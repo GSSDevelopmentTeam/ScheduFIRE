@@ -1,5 +1,5 @@
 # ScheduFIRE
-Software per la schedulazione dei turni provinciali dei vigili del fuoco, realizzato in onore dell'esame di Ingegneria del Software (a.a. 2019/2020) dell'Università degli Studi di Salerno.
+Software per la schedulazione dei turni provinciali dei vigili del fuoco, realizzato per l'esame di Ingegneria del Software (a.a. 2019/2020) dell'Università degli Studi di Salerno.
 # Documentazione
 Nella cartella /Documentazione si trovano i seguenti documenti:
 * **RAD** _(Requirement Analysis Documentation)_: Documentazione relativa alla raccolta dei requisiti e la relativa analisi;
