@@ -19,7 +19,7 @@ Nelle successive iterazioni del progetto saranno aggiunti altri documenti.
 | Giordano | Domenico | [Link](https://www.linkedin.com/in/domenico-giordano-6a758718b/) | @giordanodomenico |
 | Giuliano | Alfredo | - | @G-alfredo |
 | Labanca | Nicola | [Link](https://www.linkedin.com/in/nicola-labanca/) | @Nicola-9 |
-| Perillo | Francesca | - | - |
+| Perillo | Francesca | [Link](https://www.linkedin.com/in/francesca-perillo-671939199/) | @francesca-perillo |
 | Sansone | Michele | - | @mike4694 |
 | Sarno | Orazio | [Link](https://www.linkedin.com/in/oraziosarno/) | - |
 | Sottile | Eugenio | - | @EugenioSottile |
