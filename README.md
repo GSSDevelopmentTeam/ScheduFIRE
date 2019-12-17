@@ -6,9 +6,12 @@ Nella cartella /Documentazione si trovano i seguenti documenti:
 * **SDD** _(System Design Documentation)_: Documentazione relativa al design del sistema;
 * **TP** _(Test Plan)_: Pianificazione delle varie fasi del Testing;
 * **TCS** _(Test Case Specification)_: Specificazione dei casi di test Black Box.  
+* **ODD** _(Object Design Documentation)_: Documentazione relativa all'individuazione degli oggetti del sistema.
 
 
-Nelle successive iterazioni del progetto saranno aggiunti altri documenti.
+## ScheduFIRE
+Nella cartella /ScheduFIRE si trova il source code _(codice sorgente)_ per l'implementazione del sistema.
+
 ## Contributors
 | Cognome | Nome | LinkedIn | Github |
 | ------- | ---- | -------- | ------ |
