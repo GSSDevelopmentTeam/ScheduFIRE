@@ -13,8 +13,17 @@ body {
 	width: 55px;
 	height: 55px;
 	padding:7px;
+	margin-left:-5px;
+	margin-top:-5px;
 }
 
+.round{
+	margin-left:5px;
+	border-radius: 50%;
+	background: rgb(255, 255, 255);
+	width: 60px;
+	height: 60px;
+}
 .topnav a {
   float: left;
   display: #b60000;
@@ -24,8 +33,8 @@ body {
   font-size: 17px;
 }
 
-.topnav .select:hover {
-  background-color: #b60000;
+.topnav .round:hover {
+  background-color: #e1e1e1;
   color: white;
 }
 

@@ -12,7 +12,7 @@
 <body>
 
 <div class="topnav" id="myTopnav">
-  <a href=""><img src="../IMG/logoScheduFIRE.png" class="logo select"></a>
+  <a href=""><div class="round"><img src="../IMG/logoScheduFIRE.png" class="logo select"></div></a>
  
 </div>
 </body>

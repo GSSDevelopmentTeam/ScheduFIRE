@@ -25,9 +25,9 @@
 			class="table th  w3-auto w3-display-middle w3-center w3-margin-bottom  w3-hide-small">
 
 
-				<h1>         Benvenuto</h1>
+				<h1 style="font-size:35px">         Benvenuto</h1>
 				
-				<p>Effettua l'accesso con le tue credenziali</p>
+				<p style="font-size:23px">Effettua l'accesso con le tue credenziali</p>
 
 				<div class="tableRow ">
 					<div class="input-container">
@@ -46,7 +46,7 @@
 				</div>
 				<br> <input type="checkbox" onclick="show()"
 					class="center">Show Password
-					<br><br><a href="" style="color:#b60000">Hai Dimenticato la tua password?</a>
+					<br><br><a href="" style="color:#b60000; font-weight: bold">Hai Dimenticato la tua password?</a>
 				<script>
 						function show() {
 	  						var x = document.getElementById("myInput");
