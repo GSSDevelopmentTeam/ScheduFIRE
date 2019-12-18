@@ -5,7 +5,7 @@ public class CredenzialiBean {
 	private String username,password,ruolo;
 	
 	//Costruttore
-	public CredenzialiBean() {
+	public CredenzialiBean(){
 		
 	}
 	

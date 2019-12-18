@@ -6,7 +6,7 @@ public class CapoTurnoBean {
 	
 	//Costruttore
 	
-	public CapoTurnoBean() {
+	public CapoTurnoBean(){
 		
 	}
 	

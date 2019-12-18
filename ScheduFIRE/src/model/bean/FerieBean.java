@@ -7,7 +7,7 @@ public class FerieBean {
 	private Date dataInizio,dataFine;
 	private String emailCT,emailVF;
 	
-	
+	//Costruttore
 	public FerieBean(Date dataInizio, Date dataFine,String emailCT, String emailVF) {
 		this.dataInizio=dataInizio;
 		this.dataFine=dataFine;
@@ -15,7 +15,7 @@ public class FerieBean {
 		this.emailVF=emailVF;
 	}
 	
-	public FerieBean() {
+	public FerieBean(){
 		
 	}
 

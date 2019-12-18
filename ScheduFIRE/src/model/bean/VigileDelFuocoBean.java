@@ -6,7 +6,7 @@ public class VigileDelFuocoBean {
 	
 	//Costruttore
 	
-	public VigileDelFuocoBean() {
+	public VigileDelFuocoBean(){
 		
 	}
 	
