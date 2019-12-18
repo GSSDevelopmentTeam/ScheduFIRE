@@ -1,4 +1,4 @@
-package controller;
+package model.bean;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
@@ -7,15 +7,11 @@ import java.sql.*;
 
 public class DbConnection {
 
-
 	  /**
 	   * Costruttore.
 	   */
 	  public DbConnection() {
-		  
 		  this.setCredenziali();
-		  
-		  System.out.println(this.nomeDatabase);
 
 		  try {
 			  Class.forName("com.mysql.cj.jdbc.Driver");
@@ -28,8 +24,7 @@ public class DbConnection {
 			  
 		  } catch (Exception e) {
 			  System.out.println(e.getMessage());
-		  }
-		  
+		  }  
 	  }
 
 	  /**
@@ -55,7 +50,7 @@ public class DbConnection {
 	   * @param connessione è la variabile che contiene l'oggetto che consente
 	   * 		di connettere il database al codice.
 	   */
-	  public void setConn(Connection connessione) {
+	  public void setConnessione(Connection connessione) {
 	    this.connessione = connessione;
 	  }
 	  
@@ -80,23 +75,23 @@ public class DbConnection {
 			  try {
 				  temporanea = buffer.readLine();
 				  int indice = temporanea.indexOf(':');
-				  this.nomePortaHost = temporanea.substring(indice++);
+				  this.nomePortaHost = temporanea.substring(indice+2);
 				  
 				  temporanea = buffer.readLine();
 				  indice = temporanea.indexOf(':');
-				  this.portaHost = Integer.valueOf(temporanea.substring(indice++));
+				  this.portaHost = Integer.valueOf(temporanea.substring(indice+2));
 				  
 				  temporanea = buffer.readLine();
 				  indice = temporanea.indexOf(':');
-				  this.nomeDatabase = temporanea.substring(indice++);
+				  this.nomeDatabase = temporanea.substring(indice+2);
 				  
 				  temporanea = buffer.readLine();
 				  indice = temporanea.indexOf(':');
-				  this.userName = temporanea.substring(indice++);
+				  this.userName = temporanea.substring(indice+2);
 				  
 				  temporanea = buffer.readLine();
 				  indice = temporanea.indexOf(':');
-				  this.password = temporanea.substring(indice++);
+				  this.password = temporanea.substring(indice+2);
 				  
 			  }catch(Exception e) {
 			  	e.printStackTrace();
@@ -110,26 +105,6 @@ public class DbConnection {
 		  }catch (Exception e) {
 			e.printStackTrace();
 		  }
-	  }
-	    
-	  public String getNomeDatabase() {
-		  return nomeDatabase;
-	  }
-
-	  public String getUserName() {
-		  return userName;
-	  }
-
-	  public String getPassword() {
-		  return password;
-	  }
-
-	  public int getPortaHost() {
-		  return portaHost;
-	  }
-
-	  public String getNomePortaHost() {
-		  return nomePortaHost;
 	  }
 
 	  //Variabili d'istanza
