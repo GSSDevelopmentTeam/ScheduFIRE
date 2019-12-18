@@ -64,7 +64,5 @@ public class GiorniMalattiaBean {
 		this.emailVF = emailVF;
 	}
 	
-	
-	
-	
+
 }

@@ -44,7 +44,5 @@ public class faParteBean {
 		this.composizioneSquadra = composizioneSquadra;
 	}
 	
-	
-	
-	
+
 }

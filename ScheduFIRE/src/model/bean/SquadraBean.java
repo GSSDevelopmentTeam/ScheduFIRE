@@ -43,5 +43,5 @@ public class SquadraBean {
 		this.data = data;
 	}
 	
-	
+
 }
