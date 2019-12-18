@@ -5,7 +5,6 @@ public class CapoTurnoBean {
 	private String nome, cognome, email,turno,username;
 	
 	//Costruttore
-	
 	public CapoTurnoBean(){
 		
 	}

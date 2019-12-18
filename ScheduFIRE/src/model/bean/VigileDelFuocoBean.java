@@ -18,6 +18,7 @@ public class VigileDelFuocoBean {
 		this.mansione=mansione;
 		this.username=username;
 	}
+	
 
 	public String getNome() {
 		return nome;

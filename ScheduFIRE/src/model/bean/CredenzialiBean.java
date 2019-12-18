@@ -9,6 +9,7 @@ public class CredenzialiBean {
 		
 	}
 	
+	
 	public CredenzialiBean(String username, String password, String ruolo) {
 		this.username=username;
 		this.password=password;

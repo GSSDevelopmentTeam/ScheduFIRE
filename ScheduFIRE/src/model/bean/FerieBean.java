@@ -15,6 +15,7 @@ public class FerieBean {
 		this.emailVF=emailVF;
 	}
 	
+	
 	public FerieBean(){
 		
 	}
