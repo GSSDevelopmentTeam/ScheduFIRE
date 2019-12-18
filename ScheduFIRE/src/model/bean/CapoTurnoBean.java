@@ -5,6 +5,12 @@ public class CapoTurnoBean {
 	private String nome, cognome, email,turno,username;
 	
 	//Costruttore
+	
+	public CapoTurnoBean() {
+		
+	}
+	
+	
 	public CapoTurnoBean(String nome, String cognome,String email, String turno, String username) {
 		this.nome=nome;
 		this.cognome=cognome;
