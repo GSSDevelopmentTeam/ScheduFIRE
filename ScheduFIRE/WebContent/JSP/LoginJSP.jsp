@@ -6,7 +6,7 @@
 <meta charset="ISO-8859-1">
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Login</title>
+<title>ScheduFIRE</title>
 <link rel="stylesheet" 	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <link type="text/css" rel="stylesheet" href="../CSS/LoginCSS.css">
 <link rel="icon" href="../IMG/logoSF.png">
@@ -45,7 +45,7 @@
 					</div>
 				</div>
 				<br> <input type="checkbox" onclick="show()"
-					class="center">Show Password
+					class="center">Mostra Password
 					<br><br><a href="" style="color:#b60000; font-weight: bold">Hai Dimenticato la tua password?</a>
 				<script>
 						function show() {

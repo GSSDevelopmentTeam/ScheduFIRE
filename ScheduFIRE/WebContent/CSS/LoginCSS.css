@@ -1,7 +1,9 @@
 @charset "ISO-8859-1";
 
 body {
-	background-color:#F2F2F2;
+	background-image: url("../IMG/DSC_0066.jpg");
+	background-size:100% 850%;
+	background-repeat:no-repeat;	
 	font-family: Verdana, Geneva, Tahoma, sans-serif;
 } 
 /*'FontAwesome'!important*/
@@ -28,6 +30,7 @@ b {
 .submit:hover {
 	background-color: white;
 	color: #b60000;
+	font-weight: bold;
 }
 
 .table {
@@ -43,6 +46,8 @@ b {
 	border-radius: 5%;
 	float: left;
 	resize: vertical;
+	box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0
+		rgba(0, 0, 0, 0.19);
 }
 
 .tableRow {

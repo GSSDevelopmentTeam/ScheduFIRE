@@ -6,23 +6,26 @@ body {
 
 .topnav {
   overflow: hidden;
-  background-color:#b60000 ; 
+  background-color:#b60000 ;
+  padding:5px; 
 }
 
 .logo{
-	width: 55px;
-	height: 55px;
+	width: 75px;
+	height: 75px;
 	padding:7px;
-	margin-left:-5px;
 	margin-top:-5px;
+	margin-left:-5px;
 }
 
 .round{
 	margin-left:5px;
 	border-radius: 50%;
 	background: rgb(255, 255, 255);
-	width: 60px;
-	height: 60px;
+	width: 80px;
+	height: 80px;
+	box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0
+		rgba(0, 0, 0, 0.19);
 }
 .topnav a {
   float: left;
