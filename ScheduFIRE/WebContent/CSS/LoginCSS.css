@@ -1,0 +1,138 @@
+@charset "ISO-8859-1";
+
+body {
+	background-image: url("../IMG/DSC_0066.png");
+	background-size:100% 700%;
+	background-repeat:no-repeat;	
+	font-family: Verdana, Geneva, Tahoma, sans-serif;
+} 
+/*'FontAwesome'!important*/
+b {
+	text-align: center;
+	font-size: 24px;
+	text-shadow: 3px 2px #0B7f71;
+	color: rgb(242, 255, 255);
+}
+
+.submit {
+	background-color: #b60000;
+	color: white;
+	padding: 7px 20px;
+	text-align: center;
+	display: inline-block;
+	font-size: 16px;
+	border-radius: 7px;
+	box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0
+		rgba(0, 0, 0, 0.19);
+	cursor: pointer;
+}
+
+.submit:hover {
+	background-color: white;
+	color: #b60000;
+	font-weight: bold;
+}
+
+.table {
+	margin-top: 35px !important;
+	display: table;
+	padding: 35px;
+	padding-left: 5%;
+	padding-right: 5%;
+	background-color: #FFFFFF;
+	border:inset;
+	border-color:#575757;
+	border-width: 0.5px;
+	border-radius: 5%;
+	float: left;
+	resize: vertical;
+	box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0
+		rgba(0, 0, 0, 0.19);
+}
+
+.tableRow {
+	display: table-cell;
+	display: table-row;
+	padding: 25px;
+}
+
+.tableRow p {
+	display: table-cell;
+	vertical-align: center;
+	padding: 3px;
+	text-size:13px;
+}
+
+.center {
+	align: center !important
+}
+
+;
+
+/*icone vicino user e password*/
+* {
+	box-sizing: border-box;
+}
+
+.input-container {
+	display: -ms-flexbox; /* IE10 */
+	display: flex;
+	width: 100%;
+	margin-bottom: 15px;
+}
+
+.icon {
+	padding: 10px;
+	background: #b60000;
+	color: white;
+	min-width: 50px;
+	text-align: center;
+	box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0
+		rgba(0, 0, 0, 0.19);
+	border-radius: 5%
+}
+
+.input-field {
+	width: 100%;
+	padding: 10px;
+	outline: none;
+	box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0
+		rgba(0, 0, 0, 0.19);
+	border-radius: 5%;
+}
+
+.input-field:focus {
+	border: 2px solid #b60000;
+}
+
+/*posizione tabella*/
+ .w3-content, .w3-auto {
+	margin-left: auto;
+	margin-right: auto;
+	max-width: 1140px
+}
+@media ( max-width :1205px) {
+	.w3-auto {
+		max-width: 95%
+	}
+}
+@media ( max-width :992px) {
+	.w3-sidebar.w3-collapse {
+		display: none
+	}
+	.w3-main {
+		margin-left: 0 !important;
+		margin-right: 0 !important
+	}
+	.w3-auto {
+		max-width: 100%
+	}
+}
+
+.w3-display-middle {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	-ms-transform: translate(-50%, -50%)
+}
