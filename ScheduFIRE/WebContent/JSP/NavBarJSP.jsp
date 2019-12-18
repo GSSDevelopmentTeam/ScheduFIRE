@@ -13,11 +13,6 @@
 
 <div class="topnav" id="myTopnav">
   <a href=""><img src="../IMG/logoScheduFIRE.png" class="logo select"></a>
-  <a href="javascript:void(0);" class="icon" onclick="myFunction()">
-    <i class="fa fa-bars" style="margin-top:30px; margin-right:30px;"></i>
-  </a>
+ 
 </div>
-
-
-
 </body>

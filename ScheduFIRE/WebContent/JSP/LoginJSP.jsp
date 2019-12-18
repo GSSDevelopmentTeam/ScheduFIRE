@@ -44,11 +44,11 @@
 							id="myInput">
 					</div>
 				</div>
-				<br> <input type="checkbox" onclick="myFunction()"
+				<br> <input type="checkbox" onclick="show()"
 					class="center">Show Password
 					<br><br><a href="" style="color:#b60000">Hai Dimenticato la tua password?</a>
 				<script>
-						function myFunction() {
+						function show() {
 	  						var x = document.getElementById("myInput");
 	  						if (x.type === "password") {
 	    						x.type = "text";
