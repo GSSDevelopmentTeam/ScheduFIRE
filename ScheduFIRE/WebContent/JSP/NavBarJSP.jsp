@@ -7,7 +7,7 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <link rel="stylesheet" href="../CSS/NavBarCSS.css">
 <link rel="icon" href="../IMG/logoSF.png">
-<Title>NavBar</Title>
+<Title>ScheduFIRE</Title>
 </head>
 <body>
 
