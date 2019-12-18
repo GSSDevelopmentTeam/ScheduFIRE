@@ -46,7 +46,7 @@
 				</div>
 				<br> <input type="checkbox" onclick="myFunction()"
 					class="center">Show Password
-					<br><br><a href="" style="color:#BECDD1">Hai Dimenticato la tua password?</a>
+					<br><br><a href="" style="color:#b60000">Hai Dimenticato la tua password?</a>
 				<script>
 						function myFunction() {
 	  						var x = document.getElementById("myInput");

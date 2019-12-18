@@ -13,7 +13,7 @@ b {
 }
 
 .submit {
-	background-color: #BECDD1;
+	background-color: #b60000;
 	color: white;
 	padding: 7px 20px;
 	text-align: center;
@@ -27,7 +27,7 @@ b {
 
 .submit:hover {
 	background-color: white;
-	color: #BECDD1;
+	color: #b60000;
 }
 
 .table {
@@ -78,7 +78,7 @@ b {
 
 .icon {
 	padding: 10px;
-	background: #BECDD1;
+	background: #b60000;
 	color: white;
 	min-width: 50px;
 	text-align: center;
@@ -97,7 +97,7 @@ b {
 }
 
 .input-field:focus {
-	border: 2px solid #BECDD1;
+	border: 2px solid #b60000;
 }
 
 /*posizione tabella*/
