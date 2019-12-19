@@ -5,12 +5,12 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.sql.*;
 
-public class DbConnection {
+public class ConnessioneDB {
 
 	  /**
 	   * Costruttore.
 	   */
-	  public DbConnection() {
+	  public ConnessioneDB() {
 		  this.setCredenziali();
 
 		  try {
@@ -19,8 +19,8 @@ public class DbConnection {
 			  String url = "jdbc:mysql://" + this.nomePortaHost + ":" + this.portaHost + "/" 
 			  + this.nomeDatabase;
 			  
-			  this.connessione = DriverManager.getConnection(url, this.userName, this.password);
-			  this.connessione.setAutoCommit(false);
+			  connessione = DriverManager.getConnection(url, this.userName, this.password);
+			  connessione.setAutoCommit(false);
 			  
 		  } catch (Exception e) {
 			  System.out.println(e.getMessage());
@@ -30,28 +30,25 @@ public class DbConnection {
 	  /**
 	   * Get dell'istanza del database.
 	   */
-	  public static DbConnection getIstanza() {
-	    if (istanza == null) {
-	    	istanza = new DbConnection();
-	    }
-	    return istanza;
+	  public static Connection getIstanza() {
+		  Connection con;
+		  
+		  if (istanza == null) {
+	    	istanza = new ConnessioneDB();
+		  }
+		  
+		  con = getConnessione();
+		  
+		  return con;
 	  }
 
 	  /**
 	   * Ritorna l'oggetto di tipo Connection.
 	   */
-	  public Connection getConnessione() {
-	    return this.connessione;
-	  }
-
-	  /**
-	   * Setta la connessione con il database
-	   * 
-	   * @param connessione è la variabile che contiene l'oggetto che consente
-	   * 		di connettere il database al codice.
-	   */
-	  public void setConnessione(Connection connessione) {
-	    this.connessione = connessione;
+	  private static Connection getConnessione() {
+		  Connection con = connessione;
+		  
+		  return con;
 	  }
 	  
 	  /**
@@ -108,8 +105,8 @@ public class DbConnection {
 	  }
 
 	  //Variabili d'istanza
-	  private static DbConnection istanza = null;
-	  private Connection connessione;
+	  private static ConnessioneDB istanza = null;
+	  private static Connection connessione;
 	  private String nomeDatabase;
 	  private String userName;
 	  private String password;
