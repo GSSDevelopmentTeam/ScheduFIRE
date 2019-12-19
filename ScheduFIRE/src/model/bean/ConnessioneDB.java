@@ -5,12 +5,12 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.sql.*;
 
-public class DbConnection {
+public class ConnessioneDB {
 
 	  /**
 	   * Costruttore.
 	   */
-	  public DbConnection() {
+	  public ConnessioneDB() {
 		  this.setCredenziali();
 
 		  try {
@@ -34,7 +34,7 @@ public class DbConnection {
 		  Connection con;
 		  
 		  if (istanza == null) {
-	    	istanza = new DbConnection();
+	    	istanza = new ConnessioneDB();
 		  }
 		  
 		  con = getConnessione();
@@ -105,7 +105,7 @@ public class DbConnection {
 	  }
 
 	  //Variabili d'istanza
-	  private static DbConnection istanza = null;
+	  private static ConnessioneDB istanza = null;
 	  private static Connection connessione;
 	  private String nomeDatabase;
 	  private String userName;
