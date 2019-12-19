@@ -10,12 +10,13 @@
 <link rel="stylesheet"
 	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <link type="text/css" rel="stylesheet" href="../CSS/LoginCSS.css">
+<link rel="stylesheet" href="../CSS/HeaderCSS.css">
 <link rel="icon" href="../IMG/logoSF.png">
 </head>
 <body>
 
 	<!-- Barra Navigazione -->
-	<%@ include file="NavBarJSP.jsp"%>
+	<%@ include file="HeaderJSP.jsp"%>
 
 	<!-- Page content -->
 	<div class="w3-content w3-padding" style="max-width: 1564px">

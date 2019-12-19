@@ -6,6 +6,9 @@ body {
 	background-repeat:no-repeat;	
 	font-family: Verdana, Geneva, Tahoma, sans-serif;
 } 
+* {
+  box-sizing: border-box;
+}
 /*'FontAwesome'!important*/
 b {
 	text-align: center;
