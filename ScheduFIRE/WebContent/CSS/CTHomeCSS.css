@@ -1,0 +1,54 @@
+@charset "ISO-8859-1";
+body{
+	background-color: #f2f2f2;
+	background-size:1500px 700px;	
+	font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+/* Create two equal columns that floats next to each other */
+.clm {
+  float: left;
+  width: 50%;
+  align-content:center;
+  align-items:center;
+  align-self:center;
+  padding: 10px;
+  height: 50%; /* Should be removed. Only for demonstration */
+}
+
+/* Clear floats after the columns */
+.rw:after {
+	margin-top:90px;
+  	content: "";
+  	display: table;
+ 	 clear: both;
+}
+img{
+	width: 90px; height: 90px;
+	align-items:flex-start;
+}
+.rht {
+	float: right;
+	margin-top:5%;
+	margin-right:25%
+}
+
+.btop{
+	background-color: white;
+	height:90%;
+	width:90%;
+	border:inset;
+	display: inline-block;
+	font-size: 16px;
+	border-radius: 7px;
+	box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0
+		rgba(0, 0, 0, 0.19);
+	cursor: pointer;
+}
+.btop:hover {
+	background-color: #dbdbdb;	
+}
