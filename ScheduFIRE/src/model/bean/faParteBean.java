@@ -10,7 +10,6 @@ public class faParteBean {
 	private String emailVF;
 	private Date composizioneSquadra;
 	
-	
 	//Costruttore
 
 	public faParteBean() {
