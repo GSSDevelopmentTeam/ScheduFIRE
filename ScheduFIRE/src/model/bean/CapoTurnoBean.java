@@ -1,17 +1,17 @@
 package model.bean;
 
-public class CapoturnoBean {
+public class CapoTurnoBean {
 
 	//Variabili d'istanza
 		private String nome, cognome, email,turno,username;
 		
 		//Costruttore
-		public CapoturnoBean(){
+		public CapoTurnoBean(){
 			
 		}
 		
 		
-		public CapoturnoBean(String nome, String cognome,String email, String turno, String username) {
+		public CapoTurnoBean(String nome, String cognome,String email, String turno, String username) {
 			this.nome=nome;
 			this.cognome=cognome;
 			this.email=email;
