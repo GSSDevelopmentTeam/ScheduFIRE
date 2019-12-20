@@ -4,8 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import model.ConnessioneDB_Ciro;
+import model.ConnessioneDB;
 import model.bean.CapoTurnoBean;
 
 /*
@@ -22,7 +21,7 @@ public class CapoTurnoDao {
 			//lancio eccezione
 			;
 	
-		try(Connection con = ConnessioneDB_Ciro.getConnection()) {
+		try(Connection con = ConnessioneDB.getConnection()) {
 				
 			// Esecuzione query
 			PreparedStatement ps = con.prepareStatement("select * from Capoturno where username = ?;");

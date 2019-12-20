@@ -11,7 +11,7 @@ import java.sql.SQLException;
 
 
 
-import model.ConnessioneDB_Ciro;
+import model.ConnessioneDB;
 import model.bean.CredenzialiBean;
 
 public class UserDao {
@@ -27,7 +27,7 @@ public class UserDao {
 
 
 
-				Connection conn = ConnessioneDB_Ciro.getConnection();
+				Connection conn = ConnessioneDB.getConnection();
 				PreparedStatement stm = conn.prepareStatement("SELECT * FROM credenziali WHERE username=? AND password=? AND ruolo='capoturno'");
 
 				stm.setString(1, username);
@@ -47,7 +47,7 @@ public class UserDao {
 
 			}
 			else {
-				Connection conn = ConnessioneDB_Ciro.getConnection();
+				Connection conn = ConnessioneDB.getConnection();
 				PreparedStatement stm = conn.prepareStatement("SELECT * FROM credenziali WHERE username=? AND password=? AND ruolo='vigiledelfuoco'");
 				stm.setString(1, username);
 				stm.setString(2, password);
