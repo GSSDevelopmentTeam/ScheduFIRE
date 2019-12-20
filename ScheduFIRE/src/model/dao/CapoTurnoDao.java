@@ -1,9 +1,54 @@
 package model.dao;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import model.ConnessioneDB_Ciro;
+import model.bean.CapoTurnoBean;
+
+/*
+ * Classe che si occupa della gestione dei dati 
+ * persistenti relativi all'entità 'CapoTurno'
+ */
+
 public class CapoTurnoDao {
 
-	public CapoTurnoDao() {
-		// TODO Auto-generated constructor stub
+	public static CapoTurnoBean ottieni(String chiaveUsername) {
+		
+		//controlli
+		if(chiaveUsername == null)
+			//lancio eccezione
+			;
+	
+		try(Connection con = ConnessioneDB_Ciro.getConnection()) {
+				
+			// Esecuzione query
+			PreparedStatement ps = con.prepareStatement("select * from Capoturno where username = ?;");
+			ps.setString(1, chiaveUsername);
+			ResultSet rs = ps.executeQuery();
+			
+			// Ottenimento dati dall'interrogazione
+			String nome = rs.getString("nome");
+			String cognome = rs.getString("cognome");
+			String email = rs.getString("email");
+			String turno = rs.getString("turno");
+			String username = rs.getString("username");
+			
+			//Instanziazione oggetto CapoTurnoBean
+			CapoTurnoBean ct = new CapoTurnoBean();
+			ct.setNome(nome);
+			ct.setCognome(cognome);
+			ct.setEmail(email);
+			ct.setTurno(turno);
+			ct.setUsername(username);
+			
+			return ct;
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+		}
+		
 	}
 
 }
