@@ -6,7 +6,7 @@ import java.sql.SQLException;
 import java.util.LinkedList;
 import java.util.List;
 
-public class ConnessioneDB_Ciro  {
+public class ConnessioneDB  {
 
 	private static List<Connection> freeDbConnections;
 
@@ -18,9 +18,9 @@ public class ConnessioneDB_Ciro  {
 		Connection newConnection = null;
 		String ip = "127.0.0.1";
 		String port = "3306";
-		String db = "studyme";
+		String db = "schedufire";
 		String username = "root";
-		String password = "ciruzzo123";
+		String password = "schedufire20";
 
 		newConnection = DriverManager.getConnection("jdbc:mysql://"+ ip+":"+ port+ "/"+ db + "?useSSL=false", username, password);
 		newConnection.setAutoCommit(false);
