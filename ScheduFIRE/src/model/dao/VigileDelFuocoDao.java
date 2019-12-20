@@ -5,7 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import model.ConnessioneDB_Ciro;
+import model.ConnessioneDB;
 import model.bean.CapoTurnoBean;
 import model.bean.VigileDelFuocoBean;
 
@@ -23,7 +23,7 @@ public class VigileDelFuocoDao {
 			//lancio eccezione
 			;
 		
-		try(Connection con = ConnessioneDB_Ciro.getConnection()) {
+		try(Connection con = ConnessioneDB.getConnection()) {
 			
 			// Esecuzione query
 			PreparedStatement ps = con.prepareStatement("insert into VigileDelFuoco(email, nome, cognome, turno, mansione, "
