@@ -1,9 +1,5 @@
 @charset "ISO-8859-1";
 
-body {
-  font-family: Arial, Helvetica, sans-serif;
-}
-
 .topnav {
   overflow: hidden;
   background-color:#b60000 ;
@@ -11,11 +7,11 @@ body {
 }
 
 .logo{
-	width: 75px;
-	height: 75px;
+	width: 115%;
+	height: 115%;
 	padding:7px;
-	margin-top:-5px;
-	margin-left:-5px;
+	margin-top:-10%;
+	margin-left:-9%
 }
 
 .round{
