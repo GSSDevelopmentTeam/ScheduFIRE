@@ -16,77 +16,42 @@ import model.bean.CredenzialiBean;
 
 public class UserDao {
 
-	public UserDao() {}
+ public UserDao() {}
 
 
-	public CredenzialiBean login(String username, String password, String ruolo) {
-		CredenzialiBean credenziali = null;
-		try {
-			if(ruolo.equalsIgnoreCase("capoturno"))
-			{
+ public CredenzialiBean login(String username) {
+  CredenzialiBean credenziali = null;
+  try {
+   
+    Connection conn = ConnessioneDB.getConnection();
+    PreparedStatement stm = conn.prepareStatement("SELECT * FROM credenziali WHERE username=?");
+    stm.setString(1, username);
+    ResultSet res = stm.executeQuery();
 
 
+    credenziali = new CredenzialiBean();
 
-				Connection conn = ConnessioneDB.getConnection();
-				PreparedStatement stm = conn.prepareStatement("SELECT * FROM credenziali WHERE username=? AND password=? AND ruolo='capoturno'");
+    //se l'utente esiste
+    if(res.next()) {
+     credenziali.setUsername(res.getString(1));
+     credenziali.setPassword(res.getString(2));
+     credenziali.setRuolo(res.getString(3));
+    }
+    else {
+     return null;
 
-				stm.setString(1, username);
-				stm.setString(2, password);
-				ResultSet res = stm.executeQuery();
+   }
 
+  } catch (SQLException e) {
 
-				credenziali = new CredenzialiBean();
-
-				//se il capoturno esiste
-				if(res.next()) {
-					credenziali.setUsername(res.getString(1));
-					credenziali.setPassword(res.getString(2));
-				}
-				else
-					return null;
-
-			}
-			else {
-				Connection conn = ConnessioneDB.getConnection();
-				PreparedStatement stm = conn.prepareStatement("SELECT * FROM credenziali WHERE username=? AND password=? AND ruolo='vigiledelfuoco'");
-				stm.setString(1, username);
-				stm.setString(2, password);
-				ResultSet res = stm.executeQuery();
-
-
-				credenziali= new CredenzialiBean();
-
-				//se esiste il vigile del fuoco
-				if(res.next()) {
-					credenziali.setUsername(res.getString(1));
-					credenziali.setPassword(res.getString(2));
-				}
-				else {
-					return null;
-				}
-
-			}
+   e.printStackTrace();
+  }
 
 
 
-		} catch (SQLException e) {
-
-			e.printStackTrace();
-		}
+  return credenziali;
 
 
-
-		return credenziali;
-
-
-	}
+ }
 
 }
-
-
-
-
-
-
-
-
