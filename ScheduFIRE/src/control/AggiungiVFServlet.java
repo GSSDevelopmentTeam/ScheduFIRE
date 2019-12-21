@@ -19,8 +19,9 @@ import model.dao.VigileDelFuocoDao;
  * Servlet implementation class AggiungiVFServlet
  */
 
-/*
- *  Servlet che si occupa dell'inserimento di un nuovo VF nel database. 
+/**
+ *  Servlet che si occupa dell'inserimento di un nuovo VigileDelFuocoBean nel database.
+ *  @author Eugenio Sottile 
  */
 
 @WebServlet("/AggiungiVFServlet")
@@ -46,23 +47,30 @@ public class AggiungiVFServlet extends HttpServlet {
 		//Ottenimento credenziali dell'utente dalla sessione
 		CredenzialiBean credenziali = (CredenzialiBean) session.getAttribute("credenziali"); 
 		
-		//Ottenimento dati del CapoTurno
-		CapoTurnoBean ct = CapoTurnoDao.ottieni(credenziali.getUsername());
-	
-		VigileDelFuocoBean vf = null;
-		
-		// Variabile email per il VF
-		String email = null;
-		
-		//Ottenimento parametro email dalla richiesta
-		Object emailVF = request.getParameter("email");
-		
-		//Controllo email
-		if( emailVF == null )
+		//Controllo credenziali
+		if( credenziali == null )
 			//lancio eccezione
 			;
 		
-		if( emailVF.getClass().getSimpleName() != "String" )
+		if( credenziali.getRuolo() == "vigile" ) //definire bene la stringa
+			//lancio eccezione
+			;
+		
+		//Ottenimento dati del CapoTurno
+		CapoTurnoBean ct = CapoTurnoDao.ottieni(credenziali.getUsername());
+		
+		//Controllo CapoTurno
+		if(ct == null)
+			//lancio eccezione
+			;
+	
+		VigileDelFuocoBean vf = null;
+		
+		//Ottenimento parametro email dalla richiesta
+		String email = request.getParameter("email");;
+		
+		//Controllo email
+		if( email == null )
 			//lancio eccezione
 			;
 		
@@ -71,6 +79,7 @@ public class AggiungiVFServlet extends HttpServlet {
 			if(vf.isAdoperabile()) {
 				//lancio eccezione
 			} else {
+				
 				//Si setta il campo Adoperabile
 				if(! VigileDelFuocoDao.setAdoperabile(email, true)) 
 					//lancio eccezione
@@ -79,93 +88,50 @@ public class AggiungiVFServlet extends HttpServlet {
 			
 		} else {
 		
-			// Variabili VF
-			String nome = null;
-			String cognome = null;
-			String turno = null;
-			String mansione = null;
-			String username = "turno" + ct.getTurno();
-			String grado = null;
-			Integer giorniFerieAnnoCorrente = null;
-			Integer giorniFerieAnnoPrecedente = null;
-			
 			// Ottenimento parametri del VF dalla richiesta
-			Object nomeVF = request.getParameter("nome");
-			Object cognomeVF = request.getParameter("cognome");
-			Object turnoVF = request.getParameter("turno");
-			Object mansioneVF = request.getParameter("mansione");
-			Object giorniFerieAnnoCorrenteVF = request.getParameter("giorniFerieAnnoCorrente");
-			Object giorniFerieAnnoPrecedenteVF = request.getParameter("giorniFerieAnnoPrecedente");
-			Object gradoVF = request.getParameter("grado");
+			String nome = request.getParameter("nome");;
+			String cognome = request.getParameter("cognome");;
+			String turno = request.getParameter("turno");;
+			String mansione = request.getParameter("mansione");;
+			String username = "turno" + ct.getTurno();
+			String grado = request.getParameter("grado");
+			String giorniFerieAnnoCorrenteStringa = request.getParameter("giorniFerieAnnoCorrente");
+			String giorniFerieAnnoPrecedenteStringa = request.getParameter("giorniFerieAnnoPrecedente");
 			
 			//aggiungere controlli dei parametri
 			
 			//Controlli
 	
-			if( nomeVF == null )
+			if( nome == null )
 				//lancio eccezione
 				;
 			
-			if( nomeVF.getClass().getSimpleName() != "String" )
+			if( cognome == null )
 				//lancio eccezione
 				;
 			
-			if( cognomeVF == null )
+			if( turno == null )
 				//lancio eccezione
 				;
 			
-			if( cognomeVF.getClass().getSimpleName() != "String" )
+			if( mansione == null )
 				//lancio eccezione
 				;
 			
-			if( turnoVF == null )
+			if( giorniFerieAnnoCorrenteStringa == null )
 				//lancio eccezione
 				;
 			
-			if( turnoVF.getClass().getSimpleName() != "String" )
+			if( giorniFerieAnnoPrecedenteStringa == null )
 				//lancio eccezione
 				;
 			
-			if( mansioneVF == null )
+			if( grado == null )
 				//lancio eccezione
 				;
 			
-			if( mansioneVF.getClass().getSimpleName() != "String" )
-				//lancio eccezione
-				;
-			
-			if( giorniFerieAnnoCorrenteVF == null )
-				//lancio eccezione
-				;
-			
-			if( giorniFerieAnnoCorrenteVF.getClass().getSimpleName() != "String" )
-				//lancio eccezione
-				;
-			
-			if( giorniFerieAnnoPrecedenteVF == null )
-				//lancio eccezione
-				;
-			
-			if( giorniFerieAnnoPrecedenteVF.getClass().getSimpleName() != "String" )
-				//lancio eccezione
-				;
-			
-			if( gradoVF == null )
-				//lancio eccezione
-				;
-			
-			if( gradoVF.getClass().getSimpleName() != "String" )
-				//lancio eccezione
-				;
-			
-			nome = (String) nomeVF;
-			cognome = (String) cognomeVF;
-			email = (String) emailVF;
-			turno = (String) turnoVF;
-			mansione = (String) mansioneVF;
-			giorniFerieAnnoCorrente = Integer.parseInt(giorniFerieAnnoCorrenteVF.toString()); //da controllare!!!
-			giorniFerieAnnoPrecedente = Integer.parseInt(giorniFerieAnnoPrecedenteVF.toString()); //
-			grado = (String) gradoVF;
+			Integer giorniFerieAnnoCorrente = Integer.parseInt(giorniFerieAnnoCorrenteStringa); 
+			Integer giorniFerieAnnoPrecedente = Integer.parseInt(giorniFerieAnnoPrecedenteStringa); 
 			
 			// Instanziazione dell'oggetto VigileDelFuocoBean
 			vf = new VigileDelFuocoBean(nome, cognome, email, turno, mansione, username,
