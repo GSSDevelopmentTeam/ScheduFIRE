@@ -28,22 +28,29 @@ public class CapoTurnoDao {
 			ps.setString(1, chiaveUsername);
 			ResultSet rs = ps.executeQuery();
 			
-			// Ottenimento dati dall'interrogazione
-			String nome = rs.getString("nome");
-			String cognome = rs.getString("cognome");
-			String email = rs.getString("email");
-			String turno = rs.getString("turno");
-			String username = rs.getString("username");
-			
-			//Instanziazione oggetto CapoTurnoBean
-			CapoTurnoBean ct = new CapoTurnoBean();
-			ct.setNome(nome);
-			ct.setCognome(cognome);
-			ct.setEmail(email);
-			ct.setTurno(turno);
-			ct.setUsername(username);
-			
-			return ct;
+			if(rs.next()) {
+				
+				// Ottenimento dati dall'interrogazione
+				String nome = rs.getString("nome");
+				String cognome = rs.getString("cognome");
+				String email = rs.getString("email");
+				String turno = rs.getString("turno");
+				String username = rs.getString("username");
+				
+				//Instanziazione oggetto CapoTurnoBean
+				CapoTurnoBean ct = new CapoTurnoBean();
+				ct.setNome(nome);
+				ct.setCognome(cognome);
+				ct.setEmail(email);
+				ct.setTurno(turno);
+				ct.setUsername(username);
+				
+				return ct;
+				
+			} else {
+				return null;
+			}
+				
 		} catch (SQLException e) {
 			throw new RuntimeException(e);
 		}
