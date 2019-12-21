@@ -51,7 +51,7 @@ public class AggiungiVFServlet extends HttpServlet {
 		if( credenziali == null )
 			//lancio eccezione
 			;
-		
+		/*
 		if( credenziali.getRuolo() == "vigile" ) //definire bene la stringa
 			//lancio eccezione
 			;
@@ -63,7 +63,7 @@ public class AggiungiVFServlet extends HttpServlet {
 		if(ct == null)
 			//lancio eccezione
 			;
-	
+		 */
 		VigileDelFuocoBean vf = null;
 		
 		//Ottenimento parametro email dalla richiesta
@@ -93,7 +93,7 @@ public class AggiungiVFServlet extends HttpServlet {
 			String cognome = request.getParameter("cognome");;
 			String turno = request.getParameter("turno");;
 			String mansione = request.getParameter("mansione");;
-			String username = "turno" + ct.getTurno();
+			String username = "turno"/* + ct.getTurno()*/;
 			String grado = request.getParameter("grado");
 			String giorniFerieAnnoCorrenteStringa = request.getParameter("giorniFerieAnnoCorrente");
 			String giorniFerieAnnoPrecedenteStringa = request.getParameter("giorniFerieAnnoPrecedente");
