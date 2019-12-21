@@ -7,13 +7,18 @@ import java.sql.SQLException;
 import model.ConnessioneDB;
 import model.bean.CapoTurnoBean;
 
-/*
+/**
  * Classe che si occupa della gestione dei dati 
  * persistenti relativi all'entità 'CapoTurno'
+ * @author Eugenio Sottile
  */
 
 public class CapoTurnoDao {
-
+	
+	/**
+	 * @param chiaveUsername , stringa che identifica un CapoTurnoBean tramite l'username
+	 * @return Un tipo CapoTurnoBean identificato da chiaveUsername, null altrimenti
+	 */
 	public static CapoTurnoBean ottieni(String chiaveUsername) {
 		
 		//controlli
