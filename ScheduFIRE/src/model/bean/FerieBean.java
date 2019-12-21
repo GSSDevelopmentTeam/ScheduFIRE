@@ -4,11 +4,13 @@ import java.sql.Date;
 
 public class FerieBean {
 	//Variabili d'istanza
+	private int id;
 	private Date dataInizio,dataFine;
 	private String emailCT,emailVF;
 	
 	//Costruttore
-	public FerieBean(Date dataInizio, Date dataFine,String emailCT, String emailVF) {
+	public FerieBean(int id, Date dataInizio, Date dataFine,String emailCT, String emailVF) {
+		this.id=id;
 		this.dataInizio=dataInizio;
 		this.dataFine=dataFine;
 		this.emailCT=emailCT;
@@ -20,6 +22,14 @@ public class FerieBean {
 		
 	}
 
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id=id;
+	}
+	
 	public Date getDataInizio() {
 		return dataInizio;
 	}
