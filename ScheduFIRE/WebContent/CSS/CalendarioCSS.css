@@ -1,0 +1,130 @@
+/*contenitore per l'intero calendario*/
+.container {
+	margin-top: 5px;
+	display: flex;
+	width: 100%;
+	height: 100%;
+	background-color: #AAAAAA;
+	border: 3px solid black;
+}
+
+/*contenitore per il calendario*/
+.container-calendar {
+	width: 70%;
+	background-color: white;
+	font-family: Verdana;
+}
+
+.container-calendar h1 h2 h3 {
+	color: white;
+	text-align: center;
+	font-family: Verdana;
+}
+
+.container-month-year {
+	color: black;
+	font-family: Brush Script MT;
+	text-align: center;
+	font-size: 300%;
+}
+
+/*contenitore per la schedulazione
+flex:1 -> prende il resto del container*/
+.container-schedul {
+	flex: 1;
+	background-color: white;
+	font-family: Verdana;
+	border: 1px solid black;
+	margin: 2px;
+}
+
+.grid-days {
+	display: grid;
+	grid-template-columns: auto auto auto auto auto auto auto;
+	color: black;
+	border-bottom: 3px solid black;
+	justify-content: center;
+	font-family: Verdana;
+}
+
+.grid-container {
+	display: grid;
+	grid-template-columns: auto auto auto auto auto auto auto;
+	background-color: transparent;
+	padding: 2%;
+	font-family: Verdana;
+}
+
+.grid-item {
+	background-color: white;
+	border-bottom: 0.1px solid #808080;
+	border-top: 0.1 px solid #808080;
+	padding: 10%;
+	font-size: 200%;
+	text-align: center;
+	font-family: Verdana;
+}
+
+.dayNoWork {
+	color: #808080;
+	font-family: Verdana;
+}
+
+.grid-item:hover {
+	border: 1px solid black;
+	background-color: white;
+	font-family: Verdana;
+}
+
+
+
+/*CSS per il menù DROPDOWN dei mesi*/
+.grid-chose-month{
+	display:grid;
+	justify-content: center;
+	
+}
+
+.dropbtn {
+	background-color: white;
+	border-bottom: 2px solid black !important;
+	color: black;
+	padding: 10px;
+	font-size: 13px;
+	border: none;
+	cursor: pointer;
+}
+
+.dropdown {
+	position: relative;
+	display: inline-block;
+}
+
+.dropdown-content {
+	display: none;
+	position: absolute;
+	background-color: #f9f9f9;
+	min-width: 160px;
+	box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+	z-index: 1;
+}
+
+.dropdown-content a {
+	color: #4b4b4b;
+	padding: 12px 16px;
+	text-decoration: none;
+	display: block;
+}
+
+.dropdown-content a:hover {
+	background-color: #f1f1f1;
+	color: black;
+}
+
+.dropdown:hover .dropdown-content {
+	display: block;
+}
+
+.dropdown:hover .dropbtn {
+	background-color: white;
+}
