@@ -2,7 +2,7 @@
 	pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
 <html>
-<%@ include file="StandardJSP.jsp" %>
+	<jsp:include page="StandardJSP.jsp" />
 <link type="text/css" rel="stylesheet" href="CSS/CTHomeCSS.css">
 <body>
 
