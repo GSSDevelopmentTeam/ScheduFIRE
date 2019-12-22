@@ -63,7 +63,7 @@ public class CalendarioServlet extends HttpServlet {
 		request.setAttribute("meseStringa", mese_stringa);
 		
 
-		riempiCalendario(mese, anno, days_month);
+		riempiCalendario(05, 2015, days_month);
 				
 				//println per controllo calendario 
 				System.out.println("Mese: ");
@@ -141,12 +141,12 @@ System.out.println("primo giorno -> "+ primoGiorno);
 		case 1: //mese febbraio
 							
 				if(isBisestile(anno)) { //anno bisestile
-					for(i=day;i<=28+day+1;i++) {
+					for(i=day;i<=28+day;i++) {
 						days_month[i] = giorno;
 						giorno++;
 					}
 				} else {
-					for(i=day;i<=27+day+1;i++) {
+					for(i=day;i<=27+day;i++) {
 						days_month[i] = giorno;
 						giorno++;
 					}
@@ -155,7 +155,7 @@ System.out.println("primo giorno -> "+ primoGiorno);
 			
 		case 10: case 3: case 5: case 8: //mesi di 30 giorni
 				
-				for (i=day; i<=29+day+1; i++) {
+				for (i=day; i<=29+day; i++) {
 					days_month[i] = giorno;
 					giorno ++;
 				}
@@ -164,13 +164,15 @@ System.out.println("primo giorno -> "+ primoGiorno);
 			
 		default: // mesi di 31 giorni
 		
-				for (i=day; i<=30+day+1; i++) {
+				for (i=day; i<=30+day; i++) {
 					days_month[i] = giorno;
 					giorno++;
 				}
 				
 			break;
 		}
+		for(i=0; i<days_month.length-1;i++);
+			System.out.println("\nGiorno: "+days_month[i]);
 	}
-
+	
 }
