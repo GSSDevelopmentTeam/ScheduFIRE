@@ -63,7 +63,7 @@ public class CalendarioServlet extends HttpServlet {
 		request.setAttribute("meseStringa", mese_stringa);
 		
 
-		riempiCalendario(05, 2015, days_month);
+		riempiCalendario(mese, anno, days_month);
 				
 				//println per controllo calendario 
 				System.out.println("Mese: ");
