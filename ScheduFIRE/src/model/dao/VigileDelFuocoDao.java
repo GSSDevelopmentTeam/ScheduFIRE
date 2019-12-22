@@ -1,9 +1,11 @@
 package model.dao;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
 
@@ -234,5 +236,75 @@ public class VigileDelFuocoDao {
 		}
 		
 	}
+	
+	
+	
+	
+	/**
+	 * @param data , la data del giorno di cui si vuole avere la lista dei vigili disponibili
+	 * @return una lista di VigileDelFuocoBean che hanno attributo adoperabile=true 
+	 * 			e non sono in ferie o malattia nella data passata come parametro
+	 */
+	public static ArrayList<VigileDelFuocoBean> getDisponibili(Date data){
+		try(Connection con = ConnessioneDB.getConnection()) {
+
+			// Query di ricerca
+			PreparedStatement ps = con.prepareStatement("SELECT v.email, v.nome, v.cognome, v.turno, v.mansione, "
+					+ "v.giorniferieannocorrente, v.giorniferieannoprecedente, v.caricolavoro, v.adoperabile, v.grado, v.username " + 
+					" FROM Vigile v " + 
+					" WHERE v.adoperabile=true AND NOT EXISTS " + 
+					" (SELECT *" + 
+					" FROM Malattia m " + 
+					" WHERE m.emailVF= v.email AND ? BETWEEN m.dataInizio AND m.dataFine)" + 
+					" AND NOT EXISTS" + 
+					" (SELECT *" + 
+					" FROM Ferie f " + 
+					" WHERE f.emailVF= v.email AND ? BETWEEN f.dataInizio AND f.dataFine);");
+			ps.setDate(1, data);
+			ps.setDate(2, data);
+			ResultSet rs = ps.executeQuery();
+			ArrayList<VigileDelFuocoBean> vigili=new ArrayList<>();
+
+			//Iterazione dei risultati
+			while(rs.next()) {
+
+				String nome = rs.getString("nome");
+				String cognome = rs.getString("cognome");
+				String email = rs.getString("email");
+				String turno = rs.getString("turno");
+				String username = rs.getString("username");
+				String mansione = rs.getString("mansione");
+				int giorniFerieAnnoCorrente = rs.getInt("giorniferieannocorrente");
+				int giorniFerieAnnoPrecedente = rs.getInt("giorniferieannoprecedente");
+				int caricoLavoro = rs.getInt("caricolavoro");
+				boolean adoperabile = rs.getBoolean("adoperabile");
+				String grado = rs.getString("grado");
+				VigileDelFuocoBean vf = new VigileDelFuocoBean();
+				vf.setNome(nome);
+				vf.setCognome(cognome);
+				vf.setEmail(email);
+				vf.setTurno(turno);
+				vf.setUsername(username);
+				vf.setMansione(mansione);
+				vf.setGiorniFerieAnnoCorrente(giorniFerieAnnoCorrente);
+				vf.setGiorniFerieAnnoPrecedente(giorniFerieAnnoPrecedente);
+				vf.setCaricoLavoro(caricoLavoro);
+				vf.setAdoperabile(adoperabile);
+				vf.setGrado(grado);
+
+				vigili.add(vf);
+
+			}
+			return vigili;
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+		}
+	}
+	
+	
+	
+	
+	
+	
 
 }
