@@ -3,11 +3,11 @@
 <!DOCTYPE html>
 <html>
 <%@ include file="StandardJSP.jsp" %>
-<link type="text/css" rel="stylesheet" href="../CSS/CTHomeCSS.css">
+<link type="text/css" rel="stylesheet" href="CSS/CTHomeCSS.css">
 <body>
 
 <!-- Barra Navigazione -->
-	<%@ include file="HeaderJSP.jsp"%>
+	<jsp:include page="HeaderJSP.jsp" />
 	
 <div class="rw" style="margin:50px;">
   <div class="clm">
