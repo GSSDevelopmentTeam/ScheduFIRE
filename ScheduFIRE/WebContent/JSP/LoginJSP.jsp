@@ -29,6 +29,9 @@
 					<div class="input-container">
 						<i class="fa fa-user icon"></i> <input class="input-field"
 							type="text" id="user1" placeholder="Username" name="Username">
+							<% if(request.getAttribute("usernameErrato")!=null) { %>
+							<div>Username errato</div>
+							<% } %>
 					</div>
 				</div>
 				<br>
@@ -38,6 +41,9 @@
 						<i class="fa fa-key icon"></i> <input class="input-field"
 							type="password" placeholder="Password" name="Password"
 							id="myInput">
+							<% if(request.getAttribute("passwordErrata")!=null) { %>
+							<div>Password errata</div>
+							<% } %>
 					</div>
 				</div>
 				<br> <input type="checkbox" onclick="show()" class="center">Mostra
