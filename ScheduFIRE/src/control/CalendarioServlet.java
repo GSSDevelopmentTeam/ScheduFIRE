@@ -117,7 +117,8 @@ public class CalendarioServlet extends HttpServlet {
 		cal.set(Calendar.YEAR,anno);
 		cal.set(Calendar.MONTH,mese-1);	
 		String primoGiorno= cal.getTime().toString().substring(0,3);
-
+System.out.println("primo giorno -> "+ primoGiorno);
+		
 		int day=-1;
 		
 		switch (primoGiorno) {
