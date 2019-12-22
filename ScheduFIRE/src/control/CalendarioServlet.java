@@ -49,7 +49,7 @@ public class CalendarioServlet extends HttpServlet {
 		String giorno_stringa_numero = dataCorrente.substring(8);
 
 
-		//anno espresso in intero per controllare se è bisestile o meno.
+		//anno espresso in intero per controllare se Ã¨ bisestile o meno.
 		int anno = Integer.parseInt(anno_stringa_numero);
 
 		//mese scritto in formato Stringa: Gennaio, Febbraio [...]
@@ -82,7 +82,7 @@ public class CalendarioServlet extends HttpServlet {
 
 	
 	/**
-	 * Funzione che specifica se l'anno è o non è bisestile.
+	 * Funzione che specifica se l'anno Ã¨ o non Ã¨ bisestile.
 	 * @param anno 
 	 * @return boolean specifica se l'anno sia o meno bisestile
 	 */
@@ -111,7 +111,7 @@ public class CalendarioServlet extends HttpServlet {
 	 */
 	public void riempiCalendario (int mese, int anno, int[] days_month) {
 		
-		//per vedere qual è il primo lunedì del mese
+		//per vedere qual Ã¨ il primo lunedÃ¬ del mese
 		Date date = new Date(System.currentTimeMillis());
 		Calendar cal = Calendar.getInstance(TimeZone.getTimeZone("Europe/Rome"));
 		cal.set(Calendar.YEAR,anno);
@@ -122,11 +122,11 @@ System.out.println("primo giorno -> "+ primoGiorno);
 		int day=-1;
 		
 		switch (primoGiorno) {
-		case "Mon": day = 0; break; //lunedì
-		case "Tue": day = 1; break; //martedì
-		case "Wed": day = 2; break; //mercoledì
-		case "Thu": day = 3; break; //giovedì
-		case "Fri": day = 4; break; //venerdì
+		case "Mon": day = 0; break; //lunedÃ¬
+		case "Tue": day = 1; break; //martedÃ¬
+		case "Wed": day = 2; break; //mercoledÃ¬
+		case "Thu": day = 3; break; //giovedÃ¬
+		case "Fri": day = 4; break; //venerdÃ¬
 		case "Sat": day = 5; break; //sabato
 		case "Sun": day = 6; break; //domenica
 		default: break;
