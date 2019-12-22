@@ -34,7 +34,7 @@
 flex:1 -> prende il resto del container*/
 .container-schedul {
 	position: absolute;
-	top: 15%; bottom: 2%; left: 70%; right: 0.1%;
+	top: 15%; bottom: 5%; left: 70%; right: 0.1%;
 	flex: 1;
 	background-color: white;
 	font-family: Verdana;
