@@ -2,12 +2,13 @@
 	pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
 <html>
-	<%@ include file="StandardJSP.jsp"%>
-<link type="text/css" rel="stylesheet" href="../CSS/LoginCSS.css">
+	<jsp:include page="StandardJSP.jsp"/>
+<link type="text/css" rel="stylesheet" href="CSS/LoginCSS.css">
 <body>
 
 	<!-- Barra Navigazione -->
-	<%@ include file="HeaderJSP.jsp"%>
+	<jsp:include page="HeaderJSP.jsp"/>
+	
 
 	<!-- Page content -->
 	<div class="w3-content w3-padding" style="max-width: 1564px">
@@ -20,8 +21,7 @@
 
 			<h1 style="font-size: 35px">Benvenuto</h1>
 
-			<p style="font-size: 23px">Effettua l'accesso con le tue
-				credenziali</p>
+			<p style="font-size: 23px">Effettua l'accesso con le tue credenziali</p>
 
 			<div class="tbR ">
 				<div class="input-container">

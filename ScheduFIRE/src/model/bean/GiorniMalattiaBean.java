@@ -5,7 +5,7 @@ import java.sql.Date;
 public class GiorniMalattiaBean {
 
 	//Variabili d'istanza
-
+	private int id;
 	private Date dataInizio;
 	private Date dataFine;
 	private String emailCT;
@@ -13,7 +13,8 @@ public class GiorniMalattiaBean {
 	
 	//Costruttore
 
-	public GiorniMalattiaBean(Date dataInizio, Date dataFine, String emailCT, String emailVF) {
+	public GiorniMalattiaBean(int id, Date dataInizio, Date dataFine, String emailCT, String emailVF) {
+		this.id=id;
 		this.dataInizio = dataInizio;
 		this.dataFine = dataFine;
 		this.emailCT = emailCT;
@@ -24,7 +25,15 @@ public class GiorniMalattiaBean {
 	public GiorniMalattiaBean() {
 	}
 
+	public int getId() {
+		return id;
+	}
 
+
+	public void setId(int id) {
+		this.id=id;
+	}
+	
 	public Date getDataInizio() {
 		return dataInizio;
 	}
