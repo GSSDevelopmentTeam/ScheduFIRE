@@ -36,7 +36,7 @@ public class LoginServlet extends HttpServlet {
 
 		String username = request.getParameter("Username");
 		String password = request.getParameter("Password");
-		if (username == null)
+		if (username == null || username.equals(""))
 			request.getRequestDispatcher("/JSP/LoginJSP.jsp").forward(request, response);
 		else {
 			String passwordBase64format = Base64.getEncoder().encodeToString(password.getBytes());
@@ -45,20 +45,27 @@ public class LoginServlet extends HttpServlet {
 			CredenzialiBean utente = credenziali.login(username);
 
 			if (utente == null) {
-				System.out.println("Errore");
-			} else {
+				request.setAttribute("usernameErrato", true);
+				request.getRequestDispatcher("/JSP/LoginJSP.jsp").forward(request, response);
+				} else {
 
 				if (passwordBase64format.equals(utente.getPassword())) {
 
 					HttpSession session = request.getSession();
 					session.setAttribute("ruolo", utente.getRuolo());
 					if (utente.getRuolo().equalsIgnoreCase("capoturno")) {
-						RequestDispatcher dispatcher = request.getRequestDispatcher("WebContent\\JSP\\LoginJSP.jsp");
-						dispatcher.forward(request, response);
+						response.sendRedirect("HomeCTServlet");
+						//RequestDispatcher dispatcher = request.getRequestDispatcher("WebContent\\JSP\\LoginJSP.jsp");
+						//dispatcher.forward(request, response);
 					} else {
-						RequestDispatcher dispatcher = request.getRequestDispatcher("/CalendarioServlet");
-						dispatcher.forward(request, response);
+						response.sendRedirect("CalendarioServlet");
+						//RequestDispatcher dispatcher = request.getRequestDispatcher("/CalendarioServlet");
+						//dispatcher.forward(request, response);
 					}
+				}
+				else {
+					request.setAttribute("passwordErrata", true);
+					request.getRequestDispatcher("/JSP/LoginJSP.jsp").forward(request, response);
 
 				}
 

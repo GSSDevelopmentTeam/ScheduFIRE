@@ -10,7 +10,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link type="text/css" rel="stylesheet" href="CSS/CalendarioCSS.css"></link>
-<link rel="stylesheet" href="CSS/NavBarCSS.css">
+<link rel="stylesheet" href="CSS/HeaderCSS.css">
 <link rel="icon" href="../IMG/logoSF.png">
 
 <title>ScheduFIRE</title>
@@ -31,8 +31,7 @@
 </head>
 <body>
 	<!-- Barra Navigazione -->
-	<%@ include file="HeaderJSP.jsp"%>
-
+	<jsp:include page="HeaderJSP.jsp"/>
 	<div class="container">
 		<div class="container-calendar">
 			<div class="container-month-year">
@@ -59,15 +58,15 @@
 				%>
 				<div class="grid-days"><%=days[j]%></div>
 				<%
-					}
+					}int day=0;
 					for (int i = 0; i < days_month.length; i++) {
-						if (days_month[i] <= 0) {
+						if (days_month[i] < 0) {
 				%>
-				<div class="grid-item"><%=empty%></div>
+				<div class="item-empty"><%=empty%></div>
 				<%
-					} else {
+					} else {day++;
 				%>
-				<div class="grid-item" onClick="dayClicked()"><%=days_month[i]%></div>
+				<div class="grid-item"onClick="dayClicked()"><%=day%></div>
 				<%
 					}
 					}
@@ -76,7 +75,47 @@
 
 			</div>
 		</div>
-		<div class="container-schedul"></div>
+		<div class="container-schedul">
+		
+		<div class="wrapper">
+			<div class="box mansione"><p>SALA OPERATIVA<p></div>
+				<div class="vigili">
+					<p>NOME COGNOME</p>
+					<p>NOME COGNOME</p>
+					<p>NOME COGNOME</p>
+					<p>[...][...]</p>
+				</div>
+			
+			
+			<div class=" box mansione"><p>PRIMA PARTENZA</p></div>
+				<div class="vigili">
+					<p>NOME COGNOME</p>
+					<p>NOME COGNOME</p>
+					<p>NOME COGNOME</p>
+					<p>[...][...]</p>
+				</div>
+			
+			
+			<div class="box mansione"><p>AUTO SCALA</p></div>
+				<div class="vigili">
+					<p>NOME COGNOME</p>
+					<p>NOME COGNOME</p>
+					<p>NOME COGNOME</p>
+					<p>[...][...]</p>
+				</div>
+			
+			
+			<div class="box mansione"><p>AUTO BOTTE</p></div>
+				<div class="vigili">
+					<p>NOME COGNOME</p>
+					<p>NOME COGNOME</p>
+					<p>NOME COGNOME</p>
+					<p>[...][...]</p>
+				</div>
+			
+		</div>
+		
+		</div>
 
 
 	</div>
