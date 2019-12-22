@@ -1,8 +1,8 @@
 package model.dao;
 
-public class faparteDAO {
+public class ListaSquadreDao {
 
-	public faparteDAO() {
+	public ListaSquadreDao() {
 		// TODO Auto-generated constructor stub
 	}
 

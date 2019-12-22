@@ -2,7 +2,9 @@ package model.bean;
 
 public class VigileDelFuocoBean {
 	//Variabili d'istanza
-	private String nome, cognome, email, turno, mansione, username;
+
+	private String nome, cognome, email, turno, mansione, username, grado;
+
 	private int giorniFerieAnnoCorrente, giorniFerieAnnoPrecedente, caricoLavoro;
 	private boolean adoperabile;
 	
@@ -13,7 +15,8 @@ public class VigileDelFuocoBean {
 	}
 
 	public VigileDelFuocoBean(String nome, String cognome, String email, String turno, String mansione, String username,
-			int giorniFerieAnnoCorrente, int giorniFerieAnnoPrecedente) {
+			String grado, int giorniFerieAnnoCorrente, int giorniFerieAnnoPrecedente) {
+
 		super();
 		this.nome = nome;
 		this.cognome = cognome;
@@ -21,6 +24,7 @@ public class VigileDelFuocoBean {
 		this.turno = turno;
 		this.mansione = mansione;
 		this.username = username;
+		this.grado=grado;
 		this.giorniFerieAnnoCorrente = giorniFerieAnnoCorrente;
 		this.giorniFerieAnnoPrecedente = giorniFerieAnnoPrecedente;
 		this.caricoLavoro = 0;
@@ -73,6 +77,14 @@ public class VigileDelFuocoBean {
 
 	public void setUsername(String username) {
 		this.username = username;
+	}
+	
+	public String getGrado() {
+		return grado;
+	}
+
+	public void setGrado(String grado) {
+		this.grado = grado;
 	}
 
 	public int getGiorniFerieAnnoCorrente() {

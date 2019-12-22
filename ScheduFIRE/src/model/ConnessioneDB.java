@@ -5,6 +5,7 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.TimeZone;
 
 public class ConnessioneDB  {
 
@@ -12,17 +13,22 @@ public class ConnessioneDB  {
 
 	static {
 		freeDbConnections = new LinkedList<Connection>();
+		try {
+			Class.forName("com.mysql.cj.jdbc.Driver");
+		} catch (ClassNotFoundException e) {
+			System.out.println("DB driver not found: " + e.getMessage());
+		} 
 	}
 	
 	private static synchronized Connection createDBConnection() throws SQLException {
 		Connection newConnection = null;
-		String ip = "127.0.0.1";
+		String ip = "localhost";
 		String port = "3306";
 		String db = "schedufire";
 		String username = "root";
 		String password = "schedufire20";
 
-		newConnection = DriverManager.getConnection("jdbc:mysql://"+ ip+":"+ port+ "/"+ db + "?useSSL=false", username, password);
+		newConnection = DriverManager.getConnection("jdbc:mysql://"+ ip+":"+ port+ "/"+ db + "?useSSL=false&serverTimezone=" + TimeZone.getDefault().getID(), username, password);
 		newConnection.setAutoCommit(false);
 		return newConnection;
 	}
