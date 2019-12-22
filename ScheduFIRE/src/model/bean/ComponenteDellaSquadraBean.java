@@ -2,26 +2,25 @@ package model.bean;
 
 import java.sql.Date;
 
-public class faParteBean {
+public class ComponenteDellaSquadraBean {
 
 	//Variabili d'istanza
 
 	private String tipologiaSquadra;
 	private String emailVF;
-	private Date composizioneSquadra;
-	
+	private Date giornoLavorativo;
 	
 	//Costruttore
 
-	public faParteBean() {
+	public ComponenteDellaSquadraBean() {
 		
 	}
 
 	
-	public faParteBean(String tipologiaSquadra, String emailVF, Date composizioneSquadra) {
+	public ComponenteDellaSquadraBean(String tipologiaSquadra, String emailVF, Date giornoLavorativo) {
 		this.tipologiaSquadra = tipologiaSquadra;
 		this.emailVF = emailVF;
-		this.composizioneSquadra = composizioneSquadra;
+		this.giornoLavorativo = giornoLavorativo;
 	}
 	
 	
@@ -37,11 +36,11 @@ public class faParteBean {
 	public void setEmailVF(String emailVF) {
 		this.emailVF = emailVF;
 	}
-	public Date getComposizioneSquadra() {
-		return composizioneSquadra;
+	public Date getGiornoLavorativo() {
+		return giornoLavorativo;
 	}
-	public void setComposizioneSquadra(Date composizioneSquadra) {
-		this.composizioneSquadra = composizioneSquadra;
+	public void setGiornoLavorativo(Date giornoLavorativo) {
+		this.giornoLavorativo = giornoLavorativo;
 	}
 	
 

@@ -2,7 +2,7 @@
 
 body {
 	background-image: url("../IMG/DSC_0066.png");
-	background-size:1500px 700px;
+	background-size:cover;
 	background-repeat:no-repeat;	
 	font-family: Verdana, Geneva, Tahoma, sans-serif;
 } 
