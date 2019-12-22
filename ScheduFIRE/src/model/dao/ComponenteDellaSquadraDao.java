@@ -30,19 +30,16 @@ public class ComponenteDellaSquadraDao {
 
 			//Iterazione dei risultati
 			while(rs.next()) {
-
 				String email = rs.getString("emailVF");
 				String tipologia = rs.getString("tipologia");
 				Date giornoLavorativo = rs.getDate("giornoLavorativo");
 				
 				ComponenteDellaSquadraBean cds = new ComponenteDellaSquadraBean();
-				
 				cds.setEmailVF(email);
 				cds.setTipologiaSquadra(tipologia);
 				cds.setGiornoLavorativo(giornoLavorativo);
 				
 				componenti.add(cds);
-
 			}
 			return componenti;
 		} catch (SQLException e) {
