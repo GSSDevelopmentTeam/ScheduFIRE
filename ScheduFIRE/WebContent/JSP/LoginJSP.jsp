@@ -18,7 +18,7 @@
 		<div
 			class="tb th  w3-auto w3-display-middle w3-center w3-margin-bottom  w3-hide-small">
 
-			<form action="../Login" method="POST">
+			<form action="Login" method="POST">
 
 				<h1 style="font-size: 35px">Benvenuto</h1>
 
