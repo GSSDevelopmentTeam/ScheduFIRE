@@ -49,20 +49,19 @@ public class AggiungiVFServlet extends HttpServlet {
 		
 		//Controllo credenziali
 		if( credenziali == null )
-			//lancio eccezione
-			;
+			throw new ScheduFIREException();
+		
 		/*
 		if( credenziali.getRuolo() == "vigile" ) //definire bene la stringa
-			//lancio eccezione
-			;
+			throw new ScheduFIREException();
 		
 		//Ottenimento dati del CapoTurno
 		CapoTurnoBean ct = CapoTurnoDao.ottieni(credenziali.getUsername());
 		
 		//Controllo CapoTurno
 		if(ct == null)
-			//lancio eccezione
-			;
+			throw new ScheduFIREException();
+
 		 */
 		
 		//Ottenimento parametro email dalla richiesta
@@ -70,8 +69,7 @@ public class AggiungiVFServlet extends HttpServlet {
 		
 		//Controllo email
 		if( email == null )
-			//lancio eccezione
-			;
+			throw new ScheduFIREException();
 
 		// Ottenimento parametri del VF dalla richiesta
 		String nome = request.getParameter("nome");;
@@ -86,60 +84,52 @@ public class AggiungiVFServlet extends HttpServlet {
 		//aggiungere controlli dei parametri
 		
 		//Controlli
-
 		if( nome == null )
-			//lancio eccezione
-			;
+			throw new ScheduFIREException();
 		
 		if( cognome == null )
-			//lancio eccezione
-			;
+			throw new ScheduFIREException();
 		
 		if( turno == null )
-			//lancio eccezione
-			;
+			throw new ScheduFIREException();
 		
 		if( mansione == null )
-			//lancio eccezione
-			;
+			throw new ScheduFIREException();
 		
 		if( giorniFerieAnnoCorrenteStringa == null )
-			//lancio eccezione
-			;
+			throw new ScheduFIREException();
 		
 		if( giorniFerieAnnoPrecedenteStringa == null )
-			//lancio eccezione
-			;
+			throw new ScheduFIREException();
 		
 		if( grado == null )
-			//lancio eccezione
-			;
+			throw new ScheduFIREException();
 		
+		//Conversione parametri da Stringa ad interi
 		Integer giorniFerieAnnoCorrente = Integer.parseInt(giorniFerieAnnoCorrenteStringa); 
 		Integer giorniFerieAnnoPrecedente = Integer.parseInt(giorniFerieAnnoPrecedenteStringa);
 
 		// Instanziazione dell'oggetto VigileDelFuocoBean
-		VigileDelFuocoBean vf = new VigileDelFuocoBean(nome, cognome, email, turno, mansione, username,
-														grado, giorniFerieAnnoCorrente, giorniFerieAnnoPrecedente);
+		VigileDelFuocoBean vf = new VigileDelFuocoBean(nome, cognome, email, turno, mansione, username, grado,
+														giorniFerieAnnoCorrente, giorniFerieAnnoPrecedente);
 		
+		//Controllo se il Vigile del Fuoco è già presente nel database
 		VigileDelFuocoBean vigileDb = null;
 		if((vigileDb = VigileDelFuocoDao.ottieni(email)) != null) {
 			
+			//Se il Vigile del Fuoco è già presente nel database ed è adoperabile si lancia l'eccezione
 			if(vigileDb.isAdoperabile()) {
 				
-				//lancio eccezione
-				;
+				throw new ScheduFIREException();
 				
 			} else {
 				
 				//Si effettua l'aggiornamento dei dati nel database
 				if( ! VigileDelFuocoDao.modifica(email, vf)) 
-					//lancio eccezione
-					;
+					throw new ScheduFIREException();
 				
 				if( ! VigileDelFuocoDao.setAdoperabile(email, true)) 
-					//lancio eccezione
-					;
+					throw new ScheduFIREException();
 				
 			}
 			
@@ -147,8 +137,7 @@ public class AggiungiVFServlet extends HttpServlet {
 			
 			// Controllo salvataggio Vigile del Fuoco nel database
 			if(! VigileDelFuocoDao.salva(vf))
-				// Lancio eccezione
-				;
+				throw new ScheduFIREException();
 
 		}
 

@@ -42,26 +42,26 @@ public class ModificaVFServlet extends HttpServlet {
 				
 		//Controllo credenziali
 		if( credenziali == null )
-			//lancio eccezione
-			;
+			throw new ScheduFIREException();
+
 		/*
 		if( credenziali.getRuolo() == "vigile" ) //definire bene la stringa
-			//lancio eccezione
-			;
+			throw new ScheduFIREException();
+
 		*/
 		//Ottenimento parametro email dalla richiesta
 		String emailVecchia = request.getParameter("emailVecchia");
 		
 		//Controllo email
 		if( emailVecchia == null )
-			//lancio eccezione
-			;
+			throw new ScheduFIREException();
 		
+		//Ottenimento Vigile del Fuoco dal database
 		VigileDelFuocoBean vf = VigileDelFuocoDao.ottieni(emailVecchia);
 		
+		//Controllo se è nullo
 		if( vf == null) 
-			//lancio eccezione
-			;
+			throw new ScheduFIREException();
 		
 		// Ottenimento parametri del VF dalla richiesta
 		String nomeNuovo = request.getParameter("nomeNuovo");;
@@ -77,33 +77,27 @@ public class ModificaVFServlet extends HttpServlet {
 		//Controlli
 
 		if( nomeNuovo == null )
-			//lancio eccezione
-			;
+			throw new ScheduFIREException();
 		
 		if( cognomeNuovo == null )
-			//lancio eccezione
-			;
+			throw new ScheduFIREException();
 		
 		if( mansioneNuova == null )
-			//lancio eccezione
-			;
+			throw new ScheduFIREException();
 		
 		if( giorniFerieAnnoCorrenteNuoviStringa == null )
-			//lancio eccezione
-			;
+			throw new ScheduFIREException();
 	
 		if( giorniFerieAnnoPrecedenteNuoviStringa == null )
-			//lancio eccezione
-			;
+			throw new ScheduFIREException();
 		
 		if( gradoNuovo == null )
-			//lancio eccezione
-			;
+			throw new ScheduFIREException();
 		
 		if( emailNuova == null )
-			//lancio eccezione
-			;
+			throw new ScheduFIREException();
 		
+		//Conversione parametri da Stringa ad interi
 		Integer giorniFerieAnnoCorrenteNuovi = Integer.parseInt(giorniFerieAnnoCorrenteNuoviStringa);
 		Integer giorniFerieAnnoPrecedenteNuovi = Integer.parseInt(giorniFerieAnnoPrecedenteNuoviStringa);
 		
@@ -116,8 +110,9 @@ public class ModificaVFServlet extends HttpServlet {
 		vf.setGrado(gradoNuovo);
 		vf.setEmail(emailNuova);
 		
+		// Controllo modifica Vigile del Fuoco nel database
 		if( ! VigileDelFuocoDao.modifica(emailVecchia, vf)) {
-			//lancio eccezione
+			throw new ScheduFIREException();
 		}
 		
 		// Reindirizzamento alla jsp
