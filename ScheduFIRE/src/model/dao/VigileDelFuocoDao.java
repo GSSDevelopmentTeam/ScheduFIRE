@@ -17,6 +17,7 @@ import model.bean.VigileDelFuocoBean;
  * persistenti relativi all'entit� 'VigileDelFuoco'
  * @author Eugenio Sottile 
  * @author Nicola Labanca
+ * @author Alfredo Giuliano
  */
 
 public class VigileDelFuocoDao {
@@ -341,9 +342,9 @@ public class VigileDelFuocoDao {
 		ArrayList<VigileDelFuocoBean> listaVigili = new ArrayList<VigileDelFuocoBean>();;
 		
 		//Query da eseguire
-		String capiSquadraSQL = "SELECT * FROM Vigile WHERE mansione = Capo Squadra;";
-		String autistiSQL = "SELECT * FROM Vigile WHERE mansione = Autista;";
-		String vigiliSQL = "SELECT * FROM Vigile WHERE mansione = Vigile;";
+		String capiSquadraSQL = "SELECT * FROM Vigile WHERE mansione = \"Capo Squadra\";";
+		String autistiSQL = "SELECT * FROM Vigile WHERE mansione = \"Autista\";";
+		String vigiliSQL = "SELECT * FROM Vigile WHERE mansione = \"Vigile\";";
 		
 		try(Connection connessione = ConnessioneDB.getConnection()){
 			
