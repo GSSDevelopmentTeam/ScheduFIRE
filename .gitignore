@@ -45,5 +45,6 @@ local.properties
 *.launch
 
 # Maven
-**/log/
-**/target/
+/target/
+/bin/
+/build/

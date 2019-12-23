@@ -36,10 +36,10 @@ public class ComponenteDellaSquadraBean {
 	public void setEmailVF(String emailVF) {
 		this.emailVF = emailVF;
 	}
-	public Date getComposizioneSquadra() {
+	public Date getGiornoLavorativo() {
 		return giornoLavorativo;
 	}
-	public void setComposizioneSquadra(Date giornoLavorativo) {
+	public void setGiornoLavorativo(Date giornoLavorativo) {
 		this.giornoLavorativo = giornoLavorativo;
 	}
 	

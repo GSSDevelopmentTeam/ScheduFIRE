@@ -49,7 +49,7 @@ public class CalendarioServlet extends HttpServlet {
 		String giorno_stringa_numero = dataCorrente.substring(8);
 
 
-		//anno espresso in intero per controllare se è bisestile o meno.
+		//anno espresso in intero per controllare se Ã¨ bisestile o meno.
 		int anno = Integer.parseInt(anno_stringa_numero);
 
 		//mese scritto in formato Stringa: Gennaio, Febbraio [...]
@@ -82,7 +82,7 @@ public class CalendarioServlet extends HttpServlet {
 
 	
 	/**
-	 * Funzione che specifica se l'anno è o non è bisestile.
+	 * Funzione che specifica se l'anno Ã¨ o non Ã¨ bisestile.
 	 * @param anno 
 	 * @return boolean specifica se l'anno sia o meno bisestile
 	 */
@@ -111,21 +111,22 @@ public class CalendarioServlet extends HttpServlet {
 	 */
 	public void riempiCalendario (int mese, int anno, int[] days_month) {
 		
-		//per vedere qual è il primo lunedì del mese
+		//per vedere qual Ã¨ il primo lunedÃ¬ del mese
 		Date date = new Date(System.currentTimeMillis());
 		Calendar cal = Calendar.getInstance(TimeZone.getTimeZone("Europe/Rome"));
 		cal.set(Calendar.YEAR,anno);
 		cal.set(Calendar.MONTH,mese-1);	
 		String primoGiorno= cal.getTime().toString().substring(0,3);
-
+System.out.println("primo giorno -> "+ primoGiorno);
+		
 		int day=-1;
 		
 		switch (primoGiorno) {
-		case "Mon": day = 0; break; //lunedì
-		case "Tue": day = 1; break; //martedì
-		case "Wed": day = 2; break; //mercoledì
-		case "Thu": day = 3; break; //giovedì
-		case "Fri": day = 4; break; //venerdì
+		case "Mon": day = 0; break; //lunedÃ¬
+		case "Tue": day = 1; break; //martedÃ¬
+		case "Wed": day = 2; break; //mercoledÃ¬
+		case "Thu": day = 3; break; //giovedÃ¬
+		case "Fri": day = 4; break; //venerdÃ¬
 		case "Sat": day = 5; break; //sabato
 		case "Sun": day = 6; break; //domenica
 		default: break;
@@ -140,12 +141,12 @@ public class CalendarioServlet extends HttpServlet {
 		case 1: //mese febbraio
 							
 				if(isBisestile(anno)) { //anno bisestile
-					for(i=day;i<=28+day+1;i++) {
+					for(i=day;i<=28+day;i++) {
 						days_month[i] = giorno;
 						giorno++;
 					}
 				} else {
-					for(i=day;i<=27+day+1;i++) {
+					for(i=day;i<=27+day;i++) {
 						days_month[i] = giorno;
 						giorno++;
 					}
@@ -154,7 +155,7 @@ public class CalendarioServlet extends HttpServlet {
 			
 		case 10: case 3: case 5: case 8: //mesi di 30 giorni
 				
-				for (i=day; i<=29+day+1; i++) {
+				for (i=day; i<=29+day; i++) {
 					days_month[i] = giorno;
 					giorno ++;
 				}
@@ -163,13 +164,15 @@ public class CalendarioServlet extends HttpServlet {
 			
 		default: // mesi di 31 giorni
 		
-				for (i=day; i<=30+day+1; i++) {
+				for (i=day; i<=30+day; i++) {
 					days_month[i] = giorno;
 					giorno++;
 				}
 				
 			break;
 		}
+		for(i=0; i<days_month.length-1;i++);
+			System.out.println("\nGiorno: "+days_month[i]);
 	}
-
+	
 }

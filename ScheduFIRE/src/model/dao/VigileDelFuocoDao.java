@@ -253,7 +253,8 @@ public class VigileDelFuocoDao {
 	
 	/**
 	 * @param data , la data del giorno di cui si vuole avere la lista dei vigili disponibili
-	 * @return una lista di VigileDelFuocoBean che hanno attributo adoperabile=true e non sono in ferie o malattia nella data passata come parametro
+	 * @return una lista di VigileDelFuocoBean che hanno attributo adoperabile=true 
+	 * 			e non sono in ferie o malattia nella data passata come parametro
 	 */
 	public static ArrayList<VigileDelFuocoBean> getDisponibili(Date data){
 		try(Connection con = ConnessioneDB.getConnection()) {
@@ -312,5 +313,11 @@ public class VigileDelFuocoDao {
 			throw new RuntimeException(e);
 		}
 	}
+	
+	
+	
+	
+	
+	
 
 }

@@ -1,10 +1,14 @@
 /*contenitore per l'intero calendario*/
+* {
+  box-sizing: border-box;
+}
 .container {
-	margin-top: 5px;
+	margin-top: 2px;
+	margin-right: 10px;
 	display: flex;
 	width: 100%;
 	height: 100%;
-	background-color: #AAAAAA;
+	background-color: white;
 	border: 3px solid black;
 }
 
@@ -23,7 +27,7 @@
 
 .container-month-year {
 	color: black;
-	font-family: Brush Script MT;
+	font-family: Rod;
 	text-align: center;
 	font-size: 300%;
 }
@@ -31,11 +35,42 @@
 /*contenitore per la schedulazione
 flex:1 -> prende il resto del container*/
 .container-schedul {
+	position: absolute;
+	top: 15%; bottom: 5%; left: 70%; right: 0.1%;
 	flex: 1;
 	background-color: white;
 	font-family: Verdana;
-	border: 1px solid black;
-	margin: 2px;
+	margin: 1%;
+	overflow: auto !important;
+	border-left: 2px dotted black;
+	padding-left:1%;
+}
+
+/*id per la schedulazione delle squadre*/
+.wrapper {
+  grid-template-columns: auto;
+  grid-template-rows: auto;
+  background-color: #fff;
+  color: #444;
+}
+
+div.box{
+  background-color: #444;
+  color: #fff;
+  margin: 20px 0 20px 0;
+  font-size: 90%;
+}
+
+.mansione{
+	font-weight: bold;
+	overflow: auto;
+	text-align: center;
+} 
+
+.vigili{
+	font-style: italic;
+	color:black;
+	text-align: center;
 }
 
 .grid-days {
@@ -55,6 +90,9 @@ flex:1 -> prende il resto del container*/
 	font-family: Verdana;
 }
 
+/*grid-item e item-empty sono uguali, solo che item-empty
+(->ovvero le parti del calendario che non hanno elementi)
+non ha la proprietà :hover*/
 .grid-item {
 	background-color: white;
 	border-bottom: 0.1px solid #808080;
@@ -64,6 +102,15 @@ flex:1 -> prende il resto del container*/
 	text-align: center;
 	font-family: Verdana;
 }
+
+.item-empty{
+	background-color: white;
+	border-bottom: 0.1px solid #808080;
+	border-top: 0.1 px solid #808080;
+	padding: 10%;
+	font-size: 200%;
+	text-align: center;
+	font-family: Verdana;}
 
 .dayNoWork {
 	color: #808080;
@@ -89,8 +136,7 @@ flex:1 -> prende il resto del container*/
 	background-color: white;
 	border-bottom: 2px solid black !important;
 	color: black;
-	padding: 10px;
-	font-size: 13px;
+	font-size: 80%;
 	border: none;
 	cursor: pointer;
 }
@@ -104,14 +150,14 @@ flex:1 -> prende il resto del container*/
 	display: none;
 	position: absolute;
 	background-color: #f9f9f9;
-	min-width: 160px;
+	min-width: 16px;
 	box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
 	z-index: 1;
 }
 
 .dropdown-content a {
 	color: #4b4b4b;
-	padding: 12px 16px;
+	padding: 12px 12px;
 	text-decoration: none;
 	display: block;
 }
