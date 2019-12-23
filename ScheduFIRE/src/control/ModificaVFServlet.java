@@ -44,11 +44,11 @@ public class ModificaVFServlet extends HttpServlet {
 		if( credenziali == null )
 			//lancio eccezione
 			;
-		
+		/*
 		if( credenziali.getRuolo() == "vigile" ) //definire bene la stringa
 			//lancio eccezione
 			;
-		
+		*/
 		//Ottenimento parametro email dalla richiesta
 		String emailVecchia = request.getParameter("emailVecchia");
 		
@@ -104,7 +104,7 @@ public class ModificaVFServlet extends HttpServlet {
 			//lancio eccezione
 			;
 		
-		Integer giorniFerieAnnoCorrenteNuovi = Integer.parseInt(giorniFerieAnnoPrecedenteNuoviStringa);
+		Integer giorniFerieAnnoCorrenteNuovi = Integer.parseInt(giorniFerieAnnoCorrenteNuoviStringa);
 		Integer giorniFerieAnnoPrecedenteNuovi = Integer.parseInt(giorniFerieAnnoPrecedenteNuoviStringa);
 		
 		//Settaggio nuovi parametri

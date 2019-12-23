@@ -35,7 +35,7 @@ public class GestionePersonaleServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
+		/*
 		//Ottenimento oggetto sessione dalla richiesta
 		HttpSession session = request.getSession();
 				
@@ -50,7 +50,7 @@ public class GestionePersonaleServlet extends HttpServlet {
 		if( credenziali.getRuolo() == "vigile" ) //definire bene la stringa
 			//lancio eccezione
 			;
-		
+		*/
 		//Ottenimento della collezione di VigiliDelFuoco
 		Collection<VigileDelFuocoBean> vigili = VigileDelFuocoDao.ottieni();
 		
@@ -63,7 +63,7 @@ public class GestionePersonaleServlet extends HttpServlet {
 		request.setAttribute("vigili", vigili);
 		
 		// Reindirizzamento alla jsp
-		request.getRequestDispatcher("/").forward(request, response);
+		request.getRequestDispatcher("/JSP/GestionePersonaleJSP.jsp").forward(request, response);
 		
 	}
 

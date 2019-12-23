@@ -22,7 +22,7 @@ public class VigileDelFuocoDao {
 
 	
 	/**
-	 * @param vf , è un oggetto di tipo VigileDelFuocoBean
+	 * @param vf , è un oggetto di tipo VigileDelFuocoBean da memorizzare del database
 	 * @return true se l'operazione va a buon fine, false altrimenti
 	 */
 	public static boolean salva(VigileDelFuocoBean vf) {
@@ -31,11 +31,11 @@ public class VigileDelFuocoDao {
 		if(vf == null)
 			//lancio eccezione
 			;
-		
+
 		try(Connection con = ConnessioneDB.getConnection()) {
 			
 			// Esecuzione query
-			PreparedStatement ps = con.prepareStatement("insert into Vigile(email, nome, cognome, turno, mansione, "
+			PreparedStatement ps = con.prepareStatement("insert into vigile(email, nome, cognome, turno, mansione, "
 														+ "giorniferieannocorrente, giorniferieannoprecedente, caricolavoro, "
 														+ "adoperabile, grado, username) values (?, ?, ? ,? ,? ,? ,? , ? ,?, ?, ?);");
 			ps.setString(1, vf.getEmail());
@@ -49,12 +49,15 @@ public class VigileDelFuocoDao {
 			ps.setBoolean(9, vf.isAdoperabile());
 			ps.setString(10, vf.getGrado());
 			ps.setString(11, vf.getUsername());
+			ps.executeUpdate();
+			con.commit();
 
-			return (ps.executeUpdate() == 1);
+			return true;
 			
 		} catch (SQLException e) {
 			throw new RuntimeException(e);
 		}
+		
 		
 		
 	} 
@@ -77,7 +80,7 @@ public class VigileDelFuocoDao {
 			ps.setString(1, chiaveEmail);
 			ResultSet rs = ps.executeQuery();
 			
-			if(rs.next()) {
+			if(rs.next()) { 
 				// Ottenimento dati dall'interrogazione
 				String nome = rs.getString("nome");
 				String cognome = rs.getString("cognome");
@@ -90,8 +93,8 @@ public class VigileDelFuocoDao {
 				int caricoLavoro = rs.getInt("caricolavoro");
 				boolean adoperabile = rs.getBoolean("adoperabile");
 				String grado = rs.getString("grado");
-							
-				//Instanziazione oggetto CapoTurnoBean
+				
+				//Instanziazione oggetto VigileDelFuocoBean
 				VigileDelFuocoBean vf = new VigileDelFuocoBean();
 				vf.setNome(nome);
 				vf.setCognome(cognome);
@@ -106,7 +109,7 @@ public class VigileDelFuocoDao {
 				vf.setGrado(grado);
 				
 				return vf;
-			} else {
+			} else { 
 				return null;
 			}
 				
@@ -189,8 +192,10 @@ public class VigileDelFuocoDao {
 			PreparedStatement ps = con.prepareStatement("update Vigile set adoperabile = ? where email = ?;");
 			ps.setBoolean(1, adoperabile);
 			ps.setString(2, chiaveEmail);
+			ps.executeUpdate();
+			con.commit();
 			
-			return (ps.executeUpdate() == 1);
+			return true;
 				
 		} catch (SQLException e) {
 			throw new RuntimeException(e);
@@ -218,18 +223,24 @@ public class VigileDelFuocoDao {
 			
 			// Esecuzione query
 			PreparedStatement ps = con.prepareStatement("update Vigile set email = ?, nome = ?, cognome = ?,"
-														+ " mansione = ?, giorniferieannocorrente = ?,"
-														+ " giorniferieannoprecedente = ?,  grado = ? where email = ?;");		
+														+ " mansione = ?, turno = ?, giorniferieannocorrente = ?,"
+														+ " giorniferieannoprecedente = ?, caricolavoro = ?,"
+														+ " grado = ?, username = ? where email = ?;");		
 			ps.setString(1, nuovoVF.getEmail());
 			ps.setString(2, nuovoVF.getNome());
 			ps.setString(3, nuovoVF.getCognome());
 			ps.setString(4, nuovoVF.getMansione());
-			ps.setInt(5, nuovoVF.getGiorniFerieAnnoCorrente());
-			ps.setInt(6, nuovoVF.getGiorniFerieAnnoPrecedente());
-			ps.setString(7, nuovoVF.getGrado());
-			ps.setString(8, chiaveEmail);
+			ps.setString(5, nuovoVF.getTurno());
+			ps.setInt(6, nuovoVF.getGiorniFerieAnnoCorrente());
+			ps.setInt(7, nuovoVF.getGiorniFerieAnnoPrecedente());
+			ps.setInt(8, nuovoVF.getCaricoLavoro());
+			ps.setString(9, nuovoVF.getGrado());
+			ps.setString(10, nuovoVF.getUsername());
+			ps.setString(11, chiaveEmail);
+			ps.executeUpdate();
+			con.commit();
 			
-			return (ps.executeUpdate() == 1);
+			return true;
 				
 		} catch (SQLException e) {
 			throw new RuntimeException(e);
@@ -294,7 +305,9 @@ public class VigileDelFuocoDao {
 				vigili.add(vf);
 
 			}
+			
 			return vigili;
+			
 		} catch (SQLException e) {
 			throw new RuntimeException(e);
 		}
