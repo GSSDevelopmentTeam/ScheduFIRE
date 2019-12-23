@@ -42,6 +42,7 @@ public class CalendarioServlet extends HttpServlet {
 		String anno_stringa_numero = dataCorrente.substring(0, 4);
 		String mese_stringa_numero = dataCorrente.substring(5, 7);
 		String giorno_stringa_numero = dataCorrente.substring(8);
+
 		//Array di mesi, per convertire il mese da numero a stringa
 		String[] month = {"Gennaio", "Febbraio", "Marzo", "Aprile", "Maggio", "Giugno", 
 				"Luglio", "Agosto", "Settembre", "Ottobre", "Novembre", "Dicembre"};
@@ -49,6 +50,8 @@ public class CalendarioServlet extends HttpServlet {
 	
 		//giorno mese e anno espresso in intero.
 		int giorno = Integer.parseInt(giorno_stringa_numero);
+
+		//mese scritto in formato Stringa: Gennaio, Febbraio [...]
 		int mese = Integer.parseInt(mese_stringa_numero);
 		int anno = Integer.parseInt(anno_stringa_numero);
 		
@@ -86,7 +89,7 @@ public class CalendarioServlet extends HttpServlet {
 
 	
 	/**
-	 * Funzione che specifica se l'anno è o non è bisestile.
+	 * Funzione che specifica se l'anno Ã¨ o non Ã¨ bisestile.
 	 * @param anno 
 	 * @return boolean specifica se l'anno sia o meno bisestile
 	 */
@@ -124,6 +127,7 @@ public class CalendarioServlet extends HttpServlet {
 		int day=-1;
 		
 		switch (primoGiorno) {
+
 		case "MONDAY": day = 0; break; //lunedì
 		case "TUESDAY": day = 1; break; //martedì
 		case "WEDNESDAY": day = 2; break; //mercoledì
