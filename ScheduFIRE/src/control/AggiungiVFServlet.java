@@ -2,7 +2,6 @@ package control;
 
 import java.io.IOException;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -20,8 +19,9 @@ import model.dao.VigileDelFuocoDao;
  * Servlet implementation class AggiungiVFServlet
  */
 
-/*
- *  Servlet che si occupa dell'inserimento di un nuovo VF nel database. 
+/**
+ *  Servlet che si occupa dell'inserimento di un nuovo VigileDelFuocoBean nel database.
+ *  @author Eugenio Sottile 
  */
 
 @WebServlet("/AggiungiVFServlet")
@@ -40,86 +40,109 @@ public class AggiungiVFServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
+
 		//Ottenimento oggetto sessione dalla richiesta
 		HttpSession session = request.getSession();
 		
 		//Ottenimento credenziali dell'utente dalla sessione
 		CredenzialiBean credenziali = (CredenzialiBean) session.getAttribute("credenziali"); 
 		
+		//Controllo credenziali
+		if( credenziali == null )
+			throw new ScheduFIREException();
+		
+		/*
+		if( credenziali.getRuolo() == "vigile" ) //definire bene la stringa
+			throw new ScheduFIREException();
+		
 		//Ottenimento dati del CapoTurno
 		CapoTurnoBean ct = CapoTurnoDao.ottieni(credenziali.getUsername());
 		
-		// Variabili VF
-		String nome = null;
-		String cognome = null;
-		String email = null;
-		String turno = null;
-		String mansione = null;
-		String username = "turno" + ct.getTurno();
-		Integer giorniFerieAnnoCorrente = null;
-		Integer giorniFerieAnnoPrecedente = null;
+		//Controllo CapoTurno
+		if(ct == null)
+			throw new ScheduFIREException();
+
+		 */
 		
-		// Ottenimento parametri del VF dal client
-		Object nomeVF = request.getParameter("nome");
-		Object cognomeVF = request.getParameter("cognome");
-		Object emailVF = request.getParameter("email");
-		Object turnoVF = request.getParameter("turno");
-		Object mansioneVF = request.getParameter("mansione");
-		Object giorniFerieAnnoCorrenteVF = request.getParameter("giorniFerieAnnoCorrente");
-		Object giorniFerieAnnoPrecedenteVF = request.getParameter("giorniFerieAnnoPrecedente");
+		//Ottenimento parametro email dalla richiesta
+		String email = request.getParameter("email");;
+		
+		//Controllo email
+		if( email == null )
+			throw new ScheduFIREException();
+
+		// Ottenimento parametri del VF dalla richiesta
+		String nome = request.getParameter("nome");;
+		String cognome = request.getParameter("cognome");;
+		String turno = /*ct.getTurno()*/ "B";
+		String mansione = request.getParameter("mansione");;
+		String username = "turno"/* + ct.getTurno()*/;
+		String grado = request.getParameter("grado");
+		String giorniFerieAnnoCorrenteStringa = request.getParameter("giorniFerieAnnoCorrente");
+		String giorniFerieAnnoPrecedenteStringa = request.getParameter("giorniFerieAnnoPrecedente");
 		
 		//aggiungere controlli dei parametri
 		
 		//Controlli
+		if( nome == null )
+			throw new ScheduFIREException();
+		
+		if( cognome == null )
+			throw new ScheduFIREException();
+		
+		if( turno == null )
+			throw new ScheduFIREException();
+		
+		if( mansione == null )
+			throw new ScheduFIREException();
+		
+		if( giorniFerieAnnoCorrenteStringa == null )
+			throw new ScheduFIREException();
+		
+		if( giorniFerieAnnoPrecedenteStringa == null )
+			throw new ScheduFIREException();
+		
+		if( grado == null )
+			throw new ScheduFIREException();
+		
+		//Conversione parametri da Stringa ad interi
+		Integer giorniFerieAnnoCorrente = Integer.parseInt(giorniFerieAnnoCorrenteStringa); 
+		Integer giorniFerieAnnoPrecedente = Integer.parseInt(giorniFerieAnnoPrecedenteStringa);
 
-		if( ! (nomeVF.getClass().getSimpleName() == "String") )
-			//lancio eccezione
-			;
-		
-		if( ! (cognomeVF.getClass().getSimpleName() == "String") )
-			//lancio eccezione
-			;
-		
-		if( ! (emailVF.getClass().getSimpleName() == "String") )
-			//lancio eccezione
-			;
-		
-		if( ! (turnoVF.getClass().getSimpleName() == "String") )
-			//lancio eccezione
-			;
-		
-		if( ! (mansioneVF.getClass().getSimpleName() == "String") )
-			//lancio eccezione
-			;
-		
-		if( ! (giorniFerieAnnoCorrenteVF.getClass().getSimpleName() == "Integer") )
-			//lancio eccezione
-			;
-		
-		if( ! (giorniFerieAnnoPrecedenteVF.getClass().getSimpleName() == "Integer") )
-			//lancio eccezione
-			;
-		
-		nome = (String) nomeVF;
-		cognome = (String) cognomeVF;
-		email = (String) emailVF;
-		turno = (String) turnoVF;
-		mansione = (String) mansioneVF;
-		giorniFerieAnnoCorrente = (Integer) giorniFerieAnnoCorrenteVF;
-		giorniFerieAnnoPrecedente = (Integer) giorniFerieAnnoPrecedenteVF;
-		
 		// Instanziazione dell'oggetto VigileDelFuocoBean
-		VigileDelFuocoBean vf = new VigileDelFuocoBean(nome, cognome, email, turno, mansione, username,
+		VigileDelFuocoBean vf = new VigileDelFuocoBean(nome, cognome, email, turno, mansione, username, grado,
 														giorniFerieAnnoCorrente, giorniFerieAnnoPrecedente);
 		
-		// Controllo salvataggio Vigile del Fuoco nel database
-		if(! VigileDelFuocoDao.salva(vf))
-			// Lancio eccezione
-			;
-		
+		//Controllo se il Vigile del Fuoco è già presente nel database
+		VigileDelFuocoBean vigileDb = null;
+		if((vigileDb = VigileDelFuocoDao.ottieni(email)) != null) {
+			
+			//Se il Vigile del Fuoco è già presente nel database ed è adoperabile si lancia l'eccezione
+			if(vigileDb.isAdoperabile()) {
+				
+				throw new ScheduFIREException();
+				
+			} else {
+				
+				//Si effettua l'aggiornamento dei dati nel database
+				if( ! VigileDelFuocoDao.modifica(email, vf)) 
+					throw new ScheduFIREException();
+				
+				if( ! VigileDelFuocoDao.setAdoperabile(email, true)) 
+					throw new ScheduFIREException();
+				
+			}
+			
+		} else {
+			
+			// Controllo salvataggio Vigile del Fuoco nel database
+			if(! VigileDelFuocoDao.salva(vf))
+				throw new ScheduFIREException();
+
+		}
+
 		// Reindirizzamento alla jsp
-		request.getRequestDispatcher("/").forward(request, response);
+		request.getRequestDispatcher("/JSP/GestionePersonaleJSP.jsp").forward(request, response);
 			
 	}
 

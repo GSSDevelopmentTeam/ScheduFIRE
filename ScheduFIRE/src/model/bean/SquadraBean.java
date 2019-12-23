@@ -8,7 +8,7 @@ public class SquadraBean {
 
 	private String tipologia;
 	private int caricLavoro;
-	private Date data;
+	private Date giornoLavorativo;
 	
 	
 	//Costruttore
@@ -17,10 +17,10 @@ public class SquadraBean {
 	}
 
 
-	public SquadraBean(String tipologia, int caricLavoro, Date data) {
+	public SquadraBean(String tipologia, int caricLavoro, Date giornoLavorativo) {
 		this.tipologia = tipologia;
 		this.caricLavoro = caricLavoro;
-		this.data = data;
+		this.giornoLavorativo = giornoLavorativo;
 	}
 	
 	
@@ -37,10 +37,10 @@ public class SquadraBean {
 		this.caricLavoro = caricLavoro;
 	}
 	public Date getData() {
-		return data;
+		return giornoLavorativo;
 	}
-	public void setData(Date data) {
-		this.data = data;
+	public void setData(Date giornoLavorativo) {
+		this.giornoLavorativo = giornoLavorativo;
 	}
 	
 

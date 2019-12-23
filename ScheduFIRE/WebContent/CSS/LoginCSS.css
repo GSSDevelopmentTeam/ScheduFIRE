@@ -1,14 +1,15 @@
 @charset "ISO-8859-1";
-
-body {
-	background-image: url("../IMG/DSC_0066.png");
-	background-size:1500px 700px;
-	background-repeat:no-repeat;	
-	font-family: Verdana, Geneva, Tahoma, sans-serif;
-} 
 * {
   box-sizing: border-box;
 }
+
+body {
+	background-image: url("../IMG/DSC_0066.png");
+	background-size:cover;
+	background-repeat:no-repeat;	
+	font-family: Verdana, Geneva, Tahoma, sans-serif;
+} 
+
 /*'FontAwesome'!important*/
 b {
 	text-align: center;
