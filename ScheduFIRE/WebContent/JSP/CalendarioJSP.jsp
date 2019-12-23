@@ -23,6 +23,11 @@
 	int anno = Integer.parseInt((String) request.getAttribute("anno"));
 	String mese_stringa = (String) request.getAttribute("meseStringa");
 	int[] days_month = (int[]) request.getAttribute("days_month");
+	//ArrayList<String> sala_operativa = (ArrayList<String>) request.getAttribute("sala_operativa");
+	//ArrayList<String> prima_partenza = (ArrayList<String>) request.getAttribute("sala_operativa");
+	//ArrayList<String> autoscala = (ArrayList<String>) request.getAttribute("sala_operativa");
+	//ArrayList<String> autobotte = (ArrayList<String>) request.getAttribute("sala_operativa");
+	
 	String empty = " ";
 
 	//print per controllare se i dati passati dalla servlet sono giusti!
@@ -80,37 +85,25 @@
 		<div class="wrapper">
 			<div class="box mansione"><p>SALA OPERATIVA<p></div>
 				<div class="vigili">
-					<p>NOME COGNOME</p>
-					<p>NOME COGNOME</p>
-					<p>NOME COGNOME</p>
-					<p>[...][...]</p>
+				
 				</div>
 			
 			
 			<div class=" box mansione"><p>PRIMA PARTENZA</p></div>
 				<div class="vigili">
-					<p>NOME COGNOME</p>
-					<p>NOME COGNOME</p>
-					<p>NOME COGNOME</p>
-					<p>[...][...]</p>
+				
 				</div>
 			
 			
 			<div class="box mansione"><p>AUTO SCALA</p></div>
 				<div class="vigili">
-					<p>NOME COGNOME</p>
-					<p>NOME COGNOME</p>
-					<p>NOME COGNOME</p>
-					<p>[...][...]</p>
+				
 				</div>
 			
 			
 			<div class="box mansione"><p>AUTO BOTTE</p></div>
 				<div class="vigili">
-					<p>NOME COGNOME</p>
-					<p>NOME COGNOME</p>
-					<p>NOME COGNOME</p>
-					<p>[...][...]</p>
+				
 				</div>
 			
 		</div>
