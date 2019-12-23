@@ -22,7 +22,8 @@ public class VigileDelFuocoDao {
 
 	
 	/**
-	 * @param vf , è un oggetto di tipo VigileDelFuocoBean da memorizzare del database
+	 * Si occupa del salvataggio dei dati di un VigileDelFuocoBean nel database.
+	 * @param vf è un oggetto di tipo VigileDelFuocoBean da memorizzare del database
 	 * @return true se l'operazione va a buon fine, false altrimenti
 	 */
 	public static boolean salva(VigileDelFuocoBean vf) {
@@ -63,7 +64,8 @@ public class VigileDelFuocoDao {
 	} 
 	
 	/**
-	 * @param chiaveEmail , stringa che identifica un VigileDelFuocoBean
+	 * Si occupa dell'ottenimento di un VigileDelFuocoBean dal database data la sua chiave.
+	 * @param chiaveEmail è una stringa che identifica un VigileDelFuocoBean nel database
 	 * @return Un tipo VigileDelFuocoBean identificato da chiaveEmail, null altrimenti
 	 */
 	public static VigileDelFuocoBean ottieni(String chiaveEmail) {
@@ -120,7 +122,9 @@ public class VigileDelFuocoDao {
 	}
 	
 	/**
-	 * @return una collezione di VigileDelFuocoBean
+	 * Si occupa dell'ottenimento di una collezione di VigileDelFuocoBean dal database
+	 * con campo 'adoperabile' settato a true.
+	 * @return una collezione di VigileDelFuocoBean con campo 'adoperabile' settato a true 
 	 */
 	public static Collection<VigileDelFuocoBean> ottieni() {
 		
@@ -175,8 +179,10 @@ public class VigileDelFuocoDao {
 	}
 	
 	/**
-	 * @param chiaveEmail , stringa che identifica un VigileDelFuocoBean
-	 * @param adoperabile, booleano che indica l'adoperabilità di un VigileDelFuocoBean
+	 * Si occupa del settaggio del campo 'adoperabile' di un Vigile del Fuoco
+	 * nel database, identificato dalla sua chiave.
+	 * @param chiaveEmail è una stringa che identifica un VigileDelFuocoBean nel database
+	 * @param adoperabile è un booleano che indica l'adoperabilità di un VigileDelFuocoBean
 	 * @return true se l'operazione va a buon fine, false altrimenti
 	 */
 	public static boolean setAdoperabile(String chiaveEmail, boolean adoperabile) {
@@ -203,8 +209,10 @@ public class VigileDelFuocoDao {
 		
 	}
 	
+	
 	/**
-	 * @param chiaveEmail , stringa che identifica un VigileDelFuocoBean
+	 * Si occupa della modifica dei dati di un Vigile del Fuoco nel database.
+	 * @param chiaveEmail è una stringa che identifica un VigileDelFuocoBean nel database
 	 * @param nuovoVF ,  è un oggetto di tipo VigileDelFuocoBean
 	 * @return true se l'operazione va a buon fine, false altrimenti
 	 */

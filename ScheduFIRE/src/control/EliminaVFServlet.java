@@ -41,24 +41,22 @@ public class EliminaVFServlet extends HttpServlet {
 				
 		//Controllo credenziali
 		if( credenziali == null )
-			//lancio eccezione
-			;
+			throw new ScheduFIREException();
+
 		/*
 		if( credenziali.getRuolo() == "vigile" ) //definire bene la stringa
-			//lancio eccezione
-			;
+			throw new ScheduFIREException();
+			
 		*/
 		//Ottenimento parametro email dalla richiesta
 		String email = request.getParameter("email");
 		
 		//Controllo email
 		if( email == null )
-			//lancio eccezione
-			;
+			throw new ScheduFIREException();
 		
 		if( ! VigileDelFuocoDao.setAdoperabile(email, false))
-			//lancio eccezione
-			;
+			throw new ScheduFIREException();
 		
 		// Reindirizzamento alla jsp
 		request.getRequestDispatcher("/").forward(request, response);
