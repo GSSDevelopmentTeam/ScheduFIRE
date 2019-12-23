@@ -43,11 +43,11 @@ public class EliminaVFServlet extends HttpServlet {
 		if( credenziali == null )
 			//lancio eccezione
 			;
-		
+		/*
 		if( credenziali.getRuolo() == "vigile" ) //definire bene la stringa
 			//lancio eccezione
 			;
-		
+		*/
 		//Ottenimento parametro email dalla richiesta
 		String email = request.getParameter("email");
 		
