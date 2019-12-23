@@ -342,19 +342,21 @@ public class VigileDelFuocoDao {
 		ArrayList<VigileDelFuocoBean> listaVigili = new ArrayList<VigileDelFuocoBean>();;
 		
 		//Query da eseguire
-		String capiSquadraSQL = "SELECT * FROM Vigile WHERE mansione = \"Capo Squadra\";";
-		String autistiSQL = "SELECT * FROM Vigile WHERE mansione = \"Autista\";";
-		String vigiliSQL = "SELECT * FROM Vigile WHERE mansione = \"Vigile\";";
+		String capiSquadraSQL = "SELECT * FROM Vigile WHERE mansione = 'Capo Squadra';";
+		String autistiSQL = "SELECT * FROM Vigile WHERE mansione = 'Autista';";
+		String vigiliSQL = "SELECT * FROM Vigile WHERE mansione = 'Vigile';";
 		
 		try(Connection connessione = ConnessioneDB.getConnection()){
 			
 			ps = connessione.prepareStatement(capiSquadraSQL);
 			rs = ps.executeQuery();
 			
-			vigile = new VigileDelFuocoBean();
+			
 			
 			//Prelevamento risultati
 			while(rs.next()) {
+				vigile = new VigileDelFuocoBean();
+				
 				nome = rs.getString("nome");
 				cognome = rs.getString("cognome");
 				email = rs.getString("email");
@@ -378,6 +380,8 @@ public class VigileDelFuocoDao {
 			rs = ps.executeQuery();
 			
 			while(rs.next()) {
+				vigile = new VigileDelFuocoBean();
+				
 				nome = rs.getString("nome");
 				cognome = rs.getString("cognome");
 				email = rs.getString("email");
@@ -399,6 +403,8 @@ public class VigileDelFuocoDao {
 			rs = ps.executeQuery();
 			
 			while(rs.next()) {
+				vigile = new VigileDelFuocoBean();
+				
 				nome = rs.getString("nome");
 				cognome = rs.getString("cognome");
 				email = rs.getString("email");
