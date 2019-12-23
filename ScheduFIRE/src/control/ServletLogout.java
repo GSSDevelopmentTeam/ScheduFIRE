@@ -23,6 +23,7 @@ public class ServletLogout extends HttpServlet {
 	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.getSession().invalidate();
+		
 		request.getRequestDispatcher("/JSP/LoginJSP.jsp").forward(request, response);
 		
 
