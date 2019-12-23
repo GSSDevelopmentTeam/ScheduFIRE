@@ -42,7 +42,7 @@ public class GestioneFerieServlet extends HttpServlet {
 		ArrayList<VigileDelFuocoBean> listaVigili = VigileDelFuocoDao.ottieniListaVF();
 		
 		request.setAttribute("listaVigili", listaVigili);
-		request.getRequestDispatcher("Web Content/JSP/GestioneFerieJSP.jsp").forward(request, response);
+		request.getRequestDispatcher("JSP/GestioneFerieJSP.jsp").forward(request, response);
 	}
 
 }
