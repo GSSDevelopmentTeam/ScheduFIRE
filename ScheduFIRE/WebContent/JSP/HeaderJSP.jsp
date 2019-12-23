@@ -8,7 +8,7 @@
   <% if(ruolo!= null){
 	  %>	
  	<div class="rf">
- 		<a><form action="" method="POST">
+ 		<a><form action="Logout" method="POST">
  		<button class="inversesubmit">Logout</button>
  		</form></a>
  		<% if(ruolo.equalsIgnoreCase("capoturno")){ %>
