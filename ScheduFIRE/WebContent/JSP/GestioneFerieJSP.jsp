@@ -37,7 +37,7 @@
 						<td><%=vigile.getNome() %></td>
 						<td><%=vigile.getCognome()%></td>
 						<td><%=vigile.getEmail() %></td>
-						<td><%=vigile.getMansione()%>></td>
+						<td><%=vigile.getMansione()%></td>
 						<td><%=vigile.getGiorniFerieAnnoCorrente() %></td>
 						<td><%=vigile.getGiorniFerieAnnoCorrente() %></td>
 						<td><button type="aggiungi" src=""></button></td>
