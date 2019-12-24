@@ -1,7 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"
     		import="java.util.ArrayList,java.util.Iterator, model.bean.*, model.dao.*" 
     		%>
-
+<jsp:include page="StandardJSP.jsp" />
+<link rel="stylesheet" href="CSS/TableCSS.css">
+<!-- Barra Navigazione -->
+	<jsp:include page="HeaderJSP.jsp" />
+	
 
 <section>
 	<h2>Personale Disponibile</h2>
