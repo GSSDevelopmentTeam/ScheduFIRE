@@ -14,8 +14,10 @@ import model.bean.VigileDelFuocoBean;
 
 /**
  * Classe che si occupa della gestione dei dati 
- * persistenti relativi all'entità 'VigileDelFuoco'
+ * persistenti relativi all'entitï¿½ 'VigileDelFuoco'
  * @author Eugenio Sottile 
+ * @author Nicola Labanca
+ * @author Alfredo Giuliano
  */
 
 public class VigileDelFuocoDao {
@@ -23,7 +25,7 @@ public class VigileDelFuocoDao {
 	
 	/**
 	 * Si occupa del salvataggio dei dati di un VigileDelFuocoBean nel database.
-	 * @param vf è un oggetto di tipo VigileDelFuocoBean da memorizzare del database
+	 * @param vf ï¿½ un oggetto di tipo VigileDelFuocoBean da memorizzare del database
 	 * @return true se l'operazione va a buon fine, false altrimenti
 	 */
 	public static boolean salva(VigileDelFuocoBean vf) {
@@ -65,7 +67,7 @@ public class VigileDelFuocoDao {
 	
 	/**
 	 * Si occupa dell'ottenimento di un VigileDelFuocoBean dal database data la sua chiave.
-	 * @param chiaveEmail è una stringa che identifica un VigileDelFuocoBean nel database
+	 * @param chiaveEmail ï¿½ una stringa che identifica un VigileDelFuocoBean nel database
 	 * @return Un tipo VigileDelFuocoBean identificato da chiaveEmail, null altrimenti
 	 */
 	public static VigileDelFuocoBean ottieni(String chiaveEmail) {
@@ -181,8 +183,8 @@ public class VigileDelFuocoDao {
 	/**
 	 * Si occupa del settaggio del campo 'adoperabile' di un Vigile del Fuoco
 	 * nel database, identificato dalla sua chiave.
-	 * @param chiaveEmail è una stringa che identifica un VigileDelFuocoBean nel database
-	 * @param adoperabile è un booleano che indica l'adoperabilità di un VigileDelFuocoBean
+	 * @param chiaveEmail ï¿½ una stringa che identifica un VigileDelFuocoBean nel database
+	 * @param adoperabile ï¿½ un booleano che indica l'adoperabilitï¿½ di un VigileDelFuocoBean
 	 * @return true se l'operazione va a buon fine, false altrimenti
 	 */
 	public static boolean setAdoperabile(String chiaveEmail, boolean adoperabile) {
@@ -212,8 +214,8 @@ public class VigileDelFuocoDao {
 	
 	/**
 	 * Si occupa della modifica dei dati di un Vigile del Fuoco nel database.
-	 * @param chiaveEmail è una stringa che identifica un VigileDelFuocoBean nel database
-	 * @param nuovoVF ,  è un oggetto di tipo VigileDelFuocoBean
+	 * @param chiaveEmail ï¿½ una stringa che identifica un VigileDelFuocoBean nel database
+	 * @param nuovoVF ,  ï¿½ un oggetto di tipo VigileDelFuocoBean
 	 * @return true se l'operazione va a buon fine, false altrimenti
 	 */
 	public static boolean modifica(String chiaveEmail, VigileDelFuocoBean nuovoVF) {
@@ -322,7 +324,110 @@ public class VigileDelFuocoDao {
 		}
 	}
 	
-	
+	/**
+	 * Questo metodo si occupa di prelevare la lista completa dei VF presenti nel dataBase. 
+	 * @return una lista di VigileDelFuocoBean ordinata in base alla mansione piÃ¹ importante.
+	 */
+	public static ArrayList<VigileDelFuocoBean> ottieniListaVF() {
+		
+		//Instanziazione variabili utili;
+		String nome, cognome, email, mansione;
+		int ferieAnnoCorrente, ferieAnnoPrecedente;
+		PreparedStatement ps;
+		ResultSet rs;
+		VigileDelFuocoBean vigile;
+		
+		
+		//ArrayList da ritornare
+		ArrayList<VigileDelFuocoBean> listaVigili = new ArrayList<VigileDelFuocoBean>();;
+		
+		//Query da eseguire
+		String capiSquadraSQL = "SELECT * FROM Vigile WHERE mansione = 'Capo Squadra';";
+		String autistiSQL = "SELECT * FROM Vigile WHERE mansione = 'Autista';";
+		String vigiliSQL = "SELECT * FROM Vigile WHERE mansione = 'Vigile';";
+		
+		try(Connection connessione = ConnessioneDB.getConnection()){
+			
+			ps = connessione.prepareStatement(capiSquadraSQL);
+			rs = ps.executeQuery();
+			
+			
+			
+			//Prelevamento risultati
+			while(rs.next()) {
+				vigile = new VigileDelFuocoBean();
+				
+				nome = rs.getString("nome");
+				cognome = rs.getString("cognome");
+				email = rs.getString("email");
+				mansione = rs.getString("mansione");
+				ferieAnnoCorrente = rs.getInt("giorniferieannocorrente");
+				ferieAnnoPrecedente = rs.getInt("giorniferieannoprecedente");
+				
+				//Aggiunta dati del VF
+				vigile.setNome(nome);
+				vigile.setCognome(cognome);
+				vigile.setEmail(email);
+				vigile.setMansione(mansione);
+				vigile.setGiorniFerieAnnoCorrente(ferieAnnoCorrente);
+				vigile.setGiorniFerieAnnoPrecedente(ferieAnnoPrecedente);
+				
+				//Aggiunta del VF in lista di ritorno
+				listaVigili.add(vigile);
+			}
+			
+			ps = connessione.prepareStatement(autistiSQL);
+			rs = ps.executeQuery();
+			
+			while(rs.next()) {
+				vigile = new VigileDelFuocoBean();
+				
+				nome = rs.getString("nome");
+				cognome = rs.getString("cognome");
+				email = rs.getString("email");
+				mansione = rs.getString("mansione");
+				ferieAnnoCorrente = rs.getInt("giorniferieannocorrente");
+				ferieAnnoPrecedente = rs.getInt("giorniferieannoprecedente");
+				
+				vigile.setNome(nome);
+				vigile.setCognome(cognome);
+				vigile.setEmail(email);
+				vigile.setMansione(mansione);
+				vigile.setGiorniFerieAnnoCorrente(ferieAnnoCorrente);
+				vigile.setGiorniFerieAnnoPrecedente(ferieAnnoPrecedente);
+				
+				listaVigili.add(vigile);
+			}
+			
+			ps = connessione.prepareStatement(vigiliSQL);
+			rs = ps.executeQuery();
+			
+			while(rs.next()) {
+				vigile = new VigileDelFuocoBean();
+				
+				nome = rs.getString("nome");
+				cognome = rs.getString("cognome");
+				email = rs.getString("email");
+				mansione = rs.getString("mansione");
+				ferieAnnoCorrente = rs.getInt("giorniferieannocorrente");
+				ferieAnnoPrecedente = rs.getInt("giorniferieannoprecedente");
+				
+				vigile.setNome(nome);
+				vigile.setCognome(cognome);
+				vigile.setEmail(email);
+				vigile.setMansione(mansione);
+				vigile.setGiorniFerieAnnoCorrente(ferieAnnoCorrente);
+				vigile.setGiorniFerieAnnoPrecedente(ferieAnnoPrecedente);
+				
+				listaVigili.add(vigile);
+			}
+			
+		}catch(SQLException e){
+			e.printStackTrace();
+		}
+		
+		return listaVigili;
+	}
 	
 	
 	

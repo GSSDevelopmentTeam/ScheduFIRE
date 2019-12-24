@@ -45,7 +45,7 @@ public class Util {
 	public static List<ListaSquadreBean> generaSquadra(Date data) throws NotEnoughMembersException {
 		//Prendiamo i vigili disponibili
 		List<VigileDelFuocoBean> disponibili = VigileDelFuocoDao.getDisponibili(data);
-		
+		//Li dividiamo in 3 liste
 		List<VigileDelFuocoBean> caposquadra = new ArrayList<>();
 		List<VigileDelFuocoBean> autista = new ArrayList<>();
 		List<VigileDelFuocoBean> vigile = new ArrayList<>();
@@ -61,11 +61,16 @@ public class Util {
 				vigile.add(membro);
 			}
 		}
+		//Controlliamo se abbiamo abbastanza personale per fare squadra, altrimenti lanciamo l'eccezione
 		if(abbastanzaPerTurno(caposquadra.size(), autista.size(), vigile.size())) {
-			sorting(caposquadra);
-			sorting(autista);
-			sorting(vigile);
-			
+			//Ordiniamo in ordine ascendente
+			caposquadra.sort((VigileDelFuocoBean cs1, VigileDelFuocoBean cs2) -> 
+				cs1.getCaricoLavoro() - cs2.getCaricoLavoro());
+			autista.sort((VigileDelFuocoBean a1, VigileDelFuocoBean a2) ->
+				a1.getCaricoLavoro() - a2.getCaricoLavoro());
+			vigile.sort((VigileDelFuocoBean v1, VigileDelFuocoBean v2) ->
+				v1.getCaricoLavoro() - v2.getCaricoLavoro());
+			//Assegnamo in ordine decrescente
 			List<ListaSquadreBean> squadra = assegnaMansioni(caposquadra, autista, vigile);
 			return squadra;
 		}
@@ -76,32 +81,42 @@ public class Util {
 
 	private static List<ListaSquadreBean> assegnaMansioni(List<VigileDelFuocoBean> caposquadra,
 			List<VigileDelFuocoBean> autista, List<VigileDelFuocoBean> vigile) {
-		// TODO Auto-generated method stub
+		
+		for(VigileDelFuocoBean vf : vigile) {
+			
+		}
+		
+		for(VigileDelFuocoBean cs : caposquadra) {
+			
+		}
+		
+		for(VigileDelFuocoBean au : autista) {
+			
+		}
+		
 		return null;
 	}
 
-	private static void sorting(List<VigileDelFuocoBean> caposquadra) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	public static boolean abbastanzaPerTurno(int numCS, int numAut, int numVF) throws NotEnoughMembersException {
-		if(numCS >= 4) {
-			if((numAut >= 3) && (numVF >= 5)) {
-				return true;
-			}
-			else {
-				return false;
-			}
+	/**
+	 * Il metodo conta il personale disponibile in caserma per vedere se è possibile creare un turno con 
+	 * le persone considerate. Il numero di persone disponibili minime è considerato come un vettore
+	 * (N. Capo Squadra, N. Autisti, N. Vigili del Fuoco) con due diverse configurazioni: (2, 3, 7), 
+	 * (3, 3, 6) oppure (4, 3, 5).
+	 * @param numCS il numero di Capo Squadra
+	 * @param numAut il numero di Autisti
+	 * @param numVF il numero di Vigili del Fuoco
+	 * @return TRUE se è possibile creare un turno con i disponibili, FALSE altrimenti
+	 */
+	public static boolean abbastanzaPerTurno(int numCS, int numAut, int numVF) {
+		if(numAut < 3) {
+			return false;
 		}
-		else if (numCS >= 2) {
-			if((numAut >= 3) && (numVF >= (9 - numCS))) {
-				return true;
-			}
-			else {
-				return false;
-			}
+		else if((numCS >= 2) && (numCS <=4) && (numCS + numVF >= 9)) {
+			return true;
 		}
-		else return false;
+		else if((numCS < 2) || (numVF < 5) || ((numCS > 4) && (numVF < 5))) {
+			return false;
+		}
+		else return true;
 	}
 }
