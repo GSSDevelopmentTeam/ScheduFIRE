@@ -1,23 +1,29 @@
 package control;
 
 import java.io.IOException;
+import java.util.ArrayList;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-/**
- * Servlet implementation class lgchgcc
- */
-@WebServlet("/lgchgcc")
-public class lgchgcc extends HttpServlet {
-	private static final long serialVersionUID = 1L;
+import model.bean.VigileDelFuocoBean;
+import model.dao.VigileDelFuocoDao;
 
+/**
+ * Servlet implementation class GestioneFerieServlet
+ */
+@WebServlet("/GestioneFerieServlet")
+public class GestioneFerieServlet extends HttpServlet {
+	private static final long serialVersionUID = 1L;
+       
     /**
-     * Default constructor. 
+     * @see HttpServlet#HttpServlet()
      */
-    public lgchgcc() {
+    public GestioneFerieServlet() {
+        super();
         // TODO Auto-generated constructor stub
     }
 
@@ -25,16 +31,18 @@ public class lgchgcc extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		response.getWriter().append("Served at: ").append(request.getContextPath());
+		doPost(request, response);
 	}
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		doGet(request, response);
+		
+		ArrayList<VigileDelFuocoBean> listaVigili = VigileDelFuocoDao.ottieniListaVF();
+		
+		request.setAttribute("listaVigili", listaVigili);
+		request.getRequestDispatcher("JSP/GestioneFerieJSP.jsp").forward(request, response);
 	}
 
 }

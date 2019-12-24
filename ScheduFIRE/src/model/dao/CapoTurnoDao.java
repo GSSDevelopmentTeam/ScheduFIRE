@@ -16,7 +16,8 @@ import model.bean.CapoTurnoBean;
 public class CapoTurnoDao {
 	
 	/**
-	 * @param chiaveUsername , stringa che identifica un CapoTurnoBean tramite l'username
+	 * Si occupa dell'ottenimento di un CapoTurnoBean dal database, dato il suo username.
+	 * @param chiaveUsername è una stringa che identifica un CapoTurnoBean tramite l'username
 	 * @return Un tipo CapoTurnoBean identificato da chiaveUsername, null altrimenti
 	 */
 	public static CapoTurnoBean ottieni(String chiaveUsername) {

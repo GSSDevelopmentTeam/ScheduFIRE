@@ -118,6 +118,12 @@ public class VigileDelFuocoBean {
 	public void setAdoperabile(boolean adoperabile) {
 		this.adoperabile = adoperabile;
 	}
-	
+
+	public String toString() {
+		return "VigileDelFuocoBean [nome=" + nome + ", cognome=" + cognome + ", email=" + email + ", turno=" + turno
+				+ ", mansione=" + mansione + ", username=" + username + ", grado=" + grado
+				+ ", giorniFerieAnnoCorrente=" + giorniFerieAnnoCorrente + ", giorniFerieAnnoPrecedente="
+				+ giorniFerieAnnoPrecedente + ", caricoLavoro=" + caricoLavoro + ", adoperabile=" + adoperabile + "]";
+	}
 	
 }

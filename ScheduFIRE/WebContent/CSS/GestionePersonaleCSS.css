@@ -23,7 +23,7 @@ input[type = submit]:hover {
 	background-color: #ff4444;
 }
 
-form {
+#aggiungiVF, .modificaVF {
 	border: solid;
 	border-color: #b60000;
 	border-width: 1.5px;; 
@@ -32,3 +32,4 @@ form {
 	margin-right: 300px;
 	margin-left: 300px;
 }
+
