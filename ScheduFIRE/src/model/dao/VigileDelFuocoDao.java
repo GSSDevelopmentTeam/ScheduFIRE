@@ -270,7 +270,7 @@ public class VigileDelFuocoDao {
 		try(Connection con = ConnessioneDB.getConnection()) {
 
 			// Query di ricerca
-			PreparedStatement ps = con.prepareStatement("SELECT v.email, v.nome, v.cognome, v.turno, v.mansione, "
+			PreparedStatement ps = con.prepareStatement("(SELECT v.email, v.nome, v.cognome, v.turno, v.mansione, "
 					+ "v.giorniferieannocorrente, v.giorniferieannoprecedente, v.caricolavoro, v.adoperabile, v.grado, v.username " + 
 					" FROM Vigile v " + 
 					" WHERE v.adoperabile=true AND NOT EXISTS " + 
@@ -280,7 +280,8 @@ public class VigileDelFuocoDao {
 					" AND NOT EXISTS" + 
 					" (SELECT *" + 
 					" FROM Ferie f " + 
-					" WHERE f.emailVF= v.email AND ? BETWEEN f.dataInizio AND f.dataFine);");
+					" WHERE f.emailVF= v.email AND ? BETWEEN f.dataInizio AND f.dataFine))"
+					+ " ORDER BY v.cognome;");
 			ps.setDate(1, data);
 			ps.setDate(2, data);
 			ResultSet rs = ps.executeQuery();
