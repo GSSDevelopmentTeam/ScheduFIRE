@@ -2,13 +2,13 @@
 <%@page import = "java.util.ArrayList, model.bean.*, model.dao.*" %>
 
 <html>
-	<head>
-		<meta charset="UTF-8">
-		<title>Gestione Ferie</title>
-	</head>
-	
+	<jsp:include page="StandardJSP.jsp" />
+	<link rel="stylesheet" href="CSS/TableCSS.css">
 	<body>
-		<h3>Gestione Ferie</h3>
+	
+	<!-- Barra Navigazione -->
+	<jsp:include page="HeaderJSP.jsp" />
+		<h2>Gestione Ferie</h2>
 			<table>
 				<thead>
 					<tr>
@@ -17,10 +17,10 @@
 						<th>Cognome</th>
 						<th>Email</th>
 						<th>Mansione</th>
-						<th>Ferie anno corrente</th>
-						<th>Ferie anno precedente</th>
-						<th>Inserisci periodo di ferie</th>
-						<th>Rimuovi periodo di ferie</th>
+						<th>Ferie anno <br> corrente</th>
+						<th>Ferie anno <br> precedente</th>
+						<th>Inserisci <br> periodo di ferie</th>
+						<th>Rimuovi <br>periodo di ferie</th>
 					</tr>
 				</thead>
 				
