@@ -2,14 +2,12 @@ package model.bean;
 
 public class VigileDelFuocoBean {
 	//Variabili d'istanza
-
 	private String nome, cognome, email, turno, mansione, username, grado;
 
 	private int giorniFerieAnnoCorrente, giorniFerieAnnoPrecedente, caricoLavoro;
 	private boolean adoperabile;
 	
-	//Costruttore
-	
+	//Costruttore	
 	public VigileDelFuocoBean(){
 		
 	}
@@ -117,6 +115,7 @@ public class VigileDelFuocoBean {
 
 	public void setAdoperabile(boolean adoperabile) {
 		this.adoperabile = adoperabile;
+
 	}
 
 	public String toString() {
@@ -125,5 +124,4 @@ public class VigileDelFuocoBean {
 				+ ", giorniFerieAnnoCorrente=" + giorniFerieAnnoCorrente + ", giorniFerieAnnoPrecedente="
 				+ giorniFerieAnnoPrecedente + ", caricoLavoro=" + caricoLavoro + ", adoperabile=" + adoperabile + "]";
 	}
-	
 }

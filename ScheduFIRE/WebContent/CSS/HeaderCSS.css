@@ -1,4 +1,7 @@
 @charset "ISO-8859-1";
+* {
+  box-sizing: border-box;
+}
 
 .topnav {
   overflow: hidden;
@@ -7,11 +10,11 @@
 }
 
 .logo{
-	width: 115%;
-	height: 115%;
+	width: 150%;
+	height: 130%;
 	padding:7px;
-	margin-top:-10%;
-	margin-left:-9%
+	margin-top:-22%;
+	margin-left:-25%
 }
 
 .round{
