@@ -18,8 +18,6 @@ import model.bean.ComponenteDellaSquadraBean;
  *
  */
 public class ComponenteDellaSquadraDao {
-
-
 	/**
 	 * @param data , la data del giorno di cui si vuole avere la lista dei vigili presenti nelle varie squadre
 	 * @return una lista di ComponenteDellaSquadraBean presenti nelle varie squadre al giorno passato come parametro, 
