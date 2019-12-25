@@ -343,9 +343,9 @@ public class VigileDelFuocoDao {
 		ArrayList<VigileDelFuocoBean> listaVigili = new ArrayList<VigileDelFuocoBean>();;
 		
 		//Query da eseguire
-		String capiSquadraSQL = "SELECT * FROM Vigile WHERE mansione = 'Capo Squadra';";
-		String autistiSQL = "SELECT * FROM Vigile WHERE mansione = 'Autista';";
-		String vigiliSQL = "SELECT * FROM Vigile WHERE mansione = 'Vigile';";
+		String capiSquadraSQL = "SELECT * FROM Vigile WHERE mansione = 'Capo Squadra' ORDER BY cognome;";
+		String autistiSQL = "SELECT * FROM Vigile WHERE mansione = 'Autista' ORDER BY cognome;";
+		String vigiliSQL = "SELECT * FROM Vigile WHERE mansione = 'Vigile' ORDER BY cognome;";
 		
 		try(Connection connessione = ConnessioneDB.getConnection()){
 			

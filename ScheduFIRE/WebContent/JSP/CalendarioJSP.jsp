@@ -71,7 +71,7 @@
 				<%
 					} else {day++;
 				%>
-				<div class="grid-item"onClick="dayClicked()"><%=day%></div>
+				<div class="grid-item" onClick="dayClicked(this)"><%=day%></div>
 				<%
 					}
 					}
@@ -84,25 +84,29 @@
 		
 		<div class="wrapper">
 			<div class="box mansione"><p>SALA OPERATIVA<p></div>
-				<div class="vigili">
-				
+				<div class="vigili" >
+					<table id="SalaOperativa"></table>
 				</div>
 			
 			
 			<div class=" box mansione"><p>PRIMA PARTENZA</p></div>
 				<div class="vigili">
+					<table id="PrimaPartenza"></table>
 				
 				</div>
 			
 			
 			<div class="box mansione"><p>AUTO SCALA</p></div>
 				<div class="vigili">
+					<table id="AutoScala"></table>
 				
 				</div>
 			
 			
 			<div class="box mansione"><p>AUTO BOTTE</p></div>
-				<div class="vigili">
+				<div class="vigili" >
+					<table id="AutoBotte"></table>
+
 				
 				</div>
 			
@@ -112,5 +116,72 @@
 
 
 	</div>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+	<script>
+	
+	
+	
+
+		function dayClicked(input) {
+		console.log("parte funzione dayClicked()");
+
+		var salaOperativa = $("#SalaOperativa");
+		var primaPartenza = $("#PrimaPartenza");
+		var autoScala = $("#AutoScala");
+		var autoBotte = $("#AutoBotte");
+
+		var giorno = $(input).text();
+		
+		$.ajax({
+			type:"POST",
+			url: "AjaxCalendario",
+			data : {
+				"giorno": giorno,
+			},
+			dataType: "json",
+			async: true,
+			success: function(response) {
+				salaOperativa.empty();
+				primaPartenza.empty();
+				autoScala.empty();
+				autoBotte.empty();
+				
+				
+				console.log(response);
+				var len = response.length; 
+				console.log(len);
+				for (var i = 0; i < len; i++) {
+				vigile=response[i];
+					
+						var rigaTabella = document.createElement("TR");
+						if(vigile.tipologia=="Sala Operativa"){
+						  salaOperativa.append(rigaTabella);
+						}
+						else if(vigile.tipologia=="Prima Partenza"){
+						  primaPartenza.append(rigaTabella);
+						}
+						else if(vigile.tipologia=="Auto Scala"){
+							  autoScala.append(rigaTabella);
+							}
+						else if(vigile.tipologia=="Auto Botte"){
+							  autoBotte.append(rigaTabella);
+							}
+						  var colonnaNome = document.createElement("TD");
+						  var nome=document.createTextNode(vigile.nome);
+						   colonnaNome.appendChild(nome);
+						  rigaTabella.appendChild(colonnaNome);
+						  
+						  var colonnaCognome = document.createElement("TD");
+						  var cognome=document.createTextNode(vigile.cognome);
+						   colonnaCognome.appendChild(cognome);
+						  rigaTabella.appendChild(colonnaCognome);
+					
+				}
+			}
+		});
+	}
+
+	</script>
 </body>
 </html>
