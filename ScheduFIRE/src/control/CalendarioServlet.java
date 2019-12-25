@@ -35,9 +35,10 @@ public class CalendarioServlet extends HttpServlet {
 	}
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
+		
 		Date date = new Date(System.currentTimeMillis());
 		String dataCorrente = date.toString();
+		
 		//variabili contengono il numero dell'anno mese e giorno in formato stringa 
 		String anno_stringa_numero = dataCorrente.substring(0, 4);
 		String mese_stringa_numero = dataCorrente.substring(5, 7);
@@ -50,17 +51,24 @@ public class CalendarioServlet extends HttpServlet {
 	
 		//giorno mese e anno espresso in intero.
 		int giorno = Integer.parseInt(giorno_stringa_numero);
-
-		//mese scritto in formato Stringa: Gennaio, Febbraio [...]
 		int mese = Integer.parseInt(mese_stringa_numero);
 		int anno = Integer.parseInt(anno_stringa_numero);
 		
 		String mese_stringa = month[mese-1];
 	
+	
+			
 		//array dei giorni del mese corrrente per riempire il calendario
 		int[] days_month= new int[42];
 		for(i=0;i<=41;i++) 
 			days_month[i]=-1;
+		
+		String meseJSP = request.getParameter("mese");
+		if(meseJSP!=null) {
+			mese = Integer.parseInt(meseJSP);
+			
+		}
+	
 		//funzione per riempire il calendario
 		riempiCalendario(mese, anno, days_month);
 				
@@ -68,13 +76,81 @@ public class CalendarioServlet extends HttpServlet {
 		System.out.println("Mese: ");
 		for(i=0; i<days_month.length;i++) {
 			System.out.println(" "+ days_month[i] + "; ");
-		}
+		}	
+		
+		//per la schedulazione dei vigili
+		//creo i 4 array per ogni squadra
+		//conterranno i nomi dei vigili del fuoco
+		ArrayList<String> sala_operativa = new ArrayList<>();
+		ArrayList<String> prima_partenza = new ArrayList<>();
+		ArrayList<String> autoscala = new ArrayList<>();
+		ArrayList<String> autobotte = new ArrayList<>();
+		
+		
+		//return: email, tipologia e giorno lavorativo:
+		ArrayList<ComponenteDellaSquadraBean> componenti_squadra = new ArrayList<>();  //bean
+		componenti_squadra = ComponenteDellaSquadraDao.getComponenti(date);
+		
 	
+		VigileDelFuocoBean vf_bean = new VigileDelFuocoBean();	//bean vf
+		
+		String tipologia, email, cognome_nome;
+		for(ComponenteDellaSquadraBean c_s: componenti_squadra) {
+			
+			//tipologia -> sala_operativa, prima_partenza, autoscala, autobotte
+			tipologia = c_s.getTipologiaSquadra();
+			
+			//email del vf in pos i
+			email = c_s.getEmailVF();
+			
+			//ottengo il vf bean con la email data
+			vf_bean = VigileDelFuocoDao.ottieni(email);
+			
+			cognome_nome = vf_bean.getCognome() + " " + vf_bean.getNome();
+			
+			switch (tipologia) {
+			case "Sala Operativa":
+				sala_operativa.add(cognome_nome);
+				System.out.println("Ho aggiunto un VF in sala operativa");
+				break;
+			case "Prima Partenza":
+				prima_partenza.add(cognome_nome);
+				System.out.println("Ho aggiunto un VF in prima partenza");
+				break;
+			case "Auto Scala":
+				autoscala.add(cognome_nome);
+				System.out.println("Ho aggiunto un VF in autoscala");
+				break;
+			case "Auto Botte":
+				autobotte.add(cognome_nome);
+				System.out.println("Ho aggiunto un VF in autobotte");
+				break;
+			default: 
+				//genera errore: nome squadra non consentito
+				System.out.println("CalendarioSERVLET -> nome squadra errato!");
+				break;
+			}
+		}
+		
+		System.out.println("sala operativa:"+sala_operativa.toString()+
+				"\nprima partenza"+prima_partenza.toString()+
+				"\nautobotte"+autobotte.toString()+
+				"\nautoscala"+autoscala.toString());
+
+		
+		
+		
 		//attributi passati al CalendarioJSP.jsp
+		//array delle squadre
+		request.setAttribute("sala_operativa", sala_operativa);
+		request.setAttribute("prima_partenza", prima_partenza);
+		request.setAttribute("autoscala", autoscala);
+		request.setAttribute("autobotte", autobotte);
+		//...//
 		request.setAttribute("anno", anno_stringa_numero);
 		request.setAttribute("mese", mese_stringa_numero);
 		request.setAttribute("giorno", giorno_stringa_numero);
-		request.setAttribute("meseStringa", mese_stringa);
+		request.setAttribute("meseStringa", month[mese-1]);
 		request.setAttribute("days_month", days_month);
 		
 		
@@ -89,7 +165,7 @@ public class CalendarioServlet extends HttpServlet {
 
 	
 	/**
-	 * Funzione che specifica se l'anno è o non è bisestile.
+	 * Funzione che specifica se l'anno � o no bisestile.
 	 * @param anno 
 	 * @return boolean specifica se l'anno sia o meno bisestile
 	 */
