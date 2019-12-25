@@ -98,7 +98,7 @@ public class PersonaleDisponibileServlet extends HttpServlet{
 		//prendo i vigili del fuoco disponibili alla data odierna
 		ArrayList<VigileDelFuocoBean> vigili=VigileDelFuocoDao.getDisponibili(giorno);
 		ArrayList<ComponenteDellaSquadraBean> componenti=ComponenteDellaSquadraDao.getComponenti(giorno);
-		Collections.sort(vigili, new VigileComparator());
+		//Collections.sort(vigili, new VigileComparator());
 		Collections.sort(componenti, new ComponenteComparator());
 
 		request.setAttribute("vigili", vigili);

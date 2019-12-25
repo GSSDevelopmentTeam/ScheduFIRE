@@ -15,7 +15,7 @@
 
 <title>ScheduFIRE</title>
 <%
-	String[] days = {"Lunedì", "Martedì", "Mercoledì", "Giovedì", "Venerdì", "Sabato", "Domenica"};
+	String[] days = {"LunedÃ¬", "MartedÃ¬", "MercoledÃ¬", "GiovedÃ¬", "VenerdÃ¬", "Sabato", "Domenica"};
 	String[] month = {"Gennaio", "Febbraio", "Marzo", "Aprile", "Maggio", "Giugno", "Luglio", "Agosto",
 			"Settembre", "Ottobre", "Novembre", "Dicembre"};
 	int giorno = Integer.parseInt((String) request.getAttribute("giorno"));
@@ -132,7 +132,9 @@
 						classe ="giornoCorrente";
 					}
 				%>
-				<div class="grid-item" id=<%=classe%>><%=day%></div>
+
+				<div class="grid-item" id=<%=classe%> onClick="dayClicked(this)"><%=day%></div>
+
 				<%
 					}
 					}
@@ -143,6 +145,7 @@
 		</div>
 		<div class="container-schedul">
 
+
 			<div class="wrapper">
 				<div class="box mansione">
 					<p>SALA OPERATIVA<p>
@@ -151,26 +154,33 @@
 				<%for(String s : sala_operativa){%>
 					<p><%=s%></p>
 				<%} %>
+          <table id="SalaOperativa"></table>
 				</div>
 
 
 				<div class=" box mansione">
 					<p>PRIMA PARTENZA</p>
+
 				</div>
 				<div class="vigili">
+
 				<%for(String s: prima_partenza){%>
 					<p><%=s%></p>
 				<%} %>
+        <table id="PrimaPartenza"></table>
 				</div>
 
 
 				<div class="box mansione">
 					<p>AUTO SCALA</p>
+
 				</div>
 				<div class="vigili">
+
 				<%for(String s: autoscala){%>
 					<p><%=s%></p>
 				<%} %>
+          <table id="AutoScala"></table>
 				</div>
 
 
@@ -180,7 +190,9 @@
 				<div class="vigili">
 				<%for(String s: autobotte){%>
 					<p><%=s%></p>
+          	<table id="AutoBotte"></table>
 				<%} %>
+
 				</div>
 
 			</div>
@@ -189,5 +201,72 @@
 
 
 	</div>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+	<script>
+	
+	
+	
+
+		function dayClicked(input) {
+		console.log("parte funzione dayClicked()");
+
+		var salaOperativa = $("#SalaOperativa");
+		var primaPartenza = $("#PrimaPartenza");
+		var autoScala = $("#AutoScala");
+		var autoBotte = $("#AutoBotte");
+
+		var giorno = $(input).text();
+		
+		$.ajax({
+			type:"POST",
+			url: "AjaxCalendario",
+			data : {
+				"giorno": giorno,
+			},
+			dataType: "json",
+			async: true,
+			success: function(response) {
+				salaOperativa.empty();
+				primaPartenza.empty();
+				autoScala.empty();
+				autoBotte.empty();
+				
+				
+				console.log(response);
+				var len = response.length; 
+				console.log(len);
+				for (var i = 0; i < len; i++) {
+				vigile=response[i];
+					
+						var rigaTabella = document.createElement("TR");
+						if(vigile.tipologia=="Sala Operativa"){
+						  salaOperativa.append(rigaTabella);
+						}
+						else if(vigile.tipologia=="Prima Partenza"){
+						  primaPartenza.append(rigaTabella);
+						}
+						else if(vigile.tipologia=="Auto Scala"){
+							  autoScala.append(rigaTabella);
+							}
+						else if(vigile.tipologia=="Auto Botte"){
+							  autoBotte.append(rigaTabella);
+							}
+						  var colonnaNome = document.createElement("TD");
+						  var nome=document.createTextNode(vigile.nome);
+						   colonnaNome.appendChild(nome);
+						  rigaTabella.appendChild(colonnaNome);
+						  
+						  var colonnaCognome = document.createElement("TD");
+						  var cognome=document.createTextNode(vigile.cognome);
+						   colonnaCognome.appendChild(cognome);
+						  rigaTabella.appendChild(colonnaCognome);
+					
+				}
+			}
+		});
+	}
+
+	</script>
 </body>
 </html>
