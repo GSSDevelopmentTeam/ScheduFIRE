@@ -1,6 +1,9 @@
 package control;
 
 import java.io.IOException;
+import java.sql.Date;
+import java.util.List;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -8,22 +11,21 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import model.bean.CredenzialiBean;
-import model.dao.VigileDelFuocoDao;
+import model.bean.ComponenteDellaSquadraBean;
+import model.dao.ComponenteDellaSquadraDao;
+import util.Util;
 
 /**
- * Servlet che si occupa del rendere non adoperabili i VigileDelFuocoBean nel database. 
- * @author Eugenio Sottile 
+ * Servlet implementation class GeneraSquadreServlet
  */
-
-@WebServlet("/EliminaVFServlet")
-public class EliminaVFServlet extends HttpServlet {
+@WebServlet(description = "Servlet per la generazione delle squadre", urlPatterns = { "/GeneraSquadreServlet" })
+public class GeneraSquadreServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public EliminaVFServlet() {
+    public GeneraSquadreServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -32,35 +34,20 @@ public class EliminaVFServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		HttpSession sessione = request.getSession();
 		
-		//Ottenimento oggetto sessione dalla richiesta
-		HttpSession session = request.getSession();
+		if(sessione.getAttribute("credenziali") != null) {
+			Date data = (Date) request.getAttribute("data");
+			try {
+				List<ComponenteDellaSquadraBean> lista = Util.generaSquadra(data);
+				if(!ComponenteDellaSquadraDao.setComponenti(lista)) {
+					//exception
+				}					
+			} catch (NotEnoughMembersException e) {
 				
-		//Ottenimento credenziali dell'utente dalla sessione
-		CredenzialiBean credenziali = (CredenzialiBean) session.getAttribute("credenziali"); 
-				
-		//Controllo credenziali
-		if( credenziali == null )
-			throw new ScheduFIREException();
-
-		/*
-		if( credenziali.getRuolo() == "vigile" ) //definire bene la stringa
-			throw new ScheduFIREException();
-			
-		*/
-		//Ottenimento parametro email dalla richiesta
-		String email = request.getParameter("email");
-		
-		//Controllo email
-		if( email == null )
-			throw new ScheduFIREException();
-		
-		if( ! VigileDelFuocoDao.setAdoperabile(email, false))
-			throw new ScheduFIREException();
-		
-		// Reindirizzamento alla jsp
+			}
+		}
 		request.getRequestDispatcher("/").forward(request, response);
-		
 	}
 
 	/**

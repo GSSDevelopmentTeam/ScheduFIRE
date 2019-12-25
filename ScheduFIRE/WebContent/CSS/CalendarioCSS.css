@@ -1,5 +1,7 @@
 /*contenitore per l'intero calendario*/
-
+* {
+  box-sizing: border-box;
+}
 .container {
 	margin-top: 2px;
 	margin-right: 10px;

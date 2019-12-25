@@ -1,0 +1,228 @@
+@charset "ISO-8859-1";
+* {
+  box-sizing: border-box;
+}
+
+body {
+	background-image: url("../IMG/DSC_0066.png");
+	background-size:cover;
+	background-repeat:no-repeat;	
+	font-family: Verdana, Geneva, Tahoma, sans-serif;
+} 
+
+/*'FontAwesome'!important*/
+b {
+	text-align: center;
+	font-size: 24px;
+	text-shadow: 3px 2px #0B7f71;
+	color: rgb(242, 255, 255);
+}
+
+.submit {
+	background-color: #b60000;
+	color: white;
+	padding: 7px 20px;
+	text-align: center;
+	display: inline-block;
+	font-size: 16px;
+	font-weight:bold;
+	border-radius: 7px;
+	box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0
+		rgba(0, 0, 0, 0.19);
+	cursor: pointer;
+}
+
+.submit:hover {
+	background-color: white;
+	color: #b60000;
+	font-weight: bold;
+}
+
+.inversesubmit{
+	background-color: white;
+	color: #b60000;
+	font-weight: bold;
+	padding: 7px 20px;
+	text-align: center;
+	display: inline-block;
+	font-size: 16px;
+	border-radius: 7px;
+	box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0
+		rgba(0, 0, 0, 0.19);
+	cursor: pointer;
+}
+
+.inversesubmit:hover {
+	background-color: #b60000;
+	color: white;
+}
+.tb {
+	margin-top: 35px !important;
+	display: table;
+	padding: 35px;
+	padding-left: 5%;
+	padding-right: 5%;
+	background-color: #FFFFFF;
+	border:inset;
+	border-color:#575757;
+	border-width: 0.5px;
+	border-radius: 5%;
+	float: left;
+	resize: vertical;
+	box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0
+		rgba(0, 0, 0, 0.19);
+}
+
+.tbR {
+	display: table-cell;
+	display: table-row;
+	padding: 25px;
+}
+
+.tbR p {
+	display: table-cell;
+	vertical-align: center;
+	padding: 3px;
+	text-size:13px;
+}
+
+.center {
+	align: center !important
+}
+
+;
+
+/*icone vicino user e password*/
+* {
+	box-sizing: border-box;
+}
+
+.input-container {
+	display: -ms-flexbox; /* IE10 */
+	display: flex;
+	width: 100%;
+	margin-bottom: 15px;
+}
+
+.icon {
+	padding: 10px;
+	background: #b60000;
+	color: white;
+	min-width: 50px;
+	text-align: center;
+	box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0
+		rgba(0, 0, 0, 0.19);
+	border-radius: 5%
+}
+
+.input-field {
+	width: 100%;
+	padding: 10px;
+	outline: none;
+	box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0
+		rgba(0, 0, 0, 0.19);
+	border-radius: 5%;
+}
+
+.input-field:focus {
+	border: 2px solid #b60000;
+}
+
+/*posizione tabella*/
+ .w3-content, .w3-auto {
+	margin-left: auto;
+	margin-right: auto;
+	max-width: 1140px
+}
+@media ( max-width :1205px) {
+	body{ 
+	}
+	.w3-auto {
+		max-width: 95%
+	}
+}
+@media ( max-width :992px) {
+	.w3-sidebar.w3-collapse {
+		display: none
+	}
+	.w3-main {
+		margin-left: 0 !important;
+		margin-right: 0 !important
+	}
+	.w3-auto {
+		max-width: 100%
+	}
+}
+
+.w3-display-middle {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	-ms-transform: translate(-50%, -50%)
+}
+
+.pass{
+	background-color:#FFFFFF;
+	color:#b60000; 
+	font-weight: bold;
+	border:none;
+	text-decoration: underline;
+	font-size:17px;
+	cursor:pointer;
+}
+
+/*Recupera Password*/
+
+.container {
+  padding: 16px;
+}
+
+
+/* The Modal (background) */
+.modal {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgb(0,0,0); /* Fallback color */
+  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+  padding-top: 60px;
+}
+
+/* Modal Content/Box */
+.modal-content {
+  background-color: #fefefe;
+  margin: 5% auto 15% auto; /* 5% from the top, 15% from the bottom and centered */
+  width: 80%; /* Could be more or less, depending on screen size */
+}
+
+
+/* Change styles for span and cancel button on extra small screens */
+@media screen and (max-width: 300px) {
+  span.psw {
+     display: block;
+     float: none;
+  }
+  .cancelbtn {
+     width: 100%;
+  }
+}
+
+.tbPss {
+	padding:25px;
+	display: table;
+	background-color: #FFFFFF;
+	border:inset;
+	border-color:#575757;
+	border-width: 0.5px;
+	border-radius: 15%;
+	float: left;
+	resize: vertical;
+	box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0
+		rgba(0, 0, 0, 0.19);
+}
