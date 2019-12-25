@@ -207,7 +207,7 @@ public class CalendarioServlet extends HttpServlet {
 		case "MONDAY": day = 0; break; //lunedì
 		case "TUESDAY": day = 1; break; //martedì
 		case "WEDNESDAY": day = 2; break; //mercoledì
-		case "THUESDAY": day = 3; break; //giovedì
+		case "THURSDAY": day = 3; break; //giovedì
 		case "FRIDAY": day = 4; break; //venerdì
 		case "SATURDAY": day = 5; break; //sabato
 		case "SUNDAY": day = 6; break; //domenica

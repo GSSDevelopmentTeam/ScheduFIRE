@@ -48,67 +48,16 @@
 				<div class="dropdown">
 					<button class="dropbtn">Scegli un altro mese</button>
 					<div class="dropdown-content">
+							<%
+							for (int k = 0; k <= 11; k++) {
+						%>
+						 <a class="dropdown-item" href="CalendarioServlet?mese=<%=k+1 %>"><%=month[k]%></a>
+						 <br>
+						
+						<%	}	%>
+						
 
-						<form method="post" action="CalendarioServlet">
-							<input type="hidden" name="mese" value="1">
-							<input type="submit" value="Gennaio"><br>
-						</form>
-
-						<form method="post" action="CalendarioServlet">
-							<input type="hidden" name="mese" value="2">
-							<input type="submit" value="Febbraio"><br>
-						</form>
-
-						<form method="post" action="CalendarioServlet">
-							<input type="hidden" name="mese" value="3">
-							<input type="submit" value="Marzo"><br>
-						</form>
-
-						<form method="post" action="CalendarioServlet">
-							<input type="hidden" name="mese" value="4">
-							<input type="submit" value="Aprile"><br>
-						</form>
-
-						<form method="post" action="CalendarioServlet">
-							<input type="hidden" name="mese" value="5">
-							<input type="submit" value="Maggio"><br>
-						</form>
-
-						<form method="post" action="CalendarioServlet">
-							<input type="hidden" name="mese" value="6">
-							<input type="submit" value="Giugno"><br>
-						</form>
-
-						<form method="post" action="CalendarioServlet">
-							<input type="hidden" name="mese" value="7">
-							<input type="submit" value="Luglio"><br>
-						</form>
-
-						<form method="post" action="CalendarioServlet">
-							<input type="hidden" name="mese" value="8">
-							<input type="submit" value="Agosto"><br>
-						</form>
-
-						<form method="post" action="CalendarioServlet">
-							<input type="hidden" name="mese" value="9">
-							<input type="submit" value="Settembre"><br>
-						</form>
-
-						<form method="post" action="CalendarioServlet">
-							<input type="hidden" name="mese" value="10">
-							<input type="submit" value="Ottobre"><br>
-						</form>
-
-						<form method="post" action="CalendarioServlet">
-							<input type="hidden" name="mese" value="11">
-							<input type="submit" value="Novembre"><br>
-						</form>
-
-						<form method="post" action="CalendarioServlet">
-							<input type="hidden" name="mese" value="12">
-							<input type="submit" value="Dicembre"><br>
-						</form>
-
+						
 					</div>
 				</div>
 			</div>
@@ -133,7 +82,7 @@
 					}
 				%>
 
-				<div class="grid-item" id=<%=classe%> onClick="dayClicked(this)"><%=day%></div>
+				<div class="grid-item" id="<%=classe%>" onClick="dayClicked(this)"><%=day%></div>
 
 				<%
 					}
@@ -154,7 +103,7 @@
 				<%for(String s : sala_operativa){%>
 					<p><%=s%></p>
 				<%} %>
-          <table id="SalaOperativa"></table>
+         		 <table id="SalaOperativa"></table>
 				</div>
 
 
@@ -167,7 +116,7 @@
 				<%for(String s: prima_partenza){%>
 					<p><%=s%></p>
 				<%} %>
-        <table id="PrimaPartenza"></table>
+        		<table id="PrimaPartenza"></table>
 				</div>
 
 
@@ -180,7 +129,7 @@
 				<%for(String s: autoscala){%>
 					<p><%=s%></p>
 				<%} %>
-          <table id="AutoScala"></table>
+         		 <table id="AutoScala"></table>
 				</div>
 
 
@@ -190,9 +139,8 @@
 				<div class="vigili">
 				<%for(String s: autobotte){%>
 					<p><%=s%></p>
-          	<table id="AutoBotte"></table>
 				<%} %>
-
+				<table id="AutoBotte"></table>
 				</div>
 
 			</div>
@@ -205,8 +153,9 @@
 
 	<script>
 	
-	
-	
+		function setValore(input){
+			console.log(input);
+		}
 
 		function dayClicked(input) {
 		console.log("parte funzione dayClicked()");
