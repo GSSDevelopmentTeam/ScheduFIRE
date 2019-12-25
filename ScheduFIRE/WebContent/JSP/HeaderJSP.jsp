@@ -4,8 +4,13 @@
 %>
 
 <div class="topnav" id="myTopnav">
-  <a href=""><div class="round"><img src="IMG/logoScheduFIRE.png" class="logo"></div></a>
-  <% if(ruolo!= null){
+<% if(ruolo!= null && ruolo.equalsIgnoreCase("capoturno")) {
+%>
+  <form action="HomeCTServlet" method="POST">
+  <a><button class="round"><img src="IMG/logoScheduFIRE.png" class="logo">
+  </button></a></form><%} else {
+	  %>   <a><button class="round"><img src="IMG/logoScheduFIRE.png" class="logo"></button></a>
+ <%} if(ruolo!= null){
 	  %>	
  	<div class="rf">
  		<a><form action="Logout" method="POST">
