@@ -1,4 +1,10 @@
 /*contenitore per l'intero calendario*/
+
+body{
+	background-color: #f2f2f2;
+	font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
 * {
   box-sizing: border-box;
 }
@@ -10,6 +16,14 @@
 	height: 100%;
 	background-color: white;
 	border: 3px solid black;
+}
+
+.edit{
+	font-size: 80%;
+	color: black;
+	padding: 12px 12px;
+	text-decoration: none;
+	display: block;
 }
 
 /*contenitore per il calendario*/
@@ -26,11 +40,19 @@
 	font-family: Verdana;
 }
 
+.altroAnno{
+	background-color: white;
+	color: black;
+	font-size: 40%;
+	border: none;
+	cursor: pointer;
+}
+
 .container-month-year {
 	color: black;
 	font-family: Rod;
 	text-align: center;
-	font-size: 300%;
+	font-size: 200%;
 }
 
 /*contenitore per la schedulazione
@@ -55,8 +77,11 @@ flex:1 -> prende il resto del container*/
 }
 
 div.box{
-  background-color: #b60000;
-  color: #fff;
+  box-shadow: 20%;
+  color: black;
+  border: 3px solid white;
+  border-bottom-color: #b60000;
+  border-radius: 60%;
   margin: 20px 0 20px 0;
   font-size: 90%;
 }
@@ -141,7 +166,7 @@ non ha la proprietà :hover*/
 	background-color: white;
 	border-bottom: 2px solid black !important;
 	color: black;
-	font-size: 80%;
+	font-size: 150%;
 	border: none;
 	cursor: pointer;
 }
@@ -160,7 +185,8 @@ non ha la proprietà :hover*/
 	z-index: 1;
 }
 
-.dropdown-content a input {
+.dropdown-item {
+	font-size: 80%;
 	color: #4b4b4b;
 	padding: 12px 12px;
 	text-decoration: none;
@@ -178,4 +204,8 @@ non ha la proprietà :hover*/
 
 .dropdown:hover .dropbtn {
 	background-color: white;
+}
+
+td {
+	text-align: center;
 }
