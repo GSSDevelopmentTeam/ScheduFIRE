@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.sql.Date;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+
 import java.util.Collections;
 import java.util.Comparator;
 import javax.servlet.ServletException;
@@ -43,15 +44,15 @@ public class PersonaleDisponibileServlet extends HttpServlet{
 		
 		
 		/*
-		 * Per ricavare se nel momento in cui viene chiamata la servlet si Ë nel turno lavorativo o meno, prendo in considerazione
-		 * 3 possibilit‡: 
-		 * 1) il giorno considerato Ë lavorativo ed Ë il giorno con turno diurno;
-		 * 2) il giorno considerato Ë lavorativo ed Ë il giorno con turno notturno;
-		 * 3) non Ë un giorno lavorativo.
+		 * Per ricavare se nel momento in cui viene chiamata la servlet si √® nel turno lavorativo o meno, prendo in considerazione
+		 * 3 possibilit√†: 
+		 * 1) il giorno considerato √® lavorativo ed √® il giorno con turno diurno;
+		 * 2) il giorno considerato √® lavorativo ed √® il giorno con turno notturno;
+		 * 3) non √® un giorno lavorativo.
 		 * Delle prime due ho poi valutato se nell'istante in cui si chiama la servlet il turno:
 		 * 1)deve ancora iniziare
-		 * 2)Ë in corso
-		 * 3)Ë terminato
+		 * 2)√® in corso
+		 * 3)√® terminato
 		 * 
 		 */
 		
@@ -59,30 +60,30 @@ public class PersonaleDisponibileServlet extends HttpServlet{
 		//giorno lavorativo e turno diurno
 		if(GiornoLavorativo.isLavorativo(giorno) && GiornoLavorativo.isDiurno(giorno)) {
 			if(ora.isBefore(inizioDiurno)) {
-				request.setAttribute("titolo", "Il turno lavorativo diurno inizier‡ tra poco, il personale disponibile sar‡ il seguente");
+				request.setAttribute("titolo", "Il turno lavorativo diurno inizier√† tra poco, il personale disponibile sar√† il seguente");
 			}
 			else if(ora.isAfter(inizioDiurno) && ora.isBefore(fineDiurno)) {
-				request.setAttribute("titolo", "Il personale disponibile Ë il seguente");
+				request.setAttribute("titolo", "Il personale disponibile √® il seguente");
 			}
 			else {
 				giorno=GiornoLavorativo.nextLavorativo(giorno);
 				String giornoLavoro=""+giorno.toLocalDate().getDayOfMonth()+" "+Mese(giorno.toLocalDate().getMonthValue())+" "+giorno.toLocalDate().getYear();
-				request.setAttribute("titolo", "Il personale disponibile per domani "+giornoLavoro+" sar‡ il seguente");
+				request.setAttribute("titolo", "Il personale disponibile per domani "+giornoLavoro+" sar√† il seguente");
 
 			}
 		}
 		//giorno lavorativo e turno notturno
 		else if(GiornoLavorativo.isLavorativo(giorno) && !GiornoLavorativo.isDiurno(giorno)) {
 			if(ora.isBefore(inizioNotturno)) {
-				request.setAttribute("titolo", "Il turno lavorativo notturno inizier‡ tra poco, il personale disponibile sar‡ il seguente");
+				request.setAttribute("titolo", "Il turno lavorativo notturno inizier√† tra poco, il personale disponibile sar√† il seguente");
 			}
 			else if(ora.isAfter(inizioNotturno) && ora.isBefore(fineNotturno)) {
-				request.setAttribute("titolo", "Il personale disponibile Ë il seguente");
+				request.setAttribute("titolo", "Il personale disponibile √® il seguente");
 			}
 			else {
 				giorno=GiornoLavorativo.nextLavorativo(giorno);
 				String giornoLavoro=""+giorno.toLocalDate().getDayOfMonth()+" "+Mese(giorno.toLocalDate().getMonthValue())+" "+giorno.toLocalDate().getYear();
-				request.setAttribute("titolo", "Il personale disponibile per il giorno "+ giornoLavoro +" sar‡ il seguente");
+				request.setAttribute("titolo", "Il personale disponibile per il giorno "+ giornoLavoro +" sar√† il seguente");
 			}
 
 		}
@@ -90,7 +91,7 @@ public class PersonaleDisponibileServlet extends HttpServlet{
 		else {
 			giorno=GiornoLavorativo.nextLavorativo(giorno);
 			String giornoLavoro=""+giorno.toLocalDate().getDayOfMonth()+" "+Mese(giorno.toLocalDate().getMonthValue())+" "+giorno.toLocalDate().getYear();
-			request.setAttribute("titolo", "Il personale disponibile per il giorno "+ giornoLavoro +" sar‡ il seguente");
+			request.setAttribute("titolo", "Il personale disponibile per il giorno "+ giornoLavoro +" sar√† il seguente");
 			
 		}
 		
@@ -154,7 +155,7 @@ public class PersonaleDisponibileServlet extends HttpServlet{
 
 		/*
 		 * Per ordinare l'array di componenti della squadra in base alla tipologia della squadra di appartenenza
-		 * con priorit‡ a sala operativa, poi prima partenza, poi auto scala e infine auto botte.
+		 * con priorit√† a sala operativa, poi prima partenza, poi auto scala e infine auto botte.
 		 * In caso di tipologia uguale, ordina in base al cognome che ricava dalla mail
 		 * essendo la mail composta sempre da nome<numero>.cognome
 		 * 
