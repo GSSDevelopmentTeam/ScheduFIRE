@@ -1,0 +1,35 @@
+@charset "ISO-8859-1";
+body{
+	background-color: #f2f2f2;
+	font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+h2{
+	color:#B60000;
+	margin-left: 10%;
+}
+
+h5{
+	margin-left: 10%;
+	color: black;
+}
+
+td {	
+	border-bottom: 0.5px inset #B60000;
+	text-align: center;
+		height: 30px;
+}
+
+th {	
+	border-bottom: 0.5px inset #B60000;
+	background-color: rgba(255, 255, 255, 0.75);
+	color: #B60000;
+	border-radius: 8px;
+	height: 30px;
+	text-align: center;
+}
+
+table{
+	margin-left: 3%;
+	width: 90%
+}

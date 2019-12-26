@@ -40,7 +40,7 @@ public class AggiungiVFServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
+
 		//Ottenimento oggetto sessione dalla richiesta
 		HttpSession session = request.getSession();
 		
@@ -49,103 +49,100 @@ public class AggiungiVFServlet extends HttpServlet {
 		
 		//Controllo credenziali
 		if( credenziali == null )
-			//lancio eccezione
-			;
+			throw new ScheduFIREException();
+		
 		/*
 		if( credenziali.getRuolo() == "vigile" ) //definire bene la stringa
-			//lancio eccezione
-			;
+			throw new ScheduFIREException();
 		
 		//Ottenimento dati del CapoTurno
 		CapoTurnoBean ct = CapoTurnoDao.ottieni(credenziali.getUsername());
 		
 		//Controllo CapoTurno
 		if(ct == null)
-			//lancio eccezione
-			;
+			throw new ScheduFIREException();
+
 		 */
-		VigileDelFuocoBean vf = null;
 		
 		//Ottenimento parametro email dalla richiesta
 		String email = request.getParameter("email");;
 		
 		//Controllo email
 		if( email == null )
-			//lancio eccezione
-			;
+			throw new ScheduFIREException();
+
+		// Ottenimento parametri del VF dalla richiesta
+		String nome = request.getParameter("nome");;
+		String cognome = request.getParameter("cognome");;
+		String turno = /*ct.getTurno()*/ "B";
+		String mansione = request.getParameter("mansione");;
+		String username = "turno"/* + ct.getTurno()*/;
+		String grado = request.getParameter("grado");
+		String giorniFerieAnnoCorrenteStringa = request.getParameter("giorniFerieAnnoCorrente");
+		String giorniFerieAnnoPrecedenteStringa = request.getParameter("giorniFerieAnnoPrecedente");
 		
-		if((vf = VigileDelFuocoDao.ottieni(email)) != null) {
+		//aggiungere controlli dei parametri
+		
+		//Controlli
+		if( nome == null )
+			throw new ScheduFIREException();
+		
+		if( cognome == null )
+			throw new ScheduFIREException();
+		
+		if( turno == null )
+			throw new ScheduFIREException();
+		
+		if( mansione == null )
+			throw new ScheduFIREException();
+		
+		if( giorniFerieAnnoCorrenteStringa == null )
+			throw new ScheduFIREException();
+		
+		if( giorniFerieAnnoPrecedenteStringa == null )
+			throw new ScheduFIREException();
+		
+		if( grado == null )
+			throw new ScheduFIREException();
+		
+		//Conversione parametri da Stringa ad interi
+		Integer giorniFerieAnnoCorrente = Integer.parseInt(giorniFerieAnnoCorrenteStringa); 
+		Integer giorniFerieAnnoPrecedente = Integer.parseInt(giorniFerieAnnoPrecedenteStringa);
+
+		// Instanziazione dell'oggetto VigileDelFuocoBean
+		VigileDelFuocoBean vf = new VigileDelFuocoBean(nome, cognome, email, turno, mansione, username, grado,
+														giorniFerieAnnoCorrente, giorniFerieAnnoPrecedente);
+		
+		//Controllo se il Vigile del Fuoco è già presente nel database
+		VigileDelFuocoBean vigileDb = null;
+		if((vigileDb = VigileDelFuocoDao.ottieni(email)) != null) {
 			
-			if(vf.isAdoperabile()) {
-				//lancio eccezione
+			//Se il Vigile del Fuoco è già presente nel database ed è adoperabile si lancia l'eccezione
+			if(vigileDb.isAdoperabile()) {
+				
+				throw new ScheduFIREException();
+				
 			} else {
 				
-				//Si setta il campo Adoperabile
-				if(! VigileDelFuocoDao.setAdoperabile(email, true)) 
-					//lancio eccezione
-					;
+				//Si effettua l'aggiornamento dei dati nel database
+				if( ! VigileDelFuocoDao.modifica(email, vf)) 
+					throw new ScheduFIREException();
+				
+				if( ! VigileDelFuocoDao.setAdoperabile(email, true)) 
+					throw new ScheduFIREException();
+				
 			}
 			
 		} else {
-		
-			// Ottenimento parametri del VF dalla richiesta
-			String nome = request.getParameter("nome");;
-			String cognome = request.getParameter("cognome");;
-			String turno = request.getParameter("turno");;
-			String mansione = request.getParameter("mansione");;
-			String username = "turno"/* + ct.getTurno()*/;
-			String grado = request.getParameter("grado");
-			String giorniFerieAnnoCorrenteStringa = request.getParameter("giorniFerieAnnoCorrente");
-			String giorniFerieAnnoPrecedenteStringa = request.getParameter("giorniFerieAnnoPrecedente");
-			
-			//aggiungere controlli dei parametri
-			
-			//Controlli
-	
-			if( nome == null )
-				//lancio eccezione
-				;
-			
-			if( cognome == null )
-				//lancio eccezione
-				;
-			
-			if( turno == null )
-				//lancio eccezione
-				;
-			
-			if( mansione == null )
-				//lancio eccezione
-				;
-			
-			if( giorniFerieAnnoCorrenteStringa == null )
-				//lancio eccezione
-				;
-			
-			if( giorniFerieAnnoPrecedenteStringa == null )
-				//lancio eccezione
-				;
-			
-			if( grado == null )
-				//lancio eccezione
-				;
-			
-			Integer giorniFerieAnnoCorrente = Integer.parseInt(giorniFerieAnnoCorrenteStringa); 
-			Integer giorniFerieAnnoPrecedente = Integer.parseInt(giorniFerieAnnoPrecedenteStringa); 
-			
-			// Instanziazione dell'oggetto VigileDelFuocoBean
-			vf = new VigileDelFuocoBean(nome, cognome, email, turno, mansione, username,
-															grado, giorniFerieAnnoCorrente, giorniFerieAnnoPrecedente);
 			
 			// Controllo salvataggio Vigile del Fuoco nel database
 			if(! VigileDelFuocoDao.salva(vf))
-				// Lancio eccezione
-				;
-		
+				throw new ScheduFIREException();
+
 		}
-		
+
 		// Reindirizzamento alla jsp
-		request.getRequestDispatcher("/").forward(request, response);
+		request.getRequestDispatcher("/JSP/GestionePersonaleJSP.jsp").forward(request, response);
 			
 	}
 
