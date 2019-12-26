@@ -39,7 +39,7 @@ public class GestioneFerieServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		ArrayList<VigileDelFuocoBean> listaVigili = VigileDelFuocoDao.ottieniListaVF();
+		ArrayList<VigileDelFuocoBean> listaVigili = new ArrayList<VigileDelFuocoBean>(VigileDelFuocoDao.ottieni());
 		
 		request.setAttribute("listaVigili", listaVigili);
 		request.getRequestDispatcher("JSP/GestioneFerieJSP.jsp").forward(request, response);
