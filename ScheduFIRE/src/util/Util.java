@@ -168,4 +168,13 @@ public class Util {
 
 		return toReturn;
 	}
+	
+	public static List<VigileDelFuocoBean> ottieniSquadra(Date data) {
+		List<ComponenteDellaSquadraBean> lista = ComponenteDellaSquadraDao.getComponenti(data);
+		List<VigileDelFuocoBean> squadra = new ArrayList<>();
+		for(ComponenteDellaSquadraBean membro : lista) {
+			squadra.add(VigileDelFuocoDao.ottieni(membro.getEmailVF()));
+		}
+		return squadra;
+	}
 }

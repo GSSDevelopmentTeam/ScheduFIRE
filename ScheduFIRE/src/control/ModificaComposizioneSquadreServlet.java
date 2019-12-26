@@ -1,7 +1,8 @@
 package control;
 
 import java.io.IOException;
-import java.util.ArrayList;
+import java.sql.Date;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -10,19 +11,19 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import model.bean.VigileDelFuocoBean;
-import model.dao.VigileDelFuocoDao;
+import util.Util;
 
 /**
- * Servlet implementation class GestioneFerieServlet
+ * Servlet implementation class ModificaComposizioneSquadreServlet
  */
-@WebServlet("/GestioneFerieServlet")
-public class GestioneFerieServlet extends HttpServlet {
+@WebServlet(description = "Servlet per la modifica di una squadra già esistente", urlPatterns = { "/ModificaComposizioneSquadreServlet" })
+public class ModificaComposizioneSquadreServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public GestioneFerieServlet() {
+    public ModificaComposizioneSquadreServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -31,18 +32,16 @@ public class GestioneFerieServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		doPost(request, response);
+		List<VigileDelFuocoBean> squadra = Util.ottieniSquadra(Date.valueOf(request.getParameter("data")));
+		
 	}
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
-		ArrayList<VigileDelFuocoBean> listaVigili = new ArrayList<VigileDelFuocoBean>(VigileDelFuocoDao.ottieni());
-		
-		request.setAttribute("listaVigili", listaVigili);
-		request.getRequestDispatcher("JSP/GestioneFerieJSP.jsp").forward(request, response);
+		// TODO Auto-generated method stub
+		doGet(request, response);
 	}
 
 }

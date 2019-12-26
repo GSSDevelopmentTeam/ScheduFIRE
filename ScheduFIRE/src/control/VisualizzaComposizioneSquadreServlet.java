@@ -1,7 +1,8 @@
 package control;
 
 import java.io.IOException;
-import java.util.ArrayList;
+import java.sql.Date;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -9,40 +10,38 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import model.bean.ComponenteDellaSquadraBean;
 import model.bean.VigileDelFuocoBean;
-import model.dao.VigileDelFuocoDao;
+import model.dao.ComponenteDellaSquadraDao;
+import util.Util;
 
 /**
- * Servlet implementation class GestioneFerieServlet
+ * Servlet implementation class VisualizzaComposizioneSquadreServlet
  */
-@WebServlet("/GestioneFerieServlet")
-public class GestioneFerieServlet extends HttpServlet {
+@WebServlet(description = "Servlet per la visualizzazione di una squadra esistente", urlPatterns = { "/VisualizzaComposizioneSquadreServlet" })
+public class VisualizzaComposizioneSquadreServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public GestioneFerieServlet() {
+    public VisualizzaComposizioneSquadreServlet() {
         super();
-        // TODO Auto-generated constructor stub
     }
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		doPost(request, response);
+		Date data = Date.valueOf(request.getParameter("data"));
+		List<VigileDelFuocoBean> squadra = Util.ottieniSquadra(data);
 	}
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
-		ArrayList<VigileDelFuocoBean> listaVigili = new ArrayList<VigileDelFuocoBean>(VigileDelFuocoDao.ottieni());
-		
-		request.setAttribute("listaVigili", listaVigili);
-		request.getRequestDispatcher("JSP/GestioneFerieJSP.jsp").forward(request, response);
+		doGet(request, response);
 	}
 
 }
