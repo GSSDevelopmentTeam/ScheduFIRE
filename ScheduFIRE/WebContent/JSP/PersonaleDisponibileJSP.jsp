@@ -48,7 +48,7 @@
 						<td><%=vigile.getCognome() %></td>
 						<td><%=vigile.getEmail() %></td>
 						<td><%=vigile.getMansione() %></td>
-						<td> / </td>
+						<td></td>
 					</tr>
 
 					<% } %>
