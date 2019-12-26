@@ -30,7 +30,7 @@ public class FerieDao {
 		List<FerieBean> periodi = new ArrayList<FerieBean>();
 		
 		String ferieSQL = "SELECT f.id, f.dataInizio, f.dataFine, f.emailCT, f.emailVF " +
-							"FROM Ferie f WHERE f.emailVF = ? f.dataFine >= CURDATE();";
+							"FROM Ferie f WHERE f.emailVF = ? AND f.dataFine >= CURDATE();";
 		
 		try(Connection connessione = ConnessioneDB.getConnection()){
 			

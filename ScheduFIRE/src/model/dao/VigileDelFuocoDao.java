@@ -8,6 +8,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.List;
 
 import model.ConnessioneDB;
 import model.bean.VigileDelFuocoBean;
@@ -266,7 +267,7 @@ public class VigileDelFuocoDao {
 	 * @return una lista di VigileDelFuocoBean che hanno attributo adoperabile=true 
 	 * 			e non sono in ferie o malattia nella data passata come parametro
 	 */
-	public static ArrayList<VigileDelFuocoBean> getDisponibili(Date data){
+	public static List<VigileDelFuocoBean> getDisponibili(Date data){
 		try(Connection con = ConnessioneDB.getConnection()) {
 
 			// Query di ricerca
