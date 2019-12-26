@@ -3,6 +3,7 @@ package control;
 import java.io.IOException;
 import java.sql.Date;
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -29,7 +30,7 @@ public class PersonaleDisponibileServlet extends HttpServlet{
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		//prendo i vigili del fuoco disponibili alla data odierna
-		ArrayList<VigileDelFuocoBean> vigili=VigileDelFuocoDao.getDisponibili(new Date(System.currentTimeMillis()));
+		List<VigileDelFuocoBean> vigili=VigileDelFuocoDao.getDisponibili(new Date(System.currentTimeMillis()));
 		request.setAttribute("vigili", vigili);
 		request.getRequestDispatcher("JSP/PersonaleDisponibile.jsp").forward(request, response);
 		
