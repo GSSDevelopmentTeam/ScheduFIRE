@@ -1,34 +1,35 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1" import="java.util.*"%>
 
+<%@ page import="control.* "%>
 
+<%  String ruolo = (String) session.getAttribute("ruolo");%>
 <!DOCTYPE html>
 <html>
 <head>
 
-<meta charset="ISO-8859-1">
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<%@ include file = "StandardJSP.jsp" %>
 <link type="text/css" rel="stylesheet" href="CSS/CalendarioCSS.css"></link>
-<link rel="stylesheet" href="CSS/HeaderCSS.css">
-<link rel="icon" href="../IMG/logoSF.png">
+
 
 <title>ScheduFIRE</title>
 <%
-	String[] days = {"LunedÃ¬", "MartedÃ¬", "MercoledÃ¬", "GiovedÃ¬", "VenerdÃ¬", "Sabato", "Domenica"};
+	String modalita_uso = "Schiacchiare su un giorno per visualizzare le squadre";
+	String empty = " ";
+	String[] days = {"  Lunedì  ", " Martedì  ", "Mercoledì ", " Giovedì  ", " Venerdì  ", "  Sabato  ", "   Domenica "};
 	String[] month = {"Gennaio", "Febbraio", "Marzo", "Aprile", "Maggio", "Giugno", "Luglio", "Agosto",
 			"Settembre", "Ottobre", "Novembre", "Dicembre"};
-	int giorno = Integer.parseInt((String) request.getAttribute("giorno"));
-	int mese = Integer.parseInt((String) request.getAttribute("mese"));
-	int anno = Integer.parseInt((String) request.getAttribute("anno"));
+	int giorno = (Integer) request.getAttribute("giorno");
+	int mese = (Integer) request.getAttribute("mese");
+	int anno = (Integer) request.getAttribute("anno");
+	int anno_corrente = Integer.parseInt ((String) request.getAttribute("anno_corrente"));
+	int mese_corrente = Integer.parseInt ((String) request.getAttribute("mese_corrente"));
 	String mese_stringa = (String) request.getAttribute("meseStringa");
 	int[] days_month = (int[]) request.getAttribute("days_month");
 	ArrayList<String> sala_operativa = (ArrayList<String>) request.getAttribute("sala_operativa");
 	ArrayList<String> prima_partenza = (ArrayList<String>) request.getAttribute("prima_partenza");
 	ArrayList<String> autoscala = (ArrayList<String>) request.getAttribute("autoscala");
 	ArrayList<String> autobotte = (ArrayList<String>) request.getAttribute("autobotte");
-
-	String empty = " ";
 
 	//print per controllare se i dati passati dalla servlet sono giusti!
 	System.out.println("CalendarioJSP -> " + giorno + "/" + mese + "/" + anno + " -- " + mese_stringa);
@@ -39,26 +40,23 @@
 	<jsp:include page="HeaderJSP.jsp" />
 	<div class="container">
 		<div class="container-calendar">
-			<div class="container-month-year" id="mese_anno">
-				<%=mese_stringa%>
+			<div class="container-month-year">
+				<a class="altroAnno" href="CalendarioServlet?mese=<%=mese %>&anno=<%=anno-1 %>"><img src="IMG/previous.png"/></a>
 				<%=anno%>
+				<a class="altroAnno" href="CalendarioServlet?mese=<%=mese %>&anno=<%=anno+1 %>"><img src="IMG/next.png"/></a>
 			</div>
-
+			
 			<div class="grid-chose-month">
 				<div class="dropdown">
-					<button class="dropbtn">Scegli un altro mese</button>
+					<button class="dropbtn"><%=month[mese-1]%>  <img src="IMG/arrow-down.png"/></button>
 					<div class="dropdown-content">
 							<%
 							for (int k = 0; k <= 11; k++) {
 						%>
-						 <a class="dropdown-item" href="CalendarioServlet?mese=<%=k+1 %>"><%=month[k]%></a>
-						 <br>
-						
+						 <a class="dropdown-item" href="CalendarioServlet?mese=<%=k+1 %>&anno=<%=anno%>"><%=month[k]%></a>						
 						<%	}	%>
-						
-
-						
 					</div>
+				
 				</div>
 			</div>
 
@@ -77,7 +75,7 @@
 				<%
 					} else { day++;
 					String classe = "";
-					if(giorno==day){
+					if(giorno==day && mese_corrente == mese && anno_corrente == anno){
 						classe ="giornoCorrente";
 					}
 				%>
@@ -91,7 +89,16 @@
 
 
 			</div>
+					
+			<!-- Accesso effettuato dal capoturno -->
+			<%if(ruolo.equalsIgnoreCase("capoturno")){%>
+			<div class="edit">
+				<img src="IMG/edit.png"/><a href ="#">Modifica squadre</a><br>
+			</div>
+			<%} %>
 		</div>
+				
+		<a><%=modalita_uso%></a>
 		<div class="container-schedul">
 
 
@@ -146,7 +153,6 @@
 			</div>
 
 		</div>
-
 
 	</div>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>

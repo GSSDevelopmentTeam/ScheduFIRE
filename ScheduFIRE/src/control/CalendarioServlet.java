@@ -4,13 +4,9 @@
 package control;
 
 import java.io.IOException;
-
 import java.sql.Date;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.TimeZone;
-
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -18,8 +14,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import model.bean.ComponenteDellaSquadraBean;
+import model.bean.CredenzialiBean;
 import model.bean.VigileDelFuocoBean;
 import model.dao.ComponenteDellaSquadraDao;
+import model.dao.UserDao;
 import model.dao.VigileDelFuocoDao;
 
 /**
@@ -66,6 +64,12 @@ public class CalendarioServlet extends HttpServlet {
 		String meseJSP = request.getParameter("mese");
 		if(meseJSP!=null) {
 			mese = Integer.parseInt(meseJSP);
+			
+		}
+		
+		String annoJSP = request.getParameter("anno");
+		if(annoJSP!=null) {
+			anno = Integer.parseInt(annoJSP);
 			
 		}
 	
@@ -137,9 +141,7 @@ public class CalendarioServlet extends HttpServlet {
 				"\nautobotte"+autobotte.toString()+
 				"\nautoscala"+autoscala.toString());
 
-		
-		
-		
+	
 		//attributi passati al CalendarioJSP.jsp
 		//array delle squadre
 		request.setAttribute("sala_operativa", sala_operativa);
@@ -147,9 +149,11 @@ public class CalendarioServlet extends HttpServlet {
 		request.setAttribute("autoscala", autoscala);
 		request.setAttribute("autobotte", autobotte);
 		//...//
-		request.setAttribute("anno", anno_stringa_numero);
-		request.setAttribute("mese", mese_stringa_numero);
-		request.setAttribute("giorno", giorno_stringa_numero);
+		request.setAttribute("anno_corrente", anno_stringa_numero);
+		request.setAttribute("mese_corrente", mese_stringa_numero);
+		request.setAttribute("anno", anno);
+		request.setAttribute("mese", mese);
+		request.setAttribute("giorno", giorno);
 		request.setAttribute("meseStringa", month[mese-1]);
 		request.setAttribute("days_month", days_month);
 		
