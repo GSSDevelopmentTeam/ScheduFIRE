@@ -14,6 +14,8 @@ import model.dao.VigileDelFuocoDao;
 
 /**
  * Servlet implementation class GestioneFerieServlet
+ * 
+ * @author Nicola Labanca
  */
 @WebServlet("/GestioneFerieServlet")
 public class GestioneFerieServlet extends HttpServlet {
