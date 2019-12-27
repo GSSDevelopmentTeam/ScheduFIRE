@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import model.bean.ComponenteDellaSquadraBean;
 import model.bean.VigileDelFuocoBean;
 import util.Util;
 
@@ -32,7 +33,13 @@ public class ModificaComposizioneSquadreServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		List<VigileDelFuocoBean> squadra = Util.ottieniSquadra(Date.valueOf(request.getParameter("data")));
+		if(request.getAttribute("lista") != null) {
+			@SuppressWarnings("unchecked")
+			List<ComponenteDellaSquadraBean> lista = 
+					(List<ComponenteDellaSquadraBean>) request.getAttribute("lista");
+			
+			
+		}
 		
 	}
 

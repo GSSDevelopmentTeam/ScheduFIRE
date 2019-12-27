@@ -11,6 +11,7 @@ import java.util.Comparator;
 import java.util.List;
 import model.ConnessioneDB;
 import model.bean.ComponenteDellaSquadraBean;
+import model.bean.VigileDelFuocoBean;
 
 /**
  * 
@@ -77,9 +78,6 @@ public class ComponenteDellaSquadraDao {
 		return ps.executeUpdate();
 
 	}
-	
-	
-	
 	
 
 }
