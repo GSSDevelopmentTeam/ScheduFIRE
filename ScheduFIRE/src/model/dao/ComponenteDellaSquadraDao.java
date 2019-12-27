@@ -11,6 +11,7 @@ import java.util.Comparator;
 import java.util.List;
 import model.ConnessioneDB;
 import model.bean.ComponenteDellaSquadraBean;
+import model.bean.VigileDelFuocoBean;
 
 /**
  * 
@@ -87,7 +88,7 @@ public class ComponenteDellaSquadraDao {
 
 	/*
 	 * Per ordinare l'array di componenti della squadra in base alla tipologia della squadra di appartenenza
-	 * con priorità a sala operativa, poi prima partenza, poi auto scala e infine auto botte.
+	 * con prioritï¿½ a sala operativa, poi prima partenza, poi auto scala e infine auto botte.
 	 * In caso di tipologia uguale, ordina in base al cognome che ricava dalla mail
 	 * essendo la mail composta sempre da nome<numero>.cognome
 	 * 

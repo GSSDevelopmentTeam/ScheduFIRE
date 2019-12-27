@@ -2,6 +2,7 @@ package control;
 
 import java.io.IOException;
 import java.sql.Date;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -13,6 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import model.bean.ComponenteDellaSquadraBean;
 import model.bean.VigileDelFuocoBean;
 import model.dao.ComponenteDellaSquadraDao;
+import model.dao.VigileDelFuocoDao;
 import util.Util;
 
 /**
@@ -21,20 +23,36 @@ import util.Util;
 @WebServlet(description = "Servlet per la visualizzazione di una squadra esistente", urlPatterns = { "/VisualizzaComposizioneSquadreServlet" })
 public class VisualizzaComposizioneSquadreServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
-    public VisualizzaComposizioneSquadreServlet() {
-        super();
-    }
+
+	/**
+	 * @see HttpServlet#HttpServlet()
+	 */
+	public VisualizzaComposizioneSquadreServlet() {
+		super();
+	}
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		Date data = Date.valueOf(request.getParameter("data"));
-		List<VigileDelFuocoBean> squadra = Util.ottieniSquadra(data);
+		List<VigileDelFuocoBean> squadra;
+		if(request.getParameter("lista") == null) {
+			Date data = Date.valueOf(request.getParameter("data"));
+			squadra = Util.ottieniSquadra(data);
+			request.setAttribute("nonSalvata", false);
+		}
+		else {
+			@SuppressWarnings("unchecked")
+			List<ComponenteDellaSquadraBean> lista = 
+			(List<ComponenteDellaSquadraBean>) request.getAttribute("lista");
+			squadra = new ArrayList<>();
+			for(ComponenteDellaSquadraBean membro : lista) {
+				squadra.add(VigileDelFuocoDao.ottieni(membro.getEmailVF()));
+			}
+			request.setAttribute("nonSalvata", true);
+		}
+		request.setAttribute("squadra", squadra);
+		request.getRequestDispatcher("JSP/GestioneSquadreJSP").forward(request, response);
 	}
 
 	/**
