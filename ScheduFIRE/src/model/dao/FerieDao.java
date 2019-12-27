@@ -30,7 +30,7 @@ public class FerieDao {
 		List<FerieBean> periodi = new ArrayList<FerieBean>();
 		
 		String ferieSQL = "SELECT f.id, f.dataInizio, f.dataFine, f.emailCT, f.emailVF " +
-							"FROM Ferie f WHERE f.emailVF = ? f.dataFine >= CURDATE();";
+							"FROM Ferie f WHERE f.emailVF = ? AND f.dataFine >= CURDATE();";
 		
 		try(Connection connessione = ConnessioneDB.getConnection()){
 			
@@ -62,6 +62,31 @@ public class FerieDao {
 		}
 		
 		return periodi;
+	}
+	
+	public static boolean rimuoviPeriodoFerie(String emailVF, Date dataInizio, Date dataFine) {
+		
+		boolean rimozione = false;
+		PreparedStatement ps;
+		ResultSet rs;
+		
+		String rimozioneFerieSQL = "DELETE FROM Ferie WHERE (emailVF = ? AND dataInizio = ? AND dataFine = ?);";
+		
+		try(Connection connessione = ConnessioneDB.getConnection()){
+			
+			ps = connessione.prepareStatement(rimozioneFerieSQL);
+			ps.setString(1, emailVF);
+			ps.setDate(2, dataInizio);
+			ps.setDate(3, dataFine);
+			
+			if(ps.execute())
+				rimozione = true;
+			
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return rimozione;
 	}
 
 }
