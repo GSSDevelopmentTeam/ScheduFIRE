@@ -6,19 +6,19 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 import model.ConnessioneDB;
+import util.GiornoLavorativo;
 
 public class ListaSquadreDao {
 
-	public static boolean aggiungiSquadra(Date giornoLavorativo, int oraIniziale, String emailCT) {
+	public static boolean aggiungiSquadre(Date data) {
 		try(Connection con = ConnessioneDB.getConnection()) {
 			PreparedStatement ps = con.prepareStatement("INSERT INTO listasquadre(giornoLavorativo, "
-					+ "oraIniziale, emailCT) values (?, ?, ?);");
-			ps.setDate(1, giornoLavorativo);
-			ps.setInt(2, oraIniziale);
-			ps.setString(3, emailCT);
-			
-			return(ps.executeUpdate() == 1);
-		} catch (SQLException e) {
+					+ "oraIniziale, emailCT) VALUES (?, ?, ?);");
+			ps.setDate(1, data);
+			ps.setInt(2, (GiornoLavorativo.isDiurno(data) ? 8 : 20));
+			return (ps.executeUpdate() == 1);
+		}
+		catch(SQLException e) {
 			throw new RuntimeException(e);
 		}
 	}

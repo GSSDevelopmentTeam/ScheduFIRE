@@ -13,6 +13,8 @@ import javax.servlet.http.HttpSession;
 
 import model.bean.ComponenteDellaSquadraBean;
 import model.dao.ComponenteDellaSquadraDao;
+import model.dao.ListaSquadreDao;
+import model.dao.SquadraDao;
 import util.Util;
 
 /**
@@ -40,7 +42,9 @@ public class GeneraSquadreServlet extends HttpServlet {
 			Date data = (Date) request.getAttribute("data");
 			try {
 				List<ComponenteDellaSquadraBean> lista = Util.generaSquadra(data);
-				if(!ComponenteDellaSquadraDao.setComponenti(lista)) {
+				if((!ComponenteDellaSquadraDao.setComponenti(lista)) ||
+						(!SquadraDao.aggiungiSquadra(data)) || 
+						(!ListaSquadreDao.aggiungiSquadre(data, sessione.getAttribute(name))) ){
 					//exception
 				}					
 			} catch (NotEnoughMembersException e) {
