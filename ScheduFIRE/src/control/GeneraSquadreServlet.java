@@ -29,7 +29,6 @@ public class GeneraSquadreServlet extends HttpServlet {
      */
     public GeneraSquadreServlet() {
         super();
-        // TODO Auto-generated constructor stub
     }
 
 	/**
@@ -42,9 +41,10 @@ public class GeneraSquadreServlet extends HttpServlet {
 			Date data = (Date) request.getAttribute("data");
 			try {
 				List<ComponenteDellaSquadraBean> lista = Util.generaSquadra(data);
+				
 				if((!ComponenteDellaSquadraDao.setComponenti(lista)) ||
 						(!SquadraDao.aggiungiSquadra(data)) || 
-						(!ListaSquadreDao.aggiungiSquadre(data, sessione.getAttribute(name))) ){
+						(!ListaSquadreDao.aggiungiSquadre(data, (String) sessione.getAttribute("email"))) ){
 					//exception
 				}					
 			} catch (NotEnoughMembersException e) {
