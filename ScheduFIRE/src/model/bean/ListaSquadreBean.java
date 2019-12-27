@@ -10,7 +10,6 @@ public class ListaSquadreBean {
 	private int oraIniziale;
 	
 	//Costruttore
-	
 	public ListaSquadreBean(Date giornoLavorativo, String emailCT, int oraIniziale) {
 		this.giornoLavorativo = giornoLavorativo;
 		this.emailCT = emailCT;

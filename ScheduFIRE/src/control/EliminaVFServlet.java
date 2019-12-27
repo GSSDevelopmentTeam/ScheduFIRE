@@ -10,6 +10,7 @@ import javax.servlet.http.HttpSession;
 
 import model.bean.CredenzialiBean;
 import model.dao.VigileDelFuocoDao;
+import util.Validazione;
 
 /**
  * Servlet che si occupa del rendere non adoperabili i VigileDelFuocoBean nel database. 
@@ -38,30 +39,28 @@ public class EliminaVFServlet extends HttpServlet {
 				
 		//Ottenimento credenziali dell'utente dalla sessione
 		CredenzialiBean credenziali = (CredenzialiBean) session.getAttribute("credenziali"); 
-				
+		/*		
 		//Controllo credenziali
 		if( credenziali == null )
-			//lancio eccezione
-			;
+			throw new ScheduFIREException();
+
 		
 		if( credenziali.getRuolo() == "vigile" ) //definire bene la stringa
-			//lancio eccezione
-			;
-		
+			throw new ScheduFIREException();
+			
+		*/
 		//Ottenimento parametro email dalla richiesta
 		String email = request.getParameter("email");
 		
 		//Controllo email
-		if( email == null )
-			//lancio eccezione
-			;
+		if( ! Validazione.email(email) )
+			throw new ParametroInvalidoException("Il parametro 'email' è errato!");
 		
 		if( ! VigileDelFuocoDao.setAdoperabile(email, false))
-			//lancio eccezione
-			;
+			throw new GestionePersonaleException("La cancellazione del vigile del fuoco non è andata a buon fine!");
 		
 		// Reindirizzamento alla jsp
-		request.getRequestDispatcher("/").forward(request, response);
+		request.getRequestDispatcher("/GestionePersonaleServlet").forward(request, response);
 		
 	}
 

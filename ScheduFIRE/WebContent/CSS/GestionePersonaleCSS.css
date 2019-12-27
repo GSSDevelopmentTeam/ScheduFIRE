@@ -1,34 +1,8 @@
 @charset "ISO-8859-1";
 
-h2, section, div, h4, form {
-	text-align:center;
-}
-
-h2 {
-	color: #b60000;
-}
-
-input {
-	border: solid;
-	border-color: #b60000;
-	border-width: 1.5px;; 
-	border-radius: 10px;
+.modifica {
 	
-	background-color: #ff8080;
-	
-	outline:none;
+	display: none;
+
 }
 
-input[type = submit]:hover {
-	background-color: #ff4444;
-}
-
-form {
-	border: solid;
-	border-color: #b60000;
-	border-width: 1.5px;; 
-	border-radius: 50px;
-	
-	margin-right: 300px;
-	margin-left: 300px;
-}
