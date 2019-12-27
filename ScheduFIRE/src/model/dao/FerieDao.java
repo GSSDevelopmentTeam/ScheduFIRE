@@ -63,5 +63,30 @@ public class FerieDao {
 		
 		return periodi;
 	}
+	
+	public static boolean rimuoviPeriodoFerie(String emailVF, Date dataInizio, Date dataFine) {
+		
+		boolean rimozione = false;
+		PreparedStatement ps;
+		ResultSet rs;
+		
+		String rimozioneFerieSQL = "DELETE FROM Ferie WHERE (emailVF = ? AND dataInizio = ? AND dataFine = ?);";
+		
+		try(Connection connessione = ConnessioneDB.getConnection()){
+			
+			ps = connessione.prepareStatement(rimozioneFerieSQL);
+			ps.setString(1, emailVF);
+			ps.setDate(2, dataInizio);
+			ps.setDate(3, dataFine);
+			
+			if(ps.execute())
+				rimozione = true;
+			
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return rimozione;
+	}
 
 }
