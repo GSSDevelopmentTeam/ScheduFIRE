@@ -31,6 +31,9 @@ public class PersonaleDisponibileServlet extends HttpServlet{
 	}
 	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
+		Util.isCapoTurno(request);
+		
 		LocalDateTime ora=LocalDateTime.now();
 		LocalDateTime inizioDiurno=LocalDateTime.of(ora.getYear(), ora.getMonth(), ora.getDayOfMonth(), 8, 00);
 		LocalDateTime fineDiurno=inizioDiurno.plusHours(12);
@@ -98,7 +101,7 @@ public class PersonaleDisponibileServlet extends HttpServlet{
 		//prendo i vigili del fuoco disponibili alla data odierna
 		ArrayList<VigileDelFuocoBean> vigili=VigileDelFuocoDao.getDisponibili(giorno);
 		ArrayList<ComponenteDellaSquadraBean> componenti=ComponenteDellaSquadraDao.getComponenti(giorno);
-		Collections.sort(vigili, new VigileComparator());
+		//Collections.sort(vigili, new VigileComparator());
 		Collections.sort(componenti, new ComponenteComparator());
 
 		request.setAttribute("vigili", vigili);

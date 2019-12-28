@@ -38,11 +38,35 @@ public class GestioneFerieServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+<<<<<<< HEAD
 		
 		ArrayList<VigileDelFuocoBean> listaVigili = VigileDelFuocoDao.ottieniListaVF();
 		
 		request.setAttribute("listaVigili", listaVigili);
 		request.getRequestDispatcher("JSP/GestioneFerieJSP.jsp").forward(request, response);
+=======
+		if(request.getParameter("JSON")!=null ) {
+			String email=request.getParameter("email");
+			List<FerieBean> ferie=FerieDao.ottieniFerieConcesse(email);
+			JSONArray array = new JSONArray();
+			for(FerieBean ferieBean:ferie) {
+
+				JSONArray arrayrange = new JSONArray();
+				arrayrange.put(ferieBean.getDataInizio());
+				arrayrange.put(ferieBean.getDataFine().toLocalDate().plusDays(1));
+				array.put(arrayrange);
+
+			}
+			response.setContentType("application/json");
+			response.getWriter().append(array.toString());
+		}
+		else {
+			ArrayList<VigileDelFuocoBean> listaVigili = new ArrayList<VigileDelFuocoBean>(VigileDelFuocoDao.ottieni());
+
+			request.setAttribute("listaVigili", listaVigili);
+			request.getRequestDispatcher("JSP/GestioneFerieJSP.jsp").forward(request, response);
+		}
+>>>>>>> parent of 629e0dd... Merge pull request #169 from GSSDevelopmentTeam/alfredo
 	}
 
 }

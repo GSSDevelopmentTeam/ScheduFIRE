@@ -1,21 +1,52 @@
 /*contenitore per l'intero calendario*/
+
+body{
+	background-color: #f2f2f2;
+	font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
 * {
   box-sizing: border-box;
 }
+
+a {
+	text-decoration: none;
+	color: black;
+}
+
 .container {
+	position:relative;
 	margin-top: 2px;
 	margin-right: 10px;
 	display: flex;
 	width: 100%;
 	height: 100%;
 	background-color: white;
+	border: 3px solid black;
 }
 
-/*contenitore per il caalendario*/
+.edit{
+	background-color: #ffffa6;
+	border: 3px solid #d2d200;
+	border-radius: 12px;
+	position: absolute;
+	overflow: hidden;
+	font-size: 120%;
+	margin: 2%;
+	padding: 5px;
+	text-decoration: none;
+}
+
+.edit:hover{
+	background-color: #d2d200;
+}
+
+/*contenitore per il calendario*/
 .container-calendar {
 	width: 70%;
 	background-color: white;
 	font-family: Verdana;
+	border-right: 2px dotted black;
 }
 
 .container-calendar h1 h2 h3 {
@@ -24,11 +55,20 @@
 	font-family: Verdana;
 }
 
-.container-month-year {
+.altroAnno{
+	background-color: white;
+	color: black;
+	font-size: 40%;
+	border: none;
+	cursor: pointer;
+}
+
+.container-year {
+	overflow:hidden;
 	color: black;
 	font-family: Rod;
 	text-align: center;
-	font-size: 300%;
+	font-size: 200%;
 }
 
 /*contenitore per la schedulazione
@@ -37,21 +77,27 @@ flex:1 -> prende il resto del container*/
 	position: absolute;
 	top: 15%; bottom: 5%; left: 70%; right: 0.1%;
 	flex: 1;
-	background-color: white;
+	background-color: transparent;
 	font-family: Verdana;
 	margin: 1%;
-	overflow: auto;
-	border-left: 2px dotted black;
+	overflow: auto !important;
 	padding-left:1%;
-  	grid-template-rows: auto;
-  	color: #444;
 }
 
 /*id per la schedulazione delle squadre*/
+.wrapper {
+  grid-template-columns: auto;
+  grid-template-rows: auto;
+  background-color: #fff;
+  color: #444;
+}
 
 div.box{
-  background-color: #444;
-  color: #fff;
+  box-shadow: 20%;
+  color: black;
+  border: 3px solid white;
+  border-bottom-color: #b60000;
+  border-radius: 60%;
   margin: 20px 0 20px 0;
   font-size: 90%;
 }
@@ -64,10 +110,28 @@ div.box{
 
 .vigili{
 	font-style: italic;
-	color:black;
+	color: black;
 	text-align: center;
 }
 
+#giornoCorrente{
+	font-weight: bold;
+	color: #b60000;
+}
+
+#diurno{
+	background-color: #a0d6d6;
+}
+
+#notturno{
+	background-color: #57b7b7;
+}
+
+#giornoCorrenteLavortivo{
+	font-weight: bold;
+	color: #b60000;
+	background-color: #a0d6d6;
+}
 .grid-days {
 	display: grid;
 	grid-template-columns: auto auto auto auto auto auto auto;
@@ -113,9 +177,7 @@ non ha la proprietà :hover*/
 }
 
 .grid-item:hover {
-	border: 1px solid black;
-	background-color: white;
-	font-family: Verdana;
+	font-weight: bold;	
 }
 
 
@@ -131,7 +193,7 @@ non ha la proprietà :hover*/
 	background-color: white;
 	border-bottom: 2px solid black !important;
 	color: black;
-	font-size: 80%;
+	font-size: 150%;
 	border: none;
 	cursor: pointer;
 }
@@ -150,7 +212,8 @@ non ha la proprietà :hover*/
 	z-index: 1;
 }
 
-.dropdown-content a {
+.dropdown-item {
+	font-size: 80%;
 	color: #4b4b4b;
 	padding: 12px 12px;
 	text-decoration: none;
@@ -168,4 +231,8 @@ non ha la proprietà :hover*/
 
 .dropdown:hover .dropbtn {
 	background-color: white;
+}
+
+td {
+	text-align: center;
 }
