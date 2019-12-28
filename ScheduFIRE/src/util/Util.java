@@ -7,7 +7,10 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
 import control.NotEnoughMembersException;
+import control.ScheduFIREException;
 import model.bean.ComponenteDellaSquadraBean;
 import model.bean.SquadraBean;
 import model.bean.VigileDelFuocoBean;
@@ -189,6 +192,24 @@ public class Util {
 		Collections.sort(componenti, new ComponenteComparator());
 		return componenti;
 	}
+	
+	
+	public static void isLogged(HttpServletRequest request) throws ScheduFIREException {
+		if(request.getSession().getAttribute("ruolo")==null)
+			throw new ScheduFIREException("È richiesta l'autenticazione per poter accedere alle funzionalità del sito");
+		
+		}
+	
+	public static void isCapoTurno(HttpServletRequest request) throws ScheduFIREException {
+		if(request.getSession().getAttribute("ruolo")==null)
+			throw new ScheduFIREException("È richiesta l'autenticazione per poter accedere alle funzionalità del sito");
+		else {
+			String ruolo=(String)request.getSession().getAttribute("ruolo");
+			if(!ruolo.equals("capoturno"))
+				throw new ScheduFIREException("Devi essere capoturno per poter accedere a questa funzionalità");
+		}
+	}
+		
 	
 }
 	
