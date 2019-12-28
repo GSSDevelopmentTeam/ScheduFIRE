@@ -78,8 +78,10 @@ public class FerieDao {
 			ps.setString(1, emailVF);
 			ps.setDate(2, dataInizio);
 			ps.setDate(3, dataFine);
-			
-			if(ps.executeUpdate()>0)
+			int righe=ps.executeUpdate();
+			System.out.println("righe modificate: "+righe );
+			if(righe>0)
+				System.out.println();
 				rimozione = true;
 			
 		}catch(SQLException e) {
