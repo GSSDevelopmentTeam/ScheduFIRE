@@ -5,7 +5,7 @@ import java.io.IOException;
 import java.sql.Date;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Comparator;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -32,13 +32,13 @@ public class AjaxCalendario extends HttpServlet{
 	
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		System.out.println("Sono AjaxCalendario e sono stato chiamato");
-		String giornostr = request.getParameter("giorno");
-		String mesestr = "12"; //ToDo
-		String annostr = "2019"; //ToDo
+		String giornostr = request.getParameter("giorno").trim();
+		String mesestr = request.getParameter("mese").trim();
+		String annostr = request.getParameter("anno").trim();
 		int giorno;
 		int mese;
 		int anno;
+
 		try {
 			giorno=Integer.parseInt(giornostr);
 			mese=Integer.parseInt(mesestr);
@@ -49,7 +49,7 @@ public class AjaxCalendario extends HttpServlet{
 		}
 		Date data=Date.valueOf(LocalDate.of(anno, mese, giorno));
 		ArrayList<ComponenteDellaSquadraBean> componenti=ComponenteDellaSquadraDao.getComponenti(data);
-		ArrayList<VigileDelFuocoBean> vigili=VigileDelFuocoDao.getDisponibili(data);
+		List<VigileDelFuocoBean> vigili=VigileDelFuocoDao.getDisponibili(data);
 			
 		
 		JSONArray array = new JSONArray();
@@ -67,7 +67,6 @@ public class AjaxCalendario extends HttpServlet{
 				}
 		    }
 		}
-		System.out.println(array);
 		response.setContentType("application/json");
 		response.getWriter().append(array.toString());
 		
