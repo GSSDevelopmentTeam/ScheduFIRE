@@ -11,7 +11,6 @@
 <%@ include file="StandardJSP.jsp"%>
 <link type="text/css" rel="stylesheet" href="CSS/CalendarioCSS.css"></link>
 
-
 <title>ScheduFIRE</title>
 <%
 	String modalita_uso = "  Cliccare su un giorno per visualizzare le squadre";
@@ -47,11 +46,11 @@
 		<div class="container-calendar">
 
 			<!-- Accesso effettuato dal capoturno -->
-			<%//if(ruolo.equalsIgnoreCase("capoturno")){%>
-			<div class="edit">
-				<img src="IMG/edit.png" /><a href="#"><%=editSquadre%></a>
-			</div>
-			<%//} %>
+			<%if(ruolo.equalsIgnoreCase("capoturno")){%>
+			
+			<a href="#" class="edit" ><img src="IMG/edit.png" /><%=editSquadre%></a>
+			
+			<%} %>
 
 			<div class="container-year">
 				<a class="altroAnno"
@@ -62,8 +61,8 @@
 				</a>
 				<span id="annoVisulizzato"><%=anno%></span>
 				<a class="altroAnno"
-					href="CalendarioServlet?mese=<%=mese %>&anno=<%=anno+1 %>"> <img
-					src="IMG/arrow/right-arrow-empty.png"
+					href="CalendarioServlet?mese=<%=mese %>&anno=<%=anno+1 %>">
+					<img src="IMG/arrow/right-arrow-empty.png"
 					onmouseover="this.src='IMG/arrow/right-arrow-full.png'"
 					onmouseout="this.src='IMG/arrow/right-arrow-empty.png'" />
 				</a>
@@ -96,6 +95,7 @@
 					int day = 0;
 					int i = 0;
 					String id = "";
+					String img = "";
 					for (i=0; i < days_month.length; i++) {
 						if (days_month[i] < 0){
 							%>
@@ -109,10 +109,12 @@
 								id ="giornoCorrente";
 							}
 							if (days_work[i]==1){
-								id = "diurno";
+								id = "giornoLavorativoDiurno";
+								img = "diurno";
 							}
 							if(days_work[i]==2){
-								id = "notturno";
+								id = "giornoLavorativoNotturno";
+								img = "notturno";
 							}
 							if(giorno==day && mese_corrente == mese && anno_corrente == anno && days_work[i]==1){
 								id = "giornoCorrenteLavorativo";
@@ -121,11 +123,12 @@
 							
 							%>
 							<div class="grid-item" id="<%=id%>" onClick="dayClicked(this)">
-							<img src="IMG/<%=id%>.png" alt=" "/>
+							<img src="IMG/<%=img%>.png" alt=" "/>
 							<%=day%>
 							</div>
 							<%
 							id = "";
+							img="";
 						}
 					}
 				%>
