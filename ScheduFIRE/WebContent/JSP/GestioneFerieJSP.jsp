@@ -29,7 +29,7 @@
 
 <!--------- Alert ----------------->
 
-<div class="alert alert-success flex alert-dismissible fade in text-center" id="rimozioneOk" style="display: none;position:fixed;z-index: 99999; width:100%">
+<div class="alert alert-success flex alert-dismissible fade in text-center fixed-top" id="rimozioneOk" style="display: none;position:fixed;z-index: 99999; width:100%">
   <strong>Operazione riuscita!</strong> Rimozione ferie avvenuta con successo.
 </div>
 
@@ -61,7 +61,7 @@
 				</div>
 
 				<div class="modal-footer">
-					<button type="button" class="btn btn-secondary"
+					<button type="button" class="btn btn-danger"
 						data-dismiss="modal">Annulla</button>
 					<button type="button" class="btn btn-primary">Aggiungi
 						ferie</button>
@@ -82,7 +82,7 @@
 					<h5 class="modal-title" id="titoloRimuoviFerie">Rimuovi ferie</h5>
 					<button type="button" class="close" data-dismiss="modal"
 						aria-label="Close">
-						<span aria-hidden="true">&times;</span>
+						<span aria-hidden="true">&times; </span>
 					</button>
 				</div>
 				<div class="modal-body">
@@ -109,12 +109,7 @@
 
 					</div>
 
-					<div class="modal-footer">
-						<button type="button" class="btn btn-secondary"
-							data-dismiss="modal">Annulla</button>
-						<button type="button" class="btn btn-primary" data-dismiss="modal">Salva
-							modifiche</button>
-					</div>
+
 				</div>
 			</div>
 		</div>
@@ -134,7 +129,7 @@
         <p class="text-center">Vuoi cancellare queste ferie?<br> La procedura non può essere annullata.</p>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Annulla</button>
+        <button type="button" class="btn btn-danger" data-dismiss="modal">Annulla</button>
         <button type="button" class="btn btn-primary" data-dismiss="modal" onClick="rimuoviFerie()">Salva cambiamenti</button>
       </div>
     </div>
@@ -149,18 +144,18 @@
 		<table class="table  table-hover" id="listaVigili">
 			<thead class="thead-dark">
 				<tr>
-					<th>Grado</th>
-					<th>Nome</th>
-					<th>Cognome</th>
-					<th>Email</th>
-					<th>Mansione</th>
-					<th>Ferie anno <br> corrente
+					<th class="text-center">Grado</th>
+					<th class="text-center">Nome</th>
+					<th class="text-center">Cognome</th>
+					<th class="text-center">Email</th>
+					<th class="text-center">Mansione</th>
+					<th class="text-center">Ferie anno <br> corrente
 					</th>
-					<th>Ferie anno <br> precedente
+					<th class="text-center">Ferie anno <br> precedente
 					</th>
-					<th>Inserisci <br> periodo di ferie
+					<th class="text-center">Inserisci <br> periodo di ferie
 					</th>
-					<th>Rimuovi <br>periodo di ferie
+					<th class="text-center">Rimuovi <br>periodo di ferie
 					</th>
 				</tr>
 			</thead>
@@ -175,18 +170,18 @@
 				%>
 
 				<tr>
-					<td><%=vigile.getGrado()%></td>
-					<td><%=vigile.getNome()%></td>
-					<td><%=vigile.getCognome()%></td>
-					<td><%=vigile.getEmail()%></td>
-					<td><%=vigile.getMansione()%></td>
-					<td><%=vigile.getGiorniFerieAnnoCorrente()%></td>
-					<td><%=vigile.getGiorniFerieAnnoCorrente()%></td>
-					<td><button type="button" class="btn btn-outline-primary"
+					<td class="text-center"><%=vigile.getGrado()%></td>
+					<td class="text-center"><%=vigile.getNome()%></td>
+					<td class="text-center"><%=vigile.getCognome()%></td>
+					<td class="text-center"><%=vigile.getEmail()%></td>
+					<td class="text-center"><%=vigile.getMansione()%></td>
+					<td class="text-center"><%=vigile.getGiorniFerieAnnoCorrente()%></td>
+					<td class="text-center"><%=vigile.getGiorniFerieAnnoCorrente()%></td>
+					<td class="text-center"><button type="button" class="btn btn-outline-secondary"
 							data-toggle="modal" data-target="#aggiungiFerie"
 							onClick='apriFormAggiunta("<%=vigile.getEmail()%>")'>Aggiungi
 							Ferie</button></td>
-					<td><button type="button" class="btn btn-outline-primary"
+					<td class="text-center"><button type="button" class="btn btn-outline-secondary"
 							data-toggle="modal" data-target="#rimuoviFerie"
 							onClick='apriFormRimozione("<%=vigile.getEmail()%>")'>Rimuovi
 							Ferie</button></td>
