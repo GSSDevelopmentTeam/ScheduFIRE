@@ -79,7 +79,7 @@ public class FerieDao {
 			ps.setDate(2, dataInizio);
 			ps.setDate(3, dataFine);
 			
-			if(ps.execute())
+			if(ps.executeUpdate()>0)
 				rimozione = true;
 			
 		}catch(SQLException e) {
