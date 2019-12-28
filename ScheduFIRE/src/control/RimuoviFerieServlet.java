@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.sql.Date;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -43,21 +44,32 @@ public class RimuoviFerieServlet extends HttpServlet {
 		Date dataInizio = null;
 		Date dataFine = null;
 		String emailVF;
-		SimpleDateFormat formattazione = new SimpleDateFormat("dd-MM-yyyy");
+		SimpleDateFormat formattazione = new SimpleDateFormat("yyyy-MM-dd");
 		boolean rimozione;
 		
-		emailVF = request.getParameter("id");
+		emailVF = request.getParameter("email");
+		String dataIniz= request.getParameter("dataIniziale");
+		String dataFin= request.getParameter("dataFinale");
+		int annoIniz=Integer.parseInt(dataIniz.substring(0, 4));
+		int meseIniz=Integer.parseInt(dataIniz.substring(5, 7));
+		int giornoIniz=Integer.parseInt(dataIniz.substring(8, 10));
+		int annoFin=Integer.parseInt(dataFin.substring(0, 4));
+		int meseFin=Integer.parseInt(dataFin.substring(5, 7));
+		int giornoFin=Integer.parseInt(dataFin.substring(8, 10));
+		System.out.println(annoIniz+" "+meseIniz+" "+giornoIniz);
+		System.out.println(annoFin+" "+meseFin+" "+giornoFin);
+		System.out.println("email: "+emailVF);
+		dataInizio=Date.valueOf(LocalDate.of(annoIniz, meseIniz, giornoIniz));
+		dataFine=Date.valueOf(LocalDate.of(annoFin, meseFin, giornoFin));
+
+
 		
-		try {
-			dataInizio = (Date) formattazione.parse(request.getParameter("dataInizio"));
-			dataFine = (Date) formattazione.parse(request.getParameter("dataFine"));
-		} catch (ParseException e) {
-			e.printStackTrace();
-		}
 		
 		rimozione = FerieDao.rimuoviPeriodoFerie(emailVF, dataInizio, dataFine);
-		
+		System.out.println("rimozione= " +rimozione);
 		if(rimozione) {
+			response.setContentType("application/json");
+			response.getWriter().append("true");
 			//implementare risposta JSON
 		}
 	}
