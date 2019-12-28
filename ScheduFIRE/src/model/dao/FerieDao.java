@@ -1,12 +1,22 @@
 package model.dao;
 
+import java.sql.Connection;
+import java.sql.Date;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+
+import model.ConnessioneDB;
+import model.bean.FerieBean;
+import model.bean.VigileDelFuocoBean;
+
 public class FerieDao {
 
 	public FerieDao() {
 		// TODO Auto-generated constructor stub
 	}
-<<<<<<< HEAD
-=======
 	
 	public static List<FerieBean> ottieniFerieConcesse(String email) {
 		
@@ -68,8 +78,10 @@ public class FerieDao {
 			ps.setString(1, emailVF);
 			ps.setDate(2, dataInizio);
 			ps.setDate(3, dataFine);
-			
-			if(ps.execute())
+			int righe=ps.executeUpdate();
+			System.out.println("righe modificate: "+righe );
+			if(righe>0)
+				System.out.println();
 				rimozione = true;
 			
 		}catch(SQLException e) {
@@ -78,6 +90,5 @@ public class FerieDao {
 		
 		return rimozione;
 	}
->>>>>>> parent of 629e0dd... Merge pull request #169 from GSSDevelopmentTeam/alfredo
 
 }
