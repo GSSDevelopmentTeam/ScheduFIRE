@@ -29,7 +29,7 @@
 
 <!--------- Alert ----------------->
 
-<div class="alert alert-success flex alert-dismissible fade in text-center" id="rimozioneOk" style="display: none;position:fixed;z-index: 99999; width:100%">
+<div class="alert alert-success flex alert-dismissible fade in text-center fixed-top" id="rimozioneOk" style="display: none;position:fixed;z-index: 99999; width:100%">
   <strong>Operazione riuscita!</strong> Rimozione ferie avvenuta con successo.
 </div>
 
