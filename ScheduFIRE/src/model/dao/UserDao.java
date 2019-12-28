@@ -12,42 +12,42 @@ import model.bean.CredenzialiBean;
 
 public class UserDao {
 
- public UserDao() {}
+	public UserDao() {}
 
 
- public CredenzialiBean login(String username) {
-  CredenzialiBean credenziali = null;
-  try {
-   
-    Connection conn = ConnessioneDB.getConnection();
-    PreparedStatement stm = conn.prepareStatement("SELECT * FROM credenziali WHERE username=?");
-    stm.setString(1, username);
-    ResultSet res = stm.executeQuery();
+	public CredenzialiBean login(String username) {
+		CredenzialiBean credenziali = null;
+		try {
+
+			Connection conn = ConnessioneDB.getConnection();
+			PreparedStatement stm = conn.prepareStatement("SELECT * FROM credenziali WHERE username=?");
+			stm.setString(1, username);
+			ResultSet res = stm.executeQuery();
 
 
-    credenziali = new CredenzialiBean();
+			credenziali = new CredenzialiBean();
 
-    //se l'utente esiste
-    if(res.next()) {
-     credenziali.setUsername(res.getString(1));
-     credenziali.setPassword(res.getString(2));
-     credenziali.setRuolo(res.getString(3));
-    }
-    else {
-     return null;
+			//se l'utente esiste
+			if(res.next()) {
+				credenziali.setUsername(res.getString(1));
+				credenziali.setPassword(res.getString(2));
+				credenziali.setRuolo(res.getString(3));
+			}
+			else {
+				return null;
 
-   }
+			}
 
-  } catch (SQLException e) {
+		} catch (SQLException e) {
 
-   e.printStackTrace();
-  }
-
-
-
-  return credenziali;
+			e.printStackTrace();
+		}
 
 
- }
+
+		return credenziali;
+
+
+	}
 
 }
