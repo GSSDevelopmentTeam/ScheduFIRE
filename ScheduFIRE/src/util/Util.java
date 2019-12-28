@@ -3,9 +3,14 @@ package util;
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.Base64;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
 import control.NotEnoughMembersException;
+import control.ScheduFIREException;
 import model.bean.ComponenteDellaSquadraBean;
 import model.bean.SquadraBean;
 import model.bean.VigileDelFuocoBean;
@@ -168,4 +173,70 @@ public class Util {
 
 		return toReturn;
 	}
+	
+	public static List<VigileDelFuocoBean> ottieniSquadra(Date data) {
+		List<ComponenteDellaSquadraBean> lista = ComponenteDellaSquadraDao.getComponenti(data);
+		List<VigileDelFuocoBean> squadra = new ArrayList<>();
+		for(ComponenteDellaSquadraBean membro : lista) {
+			squadra.add(VigileDelFuocoDao.ottieni(membro.getEmailVF()));
+		}
+		return squadra;
+	}
+	
+	
+	/**
+	 * @param componenti Una lista di ComponentiDellaSquadra disordinata
+	 * @return Un arrayList di ComponentiDellaSquadra ordinati per squadra e per cognome, con priorit‡ alla squadra.
+	 */
+	public static ArrayList<ComponenteDellaSquadraBean> ordinaComponenti(ArrayList<ComponenteDellaSquadraBean> componenti){
+		Collections.sort(componenti, new ComponenteComparator());
+		return componenti;
+	}
+	
+	
+	public static void isLogged(HttpServletRequest request) throws ScheduFIREException {
+		if(request.getSession().getAttribute("ruolo")==null)
+			throw new ScheduFIREException("» richiesta l'autenticazione per poter accedere alle funzionalit‡ del sito");
+		
+		}
+	
+	public static void isCapoTurno(HttpServletRequest request) throws ScheduFIREException {
+		if(request.getSession().getAttribute("ruolo")==null)
+			throw new ScheduFIREException("» richiesta l'autenticazione per poter accedere alle funzionalit‡ del sito");
+		else {
+			String ruolo=(String)request.getSession().getAttribute("ruolo");
+			if(!ruolo.equals("capoturno"))
+				throw new ScheduFIREException("Devi essere capoturno per poter accedere a questa funzionalit‡");
+		}
+	}
+		
+	
 }
+	
+
+
+
+	class ComponenteComparator implements Comparator<ComponenteDellaSquadraBean> {
+
+		/*
+		 * Per ordinare l'array di componenti della squadra in base alla tipologia della squadra di appartenenza
+		 * con priorit√† a sala operativa, poi prima partenza, poi auto scala e infine auto botte.
+		 * In caso di tipologia uguale, ordina in base al cognome che ricava dalla mail
+		 * essendo la mail composta sempre da nome<numero>.cognome
+		 * 
+		 */
+		@Override
+		public int compare(ComponenteDellaSquadraBean o1, ComponenteDellaSquadraBean o2) {
+			String tipologia1=o1.getTipologiaSquadra();
+			String tipologia2=o2.getTipologiaSquadra();
+			int comparazione=tipologia1.compareTo(tipologia2);
+			if (comparazione==0) {
+				String cognome1=o1.getEmailVF().substring(o1.getEmailVF().indexOf(".")+1);
+				String cognome2=o2.getEmailVF().substring(o2.getEmailVF().indexOf(".")+1);
+				comparazione=cognome1.compareTo(cognome2);
+				return comparazione;
+			}
+			return -comparazione;
+		}
+	}
+

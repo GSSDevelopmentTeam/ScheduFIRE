@@ -167,7 +167,7 @@ public class CalendarioServlet extends HttpServlet {
 	private void riempiCalendario (int mese, int anno, int[] days_month) {
 
 
-		//per vedere qual è il primo giorno del mese
+		//per vedere qual Ã¨ il primo giorno del mese
 		LocalDate local=LocalDate.of(anno,mese,1);
 		String primoGiorno = local.getDayOfWeek().toString();
 
@@ -175,11 +175,11 @@ public class CalendarioServlet extends HttpServlet {
 
 		switch (primoGiorno) {
 
-		case "MONDAY": day = 0; break; //lunedì
-		case "TUESDAY": day = 1; break; //martedì
-		case "WEDNESDAY": day = 2; break; //mercoledì
-		case "THURSDAY": day = 3; break; //giovedì
-		case "FRIDAY": day = 4; break; //venerdì
+		case "MONDAY": day = 0; break; //lunedÃ¬
+		case "TUESDAY": day = 1; break; //martedÃ¬
+		case "WEDNESDAY": day = 2; break; //mercoledÃ¬
+		case "THURSDAY": day = 3; break; //giovedÃ¬
+		case "FRIDAY": day = 4; break; //venerdÃ¬
 		case "SATURDAY": day = 5; break; //sabato
 		case "SUNDAY": day = 6; break; //domenica
 		default: break;
@@ -231,7 +231,7 @@ public class CalendarioServlet extends HttpServlet {
 	 */
 	private void riempiLavorativo(int mese, int anno, int[] days_work) {
 
-		//per vedere qual è il primo giorno del mese
+		//per vedere qual Ã¨ il primo giorno del mese
 		LocalDate local=LocalDate.of(anno,mese,1);
 		String primoGiorno = local.getDayOfWeek().toString();
 
@@ -239,11 +239,11 @@ public class CalendarioServlet extends HttpServlet {
 
 		switch (primoGiorno) {
 
-		case "MONDAY": day = 0; break; //lunedì
-		case "TUESDAY": day = 1; break; //martedì
-		case "WEDNESDAY": day = 2; break; //mercoledì
-		case "THURSDAY": day = 3; break; //giovedì
-		case "FRIDAY": day = 4; break; //venerdì
+		case "MONDAY": day = 0; break; //lunedÃ¬
+		case "TUESDAY": day = 1; break; //martedÃ¬
+		case "WEDNESDAY": day = 2; break; //mercoledÃ¬
+		case "THURSDAY": day = 3; break; //giovedÃ¬
+		case "FRIDAY": day = 4; break; //venerdÃ¬
 		case "SATURDAY": day = 5; break; //sabato
 		case "SUNDAY": day = 6; break; //domenica
 		default: break;
