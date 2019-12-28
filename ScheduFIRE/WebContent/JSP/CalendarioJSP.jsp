@@ -67,13 +67,18 @@
 					onmouseover="this.src='IMG/arrow/right-arrow-full.png'"
 					onmouseout="this.src='IMG/arrow/right-arrow-empty.png'" />
 				</a>
+			<div class="container-month-year">
+				<a class="altroAnno" href="CalendarioServlet?mese=<%=mese %>&anno=<%=anno-1 %>"><img src="IMG/previous.png"/></a>
+				<span id="annoVisualizzato"><%=anno%></span>
+				<a class="altroAnno" href="CalendarioServlet?mese=<%=mese %>&anno=<%=anno+1 %>"><img src="IMG/next.png"/></a>
 			</div>
 
 			<div class="grid-chose-month">
 				<div class="dropdown">
-					<button class="dropbtn"><%=month[mese-1]%>
-						<img src="IMG/arrow/arrow-down.png" />
-					</button>
+
+				<input type="hidden" id="meseVisualizzato" value="<%=mese %>">
+					<button class="dropbtn"><%=month[mese-1]%>  <img src="IMG/arrow/arrow-down.png"/></button>
+
 					<div class="dropdown-content">
 						<%
 							for (int k = 0; k <= 11; k++) {
@@ -196,12 +201,16 @@
 		var autoBotte = $("#AutoBotte");
 
 		var giorno = $(input).text();
-		
+		var mese=$("#meseVisualizzato").val();
+		var anno=$("#annoVisualizzato").text();
+		console.log(giorno+" mese: "+mese+" anno: "+anno);
 		$.ajax({
 			type:"POST",
 			url: "AjaxCalendario",
 			data : {
 				"giorno": giorno,
+				"mese":mese,
+				"anno":anno,
 			},
 			dataType: "json",
 			async: true,
