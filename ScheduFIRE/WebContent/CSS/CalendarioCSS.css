@@ -25,20 +25,22 @@ a {
 	border: 3px solid black;
 }
 
-.edit{
-	background-color: #ffffa6;
-	border: 3px solid #d2d200;
-	border-radius: 12px;
-	position: absolute;
-	overflow: hidden;
-	font-size: 120%;
-	margin: 2%;
-	padding: 5px;
-	text-decoration: none;
+.edit {
+  border: 2px solid #57b7b7;
+  color: #57b7b7;
+  padding: 4px;
+  border-radius: 7px;
+  text-align: center;
+  text-decoration: none;
+  position:absolute;
+  font-size: 16px;
+  margin: 1.5%;
+  cursor: pointer;
 }
 
 .edit:hover{
-	background-color: #d2d200;
+	background-color: #57b7b7;
+	color:white;
 }
 
 /*contenitore per il calendario*/
@@ -119,15 +121,15 @@ div.box{
 	color: #b60000;
 }
 
-#diurno{
+#giornoLavorativoDiurno{
 	background-color: #a0d6d6;
 }
 
-#notturno{
+#giornoLavorativoNotturno{
 	background-color: #57b7b7;
 }
 
-#giornoCorrenteLavortivo{
+#giornoCorrenteLavorativo{
 	font-weight: bold;
 	color: #b60000;
 	background-color: #a0d6d6;
