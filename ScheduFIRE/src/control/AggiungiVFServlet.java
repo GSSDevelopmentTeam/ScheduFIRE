@@ -14,7 +14,6 @@ import model.bean.CredenzialiBean;
 import model.bean.VigileDelFuocoBean;
 import model.dao.CapoTurnoDao;
 import model.dao.VigileDelFuocoDao;
-import util.Validazione;
 
 /**
  * Servlet implementation class AggiungiVFServlet
@@ -47,12 +46,12 @@ public class AggiungiVFServlet extends HttpServlet {
 		
 		//Ottenimento credenziali dell'utente dalla sessione
 		CredenzialiBean credenziali = (CredenzialiBean) session.getAttribute("credenziali"); 
-		/*
+		
 		//Controllo credenziali
 		if( credenziali == null )
 			throw new ScheduFIREException();
 		
-		
+		/*
 		if( credenziali.getRuolo() == "vigile" ) //definire bene la stringa
 			throw new ScheduFIREException();
 		
@@ -69,8 +68,8 @@ public class AggiungiVFServlet extends HttpServlet {
 		String email = request.getParameter("email");;
 		
 		//Controllo email
-		if( ! Validazione.email(email) )
-			throw new ParametroInvalidoException("Il parametro 'email' è errato!");
+		if( email == null )
+			throw new ScheduFIREException();
 
 		// Ottenimento parametri del VF dalla richiesta
 		String nome = request.getParameter("nome");;
@@ -82,37 +81,33 @@ public class AggiungiVFServlet extends HttpServlet {
 		String giorniFerieAnnoCorrenteStringa = request.getParameter("giorniFerieAnnoCorrente");
 		String giorniFerieAnnoPrecedenteStringa = request.getParameter("giorniFerieAnnoPrecedente");
 		
-		if(giorniFerieAnnoCorrenteStringa == null || "".equals(giorniFerieAnnoCorrenteStringa))
-			throw new ScheduFIREException("Il parametro 'Giorni Ferie Anno Corrente' è nullo!");
+		//aggiungere controlli dei parametri
 		
-		if(giorniFerieAnnoPrecedenteStringa == null || "".equals(giorniFerieAnnoPrecedenteStringa))
-			throw new ScheduFIREException("Il parametro 'Giorni Ferie Anno Precedente' è nullo!");
+		//Controlli
+		if( nome == null )
+			throw new ScheduFIREException();
+		
+		if( cognome == null )
+			throw new ScheduFIREException();
+		
+		if( turno == null )
+			throw new ScheduFIREException();
+		
+		if( mansione == null )
+			throw new ScheduFIREException();
+		
+		if( giorniFerieAnnoCorrenteStringa == null )
+			throw new ScheduFIREException();
+		
+		if( giorniFerieAnnoPrecedenteStringa == null )
+			throw new ScheduFIREException();
+		
+		if( grado == null )
+			throw new ScheduFIREException();
 		
 		//Conversione parametri da Stringa ad interi
 		Integer giorniFerieAnnoCorrente = Integer.parseInt(giorniFerieAnnoCorrenteStringa); 
 		Integer giorniFerieAnnoPrecedente = Integer.parseInt(giorniFerieAnnoPrecedenteStringa);
-
-		//Controlli
-		if( ! Validazione.nome(nome) )
-			throw new ParametroInvalidoException("Il parametro 'nome' è errato!");
-		
-		if( ! Validazione.cognome(cognome) )
-			throw new ParametroInvalidoException("Il parametro 'cognome' è errato!");
-		
-		if( ! Validazione.turno(turno) )
-			throw new ParametroInvalidoException("Il parametro 'turno' è errato!");
-		
-		if( ! Validazione.mansione(mansione) )
-			throw new ParametroInvalidoException("Il parametro 'mansione' è errato!");
-		
-		if( ! Validazione.giorniFerieAnnoCorrente(giorniFerieAnnoCorrente) )
-			throw new ParametroInvalidoException("Il parametro 'Giorni Ferie Anno Corrente' è errato!");
-		
-		if( ! Validazione.giorniFerieAnniPrecedenti(giorniFerieAnnoPrecedente) )
-			throw new ParametroInvalidoException("Il parametro 'Giorni Ferie Anno Precedente' è errato!");
-		
-		if( ! Validazione.grado(grado) )
-			throw new ParametroInvalidoException("Il parametro 'grado' è errato!");
 
 		// Instanziazione dell'oggetto VigileDelFuocoBean
 		VigileDelFuocoBean vf = new VigileDelFuocoBean(nome, cognome, email, turno, mansione, username, grado,
@@ -125,16 +120,16 @@ public class AggiungiVFServlet extends HttpServlet {
 			//Se il Vigile del Fuoco è già presente nel database ed è adoperabile si lancia l'eccezione
 			if(vigileDb.isAdoperabile()) {
 				
-				throw new GestionePersonaleException("Il vigile del fuoco è già presente nel sistema!");
+				throw new ScheduFIREException();
 				
 			} else {
 				
 				//Si effettua l'aggiornamento dei dati nel database
 				if( ! VigileDelFuocoDao.modifica(email, vf)) 
-					throw new GestionePersonaleException("L'inserimento del vigile del fuoco non è andato a buon fine!");
+					throw new ScheduFIREException();
 				
 				if( ! VigileDelFuocoDao.setAdoperabile(email, true)) 
-					throw new GestionePersonaleException("L'inserimento del vigile del fuoco non è andato a buon fine!");
+					throw new ScheduFIREException();
 				
 			}
 			
@@ -142,12 +137,12 @@ public class AggiungiVFServlet extends HttpServlet {
 			
 			// Controllo salvataggio Vigile del Fuoco nel database
 			if(! VigileDelFuocoDao.salva(vf))
-				throw new GestionePersonaleException("L'inserimento del vigile del fuoco non è andato a buon fine!");
+				throw new ScheduFIREException();
 
 		}
 
 		// Reindirizzamento alla jsp
-		request.getRequestDispatcher("/GestionePersonaleServlet").forward(request, response);
+		request.getRequestDispatcher("/JSP/GestionePersonaleJSP.jsp").forward(request, response);
 			
 	}
 

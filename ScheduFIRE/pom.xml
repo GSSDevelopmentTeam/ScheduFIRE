@@ -56,12 +56,6 @@
 			<artifactId>junit-jupiter-api</artifactId>
 		</dependency>
 
-		<dependency>
-			<groupId>javax.mail</groupId>
-			<artifactId>javax.mail-api</artifactId>
-		</dependency>
-
-
 	</dependencies>
 	<dependencyManagement>
 		<dependencies>
@@ -99,11 +93,6 @@
 				<groupId>org.json</groupId>
 				<artifactId>json</artifactId>
 				<version>20190722</version>
-			</dependency>
-			<dependency>
-				<groupId>javax.mail</groupId>
-				<artifactId>javax.mail-api</artifactId>
-				<version>1.6.2</version>
 			</dependency>
 		</dependencies>
 	</dependencyManagement>
