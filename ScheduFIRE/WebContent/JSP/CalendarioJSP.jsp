@@ -18,7 +18,7 @@
 	String vero = "true";
 	String falso = "false";
 	String editSquadre = "   Modifica squadre";
-	String[] days = {"  Lunedì  ", " Martedì  ", "Mercoledì ", " Giovedì  ", " Venerdì  ", "  Sabato  ", "   Domenica "};
+	String[] days = {"  LunedÃ¬  ", " MartedÃ¬  ", "MercoledÃ¬ ", " GiovedÃ¬  ", " VenerdÃ¬  ", "  Sabato  ", "   Domenica "};
 	String[] month = {"Gennaio", "Febbraio", "Marzo", "Aprile", "Maggio", "Giugno", "Luglio", "Agosto",
 			"Settembre", "Ottobre", "Novembre", "Dicembre"};
 	int giorno = (Integer) request.getAttribute("giorno");
@@ -59,7 +59,7 @@
 					onmouseover="this.src='IMG/arrow/left-arrow-full.png'"
 					onmouseout="this.src='IMG/arrow/left-arrow-empty.png'" />
 				</a>
-				<span id="annoVisulizzato"><%=anno%></span>
+				<span id="annoVisualizzato"><%=anno%></span>
 				<a class="altroAnno"
 					href="CalendarioServlet?mese=<%=mese %>&anno=<%=anno+1 %>">
 					<img src="IMG/arrow/right-arrow-empty.png"
@@ -70,7 +70,7 @@
 
 			<div class="grid-chose-month">
 				<div class="dropdown">
-				<input type="hidden" id="meseVisualizzato" value="<%=mese %>>">
+				<input type="hidden" id="meseVisualizzato" value="<%=mese%>">
 					<button class="dropbtn"><%=month[mese-1]%>
 						<img src="IMG/arrow/arrow-down.png" />
 					</button>
@@ -123,9 +123,11 @@
 							
 							%>
 							<div class="grid-item" id="<%=id%>" onClick="dayClicked(this)">
+
 							<img src="IMG/<%=img%>.png" alt=" "/>
 							<%=day%>
 							</div>
+
 							<%
 							id = "";
 							img="";
@@ -189,6 +191,8 @@
 		function setValore(input){
 			console.log(input);
 		}
+		
+		
 
 		function dayClicked(input) {
 		console.log("parte funzione dayClicked()");
@@ -201,6 +205,7 @@
 		var giorno = $(input).text();
 		var mese=$("#meseVisualizzato").val();
 		var anno=$("#annoVisualizzato").text();
+		console.log("parametri passati");
 		console.log(giorno+" mese: "+mese+" anno: "+anno);
 		
 		$.ajax({
