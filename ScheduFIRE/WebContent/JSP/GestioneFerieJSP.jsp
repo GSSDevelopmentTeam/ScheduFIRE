@@ -1,62 +1,39 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@page import = "java.util.ArrayList, model.bean.*, model.dao.*" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+<%@page import="java.util.ArrayList, model.bean.*, model.dao.*"%>
 
 <html>
-	<jsp:include page="StandardJSP.jsp" />
-	<link rel="stylesheet" href="CSS/TableCSS.css">
-	<body>
-	
+<head>
+<jsp:include page="StandardJSP.jsp" />
+<link href="https://wakirin.github.io/Litepicker/css/style.css"
+	rel="stylesheet" />
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+
+<!-- jQuery library -->
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+<!-- Latest compiled JavaScript -->
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+</head>
+<body>
+
 	<!-- Barra Navigazione -->
 	<jsp:include page="HeaderJSP.jsp" />
-<<<<<<< HEAD
-		<h2>Gestione Ferie</h2>
-			<table>
-				<thead>
-					<tr>
-						<th>Grado</th>
-						<th>Nome</th>
-						<th>Cognome</th>
-						<th>Email</th>
-						<th>Mansione</th>
-						<th>Ferie anno <br> corrente</th>
-						<th>Ferie anno <br> precedente</th>
-						<th>Inserisci <br> periodo di ferie</th>
-						<th>Rimuovi <br>periodo di ferie</th>
-					</tr>
-				</thead>
-				
-				<tbody>
-					<%	ArrayList<VigileDelFuocoBean> listaVigili;
-						listaVigili= (ArrayList<VigileDelFuocoBean>) request.getAttribute("listaVigili");
-						
-						for(int i=0; i<listaVigili.size(); i++){
-							VigileDelFuocoBean vigile = listaVigili.get(i);
-					%>
-					
-					<tr>
-						<td><%=vigile.getGrado() %></td>
-						<td><%=vigile.getNome() %></td>
-						<td><%=vigile.getCognome()%></td>
-						<td><%=vigile.getEmail() %></td>
-						<td><%=vigile.getMansione()%></td>
-						<td><%=vigile.getGiorniFerieAnnoCorrente() %></td>
-						<td><%=vigile.getGiorniFerieAnnoCorrente() %></td>
-						<td><button type="aggiungi" src=""></button></td>
-						<td><button type="rimuovi" src=""></button></td>
-					</tr>
-					
-					<% } %>
-				
-				</tbody>
-			
-			</table>
-	</body>
-=======
 	<h2 class="d-flex justify-content-center">Gestione Ferie</h2>
 
 
 
+<!--------- Alert ----------------->
 
+<div class="alert alert-success flex alert-dismissible fade in text-center fixed-top" id="rimozioneOk" style="display: none;position:fixed;z-index: 99999; width:100%">
+  <strong>Operazione riuscita!</strong> Rimozione ferie avvenuta con successo.
+</div>
+
+<!-- ----------------------- -->
 
 
 	<!-- Modal di aggiunta ferie-->
@@ -66,8 +43,8 @@
 		<div class="modal-dialog modal-dialog-centered" role="document">
 			<div class="modal-content contenutiModal">
 				<div class="modal-header">
-					<h5 class="modal-title" id="titoloAggiuntaFerie">Aggiunta
-						ferie</h5>
+					<h5 class="modal-title" id="titoloAggiuntaFerie"
+						>Aggiunta ferie</h5>
 					<button type="button" class="close" data-dismiss="modal"
 						aria-label="Close">
 						<span aria-hidden="true">&times;</span>
@@ -84,7 +61,7 @@
 				</div>
 
 				<div class="modal-footer">
-					<button type="button" class="btn btn-secondary"
+					<button type="button" class="btn btn-danger"
 						data-dismiss="modal">Annulla</button>
 					<button type="button" class="btn btn-primary">Aggiungi
 						ferie</button>
@@ -105,60 +82,80 @@
 					<h5 class="modal-title" id="titoloRimuoviFerie">Rimuovi ferie</h5>
 					<button type="button" class="close" data-dismiss="modal"
 						aria-label="Close">
-						<span aria-hidden="true">&times;</span>
+						<span aria-hidden="true">&times; </span>
 					</button>
 				</div>
 				<div class="modal-body">
 					<input type="hidden" name="email" id="emailRimozioneFerie">
-					<div class=" row justify-content-center">
-					<div class="table-responsive">
-		<table class="table table-hover" id="tabellaRimozioneFerie">
-			<thead class="thead-dark">
-				<tr>
-					<th>Data Inizio</th>
-					<th>Data Fine</th>
-					<th>Elimina</th>
+					<input type="hidden" name="dataIniziale" id="rimozioneDataIniziale">
+					<input type="hidden" name="dataFinale" id="rimozioneDataFinale">
 					
-				</tr>
-			</thead>
-			<tbody>
-			</tbody>
-			</table>
+					<div class=" row justify-content-center">
+						<div class="table-responsive">
+							<table class="table table-hover" id="listaFerie">
+								<thead class="thead-dark">
+									<tr>
+										<th>Data Inizio</th>
+										<th>Data Fine</th>
+										<th>Elimina</th>
+
+									</tr>
+								</thead>
+								<tbody id="tabellaRimozioneFerie">
+								</tbody>
+							</table>
+
+						</div>
 
 					</div>
 
-				</div>
 
-				<div class="modal-footer">
-					<button type="button" class="btn btn-secondary"
-						data-dismiss="modal">Annulla</button>
-					<button type="button" class="btn btn-primary">Salva
-						modifiche</button>
 				</div>
 			</div>
 		</div>
 	</div>
+
+
+
+<!-- ----------------------------------- -->
+	<!-- Modal -->
+ <div class="modal fade " id="menuConferma" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-sm modal-dialog-centered" role="document">
+    <div class="modal-content">
+
+      <div class="modal-body">
+        <img src="IMG/fire.png" class="rounded mx-auto d-block">
+        <h4 class="modal-title text-center">Sei sicuro?</h4>
+        <p class="text-center">Vuoi cancellare queste ferie?<br> La procedura non può essere annullata.</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" data-dismiss="modal">Annulla</button>
+        <button type="button" class="btn btn-primary" data-dismiss="modal" onClick="rimuoviFerie()">Salva cambiamenti</button>
+      </div>
+    </div>
+  </div>
 </div>
 
 
+<!-- ------------------------------------ -->
 
 
 	<div class="table-responsive">
-		<table class="table  table-hover">
+		<table class="table  table-hover" id="listaVigili">
 			<thead class="thead-dark">
 				<tr>
-					<th>Grado</th>
-					<th>Nome</th>
-					<th>Cognome</th>
-					<th>Email</th>
-					<th>Mansione</th>
-					<th>Ferie anno <br> corrente
+					<th class="text-center">Grado</th>
+					<th class="text-center">Nome</th>
+					<th class="text-center">Cognome</th>
+					<th class="text-center">Email</th>
+					<th class="text-center">Mansione</th>
+					<th class="text-center">Ferie anno <br> corrente
 					</th>
-					<th>Ferie anno <br> precedente
+					<th class="text-center">Ferie anno <br> precedente
 					</th>
-					<th>Inserisci <br> periodo di ferie
+					<th class="text-center">Inserisci <br> periodo di ferie
 					</th>
-					<th>Rimuovi <br>periodo di ferie
+					<th class="text-center">Rimuovi <br>periodo di ferie
 					</th>
 				</tr>
 			</thead>
@@ -173,18 +170,18 @@
 				%>
 
 				<tr>
-					<td><%=vigile.getGrado()%></td>
-					<td><%=vigile.getNome()%></td>
-					<td><%=vigile.getCognome()%></td>
-					<td><%=vigile.getEmail()%></td>
-					<td><%=vigile.getMansione()%></td>
-					<td><%=vigile.getGiorniFerieAnnoCorrente()%></td>
-					<td><%=vigile.getGiorniFerieAnnoCorrente()%></td>
-					<td><button type="button" class="btn btn-outline-primary"
+					<td class="text-center"><%=vigile.getGrado()%></td>
+					<td class="text-center"><%=vigile.getNome()%></td>
+					<td class="text-center"><%=vigile.getCognome()%></td>
+					<td class="text-center"><%=vigile.getEmail()%></td>
+					<td class="text-center"><%=vigile.getMansione()%></td>
+					<td class="text-center"><%=vigile.getGiorniFerieAnnoCorrente()%></td>
+					<td class="text-center"><%=vigile.getGiorniFerieAnnoCorrente()%></td>
+					<td class="text-center"><button type="button" class="btn btn-outline-secondary"
 							data-toggle="modal" data-target="#aggiungiFerie"
 							onClick='apriFormAggiunta("<%=vigile.getEmail()%>")'>Aggiungi
 							Ferie</button></td>
-					<td><button type="button" class="btn btn-outline-primary"
+					<td class="text-center"><button type="button" class="btn btn-outline-secondary"
 							data-toggle="modal" data-target="#rimuoviFerie"
 							onClick='apriFormRimozione("<%=vigile.getEmail()%>")'>Rimuovi
 							Ferie</button></td>
@@ -277,6 +274,7 @@
 				url : "GestioneFerieServlet",
 				data : {
 					"JSON" : true,
+					"aggiunta":true,
 					"email" : input,
 				},
 				dataType : "json",
@@ -302,7 +300,11 @@
 
 		function apriFormRimozione(input) {
 			console.log("parte funzione apriformRimozione di " + input);
-			var cognome = $(".table td:contains('" + input + "')").prev('td');
+			var inputDataIniziale=$("#rimozioneDataIniziale");
+			var inputDataFinale=$("#rimozioneDataFinale");
+			$(inputDataIniziale).val("");
+			$(inputDataFinale).val("");
+			var cognome = $("#listaVigili td:contains('" + input + "')").prev('td');
 			var nome = $(cognome).prev('td');
 			console.log("cognome: " + cognome.text() + " nome: " + nome.text());
 			$("#titoloRimuoviFerie").text(
@@ -313,6 +315,7 @@
 				url : "GestioneFerieServlet",
 				data : {
 					"JSON" : true,
+					"rimozione":true,
 					"email" : input,
 				},
 				dataType : "json",
@@ -320,31 +323,97 @@
 				success : function(response) {
 					$("#emailRimozioneFerie").val(input);
 					$(".contenutiModal").css('background-color', '#e6e6e6');
-					var tabella=$("#tabellaRimozioneFerie");
-					
-					for(var i in response) {
-						var range=response[i];
-						var dataIniziale=range[0];
-						var dataFinale=range[1];
+					var tabella = $("#tabellaRimozioneFerie");
+					tabella.empty();
+
+					for ( var i in response) {
+						var range = response[i];
+						var dataIniziale = range[0];
+						var dataFinale = range[1];
 						var rigaTabella = document.createElement("TR");
-						  tabella.append(rigaTabella);
-						  var colonnaDataIniziale = document.createElement("TD");
-						  var nome=document.createTextNode(dataIniziale);
-						   colonnaDataIniziale.appendChild(nome);
-						  rigaTabella.appendChild(colonnaDataIniziale);
-						  
-						  var colonnaCognome = document.createElement("TD");
-						  var cognome=document.createTextNode(dataFinale);
-						   colonnaCognome.appendChild(cognome);
-						  rigaTabella.appendChild(colonnaCognome);
-    					console.log("data iniziale: "+dataIniziale+" ,data finale: "+dataFinale);
-    				}
-					
-					
+						tabella.append(rigaTabella);
+						
+						var colonnaDataIniziale = document.createElement("TD");
+						var nome = document.createTextNode(dataIniziale);
+						colonnaDataIniziale.appendChild(nome);
+						rigaTabella.appendChild(colonnaDataIniziale);
+						
+						var colonnaDataFinale = document.createElement("TD");
+						var cognome = document.createTextNode(dataFinale);
+						colonnaDataFinale.appendChild(cognome);
+						rigaTabella.appendChild(colonnaDataFinale);
+						
+						
+						var colonnaBottone = document.createElement("TD");
+						
+						var bottone=document.createElement("button");
+						$(bottone).attr("class", "btn btn-outline-primary");
+						$(bottone).attr("data-toggle", "modal");
+						$(bottone).attr("data-target", "#menuConferma");
+						$(bottone).text("Rimuovi");
+						$(bottone).attr("onclick", "setDate(this)");
+
+						colonnaBottone.appendChild(bottone);
+						rigaTabella.appendChild(colonnaBottone);
+						/*
+						var colonnaBottone = document.createElement("TD");
+						var link=document.createElement("a");
+						$(link).attr("href", "dadecidere");
+						var icona=document.createElement("img");
+						$(icona).attr("src", "IMG/edit.png");
+						$(icona).attr("data-toggle", "modal");
+						$(icona).attr("data-target", "#exampleModalCenter");
+						link.appendChild(icona);
+						colonnaBottone.appendChild(link);
+						rigaTabella.appendChild(colonnaBottone);
+						
+						*/
+						
+						console.log("data iniziale: " + dataIniziale
+								+ " ,data finale: " + dataFinale);
+						
+					}
+
 				}
 			});
 		}
+		
+		function setDate(input){
+			var inputDataIniziale=$("#rimozioneDataIniziale");
+			var inputDataFinale=$("#rimozioneDataFinale");
+			var dataFinale = $(input).parent().prev('td');
+			var dataIniziale = $(dataFinale).prev('td');
+			$(inputDataIniziale).val(dataIniziale.text());
+			$(inputDataFinale).val(dataFinale.text());
+
+			console.log("data inizz "+dataIniziale.text()+" datafin "+dataFinale.text());
+		}
+		
+		function rimuoviFerie(){
+			var dataIniziale=$("#rimozioneDataIniziale").val();
+			var dataFinale=$("#rimozioneDataFinale").val();
+			var email=$("#emailRimozioneFerie").val();
+			$.ajax({
+				type : "POST",
+				url : "RimuoviFerieServlet",
+				data : {
+					"dataIniziale" : dataIniziale,
+					"dataFinale":dataFinale,
+					"email" : email,
+				},
+				dataType : "json",
+				async : true,
+				success : function(response) {
+					var riga = $("#tabellaRimozioneFerie td:contains('" + dataIniziale + "')").parent().remove();
+					console.log("eliminata ferie " + dataIniziale+" "+ dataFinale+" di "+email);
+					$("#rimozioneOk").fadeTo(2000, 500).slideUp(500, function(){
+					    $("#success-alert").slideUp(500);
+					});
+					
+				}
+			});
+			
+		}
 	</script>
 </body>
->>>>>>> parent of 629e0dd... Merge pull request #169 from GSSDevelopmentTeam/alfredo
 </html>
