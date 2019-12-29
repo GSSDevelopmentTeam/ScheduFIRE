@@ -5,25 +5,12 @@
 <html>
 <head>
 <jsp:include page="StandardJSP.jsp" />
-<link href="https://wakirin.github.io/Litepicker/css/style.css"
-	rel="stylesheet" />
-<!-- Latest compiled and minified CSS -->
-<link rel="stylesheet"
-	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
-
-<!-- jQuery library -->
-<script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-
-<!-- Latest compiled JavaScript -->
-<script
-	src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
 </head>
 <body>
 
 	<!-- Barra Navigazione -->
 	<jsp:include page="HeaderJSP.jsp" />
-	<h2 class="d-flex justify-content-center">Gestione Ferie</h2>
+	<h2 class="d-flex justify-content-center" style="color:#B60000!Important">Gestione Ferie</h2>
 
 
 
@@ -61,9 +48,9 @@
 				</div>
 
 				<div class="modal-footer">
-					<button type="button" class="btn btn-danger"
+					<button type="button" class="btn btn-outline-danger""
 						data-dismiss="modal">Annulla</button>
-					<button type="button" class="btn btn-primary">Aggiungi
+					<button type="button" class="btn btn-outline-warning">Aggiungi
 						ferie</button>
 				</div>
 			</div>
@@ -129,8 +116,8 @@
         <p class="text-center">Vuoi cancellare queste ferie?<br> La procedura non può essere annullata.</p>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-danger" data-dismiss="modal">Annulla</button>
-        <button type="button" class="btn btn-primary" data-dismiss="modal" onClick="rimuoviFerie()">Salva cambiamenti</button>
+        <button type="button" class="btn btn-outline-danger"" data-dismiss="modal">Annulla</button>
+        <button type="button" class="btn btn-outline-warning" data-dismiss="modal" onClick="rimuoviFerie()">Salva cambiamenti</button>
       </div>
     </div>
   </div>
@@ -149,9 +136,9 @@
 					<th class="text-center">Cognome</th>
 					<th class="text-center">Email</th>
 					<th class="text-center">Mansione</th>
-					<th class="text-center">Ferie anno <br> corrente
+					<th class="text-center">Ferie anno<br>corrente
 					</th>
-					<th class="text-center">Ferie anno <br> precedente
+					<th class="text-center">Ferie anno<br> precedente
 					</th>
 					<th class="text-center">Inserisci <br> periodo di ferie
 					</th>
@@ -181,7 +168,7 @@
 							data-toggle="modal" data-target="#aggiungiFerie"
 							onClick='apriFormAggiunta("<%=vigile.getEmail()%>")'>Aggiungi
 							Ferie</button></td>
-					<td class="text-center"><button type="button" class="btn btn-outline-secondary"
+					<td class="text-center"><button type="button" class="btn btn-outline-danger"
 							data-toggle="modal" data-target="#rimuoviFerie"
 							onClick='apriFormRimozione("<%=vigile.getEmail()%>")'>Rimuovi
 							Ferie</button></td>
