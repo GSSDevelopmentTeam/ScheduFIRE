@@ -12,6 +12,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.json.JSONArray;
+
 import model.dao.FerieDao;
 
 /**
@@ -56,22 +58,20 @@ public class RimuoviFerieServlet extends HttpServlet {
 		int annoFin=Integer.parseInt(dataFin.substring(0, 4));
 		int meseFin=Integer.parseInt(dataFin.substring(5, 7));
 		int giornoFin=Integer.parseInt(dataFin.substring(8, 10));
-		System.out.println(annoIniz+" "+meseIniz+" "+giornoIniz);
-		System.out.println(annoFin+" "+meseFin+" "+giornoFin);
-		System.out.println("email: "+emailVF);
+
 		dataInizio=Date.valueOf(LocalDate.of(annoIniz, meseIniz, giornoIniz));
 		dataFine=Date.valueOf(LocalDate.of(annoFin, meseFin, giornoFin));
 
-
-		
-		
 		rimozione = FerieDao.rimuoviPeriodoFerie(emailVF, dataInizio, dataFine);
-		System.out.println("rimozione= " +rimozione);
-		if(rimozione) {
-			response.setContentType("application/json");
-			response.getWriter().append("true");
-			//implementare risposta JSON
-		}
+		response.setContentType("application/json");
+		JSONArray array = new JSONArray();
+		if(rimozione) 
+			array.put(true);
+		else
+			array.put(false);
+		
+			response.getWriter().append(array.toString());
+		
 	}
 
 }

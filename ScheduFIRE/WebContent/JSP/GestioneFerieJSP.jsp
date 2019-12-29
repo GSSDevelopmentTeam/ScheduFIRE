@@ -35,6 +35,14 @@
 
 <!-- ----------------------- -->
 
+<!--------- Alert ----------------->
+
+<div class="alert alert-danger flex alert-dismissible fade in text-center fixed-top" id="rimozioneNoOk" style="display: none;position:fixed;z-index: 99999; width:100%">
+  <strong>Operazione non riuscita!</strong> Rimozione ferie non avvenuta.
+</div>
+
+<!-- ----------------------- -->
+
 
 	<!-- Modal di aggiunta ferie-->
 	<div class="modal fade" id="aggiungiFerie" tabindex="-1" role="dialog"
@@ -404,12 +412,21 @@
 				dataType : "json",
 				async : true,
 				success : function(response) {
-					var riga = $("#tabellaRimozioneFerie td:contains('" + dataIniziale + "')").parent().remove();
-					console.log("eliminata ferie " + dataIniziale+" "+ dataFinale+" di "+email);
-					$("#rimozioneOk").fadeTo(2000, 500).slideUp(500, function(){
-					    $("#success-alert").slideUp(500);
-					});
-					
+					var booleanRisposta=response[0];
+					if(booleanRisposta){
+						var riga = $("#tabellaRimozioneFerie td:contains('" + dataIniziale + "')").parent().remove();
+						console.log("eliminata ferie " + dataIniziale+" "+ dataFinale+" di "+email);
+						$("#rimozioneOk").fadeTo(4000, 500).slideUp(500, function(){
+						    $("#success-alert").slideUp(500);
+						});
+					}
+					else{
+						console.log("problema rimozione ferie " + dataIniziale+" "+ dataFinale+" di "+email);
+						apriFormRimozione(email);
+						$("#rimozioneNoOk").fadeTo(4000, 500).slideUp(500, function(){
+						    $("#success-alert").slideUp(500);
+						});
+					}
 				}
 			});
 			
