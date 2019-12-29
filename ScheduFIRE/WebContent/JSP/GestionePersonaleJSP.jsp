@@ -20,8 +20,10 @@ if(attributoVigili instanceof Collection)
 	<%@ include file = "HeaderJSP.jsp" %>
 	
 	<h2>Gestione personale</h2>
+	<a href="#aggiungiVF" class="btn btn-danger" style="float:right; margin-right: 30px;">Aggiungi vigile del fuoco</a> <br><br>
 	
-	<h4>Vigili</h4>
+	
+	<h4>Vigili del Fuoco</h4>
 		
 	<% 
 	
@@ -39,7 +41,7 @@ if(attributoVigili instanceof Collection)
 				<span>
 					<%= vf.getCognome() %>
 				</span>
-				
+				<!-- 
 				<span>
 					Email: <%= vf.getEmail() %>
 				</span>
@@ -63,23 +65,20 @@ if(attributoVigili instanceof Collection)
 				<span>
 					Carico lavorativo attuale: <%= vf.getCaricoLavoro() %>
 				</span>
-				
-				<form action="./ModificaVFServlet" class = "modificaVF">
+				 -->
+				 <div class = "modificaVF">
+				<form action="./ModificaVFServlet" >
 					<br>
 		
 					<label>
 						Nome: <input type = "text" name = "nomeNuovo" value = <%= vf.getNome() %>>
-					</label> <br> <br>
 					
-					<label>
 						Cognome: <input type = "text" name = "cognomeNuovo" value = <%= vf.getCognome() %>>
 					</label> <br> <br>
 					
 					<label>
 						Email: <input type = "text" name = "emailNuova" value = <%= vf.getEmail() %>>
-					</label> <br> <br>
 					
-					<label>
 						Grado: <input type = "text" name = "gradoNuovo" value = <%= vf.getGrado() %>>
 					</label> <br> <br>
 					
@@ -97,41 +96,21 @@ if(attributoVigili instanceof Collection)
 					
 					<input type = "hidden" name = "emailVecchia" value = <%= vf.getEmail() %>>
 					
-					<input type = "submit" value = "Modifica"> <br> <br>
+					<Button class="btn btn-outline-secondary">Modifica</Button> <br> <br>
 					
 				</form>
 				
 				<form action="./EliminaVFServlet">
+				
 					
-					<input type = "hidden" name = "nome" value = <%= vf.getNome() %>>
-					
-					<input type = "hidden" name = "cognome" value = <%= vf.getCognome() %>>
-					
-					<input type = "hidden" name = "email" value = <%= vf.getEmail() %>>
-					
-					<input type = "hidden" name = "turno" value = <%= vf.getTurno() %>>
-					
-					<input type = "hidden" name = "mansione" value = <%= vf.getMansione() %>>
-					
-					<input type = "hidden" name = "giorniFerieAnnoCorrente" value = <%= vf.getGiorniFerieAnnoCorrente() %>>
-					
-					<input type = "hidden" name = "giorniFerieAnnoPrecedente" value = <%= vf.getGiorniFerieAnnoPrecedente() %>>
-					
-					<input type = "hidden" name = "caricoLavoro" value = <%= vf.getCaricoLavoro() %>>
-					
-					<input type = "hidden" name = "adoperabile" value = <%= vf.isAdoperabile() %>>
-					
-					<input type = "hidden" name = "grado" value = <%= vf.getGrado() %>>
-					
-					<input type = "hidden" name = "username" value = <%= vf.getUsername() %>>
-					
-					<br>
-					
-					<input type = "submit" value = "Cancella">
-					
+					<Button class="btn btn-outline-danger">Cancella</Button>
+				
 					<br> <br>
 					
 				</form>
+				
+					</div>
+			<br> <br>
 			
 			</div>
 			
@@ -184,9 +163,9 @@ if(attributoVigili instanceof Collection)
 			Giorni di ferie degli anni precedenti: <input type = "text" name = "giorniFerieAnnoPrecedente">
 		</label> <br> <br>
 		
-		<input type = "submit" value = "Aggiungi"> <br> <br>
+		<Button class="btn btn-outline-secondary">Aggiungi</Button> <br> <br> 
 		
 	</form>
-	
+	<br> <br> <br><br>
 </body>
 </html>
