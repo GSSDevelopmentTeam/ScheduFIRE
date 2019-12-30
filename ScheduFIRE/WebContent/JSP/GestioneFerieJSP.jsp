@@ -62,8 +62,10 @@
 					<button type="button" class="btn btn-outline-danger"
 						data-dismiss="modal">Annulla</button>
 
+
 					<button type="button" class="btn btn-outline-warning" id="bottoneAggiungiFerie" disabled>Aggiungi
 						ferie</button>
+
 				</div>
 			</div>
 		</div>
@@ -243,7 +245,7 @@
 								$("#messaggioFerie2").text("Hai a disposizione "+totaleFerie+" giorni di ferie, ne hai selezionati "+differenza+".");
 								$("#messaggioFerie1").attr("style","color:red");
 								$("#messaggioFerie2").attr("style","color:red");
-								 $("#bottoneAggiungiFerie").addClass( 'disabled' );
+								 $('#bottoneAggiungiFerie').prop("disabled", true);
 								 alertInsuccesso("Hai selezionato un periodo troppo grande.Hai a disposizione "+totaleFerie+
 											" giorni di ferie, ne hai selezionati "+differenza);
 
@@ -253,7 +255,7 @@
 								$("#messaggioFerie2").text("Hai selezionato "+differenza+ " giorni di ferie.");
 								$("#messaggioFerie1").attr("style","color:green");
 								$("#messaggioFerie2").attr("style","color:green");
-								 $('#bottoneAggiungiFerie').prop("disabled", false)
+								 $('#bottoneAggiungiFerie').prop("disabled", false);
 								alertSuccesso("Hai selezionato correttamente il periodo di ferie. Hai a disposizione "+totaleFerie+
 										" giorni di ferie, ne hai selezionati "+differenza);
 							}
