@@ -30,7 +30,9 @@ input {
 	outline:none;
 }
 
-
+.modifica {
+	display: none;
+}
 
 #aggiungiVF, .modificaVF {
 	border: solid;
@@ -48,12 +50,16 @@ input {
 	display: inline-block;
 }
 
+#titolo {
+	margin-left: -5%;
+}
+
 #ordinamento {
-	margin-left: 10%;
+	margin-left: 4%;
 }
 
 #buttonAggiungi {
-	margin-left: 10%;
+	margin-left: 5%;
 }
 
 .button, .buttonModifica {
@@ -96,7 +102,7 @@ input {
 	ackground-color: #fefefe;
 	margin: 0 auto; /* 5% from the top, 15% from the bottom and centered */
 	width: 50%; /* Could be more or less, depending on screen size */
-		  
+	  
 	padding:25px;
 	display: table;
 	background-color: #FFFFFF;
@@ -109,5 +115,6 @@ input {
 		rgba(0, 0, 0, 0.19);
 		
 	text-align: center;
+
 }
 
