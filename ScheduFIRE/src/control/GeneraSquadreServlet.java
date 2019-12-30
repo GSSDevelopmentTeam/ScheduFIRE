@@ -16,8 +16,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.sendmail.SendMail;
+
 import model.bean.ComponenteDellaSquadraBean;
+import model.bean.VigileDelFuocoBean;
 import model.dao.ComponenteDellaSquadraDao;
+import model.dao.ListaSquadreDao;
+import model.dao.SquadraDao;
 import util.Util;
 
 /**
@@ -44,6 +49,7 @@ public class GeneraSquadreServlet extends HttpServlet {
 
 		if(sessione.getAttribute("credenziali") != null) {
 			if(sessione.getAttribute("squadra") != null) {
+				@SuppressWarnings("unchecked")
 				HashMap<VigileDelFuocoBean, String> squadra = (HashMap<VigileDelFuocoBean, String>) 
 						sessione.getAttribute("squadra");
 				List<ComponenteDellaSquadraBean> lista = vigileToComponente(squadra, data);
@@ -53,6 +59,7 @@ public class GeneraSquadreServlet extends HttpServlet {
 					throw new ScheduFIREException("Errore nelle Query SQL");
 				}	
 				sessione.removeAttribute("squadra");
+				SendMail.sendMail(data);
 			}
 			else {
 				try {
@@ -64,11 +71,11 @@ public class GeneraSquadreServlet extends HttpServlet {
 				}
 			}
 		}
-		request.getRequestDispatcher("/").forward(request, response);
 	}
 
 	private List<ComponenteDellaSquadraBean> vigileToComponente(HashMap<VigileDelFuocoBean, String> squadra, Date data) {
 		List<ComponenteDellaSquadraBean> toReturn = new ArrayList<>();
+		@SuppressWarnings("rawtypes")
 		Iterator i = squadra.entrySet().iterator();
 		while(i.hasNext()) {
 			@SuppressWarnings("unchecked")
