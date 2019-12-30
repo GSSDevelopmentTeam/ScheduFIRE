@@ -48,7 +48,7 @@
 			<!-- Accesso effettuato dal capoturno -->
 			<%//if(ruolo.equalsIgnoreCase("capoturno")){%>
 			
-			<a href="#" class="edit" ><img src="IMG/edit.png" /><%=editSquadre%></a>
+			<a href="/ModificaComposizioneSquadreServlet" class="edit" ><img src="IMG/edit.png" /><%=editSquadre%></a>
 			
 			<%//} %>
 
@@ -124,7 +124,8 @@
 							%>
 							<div class="grid-item" id="<%=id%>" onClick="dayClicked(this)">
 
-							<img src="IMG/<%=img%>.png" alt=" "/>
+							<img src="IMG/<%=img%>.png" alt=" "
+								 onerror="this.parentElement.innerHTML = '<%=day %>';"/>
 							<%=day%>
 							</div>
 
