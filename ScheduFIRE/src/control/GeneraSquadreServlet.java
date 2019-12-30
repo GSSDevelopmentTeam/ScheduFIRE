@@ -2,7 +2,12 @@ package control;
 
 import java.io.IOException;
 import java.sql.Date;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -35,19 +40,43 @@ public class GeneraSquadreServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession sessione = request.getSession();
-		
+		Date data = (Date) request.getAttribute("data");
+
 		if(sessione.getAttribute("credenziali") != null) {
-			Date data = (Date) request.getAttribute("data");
-			try {
-				List<ComponenteDellaSquadraBean> lista = Util.generaSquadra(data);
-				if(!ComponenteDellaSquadraDao.setComponenti(lista)) {
-					//exception
-				}					
-			} catch (NotEnoughMembersException e) {
-				
+			if(sessione.getAttribute("squadra") != null) {
+				HashMap<VigileDelFuocoBean, String> squadra = (HashMap<VigileDelFuocoBean, String>) 
+						sessione.getAttribute("squadra");
+				List<ComponenteDellaSquadraBean> lista = vigileToComponente(squadra, data);
+				if((!ComponenteDellaSquadraDao.setComponenti(lista)) ||
+						(!SquadraDao.aggiungiSquadra(data)) || 
+						(!ListaSquadreDao.aggiungiSquadre(data, (String) sessione.getAttribute("email"))) ){
+					throw new ScheduFIREException("Errore nelle Query SQL");
+				}	
+				sessione.removeAttribute("squadra");
+			}
+			else {
+				try {
+					List<ComponenteDellaSquadraBean> lista = Util.generaSquadra(data);
+					request.setAttribute("lista", lista);
+					request.getRequestDispatcher("/VisualizzaComposizioneSquadreServlet").forward(request, response);				
+				} catch (NotEnoughMembersException e) {
+
+				}
 			}
 		}
 		request.getRequestDispatcher("/").forward(request, response);
+	}
+
+	private List<ComponenteDellaSquadraBean> vigileToComponente(HashMap<VigileDelFuocoBean, String> squadra, Date data) {
+		List<ComponenteDellaSquadraBean> toReturn = new ArrayList<>();
+		Iterator i = squadra.entrySet().iterator();
+		while(i.hasNext()) {
+			@SuppressWarnings("unchecked")
+			Map.Entry<VigileDelFuocoBean, String> coppia = (Entry<VigileDelFuocoBean, String>) i.next();
+			toReturn.add(new ComponenteDellaSquadraBean(coppia.getValue(), coppia.getKey().getEmail(), data));
+			i.remove();
+		}
+		return toReturn;
 	}
 
 	/**

@@ -23,8 +23,8 @@ public class ScheduFIREException extends ServletException {
 	
 	/**
 	 * Instanzia un oggetto ScheduFIREException chiamando il costruttore del padre.
-	 * @param message , è una stringa che indica il messaggio di errore.
-	 * @param rootCause , è un oggetto Throwable
+	 * @param message è una stringa che indica il messaggio di errore.
+	 * @param rootCause è un oggetto Throwable
 	 */
 	public ScheduFIREException(String message, Throwable rootCause) {
 		super(message, rootCause);
@@ -32,7 +32,7 @@ public class ScheduFIREException extends ServletException {
 	
 	/**
 	 * Instanzia un oggetto ScheduFIREException chiamando il costruttore del padre.
-	 * @param message , è una stringa che indica il messaggio di errore.
+	 * @param message è una stringa che indica il messaggio di errore.
 	 */
 	public ScheduFIREException(String message) {
 		super(message);
@@ -40,7 +40,7 @@ public class ScheduFIREException extends ServletException {
 	
 	/**
 	 * Instanzia un oggetto ScheduFIREException chiamando il costruttore del padre.
-	 * @param rootCause , è un oggetto Throwable
+	 * @param rootCause è un oggetto Throwable
 	 */
 	public ScheduFIREException(Throwable rootCause) {
 		super(rootCause);
