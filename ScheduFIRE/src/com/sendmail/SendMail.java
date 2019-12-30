@@ -1,5 +1,6 @@
 package com.sendmail;
 
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.Properties;
 
@@ -13,22 +14,16 @@ import javax.mail.internet.MimeMessage;
 
 import model.dao.EmailDao;
 
-
-
 public class SendMail {
 
-	public static void sendMail() {
+	public static void sendMail(Date data) {
 		//Lista dei destinatari
 		EmailDao allEmail = new EmailDao();
 		ArrayList<String>  email = new ArrayList<String>();
 		email=allEmail.getEmail();
 
-
-
 		//L'id del mittente
 		String from = "schedufire@gmail.com";
-
-
 
 		//Supponendo che tu stia inviando e-mail da e-mail smtp
 		String host = "smtp.gmail.com";
@@ -42,16 +37,11 @@ public class SendMail {
 		proprietà.put("mail.smtp.ssl.enable", "true");
 		proprietà.put("mail.smtp.auth", "true");
 
-
 		// Prende la sessione in oggetto // e passa l'username e password
 		Session session = Session.getInstance(proprietà, new javax.mail.Authenticator() {
-
 			protected PasswordAuthentication getPasswordAuthentication() {
-
 				return new PasswordAuthentication("schedufire@gmail.com", "schedufire20");
-
 			}
-
 		});
 
 		//Utilizzato per il debug di problemi SMTP
@@ -76,10 +66,10 @@ public class SendMail {
 
 
 			// Set Subject: header field
-			message.setSubject("prova");
+			message.setSubject("OGGETTO");
 
 			// Now set the actual message
-			message.setText("Prova con DAO");
+			message.setText("MESSAGGIO");
 
 			System.out.println("sending...");
 			// Send message
@@ -88,8 +78,5 @@ public class SendMail {
 		} catch (MessagingException mex) {
 			mex.printStackTrace();
 		}
-
 	}
-
-
 }
