@@ -22,27 +22,27 @@ public class Validazione {
 	private static final String[] TURNI = {"B"};
 	
 	/**
-	 * Si occupa di controllare se il formato del parametro passato è corretto.
-	 * @param nome è una stringa che indica il nome di una persona.
-	 * @return true se il formato è rispettato, false altrimenti.
+	 * Si occupa di controllare se il formato del parametro passato Ã¨ corretto.
+	 * @param nome Ã¨ una stringa che indica il nome di una persona.
+	 * @return true se il formato Ã¨ rispettato, false altrimenti.
 	 */
 	public static boolean nome(String nome) {
 		return (PATTERN_NOME_COGNOME.matcher(nome).matches()) && (nome != null);
 	}
 	
 	/**
-	 * Si occupa di controllare se il formato del parametro passato è corretto.
-	 * @param cognome è una stringa che indica il cognome di una persona.
-	 * @return true se il formato è rispettato, false altrimenti.
+	 * Si occupa di controllare se il formato del parametro passato Ã¨ corretto.
+	 * @param cognome Ã¨ una stringa che indica il cognome di una persona.
+	 * @return true se il formato Ã¨ rispettato, false altrimenti.
 	 */
 	public static boolean cognome(String cognome) {
 		return (PATTERN_NOME_COGNOME.matcher(cognome).matches()) && (cognome !=null);
 	}
 	
 	/**
-	 * Si occupa di controllare se il formato del parametro passato è corretto.
-	 * @param email è una stringa che rappresenta una email.
-	 * @return true se il formato è rispettato, false altrimenti.
+	 * Si occupa di controllare se il formato del parametro passato Ã¨ corretto.
+	 * @param email Ã¨ una stringa che rappresenta una email.
+	 * @return true se il formato Ã¨ rispettato, false altrimenti.
 	 */
 	public static boolean email(String email) {
 		
@@ -51,9 +51,9 @@ public class Validazione {
 	}
 	
 	/**
-	 * Si occupa di controllare se il formato del parametro passato è corretto.
-	 * @param mansione è una stringa che rappresenta una mansione.
-	 * @return true se il formato è rispettato, false altrimenti.
+	 * Si occupa di controllare se il formato del parametro passato Ã¨ corretto.
+	 * @param mansione Ã¨ una stringa che rappresenta una mansione.
+	 * @return true se il formato Ã¨ rispettato, false altrimenti.
 	 */
 	public static boolean mansione(String mansione) {
 		
@@ -70,20 +70,20 @@ public class Validazione {
 	}
 	
 	/**
-	 * Si occupa di controllare se il formato del parametro passato è corretto.
-	 * @param ferieAnnoCorrente è un intero che rappresenta il numero 
+	 * Si occupa di controllare se il formato del parametro passato Ã¨ corretto.
+	 * @param ferieAnnoCorrente Ã¨ un intero che rappresenta il numero 
 	 * di ferie relative all'anno corrente.
-	 * @return @return true se il formato è rispettato, false altrimenti.
+	 * @return @return true se il formato Ã¨ rispettato, false altrimenti.
 	 */
 	public static boolean giorniFerieAnnoCorrente(int giorniFerieAnnoCorrente) {
 		return (giorniFerieAnnoCorrente >= 0);
 	}
 	
 	/**
-	 * Si occupa di controllare se il formato del parametro passato è corretto.
-	 * @param ferieAnniPrecedenti è un intero che rappresenta il numero 
+	 * Si occupa di controllare se il formato del parametro passato Ã¨ corretto.
+	 * @param ferieAnniPrecedenti Ã¨ un intero che rappresenta il numero 
 	 * di ferie relative agli anni precedenti.
-	 * @return @return true se il formato è rispettato, false altrimenti.
+	 * @return @return true se il formato Ã¨ rispettato, false altrimenti.
 	 */
 	public static boolean giorniFerieAnniPrecedenti(int giorniFerieAnniPrecedenti) {
 		return (giorniFerieAnniPrecedenti >= 0);

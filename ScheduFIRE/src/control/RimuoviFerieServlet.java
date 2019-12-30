@@ -4,12 +4,15 @@ import java.io.IOException;
 import java.sql.Date;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import org.json.JSONArray;
 
 import model.dao.FerieDao;
 
@@ -43,23 +46,32 @@ public class RimuoviFerieServlet extends HttpServlet {
 		Date dataInizio = null;
 		Date dataFine = null;
 		String emailVF;
-		SimpleDateFormat formattazione = new SimpleDateFormat("dd-MM-yyyy");
+		SimpleDateFormat formattazione = new SimpleDateFormat("yyyy-MM-dd");
 		boolean rimozione;
 		
-		emailVF = request.getParameter("id");
-		
-		try {
-			dataInizio = (Date) formattazione.parse(request.getParameter("dataInizio"));
-			dataFine = (Date) formattazione.parse(request.getParameter("dataFine"));
-		} catch (ParseException e) {
-			e.printStackTrace();
-		}
-		
+		emailVF = request.getParameter("email");
+		String dataIniz= request.getParameter("dataIniziale");
+		String dataFin= request.getParameter("dataFinale");
+		int annoIniz=Integer.parseInt(dataIniz.substring(0, 4));
+		int meseIniz=Integer.parseInt(dataIniz.substring(5, 7));
+		int giornoIniz=Integer.parseInt(dataIniz.substring(8, 10));
+		int annoFin=Integer.parseInt(dataFin.substring(0, 4));
+		int meseFin=Integer.parseInt(dataFin.substring(5, 7));
+		int giornoFin=Integer.parseInt(dataFin.substring(8, 10));
+
+		dataInizio=Date.valueOf(LocalDate.of(annoIniz, meseIniz, giornoIniz));
+		dataFine=Date.valueOf(LocalDate.of(annoFin, meseFin, giornoFin));
+
 		rimozione = FerieDao.rimuoviPeriodoFerie(emailVF, dataInizio, dataFine);
+		response.setContentType("application/json");
+		JSONArray array = new JSONArray();
+		if(rimozione) 
+			array.put(true);
+		else
+			array.put(false);
 		
-		if(rimozione) {
-			//implementare risposta JSON
-		}
+			response.getWriter().append(array.toString());
+		
 	}
 
 }

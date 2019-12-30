@@ -8,28 +8,32 @@
 <html>
 <head>
 
-<%@ include file = "StandardJSP.jsp" %>
+<%@ include file="StandardJSP.jsp"%>
 <link type="text/css" rel="stylesheet" href="CSS/CalendarioCSS.css"></link>
-
 
 <title>ScheduFIRE</title>
 <%
-	String modalita_uso = "Schiacchiare su un giorno per visualizzare le squadre";
+	String modalita_uso = "  Cliccare su un giorno per visualizzare le squadre";
 	String empty = " ";
-	String[] days = {"  Lunedì  ", " Martedì  ", "Mercoledì ", " Giovedì  ", " Venerdì  ", "  Sabato  ", "   Domenica "};
+	String vero = "true";
+	String falso = "false";
+	String editSquadre = "   Modifica squadre";
+	String[] days = {"  Lunedì  ", " Martedì  ", "Mercoledi ", " Giovedì  ", " Venerdì  ", "  Sabato  ", "   Domenica "};
 	String[] month = {"Gennaio", "Febbraio", "Marzo", "Aprile", "Maggio", "Giugno", "Luglio", "Agosto",
 			"Settembre", "Ottobre", "Novembre", "Dicembre"};
 	int giorno = (Integer) request.getAttribute("giorno");
 	int mese = (Integer) request.getAttribute("mese");
 	int anno = (Integer) request.getAttribute("anno");
+	int primoGiorno = (Integer) request.getAttribute("primo_giorno");
 	int anno_corrente = Integer.parseInt ((String) request.getAttribute("anno_corrente"));
 	int mese_corrente = Integer.parseInt ((String) request.getAttribute("mese_corrente"));
 	String mese_stringa = (String) request.getAttribute("meseStringa");
 	int[] days_month = (int[]) request.getAttribute("days_month");
-	ArrayList<String> sala_operativa = (ArrayList<String>) request.getAttribute("sala_operativa");
-	ArrayList<String> prima_partenza = (ArrayList<String>) request.getAttribute("prima_partenza");
-	ArrayList<String> autoscala = (ArrayList<String>) request.getAttribute("autoscala");
-	ArrayList<String> autobotte = (ArrayList<String>) request.getAttribute("autobotte");
+	int[] days_work = (int[]) request.getAttribute("days_work");
+	//ArrayList<String> sala_operativa = (ArrayList<String>) request.getAttribute("sala_operativa");
+	//ArrayList<String> prima_partenza = (ArrayList<String>) request.getAttribute("prima_partenza");
+	//ArrayList<String> autoscala = (ArrayList<String>) request.getAttribute("autoscala");
+	//ArrayList<String> autobotte = (ArrayList<String>) request.getAttribute("autobotte");
 
 	//print per controllare se i dati passati dalla servlet sono giusti!
 	System.out.println("CalendarioJSP -> " + giorno + "/" + mese + "/" + anno + " -- " + mese_stringa);
@@ -40,23 +44,44 @@
 	<jsp:include page="HeaderJSP.jsp" />
 	<div class="container">
 		<div class="container-calendar">
-			<div class="container-month-year">
-				<a class="altroAnno" href="CalendarioServlet?mese=<%=mese %>&anno=<%=anno-1 %>"><img src="IMG/previous.png"/></a>
-				<%=anno%>
-				<a class="altroAnno" href="CalendarioServlet?mese=<%=mese %>&anno=<%=anno+1 %>"><img src="IMG/next.png"/></a>
-			</div>
+
+			<!-- Accesso effettuato dal capoturno -->
+			<%//if(ruolo.equalsIgnoreCase("capoturno")){%>
 			
+			<a href="/ModificaComposizioneSquadreServlet" class="edit" ><img src="IMG/edit.png" /><%=editSquadre%></a>
+			
+			<%//} %>
+
+			<div class="container-year">
+				<a class="altroAnno"
+					href="CalendarioServlet?mese=<%=mese %>&anno=<%=anno-1 %>">
+					<img src="IMG/arrow/left-arrow-empty.png"
+					onmouseover="this.src='IMG/arrow/left-arrow-full.png'"
+					onmouseout="this.src='IMG/arrow/left-arrow-empty.png'" />
+				</a>
+				<span id="annoVisualizzato"><%=anno%></span>
+				<a class="altroAnno"
+					href="CalendarioServlet?mese=<%=mese %>&anno=<%=anno+1 %>">
+					<img src="IMG/arrow/right-arrow-empty.png"
+					onmouseover="this.src='IMG/arrow/right-arrow-full.png'"
+					onmouseout="this.src='IMG/arrow/right-arrow-empty.png'" />
+				</a>
+			</div>
+
 			<div class="grid-chose-month">
 				<div class="dropdown">
-					<button class="dropbtn"><%=month[mese-1]%>  <img src="IMG/arrow-down.png"/></button>
+				<input type="hidden" id="meseVisualizzato" value="<%=mese%>">
+					<button class="dropbtn"><%=month[mese-1]%>
+						<img src="IMG/arrow/arrow-down.png" />
+					</button>
 					<div class="dropdown-content">
-							<%
+						<%
 							for (int k = 0; k <= 11; k++) {
 						%>
-						 <a class="dropdown-item" href="CalendarioServlet?mese=<%=k+1 %>&anno=<%=anno%>"><%=month[k]%></a>						
+						<a class="dropdown-item"
+							href="CalendarioServlet?mese=<%=k+1 %>&anno=<%=anno%>"><%=month[k]%></a>
 						<%	}	%>
 					</div>
-				
 				</div>
 			</div>
 
@@ -68,49 +93,65 @@
 				<%
 					}
 					int day = 0;
-					for (int i = 0; i < days_month.length; i++) {
-						if (days_month[i] < 0) {
-				%>
-				<div class="item-empty"><%=empty%></div>
-				<%
-					} else { day++;
-					String classe = "";
-					if(giorno==day && mese_corrente == mese && anno_corrente == anno){
-						classe ="giornoCorrente";
+					int i = 0;
+					String id = "";
+					String img = "";
+					for (i=0; i < days_month.length; i++) {
+						if (days_month[i] < 0){
+							%>
+							<div class="item-empty"><%=empty%></div>
+							<%
+					} else
+						{
+							day++;
+						
+							if(giorno==day && mese_corrente == mese && anno_corrente == anno){
+								id ="giornoCorrente";
+							}
+							if (days_work[i]==1){
+								id = "giornoLavorativoDiurno";
+								img = "diurno";
+							}
+							if(days_work[i]==2){
+								id = "giornoLavorativoNotturno";
+								img = "notturno";
+							}
+							if(giorno==day && mese_corrente == mese && anno_corrente == anno && days_work[i]==1){
+								id = "giornoCorrenteLavorativo";
+							}
+							
+							
+							%>
+							<div class="grid-item" id="<%=id%>" onClick="dayClicked(this)">
+
+							<img src="IMG/<%=img%>.png" alt=" "
+								 onerror="this.parentElement.innerHTML = '<%=day %>';"/>
+							<%=day%>
+							</div>
+
+							<%
+							id = "";
+							img = "";
+						}
 					}
 				%>
-
-				<div class="grid-item" id="<%=classe%>" onClick="dayClicked(this)"><%=day%></div>
-
-				<%
-					}
-					}
-				%>
-
 
 			</div>
-					
-			<!-- Accesso effettuato dal capoturno -->
-			<%if(ruolo.equalsIgnoreCase("capoturno")){%>
-			<div class="edit">
-				<img src="IMG/edit.png"/><a href ="#">Modifica squadre</a><br>
-			</div>
-			<%} %>
+
+
 		</div>
-				
-		<a><%=modalita_uso%></a>
+
+		<a> <%=modalita_uso%></a>
 		<div class="container-schedul">
 
 
 			<div class="wrapper">
 				<div class="box mansione">
-					<p>SALA OPERATIVA<p>
+					<p>SALA OPERATIVA
+					<p>
 				</div>
 				<div class="vigili">
-				<%for(String s : sala_operativa){%>
-					<p><%=s%></p>
-				<%} %>
-         		 <table id="SalaOperativa"></table>
+					<table id="SalaOperativa"></table>
 				</div>
 
 
@@ -119,24 +160,15 @@
 
 				</div>
 				<div class="vigili">
-
-				<%for(String s: prima_partenza){%>
-					<p><%=s%></p>
-				<%} %>
-        		<table id="PrimaPartenza"></table>
+					<table id="PrimaPartenza"></table>
 				</div>
 
 
 				<div class="box mansione">
 					<p>AUTO SCALA</p>
-
 				</div>
 				<div class="vigili">
-
-				<%for(String s: autoscala){%>
-					<p><%=s%></p>
-				<%} %>
-         		 <table id="AutoScala"></table>
+					<table id="AutoScala"></table>
 				</div>
 
 
@@ -144,10 +176,7 @@
 					<p>AUTO BOTTE</p>
 				</div>
 				<div class="vigili">
-				<%for(String s: autobotte){%>
-					<p><%=s%></p>
-				<%} %>
-				<table id="AutoBotte"></table>
+					<table id="AutoBotte"></table>
 				</div>
 
 			</div>
@@ -155,13 +184,16 @@
 		</div>
 
 	</div>
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+	<script
+		src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 
 	<script>
 	
 		function setValore(input){
 			console.log(input);
 		}
+		
+		
 
 		function dayClicked(input) {
 		console.log("parte funzione dayClicked()");
@@ -172,12 +204,18 @@
 		var autoBotte = $("#AutoBotte");
 
 		var giorno = $(input).text();
+		var mese=$("#meseVisualizzato").val();
+		var anno=$("#annoVisualizzato").text();
+		console.log("parametri passati");
+		console.log(giorno+" mese: "+mese+" anno: "+anno);
 		
 		$.ajax({
 			type:"POST",
 			url: "AjaxCalendario",
 			data : {
 				"giorno": giorno,
+				"mese":mese,
+				"anno":anno,
 			},
 			dataType: "json",
 			async: true,
@@ -223,5 +261,6 @@
 	}
 
 	</script>
+	
 </body>
 </html>
