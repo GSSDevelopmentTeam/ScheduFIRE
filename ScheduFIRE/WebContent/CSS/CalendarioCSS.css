@@ -10,8 +10,7 @@ body{
 }
 
 a {
-	text-decoration: none;
-	color: black;
+
 }
 
 .container {
@@ -75,13 +74,11 @@ a {
 /*contenitore per la schedulazione
 flex:1 -> prende il resto del container*/
 .container-schedul {
-	position: absolute;
-	top: 15%; bottom: 5%; left: 70%; right: 0.1%;
-	flex: 1;
+	flex: 30%;
+	overflow-y:scroll;
 	background-color: transparent;
 	font-family: Verdana;
 	margin: 1%;
-	overflow: auto !important;
 	padding-left:1%;
 }
 
@@ -127,11 +124,18 @@ div.box{
 	background-color: #57b7b7;
 }
 
-#giornoCorrenteLavorativo{
+#giornoCorrenteLavorativoDiurno{
 	font-weight: bold;
 	color: #b60000;
 	background-color: #a0d6d6;
 }
+
+#giornoCorrenteLavorativoNotturno{
+	font-weight: bold;
+	color: #b60000;
+	background-color: #57b7b7;
+}
+
 .grid-days {
 	display: grid;
 	grid-template-columns: auto auto auto auto auto auto auto;
@@ -171,10 +175,6 @@ non ha la proprietà :hover*/
 	text-align: center;
 	font-family: Verdana;}
 
-.dayNoWork {
-	color: #808080;
-	font-family: Verdana;
-}
 
 .grid-item:hover {
 	background-color: #c7c7c7 !important;	
@@ -234,8 +234,9 @@ non ha la proprietà :hover*/
 }
 /*Fine menù dropdown dei mesi*/
 
-td {
-	text-align: center;
+.info{
+	text-decoration: none;
+	color: black;
 }
 
 
