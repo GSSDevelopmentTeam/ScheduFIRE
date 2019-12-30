@@ -194,7 +194,7 @@ public class Util {
 	}
 	
 	
-	public static void isLogged(HttpServletRequest request) throws ScheduFIREException {
+	public static void isAutenticato(HttpServletRequest request) throws ScheduFIREException {
 		if(request.getSession().getAttribute("ruolo")==null)
 			throw new ScheduFIREException("È richiesta l'autenticazione per poter accedere alle funzionalità del sito");
 		
