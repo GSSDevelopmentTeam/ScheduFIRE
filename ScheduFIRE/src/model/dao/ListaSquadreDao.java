@@ -1,9 +1,26 @@
 package model.dao;
 
-public class ListaSquadreDao {
+import java.sql.Connection;
+import java.sql.Date;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 
-	public ListaSquadreDao() {
-		// TODO Auto-generated constructor stub
+import model.ConnessioneDB;
+import util.GiornoLavorativo;
+
+public class ListaSquadreDao {
+	
+	public static boolean aggiungiSquadre(Date data, String emailCT) {
+		try(Connection con = ConnessioneDB.getConnection()) {
+			PreparedStatement ps = con.prepareStatement("INSERT INTO listasquadre (giornoLavorativo, oraIniziale, "
+					+ "emailCT) VALUES (?, ?, ?);");
+			ps.setDate(1, data);
+			ps.setInt(2, (GiornoLavorativo.isDiurno(data) ? 8 : 20));
+			ps.setString(3, emailCT);
+			return (ps.executeUpdate() == 1);
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+		}
 	}
 
 }
