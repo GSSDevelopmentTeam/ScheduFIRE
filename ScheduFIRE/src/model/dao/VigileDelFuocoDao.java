@@ -198,7 +198,7 @@ public class VigileDelFuocoDao {
 	/**
 	 * Si occupa dell'ottenimento di una collezione di VigileDelFuocoBean dal database
 	 * con campo 'adoperabile' settato a true.
-	 * @param ordinamento è un intero che determina il tipo di ordinamento della collezione
+	 * @param ordinamento ï¿½ un intero che determina il tipo di ordinamento della collezione
 	 * @return una collezione di VigileDelFuocoBean con campo 'adoperabile' settato a true 
 	 */
 	public static Collection<VigileDelFuocoBean> ottieni(int ordinamento) {
@@ -508,8 +508,108 @@ public class VigileDelFuocoDao {
 		return listaVigili;
 	}
 	
+	public static int ottieniNumeroFeriePrecedenti(String emailVF) {
+		PreparedStatement ps;
+		ResultSet rs;
+		int feriePrecedenti = 0;
+		
+		String FerieAnnoPSQL = "SELECT giorniFerieAnnoPrecedente FROM Vigile WHERE emailVF = ?;";
+		
+		try{
+			Connection connessione=null;
+			try {
+				connessione = ConnessioneDB.getConnection();
+				
+				ps = connessione.prepareStatement(FerieAnnoPSQL);
+				ps.setString(1, emailVF);
+				rs = ps.executeQuery();
+			
+				feriePrecedenti = rs.getInt("giorniFerieAnnoPrecedente");
+			}
+			finally {
+				ConnessioneDB.releaseConnection(connessione);	
+			}
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return feriePrecedenti;
+	}
 	
+	public static int ottieniNumeroFerieCorrenti(String emailVF) {
+		PreparedStatement ps;
+		ResultSet rs;
+		int ferieCorrenti = 0;
+		
+		String FerieAnnoCSQL = "SELECT giorniFerieAnnoCorrente FROM Vigile WHERE emailVF = ?;";
+		
+		try{
+			Connection connessione=null;
+			try {
+				connessione = ConnessioneDB.getConnection();
+				
+				ps = connessione.prepareStatement(FerieAnnoCSQL);
+				ps.setString(1, emailVF);
+				rs = ps.executeQuery();
+			
+				ferieCorrenti = rs.getInt("giorniFerieAnnoCorrente");
+			}
+			finally {
+				ConnessioneDB.releaseConnection(connessione);	
+			}
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return ferieCorrenti;
+	}
 	
+	public static void aggiornaFeriePrecedenti(String emailVF, int numeroFerie) {
+		PreparedStatement ps;
+		
+		String aggiornaFeriePSQL = "UPDATE Vigile SET giorniFerieAnnoPrecedente = ? WHERE emailVF = ?;";
+		
+		try{
+			Connection connessione=null;
+			try {
+				connessione = ConnessioneDB.getConnection();
+				
+				ps = connessione.prepareStatement(aggiornaFeriePSQL);
+				ps.setInt(1, numeroFerie);
+				ps.setString(2, emailVF);
+				ps.executeUpdate();
+				connessione.commit();
+			}
+			finally {
+				ConnessioneDB.releaseConnection(connessione);	
+			}
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}
+	}
 	
+	public static void aggiornaFerieCorrenti(String emailVF, int numeroFerie) {
+		PreparedStatement ps;
+		
+		String aggiornaFerieCSQL = "UPDATE Vigile SET giorniFerieAnnoCorrente = ? WHERE emailVF = ?;";
+		
+		try{
+			Connection connessione=null;
+			try {
+				connessione = ConnessioneDB.getConnection();
+				
+				ps = connessione.prepareStatement(aggiornaFerieCSQL);
+				ps.setInt(1, numeroFerie);
+				ps.setString(2, emailVF);
+				ps.executeUpdate();
+				connessione.commit();
+			}
+			finally {
+				ConnessioneDB.releaseConnection(connessione);	
+			}
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}
+	}
 
 }
