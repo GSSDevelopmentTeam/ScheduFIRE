@@ -21,6 +21,7 @@ import model.dao.VigileDelFuocoDao;
  * Servlet implementation class GestioneFerieServlet
  * 
  * @author Nicola Labanca
+ * @author Alfredo Giuliano
  */
 @WebServlet("/GestioneFerieServlet")
 public class GestioneFerieServlet extends HttpServlet {
@@ -45,27 +46,38 @@ public class GestioneFerieServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		if(request.getParameter("JSON")!=null) {
+		if(request.getParameter("JSON")!=null && request.getParameter("aggiunta")!=null ) {
 			String email=request.getParameter("email");
 			List<FerieBean> ferie=FerieDao.ottieniFerieConcesse(email);
 			JSONArray array = new JSONArray();
 			for(FerieBean ferieBean:ferie) {
-				if(ferieBean.getDataInizio().equals(ferieBean.getDataFine())) {
-					array.put(ferieBean.getDataInizio());
-				}
-				else {
-					JSONArray arrayrange = new JSONArray();
 
+				JSONArray arrayrange = new JSONArray();
 				arrayrange.put(ferieBean.getDataInizio());
 				arrayrange.put(ferieBean.getDataFine().toLocalDate().plusDays(1));
 				array.put(arrayrange);
-				}
+
+			}
+			response.setContentType("application/json");
+			response.getWriter().append(array.toString());
+		}
+		else if(request.getParameter("JSON")!=null && request.getParameter("rimozione")!=null ) {
+			String email=request.getParameter("email");
+			List<FerieBean> ferie=FerieDao.ottieniFerieConcesse(email);
+			JSONArray array = new JSONArray();
+			for(FerieBean ferieBean:ferie) {
+
+				JSONArray arrayrange = new JSONArray();
+				arrayrange.put(ferieBean.getDataInizio());
+				arrayrange.put(ferieBean.getDataFine().toLocalDate());
+				array.put(arrayrange);
+
 			}
 			response.setContentType("application/json");
 			response.getWriter().append(array.toString());
 		}
 		else {
-			ArrayList<VigileDelFuocoBean> listaVigili = new ArrayList<VigileDelFuocoBean>(VigileDelFuocoDao.ottieni());
+			List<VigileDelFuocoBean> listaVigili = VigileDelFuocoDao.ottieni();
 
 			request.setAttribute("listaVigili", listaVigili);
 			request.getRequestDispatcher("JSP/GestioneFerieJSP.jsp").forward(request, response);

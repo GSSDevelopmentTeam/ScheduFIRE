@@ -22,7 +22,7 @@ public class VigileDelFuocoBean {
 		this.turno = turno;
 		this.mansione = mansione;
 		this.username = username;
-		this.grado=grado;
+		this.grado = grado;
 		this.giorniFerieAnnoCorrente = giorniFerieAnnoCorrente;
 		this.giorniFerieAnnoPrecedente = giorniFerieAnnoPrecedente;
 		this.caricoLavoro = 0;
@@ -124,4 +124,76 @@ public class VigileDelFuocoBean {
 				+ ", giorniFerieAnnoCorrente=" + giorniFerieAnnoCorrente + ", giorniFerieAnnoPrecedente="
 				+ giorniFerieAnnoPrecedente + ", caricoLavoro=" + caricoLavoro + ", adoperabile=" + adoperabile + "]";
 	}
+
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + (adoperabile ? 1231 : 1237);
+		result = prime * result + caricoLavoro;
+		result = prime * result + ((cognome == null) ? 0 : cognome.hashCode());
+		result = prime * result + ((email == null) ? 0 : email.hashCode());
+		result = prime * result + giorniFerieAnnoCorrente;
+		result = prime * result + giorniFerieAnnoPrecedente;
+		result = prime * result + ((grado == null) ? 0 : grado.hashCode());
+		result = prime * result + ((mansione == null) ? 0 : mansione.hashCode());
+		result = prime * result + ((nome == null) ? 0 : nome.hashCode());
+		result = prime * result + ((turno == null) ? 0 : turno.hashCode());
+		result = prime * result + ((username == null) ? 0 : username.hashCode());
+		return result;
+	}
+
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		VigileDelFuocoBean other = (VigileDelFuocoBean) obj;
+		if (adoperabile != other.adoperabile)
+			return false;
+		if (caricoLavoro != other.caricoLavoro)
+			return false;
+		if (cognome == null) {
+			if (other.cognome != null)
+				return false;
+		} else if (!cognome.equals(other.cognome))
+			return false;
+		if (email == null) {
+			if (other.email != null)
+				return false;
+		} else if (!email.equals(other.email))
+			return false;
+		if (giorniFerieAnnoCorrente != other.giorniFerieAnnoCorrente)
+			return false;
+		if (giorniFerieAnnoPrecedente != other.giorniFerieAnnoPrecedente)
+			return false;
+		if (grado == null) {
+			if (other.grado != null)
+				return false;
+		} else if (!grado.equals(other.grado))
+			return false;
+		if (mansione == null) {
+			if (other.mansione != null)
+				return false;
+		} else if (!mansione.equals(other.mansione))
+			return false;
+		if (nome == null) {
+			if (other.nome != null)
+				return false;
+		} else if (!nome.equals(other.nome))
+			return false;
+		if (turno == null) {
+			if (other.turno != null)
+				return false;
+		} else if (!turno.equals(other.turno))
+			return false;
+		if (username == null) {
+			if (other.username != null)
+				return false;
+		} else if (!username.equals(other.username))
+			return false;
+		return true;
+	}
+	
 }

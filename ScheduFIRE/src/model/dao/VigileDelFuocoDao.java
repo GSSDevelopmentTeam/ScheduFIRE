@@ -22,7 +22,21 @@ import model.bean.VigileDelFuocoBean;
  */
 
 public class VigileDelFuocoDao {
-
+	
+	//Costanti
+	
+	public static final int ORDINA_PER_NOME = 0;
+	
+	public static final int ORDINA_PER_COGNOME = 1;
+	
+	public static final int ORDINA_PER_CARICO_LAVORO = 2;
+	
+	public static final int ORDINA_PER_GIORNI_FERIE_ANNO_CORRENTE = 3;
+	
+	public static final int ORDINA_PER_GIORNI_FERIE_ANNI_PRECEDENTI = 4;
+	
+	private static final String[] ORDINAMENTI = {"order by nome", "order by cognome", "order by caricolavoro",
+												"order by giorniferieannocorrente", "order by giorniferieannoprecedente"};
 	
 	/**
 	 * Si occupa del salvataggio dei dati di un VigileDelFuocoBean nel database.
@@ -129,16 +143,79 @@ public class VigileDelFuocoDao {
 	 * con campo 'adoperabile' settato a true.
 	 * @return una collezione di VigileDelFuocoBean con campo 'adoperabile' settato a true 
 	 */
-	public static Collection<VigileDelFuocoBean> ottieni() {
+	public static List<VigileDelFuocoBean> ottieni() {
 		
 		try(Connection con = ConnessioneDB.getConnection()) {
 			
 			// Esecuzione query
-			PreparedStatement ps = con.prepareStatement("select * from Vigile where adoperabile = true;");
+			PreparedStatement ps = con.prepareStatement("select * from Vigile where adoperabile = true ORDER BY cognome;");
 			ResultSet rs = ps.executeQuery();
 			
 			//Instanziazione del set dei Vigili del Fuoco
-			HashSet<VigileDelFuocoBean> vigili = new HashSet<VigileDelFuocoBean>();
+			List<VigileDelFuocoBean> vigili = new ArrayList<VigileDelFuocoBean>();
+			
+			//Iterazione sui risultati
+			while(rs.next()) {
+				
+				// Ottenimento dati dall'interrogazione
+				String nome = rs.getString("nome");
+				String cognome = rs.getString("cognome");
+				String email = rs.getString("email");
+				String turno = rs.getString("turno");
+				String username = rs.getString("username");
+				String mansione = rs.getString("mansione");
+				int giorniFerieAnnoCorrente = rs.getInt("giorniferieannocorrente");
+				int giorniFerieAnnoPrecedente = rs.getInt("giorniferieannoprecedente");
+				int caricoLavoro = rs.getInt("caricolavoro");
+				boolean adoperabile = rs.getBoolean("adoperabile");
+				String grado = rs.getString("grado");
+				
+				VigileDelFuocoBean vf = new VigileDelFuocoBean();
+				vf.setNome(nome);
+				vf.setCognome(cognome);
+				vf.setEmail(email);
+				vf.setTurno(turno);
+				vf.setUsername(username);
+				vf.setMansione(mansione);
+				vf.setGiorniFerieAnnoCorrente(giorniFerieAnnoCorrente);
+				vf.setGiorniFerieAnnoPrecedente(giorniFerieAnnoPrecedente);
+				vf.setCaricoLavoro(caricoLavoro);
+				vf.setAdoperabile(adoperabile);
+				vf.setGrado(grado);
+				
+				vigili.add(vf);
+				
+			}
+			
+			return vigili;
+			
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+		}
+	
+	}
+	
+	/**
+	 * Si occupa dell'ottenimento di una collezione di VigileDelFuocoBean dal database
+	 * con campo 'adoperabile' settato a true.
+	 * @param ordinamento è un intero che determina il tipo di ordinamento della collezione
+	 * @return una collezione di VigileDelFuocoBean con campo 'adoperabile' settato a true 
+	 */
+	public static Collection<VigileDelFuocoBean> ottieni(int ordinamento) {
+		
+		if(ordinamento < 0 || ordinamento > 4)
+			//lancio eccezione
+			;
+		
+		try(Connection con = ConnessioneDB.getConnection()) {
+			
+			// Esecuzione query
+			PreparedStatement ps = con.prepareStatement("select * from Vigile where adoperabile = true " +
+														ORDINAMENTI[ordinamento] + ";");
+			ResultSet rs = ps.executeQuery();
+			
+			//Instanziazione del set dei Vigili del Fuoco
+			ArrayList<VigileDelFuocoBean> vigili = new ArrayList<VigileDelFuocoBean>();
 			
 			//Iterazione sui risultati
 			while(rs.next()) {
@@ -267,7 +344,7 @@ public class VigileDelFuocoDao {
 	 * @return una lista di VigileDelFuocoBean che hanno attributo adoperabile=true 
 	 * 			e non sono in ferie o malattia nella data passata come parametro
 	 */
-	public static List<VigileDelFuocoBean> getDisponibili(Date data){
+	public static ArrayList<VigileDelFuocoBean> getDisponibili(Date data){
 		try(Connection con = ConnessioneDB.getConnection()) {
 
 			// Query di ricerca
