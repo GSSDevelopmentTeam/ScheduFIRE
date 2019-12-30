@@ -9,11 +9,7 @@ body{
   box-sizing: border-box;
 }
 
-a {
-
-}
-
-.container {
+.containerAll {
 	position:relative;
 	margin-top: 3px;
 	margin-right: 10px;
@@ -43,7 +39,7 @@ a {
 
 /*contenitore per il calendario*/
 .container-calendar {
-	width: 70%;
+	width: 80%;
 	background-color: white;
 	font-family: Verdana;
 	border-right: 2px dotted black;
@@ -75,11 +71,12 @@ a {
 flex:1 -> prende il resto del container*/
 .container-schedul {
 	flex: 30%;
+	height: 600px;
 	overflow-y:scroll;
 	background-color: transparent;
 	font-family: Verdana;
 	margin: 1%;
-	padding-left:1%;
+	padding-left: 1%;
 }
 
 /*per la schedulazione delle squadre*/
@@ -90,18 +87,15 @@ flex:1 -> prende il resto del container*/
   color: #444;
 }
 
-div.box{
-  box-shadow: 20%;
-  color: black;
-  border: 3px solid white;
-  border-bottom: 3px solid black;
-  margin: 20px 0 20px 0;
-  font-size: 90%;
-}
-
 .mansione{
+	box-shadow: 20%;
+	color: black;
+	border: 3px solid white;
+	border-bottom: 3px solid black;
+	margin: 10px 0 10px 0;
+	font-size: 90%;
 	font-weight: bold;
-	overflow: auto;
+	overflow: visible;
 	text-align: center;
 } 
 
