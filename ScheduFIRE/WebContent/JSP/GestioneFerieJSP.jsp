@@ -14,18 +14,18 @@
 
 
 
-<!--------- Alert ----------------->
+<!--------- Alert Ok----------------->
 
 <div class="alert alert-success flex alert-dismissible fade in text-center fixed-top" id="rimozioneOk" style="display: none;position:fixed;z-index: 99999; width:100%">
-  <strong>Operazione riuscita!</strong> Rimozione ferie avvenuta con successo.
+  <strong>Operazione riuscita!</strong> <span>Rimozione ferie avvenuta con successo..</span>
 </div>
 
 <!-- ----------------------- -->
 
-<!--------- Alert ----------------->
+<!--------- Alert NON Ok ----------------->
 
 <div class="alert alert-danger flex alert-dismissible fade in text-center fixed-top" id="rimozioneNoOk" style="display: none;position:fixed;z-index: 99999; width:100%">
-  <strong>Operazione non riuscita!</strong> Rimozione ferie non avvenuta.
+  <strong>Errore!</strong> <span>Rimozione ferie non avvenuta..</span>
 </div>
 
 <!-- ----------------------- -->
@@ -51,14 +51,17 @@
 						<input id="dataInizio" placeholder="Giorno iniziale" readonly
 							size="34" /> <input id="dataFine" placeholder="Giorno finale"
 							readonly size="34" />
-
 					</div>
+				<div class="text-center" id="messaggioFerie1"></div>
+				<div class="text-center" id="messaggioFerie2"></div>
+				
+					
 				</div>
 
 				<div class="modal-footer">
-					<button type="button" class="btn btn-outline-danger""
+					<button type="button" class="btn btn-outline-danger"
 						data-dismiss="modal">Annulla</button>
-					<button type="button" class="btn btn-outline-warning">Aggiungi
+					<button type="button" class="btn btn-outline-warning" id="bottoneAggiungiFerie" disabled>Aggiungi
 						ferie</button>
 				</div>
 			</div>
@@ -204,6 +207,7 @@
 
 
 	<script>
+		
 		var picker = new Litepicker(
 				{
 					element : document.getElementById('dataInizio'),
@@ -216,44 +220,94 @@
 					inlineMode : true,
 					minDate : new Date(),
 					disallowLockDaysInRange : true,
-					tooltipText : {
-						one : 'giorno',
-						other : 'giorni',
-					},
+					showTooltip:false,
 					onError : function(error) {
-						alert("Nel periodo selezionato risultano già dei giorni di ferie");
+						alertInsuccesso("Nel periodo selezionato risultano già dei giorni di ferie.");
 					},
-					onHide : function() {
+					onSelect : function() {
 						if ($("#dataInizio").val() != "") {
-							var giornoLavorativo = moment("24/12/2019",
-									'DD/MM/YYYY');
-							var lavorativo = 0;
-							var inizio = moment(document
-									.getElementById("dataInizio").value,
-									'DD/MM/YYYY');
-							var fine = moment(document
-									.getElementById("dataFine").value,
-									'DD/MM/YYYY');
-							console.log(inizio);
-							console.log(fine);
+							
+							var differenza =calcolaGiorniFerie();
+							
+							var email= $("#emailAggiuntaFerie").val();
+							var ferieAnnoCorrente= $("#listaVigili td:contains('" + email + "')")
+							.next('td').next('td');
+							var ferieAnnoPrecedente= ferieAnnoCorrente.next('td');
+							var totaleFerie=parseInt(ferieAnnoCorrente.text())+parseInt(ferieAnnoPrecedente.text());
+							if (totaleFerie<differenza){
+								picker.setOptions({
+									startDate : null,
+									endDate : null
+								});
+								$("#dataInizio").val("");
+								$("#dataFine").val("");
+								$("#messaggioFerie1").text("Hai selezionato un periodo troppo grande.");
+								$("#messaggioFerie2").text("Hai a disposizione "+totaleFerie+" giorni di ferie, ne hai selezionati "+differenza+".");
+								alertInsuccesso("Hai selezionato un periodo troppo grande.Hai a disposizione "+totaleFerie+
+										" giorni di ferie, ne hai selezionati "+differenza);
+								$("#messaggioFerie1").attr("style","color:red");
+								$("#messaggioFerie2").attr("style","color:red");
+								 $("#bottoneAggiungiFerie").addClass( 'disabled' );
 
-							while (inizio.diff(fine) <= 0) {
-								var differenza = inizio.diff(giornoLavorativo,
-										'days');
-								var resto = differenza % 4;
-								if (resto == 0 || resto == 1)
-									lavorativo++;
-
-								inizio.add(1, 'days').format("DD");
 							}
-							alert("giorni di ferie effettivi: "
-									+ lavorativo
-									+ "\n ToDo verifica che giorni di ferie presi non superino quelli disponibili");
+							else{
+								$("#messaggioFerie1").text("Periodo selezionato correttamente.");
+								$("#messaggioFerie2").text("Hai selezionato "+differenza+ " giorni di ferie.");
+								$("#messaggioFerie1").attr("style","color:green");
+								$("#messaggioFerie2").attr("style","color:green");
+								 $('#bottoneAggiungiFerie').prop("disabled", false)
+
+								alertSuccesso("Hai selezionato correttamente il periodo di ferie. Hai a disposizione "+totaleFerie+
+										" giorni di ferie, ne hai selezionati "+differenza);
+							}
 						}
 					}
 
 				});
 
+		function alertInsuccesso(input){
+			$("#rimozioneNoOk span").text(input);
+			$("#rimozioneNoOk").fadeTo(4000, 500).slideUp(500, function(){
+			    $("#success-alert").slideUp(500);
+			});
+			
+		}
+		
+		function alertSuccesso(input){
+			$("#rimozioneOk span").text(input);
+			$("#rimozioneOk").fadeTo(4000, 500).slideUp(500, function(){
+			    $("#success-alert").slideUp(500);
+			});
+		}
+		
+
+		function calcolaGiorniFerie(){
+			var giornoLavorativo = moment("24/12/2019",
+			'DD/MM/YYYY');
+			var differenza = 0;
+			var inizio = moment(document
+					.getElementById("dataInizio").value,
+					'DD/MM/YYYY');
+			var fine = moment(document
+					.getElementById("dataFine").value,
+					'DD/MM/YYYY');
+			console.log(inizio);
+			console.log(fine);
+			while (inizio.diff(fine) <= 0) {
+				var diff = inizio.diff(giornoLavorativo,
+						'days');
+				var resto = diff % 4;
+				if (resto == 0 || resto == 1)
+					differenza++;
+		
+				inizio.add(1, 'days').format("DD");
+			}
+			return differenza;
+		}
+		
+		
+		
+		
 		function apriFormAggiunta(input) {
 			console.log("parte funzione apriformAggiunta di " + input);
 			picker.setOptions({
@@ -263,6 +317,9 @@
 			$("#dataInizio").val("");
 			$("#dataFine").val("");
 			picker.setLockDays([]);
+			$("#messaggioFerie1").text("");
+			$("#messaggioFerie2").text("");
+
 
 			$.ajax({
 				type : "POST",
@@ -286,7 +343,6 @@
 					$("#titoloAggiuntaFerie").text(
 							"Aggiunta ferie per " + nome.text() + " "
 									+ cognome.text());
-					$('#formAggiunta').show();
 					$(".contenutiModal").css('background-color', '#e6e6e6');
 				}
 			});
@@ -403,16 +459,12 @@
 					if(booleanRisposta){
 						var riga = $("#tabellaRimozioneFerie td:contains('" + dataIniziale + "')").parent().remove();
 						console.log("eliminata ferie " + dataIniziale+" "+ dataFinale+" di "+email);
-						$("#rimozioneOk").fadeTo(4000, 500).slideUp(500, function(){
-						    $("#success-alert").slideUp(500);
-						});
+						alertSuccesso("Rimozione ferie avvenuta con successo.");
 					}
 					else{
 						console.log("problema rimozione ferie " + dataIniziale+" "+ dataFinale+" di "+email);
 						apriFormRimozione(email);
-						$("#rimozioneNoOk").fadeTo(4000, 500).slideUp(500, function(){
-						    $("#success-alert").slideUp(500);
-						});
+						alertInsuccesso("Rimozione ferie non avvenuta a causa di un errore imprevisto.");
 					}
 				}
 			});
