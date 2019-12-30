@@ -8,6 +8,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.List;
 
 import model.ConnessioneDB;
 import model.bean.VigileDelFuocoBean;
@@ -142,16 +143,16 @@ public class VigileDelFuocoDao {
 	 * con campo 'adoperabile' settato a true.
 	 * @return una collezione di VigileDelFuocoBean con campo 'adoperabile' settato a true 
 	 */
-	public static Collection<VigileDelFuocoBean> ottieni() {
+	public static List<VigileDelFuocoBean> ottieni() {
 		
 		try(Connection con = ConnessioneDB.getConnection()) {
 			
 			// Esecuzione query
-			PreparedStatement ps = con.prepareStatement("select * from Vigile where adoperabile = true;");
+			PreparedStatement ps = con.prepareStatement("select * from Vigile where adoperabile = true ORDER BY cognome;");
 			ResultSet rs = ps.executeQuery();
 			
 			//Instanziazione del set dei Vigili del Fuoco
-			HashSet<VigileDelFuocoBean> vigili = new HashSet<VigileDelFuocoBean>();
+			List<VigileDelFuocoBean> vigili = new ArrayList<VigileDelFuocoBean>();
 			
 			//Iterazione sui risultati
 			while(rs.next()) {
