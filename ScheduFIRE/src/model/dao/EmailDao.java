@@ -13,34 +13,34 @@ import model.bean.EmailBean;
 public class EmailDao {
 
 	public EmailDao() {}
-	
+
 	public ArrayList<String> getEmail() {
-		
-		 
+
+
 		ArrayList<String> allEmail = new ArrayList<String>();
-		
-	try {
-		
-	    Connection conn = ConnessioneDB.getConnection();
-	    PreparedStatement stm = conn.prepareStatement("SELECT  email FROM dati");
-	    ResultSet res = stm.executeQuery();
-	   
-	    EmailBean email = new EmailBean();
-	    
-	    	while(res.next()) {
-	    	
-	    		allEmail.add(email.setEmail(res.getString(1)));
-	    		
-	    		
-	    		
-	    	}
-	  
-}catch (SQLException e) {
 
-	   e.printStackTrace();
-	  }
+		try {
 
-	return allEmail;
-}
+			Connection conn = ConnessioneDB.getConnection();
+			PreparedStatement stm = conn.prepareStatement("SELECT  email FROM vigile");
+			ResultSet res = stm.executeQuery();
+
+			EmailBean email = new EmailBean();
+
+			while(res.next()) {
+
+				allEmail.add(email.setEmail(res.getString(1)));
+
+
+
+			}
+
+		}catch (SQLException e) {
+
+			e.printStackTrace();
+		}
+
+		return allEmail;
+	}
 }
 
