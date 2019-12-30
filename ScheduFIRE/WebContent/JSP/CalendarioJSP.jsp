@@ -11,7 +11,6 @@
 <%@ include file="StandardJSP.jsp"%>
 <link type="text/css" rel="stylesheet" href="CSS/CalendarioCSS.css"></link>
 
-
 <title>ScheduFIRE</title>
 <%
 	String modalita_uso = "  Cliccare su un giorno per visualizzare le squadre";
@@ -19,7 +18,7 @@
 	String vero = "true";
 	String falso = "false";
 	String editSquadre = "   Modifica squadre";
-	String[] days = {"  Lunedì  ", " Martedì  ", "Mercoledì ", " Giovedì  ", " Venerdì  ", "  Sabato  ", "   Domenica "};
+	String[] days = {"  Lunedì  ", " Martedì  ", "Mercoledi ", " Giovedì  ", " Venerdì  ", "  Sabato  ", "   Domenica "};
 	String[] month = {"Gennaio", "Febbraio", "Marzo", "Aprile", "Maggio", "Giugno", "Luglio", "Agosto",
 			"Settembre", "Ottobre", "Novembre", "Dicembre"};
 	int giorno = (Integer) request.getAttribute("giorno");
@@ -43,42 +42,47 @@
 <body>
 	<!-- Barra Navigazione -->
 	<jsp:include page="HeaderJSP.jsp" />
-	<div class="container">
+	
+	<!-- START: Container per calendario e schedulazione -->
+	<div class="containerAll">
+		
+		<!-- START: Container per il calendaio -->
 		<div class="container-calendar">
 
 			<!-- Accesso effettuato dal capoturno -->
 			<%//if(ruolo.equalsIgnoreCase("capoturno")){%>
-			<div class="edit">
-				<img src="IMG/edit.png" /><a href="#"><%=editSquadre%></a>
-			</div>
+			<a href="#" class="edit" ><%=editSquadre%></a>
 			<%//} %>
-
+			
+			<!-- START: container per (<-) anno (->) -->
 			<div class="container-year">
 				<a class="altroAnno"
-					href="CalendarioServlet?mese=<%=mese %>&anno=<%=anno-1 %>"> <img
-					src="IMG/arrow/left-arrow-empty.png"
+					href="CalendarioServlet?mese=<%=mese %>&anno=<%=anno-1 %>">
+					<img src="IMG/arrow/left-arrow-empty.png"
 					onmouseover="this.src='IMG/arrow/left-arrow-full.png'"
 					onmouseout="this.src='IMG/arrow/left-arrow-empty.png'" />
 				</a>
-				<%=anno%>
+				
+				<span id="annoVisualizzato">
+					<%=anno%>
+				</span>
+				
 				<a class="altroAnno"
-					href="CalendarioServlet?mese=<%=mese %>&anno=<%=anno+1 %>"> <img
-					src="IMG/arrow/right-arrow-empty.png"
+					href="CalendarioServlet?mese=<%=mese %>&anno=<%=anno+1 %>">
+					<img src="IMG/arrow/right-arrow-empty.png"
 					onmouseover="this.src='IMG/arrow/right-arrow-full.png'"
 					onmouseout="this.src='IMG/arrow/right-arrow-empty.png'" />
 				</a>
-			<div class="container-month-year">
-				<a class="altroAnno" href="CalendarioServlet?mese=<%=mese %>&anno=<%=anno-1 %>"><img src="IMG/previous.png"/></a>
-				<span id="annoVisualizzato"><%=anno%></span>
-				<a class="altroAnno" href="CalendarioServlet?mese=<%=mese %>&anno=<%=anno+1 %>"><img src="IMG/next.png"/></a>
 			</div>
-
+			<!-- END: container per (<-) anno (->) -->
+			
+			<!-- START: container per la griglia dei mesi -->
 			<div class="grid-chose-month">
 				<div class="dropdown">
-
-				<input type="hidden" id="meseVisualizzato" value="<%=mese %>">
-					<button class="dropbtn"><%=month[mese-1]%>  <img src="IMG/arrow/arrow-down.png"/></button>
-
+				<input type="hidden" id="meseVisualizzato" value="<%=mese%>">
+					<button class="dropbtn"><%=month[mese-1]%>
+						<img src="IMG/arrow/arrow-down.png" />
+					</button>
 					<div class="dropdown-content">
 						<%
 							for (int k = 0; k <= 11; k++) {
@@ -87,10 +91,11 @@
 							href="CalendarioServlet?mese=<%=k+1 %>&anno=<%=anno%>"><%=month[k]%></a>
 						<%	}	%>
 					</div>
-
 				</div>
 			</div>
+			<!-- AND: container per la griglia dei mesi -->
 
+			<!-- START: contailer dei giorni del mese -->
 			<div class="grid-container">
 				<%
 					for (int j = 0; j <= 6; j++) {
@@ -101,6 +106,7 @@
 					int day = 0;
 					int i = 0;
 					String id = "";
+					String img = "";
 					for (i=0; i < days_month.length; i++) {
 						if (days_month[i] < 0){
 							%>
@@ -114,56 +120,65 @@
 								id ="giornoCorrente";
 							}
 							if (days_work[i]==1){
-								id = "diurno";
+								id = "giornoLavorativoDiurno";
+								img = "diurno";
 							}
 							if(days_work[i]==2){
-								id = "notturno";
+								id = "giornoLavorativoNotturno";
+								img = "notturno";
 							}
 							if(giorno==day && mese_corrente == mese && anno_corrente == anno && days_work[i]==1){
-								id = "giornoCorrenteLavorativo";
+								id = "giornoCorrenteLavorativoDiurno";
+								img = "diurno";
 							}
-							
+							if(giorno==day && mese_corrente == mese && anno_corrente == anno && days_work[i]==2){
+								id = "giornoCorrenteLavorativoNotturno";
+								img = "notturno";
+							}							
 							
 							%>
 							<div class="grid-item" id="<%=id%>" onClick="dayClicked(this)">
-							<img src="IMG/<%=id%>.png" alt=" "/>
+
+							<img src="IMG/<%=img%>.png" alt=" "
+								 onerror="this.parentElement.innerHTML = '<%=day %>';"/>
 							<%=day%>
 							</div>
+
 							<%
 							id = "";
+							img = "";
 						}
 					}
 				%>
 
 			</div>
-
+			<!-- END: container dei giorni del mese -->
 
 		</div>
+		<!-- AND container per il calendario -->
 
-		<a> <%=modalita_uso%></a>
+		
 		<div class="container-schedul">
-
-
+		<a class="info"> <%=modalita_uso%></a>
 			<div class="wrapper">
-				<div class="box mansione">
-					<p>SALA OPERATIVA
-					<p>
+			
+				<div class="mansione">
+					<p>SALA OPERATIVA</p>
 				</div>
 				<div class="vigili">
 					<table id="SalaOperativa"></table>
 				</div>
 
 
-				<div class=" box mansione">
+				<div class="mansione">
 					<p>PRIMA PARTENZA</p>
-
 				</div>
 				<div class="vigili">
 					<table id="PrimaPartenza"></table>
 				</div>
 
 
-				<div class="box mansione">
+				<div class="mansione">
 					<p>AUTO SCALA</p>
 				</div>
 				<div class="vigili">
@@ -171,7 +186,7 @@
 				</div>
 
 
-				<div class="box mansione">
+				<div class="mansione">
 					<p>AUTO BOTTE</p>
 				</div>
 				<div class="vigili">
@@ -183,15 +198,18 @@
 		</div>
 
 	</div>
-	<script
-		src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-
-	<script>
+	<!-- AND: container per calendario e schedulazione -->
 	
+	<script
+		src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js">
+	</script>
+
+	<!-- START: script per la funzione dayClicked() -->
+	<script>
 		function setValore(input){
 			console.log(input);
 		}
-
+		
 		function dayClicked(input) {
 		console.log("parte funzione dayClicked()");
 
@@ -203,7 +221,9 @@
 		var giorno = $(input).text();
 		var mese=$("#meseVisualizzato").val();
 		var anno=$("#annoVisualizzato").text();
+		console.log("parametri passati");
 		console.log(giorno+" mese: "+mese+" anno: "+anno);
+		
 		$.ajax({
 			type:"POST",
 			url: "AjaxCalendario",
@@ -254,7 +274,8 @@
 			}
 		});
 	}
-
 	</script>
+	<!-- AND: script per la funzione dayClicked() -->
+	
 </body>
 </html>

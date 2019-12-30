@@ -1,12 +1,22 @@
 package model.dao;
 
+import java.sql.Connection;
+import java.sql.Date;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+
+import model.ConnessioneDB;
+import model.bean.FerieBean;
+import model.bean.VigileDelFuocoBean;
+
 public class FerieDao {
 
 	public FerieDao() {
 		// TODO Auto-generated constructor stub
 	}
-<<<<<<< HEAD
-=======
 	
 	public static List<FerieBean> ottieniFerieConcesse(String email) {
 		
@@ -62,22 +72,28 @@ public class FerieDao {
 		
 		String rimozioneFerieSQL = "DELETE FROM Ferie WHERE (emailVF = ? AND dataInizio = ? AND dataFine = ?);";
 		
-		try(Connection connessione = ConnessioneDB.getConnection()){
-			
+		try{
+			Connection connessione=null;
+			try {
+			connessione = ConnessioneDB.getConnection();
 			ps = connessione.prepareStatement(rimozioneFerieSQL);
 			ps.setString(1, emailVF);
 			ps.setDate(2, dataInizio);
 			ps.setDate(3, dataFine);
-			
-			if(ps.execute())
+			int righe=ps.executeUpdate();
+			connessione.commit();
+			if(righe>0)
 				rimozione = true;
-			
+			}
+			finally {
+				ConnessioneDB.releaseConnection(connessione);
+				
+			}
 		}catch(SQLException e) {
 			e.printStackTrace();
 		}
 		
 		return rimozione;
 	}
->>>>>>> parent of 629e0dd... Merge pull request #169 from GSSDevelopmentTeam/alfredo
 
 }

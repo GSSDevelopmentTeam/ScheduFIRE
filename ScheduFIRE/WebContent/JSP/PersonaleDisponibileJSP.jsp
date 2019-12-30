@@ -2,23 +2,24 @@
     		import="java.util.ArrayList,java.util.Iterator, model.bean.*, model.dao.*" 
     		%>
 <jsp:include page="StandardJSP.jsp" />
-<link rel="stylesheet" href="CSS/TableCSS.css">
 <!-- Barra Navigazione -->
 	<jsp:include page="HeaderJSP.jsp" />
 	
 
 <section>
-	<h2>Personale Disponibile</h2>
-	<h5><%=request.getAttribute("titolo")==null ? "" : request.getAttribute("titolo") %></h5>
-		<table>
-			<thead>
+	
+	<h2 class="d-flex justify-content-center" style="color:#B60000!Important">Personale Disponibile</h2>
+	<h5 class="d-flex justify-content-center" ><%=request.getAttribute("titolo")==null ? "" : request.getAttribute("titolo") %></h5>
+		<div class="table-responsive">
+		<table class="table  table-hover" id="listaVigili" >
+			<thead class="thead-dark">
 				<tr>
-					<th>Grado</th>
-					<th>Nome</th>
-					<th>Cognome</th>
-					<th>Email</th>
-					<th>Mansione</th>
-					<th>Squadra</th>
+					<th class="text-center">Grado</th>
+					<th class="text-center">Nome</th>
+					<th class="text-center">Cognome</th>
+					<th class="text-center">Email</th>
+					<th class="text-center">Mansione</th>
+					<th class="text-center">Squadra</th>
 				</tr>
 			</thead>
 
@@ -32,28 +33,29 @@
 				%>
 
 					<tr>
-						<td><%=vigile.getGrado() %></td>
-						<td><%=vigile.getNome() %></td>
-						<td><%=vigile.getCognome() %></td>
-						<td><%=vigile.getEmail() %></td>
-						<td><%=vigile.getMansione() %></td>
-						<td><%=componente.getTipologiaSquadra() %></td>
+						<td class="text-center"><img src="Grado/<%=vigile.getGrado() %>.png" style="height:25%" onerror="this.parentElement.innerHTML='Non disponibile';"></td>
+						<td class="text-center"><%=vigile.getNome() %></td>
+						<td class="text-center"><%=vigile.getCognome() %></td>
+						<td class="text-center"><%=vigile.getEmail() %></td>
+						<td class="text-center"><%=vigile.getMansione() %></td>
+						<td class="text-center"><%=componente.getTipologiaSquadra() %></td>
 					</tr>
 					<% ; i.remove(); } } }
 					for(VigileDelFuocoBean vigile: vigili){
 					%>
 					<tr>
-						<td><%=vigile.getGrado() %></td>
-						<td><%=vigile.getNome() %></td>
-						<td><%=vigile.getCognome() %></td>
-						<td><%=vigile.getEmail() %></td>
-						<td><%=vigile.getMansione() %></td>
-						<td></td>
+						<td class="text-center"><img src="Grado/<%=vigile.getGrado() %>.png" style="height:25%" onerror="this.parentElement.innerHTML='Non disponibile';"></td>
+						<td class="text-center"><%=vigile.getNome() %></td>
+						<td class="text-center"><%=vigile.getCognome() %></td>
+						<td class="text-center"><%=vigile.getEmail() %></td>
+						<td class="text-center"><%=vigile.getMansione() %></td>
+						<td class="text-center"></td>
 					</tr>
 
 					<% } %>
 					
 			</tbody>
 		</table>
+		</div>
 	</section>
 

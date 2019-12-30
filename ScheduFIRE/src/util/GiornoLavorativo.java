@@ -17,7 +17,7 @@ public class GiornoLavorativo {
 	public static boolean isLavorativo(Date data) {
 		int differenza=differenza(data);
 		if(differenza<0)
-			differenza=-differenza;
+			differenza=(-differenza)+1;
 		int resto=differenza%4;
 		if(resto==0 || resto==1)
 			return true;
@@ -30,14 +30,13 @@ public class GiornoLavorativo {
 	 * @return true se il turno di lavoro è diurno, false altrimenti
 	 */
 	public static boolean isDiurno(Date data) {
-		int differenza=differenza(data);
-		if(differenza<0)
-			differenza=-differenza;
-		int resto=differenza%4;
-		if(resto==0)
-			return true;
-		else
-			return false;
+		if(isLavorativo(data)) {
+			LocalDate giornosucc=data.toLocalDate().plusDays(1);
+			if(isLavorativo(Date.valueOf(giornosucc)))
+				return true;
+			else return false;
+		}
+		else return false;
 	
 	}
 	
@@ -61,6 +60,7 @@ public class GiornoLavorativo {
 		LocalDate fine=data.toLocalDate();
 		long days = Duration.between(start.atStartOfDay(), fine.atStartOfDay()).toDays();
         return (int)days;
+        
 	}
 	
    

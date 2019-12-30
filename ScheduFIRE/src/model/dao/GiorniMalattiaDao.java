@@ -23,8 +23,6 @@ public class GiorniMalattiaDao {
 	}
 
 	/** La query per l'inserimento di un periodo di malattia */
-	
-	private static final String selezionaIdVfDiMalattia_QUERY = "SELECT * FROM malattia WHERE id = ?;";
 	private static final String addPeriodoDiMalattia_QUERY = "INSERT INTO malattia (dataInizio, dataFine, emailCT, emailVF) "
 	                                                        +"values(?, ?, ?, ?);";
 	
@@ -46,7 +44,7 @@ public class GiorniMalattiaDao {
 		 try{
 			// Esecuzione query
 			    con = ConnessioneDB.getConnection();
-				ps = con.prepareStatement(selezionaIdVfDiMalattia_QUERY);
+				ps = con.prepareStatement(addPeriodoDiMalattia_QUERY);
 				
 				ps.setDate(1, malattia.getDataInizio());
 				ps.setDate(2, malattia.getDataFine());
