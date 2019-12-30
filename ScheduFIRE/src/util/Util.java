@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Base64;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -87,14 +88,14 @@ public class Util {
 	}
 
 	/**
-	 * Il metodo conta il personale disponibile in caserma per vedere se è possibile creare un turno con 
-	 * le persone considerate. Il numero di persone disponibili minime è considerato come un vettore
+	 * Il metodo conta il personale disponibile in caserma per vedere se ï¿½ possibile creare un turno con 
+	 * le persone considerate. Il numero di persone disponibili minime ï¿½ considerato come un vettore
 	 * (N. Capo Squadra, N. Autisti, N. Vigili del Fuoco) con due diverse configurazioni: (2, 3, 7), 
 	 * (3, 3, 6) oppure (4, 3, 5).
 	 * @param numCS il numero di Capo Squadra
 	 * @param numAut il numero di Autisti
 	 * @param numVF il numero di Vigili del Fuoco
-	 * @return TRUE se è possibile creare un turno con i disponibili, FALSE altrimenti
+	 * @return TRUE se ï¿½ possibile creare un turno con i disponibili, FALSE altrimenti
 	 */
 	public static boolean abbastanzaPerTurno(int numCS, int numAut, int numVF) {
 		if(numAut < 3) {
@@ -174,11 +175,11 @@ public class Util {
 		return toReturn;
 	}
 	
-	public static List<VigileDelFuocoBean> ottieniSquadra(Date data) {
+	public static HashMap<VigileDelFuocoBean, String> ottieniSquadra(Date data) {
 		List<ComponenteDellaSquadraBean> lista = ComponenteDellaSquadraDao.getComponenti(data);
-		List<VigileDelFuocoBean> squadra = new ArrayList<>();
+		HashMap<VigileDelFuocoBean, String>  squadra = new HashMap<>();
 		for(ComponenteDellaSquadraBean membro : lista) {
-			squadra.add(VigileDelFuocoDao.ottieni(membro.getEmailVF()));
+			squadra.put(VigileDelFuocoDao.ottieni(membro.getEmailVF()), membro.getTipologiaSquadra());
 		}
 		return squadra;
 	}
@@ -186,7 +187,7 @@ public class Util {
 	
 	/**
 	 * @param componenti Una lista di ComponentiDellaSquadra disordinata
-	 * @return Un arrayList di ComponentiDellaSquadra ordinati per squadra e per cognome, con priorità alla squadra.
+	 * @return Un arrayList di ComponentiDellaSquadra ordinati per squadra e per cognome, con prioritï¿½ alla squadra.
 	 */
 	public static ArrayList<ComponenteDellaSquadraBean> ordinaComponenti(ArrayList<ComponenteDellaSquadraBean> componenti){
 		Collections.sort(componenti, new ComponenteComparator());
@@ -196,22 +197,23 @@ public class Util {
 	
 	public static void isAutenticato(HttpServletRequest request) throws ScheduFIREException {
 		if(request.getSession().getAttribute("ruolo")==null)
-			throw new ScheduFIREException("È richiesta l'autenticazione per poter accedere alle funzionalità del sito");
+			throw new ScheduFIREException("ï¿½ richiesta l'autenticazione per poter accedere alle funzionalitï¿½ del sito");
 		
 		}
 	
 	public static void isCapoTurno(HttpServletRequest request) throws ScheduFIREException {
 		if(request.getSession().getAttribute("ruolo")==null)
-			throw new ScheduFIREException("È richiesta l'autenticazione per poter accedere alle funzionalità del sito");
+			throw new ScheduFIREException("ï¿½ richiesta l'autenticazione per poter accedere alle funzionalitï¿½ del sito");
 		else {
 			String ruolo=(String)request.getSession().getAttribute("ruolo");
 			if(!ruolo.equals("capoturno"))
-				throw new ScheduFIREException("Devi essere capoturno per poter accedere a questa funzionalità");
+				throw new ScheduFIREException("Devi essere capoturno per poter accedere a questa funzionalitï¿½");
 		}
 	}
 		
 	
-}
+	}	
+
 	
 
 
