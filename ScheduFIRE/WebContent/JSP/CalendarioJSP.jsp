@@ -137,7 +137,7 @@
 							}							
 							
 							%>
-							<div class="grid-item" id="<%=id%>" onClick="dayClicked(this)">
+							<div class="grid-item" id="<%=id%>" onClick="dayClicked(this)" style="cursor: pointer;">
 
 							<img src="IMG/<%=img%>.png" alt=" "
 								 onerror="this.parentElement.innerHTML = '<%=day %>';"/>
