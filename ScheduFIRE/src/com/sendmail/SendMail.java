@@ -1,5 +1,6 @@
 package com.sendmail;
 
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.Properties;
 
@@ -13,83 +14,69 @@ import javax.mail.internet.MimeMessage;
 
 import model.dao.EmailDao;
 
-
-
 public class SendMail {
 
-	public static void sendMail() {
+	public static void sendMail(Date data) {
 		//Lista dei destinatari
-				EmailDao allEmail = new EmailDao();
-				ArrayList<String>  email = new ArrayList<String>();
-				email=allEmail.getEmail();
-				
-				
-			
-				//L'id del mittente
-				String from = "schedufire@gmail.com";
-			
-				
-				
-				//Supponendo che tu stia inviando e-mail da e-mail smtp
-				String host = "smtp.gmail.com";
-				
-				//Ottieni proprietà del sistema
-				Properties proprietà = System.getProperties();
-				
-				//setup mail server
-				proprietà.put("mail.smtp.host", host);
-				proprietà.put("mail.smtp.port", "465");
-				proprietà.put("mail.smtp.ssl.enable", "true");
-			    proprietà.put("mail.smtp.auth", "true");
-			    
+		EmailDao allEmail = new EmailDao();
+		ArrayList<String>  email = new ArrayList<String>();
+		email=allEmail.getEmail();
 
-		        // Prende la sessione in oggetto // e passa l'username e password
-		        Session session = Session.getInstance(proprietà, new javax.mail.Authenticator() {
+		//L'id del mittente
+		String from = "schedufire@gmail.com";
 
-		            protected PasswordAuthentication getPasswordAuthentication() {
+		//Supponendo che tu stia inviando e-mail da e-mail smtp
+		String host = "smtp.gmail.com";
 
-		                return new PasswordAuthentication("schedufire@gmail.com", "schedufire20");
+		//Ottieni proprietà del sistema
+		Properties proprietà = System.getProperties();
 
-		            }
+		//setup mail server
+		proprietà.put("mail.smtp.host", host);
+		proprietà.put("mail.smtp.port", "465");
+		proprietà.put("mail.smtp.ssl.enable", "true");
+		proprietà.put("mail.smtp.auth", "true");
 
-		        });
+		// Prende la sessione in oggetto // e passa l'username e password
+		Session session = Session.getInstance(proprietà, new javax.mail.Authenticator() {
+			protected PasswordAuthentication getPasswordAuthentication() {
+				return new PasswordAuthentication("schedufire@gmail.com", "schedufire20");
+			}
+		});
 
-		        //Utilizzato per il debug di problemi SMTP
-		        session.setDebug(true);
+		//Utilizzato per il debug di problemi SMTP
+		session.setDebug(true);
 
-		        try {
-		            // Create a default MimeMessage object.
-		            MimeMessage message = new MimeMessage(session);
+		try {
+			// Create a default MimeMessage object.
+			MimeMessage message = new MimeMessage(session);
 
-		            // Set From: header field of the header.
-		            message.setFrom(new InternetAddress(from));
+			// Set From: header field of the header.
+			message.setFrom(new InternetAddress(from));
 
-		         // Set To: header field of the header.
-		            
-		            
-		            InternetAddress [] address = new InternetAddress[email.size()];
-		            for(int i = 0 ; i<email.size(); i++) {
-		            	address[i]= new InternetAddress(email.get(i));
-		            	System.out.println(address[i]);
-		            }
-		            message.setRecipients(Message.RecipientType.TO, address);
-		            
-		            
-		            // Set Subject: header field
-		            message.setSubject("prova");
+			// Set To: header field of the header.
 
-		            // Now set the actual message
-		            message.setText("Prova con DAO");
 
-		            System.out.println("sending...");
-		            // Send message
-		            Transport.send(message);
-		            System.out.println("Sent message successfully....");
-		        } catch (MessagingException mex) {
-		            mex.printStackTrace();
-		        }
+			InternetAddress [] address = new InternetAddress[email.size()];
+			for(int i = 0 ; i<email.size(); i++) {
+				address[i]= new InternetAddress(email.get(i));
+				System.out.println(address[i]);
+			}
+			message.setRecipients(Message.RecipientType.TO, address);
 
-		    }
 
-	
+			// Set Subject: header field
+			message.setSubject("OGGETTO");
+
+			// Now set the actual message
+			message.setText("MESSAGGIO");
+
+			System.out.println("sending...");
+			// Send message
+			Transport.send(message);
+			System.out.println("Sent message successfully....");
+		} catch (MessagingException mex) {
+			mex.printStackTrace();
+		}
+	}
 }
