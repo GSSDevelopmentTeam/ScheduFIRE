@@ -18,7 +18,7 @@
 	String vero = "true";
 	String falso = "false";
 	String editSquadre = "   Modifica squadre";
-	String[] days = {"  Luned√¨  ", " Marted√¨  ", "Mercoled√¨ ", " Gioved√¨  ", " Venerd√¨  ", "  Sabato  ", "   Domenica "};
+	String[] days = {"  LunedÏ  ", " MartedÏ  ", "Mercoledi ", " GiovedÏ  ", " VenerdÏ  ", "  Sabato  ", "   Domenica "};
 	String[] month = {"Gennaio", "Febbraio", "Marzo", "Aprile", "Maggio", "Giugno", "Luglio", "Agosto",
 			"Settembre", "Ottobre", "Novembre", "Dicembre"};
 	int giorno = (Integer) request.getAttribute("giorno");
@@ -42,16 +42,19 @@
 <body>
 	<!-- Barra Navigazione -->
 	<jsp:include page="HeaderJSP.jsp" />
-	<div class="container">
+	
+	<!-- START: Container per calendario e schedulazione -->
+	<div class="containerAll">
+		
+		<!-- START: Container per il calendaio -->
 		<div class="container-calendar">
 
 			<!-- Accesso effettuato dal capoturno -->
-			<%if(ruolo.equalsIgnoreCase("capoturno")){%>
+			<%//if(ruolo.equalsIgnoreCase("capoturno")){%>
+			<a href="#" class="edit" ><%=editSquadre%></a>
+			<%//} %>
 			
-			<a href="#" class="edit" ><img src="IMG/edit.png" /><%=editSquadre%></a>
-			
-			<%} %>
-
+			<!-- START: container per (<-) anno (->) -->
 			<div class="container-year">
 				<a class="altroAnno"
 					href="CalendarioServlet?mese=<%=mese %>&anno=<%=anno-1 %>">
@@ -59,7 +62,7 @@
 					onmouseover="this.src='IMG/arrow/left-arrow-full.png'"
 					onmouseout="this.src='IMG/arrow/left-arrow-empty.png'" />
 				</a>
-				<span id="annoVisualizzato"><%=anno%></span>
+				<span id="annoVisualizzato"> <%=anno%> </span>
 				<a class="altroAnno"
 					href="CalendarioServlet?mese=<%=mese %>&anno=<%=anno+1 %>">
 					<img src="IMG/arrow/right-arrow-empty.png"
@@ -67,7 +70,9 @@
 					onmouseout="this.src='IMG/arrow/right-arrow-empty.png'" />
 				</a>
 			</div>
-
+			<!-- END: container per (<-) anno (->) -->
+			
+			<!-- START: container per la griglia dei mesi -->
 			<div class="grid-chose-month">
 				<div class="dropdown">
 				<input type="hidden" id="meseVisualizzato" value="<%=mese%>">
@@ -84,7 +89,9 @@
 					</div>
 				</div>
 			</div>
+			<!-- AND: container per la griglia dei mesi -->
 
+			<!-- START: contailer dei giorni del mese -->
 			<div class="grid-container">
 				<%
 					for (int j = 0; j <= 6; j++) {
@@ -117,37 +124,42 @@
 								img = "notturno";
 							}
 							if(giorno==day && mese_corrente == mese && anno_corrente == anno && days_work[i]==1){
-								id = "giornoCorrenteLavorativo";
+								id = "giornoCorrenteLavorativoDiurno";
+								img = "diurno";
 							}
-							
+							if(giorno==day && mese_corrente == mese && anno_corrente == anno && days_work[i]==2){
+								id = "giornoCorrenteLavorativoNotturno";
+								img = "notturno";
+							}							
 							
 							%>
 							<div class="grid-item" id="<%=id%>" onClick="dayClicked(this)">
 
-							<img src="IMG/<%=img%>.png" alt=" "/>
+							<img src="IMG/<%=img%>.png" alt=" "
+								 onerror="this.parentElement.innerHTML = '<%=day %>';"/>
 							<%=day%>
 							</div>
 
 							<%
 							id = "";
-							img="";
+							img = "";
 						}
 					}
 				%>
 
 			</div>
-
+			<!-- END: container dei giorni del mese -->
 
 		</div>
+		<!-- AND container per il calendario -->
 
-		<a> <%=modalita_uso%></a>
+		
 		<div class="container-schedul">
-
-
+		<a class="info"> <%=modalita_uso%></a>
 			<div class="wrapper">
+			
 				<div class="box mansione">
-					<p>SALA OPERATIVA
-					<p>
+					<p>SALA OPERATIVA</p>
 				</div>
 				<div class="vigili">
 					<table id="SalaOperativa"></table>
@@ -156,7 +168,6 @@
 
 				<div class=" box mansione">
 					<p>PRIMA PARTENZA</p>
-
 				</div>
 				<div class="vigili">
 					<table id="PrimaPartenza"></table>
@@ -183,17 +194,18 @@
 		</div>
 
 	</div>
-	<script
-		src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-
-	<script>
+	<!-- AND: container per calendario e schedulazione -->
 	
+	<script
+		src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js">
+	</script>
+
+	<!-- START: script per la funzione dayClicked() -->
+	<script>
 		function setValore(input){
 			console.log(input);
 		}
 		
-		
-
 		function dayClicked(input) {
 		console.log("parte funzione dayClicked()");
 
@@ -258,7 +270,8 @@
 			}
 		});
 	}
-
 	</script>
+	<!-- AND: script per la funzione dayClicked() -->
+	
 </body>
 </html>

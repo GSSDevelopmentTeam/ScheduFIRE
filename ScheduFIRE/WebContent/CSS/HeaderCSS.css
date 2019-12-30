@@ -84,3 +84,60 @@
 	margin-left:5px;
 	margin-top:-7px;
 }
+.dd {
+	float: left;
+	overflow: hidden;
+	border: none;
+	outline: none;
+	padding: 14px 16px;
+	margin: 0;
+	width: 100%
+}
+
+.db{
+	border: none;
+	outline: none;
+	padding: 14px 16px;
+	margin: 0;
+	width: 100%;
+	margin-top:-40%;
+	background-color: #B60000;
+}
+
+.ddc {
+	display: none;
+	position: fixed;
+	right: 20px;
+	top: 13%;
+	z-index: 999;
+	width: 10%;
+	background-color: #f3f3f3;
+	min-width: 160px;
+	box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+	z-index: 1;
+}
+
+.ddc a {
+	float: none;
+	color: black;
+	padding: 12px 16px;
+	text-decoration: none;
+	display: block;
+	text-align: left;
+}
+
+.dd:hover .db {
+	background-color: rgba(0, 0, 0, 0.3);
+	border-radius: 10%;
+}
+
+
+.ddc button:hover {
+	background-color: rgba(0, 0, 0, 0.3);
+	color: white;
+	
+}
+
+.dd:hover .ddc {
+	display: block;
+}
