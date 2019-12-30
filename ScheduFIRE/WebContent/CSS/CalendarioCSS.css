@@ -16,13 +16,12 @@ a {
 
 .container {
 	position:relative;
-	margin-top: 2px;
+	margin-top: 3px;
 	margin-right: 10px;
 	display: flex;
 	width: 100%;
 	height: 100%;
 	background-color: white;
-	border: 3px solid black;
 }
 
 .edit {
@@ -86,7 +85,7 @@ flex:1 -> prende il resto del container*/
 	padding-left:1%;
 }
 
-/*id per la schedulazione delle squadre*/
+/*per la schedulazione delle squadre*/
 .wrapper {
   grid-template-columns: auto;
   grid-template-rows: auto;
@@ -98,8 +97,7 @@ div.box{
   box-shadow: 20%;
   color: black;
   border: 3px solid white;
-  border-bottom-color: #b60000;
-  border-radius: 60%;
+  border-bottom: 3px solid black;
   margin: 20px 0 20px 0;
   font-size: 90%;
 }
@@ -184,7 +182,7 @@ non ha la proprietà :hover*/
 
 
 
-/*CSS per il menù DROPDOWN dei mesi*/
+/*menù DROPDOWN dei mesi*/
 .grid-chose-month{
 	display:grid;
 	justify-content: center;
@@ -234,7 +232,10 @@ non ha la proprietà :hover*/
 .dropdown:hover .dropbtn {
 	background-color: white;
 }
+/*Fine menù dropdown dei mesi*/
 
 td {
 	text-align: center;
 }
+
+

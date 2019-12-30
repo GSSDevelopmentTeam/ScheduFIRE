@@ -18,7 +18,7 @@
 	String vero = "true";
 	String falso = "false";
 	String editSquadre = "   Modifica squadre";
-	String[] days = {"  Luned√¨  ", " Marted√¨  ", "Mercoled√¨ ", " Gioved√¨  ", " Venerd√¨  ", "  Sabato  ", "   Domenica "};
+	String[] days = {"  LunedÏ  ", " MartedÏ  ", "Mercoledi ", " GiovedÏ  ", " VenerdÏ  ", "  Sabato  ", "   Domenica "};
 	String[] month = {"Gennaio", "Febbraio", "Marzo", "Aprile", "Maggio", "Giugno", "Luglio", "Agosto",
 			"Settembre", "Ottobre", "Novembre", "Dicembre"};
 	int giorno = (Integer) request.getAttribute("giorno");
@@ -46,11 +46,11 @@
 		<div class="container-calendar">
 
 			<!-- Accesso effettuato dal capoturno -->
-			<%if(ruolo.equalsIgnoreCase("capoturno")){%>
+			<%//if(ruolo.equalsIgnoreCase("capoturno")){%>
 			
-			<a href="#" class="edit" ><img src="IMG/edit.png" /><%=editSquadre%></a>
+			<a href="/ModificaComposizioneSquadreServlet" class="edit" ><img src="IMG/edit.png" /><%=editSquadre%></a>
 			
-			<%} %>
+			<%//} %>
 
 			<div class="container-year">
 				<a class="altroAnno"
@@ -124,13 +124,14 @@
 							%>
 							<div class="grid-item" id="<%=id%>" onClick="dayClicked(this)">
 
-							<img src="IMG/<%=img%>.png" alt=" "/>
+							<img src="IMG/<%=img%>.png" alt=" "
+								 onerror="this.parentElement.innerHTML = '<%=day %>';"/>
 							<%=day%>
 							</div>
 
 							<%
 							id = "";
-							img="";
+							img = "";
 						}
 					}
 				%>
@@ -260,5 +261,6 @@
 	}
 
 	</script>
+	
 </body>
 </html>
