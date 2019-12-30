@@ -21,6 +21,7 @@ import model.dao.VigileDelFuocoDao;
  * Servlet implementation class GestioneFerieServlet
  * 
  * @author Nicola Labanca
+ * @author Alfredo Giuliano
  */
 @WebServlet("/GestioneFerieServlet")
 public class GestioneFerieServlet extends HttpServlet {
@@ -76,7 +77,7 @@ public class GestioneFerieServlet extends HttpServlet {
 			response.getWriter().append(array.toString());
 		}
 		else {
-			ArrayList<VigileDelFuocoBean> listaVigili = new ArrayList<VigileDelFuocoBean>(VigileDelFuocoDao.ottieni());
+			List<VigileDelFuocoBean> listaVigili = VigileDelFuocoDao.ottieni();
 
 			request.setAttribute("listaVigili", listaVigili);
 			request.getRequestDispatcher("JSP/GestioneFerieJSP.jsp").forward(request, response);
