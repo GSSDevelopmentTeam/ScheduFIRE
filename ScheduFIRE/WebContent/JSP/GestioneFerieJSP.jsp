@@ -61,6 +61,7 @@
 				<div class="modal-footer">
 					<button type="button" class="btn btn-outline-danger"
 						data-dismiss="modal">Annulla</button>
+
 					<button type="button" class="btn btn-outline-warning" id="bottoneAggiungiFerie" disabled>Aggiungi
 						ferie</button>
 				</div>
@@ -128,7 +129,7 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-outline-danger"" data-dismiss="modal">Annulla</button>
-        <button type="button" class="btn btn-outline-warning" data-dismiss="modal" onClick="rimuoviFerie()">Salva cambiamenti</button>
+        <button type="button" class="btn btn-outline-secondary" data-dismiss="modal" onClick="rimuoviFerie()">Salva cambiamenti</button>
       </div>
     </div>
   </div>

@@ -73,11 +73,11 @@ public class Util {
 		if(abbastanzaPerTurno(caposquadra.size(), autista.size(), vigile.size())) {
 			//Ordiniamo in ordine ascendente
 			caposquadra.sort((VigileDelFuocoBean cs1, VigileDelFuocoBean cs2) -> 
-				cs1.getCaricoLavoro() - cs2.getCaricoLavoro());
+			cs1.getCaricoLavoro() - cs2.getCaricoLavoro());
 			autista.sort((VigileDelFuocoBean a1, VigileDelFuocoBean a2) ->
-				a1.getCaricoLavoro() - a2.getCaricoLavoro());
+			a1.getCaricoLavoro() - a2.getCaricoLavoro());
 			vigile.sort((VigileDelFuocoBean v1, VigileDelFuocoBean v2) ->
-				v1.getCaricoLavoro() - v2.getCaricoLavoro());
+			v1.getCaricoLavoro() - v2.getCaricoLavoro());
 			//Assegnamo in ordine decrescente
 			List<ComponenteDellaSquadraBean> squadra = assegnaMansioni(caposquadra, autista, vigile, data);
 			return squadra;
@@ -109,7 +109,7 @@ public class Util {
 		}
 		else return true;
 	}
-	
+
 	private static List<ComponenteDellaSquadraBean> assegnaMansioni(List<VigileDelFuocoBean> caposquadra,
 			List<VigileDelFuocoBean> autista, List<VigileDelFuocoBean> vigile, Date data) {
 		List<ComponenteDellaSquadraBean> toReturn = new ArrayList<>();
@@ -174,7 +174,7 @@ public class Util {
 
 		return toReturn;
 	}
-	
+
 	public static HashMap<VigileDelFuocoBean, String> ottieniSquadra(Date data) {
 		List<ComponenteDellaSquadraBean> lista = ComponenteDellaSquadraDao.getComponenti(data);
 		HashMap<VigileDelFuocoBean, String>  squadra = new HashMap<>();
@@ -183,8 +183,8 @@ public class Util {
 		}
 		return squadra;
 	}
-	
-	
+
+
 	/**
 	 * @param componenti Una lista di ComponentiDellaSquadra disordinata
 	 * @return Un arrayList di ComponentiDellaSquadra ordinati per squadra e per cognome, con priorit� alla squadra.
@@ -193,14 +193,14 @@ public class Util {
 		Collections.sort(componenti, new ComponenteComparator());
 		return componenti;
 	}
-	
-	
+
+
 	public static void isAutenticato(HttpServletRequest request) throws ScheduFIREException {
 		if(request.getSession().getAttribute("ruolo")==null)
 			throw new ScheduFIREException("� richiesta l'autenticazione per poter accedere alle funzionalit� del sito");
-		
-		}
-	
+
+	}
+
 	public static void isCapoTurno(HttpServletRequest request) throws ScheduFIREException {
 		if(request.getSession().getAttribute("ruolo")==null)
 			throw new ScheduFIREException("� richiesta l'autenticazione per poter accedere alle funzionalit� del sito");
@@ -210,35 +210,35 @@ public class Util {
 				throw new ScheduFIREException("Devi essere capoturno per poter accedere a questa funzionalit�");
 		}
 	}
-		
-	
-	}	
 
-	
+
+}	
 
 
 
-	class ComponenteComparator implements Comparator<ComponenteDellaSquadraBean> {
 
-		/*
-		 * Per ordinare l'array di componenti della squadra in base alla tipologia della squadra di appartenenza
-		 * con priorità a sala operativa, poi prima partenza, poi auto scala e infine auto botte.
-		 * In caso di tipologia uguale, ordina in base al cognome che ricava dalla mail
-		 * essendo la mail composta sempre da nome<numero>.cognome
-		 * 
-		 */
-		@Override
-		public int compare(ComponenteDellaSquadraBean o1, ComponenteDellaSquadraBean o2) {
-			String tipologia1=o1.getTipologiaSquadra();
-			String tipologia2=o2.getTipologiaSquadra();
-			int comparazione=tipologia1.compareTo(tipologia2);
-			if (comparazione==0) {
-				String cognome1=o1.getEmailVF().substring(o1.getEmailVF().indexOf(".")+1);
-				String cognome2=o2.getEmailVF().substring(o2.getEmailVF().indexOf(".")+1);
-				comparazione=cognome1.compareTo(cognome2);
-				return comparazione;
-			}
-			return -comparazione;
+
+class ComponenteComparator implements Comparator<ComponenteDellaSquadraBean> {
+
+	/*
+	 * Per ordinare l'array di componenti della squadra in base alla tipologia della squadra di appartenenza
+	 * con priorità a sala operativa, poi prima partenza, poi auto scala e infine auto botte.
+	 * In caso di tipologia uguale, ordina in base al cognome che ricava dalla mail
+	 * essendo la mail composta sempre da nome<numero>.cognome
+	 * 
+	 */
+	@Override
+	public int compare(ComponenteDellaSquadraBean o1, ComponenteDellaSquadraBean o2) {
+		String tipologia1=o1.getTipologiaSquadra();
+		String tipologia2=o2.getTipologiaSquadra();
+		int comparazione=tipologia1.compareTo(tipologia2);
+		if (comparazione==0) {
+			String cognome1=o1.getEmailVF().substring(o1.getEmailVF().indexOf(".")+1);
+			String cognome2=o2.getEmailVF().substring(o2.getEmailVF().indexOf(".")+1);
+			comparazione=cognome1.compareTo(cognome2);
+			return comparazione;
 		}
+		return -comparazione;
 	}
+}
 

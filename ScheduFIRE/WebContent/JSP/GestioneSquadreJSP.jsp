@@ -36,15 +36,14 @@
 						>Personale Disponibile</h5>
 					
 				</div>
-				<div class="modal-body">
-					<input type="hidden" name="email" id="emailAggiuntaFerie">
+				<div class="modal-body" id="elenco">
 					
 				</div>
 
 				<div class="modal-footer">
 					<button type="button" class="btn btn-outline-danger""
 						data-dismiss="modal">Annulla</button>
-					<button type="button" class="btn btn-outline-warning">Aggiungi</button>
+					<button type="button" class="btn btn-outline-secondary">Aggiungi</button>
 				</div>
 			</div>
 		</div>
@@ -82,7 +81,7 @@
 						<td class="text-center">cognome</td>
 						<td class="text-center">mansione</td>
 						<td class="text-center"><button type="button" class="btn btn-outline-secondary"
-							data-toggle="modal" data-target="#aggiungiVF"
+							data-toggle="modal" data-target="#aggiungiVF" id="aggiungiVF"
 							onClick='apriFormVF(" ")'>Sostituisci</button></td>
 						</td>
 					</tr>
@@ -221,39 +220,12 @@
 <script>
 
 function apriFormVF(input) {
-	console.log("parte funzione apriformAggiunta di " + input);
-	picker.setOptions({
-		startDate : null,
-		endDate : null
-	});
-	$("#dataInizio").val("");
-	$("#dataFine").val("");
-	picker.setLockDays([]);
-
+	//Chiamata ajax alla servlet PersonaleDisponibileAJAX
 	$.ajax({
-		type : "POST",
-		url : "GestioneFerieServlet",
-		data : {
-			"JSON" : true,
-			"aggiunta":true,
-			"email" : input,
-		},
-		dataType : "json",
-		async : false,
-		success : function(response) {
-			picker.setLockDays(response);
-			$("#emailAggiuntaFerie").val(input)
-			console.log("settati giorni di ferie: " + response);
-			var cognome = $(".table td:contains('" + input + "')")
-					.prev('td');
-			var nome = $(cognome).prev('td');
-			console.log("cognome: " + cognome.text() + " nome: "
-					+ nome.text());
-			$("#titoloAggiuntaFerie").text(
-					"Aggiunta ferie per " + nome.text() + " "
-							+ cognome.text());
-			$('#formAggiunta').show();
-			$(".contenutiModal").css('background-color', '#e6e6e6');
+		type : "POST",//Chiamata POST
+		url : "../PersonaleDisponibileAJAX",//url della servlet che devo chiamare
+		success : function(response) {//Operazione da eseguire una volta terminata la chiamata alla servlet.
+			$(response).appendTo("#elenco");						
 		}
 	});
 
