@@ -116,7 +116,7 @@
 
 
 <!-- ----------------------------------- -->
-	<!-- Modal -->
+	<!-- Modal di avviso di sicurezza-->
  <div class="modal fade " id="menuConferma" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
   <div class="modal-dialog modal-sm modal-dialog-centered" role="document">
     <div class="modal-content">
@@ -196,14 +196,11 @@
 
 
 
-	<script
-		src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 	<script src="JS/datePicker.js"></script>
-	<script type="text/javascript"
-		src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.min.js"></script>
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.min.js"></script>
 	<script src="https://buttons.github.io/buttons.js"></script>
-	<script
-		src="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.js"></script>
 
 
 	<script>
@@ -243,11 +240,11 @@
 								$("#dataFine").val("");
 								$("#messaggioFerie1").text("Hai selezionato un periodo troppo grande.");
 								$("#messaggioFerie2").text("Hai a disposizione "+totaleFerie+" giorni di ferie, ne hai selezionati "+differenza+".");
-								alertInsuccesso("Hai selezionato un periodo troppo grande.Hai a disposizione "+totaleFerie+
-										" giorni di ferie, ne hai selezionati "+differenza);
 								$("#messaggioFerie1").attr("style","color:red");
 								$("#messaggioFerie2").attr("style","color:red");
 								 $("#bottoneAggiungiFerie").addClass( 'disabled' );
+								 alertInsuccesso("Hai selezionato un periodo troppo grande.Hai a disposizione "+totaleFerie+
+											" giorni di ferie, ne hai selezionati "+differenza);
 
 							}
 							else{
@@ -256,7 +253,6 @@
 								$("#messaggioFerie1").attr("style","color:green");
 								$("#messaggioFerie2").attr("style","color:green");
 								 $('#bottoneAggiungiFerie').prop("disabled", false)
-
 								alertSuccesso("Hai selezionato correttamente il periodo di ferie. Hai a disposizione "+totaleFerie+
 										" giorni di ferie, ne hai selezionati "+differenza);
 							}
@@ -429,6 +425,8 @@
 			});
 		}
 		
+		
+		
 		function setDate(input){
 			var inputDataIniziale=$("#rimozioneDataIniziale");
 			var inputDataFinale=$("#rimozioneDataFinale");
@@ -439,6 +437,8 @@
 
 			console.log("data inizz "+dataIniziale.text()+" datafin "+dataFinale.text());
 		}
+		
+		
 		
 		function rimuoviFerie(){
 			var dataIniziale=$("#rimozioneDataIniziale").val();
