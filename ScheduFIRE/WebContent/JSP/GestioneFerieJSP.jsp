@@ -1,171 +1,423 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@page import = "java.util.ArrayList, model.bean.*, model.dao.*" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+<%@page import="java.util.ArrayList, model.bean.*, model.dao.*"%>
 
 <html>
 <head>
 <jsp:include page="StandardJSP.jsp" />
-<link rel="stylesheet" href="CSS/TableCSS.css">
-<link href="https://wakirin.github.io/Litepicker/css/style.css"
-	rel="stylesheet" />
 </head>
 <body>
 
 	<!-- Barra Navigazione -->
 	<jsp:include page="HeaderJSP.jsp" />
-	<h2>Gestione Ferie</h2>
-	
-	
-	
-	<!-- da rendere popup come per pass dimenticata in login 
-		deve partire nascosto e attivarsi al click di uno degli aggiungiFerie.
-		Non rimuovete o cambiate codice , chiedete prima di agire se avete dubbi
-					NON CAMBIARE GLI ID
-	-->
-	<div id="formAggiunta">
-		<div>
-			<div>
-				<input type="hidden" name="email" id="emailHidden"> 
-				<input id="dataInizio" readonly/> 
-				<input id="dataFine" readonly/>
-				<button>Aggiungi ferie</button>
-				<button>Annulla</button>
-					
+	<h2 class="d-flex justify-content-center" style="color:#B60000!Important">Gestione Ferie</h2>
+
+
+
+<!--------- Alert ----------------->
+
+<div class="alert alert-success flex alert-dismissible fade in text-center fixed-top" id="rimozioneOk" style="display: none;position:fixed;z-index: 99999; width:100%">
+  <strong>Operazione riuscita!</strong> Rimozione ferie avvenuta con successo.
+</div>
+
+<!-- ----------------------- -->
+
+<!--------- Alert ----------------->
+
+<div class="alert alert-danger flex alert-dismissible fade in text-center fixed-top" id="rimozioneNoOk" style="display: none;position:fixed;z-index: 99999; width:100%">
+  <strong>Operazione non riuscita!</strong> Rimozione ferie non avvenuta.
+</div>
+
+<!-- ----------------------- -->
+
+
+	<!-- Modal di aggiunta ferie-->
+	<div class="modal fade" id="aggiungiFerie" tabindex="-1" role="dialog"
+		aria-labelledby="exampleModalCenterTitle" aria-hidden="true"
+		style="display: none">
+		<div class="modal-dialog modal-dialog-centered" role="document">
+			<div class="modal-content contenutiModal">
+				<div class="modal-header">
+					<h5 class="modal-title" id="titoloAggiuntaFerie"
+						>Aggiunta ferie</h5>
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<input type="hidden" name="email" id="emailAggiuntaFerie">
+					<div class=" row justify-content-center">
+						<input id="dataInizio" placeholder="Giorno iniziale" readonly
+							size="34" /> <input id="dataFine" placeholder="Giorno finale"
+							readonly size="34" />
+
+					</div>
+				</div>
+
+				<div class="modal-footer">
+					<button type="button" class="btn btn-outline-danger""
+						data-dismiss="modal">Annulla</button>
+					<button type="button" class="btn btn-outline-warning">Aggiungi
+						ferie</button>
+				</div>
 			</div>
 		</div>
 	</div>
-	<!-- tutto il codice qui sopra è un popup 
-	 			NON CAMBIARE GLI ID
-	 -->
-	
-	<table>
-		<thead>
-			<tr>
-				<th>Grado</th>
-				<th>Nome</th>
-				<th>Cognome</th>
-				<th>Email</th>
-				<th>Mansione</th>
-				<th>Ferie anno <br> corrente
-				</th>
-				<th>Ferie anno <br> precedente
-				</th>
-				<th>Inserisci <br> periodo di ferie
-				</th>
-				<th>Rimuovi <br>periodo di ferie
-				</th>
-			</tr>
-		</thead>
 
-		<tbody>
-			<%
-				ArrayList<VigileDelFuocoBean> listaVigili;
-				listaVigili = (ArrayList<VigileDelFuocoBean>) request.getAttribute("listaVigili");
 
-				for (int i = 0; i < listaVigili.size(); i++) {
-					VigileDelFuocoBean vigile = listaVigili.get(i);
-			%>
 
-			<tr>
-				<td><%=vigile.getGrado()%></td>
-				<td><%=vigile.getNome()%></td>
-				<td><%=vigile.getCognome()%></td>
-				<td><%=vigile.getEmail()%></td>
-				<td><%=vigile.getMansione()%></td>
-				<td><%=vigile.getGiorniFerieAnnoCorrente()%></td>
-				<td><%=vigile.getGiorniFerieAnnoCorrente()%></td>
-				<td><button type="aggiungi"
-						onClick='apriFormAggiunta("<%=vigile.getEmail()%>")'>Aggiungi
-						Ferie</button></td>
-				<td><button type="rimuovi" src="">Rimuovi Ferie</button></td>
-			</tr>
+	<!-- Modal di rimozione ferie-->
+	<div class="modal fade" id="rimuoviFerie" tabindex="-1" role="dialog"
+		aria-labelledby="exampleModalCenterTitle" aria-hidden="true"
+		style="display: none">
+		<div class="modal-dialog modal-dialog-centered" role="document">
+			<div class="modal-content contenutiModal">
+				<div class="modal-header">
+					<h5 class="modal-title" id="titoloRimuoviFerie">Rimuovi ferie</h5>
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close">
+						<span aria-hidden="true">&times; </span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<input type="hidden" name="email" id="emailRimozioneFerie">
+					<input type="hidden" name="dataIniziale" id="rimozioneDataIniziale">
+					<input type="hidden" name="dataFinale" id="rimozioneDataFinale">
+					
+					<div class=" row justify-content-center">
+						<div class="table-responsive">
+							<table class="table table-hover" id="listaFerie">
+								<thead class="thead-dark">
+									<tr>
+										<th>Data Inizio</th>
+										<th>Data Fine</th>
+										<th>Elimina</th>
 
-			<%
-				}
-			%>
+									</tr>
+								</thead>
+								<tbody id="tabellaRimozioneFerie">
+								</tbody>
+							</table>
 
-		</tbody>
+						</div>
 
-	</table>
+					</div>
 
+
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+
+<!-- ----------------------------------- -->
+	<!-- Modal -->
+ <div class="modal fade " id="menuConferma" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-sm modal-dialog-centered" role="document">
+    <div class="modal-content">
+
+      <div class="modal-body">
+        <img src="IMG/fire.png" class="rounded mx-auto d-block">
+        <h4 class="modal-title text-center">Sei sicuro?</h4>
+        <p class="text-center">Vuoi cancellare queste ferie?<br> La procedura non può essere annullata.</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline-danger"" data-dismiss="modal">Annulla</button>
+        <button type="button" class="btn btn-outline-warning" data-dismiss="modal" onClick="rimuoviFerie()">Salva cambiamenti</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ------------------------------------ -->
+
+
+	<div class="table-responsive">
+		<table class="table  table-hover" id="listaVigili">
+			<thead class="thead-dark">
+				<tr>
+					<th class="text-center">Grado</th>
+					<th class="text-center">Nome</th>
+					<th class="text-center">Cognome</th>
+					<th class="text-center">Email</th>
+					<th class="text-center">Mansione</th>
+					<th class="text-center">Ferie anno<br>corrente
+					</th>
+					<th class="text-center">Ferie anno<br> precedente
+					</th>
+					<th class="text-center">Inserisci <br> periodo di ferie
+					</th>
+					<th class="text-center">Rimuovi <br>periodo di ferie
+					</th>
+				</tr>
+			</thead>
+
+			<tbody>
+				<%
+					ArrayList<VigileDelFuocoBean> listaVigili;
+					listaVigili = (ArrayList<VigileDelFuocoBean>) request.getAttribute("listaVigili");
+
+					for (int i = 0; i < listaVigili.size(); i++) {
+						VigileDelFuocoBean vigile = listaVigili.get(i);
+				%>
+
+				<tr>
+					<td class="text-center"><%=vigile.getGrado()%></td>
+					<td class="text-center"><%=vigile.getNome()%></td>
+					<td class="text-center"><%=vigile.getCognome()%></td>
+					<td class="text-center"><%=vigile.getEmail()%></td>
+					<td class="text-center"><%=vigile.getMansione()%></td>
+					<td class="text-center"><%=vigile.getGiorniFerieAnnoCorrente()%></td>
+					<td class="text-center"><%=vigile.getGiorniFerieAnnoCorrente()%></td>
+					<td class="text-center"><button type="button" class="btn btn-outline-secondary"
+							data-toggle="modal" data-target="#aggiungiFerie"
+							onClick='apriFormAggiunta("<%=vigile.getEmail()%>")'>Aggiungi
+							Ferie</button></td>
+					<td class="text-center"><button type="button" class="btn btn-outline-danger"
+							data-toggle="modal" data-target="#rimuoviFerie"
+							onClick='apriFormRimozione("<%=vigile.getEmail()%>")'>Rimuovi
+							Ferie</button></td>
+				</tr>
+
+				<%
+					}
+				%>
+
+			</tbody>
+
+		</table>
+	</div>
 
 
 
 	<script
 		src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 	<script src="JS/datePicker.js"></script>
-	<script type="text/javascript"src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.min.js"></script>
+	<script type="text/javascript"
+		src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.min.js"></script>
 	<script src="https://buttons.github.io/buttons.js"></script>
+	<script
+		src="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.js"></script>
+
 
 	<script>
-		
-	var picker = new Litepicker({ 
-		element: document.getElementById('dataInizio') ,
-		elementEnd: document.getElementById('dataFine'),
-		singleMode:false,
-		format:'DD-MM-YYYY',
-		lang:'it',
-		numberOfMonths:2,
-		numberOfColumns:2,
-		minDate:new Date(),
-		disallowLockDaysInRange: true,
-		tooltipText:{
-			one: 'giorno',
-			other: 'giorni',
-		},
-		onError: function(error) { alert("Nel periodo selezionato risultano già dei giorni di ferie"); },
-		onHide: function() { 
-			if($("#dataInizio").val()!=""){
-				var giornoLavorativo=moment("24/12/2019",'DD/MM/YYYY');
-				var lavorativo=0;
-				var inizio = moment(document.getElementById("dataInizio").value,'DD/MM/YYYY');
-				var fine = moment(document.getElementById("dataFine").value,'DD/MM/YYYY');
-				console.log(inizio);
-				console.log(fine);
-	
-				while(inizio.diff(fine)<=0){
-					var differenza=inizio.diff(giornoLavorativo,'days');
-					var resto=differenza%4;
-					if(resto==0 || resto==1)
-						lavorativo++;
-					
-					inizio.add(1, 'days').format("DD");
+		var picker = new Litepicker(
+				{
+					element : document.getElementById('dataInizio'),
+					elementEnd : document.getElementById('dataFine'),
+					singleMode : false,
+					format : 'DD-MM-YYYY',
+					lang : 'it',
+					numberOfMonths : 1,
+					numberOfColumns : 1,
+					inlineMode : true,
+					minDate : new Date(),
+					disallowLockDaysInRange : true,
+					tooltipText : {
+						one : 'giorno',
+						other : 'giorni',
+					},
+					onError : function(error) {
+						alert("Nel periodo selezionato risultano già dei giorni di ferie");
+					},
+					onHide : function() {
+						if ($("#dataInizio").val() != "") {
+							var giornoLavorativo = moment("24/12/2019",
+									'DD/MM/YYYY');
+							var lavorativo = 0;
+							var inizio = moment(document
+									.getElementById("dataInizio").value,
+									'DD/MM/YYYY');
+							var fine = moment(document
+									.getElementById("dataFine").value,
+									'DD/MM/YYYY');
+							console.log(inizio);
+							console.log(fine);
+
+							while (inizio.diff(fine) <= 0) {
+								var differenza = inizio.diff(giornoLavorativo,
+										'days');
+								var resto = differenza % 4;
+								if (resto == 0 || resto == 1)
+									lavorativo++;
+
+								inizio.add(1, 'days').format("DD");
+							}
+							alert("giorni di ferie effettivi: "
+									+ lavorativo
+									+ "\n ToDo verifica che giorni di ferie presi non superino quelli disponibili");
+						}
+					}
+
+				});
+
+		function apriFormAggiunta(input) {
+			console.log("parte funzione apriformAggiunta di " + input);
+			picker.setOptions({
+				startDate : null,
+				endDate : null
+			});
+			$("#dataInizio").val("");
+			$("#dataFine").val("");
+			picker.setLockDays([]);
+
+			$.ajax({
+				type : "POST",
+				url : "GestioneFerieServlet",
+				data : {
+					"JSON" : true,
+					"aggiunta":true,
+					"email" : input,
+				},
+				dataType : "json",
+				async : false,
+				success : function(response) {
+					picker.setLockDays(response);
+					$("#emailAggiuntaFerie").val(input)
+					console.log("settati giorni di ferie: " + response);
+					var cognome = $(".table td:contains('" + input + "')")
+							.prev('td');
+					var nome = $(cognome).prev('td');
+					console.log("cognome: " + cognome.text() + " nome: "
+							+ nome.text());
+					$("#titoloAggiuntaFerie").text(
+							"Aggiunta ferie per " + nome.text() + " "
+									+ cognome.text());
+					$('#formAggiunta').show();
+					$(".contenutiModal").css('background-color', '#e6e6e6');
 				}
-				alert("giorni di ferie effettivi: "+lavorativo+ "\n ToDo verifica che giorni di ferie presi non superino quelli disponibili");
-			}
-		 }
+			});
+
+		}
+
+		function apriFormRimozione(input) {
+			console.log("parte funzione apriformRimozione di " + input);
+			var inputDataIniziale=$("#rimozioneDataIniziale");
+			var inputDataFinale=$("#rimozioneDataFinale");
+			$(inputDataIniziale).val("");
+			$(inputDataFinale).val("");
+			var cognome = $("#listaVigili td:contains('" + input + "')").prev('td');
+			var nome = $(cognome).prev('td');
+			console.log("cognome: " + cognome.text() + " nome: " + nome.text());
+			$("#titoloRimuoviFerie").text(
+					"Rimuovi ferie per " + nome.text() + " " + cognome.text());
+
+			$.ajax({
+				type : "POST",
+				url : "GestioneFerieServlet",
+				data : {
+					"JSON" : true,
+					"rimozione":true,
+					"email" : input,
+				},
+				dataType : "json",
+				async : false,
+				success : function(response) {
+					$("#emailRimozioneFerie").val(input);
+					$(".contenutiModal").css('background-color', '#e6e6e6');
+					var tabella = $("#tabellaRimozioneFerie");
+					tabella.empty();
+
+					for ( var i in response) {
+						var range = response[i];
+						var dataIniziale = range[0];
+						var dataFinale = range[1];
+						var rigaTabella = document.createElement("TR");
+						tabella.append(rigaTabella);
+						
+						var colonnaDataIniziale = document.createElement("TD");
+						var nome = document.createTextNode(dataIniziale);
+						colonnaDataIniziale.appendChild(nome);
+						rigaTabella.appendChild(colonnaDataIniziale);
+						
+						var colonnaDataFinale = document.createElement("TD");
+						var cognome = document.createTextNode(dataFinale);
+						colonnaDataFinale.appendChild(cognome);
+						rigaTabella.appendChild(colonnaDataFinale);
+						
+						
+						var colonnaBottone = document.createElement("TD");
+						
+						var bottone=document.createElement("button");
+						$(bottone).attr("class", "btn btn-outline-primary");
+						$(bottone).attr("data-toggle", "modal");
+						$(bottone).attr("data-target", "#menuConferma");
+						$(bottone).text("Rimuovi");
+						$(bottone).attr("onclick", "setDate(this)");
+
+						colonnaBottone.appendChild(bottone);
+						rigaTabella.appendChild(colonnaBottone);
+						/*
+						var colonnaBottone = document.createElement("TD");
+						var link=document.createElement("a");
+						$(link).attr("href", "dadecidere");
+						var icona=document.createElement("img");
+						$(icona).attr("src", "IMG/edit.png");
+						$(icona).attr("data-toggle", "modal");
+						$(icona).attr("data-target", "#exampleModalCenter");
+						link.appendChild(icona);
+						colonnaBottone.appendChild(link);
+						rigaTabella.appendChild(colonnaBottone);
+						
+						*/
+						
+						console.log("data iniziale: " + dataIniziale
+								+ " ,data finale: " + dataFinale);
+						
+					}
+
+				}
+			});
+		}
 		
+		function setDate(input){
+			var inputDataIniziale=$("#rimozioneDataIniziale");
+			var inputDataFinale=$("#rimozioneDataFinale");
+			var dataFinale = $(input).parent().prev('td');
+			var dataIniziale = $(dataFinale).prev('td');
+			$(inputDataIniziale).val(dataIniziale.text());
+			$(inputDataFinale).val(dataFinale.text());
+
+			console.log("data inizz "+dataIniziale.text()+" datafin "+dataFinale.text());
+		}
 		
-		
-		
-	});
-	
-	picker.setLockDays(['2020-01-29']);
-	
-	
-	function apriFormAggiunta(input){
-		console.log("parte funzione apriformAggiunta di "+input);
-		picker.setOptions({startDate:null,endDate:null});
-		$("#dataInizio").val("");
-		$("#dataFine").val("");
-		$.ajax({
-			type:"POST",
-			url: "GestioneFerieServlet",
-			data : {
-				"JSON":true,
-				"email": input,
-			},
-			dataType: "json",
-			async: false,
-			success: function(response) {
-				picker.setLockDays(response);
-				$("#emailHidden").val(input)
-				console.log("settati giorni di ferie: " +response);
-			}
-		});
-		
-		
-	}
-	
+		function rimuoviFerie(){
+			var dataIniziale=$("#rimozioneDataIniziale").val();
+			var dataFinale=$("#rimozioneDataFinale").val();
+			var email=$("#emailRimozioneFerie").val();
+			$.ajax({
+				type : "POST",
+				url : "RimuoviFerieServlet",
+				data : {
+					"dataIniziale" : dataIniziale,
+					"dataFinale":dataFinale,
+					"email" : email,
+				},
+				dataType : "json",
+				async : true,
+				success : function(response) {
+					var booleanRisposta=response[0];
+					if(booleanRisposta){
+						var riga = $("#tabellaRimozioneFerie td:contains('" + dataIniziale + "')").parent().remove();
+						console.log("eliminata ferie " + dataIniziale+" "+ dataFinale+" di "+email);
+						$("#rimozioneOk").fadeTo(4000, 500).slideUp(500, function(){
+						    $("#success-alert").slideUp(500);
+						});
+					}
+					else{
+						console.log("problema rimozione ferie " + dataIniziale+" "+ dataFinale+" di "+email);
+						apriFormRimozione(email);
+						$("#rimozioneNoOk").fadeTo(4000, 500).slideUp(500, function(){
+						    $("#success-alert").slideUp(500);
+						});
+					}
+				}
+			});
+			
+		}
 	</script>
 </body>
 </html>

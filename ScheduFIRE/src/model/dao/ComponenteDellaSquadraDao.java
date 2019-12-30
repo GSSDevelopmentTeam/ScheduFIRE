@@ -68,13 +68,12 @@ public class ComponenteDellaSquadraDao {
 	}
 
 	private static int aggiungiAlDb(ComponenteDellaSquadraBean comp, Connection con) throws SQLException {
-		PreparedStatement ps = con.prepareStatement("INSERT INTO componentedellasquadra(emailVF, tipologia, giornoLavorativo) "
+		PreparedStatement ps = con.prepareStatement("insert into Squadra(emailVF, tipologia, giornoLavorativo) "
 				+ "values (?, ?, ?);");
 		ps.setString(1, comp.getTipologiaSquadra());
 		ps.setString(2, comp.getEmailVF());
 		ps.setDate(3, comp.getGiornoLavorativo());
-		
-		
+
 		return ps.executeUpdate();
 
 	}
