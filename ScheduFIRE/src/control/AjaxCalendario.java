@@ -32,13 +32,13 @@ public class AjaxCalendario extends HttpServlet{
 	
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		System.out.println("Sono AjaxCalendario e sono stato chiamato");
-		String giornostr = request.getParameter("giorno");
-		String mesestr = request.getParameter("mese");
-		String annostr = request.getParameter("anno");
+		String giornostr = request.getParameter("giorno").trim();
+		String mesestr = request.getParameter("mese").trim();
+		String annostr = request.getParameter("anno").trim();
 		int giorno;
 		int mese;
 		int anno;
+
 		try {
 			giorno=Integer.parseInt(giornostr);
 			mese=Integer.parseInt(mesestr);

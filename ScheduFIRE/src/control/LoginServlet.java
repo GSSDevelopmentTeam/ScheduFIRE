@@ -53,7 +53,6 @@ public class LoginServlet extends HttpServlet {
 
 					HttpSession session = request.getSession();
 					session.setAttribute("ruolo", utente.getRuolo());
-					session.setAttribute("email", username);
 					if (utente.getRuolo().equalsIgnoreCase("capoturno")) {
 						response.sendRedirect("HomeCTServlet");
 						//RequestDispatcher dispatcher = request.getRequestDispatcher("WebContent\\JSP\\LoginJSP.jsp");

@@ -8,7 +8,14 @@ body{
 * {
   box-sizing: border-box;
 }
+
+a {
+	text-decoration: none;
+	color: black;
+}
+
 .container {
+	position:relative;
 	margin-top: 2px;
 	margin-right: 10px;
 	display: flex;
@@ -18,12 +25,22 @@ body{
 	border: 3px solid black;
 }
 
-.edit{
-	font-size: 80%;
-	color: black;
-	padding: 12px 12px;
-	text-decoration: none;
-	display: block;
+.edit {
+  border: 2px solid #57b7b7;
+  color: #57b7b7;
+  padding: 4px;
+  border-radius: 7px;
+  text-align: center;
+  text-decoration: none;
+  position:absolute;
+  font-size: 16px;
+  margin: 1.5%;
+  cursor: pointer;
+}
+
+.edit:hover{
+	background-color: #57b7b7;
+	color:white;
 }
 
 /*contenitore per il calendario*/
@@ -48,7 +65,8 @@ body{
 	cursor: pointer;
 }
 
-.container-month-year {
+.container-year {
+	overflow:hidden;
 	color: black;
 	font-family: Rod;
 	text-align: center;
@@ -94,15 +112,28 @@ div.box{
 
 .vigili{
 	font-style: italic;
-	color:black;
+	color: black;
 	text-align: center;
 }
 
 #giornoCorrente{
-	color:black;
-	background-color: #b5cbdf;
+	font-weight: bold;
+	color: #b60000;
 }
 
+#giornoLavorativoDiurno{
+	background-color: #a0d6d6;
+}
+
+#giornoLavorativoNotturno{
+	background-color: #57b7b7;
+}
+
+#giornoCorrenteLavorativo{
+	font-weight: bold;
+	color: #b60000;
+	background-color: #a0d6d6;
+}
 .grid-days {
 	display: grid;
 	grid-template-columns: auto auto auto auto auto auto auto;
@@ -148,9 +179,7 @@ non ha la proprietà :hover*/
 }
 
 .grid-item:hover {
-	border: 1px solid #b60000;
-	background-color: white;
-	font-family: Verdana;
+	background-color: #c7c7c7 !important;	
 }
 
 

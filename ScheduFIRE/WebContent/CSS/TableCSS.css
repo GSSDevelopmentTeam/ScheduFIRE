@@ -4,15 +4,14 @@ body{
 	font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 
-h2{
+h2,h3{
 	color:#B60000;
-	margin-left: 10%;
 }
 
-h5{
-	margin-left: 10%;
-	color: black;
-}
+.fr{height:38px; 
+    width:38px;
+    float:left;
+    }
 
 td {	
 	border-bottom: 0.5px inset #B60000;

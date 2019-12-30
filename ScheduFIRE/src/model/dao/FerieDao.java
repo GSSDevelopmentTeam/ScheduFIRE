@@ -72,16 +72,23 @@ public class FerieDao {
 		
 		String rimozioneFerieSQL = "DELETE FROM Ferie WHERE (emailVF = ? AND dataInizio = ? AND dataFine = ?);";
 		
-		try(Connection connessione = ConnessioneDB.getConnection()){
-			
+		try{
+			Connection connessione=null;
+			try {
+			connessione = ConnessioneDB.getConnection();
 			ps = connessione.prepareStatement(rimozioneFerieSQL);
 			ps.setString(1, emailVF);
 			ps.setDate(2, dataInizio);
 			ps.setDate(3, dataFine);
-			
-			if(ps.execute())
+			int righe=ps.executeUpdate();
+			connessione.commit();
+			if(righe>0)
 				rimozione = true;
-			
+			}
+			finally {
+				ConnessioneDB.releaseConnection(connessione);
+				
+			}
 		}catch(SQLException e) {
 			e.printStackTrace();
 		}
