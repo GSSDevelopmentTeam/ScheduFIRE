@@ -6,3 +6,70 @@
 
 }
 
+#titolo, #buttonFormAggiungiVF, #ordinamento, #buttonAggiungi {
+	display: inline-block;
+}
+
+#ordinamento {
+	margin-left: 10%;
+}
+
+#buttonAggiungi {
+	margin-left: 10%;
+}
+
+.button, .buttonModifica {
+	background-color: #b60000;
+	color: white;
+	padding: 7px 20px;
+	text-align: center;
+	display: inline-block;
+	font-size: 16px;
+	font-weight:bold;
+	border-radius: 7px;
+	box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0
+		rgba(0, 0, 0, 0.19);
+	cursor: pointer;
+}
+
+.button:hover, .buttonModifica:hover {
+	background-color: white;
+	color: #b60000;
+	font-weight: bold;
+}
+
+#divPopup {
+	  display: none; /* Hidden by default */
+	  position: fixed; /* Stay in place */
+	  z-index: 1; /* Sit on top */
+	  left: 0;
+	  top: 0;
+	  width: 100%; /* Full width */
+	  height: 100%; /* Full height */
+	  overflow: auto; /* Enable scroll if needed */
+	  background-color: rgb(0,0,0); /* Fallback color */
+	  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+	  padding-top: 60px;
+	  
+
+}
+
+.form-popup {
+	ackground-color: #fefefe;
+	margin: 0 auto; /* 5% from the top, 15% from the bottom and centered */
+	width: 50%; /* Could be more or less, depending on screen size */
+		  
+	padding:25px;
+	display: table;
+	background-color: #FFFFFF;
+	border:inset;
+	border-color:#575757;
+	border-width: 0.5px;
+	border-radius: 5%;
+	resize: vertical;
+	box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0
+		rgba(0, 0, 0, 0.19);
+		
+	text-align: center;
+}
+

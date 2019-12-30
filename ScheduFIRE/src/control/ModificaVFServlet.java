@@ -73,10 +73,12 @@ public class ModificaVFServlet extends HttpServlet {
 		String giorniFerieAnnoPrecedenteNuoviStringa = request.getParameter("giorniFerieAnnoPrecedenteNuovi");
 		String emailNuova = request.getParameter("emailNuova");
 		
-		if(giorniFerieAnnoCorrenteNuoviStringa == null)
+		if(giorniFerieAnnoCorrenteNuoviStringa == null ||
+			"".equals(giorniFerieAnnoCorrenteNuoviStringa))
 			throw new ScheduFIREException("Il parametro 'Giorni Ferie Anno Corrente' è nullo!");
 		
-		if(giorniFerieAnnoPrecedenteNuoviStringa == null)
+		if(giorniFerieAnnoPrecedenteNuoviStringa == null ||
+			"".equals(giorniFerieAnnoPrecedenteNuoviStringa))
 			throw new ScheduFIREException("Il parametro 'Giorni Ferie Anno Precedente' è nullo!");
 		
 		//Conversione parametri da Stringa ad interi
@@ -105,10 +107,7 @@ public class ModificaVFServlet extends HttpServlet {
 		
 		if( ! Validazione.email(emailNuova) )
 			throw new ParametroInvalidoException("Il parametro 'email' è errato!");
-		
-		if( VigileDelFuocoDao.ottieni(emailNuova) != null )
-			throw new GestionePersonaleException("L'email inserita è già in uso!");
-		
+	
 		//Settaggio nuovi parametri
 		vf.setNome(nomeNuovo);
 		vf.setCognome(cognomeNuovo);
@@ -116,11 +115,20 @@ public class ModificaVFServlet extends HttpServlet {
 		vf.setGiorniFerieAnnoCorrente(giorniFerieAnnoCorrenteNuovi);
 		vf.setGiorniFerieAnnoPrecedente(giorniFerieAnnoPrecedenteNuovi);
 		vf.setGrado(gradoNuovo);
-		vf.setEmail(emailNuova);
 		
-		// Controllo modifica Vigile del Fuoco nel database
-		if( ! VigileDelFuocoDao.modifica(emailVecchia, vf)) {
-			throw new GestionePersonaleException("La modifica del vigile del fuoco non è andata a buon fine!");
+		VigileDelFuocoBean vfDb =  VigileDelFuocoDao.ottieni(emailNuova);
+		if( ! vf.equals(vfDb) ) {
+		
+			//Controllo email già in uso
+			if( (vfDb != null) && ( ! emailVecchia.equals(emailNuova) ) )
+				throw new GestionePersonaleException("L'email inserita è già in uso!");
+			
+			vf.setEmail(emailNuova);
+			
+			// Controllo modifica Vigile del Fuoco nel database
+			if( ! VigileDelFuocoDao.modifica(emailVecchia, vf)) 
+				throw new GestionePersonaleException("La modifica del vigile del fuoco non è andata a buon fine!");
+		
 		}
 		
 		// Reindirizzamento alla jsp
