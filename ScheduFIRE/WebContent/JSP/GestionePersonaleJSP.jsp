@@ -75,32 +75,10 @@ if(ordinamentoObj.getClass().getSimpleName().equals("String"))
 			var email = document.getElementById(id + "Email");
 			var grado = document.getElementById(id + "Grado");
 			var mansione = document.getElementById(id + "Mansione");
-			/*
-			alert(nome.value);
-			alert(nome.value === "");
-			alert(nome.value === "undefined");
-			alert( nome.value.match("^[A-Z]{1}[a-z]{0,19}+$"));
-			alert(cognome.value);
-			alert(cognome.value === "");
-			alert(cognome.value === "undefined");
-			alert( cognome.value.match("^[A-Z]{1}[a-z]{0,19}+$"));
-			alert(email.value);
-			alert(email.value === "");
-			alert(email.value === "undefined");
-			alert( email.value.match("^[A-Za-z]{2,}[1-9]*[0-9]*$"));
-			alert(grado.value);
-			alert(grado.value === "");
-			alert(grado.value === "undefined");
-			alert(mansione.value);
-			alert(mansione.value === "");
-			alert(mansione.value === "undefined");
-			*/
-			
-			
 			
 			if( (nome.value === "") || (nome.value == "undefined") || 
 					!nome.value.test("^[A-Z]{1}[a-z]{0,19}+$") ) {
-				alert(1.1);
+				
 				nome.focus();
 				alert("Nome errato!");
 				return false;
@@ -108,7 +86,7 @@ if(ordinamentoObj.getClass().getSimpleName().equals("String"))
 			}
 			else if( (cognome.value === "") || (cognome.value == "undefined") ||
 					!cognome.value.test("/^[A-Z]{1}[a-z]{0,19}+$/") ) {
-				alert(1.2);
+
 				cognome.focus();
 				alert("Cognome errato!");
 				return false;
@@ -116,7 +94,7 @@ if(ordinamentoObj.getClass().getSimpleName().equals("String"))
 			}
 			else if( (email.value === "") || (email.value == "undefined") || 
 					!email.value.test("^[A-Za-z]{2,}[1-9]*[0-9]*$") ) {
-				alert(1.3);
+
 				email.focus();
 				alert("Email errata!");
 				return false;
@@ -124,7 +102,7 @@ if(ordinamentoObj.getClass().getSimpleName().equals("String"))
 			}
 			else if( (grado.value === "") || (grado.value == "undefined") || 
 					(grado.value == "-")  ) {
-				alert(1.4);
+
 				grado.focus();
 				alert("Grado errato!");
 				return false;
@@ -132,15 +110,13 @@ if(ordinamentoObj.getClass().getSimpleName().equals("String"))
 			}
 			else if( (mansione.value === "") || (mansione.value == "undefined") || 
 					(mansione.value == "-")  ) {
-				alert(1.5);
+
 				mansione.focus();
 				alert("Mansione errata!");
 				return false;
 				
 			}
-			
-			alert(2);
-			
+	
 			return true;
 			
 		}
@@ -148,6 +124,8 @@ if(ordinamentoObj.getClass().getSimpleName().equals("String"))
 	</script>
 	
 	<section>
+	
+		<br>
 	
 		<h2 id = "titolo">Gestione Personale</h2>
 		
@@ -216,6 +194,8 @@ if(ordinamentoObj.getClass().getSimpleName().equals("String"))
 		<button id = "buttonAggiungi" class = "button" onclick = "mostraFormAggiuta()">
 			Aggiungi Vigile del Fuoco
 		</button>
+		
+		<br> <br>
 		
 		<% 
 				
