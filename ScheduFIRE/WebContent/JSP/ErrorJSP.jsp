@@ -11,7 +11,11 @@
 	<jsp:include page="HeaderJSP.jsp" />
 	<jsp:include page="StandardJSP.jsp" />
 	<h1 class="text-center"><img src="IMG/fire.png" class="fr">Error<img src="IMG/fire.png" class="fr"></h1>
-	<p class="text-center">E'stato riscontrato un problema, <br> la preghiamo di attendere e di ricaricare la pagina</p>
+	<p class="text-center">
+		E' stato riscontrato un problema,<br>
+		controlla che l'URL della pagina sia scritto correttamente, <br>
+		in alternativa effettua nuovamente il Login.
+	</p>
 
 </body>
 </html>
