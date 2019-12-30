@@ -11,6 +11,7 @@ import javax.servlet.http.HttpSession;
 import model.bean.CredenzialiBean;
 import model.bean.VigileDelFuocoBean;
 import model.dao.VigileDelFuocoDao;
+import util.Validazione;
 
 /**
  * Servlet che si occupa della modifica dei VigileDelFuocoBean nel database. 
@@ -39,12 +40,12 @@ public class ModificaVFServlet extends HttpServlet {
 				
 		//Ottenimento credenziali dell'utente dalla sessione
 		CredenzialiBean credenziali = (CredenzialiBean) session.getAttribute("credenziali"); 
-				
+		/*
 		//Controllo credenziali
 		if( credenziali == null )
 			throw new ScheduFIREException();
 
-		/*
+		
 		if( credenziali.getRuolo() == "vigile" ) //definire bene la stringa
 			throw new ScheduFIREException();
 
@@ -53,15 +54,15 @@ public class ModificaVFServlet extends HttpServlet {
 		String emailVecchia = request.getParameter("emailVecchia");
 		
 		//Controllo email
-		if( emailVecchia == null )
-			throw new ScheduFIREException();
+		if( ! Validazione.email(emailVecchia) )
+			throw new ParametroInvalidoException("Il parametro 'email' è errato!");
 		
 		//Ottenimento Vigile del Fuoco dal database
 		VigileDelFuocoBean vf = VigileDelFuocoDao.ottieni(emailVecchia);
 		
-		//Controllo se � nullo
-		if( vf == null) 
-			throw new ScheduFIREException();
+		//Controllo se è nullo
+		if( vf == null ) 
+			throw new GestionePersonaleException("Il vigile del fuoco non è presente nel sistema!");
 		
 		// Ottenimento parametri del VF dalla richiesta
 		String nomeNuovo = request.getParameter("nomeNuovo");;
@@ -72,35 +73,41 @@ public class ModificaVFServlet extends HttpServlet {
 		String giorniFerieAnnoPrecedenteNuoviStringa = request.getParameter("giorniFerieAnnoPrecedenteNuovi");
 		String emailNuova = request.getParameter("emailNuova");
 		
-		//aggiungere controlli dei parametri
+		if(giorniFerieAnnoCorrenteNuoviStringa == null ||
+			"".equals(giorniFerieAnnoCorrenteNuoviStringa))
+			throw new ScheduFIREException("Il parametro 'Giorni Ferie Anno Corrente' è nullo!");
 		
-		//Controlli
-
-		if( nomeNuovo == null )
-			throw new ScheduFIREException();
-		
-		if( cognomeNuovo == null )
-			throw new ScheduFIREException();
-		
-		if( mansioneNuova == null )
-			throw new ScheduFIREException();
-		
-		if( giorniFerieAnnoCorrenteNuoviStringa == null )
-			throw new ScheduFIREException();
-	
-		if( giorniFerieAnnoPrecedenteNuoviStringa == null )
-			throw new ScheduFIREException();
-		
-		if( gradoNuovo == null )
-			throw new ScheduFIREException();
-		
-		if( emailNuova == null )
-			throw new ScheduFIREException();
+		if(giorniFerieAnnoPrecedenteNuoviStringa == null ||
+			"".equals(giorniFerieAnnoPrecedenteNuoviStringa))
+			throw new ScheduFIREException("Il parametro 'Giorni Ferie Anno Precedente' è nullo!");
 		
 		//Conversione parametri da Stringa ad interi
 		Integer giorniFerieAnnoCorrenteNuovi = Integer.parseInt(giorniFerieAnnoCorrenteNuoviStringa);
 		Integer giorniFerieAnnoPrecedenteNuovi = Integer.parseInt(giorniFerieAnnoPrecedenteNuoviStringa);
+	
+		//Controlli
+
+		if( ! Validazione.nome(nomeNuovo) )
+			throw new ParametroInvalidoException("Il parametro 'nome' è errato!");
 		
+		if( ! Validazione.cognome(cognomeNuovo) )
+			throw new ParametroInvalidoException("Il parametro 'cognome' è errato!");
+		
+		if( ! Validazione.mansione(mansioneNuova) )
+			throw new ParametroInvalidoException("Il parametro 'mansione' è errato!");
+		
+		if( ! Validazione.giorniFerieAnnoCorrente(giorniFerieAnnoCorrenteNuovi) )
+			throw new ParametroInvalidoException("Il parametro 'Giorni Ferie Anno Corrente' è errato!");
+	
+		if( ! Validazione.giorniFerieAnniPrecedenti(giorniFerieAnnoPrecedenteNuovi) )
+			throw new ParametroInvalidoException("Il parametro 'Giorni Ferie Anno Precedente' è errato!");
+		
+		if( ! Validazione.grado(gradoNuovo) )
+			throw new ParametroInvalidoException("Il parametro 'grado' è errato!");
+		
+		if( ! Validazione.email(emailNuova) )
+			throw new ParametroInvalidoException("Il parametro 'email' è errato!");
+	
 		//Settaggio nuovi parametri
 		vf.setNome(nomeNuovo);
 		vf.setCognome(cognomeNuovo);
@@ -108,15 +115,24 @@ public class ModificaVFServlet extends HttpServlet {
 		vf.setGiorniFerieAnnoCorrente(giorniFerieAnnoCorrenteNuovi);
 		vf.setGiorniFerieAnnoPrecedente(giorniFerieAnnoPrecedenteNuovi);
 		vf.setGrado(gradoNuovo);
-		vf.setEmail(emailNuova);
 		
-		// Controllo modifica Vigile del Fuoco nel database
-		if( ! VigileDelFuocoDao.modifica(emailVecchia, vf)) {
-			throw new ScheduFIREException();
+		VigileDelFuocoBean vfDb =  VigileDelFuocoDao.ottieni(emailNuova);
+		if( ! vf.equals(vfDb) ) {
+		
+			//Controllo email già in uso
+			if( (vfDb != null) && ( ! emailVecchia.equals(emailNuova) ) )
+				throw new GestionePersonaleException("L'email inserita è già in uso!");
+			
+			vf.setEmail(emailNuova);
+			
+			// Controllo modifica Vigile del Fuoco nel database
+			if( ! VigileDelFuocoDao.modifica(emailVecchia, vf)) 
+				throw new GestionePersonaleException("La modifica del vigile del fuoco non è andata a buon fine!");
+		
 		}
 		
 		// Reindirizzamento alla jsp
-		request.getRequestDispatcher("/").forward(request, response);
+		request.getRequestDispatcher("/GestionePersonaleServlet").forward(request, response);
 		
 	}
 
