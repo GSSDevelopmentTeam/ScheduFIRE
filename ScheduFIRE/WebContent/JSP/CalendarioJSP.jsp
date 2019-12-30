@@ -44,7 +44,7 @@
 	<jsp:include page="HeaderJSP.jsp" />
 	
 	<!-- START: Container per calendario e schedulazione -->
-	<div class="container">
+	<div class="containerAll">
 		
 		<!-- START: Container per il calendaio -->
 		<div class="container-calendar">
@@ -62,7 +62,7 @@
 					onmouseover="this.src='IMG/arrow/left-arrow-full.png'"
 					onmouseout="this.src='IMG/arrow/left-arrow-empty.png'" />
 				</a>
-				<span id="annoVisualizzato"><%=anno%></span>
+				<span id="annoVisualizzato"> <%=anno%> </span>
 				<a class="altroAnno"
 					href="CalendarioServlet?mese=<%=mese %>&anno=<%=anno+1 %>">
 					<img src="IMG/arrow/right-arrow-empty.png"
@@ -153,9 +153,9 @@
 		</div>
 		<!-- AND container per il calendario -->
 
-		<a class="info"> <%=modalita_uso%></a>
+		
 		<div class="container-schedul">
-
+		<a class="info"> <%=modalita_uso%></a>
 			<div class="wrapper">
 			
 				<div class="box mansione">
