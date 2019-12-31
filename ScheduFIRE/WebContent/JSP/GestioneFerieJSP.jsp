@@ -357,7 +357,12 @@
 							"Aggiunta ferie per " + nome.text() + " "
 									+ cognome.text());
 					$(".contenutiModal").css('background-color', '#e6e6e6');
-				}
+				},
+				error: function(jqXHR, textStatus, errorThrown) {
+
+	                $(document.body).html(jqXHR.responseText);
+
+	            },
 			});
 
 		}
@@ -416,29 +421,19 @@
 						$(bottone).attr("data-target", "#menuConferma");
 						$(bottone).text("Rimuovi");
 						$(bottone).attr("onclick", "setDate(this)");
-
 						colonnaBottone.appendChild(bottone);
 						rigaTabella.appendChild(colonnaBottone);
-						/*
-						var colonnaBottone = document.createElement("TD");
-						var link=document.createElement("a");
-						$(link).attr("href", "dadecidere");
-						var icona=document.createElement("img");
-						$(icona).attr("src", "IMG/edit.png");
-						$(icona).attr("data-toggle", "modal");
-						$(icona).attr("data-target", "#exampleModalCenter");
-						link.appendChild(icona);
-						colonnaBottone.appendChild(link);
-						rigaTabella.appendChild(colonnaBottone);
-						
-						*/
-						
 						console.log("data iniziale: " + dataIniziale
 								+ " ,data finale: " + dataFinale);
 						
 					}
 
-				}
+				},
+				error: function(jqXHR, textStatus, errorThrown) {
+
+	                $(document.body).html(jqXHR.responseText);
+
+	            },
 			});
 		}
 		
@@ -483,7 +478,12 @@
 						apriFormRimozione(email);
 						alertInsuccesso("Rimozione ferie non avvenuta a causa di un errore imprevisto.");
 					}
-				}
+				},
+				error: function(jqXHR, textStatus, errorThrown) {
+
+	                $(document.body).html(jqXHR.responseText);
+
+	            },
 			});	
 		}
 		
