@@ -3,6 +3,8 @@ package control;
 import java.io.IOException;
 import java.sql.Date;
 import java.time.LocalDate;
+import java.util.ArrayList;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -12,6 +14,7 @@ import javax.servlet.http.HttpSession;
 import org.json.JSONArray;
 import model.bean.CapoTurnoBean;
 import model.bean.CredenzialiBean;
+import model.bean.VigileDelFuocoBean;
 import model.dao.CapoTurnoDao;
 import model.dao.ComponenteDellaSquadraDao;
 import model.dao.FerieDao;
@@ -81,8 +84,7 @@ public class AggiungiFerieServlet extends HttpServlet {
 			throw new ScheduFIREException("Selezionato un periodo contenente giorni non lavorativi!");
 		else {
 			
-			if((!Util.abbastanzaPerTurno(2, 3, 7)) && (!Util.abbastanzaPerTurno(3, 3, 6)) 
-					&& (!Util.abbastanzaPerTurno(4, 3, 5))) {
+			if(isPresentiNumeroMinimo(dataInizio, dataFine)) {
 				
 				throw new ScheduFIREException("Personale insufficiente.\nImpossibile inserire ferie");
 			}
@@ -159,6 +161,62 @@ public class AggiungiFerieServlet extends HttpServlet {
 		
 		lavorativo = GiornoLavorativo.isLavorativo(Date.valueOf(fine));
 		return lavorativo;
+	}
+	
+	private boolean isPresentiNumeroMinimo(Date dataIniziale, Date dataFinale) {
+		int capiSquadra = 0; 
+		int autisti = 0;
+		int vigili = 0;
+		boolean presentiNumero = true;
+		ArrayList<VigileDelFuocoBean> presenti = new ArrayList<VigileDelFuocoBean>();
+		
+		LocalDate inizio = dataIniziale.toLocalDate();
+		LocalDate fine = dataFinale.toLocalDate();
+
+		while(inizio.compareTo(fine) != 0) {
+			presenti = VigileDelFuocoDao.getDisponibili(Date.valueOf(inizio));
+			
+			for(int i=0; i<presenti.size(); i++) {
+				String mansione = presenti.get(i).getMansione().toString().toLowerCase();
+				
+				if(mansione.equals("Capo Squadra"))
+					capiSquadra += 1;
+				else
+					if(mansione.equals("Autista"))
+						autisti += 1;
+					else
+						if(mansione.equals("Vigile"))
+							vigili += 1;
+			}
+			
+			presentiNumero = Util.abbastanzaPerTurno(capiSquadra, autisti, vigili);
+			
+			if(!presentiNumero) {
+				presentiNumero = false;
+				return presentiNumero;
+			}
+			else
+				inizio.plusDays(1);	
+		}
+		
+		presenti = VigileDelFuocoDao.getDisponibili(Date.valueOf(fine));
+		
+		for(int i=0; i < presenti.size(); i++) {
+			String mansione = presenti.get(i).getMansione().toString().toLowerCase();
+			
+			if(mansione.equals("Capo Squadra"))
+				capiSquadra += 1;
+			else
+				if(mansione.equals("Autista"))
+					autisti += 1;
+				else
+					if(mansione.equals("Vigile"))
+						vigili += 1;
+		}
+		
+		presentiNumero = Util.abbastanzaPerTurno(capiSquadra, autisti, vigili);
+		
+		return presentiNumero;
 	}
 
 }
