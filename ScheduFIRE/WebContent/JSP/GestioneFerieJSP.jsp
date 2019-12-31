@@ -505,7 +505,12 @@
 						apriFormAggiunta(email);
 						alertInsuccesso("Aggiunta ferie non avvenuta a causa di un errore imprevisto.");
 					}
-				}
+				},
+				error: function(jqXHR, textStatus, errorThrown) {
+
+	                $(document.body).html(jqXHR.responseText);
+
+	            },
 			});	
 		}
 	</script>
