@@ -95,5 +95,36 @@ public class FerieDao {
 		
 		return rimozione;
 	}
-
+	
+	public static boolean aggiungiPeriodoFerie(String emailCT, String emailVF, Date dataInizio, Date dataFine) {
+		
+		boolean aggiunta = false;
+		PreparedStatement ps;
+		
+		String aggiuntaFerieSQL = "INSERT INTO Ferie(dataInizio, dataFine, emailCT, emailVF) VALUES(?, ?, ?, ?);";
+		
+		try {
+			Connection connessione = null;
+			
+			try {
+				connessione = ConnessioneDB.getConnection();
+				
+				ps = connessione.prepareStatement(aggiuntaFerieSQL);
+				ps.setDate(1, dataInizio);
+				ps.setDate(2, dataFine);
+				ps.setString(3, emailCT);
+				ps.setString(4, emailVF);
+				
+				if(ps.executeUpdate() == 1)
+					aggiunta = true;
+				
+			}finally {
+				ConnessioneDB.releaseConnection(connessione);
+			}
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return aggiunta;
+	}
 }
