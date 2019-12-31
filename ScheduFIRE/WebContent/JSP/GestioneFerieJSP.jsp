@@ -474,14 +474,15 @@
 		}
 		
 		function aggiungiFerie(){
-			var dataIniziale=$("#DataInizio").val();
-			var dataFinale=$("#DataFine").val();
+			var dataIniziale=$("#dataInizio").val();
+			var dataFinale=$("#dataFine").val();
 			var email=$("#emailAggiuntaFerie").val();
+			console.log("aggiungiFerie data: "+dataIniziale+" fino a "+dataFinale+" email: "+email);
 			$.ajax({
 				type : "POST",
 				url : "AggiungiFerieServlet",
 				data : {
-					"dataInizio" : dataIniziale,
+					"dataIniziale" : dataIniziale,
 					"dataFinale":dataFinale,
 					"email" : email,
 				},
