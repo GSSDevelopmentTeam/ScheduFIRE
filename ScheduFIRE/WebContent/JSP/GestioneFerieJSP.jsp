@@ -176,8 +176,8 @@
 					<td class="text-center"><%=vigile.getCognome()%></td>
 					<td class="text-center"><%=vigile.getEmail()%></td>
 					<td class="text-center"><%=vigile.getMansione()%></td>
-					<td class="text-center"><%=vigile.getGiorniFerieAnnoCorrente()%></td>
-					<td class="text-center"><%=vigile.getGiorniFerieAnnoCorrente()%></td>
+					<td class="text-center" id="ferieCorrenti"><%=vigile.getGiorniFerieAnnoCorrente()%></td>
+					<td class="text-center" id="feriePrecedenti"><%=vigile.getGiorniFerieAnnoPrecedente()%></td>
 					<td class="text-center"><button type="button" class="btn btn-outline-secondary"
 							data-toggle="modal" data-target="#aggiungiFerie"
 							onClick='apriFormAggiunta("<%=vigile.getEmail()%>")'>Aggiungi
@@ -470,8 +470,37 @@
 						alertInsuccesso("Rimozione ferie non avvenuta a causa di un errore imprevisto.");
 					}
 				}
-			});
-			
+			});	
+		}
+		
+		function aggiungiFerie(){
+			var dataIniziale=$("#DataInizio").val();
+			var dataFinale=$("#DataFine").val();
+			var email=$("#emailAggiuntaFerie").val();
+			$.ajax({
+				type : "POST",
+				url : "AggiungiFerieServlet",
+				data : {
+					"dataInizio" : dataIniziale,
+					"dataFinale":dataFinale,
+					"email" : email,
+				},
+				dataType : "json",
+				async : true,
+				success : function(response) {
+					var booleanRisposta=response[0];
+					if(booleanRisposta){
+						var riga = $("#listaVigili td:contains('" + email + "')");
+						console.log("inserite ferie " + dataIniziale+" "+ dataFinale+" di "+email);
+						alertSuccesso("Inserimento ferie avvenuto con successo.");
+					}
+					else{
+						console.log("problema inserimento ferie " + dataIniziale+" "+ dataFinale+" di "+email);
+						apriFormAggiunta(email);
+						alertInsuccesso("Aggiunta ferie non avvenuta a causa di un errore imprevisto.");
+					}
+				}
+			});	
 		}
 	</script>
 </body>
