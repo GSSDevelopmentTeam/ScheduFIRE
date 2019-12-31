@@ -7,10 +7,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-
 import model.ConnessioneDB;
 import model.bean.FerieBean;
-import model.bean.VigileDelFuocoBean;
+
 
 public class FerieDao {
 
@@ -68,7 +67,6 @@ public class FerieDao {
 		
 		boolean rimozione = false;
 		PreparedStatement ps;
-		ResultSet rs;
 		
 		String rimozioneFerieSQL = "DELETE FROM Ferie WHERE (emailVF = ? AND dataInizio = ? AND dataFine = ?);";
 		
@@ -115,7 +113,10 @@ public class FerieDao {
 				ps.setString(3, emailCT);
 				ps.setString(4, emailVF);
 				
-				if(ps.executeUpdate() == 1)
+				int righe = ps.executeUpdate();
+				connessione.commit();
+				
+				if(righe > 0)
 					aggiunta = true;
 				
 			}finally {
