@@ -13,6 +13,7 @@ import org.json.JSONArray;
 import model.bean.CapoTurnoBean;
 import model.bean.CredenzialiBean;
 import model.dao.CapoTurnoDao;
+import model.dao.ComponenteDellaSquadraDao;
 import model.dao.FerieDao;
 import model.dao.VigileDelFuocoDao;
 import util.GiornoLavorativo;
@@ -88,35 +89,40 @@ public class AggiungiFerieServlet extends HttpServlet {
 				throw new ScheduFIREException("Personale insufficiente.\nImpossibile inserire ferie");
 			}
 			else {
-				//controllo se schedulato da inserire
 				
-				if(VigileDelFuocoDao.ottieniNumeroFeriePrecedenti(emailVF) != 0) {
-					if(VigileDelFuocoDao.ottieniNumeroFeriePrecedenti(emailVF) >= numeroGiorniFerie) {
-						aggiunta = FerieDao.aggiungiPeriodoFerie(emailCT, emailVF, dataInizio, dataFine);
+				if(ComponenteDellaSquadraDao.isComponente(emailVF, dataInizio))
+					throw new ScheduFIREException("Impossibile inserire ferie. Vigile già inserito in squadra");
+				
+				else {
+				
+					if(VigileDelFuocoDao.ottieniNumeroFeriePrecedenti(emailVF) != 0) {
+						if(VigileDelFuocoDao.ottieniNumeroFeriePrecedenti(emailVF) >= numeroGiorniFerie) {
+							aggiunta = FerieDao.aggiungiPeriodoFerie(emailCT, emailVF, dataInizio, dataFine);
 						
-						int ferieDb = VigileDelFuocoDao.ottieniNumeroFeriePrecedenti(emailVF);
-						VigileDelFuocoDao.aggiornaFeriePrecedenti(emailVF, (ferieDb - numeroGiorniFerie));
+							int ferieDb = VigileDelFuocoDao.ottieniNumeroFeriePrecedenti(emailVF);
+							VigileDelFuocoDao.aggiornaFeriePrecedenti(emailVF, (ferieDb - numeroGiorniFerie));
+						}
+						else {
+							aggiunta = FerieDao.aggiungiPeriodoFerie(emailCT, emailVF, dataInizio, dataFine);
+						
+							int feriePDb = VigileDelFuocoDao.ottieniNumeroFeriePrecedenti(emailVF);
+							int ferieCDb = VigileDelFuocoDao.ottieniNumeroFerieCorrenti(emailVF);
+							int ferieDaScalareC = ferieCDb - (numeroGiorniFerie - feriePDb);
+						
+							VigileDelFuocoDao.aggiornaFeriePrecedenti(emailVF, 0);
+							VigileDelFuocoDao.aggiornaFerieCorrenti(emailVF, ferieDaScalareC);
+						}
 					}
 					else {
-						aggiunta = FerieDao.aggiungiPeriodoFerie(emailCT, emailVF, dataInizio, dataFine);
+						if(VigileDelFuocoDao.ottieniNumeroFerieCorrenti(emailVF) >= numeroGiorniFerie) {
+							aggiunta = FerieDao.aggiungiPeriodoFerie(emailCT, emailVF, dataInizio, dataFine);
 						
-						int feriePDb = VigileDelFuocoDao.ottieniNumeroFeriePrecedenti(emailVF);
-						int ferieCDb = VigileDelFuocoDao.ottieniNumeroFerieCorrenti(emailVF);
-						int ferieDaScalareC = ferieCDb - (numeroGiorniFerie - feriePDb);
-						
-						VigileDelFuocoDao.aggiornaFeriePrecedenti(emailVF, 0);
-						VigileDelFuocoDao.aggiornaFerieCorrenti(emailVF, ferieDaScalareC);
+							int ferieCDb = VigileDelFuocoDao.ottieniNumeroFerieCorrenti(emailVF);
+							VigileDelFuocoDao.aggiornaFeriePrecedenti(emailVF, (ferieCDb - numeroGiorniFerie));
+						}
+						else
+							throw new ScheduFIREException("Giorni di ferie insufficienti");
 					}
-				}
-				else {
-					if(VigileDelFuocoDao.ottieniNumeroFerieCorrenti(emailVF) >= numeroGiorniFerie) {
-						aggiunta = FerieDao.aggiungiPeriodoFerie(emailCT, emailVF, dataInizio, dataFine);
-						
-						int ferieCDb = VigileDelFuocoDao.ottieniNumeroFerieCorrenti(emailVF);
-						VigileDelFuocoDao.aggiornaFeriePrecedenti(emailVF, (ferieCDb - numeroGiorniFerie));
-					}
-					else
-						throw new ScheduFIREException("Giorni di ferie insufficienti");
 				}
 			}
 		}
