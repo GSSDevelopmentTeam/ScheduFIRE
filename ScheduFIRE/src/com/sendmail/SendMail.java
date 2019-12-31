@@ -14,8 +14,17 @@ import javax.mail.internet.MimeMessage;
 
 import model.dao.EmailDao;
 
+/**
+ * Classe per mandare le mail ai vigili del fuoco quando viene generato un turno.
+ * @author Ciro Cipolletta
+ * @see javax.mail
+ */
 public class SendMail {
 
+	/**
+	 * Il metodo si occupa del mandare le mail ai vigili del fuoco. 
+	 * @param data
+	 */
 	public static void sendMail(Date data) {
 		//Lista dei destinatari
 		EmailDao allEmail = new EmailDao();

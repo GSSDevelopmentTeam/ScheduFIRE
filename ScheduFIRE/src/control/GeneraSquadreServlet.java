@@ -27,6 +27,7 @@ import util.Util;
 
 /**
  * Servlet implementation class GeneraSquadreServlet
+ * @author Emanuele Bombardelli
  */
 @WebServlet(description = "Servlet per la generazione delle squadre", urlPatterns = { "/GeneraSquadreServlet" })
 public class GeneraSquadreServlet extends HttpServlet {
