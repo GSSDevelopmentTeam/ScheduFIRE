@@ -130,8 +130,13 @@ public class AggiungiFerieServlet extends HttpServlet {
 		response.setContentType("application/json");
 		JSONArray array = new JSONArray();
 		
-		if(aggiunta) 
+		if(aggiunta) {
+			int feriePDb = VigileDelFuocoDao.ottieniNumeroFeriePrecedenti(emailVF);
+			int ferieCDb = VigileDelFuocoDao.ottieniNumeroFerieCorrenti(emailVF);
 			array.put(true);
+			array.put(feriePDb);
+			array.put(ferieCDb);
+		}
 		else
 			array.put(false);
 		

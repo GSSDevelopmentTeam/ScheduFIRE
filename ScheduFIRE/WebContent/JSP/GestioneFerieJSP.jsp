@@ -63,7 +63,7 @@
 						data-dismiss="modal">Annulla</button>
 
 
-					<button type="button" class="btn btn-outline-warning" id="bottoneAggiungiFerie" disabled>Aggiungi
+					<button type="button" class="btn btn-outline-warning" id="bottoneAggiungiFerie" onclick="aggiungiFerie()" disabled>Aggiungi
 						ferie</button>
 
 				</div>
@@ -493,6 +493,11 @@
 						var riga = $("#listaVigili td:contains('" + email + "')");
 						console.log("inserite ferie " + dataIniziale+" "+ dataFinale+" di "+email);
 						alertSuccesso("Inserimento ferie avvenuto con successo.");
+						var ferieAnnoCorrente= $("#listaVigili td:contains('" + email + "')")
+						.next('td').next('td');
+						var ferieAnnoPrecedente= ferieAnnoCorrente.next('td');
+						ferieAnnoCorrente.text(response[2]);
+						ferieAnnoPrecedente.text(response[1]);
 					}
 					else{
 						console.log("problema inserimento ferie " + dataIniziale+" "+ dataFinale+" di "+email);
