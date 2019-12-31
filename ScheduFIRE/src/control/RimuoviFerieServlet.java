@@ -2,18 +2,13 @@ package control;
 
 import java.io.IOException;
 import java.sql.Date;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
-
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
 import org.json.JSONArray;
-
 import model.dao.FerieDao;
 
 /**
@@ -46,7 +41,6 @@ public class RimuoviFerieServlet extends HttpServlet {
 		Date dataInizio = null;
 		Date dataFine = null;
 		String emailVF;
-		SimpleDateFormat formattazione = new SimpleDateFormat("yyyy-MM-dd");
 		boolean rimozione;
 		
 		emailVF = request.getParameter("email");

@@ -3,15 +3,13 @@ package control;
 import java.io.IOException;
 import java.sql.Date;
 import java.time.LocalDate;
-import java.util.ArrayList;
-
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-
+import org.json.JSONArray;
 import model.bean.CapoTurnoBean;
 import model.bean.CredenzialiBean;
 import model.dao.CapoTurnoDao;
@@ -110,12 +108,28 @@ public class AggiungiFerieServlet extends HttpServlet {
 						VigileDelFuocoDao.aggiornaFerieCorrenti(emailVF, ferieDaScalareC);
 					}
 				}
-				
+				else {
+					if(VigileDelFuocoDao.ottieniNumeroFerieCorrenti(emailVF) >= numeroGiorniFerie) {
+						aggiunta = FerieDao.aggiungiPeriodoFerie(emailCT, emailVF, dataInizio, dataFine);
+						
+						int ferieCDb = VigileDelFuocoDao.ottieniNumeroFerieCorrenti(emailVF);
+						VigileDelFuocoDao.aggiornaFeriePrecedenti(emailVF, (ferieCDb - numeroGiorniFerie));
+					}
+					else
+						throw new ScheduFIREException("Giorni di ferie insufficienti");
+				}
 			}
 		}
 		
+		response.setContentType("application/json");
+		JSONArray array = new JSONArray();
 		
+		if(aggiunta) 
+			array.put(true);
+		else
+			array.put(false);
 		
+		response.getWriter().append(array.toString());
 	}
 	
 	private boolean isPeriodoLavorativo(Date dataIniziale, Date dataFinale) {
