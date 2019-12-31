@@ -84,7 +84,7 @@ public class AggiungiFerieServlet extends HttpServlet {
 			throw new ScheduFIREException("Selezionato un periodo contenente giorni non lavorativi!");
 		else {
 			
-			if(isPresentiNumeroMinimo(dataInizio, dataFine)) {
+			if(this.isPresentiNumeroMinimo(dataInizio, dataFine)) {
 				
 				throw new ScheduFIREException("Personale insufficiente.\nImpossibile inserire ferie");
 			}
