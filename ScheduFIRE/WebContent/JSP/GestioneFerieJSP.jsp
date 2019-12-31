@@ -63,7 +63,7 @@
 						data-dismiss="modal">Annulla</button>
 
 
-					<button type="button" class="btn btn-outline-warning" id="bottoneAggiungiFerie" disabled>Aggiungi
+					<button type="button" class="btn btn-outline-warning" id="bottoneAggiungiFerie" onclick="aggiungiFerie()" disabled>Aggiungi
 						ferie</button>
 
 				</div>
@@ -130,7 +130,7 @@
         <p class="text-center">Vuoi cancellare queste ferie?<br> La procedura non può essere annullata.</p>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-outline-danger"" data-dismiss="modal">Annulla</button>
+        <button type="button" class="btn btn-outline-danger" data-dismiss="modal">Annulla</button>
         <button type="button" class="btn btn-outline-secondary" data-dismiss="modal" onClick="rimuoviFerie()">Salva cambiamenti</button>
       </div>
     </div>
@@ -176,8 +176,8 @@
 					<td class="text-center"><%=vigile.getCognome()%></td>
 					<td class="text-center"><%=vigile.getEmail()%></td>
 					<td class="text-center"><%=vigile.getMansione()%></td>
-					<td class="text-center"><%=vigile.getGiorniFerieAnnoCorrente()%></td>
-					<td class="text-center"><%=vigile.getGiorniFerieAnnoCorrente()%></td>
+					<td class="text-center" id="ferieCorrenti"><%=vigile.getGiorniFerieAnnoCorrente()%></td>
+					<td class="text-center" id="feriePrecedenti"><%=vigile.getGiorniFerieAnnoPrecedente()%></td>
 					<td class="text-center"><button type="button" class="btn btn-outline-secondary"
 							data-toggle="modal" data-target="#aggiungiFerie"
 							onClick='apriFormAggiunta("<%=vigile.getEmail()%>")'>Aggiungi
@@ -470,8 +470,43 @@
 						alertInsuccesso("Rimozione ferie non avvenuta a causa di un errore imprevisto.");
 					}
 				}
-			});
-			
+			});	
+		}
+		
+		function aggiungiFerie(){
+			var dataIniziale=$("#dataInizio").val();
+			var dataFinale=$("#dataFine").val();
+			var email=$("#emailAggiuntaFerie").val();
+			console.log("aggiungiFerie data: "+dataIniziale+" fino a "+dataFinale+" email: "+email);
+			$.ajax({
+				type : "POST",
+				url : "AggiungiFerieServlet",
+				data : {
+					"dataIniziale" : dataIniziale,
+					"dataFinale":dataFinale,
+					"email" : email,
+				},
+				dataType : "json",
+				async : true,
+				success : function(response) {
+					var booleanRisposta=response[0];
+					if(booleanRisposta){
+						var riga = $("#listaVigili td:contains('" + email + "')");
+						console.log("inserite ferie " + dataIniziale+" "+ dataFinale+" di "+email);
+						alertSuccesso("Inserimento ferie avvenuto con successo.");
+						var ferieAnnoCorrente= $("#listaVigili td:contains('" + email + "')")
+						.next('td').next('td');
+						var ferieAnnoPrecedente= ferieAnnoCorrente.next('td');
+						ferieAnnoCorrente.text(response[2]);
+						ferieAnnoPrecedente.text(response[1]);
+					}
+					else{
+						console.log("problema inserimento ferie " + dataIniziale+" "+ dataFinale+" di "+email);
+						apriFormAggiunta(email);
+						alertInsuccesso("Aggiunta ferie non avvenuta a causa di un errore imprevisto.");
+					}
+				}
+			});	
 		}
 	</script>
 </body>

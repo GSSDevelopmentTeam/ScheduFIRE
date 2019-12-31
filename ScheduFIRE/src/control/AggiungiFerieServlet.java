@@ -11,10 +11,12 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-
+import org.json.JSONArray;
 import model.bean.CapoTurnoBean;
 import model.bean.CredenzialiBean;
+import model.bean.VigileDelFuocoBean;
 import model.dao.CapoTurnoDao;
+import model.dao.ComponenteDellaSquadraDao;
 import model.dao.FerieDao;
 import model.dao.VigileDelFuocoDao;
 import util.GiornoLavorativo;
@@ -55,9 +57,7 @@ public class AggiungiFerieServlet extends HttpServlet {
 		int numeroGiorniFerie;
 		
 		HttpSession sessione = request.getSession();
-		CredenzialiBean credenziali = (CredenzialiBean) sessione.getAttribute("credenziali");
-		String username = credenziali.getUsername();
-		CapoTurnoBean capoTurno = (CapoTurnoBean) CapoTurnoDao.ottieni(username);
+		CapoTurnoBean capoTurno = (CapoTurnoBean) sessione.getAttribute("capoturno");;
 		String emailCT = capoTurno.getEmail();
 		
 		emailVF = request.getParameter("email");
@@ -65,14 +65,14 @@ public class AggiungiFerieServlet extends HttpServlet {
 		String dataIniziale = request.getParameter("dataIniziale");
 		String dataFinale = request.getParameter("dataFinale");
 		
-		int annoIniziale = Integer.parseInt(dataIniziale.substring(0, 4));
-		int meseIniziale = Integer.parseInt(dataIniziale.substring(5, 7));
-		int giornoIniziale = Integer.parseInt(dataIniziale.substring(8, 10));
+		int annoIniziale = Integer.parseInt(dataIniziale.substring(6, 10));
+		int meseIniziale = Integer.parseInt(dataIniziale.substring(3, 5));
+		int giornoIniziale = Integer.parseInt(dataIniziale.substring(0, 2));
 		
-		int annoFinale = Integer.parseInt(dataFinale.substring(0, 4));
-		int meseFinale = Integer.parseInt(dataFinale.substring(5, 7));
-		int giornoFinale = Integer.parseInt(dataFinale.substring(8, 10));
-		
+		int annoFinale = Integer.parseInt(dataFinale.substring(6, 10));
+		int meseFinale = Integer.parseInt(dataFinale.substring(3, 5));
+		int giornoFinale = Integer.parseInt(dataFinale.substring(0, 2));
+		System.out.println(""+giornoIniziale+" "+meseIniziale+" "+annoIniziale+" -- "+giornoFinale+" "+meseFinale+" "+annoFinale);
 		numeroGiorniFerie = giornoFinale - giornoIniziale;
 		
 		dataInizio = Date.valueOf(LocalDate.of(annoIniziale, meseIniziale, giornoIniziale));
@@ -84,38 +84,63 @@ public class AggiungiFerieServlet extends HttpServlet {
 			throw new ScheduFIREException("Selezionato un periodo contenente giorni non lavorativi!");
 		else {
 			
-			if((!Util.abbastanzaPerTurno(2, 3, 7)) && (!Util.abbastanzaPerTurno(3, 3, 6)) 
-					&& (!Util.abbastanzaPerTurno(4, 3, 5))) {
+			if(this.isPresentiNumeroMinimo(dataInizio, dataFine)) {
 				
 				throw new ScheduFIREException("Personale insufficiente.\nImpossibile inserire ferie");
 			}
 			else {
-				//controllo se schedulato da inserire
 				
-				if(VigileDelFuocoDao.ottieniNumeroFeriePrecedenti(emailVF) != 0) {
-					if(VigileDelFuocoDao.ottieniNumeroFeriePrecedenti(emailVF) >= numeroGiorniFerie) {
-						aggiunta = FerieDao.aggiungiPeriodoFerie(emailCT, emailVF, dataInizio, dataFine);
+				if(ComponenteDellaSquadraDao.isComponente(emailVF, dataInizio))
+					throw new ScheduFIREException("Impossibile inserire ferie. Vigile già inserito in squadra");
+				
+				else {
+				
+					if(VigileDelFuocoDao.ottieniNumeroFeriePrecedenti(emailVF) != 0) {
+						if(VigileDelFuocoDao.ottieniNumeroFeriePrecedenti(emailVF) >= numeroGiorniFerie) {
+							aggiunta = FerieDao.aggiungiPeriodoFerie(emailCT, emailVF, dataInizio, dataFine);
 						
-						int ferieDb = VigileDelFuocoDao.ottieniNumeroFeriePrecedenti(emailVF);
-						VigileDelFuocoDao.aggiornaFeriePrecedenti(emailVF, (ferieDb - numeroGiorniFerie));
+							int ferieDb = VigileDelFuocoDao.ottieniNumeroFeriePrecedenti(emailVF);
+							VigileDelFuocoDao.aggiornaFeriePrecedenti(emailVF, (ferieDb - numeroGiorniFerie));
+						}
+						else {
+							aggiunta = FerieDao.aggiungiPeriodoFerie(emailCT, emailVF, dataInizio, dataFine);
+						
+							int feriePDb = VigileDelFuocoDao.ottieniNumeroFeriePrecedenti(emailVF);
+							int ferieCDb = VigileDelFuocoDao.ottieniNumeroFerieCorrenti(emailVF);
+							int ferieDaScalareC = ferieCDb - (numeroGiorniFerie - feriePDb);
+						
+							VigileDelFuocoDao.aggiornaFeriePrecedenti(emailVF, 0);
+							VigileDelFuocoDao.aggiornaFerieCorrenti(emailVF, ferieDaScalareC);
+						}
 					}
 					else {
-						aggiunta = FerieDao.aggiungiPeriodoFerie(emailCT, emailVF, dataInizio, dataFine);
+						if(VigileDelFuocoDao.ottieniNumeroFerieCorrenti(emailVF) >= numeroGiorniFerie) {
+							aggiunta = FerieDao.aggiungiPeriodoFerie(emailCT, emailVF, dataInizio, dataFine);
 						
-						int feriePDb = VigileDelFuocoDao.ottieniNumeroFeriePrecedenti(emailVF);
-						int ferieCDb = VigileDelFuocoDao.ottieniNumeroFerieCorrenti(emailVF);
-						int ferieDaScalareC = ferieCDb - (numeroGiorniFerie - feriePDb);
-						
-						VigileDelFuocoDao.aggiornaFeriePrecedenti(emailVF, 0);
-						VigileDelFuocoDao.aggiornaFerieCorrenti(emailVF, ferieDaScalareC);
+							int ferieCDb = VigileDelFuocoDao.ottieniNumeroFerieCorrenti(emailVF);
+							VigileDelFuocoDao.aggiornaFeriePrecedenti(emailVF, (ferieCDb - numeroGiorniFerie));
+						}
+						else
+							throw new ScheduFIREException("Giorni di ferie insufficienti");
 					}
 				}
-				
 			}
 		}
 		
+		response.setContentType("application/json");
+		JSONArray array = new JSONArray();
 		
+		if(aggiunta) {
+			int feriePDb = VigileDelFuocoDao.ottieniNumeroFeriePrecedenti(emailVF);
+			int ferieCDb = VigileDelFuocoDao.ottieniNumeroFerieCorrenti(emailVF);
+			array.put(true);
+			array.put(feriePDb);
+			array.put(ferieCDb);
+		}
+		else
+			array.put(false);
 		
+		response.getWriter().append(array.toString());
 	}
 	
 	private boolean isPeriodoLavorativo(Date dataIniziale, Date dataFinale) {
@@ -136,6 +161,62 @@ public class AggiungiFerieServlet extends HttpServlet {
 		
 		lavorativo = GiornoLavorativo.isLavorativo(Date.valueOf(fine));
 		return lavorativo;
+	}
+	
+	private boolean isPresentiNumeroMinimo(Date dataIniziale, Date dataFinale) {
+		int capiSquadra = 0; 
+		int autisti = 0;
+		int vigili = 0;
+		boolean presentiNumero = true;
+		ArrayList<VigileDelFuocoBean> presenti = new ArrayList<VigileDelFuocoBean>();
+		
+		LocalDate inizio = dataIniziale.toLocalDate();
+		LocalDate fine = dataFinale.toLocalDate();
+
+		while(inizio.compareTo(fine) != 0) {
+			presenti = VigileDelFuocoDao.getDisponibili(Date.valueOf(inizio));
+			
+			for(int i=0; i<presenti.size(); i++) {
+				String mansione = presenti.get(i).getMansione().toString().toLowerCase();
+				
+				if(mansione.equals("Capo Squadra"))
+					capiSquadra += 1;
+				else
+					if(mansione.equals("Autista"))
+						autisti += 1;
+					else
+						if(mansione.equals("Vigile"))
+							vigili += 1;
+			}
+			
+			presentiNumero = Util.abbastanzaPerTurno(capiSquadra, autisti, vigili);
+			
+			if(!presentiNumero) {
+				presentiNumero = false;
+				return presentiNumero;
+			}
+			else
+				inizio.plusDays(1);	
+		}
+		
+		presenti = VigileDelFuocoDao.getDisponibili(Date.valueOf(fine));
+		
+		for(int i=0; i < presenti.size(); i++) {
+			String mansione = presenti.get(i).getMansione().toString().toLowerCase();
+			
+			if(mansione.equals("Capo Squadra"))
+				capiSquadra += 1;
+			else
+				if(mansione.equals("Autista"))
+					autisti += 1;
+				else
+					if(mansione.equals("Vigile"))
+						vigili += 1;
+		}
+		
+		presentiNumero = Util.abbastanzaPerTurno(capiSquadra, autisti, vigili);
+		
+		return presentiNumero;
 	}
 
 }

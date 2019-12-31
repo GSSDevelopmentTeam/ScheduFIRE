@@ -116,9 +116,10 @@ public class PersonaleDisponibileAJAX extends HttpServlet {
 		ArrayList<ComponenteDellaSquadraBean> componenti=ComponenteDellaSquadraDao.getComponenti(giorno);
 		//Collections.sort(vigili, new VigileComparator());
 		Collections.sort(componenti, new ComponenteComparator());
-
+		String email=request.getParameter("email");
 		request.setAttribute("vigili", vigili);
 		request.setAttribute("componenti", componenti);
+		request.setAttribute("email", email);		
 		request.getRequestDispatcher("JSP/PersonaleDisponibileAJAXJSP.jsp").forward(request, response);
 		
 	}
