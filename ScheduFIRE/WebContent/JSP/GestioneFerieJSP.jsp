@@ -234,7 +234,21 @@
 							.next('td').next('td');
 							var ferieAnnoPrecedente= ferieAnnoCorrente.next('td');
 							var totaleFerie=parseInt(ferieAnnoCorrente.text())+parseInt(ferieAnnoPrecedente.text());
-							if (totaleFerie<differenza){
+							if(differenza==0){
+								picker.setOptions({
+									startDate : null,
+									endDate : null
+								});
+								$("#dataInizio").val("");
+								$("#dataFine").val("");
+								$("#messaggioFerie1").text("Nei giorni selezionati non cade neanche un giorno lavorativo.");
+								$("#messaggioFerie2").text("");
+								$("#messaggioFerie1").attr("style","color:red");
+								$("#messaggioFerie2").attr("style","color:red");
+								 $('#bottoneAggiungiFerie').prop("disabled", true);
+								 alertInsuccesso("Nei giorni selezionati non cade neanche un giorno lavorativo.");
+							}
+							else if (totaleFerie<differenza){
 								picker.setOptions({
 									startDate : null,
 									endDate : null
