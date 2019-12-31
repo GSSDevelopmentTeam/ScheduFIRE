@@ -6,33 +6,47 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import control.PersonaleDisponibileServlet.ComponenteComparator;
 import model.bean.ComponenteDellaSquadraBean;
 import model.bean.VigileDelFuocoBean;
 import model.dao.ComponenteDellaSquadraDao;
 import model.dao.VigileDelFuocoDao;
 import util.GiornoLavorativo;
-import util.Util;
 
 /**
- * Servlet per la visualizzazione del personale disponibile nel turno.
- * @author Alfredo Giuliano
+ * Servlet implementation class PersonaleDisponibileAJAX
  */
-
-@WebServlet("/PersonaleDisponibile")
-public class PersonaleDisponibileServlet extends HttpServlet{
+@WebServlet("/PersonaleDisponibileAJAX")
+public class PersonaleDisponibileAJAX extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	
+       
+    /**
+     * @see HttpServlet#HttpServlet()
+     */
+    public PersonaleDisponibileAJAX() {
+        super();
+        // TODO Auto-generated constructor stub
+    }
+
+	/**
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		doPost(request,response);
 	}
-	
+
+	/**
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-				
+		
 		LocalDateTime ora=LocalDateTime.now();
 		LocalDateTime inizioDiurno=LocalDateTime.of(ora.getYear(), ora.getMonth(), ora.getDayOfMonth(), 8, 00);
 		LocalDateTime fineDiurno=inizioDiurno.plusHours(12);
@@ -59,17 +73,16 @@ public class PersonaleDisponibileServlet extends HttpServlet{
 		
 		
 		//giorno lavorativo e turno diurno
-		String giornoLavoro=""+giorno.toLocalDate().getDayOfMonth()+" "+Mese(giorno.toLocalDate().getMonthValue())+" "+giorno.toLocalDate().getYear();
 		if(GiornoLavorativo.isLavorativo(giorno) && GiornoLavorativo.isDiurno(giorno)) {
 			if(ora.isBefore(inizioDiurno)) {
-				request.setAttribute("titolo", "Il turno lavorativo diurno del giorno "+giornoLavoro+" inizierà tra poco, il personale disponibile sarà il seguente");
+				request.setAttribute("titolo", "Il turno lavorativo diurno inizierà tra poco, il personale disponibile sarà il seguente");
 			}
 			else if(ora.isAfter(inizioDiurno) && ora.isBefore(fineDiurno)) {
-				request.setAttribute("titolo", "Il personale disponibile oggi "+giornoLavoro+" è il seguente");
+				request.setAttribute("titolo", "Il personale disponibile è il seguente");
 			}
 			else {
 				giorno=GiornoLavorativo.nextLavorativo(giorno);
-				giornoLavoro=""+giorno.toLocalDate().getDayOfMonth()+" "+Mese(giorno.toLocalDate().getMonthValue())+" "+giorno.toLocalDate().getYear();
+				String giornoLavoro=""+giorno.toLocalDate().getDayOfMonth()+" "+Mese(giorno.toLocalDate().getMonthValue())+" "+giorno.toLocalDate().getYear();
 				request.setAttribute("titolo", "Il personale disponibile per domani "+giornoLavoro+" sarà il seguente");
 
 			}
@@ -77,14 +90,14 @@ public class PersonaleDisponibileServlet extends HttpServlet{
 		//giorno lavorativo e turno notturno
 		else if(GiornoLavorativo.isLavorativo(giorno) && !GiornoLavorativo.isDiurno(giorno)) {
 			if(ora.isBefore(inizioNotturno)) {
-				request.setAttribute("titolo", "Il turno lavorativo notturno del giorno "+giornoLavoro+" inizierà tra poco, il personale disponibile sarà il seguente");
+				request.setAttribute("titolo", "Il turno lavorativo notturno inizierà tra poco, il personale disponibile sarà il seguente");
 			}
 			else if(ora.isAfter(inizioNotturno) && ora.isBefore(fineNotturno)) {
-				request.setAttribute("titolo", "Il personale disponibile oggi "+giornoLavoro+" è il seguente");
+				request.setAttribute("titolo", "Il personale disponibile è il seguente");
 			}
 			else {
 				giorno=GiornoLavorativo.nextLavorativo(giorno);
-				giornoLavoro=""+giorno.toLocalDate().getDayOfMonth()+" "+Mese(giorno.toLocalDate().getMonthValue())+" "+giorno.toLocalDate().getYear();
+				String giornoLavoro=""+giorno.toLocalDate().getDayOfMonth()+" "+Mese(giorno.toLocalDate().getMonthValue())+" "+giorno.toLocalDate().getYear();
 				request.setAttribute("titolo", "Il personale disponibile per il giorno "+ giornoLavoro +" sarà il seguente");
 			}
 
@@ -92,7 +105,7 @@ public class PersonaleDisponibileServlet extends HttpServlet{
 		//giorno non lavorativo
 		else {
 			giorno=GiornoLavorativo.nextLavorativo(giorno);
-			giornoLavoro=""+giorno.toLocalDate().getDayOfMonth()+" "+Mese(giorno.toLocalDate().getMonthValue())+" "+giorno.toLocalDate().getYear();
+			String giornoLavoro=""+giorno.toLocalDate().getDayOfMonth()+" "+Mese(giorno.toLocalDate().getMonthValue())+" "+giorno.toLocalDate().getYear();
 			request.setAttribute("titolo", "Il personale disponibile per il giorno "+ giornoLavoro +" sarà il seguente");
 			
 		}
@@ -106,7 +119,7 @@ public class PersonaleDisponibileServlet extends HttpServlet{
 
 		request.setAttribute("vigili", vigili);
 		request.setAttribute("componenti", componenti);
-		request.getRequestDispatcher("JSP/PersonaleDisponibileJSP.jsp").forward(request, response);
+		request.getRequestDispatcher("JSP/PersonaleDisponibileAJAXJSP.jsp").forward(request, response);
 		
 	}
 	

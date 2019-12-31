@@ -17,7 +17,7 @@ Nella cartella /ScheduFIRE si trova il source code _(codice sorgente)_ per l'imp
 | ------- | ---- | -------- | ------ |
 | Annunziata | Giusy | [Link](http://linkedin.com/in/giusy-annunziata-2b9947195) | @GiusyAnn |
 | Bombardelli | Emanuele | [Link](https://www.linkedin.com/in/emanuele-bombardelli-b41853174/) | @Bombaclath97 |
-| Bruno | Biagio | [Link](linkedin.com/in/biagio-bruno-843546199) | @BiagioBru |
+| Bruno | Biagio | [Link](linkedin.com/in/biagio-bruno-843546199) | @BiagioBruno |
 | Cipolletta | Ciro | [Link](https://www.linkedin.com/in/ciro-cipolletta-b30674189) | @CipoCiro |
 | Giordano | Domenico | [Link](https://www.linkedin.com/in/domenico-giordano-6a758718b/) | @giordanodomenico |
 | Giuliano | Alfredo | - | @G-alfredo |
