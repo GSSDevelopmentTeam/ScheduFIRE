@@ -54,9 +54,7 @@ public class AggiungiFerieServlet extends HttpServlet {
 		int numeroGiorniFerie;
 		
 		HttpSession sessione = request.getSession();
-		CredenzialiBean credenziali = (CredenzialiBean) sessione.getAttribute("credenziali");
-		String username = credenziali.getUsername();
-		CapoTurnoBean capoTurno = (CapoTurnoBean) CapoTurnoDao.ottieni(username);
+		CapoTurnoBean capoTurno = (CapoTurnoBean) sessione.getAttribute("capoturno");;
 		String emailCT = capoTurno.getEmail();
 		
 		emailVF = request.getParameter("email");
@@ -64,14 +62,14 @@ public class AggiungiFerieServlet extends HttpServlet {
 		String dataIniziale = request.getParameter("dataIniziale");
 		String dataFinale = request.getParameter("dataFinale");
 		
-		int annoIniziale = Integer.parseInt(dataIniziale.substring(0, 4));
-		int meseIniziale = Integer.parseInt(dataIniziale.substring(5, 7));
-		int giornoIniziale = Integer.parseInt(dataIniziale.substring(8, 10));
+		int annoIniziale = Integer.parseInt(dataIniziale.substring(6, 10));
+		int meseIniziale = Integer.parseInt(dataIniziale.substring(3, 5));
+		int giornoIniziale = Integer.parseInt(dataIniziale.substring(0, 2));
 		
-		int annoFinale = Integer.parseInt(dataFinale.substring(0, 4));
-		int meseFinale = Integer.parseInt(dataFinale.substring(5, 7));
-		int giornoFinale = Integer.parseInt(dataFinale.substring(8, 10));
-		
+		int annoFinale = Integer.parseInt(dataFinale.substring(6, 10));
+		int meseFinale = Integer.parseInt(dataFinale.substring(3, 5));
+		int giornoFinale = Integer.parseInt(dataFinale.substring(0, 2));
+		System.out.println(""+giornoIniziale+" "+meseIniziale+" "+annoIniziale+" -- "+giornoFinale+" "+meseFinale+" "+annoFinale);
 		numeroGiorniFerie = giornoFinale - giornoIniziale;
 		
 		dataInizio = Date.valueOf(LocalDate.of(annoIniziale, meseIniziale, giornoIniziale));

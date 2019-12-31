@@ -11,7 +11,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import model.bean.CapoTurnoBean;
 import model.bean.CredenzialiBean;
+import model.dao.CapoTurnoDao;
 import model.dao.UserDao;
 
 /**
@@ -52,6 +54,8 @@ public class LoginServlet extends HttpServlet {
 				if (passwordBase64format.equals(utente.getPassword())) {
 
 					HttpSession session = request.getSession();
+					CapoTurnoBean capoturno=CapoTurnoDao.ottieni(username);
+					session.setAttribute("capoturno", capoturno);
 					session.setAttribute("ruolo", utente.getRuolo());
 					if (utente.getRuolo().equalsIgnoreCase("capoturno")) {
 						response.sendRedirect("HomeCTServlet");
