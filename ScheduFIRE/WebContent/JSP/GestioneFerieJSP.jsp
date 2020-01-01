@@ -63,8 +63,8 @@
 						data-dismiss="modal">Annulla</button>
 
 
-					<button type="button" class="btn btn-outline-warning" id="bottoneAggiungiFerie" onclick="aggiungiFerie()" disabled>Aggiungi
-						ferie</button>
+					<button type="button" class="btn btn-outline-warning" id="bottoneAggiungiFerie" onclick="aggiungiFerie()" 
+					data-dismiss="modal" disabled>Aggiungi ferie</button>
 
 				</div>
 			</div>
