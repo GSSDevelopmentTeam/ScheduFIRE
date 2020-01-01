@@ -7,10 +7,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-
 import model.ConnessioneDB;
 import model.bean.FerieBean;
-import model.bean.VigileDelFuocoBean;
+
 
 public class FerieDao {
 
@@ -68,7 +67,6 @@ public class FerieDao {
 		
 		boolean rimozione = false;
 		PreparedStatement ps;
-		ResultSet rs;
 		
 		String rimozioneFerieSQL = "DELETE FROM Ferie WHERE (emailVF = ? AND dataInizio = ? AND dataFine = ?);";
 		
@@ -95,5 +93,39 @@ public class FerieDao {
 		
 		return rimozione;
 	}
-
+	
+	public static boolean aggiungiPeriodoFerie(String emailCT, String emailVF, Date dataInizio, Date dataFine) {
+		
+		boolean aggiunta = false;
+		PreparedStatement ps;
+		
+		String aggiuntaFerieSQL = "INSERT INTO Ferie(dataInizio, dataFine, emailCT, emailVF) VALUES(?, ?, ?, ?);";
+		
+		try {
+			Connection connessione = null;
+			
+			try {
+				connessione = ConnessioneDB.getConnection();
+				
+				ps = connessione.prepareStatement(aggiuntaFerieSQL);
+				ps.setDate(1, dataInizio);
+				ps.setDate(2, dataFine);
+				ps.setString(3, emailCT);
+				ps.setString(4, emailVF);
+				
+				int righe = ps.executeUpdate();
+				connessione.commit();
+				
+				if(righe > 0)
+					aggiunta = true;
+				
+			}finally {
+				ConnessioneDB.releaseConnection(connessione);
+			}
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return aggiunta;
+	}
 }
