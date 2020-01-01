@@ -1,13 +1,15 @@
 package model.bean;
 
 import java.sql.Date;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 
 public class GiorniMalattiaBean {
 
 	//Variabili d'istanza
 	private int id;
-	private Date dataInizio;
-	private Date dataFine;
+	private Date dataInizio = null; 
+	private Date dataFine = null;
 	private String emailCT;
 	private String emailVF;
 	
