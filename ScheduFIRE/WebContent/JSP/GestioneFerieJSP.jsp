@@ -130,7 +130,7 @@
         <p class="text-center">Vuoi cancellare queste ferie?<br> La procedura non può essere annullata.</p>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-outline-danger"" data-dismiss="modal">Annulla</button>
+        <button type="button" class="btn btn-outline-danger" data-dismiss="modal">Annulla</button>
         <button type="button" class="btn btn-outline-secondary" data-dismiss="modal" onClick="rimuoviFerie()">Salva cambiamenti</button>
       </div>
     </div>
