@@ -117,8 +117,8 @@ insert into componentedellasquadra values ("mail23","Auto Botte","2020-01-05");
 
 
 
-insert into malattia (dataInizio,dataFine,emailCT,emailVF) values (	"2019-12-23","2019-12-24","capoturno","mail18");
-insert into malattia (dataInizio,dataFine,emailCT,emailVF) values (	"2020-01-06","2020-01-09","capoturno","mail18");
+insert into malattia (dataInizio,dataFine,emailCT,emailVF) values (	"2019-12-23","2019-12-24","capoturno","mail19");
+insert into malattia (dataInizio,dataFine,emailCT,emailVF) values (	"2020-01-06","2020-01-09","capoturno","mail19");
 
 
 
