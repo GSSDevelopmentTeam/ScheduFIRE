@@ -47,7 +47,7 @@
 				</div>
 
 				<div class="modal-footer">
-	  			<button id = "sese" type="button" class="btn btn-outline-warning" onClick = "inserisciMalattia()">Aggiungi Malattia</button>
+	  			<button type="button" class="btn btn-outline-warning" onClick = "inserisciMalattia()">Aggiungi Malattia</button>
 					<button type="button" class="btn btn-outline-danger" data-dismiss="modal">Annulla</button>
 				</div>
 			</div>
