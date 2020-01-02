@@ -11,6 +11,8 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
 import model.bean.ComponenteDellaSquadraBean;
 import model.bean.VigileDelFuocoBean;
 import model.dao.ComponenteDellaSquadraDao;
@@ -35,17 +37,37 @@ public class VisualizzaComposizioneSquadreServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		boolean debug = true;
+		HttpSession sessione = request.getSession();
+			
 		HashMap<VigileDelFuocoBean, String> squadra;
 		if(request.getParameter("lista") == null) {
 			Date data = (Date) request.getAttribute("data");
 			squadra = Util.ottieniSquadra(data);
 			request.setAttribute("nonSalvata", false);
 		}
-		else {
+		else if(!debug) {
 			squadra = (HashMap<VigileDelFuocoBean, String>) request.getAttribute("lista");
 			request.setAttribute("nonSalvata", true);
 		}
-		request.setAttribute("squadra", squadra);
+		else {
+			squadra = new HashMap<>();
+			squadra.put(new VigileDelFuocoBean("Mario", "Rossi", "mario.rossi", "B", "Autista", "turnob", "Coordinatore", 0, 0), "Prima Partenza");
+			squadra.put(new VigileDelFuocoBean("Giuseppe", "Rossi", "giuseppe.rossi", "B", "Vigile", "turnob", "Coordinatore", 0, 0), "Prima Partenza");
+			squadra.put(new VigileDelFuocoBean("Luca", "Rossi", "luca.rossi", "B", "Capo Squadra", "turnob", "Esperto", 0, 0), "Prima Partenza");
+			squadra.put(new VigileDelFuocoBean("Gennaro", "Rossi", "gennaro.rossi", "B", "Vigile", "turnob", "Qualificato", 0, 0), "Prima Partenza");
+			
+			squadra.put(new VigileDelFuocoBean("Ciro", "Rossi", "ciro.rossi", "B", "Capo Squadra", "turnob", "Esperto", 0, 0), "Sala Operativa");
+			squadra.put(new VigileDelFuocoBean("Giuseppe", "Rossi", "giuseppe.rossi", "B", "Vigile", "turnob", "Coordinatore", 0, 0), "Sala Operativa");
+			squadra.put(new VigileDelFuocoBean("Pia", "Rossi", "pia.rossi", "B", "Vigile", "turnob", "Coordinatore", 0, 0), "Sala Operativa");
+			
+			squadra.put(new VigileDelFuocoBean("Alfredo", "Rossi", "alfredo.rossi", "B", "Autista", "turnob", "Coordinatore", 0, 0), "Auto Scala");
+			squadra.put(new VigileDelFuocoBean("Lorenzo", "Rossi", "lorenzo.rossi", "B", "Vigile", "turnob", "Qualificato", 0, 0), "Auto Scala");
+			
+			squadra.put(new VigileDelFuocoBean("Pasquale", "Rossi", "pasquale.rossi", "B", "Autista", "turnob", "Coordinatore", 0, 0), "Auto Botte");
+			squadra.put(new VigileDelFuocoBean("Donna", "Rossi", "donna.rossi", "B", "Capo Squadra", "turnob", "Esperto", 0, 0), "Auto Botte");
+		}
+		sessione.setAttribute("squadra", squadra);
 		request.getRequestDispatcher("JSP/GestioneSquadreJSP").forward(request, response);
 	}
 

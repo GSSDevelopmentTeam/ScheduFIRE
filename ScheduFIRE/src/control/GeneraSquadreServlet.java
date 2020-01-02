@@ -2,6 +2,7 @@ package control;
 
 import java.io.IOException;
 import java.sql.Date;
+import java.sql.Time;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -23,6 +24,8 @@ import model.bean.VigileDelFuocoBean;
 import model.dao.ComponenteDellaSquadraDao;
 import model.dao.ListaSquadreDao;
 import model.dao.SquadraDao;
+import model.dao.VigileDelFuocoDao;
+import util.GiornoLavorativo;
 import util.Util;
 
 /**
@@ -32,47 +35,49 @@ import util.Util;
 @WebServlet(description = "Servlet per la generazione delle squadre", urlPatterns = { "/GeneraSquadreServlet" })
 public class GeneraSquadreServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
-    public GeneraSquadreServlet() {
-        super();
-        // TODO Auto-generated constructor stub
-    }
+
+	/**
+	 * @see HttpServlet#HttpServlet()
+	 */
+	public GeneraSquadreServlet() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession sessione = request.getSession();
-		Date data = (Date) request.getAttribute("data");
+		Date data = GiornoLavorativo.nextLavorativo(new Date(System.currentTimeMillis()));
+		Util.isCapoTurno(request);
 
-		if(sessione.getAttribute("credenziali") != null) {
-			if(sessione.getAttribute("squadra") != null) {
-				@SuppressWarnings("unchecked")
-				HashMap<VigileDelFuocoBean, String> squadra = (HashMap<VigileDelFuocoBean, String>) 
-						sessione.getAttribute("squadra");
-				List<ComponenteDellaSquadraBean> lista = vigileToComponente(squadra, data);
-				if((!ComponenteDellaSquadraDao.setComponenti(lista)) ||
-						(!SquadraDao.aggiungiSquadra(data)) || 
-						(!ListaSquadreDao.aggiungiSquadre(data, (String) sessione.getAttribute("email"))) ){
-					throw new ScheduFIREException("Errore nelle Query SQL");
-				}	
-				sessione.removeAttribute("squadra");
-				SendMail.sendMail(data);
-			}
-			else {
-				try {
-					List<ComponenteDellaSquadraBean> lista = Util.generaSquadra(data);
-					request.setAttribute("lista", lista);
-					request.getRequestDispatcher("/VisualizzaComposizioneSquadreServlet").forward(request, response);				
-				} catch (NotEnoughMembersException e) {
+		if(sessione.getAttribute("squadra") != null) {
+			@SuppressWarnings("unchecked")
+			HashMap<VigileDelFuocoBean, String> squadra = (HashMap<VigileDelFuocoBean, String>) 
+			sessione.getAttribute("squadra");
+			List<ComponenteDellaSquadraBean> lista = vigileToComponente(squadra, data);				
 
-				}
-			}
+			if((!ListaSquadreDao.aggiungiSquadre(data, (String) sessione.getAttribute("email"))) ||
+					(!SquadraDao.aggiungiSquadra(data)) ||
+					(!ComponenteDellaSquadraDao.setComponenti(lista)) ||
+					(!VigileDelFuocoDao.caricoLavorativo(squadra))){
+				throw new ScheduFIREException("Errore nelle Query SQL");
+			}	
+			SendMail.sendMail(data);
+		}
+		else {
+			try {
+				List<ComponenteDellaSquadraBean> lista = Util.generaSquadra(data);
+				request.setAttribute("squadra", lista);
+				request.getRequestDispatcher("/VisualizzaComposizioneSquadreServlet").forward(request, response);				
+			} catch (NotEnoughMembersException e) {
+				//
+			} 
 		}
 	}
+
+
 
 	private List<ComponenteDellaSquadraBean> vigileToComponente(HashMap<VigileDelFuocoBean, String> squadra, Date data) {
 		List<ComponenteDellaSquadraBean> toReturn = new ArrayList<>();
