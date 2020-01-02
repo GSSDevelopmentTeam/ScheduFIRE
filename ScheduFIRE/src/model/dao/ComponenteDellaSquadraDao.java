@@ -91,7 +91,8 @@ public class ComponenteDellaSquadraDao {
 			ps.setString(1, emailVF);
 			ps.setDate(2, giornoLavorativo);
 			
-			if(ps.execute()) 
+			ResultSet rs = ps.executeQuery();
+			if(rs.next()) 
 				schedulato = true;
 			
 		}catch(SQLException e) {

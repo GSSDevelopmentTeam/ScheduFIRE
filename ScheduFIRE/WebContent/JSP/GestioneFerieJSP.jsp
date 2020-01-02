@@ -63,8 +63,8 @@
 						data-dismiss="modal">Annulla</button>
 
 
-					<button type="button" class="btn btn-outline-warning" id="bottoneAggiungiFerie" onclick="aggiungiFerie()" disabled>Aggiungi
-						ferie</button>
+					<button type="button" class="btn btn-outline-warning" id="bottoneAggiungiFerie" onclick="aggiungiFerie()" 
+					data-dismiss="modal" disabled>Aggiungi ferie</button>
 
 				</div>
 			</div>
@@ -171,7 +171,7 @@
 				%>
 
 				<tr>
-					<td class="text-center"><%=vigile.getGrado()%></td>
+					<td class="text-center"><img src="Grado/<%=vigile.getGrado() %>.png" style="height:25%" onerror="this.parentElement.innerHTML='Non disponibile';"></td>
 					<td class="text-center"><%=vigile.getNome()%></td>
 					<td class="text-center"><%=vigile.getCognome()%></td>
 					<td class="text-center"><%=vigile.getEmail()%></td>
