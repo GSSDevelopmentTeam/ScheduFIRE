@@ -5,15 +5,9 @@
 <!DOCTYPE html>
 <html>
 <jsp:include page="StandardJSP.jsp" />
-
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>ScheduFIRE</title>
-<link rel="stylesheet"
-	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-<link rel="stylesheet" href="../CSS/HeaderCSS.css">
-<link rel="icon" href="../IMG/logoSF.png">
 <style>
 .fr {
 	height: 38px;
@@ -91,7 +85,7 @@ h2 {
 				%>
 
 				<tr>
-					<td class="text-center"><%=membro.getGrado()%></td>
+					<td class="text-center"><img src="Grado/<%=membro.getGrado() %>.png" style="height:25%" onerror="this.parentElement.innerHTML='Non disponibile';"></td>
 					<td class="text-center"><%=membro.getNome()%></td>
 					<td class="text-center"><%=membro.getCognome()%></td>
 					<td class="text-center"><%=membro.getMansione()%></td>
@@ -138,7 +132,7 @@ h2 {
 				%>
 
 				<tr>
-					<td class="text-center"><%=membro.getGrado()%></td>
+					<td class="text-center"><img src="Grado/<%=membro.getGrado() %>.png" style="height:25%" onerror="this.parentElement.innerHTML='Non disponibile';"></td>
 					<td class="text-center"><%=membro.getNome()%></td>
 					<td class="text-center"><%=membro.getCognome()%></td>
 					<td class="text-center"><%=membro.getMansione()%></td>
@@ -180,11 +174,11 @@ h2 {
                 while (it.hasNext()) {
                     Map.Entry coppia = (Map.Entry) it.next();
                     VigileDelFuocoBean membro = (VigileDelFuocoBean) coppia.getKey();
-                    if (coppia.getKey() == "Autoscala") {	
+                    if (coppia.getKey() == "Auto Scala") {	
 				%>
 
 				<tr>
-					<td class="text-center"><%=membro.getGrado()%></td>
+					<td class="text-center"><img src="Grado/<%=membro.getGrado() %>.png" style="height:25%" onerror="this.parentElement.innerHTML='Non disponibile';"></td>
 					<td class="text-center"><%=membro.getNome()%></td>
 					<td class="text-center"><%=membro.getCognome()%></td>
 					<td class="text-center"><%=membro.getMansione()%></td>
@@ -226,11 +220,11 @@ h2 {
                 while (it.hasNext()) {
                     Map.Entry coppia = (Map.Entry) it.next();
                     VigileDelFuocoBean membro = (VigileDelFuocoBean) coppia.getKey();
-                    if (coppia.getKey() == "Autobotte") {		
+                    if (coppia.getKey() == "Auto Botte") {		
 				%>
 
 				<tr>
-					<td class="text-center"><%=membro.getGrado()%></td>
+					<td class="text-center"><img src="Grado/<%=membro.getGrado() %>.png" style="height:25%" onerror="this.parentElement.innerHTML='Non disponibile';"></td>
 					<td class="text-center"><%=membro.getNome()%></td>
 					<td class="text-center"><%=membro.getCognome()%></td>
 					<td class="text-center"><%=membro.getMansione()%></td>
