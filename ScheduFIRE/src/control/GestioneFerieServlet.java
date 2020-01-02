@@ -1,7 +1,6 @@
 package control;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -46,6 +45,8 @@ public class GestioneFerieServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
+		//nel caso di chiamata AJAX che gestisce il datepicker per aggiungere ferie ad un vigile
 		if(request.getParameter("JSON")!=null && request.getParameter("aggiunta")!=null ) {
 			String email=request.getParameter("email");
 			List<FerieBean> ferie=FerieDao.ottieniFerieConcesse(email);
@@ -61,6 +62,8 @@ public class GestioneFerieServlet extends HttpServlet {
 			response.setContentType("application/json");
 			response.getWriter().append(array.toString());
 		}
+		
+		//nel caso di chiamata AJAX che fa visualizzare la lista delle ferie di un vigile per poterne selezionare una da rimuovere
 		else if(request.getParameter("JSON")!=null && request.getParameter("rimozione")!=null ) {
 			String email=request.getParameter("email");
 			List<FerieBean> ferie=FerieDao.ottieniFerieConcesse(email);

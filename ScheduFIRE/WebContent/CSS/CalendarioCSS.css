@@ -20,21 +20,23 @@ body{
 }
 
 .edit {
-  border: 2px solid #57b7b7;
-  color: #57b7b7;
-  padding: 4px;
-  border-radius: 7px;
-  text-align: center;
-  text-decoration: none;
-  position:absolute;
-  font-size: 16px;
-  margin: 1.5%;
-  cursor: pointer;
+	border: 1px solid #454d55;
+	color: #454d55;
+	padding: 7px;
+	border-radius: 7px;
+	text-align: center;
+	text-decoration: none;
+	position:absolute;
+	font-size: 16px;
+	margin: 1.5%;
+	cursor: pointer;
 }
 
 .edit:hover{
-	background-color: #57b7b7;
+	background-color: #454d55;
 	color:white;
+	text-decoration: none;
+	transition: color .6s ease-in-out,background-color .5s;
 }
 
 /*contenitore per il calendario*/
@@ -61,7 +63,7 @@ body{
 
 .container-year {
 	overflow:hidden;
-	color: black;
+	color: #343a40;
 	font-family: Rod;
 	text-align: center;
 	font-size: 200%;
@@ -84,16 +86,17 @@ flex:1 -> prende il resto del container*/
   grid-template-columns: auto;
   grid-template-rows: auto;
   background-color: #fff;
-  color: #444;
+  color: #343a40;
 }
 
 .mansione{
 	box-shadow: 20%;
-	color: black;
-	border: 3px solid white;
-	border-bottom: 3px solid black;
+	color: white;
+	border: 1px solid #454d55;
+	background-color: #343a40;
 	margin: 10px 0 10px 0;
 	font-size: 90%;
+	font-style:oblique;
 	font-weight: bold;
 	overflow: visible;
 	text-align: center;
@@ -130,13 +133,41 @@ flex:1 -> prende il resto del container*/
 	background-color: #57b7b7;
 }
 
+#giornoCorrente:hover{
+	color:white;
+	font-style: italic;
+}
+
+#giornoLavorativoDiurno:hover{
+	color:white;
+	font-style: italic;
+}
+
+#giornoLavorativoNotturno:hover{
+	color:white;
+	font-style: italic;
+}
+
+#giornoCorrenteLavorativoDiurno:hover{
+	color:white;
+	font-style: italic;
+}
+
+#giornoCorrenteLavorativoNotturno:hover{
+	color:white;
+	font-style: italic;
+}
+
 .grid-days {
 	display: grid;
 	grid-template-columns: auto auto auto auto auto auto auto;
-	color: black;
-	border-bottom: 3px solid black;
+	color: white;
+	border-bottom: 3px solid #454d55;
+	padding: 2%;
+	background-color: #343a40;
 	justify-content: center;
 	font-family: Verdana;
+	cursor:default;
 }
 
 .grid-container {
@@ -152,12 +183,13 @@ flex:1 -> prende il resto del container*/
 non ha la proprietà :hover*/
 .grid-item {
 	background-color: white;
-	border-bottom: 0.1px solid #808080;
-	border-top: 0.1 px solid #808080;
+	border-bottom: 0.1px solid #343a40;
+	border-top: 0.1 px solid #343a40;
 	padding: 10%;
 	font-size: 200%;
 	text-align: center;
 	font-family: Verdana;
+	cursor: default;
 }
 
 .item-empty{
@@ -167,13 +199,9 @@ non ha la proprietà :hover*/
 	padding: 10%;
 	font-size: 200%;
 	text-align: center;
-	font-family: Verdana;}
-
-
-.grid-item:hover {
-	background-color: #c7c7c7 !important;	
+	font-family: Verdana;
+	cursor: default;
 }
-
 
 
 /*menù DROPDOWN dei mesi*/
@@ -185,8 +213,8 @@ non ha la proprietà :hover*/
 
 .dropbtn {
 	background-color: white;
-	border-bottom: 2px solid black !important;
-	color: black;
+	border-bottom: 2px solid #343a40 !important;
+	color: #343a40;
 	font-size: 150%;
 	border: none;
 	cursor: pointer;
@@ -209,14 +237,14 @@ non ha la proprietà :hover*/
 .dropdown-item {
 	font-size: 80%;
 	color: #4b4b4b;
-	padding: 12px 12px;
+	padding: 10px 10px;
 	text-decoration: none;
 	display: block;
 }
 
 .dropdown-content a:hover {
-	background-color: #f1f1f1;
-	color: black;
+	background-color: #454d55;
+	color: white;
 }
 
 .dropdown:hover .dropdown-content {
