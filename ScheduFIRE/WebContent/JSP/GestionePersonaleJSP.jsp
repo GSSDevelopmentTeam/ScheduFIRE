@@ -206,7 +206,7 @@ if(ordinamentoObj.getClass().getSimpleName().equals("String"))
 		</form>
 
 		<button id="buttonAggiungi" type="button"
-			class="btn btn-outline-secondary" data-toggle="modal"
+			class="btn btn-danger" data-toggle="modal"
 			onclick="mostraFormAggiuta()">Aggiungi Vigile del Fuoco</button>
 
 		<br> <br>
@@ -243,7 +243,7 @@ if(ordinamentoObj.getClass().getSimpleName().equals("String"))
 				<tbody>
 
 					<tr id=<%= "vigile" + id %> class="vigile">
-						<td class="text-center"><%= vf.getGrado() %></td>
+						<td class="text-center"><img src="Grado/<%=vf.getGrado() %>.png" style="height:25%" onerror="this.parentElement.innerHTML='Non disponibile';"></td>
 
 						<td class="text-center"><%= vf.getNome() %></td>
 
@@ -475,8 +475,8 @@ if(ordinamentoObj.getClass().getSimpleName().equals("String"))
 				class="btn btn-outline-secondary" data-toggle="modal"
 				class="button" value="Aggiungi"> Aggiungi </Button>
 				&nbsp;
-				<Button class="button" value="Chiudi"
-				class="btn btn-outline-danger" data-toggle="modal"
+				<Button  value="Chiudi"
+				class="btn btn-outline-danger" data-toggle="modal" class="button"
 				onclick="chiudiFormAggiunta()"> Chiudi </Button>
 			<br> <br>
 
