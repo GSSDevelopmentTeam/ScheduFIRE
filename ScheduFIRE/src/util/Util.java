@@ -197,17 +197,17 @@ public class Util {
 
 	public static void isAutenticato(HttpServletRequest request) throws ScheduFIREException {
 		if(request.getSession().getAttribute("ruolo")==null)
-			throw new ScheduFIREException("� richiesta l'autenticazione per poter accedere alle funzionalit� del sito");
+			throw new ScheduFIREException("È richiesta l'autenticazione per poter accedere alle funzionalità del sito");
 
 	}
 
 	public static void isCapoTurno(HttpServletRequest request) throws ScheduFIREException {
 		if(request.getSession().getAttribute("ruolo")==null)
-			throw new ScheduFIREException("� richiesta l'autenticazione per poter accedere alle funzionalit� del sito");
+			throw new ScheduFIREException("È richiesta l'autenticazione per poter accedere alle funzionalità del sito");
 		else {
 			String ruolo=(String)request.getSession().getAttribute("ruolo");
 			if(!ruolo.equals("capoturno"))
-				throw new ScheduFIREException("Devi essere capoturno per poter accedere a questa funzionalit�");
+				throw new ScheduFIREException("Devi essere capoturno per poter accedere a questa funzionalità");
 		}
 	}
 

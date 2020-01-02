@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.json.JSONArray;
 import model.dao.FerieDao;
+import util.Util;
 
 /**
  * Servlet implementation class RimuoviFerieServlet
@@ -37,7 +38,7 @@ public class RimuoviFerieServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
+		Util.isCapoTurno(request);
 		Date dataInizio = null;
 		Date dataFine = null;
 		String emailVF;

@@ -15,7 +15,7 @@ import model.bean.VigileDelFuocoBean;
 
 import model.dao.CapoTurnoDao;
 import model.dao.VigileDelFuocoDao;
-
+import util.Util;
 import util.Validazione;
 
 /**
@@ -43,7 +43,7 @@ public class AggiungiVFServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
+		Util.isCapoTurno(request);
 		//Ottenimento oggetto sessione dalla richiesta
 		HttpSession session = request.getSession();
 		

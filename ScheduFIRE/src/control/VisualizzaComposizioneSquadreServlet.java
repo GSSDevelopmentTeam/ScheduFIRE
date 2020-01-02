@@ -35,6 +35,7 @@ public class VisualizzaComposizioneSquadreServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		Util.isCapoTurno(request);
 		HashMap<VigileDelFuocoBean, String> squadra;
 		if(request.getParameter("lista") == null) {
 			Date data = (Date) request.getAttribute("data");

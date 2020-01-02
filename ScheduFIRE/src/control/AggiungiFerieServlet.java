@@ -46,7 +46,7 @@ public class AggiungiFerieServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
+		Util.isCapoTurno(request);
 		Date dataInizio = null;
 		Date dataFine = null;
 		LocalDate inizio;

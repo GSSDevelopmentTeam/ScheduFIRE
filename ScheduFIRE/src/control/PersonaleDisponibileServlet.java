@@ -33,6 +33,8 @@ public class PersonaleDisponibileServlet extends HttpServlet{
 	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 				
+		Util.isCapoTurno(request);
+		
 		LocalDateTime ora=LocalDateTime.now();
 		LocalDateTime inizioDiurno=LocalDateTime.of(ora.getYear(), ora.getMonth(), ora.getDayOfMonth(), 8, 00);
 		LocalDateTime fineDiurno=inizioDiurno.plusHours(12);

@@ -14,6 +14,7 @@ import model.bean.CredenzialiBean;
 import model.bean.VigileDelFuocoBean;
 
 import model.dao.VigileDelFuocoDao;
+import util.Util;
 
 /**
  * Servlet che si occupa dell'ottenimento di una collezione di VigileDelFuocoBean dal database.
@@ -36,6 +37,8 @@ public class GestionePersonaleServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
+		Util.isCapoTurno(request);
 		/*
 		//Ottenimento oggetto sessione dalla richiesta
 		HttpSession session = request.getSession();

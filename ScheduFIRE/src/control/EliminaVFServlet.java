@@ -10,6 +10,7 @@ import javax.servlet.http.HttpSession;
 
 import model.bean.CredenzialiBean;
 import model.dao.VigileDelFuocoDao;
+import util.Util;
 import util.Validazione;
 
 /**
@@ -34,6 +35,7 @@ public class EliminaVFServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
+		Util.isCapoTurno(request);
 		//Ottenimento oggetto sessione dalla richiesta
 		HttpSession session = request.getSession();
 				

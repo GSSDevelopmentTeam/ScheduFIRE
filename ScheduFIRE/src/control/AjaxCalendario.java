@@ -18,6 +18,7 @@ import model.bean.ComponenteDellaSquadraBean;
 import model.bean.VigileDelFuocoBean;
 import model.dao.ComponenteDellaSquadraDao;
 import model.dao.VigileDelFuocoDao;
+import util.Util;
 
 /**
  * @author Alfredo Giuliano
@@ -32,6 +33,7 @@ public class AjaxCalendario extends HttpServlet{
 	
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		Util.isAutenticato(request);
 		String giornostr = request.getParameter("giorno").trim();
 		String mesestr = request.getParameter("mese").trim();
 		String annostr = request.getParameter("anno").trim();

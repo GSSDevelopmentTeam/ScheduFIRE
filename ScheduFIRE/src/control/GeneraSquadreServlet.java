@@ -45,6 +45,7 @@ public class GeneraSquadreServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		Util.isCapoTurno(request);
 		HttpSession sessione = request.getSession();
 		Date data = (Date) request.getAttribute("data");
 
