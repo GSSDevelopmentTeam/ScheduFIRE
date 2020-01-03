@@ -55,7 +55,19 @@ h2 {
 
 	<!-- ELENCO SQUADRE  -->
 
+<%
 
+	HashMap<VigileDelFuocoBean, String> squadra = (HashMap<VigileDelFuocoBean, String>) session.getAttribute("squadra");
+        if ((boolean) request.getAttribute("nonSalvata")) {
+            request.setAttribute("squadra", squadra);
+            request.setAttribute("data", (Date) request.getAttribute("data"));
+    %> 
+    <form action="GeneraSquadreServlet" method=post>
+        <input type="Submit"  class="btn btn-success btn-lg" value="Conferma" name="Conferma">
+    </form> <br>
+    <%
+        }
+    %> <br><br>
 	<div class="d-flex justify-content-center">
 		<img src="../Icon/caserma.png" class="fr">
 		<h2>Sala Operativa</h2>
@@ -75,7 +87,6 @@ h2 {
 
 			<tbody>
 				<% 
-				HashMap<VigileDelFuocoBean, String> squadra = (HashMap<VigileDelFuocoBean, String>) request.getAttribute("squadra");
 	            
                 Iterator it = squadra.entrySet().iterator();
                 while (it.hasNext()) {
@@ -243,18 +254,6 @@ h2 {
 			</tbody>
 		</table>
 	</div>
-	<br><br>
-	<%
-        if ((boolean) request.getAttribute("nonSalvata")) {
-            request.setAttribute("squadra", squadra);
-            request.setAttribute("data", (Date) request.getAttribute("data"));
-    %>
-    <form action="GeneraSquadreServlet" method=post>
-        <input type="Submit"  class="btn btn-success btn-lg btn-block " value="Conferma" name="Conferma">
-    </form> <br>
-    <%
-        }
-    %>
 
 
 	<script	src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
