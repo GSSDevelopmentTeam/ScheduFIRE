@@ -78,15 +78,33 @@ public class ComponenteDellaSquadraDao {
 
 	}
 	
+	public static boolean isComponente(String emailVF, Date giornoLavorativo) {
+		
+		PreparedStatement ps;
+		boolean schedulato = false;
+		
+		String componenteSQL = "SELECT * FROM ComponenteDellaSquadra WHERE emailVF = ? AND giornoLavorativo = ?;";
+		
+		try(Connection connessione = ConnessioneDB.getConnection()){
+			
+			ps = connessione.prepareStatement(componenteSQL);
+			ps.setString(1, emailVF);
+			ps.setDate(2, giornoLavorativo);
+			
+			ResultSet rs = ps.executeQuery();
+			if(rs.next()) 
+				schedulato = true;
+			
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return schedulato;
+	}
 	
-	
-	
-	
-
-
 	/*
 	 * Per ordinare l'array di componenti della squadra in base alla tipologia della squadra di appartenenza
-	 * con priorità a sala operativa, poi prima partenza, poi auto scala e infine auto botte.
+	 * con prioritï¿½ a sala operativa, poi prima partenza, poi auto scala e infine auto botte.
 	 * In caso di tipologia uguale, ordina in base al cognome che ricava dalla mail
 	 * essendo la mail composta sempre da nome<numero>.cognome
 	 * 

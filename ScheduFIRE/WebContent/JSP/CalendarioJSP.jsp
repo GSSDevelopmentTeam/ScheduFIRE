@@ -3,7 +3,8 @@
 
 <%@ page import="control.* "%>
 
-<%  String ruolo = (String) session.getAttribute("ruolo");%>
+<%  String ruolo = "";
+		ruolo= (String) session.getAttribute("ruolo");%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -49,7 +50,8 @@
 		<!-- START: Container per il calendaio -->
 		<div class="container-calendar">
 
-			<!-- Accesso effettuato dal capoturno -->
+			<!-- Accesso effettuato dal capoturno, commentato per far partire la JSP.
+			Da decommentare a progetto terminato-->
 			<%//if(ruolo.equalsIgnoreCase("capoturno")){%>
 			<a href="#" class="edit" ><%=editSquadre%></a>
 			<%//} %>
@@ -58,9 +60,10 @@
 			<div class="container-year">
 				<a class="altroAnno"
 					href="CalendarioServlet?mese=<%=mese %>&anno=<%=anno-1 %>">
-					<img src="IMG/arrow/left-arrow-empty.png"
-					onmouseover="this.src='IMG/arrow/left-arrow-full.png'"
-					onmouseout="this.src='IMG/arrow/left-arrow-empty.png'" />
+					<img src="IMG/arrow/left-arrow-p.png"
+						 style="margin-right: 10px"
+					 	 onmouseover="this.src='IMG/arrow/left-arrow-d.png'"
+						 onmouseout="this.src='IMG/arrow/left-arrow-p.png'" />
 				</a>
 				
 				<span id="annoVisualizzato">
@@ -69,9 +72,10 @@
 				
 				<a class="altroAnno"
 					href="CalendarioServlet?mese=<%=mese %>&anno=<%=anno+1 %>">
-					<img src="IMG/arrow/right-arrow-empty.png"
-					onmouseover="this.src='IMG/arrow/right-arrow-full.png'"
-					onmouseout="this.src='IMG/arrow/right-arrow-empty.png'" />
+					<img src="IMG/arrow/right-arrow-p.png"
+						 style="margin-left:5px"
+						 onmouseover="this.src='IMG/arrow/right-arrow-d.png'"
+						 onmouseout="this.src='IMG/arrow/right-arrow-p.png'" />
 				</a>
 			</div>
 			<!-- END: container per (<-) anno (->) -->
@@ -119,18 +123,22 @@
 							if(giorno==day && mese_corrente == mese && anno_corrente == anno){
 								id ="giornoCorrente";
 							}
+							
 							if (days_work[i]==1){
 								id = "giornoLavorativoDiurno";
 								img = "diurno";
 							}
+							
 							if(days_work[i]==2){
 								id = "giornoLavorativoNotturno";
 								img = "notturno";
 							}
+							
 							if(giorno==day && mese_corrente == mese && anno_corrente == anno && days_work[i]==1){
 								id = "giornoCorrenteLavorativoDiurno";
 								img = "diurno";
 							}
+							
 							if(giorno==day && mese_corrente == mese && anno_corrente == anno && days_work[i]==2){
 								id = "giornoCorrenteLavorativoNotturno";
 								img = "notturno";
@@ -166,7 +174,7 @@
 					<p>SALA OPERATIVA</p>
 				</div>
 				<div class="vigili">
-					<table id="SalaOperativa"></table>
+					<table id="SalaOperativa" class="table"></table>
 				</div>
 
 
@@ -174,7 +182,7 @@
 					<p>PRIMA PARTENZA</p>
 				</div>
 				<div class="vigili">
-					<table id="PrimaPartenza"></table>
+					<table id="PrimaPartenza" class="table"></table>
 				</div>
 
 
@@ -182,7 +190,7 @@
 					<p>AUTO SCALA</p>
 				</div>
 				<div class="vigili">
-					<table id="AutoScala"></table>
+					<table id="AutoScala" class="table"></table>
 				</div>
 
 
@@ -190,13 +198,12 @@
 					<p>AUTO BOTTE</p>
 				</div>
 				<div class="vigili">
-					<table id="AutoBotte"></table>
+					<table id="AutoBotte" class="table"></table>
 				</div>
 
 			</div>
 
 		</div>
-
 	</div>
 	<!-- AND: container per calendario e schedulazione -->
 	

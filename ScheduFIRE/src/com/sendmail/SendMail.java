@@ -37,17 +37,17 @@ public class SendMail {
 		//Supponendo che tu stia inviando e-mail da e-mail smtp
 		String host = "smtp.gmail.com";
 
-		//Ottieni proprietà del sistema
-		Properties proprietà = System.getProperties();
+		//Ottieni proprieta del sistema
+		Properties proprieta = System.getProperties();
 
 		//setup mail server
-		proprietà.put("mail.smtp.host", host);
-		proprietà.put("mail.smtp.port", "465");
-		proprietà.put("mail.smtp.ssl.enable", "true");
-		proprietà.put("mail.smtp.auth", "true");
+		proprieta.put("mail.smtp.host", host);
+		proprieta.put("mail.smtp.port", "465");
+		proprieta.put("mail.smtp.ssl.enable", "true");
+		proprieta.put("mail.smtp.auth", "true");
 
 		// Prende la sessione in oggetto // e passa l'username e password
-		Session session = Session.getInstance(proprietà, new javax.mail.Authenticator() {
+		Session session = Session.getInstance(proprieta, new javax.mail.Authenticator() {
 			protected PasswordAuthentication getPasswordAuthentication() {
 				return new PasswordAuthentication("schedufire@gmail.com", "schedufire20");
 			}

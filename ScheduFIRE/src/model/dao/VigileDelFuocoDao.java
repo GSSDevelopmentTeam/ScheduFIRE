@@ -517,7 +517,7 @@ public class VigileDelFuocoDao {
 		ResultSet rs;
 		int feriePrecedenti = 0;
 		
-		String FerieAnnoPSQL = "SELECT giorniFerieAnnoPrecedente FROM Vigile WHERE emailVF = ?;";
+		String FerieAnnoPSQL = "SELECT giorniFerieAnnoPrecedente FROM Vigile WHERE email = ?;";
 		
 		try{
 			Connection connessione=null;
@@ -527,7 +527,7 @@ public class VigileDelFuocoDao {
 				ps = connessione.prepareStatement(FerieAnnoPSQL);
 				ps.setString(1, emailVF);
 				rs = ps.executeQuery();
-			
+				rs.next();
 				feriePrecedenti = rs.getInt("giorniFerieAnnoPrecedente");
 			}
 			finally {
@@ -545,7 +545,7 @@ public class VigileDelFuocoDao {
 		ResultSet rs;
 		int ferieCorrenti = 0;
 		
-		String FerieAnnoCSQL = "SELECT giorniFerieAnnoCorrente FROM Vigile WHERE emailVF = ?;";
+		String FerieAnnoCSQL = "SELECT giorniFerieAnnoCorrente FROM Vigile WHERE email = ?;";
 		
 		try{
 			Connection connessione=null;
@@ -555,7 +555,7 @@ public class VigileDelFuocoDao {
 				ps = connessione.prepareStatement(FerieAnnoCSQL);
 				ps.setString(1, emailVF);
 				rs = ps.executeQuery();
-			
+				rs.next();
 				ferieCorrenti = rs.getInt("giorniFerieAnnoCorrente");
 			}
 			finally {
@@ -571,7 +571,7 @@ public class VigileDelFuocoDao {
 	public static void aggiornaFeriePrecedenti(String emailVF, int numeroFerie) {
 		PreparedStatement ps;
 		
-		String aggiornaFeriePSQL = "UPDATE Vigile SET giorniFerieAnnoPrecedente = ? WHERE emailVF = ?;";
+		String aggiornaFeriePSQL = "UPDATE Vigile SET giorniFerieAnnoPrecedente = ? WHERE email = ?;";
 		
 		try{
 			Connection connessione=null;
@@ -595,7 +595,7 @@ public class VigileDelFuocoDao {
 	public static void aggiornaFerieCorrenti(String emailVF, int numeroFerie) {
 		PreparedStatement ps;
 		
-		String aggiornaFerieCSQL = "UPDATE Vigile SET giorniFerieAnnoCorrente = ? WHERE emailVF = ?;";
+		String aggiornaFerieCSQL = "UPDATE Vigile SET giorniFerieAnnoCorrente = ? WHERE email = ?;";
 		
 		try{
 			Connection connessione=null;
