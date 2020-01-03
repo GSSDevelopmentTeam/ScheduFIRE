@@ -51,7 +51,7 @@ public class ModificaVFServlet extends HttpServlet {
 
 		*/
 		//Ottenimento parametro email dalla richiesta
-		String emailVecchia = request.getParameter("email");
+		String emailVecchia = request.getParameter("emailVecchia");
 		
 		//Controllo email
 		if( ! Validazione.email(emailVecchia) )
@@ -71,7 +71,7 @@ public class ModificaVFServlet extends HttpServlet {
 		String gradoNuovo = request.getParameter("gradoNuovo");
 		String giorniFerieAnnoCorrenteNuoviStringa = request.getParameter("giorniFerieAnnoCorrenteNuovi");;
 		String giorniFerieAnnoPrecedenteNuoviStringa = request.getParameter("giorniFerieAnnoPrecedenteNuovi");
-		String emailNuova = request.getParameter("VFNew");
+		String emailNuova = request.getParameter("emailNuova");
 		
 		if(giorniFerieAnnoCorrenteNuoviStringa == null ||
 			"".equals(giorniFerieAnnoCorrenteNuoviStringa))

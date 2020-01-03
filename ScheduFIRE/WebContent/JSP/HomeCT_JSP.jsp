@@ -11,7 +11,7 @@
 	
 <div class="rw" style="margin:50px;">
   <div class="clm">
-  <form action="" method="POST">
+  <form action="VisualizzaComposizioe" method="POST">
     <button class="btop"><img src="Icon/CavallettoColorato.png"><span class="rht">Gestione <br> Squadra</span> </button>
   </form></div>
     <div class="clm" >
