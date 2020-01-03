@@ -61,16 +61,19 @@ public class Util {
 		List<VigileDelFuocoBean> vigile = new ArrayList<>();
 
 		for(VigileDelFuocoBean membro : disponibili) {
-			if(membro.getMansione().toLowerCase() == "capo squadra") {
+			System.out.println("Mansione: "+membro.getMansione());
+			if(membro.getMansione().toLowerCase().equals("capo squadra")) {
 				caposquadra.add(membro);
 			}
-			else if(membro.getMansione().toLowerCase() == "autista") {
+			else if(membro.getMansione().toLowerCase().equals("autista")) {
 				autista.add(membro);
 			}
-			else if(membro.getMansione().toLowerCase() == "vigile") {
+			else if(membro.getMansione().toLowerCase().equals("vigile")) {
 				vigile.add(membro);
 			}
 		}
+		System.out.println("Vigili disponibili: "+disponibili.size());
+		System.out.println("Capisquadra: "+caposquadra.size()+" ,autisti: "+ autista.size()+" ,vigili: "+ vigile.size());
 		//Controlliamo se abbiamo abbastanza personale per fare squadra, altrimenti lanciamo l'eccezione
 		if(abbastanzaPerTurno(caposquadra.size(), autista.size(), vigile.size())) {
 			//Ordiniamo in ordine ascendente
@@ -113,6 +116,54 @@ public class Util {
 	}
 
 	private static List<ComponenteDellaSquadraBean> assegnaMansioni(List<VigileDelFuocoBean> caposquadra,
+			List<VigileDelFuocoBean> autista, List<VigileDelFuocoBean> vigile, Date data) {
+		List<ComponenteDellaSquadraBean> toReturn = new ArrayList<>();
+		SquadraBean salaOp = new SquadraBean("Sala Operativa", 3, data);
+		SquadraBean primaP = new SquadraBean("Prima Partenza", 3, data);
+		SquadraBean autoSc = new SquadraBean("Autoscala", 2, data);
+		SquadraBean autoBo = new SquadraBean("Autobotte", 1, data);
+		boolean vigileAutoSc=false;
+		boolean vigileAutoBo=false;
+
+		//Aggiungo gli autisti
+		toReturn.add(new ComponenteDellaSquadraBean(primaP.getTipologia(), autista.get(0).getEmail(), data));
+		toReturn.add(new ComponenteDellaSquadraBean(autoSc.getTipologia(), autista.get(1).getEmail(), data));
+		toReturn.add(new ComponenteDellaSquadraBean(autoBo.getTipologia(), autista.get(2).getEmail(), data));
+	
+		//Aggiungo i vigili
+		toReturn.add(new ComponenteDellaSquadraBean(salaOp.getTipologia(), vigile.get(0).getEmail(), data));
+		toReturn.add(new ComponenteDellaSquadraBean(salaOp.getTipologia(), vigile.get(1).getEmail(), data));
+		toReturn.add(new ComponenteDellaSquadraBean(primaP.getTipologia(), vigile.get(2).getEmail(), data));
+		toReturn.add(new ComponenteDellaSquadraBean(primaP.getTipologia(), vigile.get(3).getEmail(), data));
+		toReturn.add(new ComponenteDellaSquadraBean(primaP.getTipologia(), vigile.get(4).getEmail(), data));
+		if(vigile.size()>5) {
+			toReturn.add(new ComponenteDellaSquadraBean(autoSc.getTipologia(), vigile.get(5).getEmail(), data));
+			vigileAutoSc=true;
+		}
+		if(vigile.size()>6) {
+			toReturn.add(new ComponenteDellaSquadraBean(autoBo.getTipologia(), vigile.get(6).getEmail(), data));
+			vigileAutoBo=true;
+		}
+	
+		//Aggiungo i caposquadra
+		toReturn.add(new ComponenteDellaSquadraBean(salaOp.getTipologia(), caposquadra.get(0).getEmail(), data));
+		toReturn.add(new ComponenteDellaSquadraBean(primaP.getTipologia(), caposquadra.get(1).getEmail(), data));
+		if(!vigileAutoSc) {
+			toReturn.add(new ComponenteDellaSquadraBean(autoSc.getTipologia(), caposquadra.get(2).getEmail(), data));
+			caposquadra.remove(2);
+		}
+		if(!vigileAutoBo) {
+		toReturn.add(new ComponenteDellaSquadraBean(autoBo.getTipologia(), caposquadra.get(2).getEmail(), data));
+		}
+		
+		return toReturn;
+	}
+	
+	
+	
+	
+	
+	private static List<ComponenteDellaSquadraBean> assegnaMansioniOld(List<VigileDelFuocoBean> caposquadra,
 			List<VigileDelFuocoBean> autista, List<VigileDelFuocoBean> vigile, Date data) {
 		List<ComponenteDellaSquadraBean> toReturn = new ArrayList<>();
 		SquadraBean salaOp = new SquadraBean("Sala Operativa", 3, data);
@@ -176,6 +227,13 @@ public class Util {
 
 		return toReturn;
 	}
+	
+	
+	
+	
+	
+	
+	
 
 	public static HashMap<VigileDelFuocoBean, String> ottieniSquadra(Date data) {
 		List<ComponenteDellaSquadraBean> lista = ComponenteDellaSquadraDao.getComponenti(data);
