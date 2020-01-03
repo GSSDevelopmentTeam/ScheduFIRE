@@ -6,12 +6,16 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import control.PersonaleDisponibileServlet.ComponenteComparator;
 import model.bean.ComponenteDellaSquadraBean;
@@ -26,14 +30,14 @@ import util.GiornoLavorativo;
 @WebServlet("/PersonaleDisponibileAJAX")
 public class PersonaleDisponibileAJAX extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
-    public PersonaleDisponibileAJAX() {
-        super();
-        // TODO Auto-generated constructor stub
-    }
+
+	/**
+	 * @see HttpServlet#HttpServlet()
+	 */
+	public PersonaleDisponibileAJAX() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
@@ -46,7 +50,7 @@ public class PersonaleDisponibileAJAX extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
+
 		LocalDateTime ora=LocalDateTime.now();
 		LocalDateTime inizioDiurno=LocalDateTime.of(ora.getYear(), ora.getMonth(), ora.getDayOfMonth(), 8, 00);
 		LocalDateTime fineDiurno=inizioDiurno.plusHours(12);
@@ -54,10 +58,10 @@ public class PersonaleDisponibileAJAX extends HttpServlet {
 		LocalDateTime fineNotturno=inizioNotturno.plusHours(12);
 
 		Date giorno=Date.valueOf(ora.toLocalDate());
-		
-		
-		
-		
+
+
+
+
 		/*
 		 * Per ricavare se nel momento in cui viene chiamata la servlet si è nel turno lavorativo o meno, prendo in considerazione
 		 * 3 possibilità: 
@@ -70,8 +74,8 @@ public class PersonaleDisponibileAJAX extends HttpServlet {
 		 * 3)è terminato
 		 * 
 		 */
-		
-		
+
+
 		//giorno lavorativo e turno diurno
 		if(GiornoLavorativo.isLavorativo(giorno) && GiornoLavorativo.isDiurno(giorno)) {
 			if(ora.isBefore(inizioDiurno)) {
@@ -107,26 +111,68 @@ public class PersonaleDisponibileAJAX extends HttpServlet {
 			giorno=GiornoLavorativo.nextLavorativo(giorno);
 			String giornoLavoro=""+giorno.toLocalDate().getDayOfMonth()+" "+Mese(giorno.toLocalDate().getMonthValue())+" "+giorno.toLocalDate().getYear();
 			request.setAttribute("titolo", "Il personale disponibile per il giorno "+ giornoLavoro +" sarà il seguente");
-			
+
 		}
-		
+
 
 		//prendo i vigili del fuoco disponibili alla data odierna
 		ArrayList<VigileDelFuocoBean> vigili=VigileDelFuocoDao.getDisponibili(giorno);
 		ArrayList<ComponenteDellaSquadraBean> componenti=ComponenteDellaSquadraDao.getComponenti(giorno);
 		//Collections.sort(vigili, new VigileComparator());
 		Collections.sort(componenti, new ComponenteComparator());
+
+		//Prendo l'email del VF da sostituire
 		String email=request.getParameter("email");
-		request.setAttribute("vigili", vigili);
+		//Ricavo il ruolo del VF da sostituire
+		String ruolo=null;
+		HttpSession session = request.getSession();
+		HashMap<VigileDelFuocoBean, String> squadra = (HashMap<VigileDelFuocoBean, String>) session.getAttribute("squadra");		
+		Iterator it = squadra.entrySet().iterator();
+		while (it.hasNext()) {
+			Map.Entry coppia = (Map.Entry) it.next();
+			VigileDelFuocoBean membro = (VigileDelFuocoBean) coppia.getKey();
+			if(membro.getEmail().equalsIgnoreCase(email)) {
+				ruolo = membro.getMansione();
+				break;
+			}
+			it.remove();
+		}
+
+		//Confronto se nell'ArrayList dei vigili ci sono quelli già inseriti nelle squadre 
+		ArrayList<VigileDelFuocoBean> nuovoelenco = new ArrayList<VigileDelFuocoBean>();
+		it = squadra.entrySet().iterator();
+		while (it.hasNext()) {
+			Map.Entry coppia = (Map.Entry) it.next();
+			VigileDelFuocoBean membro = (VigileDelFuocoBean) coppia.getKey();
+			boolean trovato= false;
+			//confronto il membro nella squadra con tutta la lista di vigili disponibili
+			for(int i=0; i<vigili.size();i++) {
+				if(!membro.getEmail().equalsIgnoreCase(vigili.get(i).getEmail())) {
+					trovato = true;
+					break;
+				}
+			}
+			//Se il vigile non è presente nell'HashMap lo inserisco nel nuovo arrayList, controllando se è dello stesso ruolo del VF rimosso
+			if(trovato==false) {
+				if(ruolo!=null) {
+					if(membro.getMansione().equalsIgnoreCase(ruolo)) {
+						nuovoelenco.add(membro);
+					}
+				}
+			}
+			it.remove();
+		}
+
+		request.setAttribute("vigili", nuovoelenco);
 		request.setAttribute("componenti", componenti);
 		request.setAttribute("email", email);		
 		request.getRequestDispatcher("JSP/PersonaleDisponibileAJAXJSP.jsp").forward(request, response);
-		
+
 	}
-	
-	
-	
-	
+
+
+
+
 	private String Mese (int mese) {
 		String meseString="";
 		switch (mese) {
@@ -145,10 +191,10 @@ public class PersonaleDisponibileAJAX extends HttpServlet {
 		}
 		return meseString;
 	}
-	
-	
-	
-	
+
+
+
+
 	class VigileComparator implements Comparator<VigileDelFuocoBean> {
 
 		@Override
@@ -164,9 +210,9 @@ public class PersonaleDisponibileAJAX extends HttpServlet {
 			return o1.getMansione().compareTo(o2.getMansione());
 		}
 	}
-	
-	
-	
+
+
+
 	class ComponenteComparator implements Comparator<ComponenteDellaSquadraBean> {
 
 		/*
@@ -190,5 +236,5 @@ public class PersonaleDisponibileAJAX extends HttpServlet {
 			return -comparazione;
 		}
 	}
-	
+
 }
