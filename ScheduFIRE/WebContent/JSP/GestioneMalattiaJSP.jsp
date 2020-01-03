@@ -49,6 +49,7 @@
 				<div class="modal-footer">
 	  			<button type="button" class="btn btn-outline-warning" data-toggle ="modal"  data-target ="#menuConferma">Aggiungi Malattia</button>
 					<button type="button" class="btn btn-outline-danger" data-dismiss="modal">Annulla</button>
+
 				</div>
 			</div>
 		</div>
@@ -99,17 +100,21 @@
 					%>
 					
 					<tr>
+<<<<<<< HEAD
 						<td class="text-center">
 						<% if(vigile.getGrado().equals("Coordinatore")) {%><img src="Grado/Coordinatore.png" class="rounded mx-auto d-block" width = 22%; height=22%;>
 						<%} else if(vigile.getGrado().equals("Esperto")) {%><img src="Grado/Esperto.png" class="rounded mx-auto d-block" width = 22%; height=22%;>
 						<%} else {%><img src="Grado/Qualificato.png" class="rounded mx-auto d-block" width = 22%; height=22%;>
 						<%} %>
 						</td>
+=======
+						<td class="text-center"><img src="Grado/<%=vigile.getGrado() %>.png" style="height:25%" onerror="this.parentElement.innerHTML='Non disponibile';"></td>
+>>>>>>> 45404b71c5b44f395467e7f326bc6a539c38136a
 						<td class="text-center"><%=vigile.getNome() %></td>
 						<td class="text-center"><%=vigile.getCognome()%></td>
 						<td class="text-center"><%=vigile.getEmail() %></td>
 						<td class="text-center"><%=vigile.getMansione()%></td>
-						<td class="text-center"><button class="pass btn btn-outline-danger" 
+						<td class="text-center"><button class="pass btn btn-outline-secondary" 
 						data-toggle="modal" data-target="#aggiungiMalattia"
 						onClick='apriFormAggiunta("<%=vigile.getEmail()%>")'>Aggiungi Malattia</button></td>
 					</tr>
