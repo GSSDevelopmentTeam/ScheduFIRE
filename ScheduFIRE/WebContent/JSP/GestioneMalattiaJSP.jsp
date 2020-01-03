@@ -47,7 +47,7 @@
 				</div>
 
 				<div class="modal-footer">
-	  			<button type="button" class="btn btn-outline-warning" onClick = "inserisciMalattia()">Aggiungi Malattia</button>
+	  			<button type="button" class="btn btn-outline-warning" data-toggle ="modal"  data-target ="#menuConferma">Aggiungi Malattia</button>
 					<button type="button" class="btn btn-outline-danger" data-dismiss="modal">Annulla</button>
 				</div>
 			</div>
@@ -63,11 +63,11 @@
       <div class="modal-body">
         <img src="IMG/fire.png" class="rounded mx-auto d-block">
         <h4 class="modal-title text-center">Sei sicuro?</h4>
-        <p class="text-center">Vuoi inserire questo il periodo di malattia?<br> La procedura non può essere annullata.</p>
+        <p class="text-center">Vuoi inserire il periodo di malattia?<br> La procedura non può essere annullata.</p>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-outline-danger" data-dismiss="modal">Annulla</button>
-        <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">inserisci</button>
+        <button type="button" class="btn btn-outline-secondary" data-dismiss="modal" onClick = "inserisciMalattia()">inserisci</button>
       </div>
     </div>
   </div>
@@ -81,12 +81,12 @@
 		<table class="table  table-hover" id="listaVigili">
 			<thead class="thead-dark">
 				<tr>
-					<th class="text-center">Grado</th>
-					<th class="text-center">Nome</th>
-					<th class="text-center">Cognome</th>
-					<th class="text-center">Email</th>
-					<th class="text-center">Mansione</th>
-					<th class="text-center">Inserisci Malattia</th>
+					<th class="text-center"width = 16.66%>Grado</th>
+					<th class="text-center"width = 16.66%>Nome</th>
+					<th class="text-center"width = 16.66%>Cognome</th>
+					<th class="text-center"width = 16.66%>Email</th>
+					<th class="text-center"width = 16.66%>Mansione</th>
+					<th class="text-center"width = 16.66%>Inserisci Malattia</th>
 				</tr>
 			</thead>
 				
@@ -99,7 +99,12 @@
 					%>
 					
 					<tr>
-						<td class="text-center"><%=vigile.getGrado() %></td>
+						<td class="text-center">
+						<% if(vigile.getGrado().equals("Coordinatore")) {%><img src="Grado/Coordinatore.png" class="rounded mx-auto d-block" width = 22%; height=22%;>
+						<%} else if(vigile.getGrado().equals("Esperto")) {%><img src="Grado/Esperto.png" class="rounded mx-auto d-block" width = 22%; height=22%;>
+						<%} else {%><img src="Grado/Qualificato.png" class="rounded mx-auto d-block" width = 22%; height=22%;>
+						<%} %>
+						</td>
 						<td class="text-center"><%=vigile.getNome() %></td>
 						<td class="text-center"><%=vigile.getCognome()%></td>
 						<td class="text-center"><%=vigile.getEmail() %></td>
@@ -115,6 +120,24 @@
 			
 			</table>
 		</div>
+
+
+
+<!--avvenuto inserimento-->
+
+<div class="alert alert-success flex alert-dismissible fade in text-center fixed-top" id="inserimentoOk" style="display: none;position:fixed;z-index: 99999; width:100%">
+  <strong>Operazione riuscita!</strong> <span>Malattia aggiunta correttamente..</span>
+</div>
+
+<!-- ----------------------- -->
+
+<!--------- inserimento non avvenuto ----------------->
+
+<div class="alert alert-danger flex alert-dismissible fade in text-center fixed-top" id="inserimentoNoOk" style="display: none;position:fixed;z-index: 99999; width:100%">
+  <strong>Errore!</strong> <span>Aggiunta malattia non avvenuta..</span>
+</div>
+
+<!-- ----------------------- -->
 
 		
 			<script>
@@ -136,9 +159,7 @@
 						onError : function(error) {
 							alertInsuccesso("Nel periodo selezionato risultano già dei giorni di malattia");
 						}
-					});
-				
-			
+					});	
 			
 			function apriFormAggiunta(input) {
 				console.log("parte funzione apriformAggiunta di " + input);
@@ -171,17 +192,16 @@
         			
         				
        
-        				/*$("#titoloAggiuntaMalattia").text(
+        			$("#titoloAggiuntaMalattia").text(
         						"Aggiunta malattia per " + nome.text() + " "+ cognome.text());
 						
 						$('#formAggiunta').show();
 						
-						$(".contenutiModal").css('background-color', '#e6e6e6');*/
+						$(".contenutiModal").css('background-color', '#e6e6e6');
 					}
 					
 				});
-			}
-			
+			}			
 			</script>
 			
 			<script>
@@ -189,8 +209,7 @@
 				 var emailVF = document.getElementById("emailAggiuntaMalattia").innerHTML;
 				 var dataIn = $('#dataInizio').val();
 				 var dataFi = $('#dataFine').val();
-				
-				 //alert(emailVF + ""+dataIn+""+dataFi);
+
 				 $.ajax({
 				type : "POST",
 				url : "AggiungiMalattiaServlet",
@@ -204,17 +223,35 @@
 						dataType : "json",
 						async : false,
 						
-					});	
+					
+				 success : function(response) {
+					 var Risposta=response[0];
+					 if(Risposta){
+						 alertSuccesso();
+					 }
+					 else{
+						 apriFormAggiunta();
+						 alertInsuccesso();
+					 }
+				 },
+			});	
 		}
-				
 
 			</script>
 			
 			<script>
-			function apriModal(){
-				$("#sese").attr("data-target","#menuConferma");
+			function alertInsuccesso(){
+				$("#inserimentoNoOk").fadeTo(4000, 500).slideUp(500, function(){
+				    $("#success-alert").slideUp(500);
+				});
+				
+			}
+			
+			function alertSuccesso(){
+				$("#inserimentoOk").fadeTo(4000, 500).slideUp(500, function(){
+				    $("#success-alert").slideUp(500);
+				});
 			}
 			</script>
-			
 	</body>
 </html>
