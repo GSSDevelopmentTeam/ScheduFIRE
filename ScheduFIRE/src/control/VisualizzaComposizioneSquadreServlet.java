@@ -42,8 +42,9 @@ public class VisualizzaComposizioneSquadreServlet extends HttpServlet {
 		HashMap<VigileDelFuocoBean, String> squadra;
 		Date data=Date.valueOf(request.getParameter("data"));
 		squadra=Util.ottieniSquadra(data);
+		System.out.println("squadra: "+squadra);
 		sessione.setAttribute("squadra", squadra);
-		sessione.setAttribute("nonSalvata", false);
+		request.setAttribute("nonSalvata", false);
 		request.getRequestDispatcher("JSP/GestioneSquadreJSP.jsp").forward(request, response);
 		
 		

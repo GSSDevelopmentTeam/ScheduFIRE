@@ -678,7 +678,7 @@ public class VigileDelFuocoDao {
 				ps.setInt(1, pair.getKey().getCaricoLavoro() + toAdd);
 				ps.setString(2, pair.getKey().getEmail());
 				count = ps.executeUpdate();
-				
+				con.commit();
 				i.remove();
 			}
 			

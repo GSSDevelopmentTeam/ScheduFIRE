@@ -19,6 +19,7 @@ import javax.servlet.http.HttpSession;
 
 import com.sendmail.SendMail;
 
+import model.bean.CapoTurnoBean;
 import model.bean.ComponenteDellaSquadraBean;
 import model.bean.VigileDelFuocoBean;
 import model.dao.ComponenteDellaSquadraDao;
@@ -72,20 +73,20 @@ public class GeneraSquadreServlet extends HttpServlet {
 					sessione.getAttribute("squadraNotturno");
 			List<ComponenteDellaSquadraBean> listaDiurno = vigileToComponente(squadraDiurno, data);	
 			List<ComponenteDellaSquadraBean> listaNotturno = vigileToComponente(squadraNotturno, giornoSuccessivo);			
-
-			if((!ListaSquadreDao.aggiungiSquadre(data, (String) sessione.getAttribute("email"))) ||
+			CapoTurnoBean capoturno=(CapoTurnoBean)sessione.getAttribute("capoturno");
+			if((!ListaSquadreDao.aggiungiSquadre(data, capoturno.getEmail())) ||
 					(!SquadraDao.aggiungiSquadra(data)) ||
 					(!ComponenteDellaSquadraDao.setComponenti(listaDiurno)) ||
 					(!VigileDelFuocoDao.caricoLavorativo(squadraDiurno))){
 				throw new ScheduFIREException("Errore nelle Query SQL");
 			}	
-			if((!ListaSquadreDao.aggiungiSquadre(giornoSuccessivo, (String) sessione.getAttribute("email"))) ||
+			if((!ListaSquadreDao.aggiungiSquadre(giornoSuccessivo, capoturno.getEmail())) ||
 					(!SquadraDao.aggiungiSquadra(giornoSuccessivo)) ||
 					(!ComponenteDellaSquadraDao.setComponenti(listaNotturno)) ||
 					(!VigileDelFuocoDao.caricoLavorativo(squadraNotturno))){
 				throw new ScheduFIREException("Errore nelle Query SQL");
 			}	
-			SendMail.sendMail(data);
+			//SendMail.sendMail(data);
 			sessione.removeAttribute("squadraDiurno");
 			sessione.removeAttribute("squadraNotturno");
 			request.getRequestDispatcher("JSP/HomeCT_JSP.jsp").forward(request, response);
@@ -103,7 +104,7 @@ public class GeneraSquadreServlet extends HttpServlet {
 		if(sessione.getAttribute("squadraDiurno") != null) {
 			System.out.println("Attributo squadra in sessione non nullo");
 			request.setAttribute("nonSalvata",true);
-			request.getRequestDispatcher("JSP/GestioneSquadreJSP.jsp").forward(request, response);
+			request.getRequestDispatcher("JSP/GestioneSquadreJSPTEST.jsp").forward(request, response);
 
 			return;
 		}
@@ -117,7 +118,7 @@ public class GeneraSquadreServlet extends HttpServlet {
 			sessione.setAttribute("squadraDiurno", squadraDiurno);
 			sessione.setAttribute("squadraNotturno", squadraNotturno);
 			request.setAttribute("nonSalvata",false);
-			request.getRequestDispatcher("JSP/GestioneSquadreJSP.jsp").forward(request, response);
+			request.getRequestDispatcher("JSP/GestioneSquadreJSPTEST.jsp").forward(request, response);
 			return;
 		}
 
@@ -188,7 +189,7 @@ public class GeneraSquadreServlet extends HttpServlet {
 		sessione.setAttribute("squadraDiurno", squadraDiurno);
 		sessione.setAttribute("squadraNotturno", squadraNotturno);
 		request.setAttribute("nonSalvata",true);
-		request.getRequestDispatcher("JSP/GestioneSquadreJSP.jsp").forward(request, response);
+		request.getRequestDispatcher("JSP/GestioneSquadreJSPTEST.jsp").forward(request, response);
 
 
 
