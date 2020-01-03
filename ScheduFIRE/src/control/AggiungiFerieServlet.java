@@ -53,7 +53,6 @@ public class AggiungiFerieServlet extends HttpServlet {
 		LocalDate fine;
 		String emailVF;
 		boolean aggiunta = false;
-		boolean verificaPeriodoInserito = false;
 		int numeroGiorniFerie=0;
 
 		HttpSession sessione = request.getSession();
