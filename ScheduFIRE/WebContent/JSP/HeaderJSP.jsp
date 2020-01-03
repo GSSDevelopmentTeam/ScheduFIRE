@@ -1,6 +1,10 @@
 <%@ page import="control.* "%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+<%@page import="java.util.*, model.bean.*, model.dao.*"%>
 <%
 	String ruolo = (String) session.getAttribute("ruolo");
+	//Notifiche lstnot = (Notifiche) session.getAttribute("notifiche");
 %>
 
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
@@ -27,9 +31,9 @@
     <img src="IMG/notizia.png" style="height:50px; width:50px ">
   </button>
   <div class="ddc">
-    <button class="dropdown-item" type="button">Notifica 1</button>
-    <button class="dropdown-item" type="button">Notifica 2</button>
-    <button class="dropdown-item" type="button">Notifica 3</button>
+    <button class="ntf gr"  >Notifica 1</button>
+    <button class="ntf yl" >Notifica 2</button>
+    <button class="ntf rd" >Il personale disponibile il 03/01/2020 non è sufficiente per creare il turno.</button>
   </div>
 </div>
 </span>

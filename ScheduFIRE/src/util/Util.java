@@ -6,7 +6,9 @@ import java.util.Base64;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -210,8 +212,7 @@ public class Util {
 				throw new ScheduFIREException("Devi essere capoturno per poter accedere a questa funzionalit�");
 		}
 	}
-
-
+	
 }	
 
 
