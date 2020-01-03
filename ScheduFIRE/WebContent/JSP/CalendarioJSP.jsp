@@ -14,7 +14,6 @@
 
 <title>ScheduFIRE</title>
 <%
-	String modalita_uso = "  Cliccare su un giorno per visualizzare le squadre";
 	String empty = " ";
 	String vero = "true";
 	String falso = "false";
@@ -31,10 +30,10 @@
 	String mese_stringa = (String) request.getAttribute("meseStringa");
 	int[] days_month = (int[]) request.getAttribute("days_month");
 	int[] days_work = (int[]) request.getAttribute("days_work");
-	//ArrayList<String> sala_operativa = (ArrayList<String>) request.getAttribute("sala_operativa");
-	//ArrayList<String> prima_partenza = (ArrayList<String>) request.getAttribute("prima_partenza");
-	//ArrayList<String> autoscala = (ArrayList<String>) request.getAttribute("autoscala");
-	//ArrayList<String> autobotte = (ArrayList<String>) request.getAttribute("autobotte");
+	ArrayList<String> sala_operativa = (ArrayList<String>) request.getAttribute("sala_operativa");
+	ArrayList<String> prima_partenza = (ArrayList<String>) request.getAttribute("prima_partenza");
+	ArrayList<String> autoscala = (ArrayList<String>) request.getAttribute("autoscala");
+	ArrayList<String> autobotte = (ArrayList<String>) request.getAttribute("autobotte");
 
 	//print per controllare se i dati passati dalla servlet sono giusti!
 	System.out.println("CalendarioJSP -> " + giorno + "/" + mese + "/" + anno + " -- " + mese_stringa);
@@ -46,15 +45,18 @@
 	
 	<!-- START: Container per calendario e schedulazione -->
 	<div class="containerAll">
+	
+			<%if(sala_operativa.isEmpty() && prima_partenza.isEmpty()
+				&& autoscala.isEmpty() && sala_operativa.isEmpty()) {%>
+				
+				<%//if(ruolo.equalsIgnoreCase("capoturno")){%>
+				<a href="#" class="edit" ><%=editSquadre%></a>
+				<%//} %>
+			
+			<%} %>
 		
 		<!-- START: Container per il calendaio -->
 		<div class="container-calendar">
-
-			<!-- Accesso effettuato dal capoturno, commentato per far partire la JSP.
-			Da decommentare a progetto terminato-->
-			<%//if(ruolo.equalsIgnoreCase("capoturno")){%>
-			<a href="#" class="edit" ><%=editSquadre%></a>
-			<%//} %>
 			
 			<!-- START: container per (<-) anno (->) -->
 			<div class="container-year">
@@ -84,8 +86,8 @@
 			<div class="grid-chose-month">
 				<div class="dropdown">
 				<input type="hidden" id="meseVisualizzato" value="<%=mese%>">
-					<button class="dropbtn"><%=month[mese-1]%>
-						<img src="IMG/arrow/arrow-down.png" />
+					<button class="dropbtn" id="meseStringa"><%=month[mese-1]%>
+						<img src="IMG/arrow/arrow-down.png"/>
 					</button>
 					<div class="dropdown-content">
 						<%
@@ -111,6 +113,8 @@
 					int i = 0;
 					String id = "";
 					String img = "";
+					String onClick ="";
+					
 					for (i=0; i < days_month.length; i++) {
 						if (days_month[i] < 0){
 							%>
@@ -127,11 +131,13 @@
 							if (days_work[i]==1){
 								id = "giornoLavorativoDiurno";
 								img = "diurno";
+								onClick ="dayClicked(this)";
 							}
 							
 							if(days_work[i]==2){
 								id = "giornoLavorativoNotturno";
 								img = "notturno";
+								onClick ="dayClicked(this)";
 							}
 							
 							if(giorno==day && mese_corrente == mese && anno_corrente == anno && days_work[i]==1){
@@ -145,7 +151,7 @@
 							}							
 							
 							%>
-							<div class="grid-item" id="<%=id%>" onClick="dayClicked(this)" style="cursor: pointer;">
+							<div class="grid-item" id="<%=id%>" onClick="<%=onClick %>" style="cursor: pointer;">
 
 							<img src="IMG/<%=img%>.png" alt=" "
 								 onerror="this.parentElement.innerHTML = '<%=day %>';"/>
@@ -155,6 +161,7 @@
 							<%
 							id = "";
 							img = "";
+							onClick="";
 						}
 					}
 				%>
@@ -164,16 +171,21 @@
 
 		</div>
 		<!-- AND container per il calendario -->
-
 		
-		<div class="container-schedul">
-		<a class="info"> <%=modalita_uso%></a>
+		<div class="container-schedul" id="vibilibity">
+		<a class="info" id="informazione"></a>
+		
+		
 			<div class="wrapper">
 			
 				<div class="mansione">
 					<p>SALA OPERATIVA</p>
 				</div>
 				<div class="vigili">
+					<%for(String s:sala_operativa){%>
+						<table id="SalaOperativa" class="table"><%=s %></table>
+					<%} %>
+					
 					<table id="SalaOperativa" class="table"></table>
 				</div>
 
@@ -182,6 +194,10 @@
 					<p>PRIMA PARTENZA</p>
 				</div>
 				<div class="vigili">
+					<%for(String s:prima_partenza){%>
+						<table id="PrimaPartenza" class="table"><%=s %></table>
+					<%} %>
+					
 					<table id="PrimaPartenza" class="table"></table>
 				</div>
 
@@ -190,6 +206,10 @@
 					<p>AUTO SCALA</p>
 				</div>
 				<div class="vigili">
+					<%for(String s:autoscala){%>
+						<table id="AutoScala" class="table"><%=s %></table>
+					<%} %>
+					
 					<table id="AutoScala" class="table"></table>
 				</div>
 
@@ -198,12 +218,16 @@
 					<p>AUTO BOTTE</p>
 				</div>
 				<div class="vigili">
+					<%for(String s:sala_operativa){%>
+						<table id="AutoBotte" class="table"><%=s %></table>
+					<%} %>
+					
 					<table id="AutoBotte" class="table"></table>
 				</div>
 
 			</div>
-
 		</div>
+		
 	</div>
 	<!-- AND: container per calendario e schedulazione -->
 	
@@ -218,6 +242,10 @@
 		}
 		
 		function dayClicked(input) {
+			
+		var v = document.getElementById('vibilibity');
+		v.style.display ='block';
+			
 		console.log("parte funzione dayClicked()");
 
 		var salaOperativa = $("#SalaOperativa");
@@ -228,6 +256,10 @@
 		var giorno = $(input).text();
 		var mese=$("#meseVisualizzato").val();
 		var anno=$("#annoVisualizzato").text();
+		
+		var meseStringa = $("#meseStringa").text();
+		$("#informazione").text("Composizione della squadra del"+giorno+" "+meseStringa+" "+anno);
+		
 		console.log("parametri passati");
 		console.log(giorno+" mese: "+mese+" anno: "+anno);
 		
@@ -242,6 +274,7 @@
 			dataType: "json",
 			async: true,
 			success: function(response) {
+								
 				salaOperativa.empty();
 				primaPartenza.empty();
 				autoScala.empty();

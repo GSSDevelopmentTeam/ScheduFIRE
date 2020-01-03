@@ -20,13 +20,13 @@ body{
 }
 
 .edit {
+	position:absolute;
 	border: 1px solid #454d55;
 	color: #454d55;
 	padding: 7px;
 	border-radius: 7px;
 	text-align: center;
 	text-decoration: none;
-	position:absolute;
 	font-size: 16px;
 	margin: 1.5%;
 	cursor: pointer;
@@ -41,7 +41,7 @@ body{
 
 /*contenitore per il calendario*/
 .container-calendar {
-	width: 80%;
+	width: 70%;
 	background-color: white;
 	font-family: Verdana;
 	border-right: 2px dotted black;
@@ -72,13 +72,17 @@ body{
 /*contenitore per la schedulazione
 flex:1 -> prende il resto del container*/
 .container-schedul {
-	flex: 30%;
+	flex: 1;
 	height: 600px;
 	overflow-y:scroll;
 	background-color: transparent;
 	font-family: Verdana;
 	margin: 1%;
 	padding-left: 1%;
+}
+
+#vibilibity{
+	display:none;
 }
 
 /*per la schedulazione delle squadre*/
@@ -115,10 +119,12 @@ flex:1 -> prende il resto del container*/
 
 #giornoLavorativoDiurno{
 	background-color: #a0d6d6;
+	color:black;
 }
 
 #giornoLavorativoNotturno{
 	background-color: #57b7b7;
+	color:black;
 }
 
 #giornoCorrenteLavorativoDiurno{
@@ -131,11 +137,6 @@ flex:1 -> prende il resto del container*/
 	font-weight: bold;
 	color: #b60000;
 	background-color: #57b7b7;
-}
-
-#giornoCorrente:hover{
-	color:white;
-	font-style: italic;
 }
 
 #giornoLavorativoDiurno:hover{
@@ -182,6 +183,7 @@ flex:1 -> prende il resto del container*/
 (->ovvero le parti del calendario che non hanno elementi)
 non ha la proprietà :hover*/
 .grid-item {
+	color: #343a40;
 	background-color: white;
 	border-bottom: 0.1px solid #343a40;
 	border-top: 0.1 px solid #343a40;
