@@ -49,6 +49,7 @@
 				<div class="modal-footer">
 	  			<button type="button" class="btn btn-outline-warning" onClick = "inserisciMalattia()">Aggiungi Malattia</button>
 					<button type="button" class="btn btn-outline-danger" data-dismiss="modal">Annulla</button>
+
 				</div>
 			</div>
 		</div>
@@ -99,12 +100,12 @@
 					%>
 					
 					<tr>
-						<td class="text-center"><%=vigile.getGrado() %></td>
+						<td class="text-center"><img src="Grado/<%=vigile.getGrado() %>.png" style="height:25%" onerror="this.parentElement.innerHTML='Non disponibile';"></td>
 						<td class="text-center"><%=vigile.getNome() %></td>
 						<td class="text-center"><%=vigile.getCognome()%></td>
 						<td class="text-center"><%=vigile.getEmail() %></td>
 						<td class="text-center"><%=vigile.getMansione()%></td>
-						<td class="text-center"><button class="pass btn btn-outline-danger" 
+						<td class="text-center"><button class="pass btn btn-outline-secondary" 
 						data-toggle="modal" data-target="#aggiungiMalattia"
 						onClick='apriFormAggiunta("<%=vigile.getEmail()%>")'>Aggiungi Malattia</button></td>
 					</tr>

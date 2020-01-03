@@ -7,8 +7,11 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 import model.ConnessioneDB;
 import model.bean.VigileDelFuocoBean;
@@ -19,6 +22,7 @@ import model.bean.VigileDelFuocoBean;
  * @author Eugenio Sottile 
  * @author Nicola Labanca
  * @author Alfredo Giuliano
+ * @author Emanuele Bombardelli
  */
 
 public class VigileDelFuocoDao {
@@ -39,8 +43,8 @@ public class VigileDelFuocoDao {
 												"order by giorniferieannocorrente", "order by giorniferieannoprecedente"};
 	
 	/**
-	 * Si occupa del salvataggio dei dati di un VigileDelFuocoBean nel database.
-	 * @param vf ï¿½ un oggetto di tipo VigileDelFuocoBean da memorizzare del database
+	 * Si occupa del salvataggio dei dati di un Vigile del Fuoco nel database.
+	 * @param vf Il vigile da memorizzare del database
 	 * @return true se l'operazione va a buon fine, false altrimenti
 	 */
 	public static boolean salva(VigileDelFuocoBean vf) {
@@ -81,9 +85,9 @@ public class VigileDelFuocoDao {
 	} 
 	
 	/**
-	 * Si occupa dell'ottenimento di un VigileDelFuocoBean dal database data la sua chiave.
-	 * @param chiaveEmail ï¿½ una stringa che identifica un VigileDelFuocoBean nel database
-	 * @return Un tipo VigileDelFuocoBean identificato da chiaveEmail, null altrimenti
+	 * Si occupa dell'ottenimento di un Vigile del Fuoco dal database data la sua chiave.
+	 * @param chiaveEmail una stringa contenente la mail del Vigile
+	 * @return il Vigile identificato da chiaveEmail (può essere null)
 	 */
 	public static VigileDelFuocoBean ottieni(String chiaveEmail) {
 		
@@ -609,6 +613,37 @@ public class VigileDelFuocoDao {
 			}
 		}catch(SQLException e) {
 			e.printStackTrace();
+		}
+	}
+
+	/**
+	 * Il metodo incrementa per ogni vigile del fuoco (nella mappa 'Key') il suo carico lavorativo
+	 * a seconda della squadra assegnata (nella mappa 'Value'). 
+	 * @param squadra Una mappa di Vigili del Fuoco e delle relative squadre 
+	 * @return true se l'operazione va a buon fine, false altrimenti.
+	 */
+	public static boolean caricoLavorativo(HashMap<VigileDelFuocoBean, String> squadra) {
+		try (Connection con = ConnessioneDB.getConnection()) {
+			PreparedStatement ps;
+			String incrementaCaricoLavorativo = "UPDATE Vigile Set caricolavoro = ? WHERE emailVF = ?;";
+			int count = 0;
+
+			Iterator i = squadra.entrySet().iterator();
+			while (i.hasNext()) {
+				Map.Entry<VigileDelFuocoBean, String> pair = (Map.Entry<VigileDelFuocoBean, String>) i.next();
+				int toAdd = (pair.getValue() == "Prima Partenza" || pair.getValue() == "Sala Operativa") ? 3 :
+					(pair.getValue() == "Auto Scala") ? 2 : 1;
+				ps = con.prepareStatement(incrementaCaricoLavorativo);
+				ps.setInt(1, pair.getKey().getCaricoLavoro() + toAdd);
+				ps.setString(2, pair.getKey().getEmail());
+				count = ps.executeUpdate();
+				
+				i.remove();
+			}
+			
+			return (count == squadra.size());
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
 		}
 	}
 

@@ -123,7 +123,8 @@ public class CalendarioServlet extends HttpServlet {
 				autobotte.add(cognome_nome);
 				break;
 			default: 
-				//genera errore: nome squadra non consentito
+				System.out.println("Parametro nome squadra non valido."
+						+ "LINEA 126 CalendarioServlet");
 				break;
 			}
 		}

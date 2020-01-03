@@ -26,7 +26,7 @@
 				%>
 
 					<tr>
-						<td class="text-center"><%=vigile.getGrado() %></td>
+						<td class="text-center"><img src="Grado/<%=vigile.getGrado() %>.png" style="height:25%" onerror="this.parentElement.innerHTML='Non disponibile';"></td>
 						<td class="text-center"><%=vigile.getNome() %></td>
 						<td class="text-center"><%=vigile.getCognome() %></td>
 						<td class="text-center"><%=vigile.getMansione() %></td>
