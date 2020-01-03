@@ -112,7 +112,7 @@
 	z-index: 999;
 	width: 10%;
 	background:none;
-	min-width: 160px;
+	min-width: 230px;
 	z-index: 1;
 }
 
@@ -128,11 +128,6 @@
 	
 }
 
-.ddc button{
-	background-color: rgba(0, 0, 0, 0.5);
-	color: white;
-}
-
 .dd:hover .ddc {
 	display: block;
 }
@@ -143,4 +138,25 @@
 	border-width:1%;
 	margin:1%;
 	box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+}
+.rd{
+	background-color: #ffaead!important;
+}
+.rd hover{
+	background-color: #B60000!important;
+	color:white;
+}
+.gr{
+	background-color: #adffb0!important;
+}
+.gr hover{
+	background-color: #008000!important;
+	color:white;
+}
+.yl{
+	background-color:#fffdad!important;
+}
+.yl hover {
+	background-color:#d7d700!important;
+	color:white;
 }
