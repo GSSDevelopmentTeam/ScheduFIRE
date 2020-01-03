@@ -15,7 +15,6 @@ import javax.servlet.http.HttpSession;
 
 import model.bean.VigileDelFuocoBean;
 import model.dao.VigileDelFuocoDao;
-import model.bean.ComponenteDellaSquadraBean;
 
 import util.Util;
 
@@ -41,16 +40,27 @@ public class ModificaComposizioneSquadreServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession sessione = request.getSession();
 		Date data = (Date) request.getAttribute("data");
-		Map<VigileDelFuocoBean, String> squadra = (HashMap<VigileDelFuocoBean, String>) sessione.getAttribute("squadra");
 		String oldVF = (String) request.getAttribute("email");
-		String newVF = (String) request.getAttribute("VFnew");
-		for(VigileDelFuocoBean daModificare : squadra.keySet()) {
-			if(daModificare.getEmail() == oldVF) {
-				VigileDelFuocoBean daAggiungere = VigileDelFuocoDao.ottieni(newVF);
+		Map<VigileDelFuocoBean, String> squadra = (HashMap<VigileDelFuocoBean, String>) sessione.getAttribute("squadra");
+		
+		if((boolean) request.getAttribute("fatto")) {
+			String newVF = (String) request.getAttribute("VFnew");
+			for(VigileDelFuocoBean daModificare : squadra.keySet()) {
+				if(daModificare.getEmail() == oldVF) {
+					VigileDelFuocoBean daAggiungere = VigileDelFuocoDao.ottieni(newVF);
+					String mansione = squadra.get(daModificare);
+					squadra.remove(daModificare);
+					squadra.put(daAggiungere, mansione);
+				}
+			}
+		}
+		else {
+			for(VigileDelFuocoBean daModificare : squadra.keySet()) {
 				
 			}
 		}
-		
+		request.getRequestDispatcher("JSP/GestioneSquadreJSP").forward(request, response);
+
 	}
 
 	/**
