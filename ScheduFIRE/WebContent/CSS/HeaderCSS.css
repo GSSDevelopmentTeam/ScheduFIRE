@@ -111,19 +111,9 @@
 	top: 13%;
 	z-index: 999;
 	width: 10%;
-	background-color: #f3f3f3;
+	background:none;
 	min-width: 160px;
-	box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
 	z-index: 1;
-}
-
-.ddc a {
-	float: none;
-	color: black;
-	padding: 12px 16px;
-	text-decoration: none;
-	display: block;
-	text-align: left;
 }
 
 .dd:hover .db {
@@ -133,11 +123,24 @@
 
 
 .ddc button:hover {
-	background-color: rgba(0, 0, 0, 0.3);
+	background-color: rgba(0, 0, 0, 0.3)!important;
 	color: white;
 	
 }
 
+.ddc button{
+	background-color: rgba(0, 0, 0, 0.5);
+	color: white;
+}
+
 .dd:hover .ddc {
 	display: block;
+}
+.ntf{
+	width: 98%;
+	border-radius: 25px;
+	border:outset;
+	border-width:1%;
+	margin:1%;
+	box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
 }

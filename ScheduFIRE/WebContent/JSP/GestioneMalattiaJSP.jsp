@@ -37,10 +37,8 @@
 				<div class="modal-body">
 					<p type="hidden" hidden="hidden" name="email" id="emailAggiuntaMalattia"></p>
 					<div class=" row justify-content-center">
-						<input id="dataInizio" placeholder="Giorno iniziale" readonly
-							size="34" /> <input id="dataFine" placeholder="Giorno finale"
-							readonly size="34" />
-
+						<input id="dataInizio" placeholder="Giorno iniziale" size="34" /> 
+						<input id="dataFine" placeholder="Giorno finale" size="34" />
 					</div>
 					
 				<div class="text-center" id="messaggioMalattia1"></div>
@@ -49,13 +47,34 @@
 				</div>
 
 				<div class="modal-footer">
-				<button type="button" class="btn btn-outline-warning" onClick = "inserisciMalattia()">Aggiungi Malattia</button>
-					<button type="button" class="btn btn-outline-danger""
-						data-dismiss="modal">Annulla</button>
+	  			<button type="button" class="btn btn-outline-warning" onClick = "inserisciMalattia()">Aggiungi Malattia</button>
+					<button type="button" class="btn btn-outline-danger" data-dismiss="modal">Annulla</button>
+
 				</div>
 			</div>
 		</div>
 	</div>
+	
+	
+	<!-- Modal di avviso aggiunta malattia-->
+ <div class="modal fade " id="menuConferma" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-sm modal-dialog-centered" role="document">
+    <div class="modal-content">
+
+      <div class="modal-body">
+        <img src="IMG/fire.png" class="rounded mx-auto d-block">
+        <h4 class="modal-title text-center">Sei sicuro?</h4>
+        <p class="text-center">Vuoi inserire questo il periodo di malattia?<br> La procedura non può essere annullata.</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline-danger" data-dismiss="modal">Annulla</button>
+        <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">inserisci</button>
+      </div>
+    </div>
+  </div>
+</div>
+	
+	
 	
 	
 	<!-- body aggiungi malattia -->
@@ -81,12 +100,12 @@
 					%>
 					
 					<tr>
-						<td class="text-center"><%=vigile.getGrado() %></td>
+						<td class="text-center"><img src="Grado/<%=vigile.getGrado() %>.png" style="height:25%" onerror="this.parentElement.innerHTML='Non disponibile';"></td>
 						<td class="text-center"><%=vigile.getNome() %></td>
 						<td class="text-center"><%=vigile.getCognome()%></td>
 						<td class="text-center"><%=vigile.getEmail() %></td>
 						<td class="text-center"><%=vigile.getMansione()%></td>
-						<td class="text-center"><button class="pass btn btn-outline-danger" 
+						<td class="text-center"><button class="pass btn btn-outline-secondary" 
 						data-toggle="modal" data-target="#aggiungiMalattia"
 						onClick='apriFormAggiunta("<%=vigile.getEmail()%>")'>Aggiungi Malattia</button></td>
 					</tr>
@@ -136,18 +155,15 @@
 					type : "POST",
 					url : "PeriodiDiMalattiaServlet",
 					data : {
-						"visFerie" : true,
+						"visMalattia" : true,
 						"JSON" : true,
-						"aggiunta": true,
 						"emailVF" : input,
 					},
 					dataType : "json",
 					async : false,
 					success : function(response) {
 						picker.setLockDays(response);
-                        console.log("settati giorni di malattia: " + response);
-                        
-                      
+               
         				var mail = document.getElementById("emailAggiuntaMalattia");
         				mail.innerHTML = input;
         				
@@ -155,46 +171,51 @@
         				var nome = $(cognome).prev('td');
         			
         				
-        				$("#titoloAggiuntaMalattia").text(
+       
+        				/*$("#titoloAggiuntaMalattia").text(
         						"Aggiunta malattia per " + nome.text() + " "+ cognome.text());
 						
 						$('#formAggiunta').show();
 						
-						$(".contenutiModal").css('background-color', '#e6e6e6');
+						$(".contenutiModal").css('background-color', '#e6e6e6');*/
 					}
+					
 				});
 			}
-				
-			</script>
 			
+			</script>
 			
 			<script>
 			function inserisciMalattia(){
-					 var emailVF = document.getElementById("emailAggiuntaMalattia").innerHTML;
-					 var dataIn = $('#dataInizio').val();
-					 var dataFi = $('#dataFine').val();
-					 
-					 console.log("qqqqqqqqqqqqqq"+dataIn);
-					 
-					 $.ajax({
-							type : "POST",
-							url : "PeriodiDiMalattiaServlet",
-							data : {
-								"JSON": true, 
-								"aggiunta": true, 
-								"emailVF": emailVF,
-								"dataInizio": dataInizio,
-								"dataFine" : dataFine},
-							dataType : "json",
-							async : false,
-							
-							success : function(response) {
-								
-								console.log("settati giorni di malattia: " + response);
-								
-							}
-						});	
+				 var emailVF = document.getElementById("emailAggiuntaMalattia").innerHTML;
+				 var dataIn = $('#dataInizio').val();
+				 var dataFi = $('#dataFine').val();
+				
+				 //alert(emailVF + ""+dataIn+""+dataFi);
+				 $.ajax({
+				type : "POST",
+				url : "AggiungiMalattiaServlet",
+				data : {
+					"inserisci": true, 
+					"JSON" : true,
+					"emailVF": emailVF,
+					"dataInizio": dataIn,
+					"dataFine" : dataFi
+				},
+						dataType : "json",
+						async : false,
+						
+					});	
+		}
+				
+
+			</script>
+			
+			<script>
+			function apriModal(){
+				$("#sese").attr("data-target","#menuConferma");
 			}
 			</script>
+			
 	</body>
 </html>
