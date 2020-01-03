@@ -22,6 +22,7 @@ import model.dao.SquadraDao;
 import model.dao.VigileDelFuocoDao;
 import model.bean.ComponenteDellaSquadraBean;
 import util.GiornoLavorativo;
+
 import util.Util;
 
 /**
@@ -119,6 +120,7 @@ public class ModificaComposizioneSquadreServlet extends HttpServlet {
 
 		request.getRequestDispatcher("JSP/GestioneSquadreJSP.jsp").forward(request, response);
 		return;
+
 	}
 
 	/**
