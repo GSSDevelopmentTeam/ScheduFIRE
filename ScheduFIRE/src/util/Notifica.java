@@ -1,18 +1,39 @@
 package util;
 
-/**
- * La classe si occupa della generazione, della gestione e dell'aggiornamento delle
- * notifiche del sistema. 
- * @author Emanuele Bombardelli
- *
- */
 public class Notifica {
+	private int severita;
+	private String testo;
+	private String path;
 	
-	public Notifica() {
-		update();
+	public Notifica(int severita, String testo, String path) {
+		this.severita = severita;
+		this.testo = testo;
+		this.path = path;
 	}
 
-	public static void update() {
-		
+	public int getSeverita() {
+		return severita;
 	}
+
+	public void setSeverita(int severita) {
+		this.severita = severita;
+	}
+
+	public String getTesto() {
+		return testo;
+	}
+
+	public void setTesto(String testo) {
+		this.testo = testo;
+	}
+
+	public String getPath() {
+		return path;
+	}
+
+	public void setPath(String path) {
+		this.path = path;
+	}
+	
+	
 }

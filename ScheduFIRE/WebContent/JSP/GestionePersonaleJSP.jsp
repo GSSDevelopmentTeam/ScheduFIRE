@@ -52,32 +52,56 @@ if(ordinamentoObj.getClass().getSimpleName().equals("String"))
 			
 		}
 		
-		
-		var popup = document.getElementById("divPopup");
-
-		window.onclick = function(event) {
-			if (event.target == popup) {
-				popup.style.display = "none";
-			}
-		}
-		
 		function chiudiFormAggiunta() {
 			
 			$("#divPopup").hide();
 			
 		}
 		
+		function mostraFormCancellazione(id) {
+			
+			var newID = id * (-1);
+			$("#divPopupFormEliminazioneVF" + newID).show();
+			
+		}
+		
+		function chiudiFormCancellazione(parent) {
+			
+			$("#" + parent.parentNode.id).hide();
+			
+		}
+		
 		//Validazione form
 		
+		/*
+		Questa funzione viene invocata ad ogni submit di ogni form di modifica
+		presente nella pagina ed al submit del form di aggiunta di un VF.
+		Come parametro alla funzione viene passato l'id del form.
+		L'id di ogni elemento del form è formato dall'id del form concatenato
+		il nome dell'elemento. 
+		(Es. id form = "form1", di conseguenza l'id dell'elemento che deve
+		contenere il nome sara "form1Nome")
+		
+		L'ottenimento degli elementi funziona, ma nel momento in cui faccio
+		match sulla regex, la funziona si arresta.
+		*/
+		
 		function validazioneForm(id) {
-			
+
 			var nome = document.getElementById(id + "Nome");
 			var cognome = document.getElementById(id + "Cognome");
 			var email = document.getElementById(id + "Email");
 			var grado = document.getElementById(id + "Grado");
 			var mansione = document.getElementById(id + "Mansione");
 			
-			if( (nome.value === "") || (nome.value == "undefined") || 
+			alert(cognome.id);
+			alert(cognome.value);
+			alert((cognome.value === ""))
+			alert((cognome.value === "undefined"))
+			alert(nome.value.test("^[A-Z]{1}[a-z]{0,19}+$"))
+			alert(cognome.value.test("^[A-Z]{1}[a-z]{0,19}+$"))
+			
+			if( (nome.value === "") || (nome.value === "undefined") || 
 					!nome.value.test("^[A-Z]{1}[a-z]{0,19}+$") ) {
 				
 				nome.focus();
@@ -85,15 +109,15 @@ if(ordinamentoObj.getClass().getSimpleName().equals("String"))
 				return false;
 				
 			}
-			else if( (cognome.value === "") || (cognome.value == "undefined") ||
-					!cognome.value.test("/^[A-Z]{1}[a-z]{0,19}+$/") ) {
+			else if( (cognome.value === "") || (cognome.value === "undefined") ||
+					!cognome.value.test("^[A-Z]{1}[a-z]{0,19}+$") ) {
 
 				cognome.focus();
 				alert("Cognome errato!");
 				return false;
 				
 			}
-			else if( (email.value === "") || (email.value == "undefined") || 
+			else if( (email.value === "") || (email.value === "undefined") || 
 					!email.value.test("^[A-Za-z]{2,}[1-9]*[0-9]*$") ) {
 
 				email.focus();
@@ -101,16 +125,16 @@ if(ordinamentoObj.getClass().getSimpleName().equals("String"))
 				return false;
 				
 			}
-			else if( (grado.value === "") || (grado.value == "undefined") || 
-					(grado.value == "-")  ) {
+			else if( (grado.value !== "Qualificato") || (grado.value !== "Esperto") || 
+					 (grado.value !== "Coordinatore") ) {
 
 				grado.focus();
 				alert("Grado errato!");
 				return false;
 				
 			}
-			else if( (mansione.value === "") || (mansione.value == "undefined") || 
-					(mansione.value == "-")  ) {
+			else if( (mansione.value !== "Capo Squadra") || (mansione.value !== "Autista") || 
+					(mansione.value !== "Vigile")  ) {
 
 				mansione.focus();
 				alert("Mansione errata!");
@@ -206,7 +230,7 @@ if(ordinamentoObj.getClass().getSimpleName().equals("String"))
 		</form>
 
 		<button id="buttonAggiungi" type="button"
-			class="btn btn-danger" data-toggle="modal"
+			class="btn btn-outline-secondary" data-toggle="modal"
 			onclick="mostraFormAggiuta()">Aggiungi Vigile del Fuoco</button>
 
 		<br> <br>
@@ -235,7 +259,7 @@ if(ordinamentoObj.getClass().getSimpleName().equals("String"))
 
 				<%		
 					
-					int id = 0;
+					int id = 1;
 					for(VigileDelFuocoBean vf: vigili) {
 					
 				%>
@@ -269,34 +293,60 @@ if(ordinamentoObj.getClass().getSimpleName().equals("String"))
 						</td>
 
 						<td>
-
-							<form action="./EliminaVFServlet">
-
-								<input type="hidden" name="nome" value=<%= vf.getNome() %>>
-
-								<input type="hidden" name="cognome" value=<%= vf.getCognome() %>>
-
-								<input type="hidden" name="email" value=<%= vf.getEmail() %>>
-
-								<input type="hidden" name="turno" value=<%= vf.getTurno() %>>
-
-								<input type="hidden" name="mansione"
-									value=<%= vf.getMansione() %>> <input type="hidden"
-									name="giorniFerieAnnoCorrente"
-									value=<%= vf.getGiorniFerieAnnoCorrente() %>> <input
-									type="hidden" name="giorniFerieAnnoPrecedente"
-									value=<%= vf.getGiorniFerieAnnoPrecedente() %>> <input
-									type="hidden" name="caricoLavoro"
-									value=<%= vf.getCaricoLavoro() %>> <input type="hidden"
-									name="adoperabile" value=<%= vf.isAdoperabile() %>> <input
-									type="hidden" name="grado" value=<%= vf.getGrado() %>>
-
-								<input type="hidden" name="username" 
-									value=<%= vf.getUsername() %>>
-								<button type="submit" class="btn btn-outline-danger" data-toggle="modal"
-									class="button" value="Cancella">Cancella</button>
-
-							</form>
+						
+							<div id = <%= "divPopupFormEliminazioneVF" + id %> class="divPopupFormEliminazioneVF">
+								
+								<br> <br> <br> <br> <br> 
+								
+								<form id = <%= "formEliminazioneVF" + id %> class="form-popup" action="./EliminaVFServlet">
+								
+									<br>
+									
+									<label id = "labelCancellazione">
+										Sei sicuro di cancellare <%= vf.getCognome() %> <%= vf.getNome() %> ?
+									</label>
+									
+									<br> <br>
+	
+									<input type="hidden" name="nome" value=<%= vf.getNome() %>>
+	
+									<input type="hidden" name="cognome" value=<%= vf.getCognome() %>>
+	
+									<input type="hidden" name="email" value=<%= vf.getEmail() %>>
+	
+									<input type="hidden" name="turno" value=<%= vf.getTurno() %>>
+	
+									<input type="hidden" name="mansione"
+										value=<%= vf.getMansione() %>> <input type="hidden"
+										name="giorniFerieAnnoCorrente"
+										value=<%= vf.getGiorniFerieAnnoCorrente() %>> <input
+										type="hidden" name="giorniFerieAnnoPrecedente"
+										value=<%= vf.getGiorniFerieAnnoPrecedente() %>> <input
+										type="hidden" name="caricoLavoro"
+										value=<%= vf.getCaricoLavoro() %>> <input type="hidden"
+										name="adoperabile" value=<%= vf.isAdoperabile() %>> <input
+										type="hidden" name="grado" value=<%= vf.getGrado() %>>
+	
+									<input type="hidden" name="username" 
+										value=<%= vf.getUsername() %>>
+										
+									<input id = "buttonCancella" type="submit" class="btn btn-outline-danger" 
+										data-toggle="modal" class="button" value="Sì">
+									
+									&ensp;
+										
+									<input type = "button" id = "buttonCancellaNo" class = "btn btn-danger"
+										data-toggle="modal" value = "No" onclick = "chiudiFormCancellazione(this.parentNode)">
+										
+									<br> <br>
+									
+								</form>
+								
+							</div>
+							
+							<button id = <%= id * (-1) %> class = "btn btn-outline-danger" onclick = "mostraFormCancellazione(this.id)">
+								Cancella
+							</button>
 
 						</td>
 
@@ -311,7 +361,7 @@ if(ordinamentoObj.getClass().getSimpleName().equals("String"))
 								<br> <label> Nome: <input
 									id=<%= "modificaVF" + id + "Nome" %> type="text"
 									name="nomeNuovo" value=<%= vf.getNome() %>>
-								</label> <label> Cognome: <input
+								</label> &ensp; <label> Cognome: <input
 									id=<%= "modificaVF" + id + "Cognome" %> type="text"
 									name="cognomeNuovo" value=<%= vf.getCognome() %>>
 								</label> <br> <br> <label> Email: <input
@@ -398,9 +448,13 @@ if(ordinamentoObj.getClass().getSimpleName().equals("String"))
 									name="giorniFerieAnnoPrecedenteNuovi"
 									value=<%= vf.getGiorniFerieAnnoPrecedente() %> min="0">
 								</label> <br> <br> <input type="hidden" name="emailVecchia"
-									value=<%= vf.getEmail() %>> <Button type="submit" class="btn btn-outline-secondary"
+									value=<%= vf.getEmail() %>> 
+									
+									<Button type="submit" class="btn btn-outline-secondary"
 									data-toggle="modal" class="button" value="Conferma" onsubmit="validazioneForm()">
-									Conferma</Button>
+										Conferma
+									</Button>
+									
 								<br> <br>
 
 							</form>
@@ -445,6 +499,7 @@ if(ordinamentoObj.getClass().getSimpleName().equals("String"))
 
 			<br> <label> Nome: <input id="aggiungiVFNome"
 				type="text" name="nome">
+			&ensp;
 			</label> <label> Cognome: <input id="aggiungiVFCognome" type="text"
 				name="cognome">
 			</label> <br> <br> <label> Email: <input
@@ -471,13 +526,13 @@ if(ordinamentoObj.getClass().getSimpleName().equals("String"))
 				min="0" value="0">
 			</label> <br> <br>
 			
-				<Button id="buttonFormAggiungiVF" type="submit"
+				<input id="buttonFormAggiungiVF" type="submit"
 				class="btn btn-outline-secondary" data-toggle="modal"
-				class="button" value="Aggiungi"> Aggiungi </Button>
+				class="button" value="Aggiungi">
 				&nbsp;
-				<Button  value="Chiudi"
+				<input type = "button" value="Chiudi"
 				class="btn btn-outline-danger" data-toggle="modal" class="button"
-				onclick="chiudiFormAggiunta()"> Chiudi </Button>
+				onclick="chiudiFormAggiunta()">
 			<br> <br>
 
 		</form>

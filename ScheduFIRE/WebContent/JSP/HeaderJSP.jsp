@@ -31,9 +31,9 @@
     <img src="IMG/notizia.png" style="height:50px; width:50px ">
   </button>
   <div class="ddc">
-    <button class="ntf" style="border-color:#adffb0" >Notifica 1</button>
-    <button class="ntf" style="border-color:#fffdad" >Notifica 2</button>
-    <button class="ntf" style="border-color:#ffaead" >Notifica 3</button>
+    <button class="ntf gr"  >Notifica 1</button>
+    <button class="ntf yl" >Notifica 2</button>
+    <button class="ntf rd" >Il personale disponibile il 03/01/2020 non è sufficiente per creare il turno.</button>
   </div>
 </div>
 </span>

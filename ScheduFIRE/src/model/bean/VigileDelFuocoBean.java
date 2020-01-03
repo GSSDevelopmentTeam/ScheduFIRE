@@ -196,4 +196,15 @@ public class VigileDelFuocoBean {
 		return true;
 	}
 	
+	
+	public boolean equalsVF (VigileDelFuocoBean v) {
+		if (this.getNome().equalsIgnoreCase(v.getNome()) &&
+			this.getCognome().equalsIgnoreCase(v.getCognome()) &&
+			this.getEmail().equalsIgnoreCase(v.getEmail())) {
+			return true;
+		}
+		else return false;
+	}
+
+	
 }
