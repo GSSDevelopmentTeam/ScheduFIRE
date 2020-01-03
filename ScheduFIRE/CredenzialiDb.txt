@@ -1,5 +1,0 @@
-Nome Porta Host: localhost
-Porta Host: 3306
-Nome Database: ScheduFire
-Username: root
-Password: pass
