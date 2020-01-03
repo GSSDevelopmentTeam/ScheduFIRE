@@ -13,7 +13,7 @@ public class Validazione {
 	
 	private static final Pattern PATTERN_NOME_COGNOME = Pattern.compile("^[A-Z]{1}[a-z]{0,19}+$");
 	
-	private static final Pattern PATTERN_EMAIL = Pattern.compile("^[A-Za-z]{2,}[1-9]*[0-9]*$"); 
+	private static final Pattern PATTERN_EMAIL = Pattern.compile("^[A-Za-z]+\\.[A-Za-z]+[1-9]*[0-9]*$"); 
 	
 	private static final String[] MANSIONI = {"Capo Squadra", "Autista", "Vigile"};
 	
@@ -27,7 +27,7 @@ public class Validazione {
 	 * @return true se il formato è rispettato, false altrimenti.
 	 */
 	public static boolean nome(String nome) {
-		return (PATTERN_NOME_COGNOME.matcher(nome).matches()) && (nome != null);
+		return (nome != null) && (PATTERN_NOME_COGNOME.matcher(nome).matches());
 	}
 	
 	/**
@@ -36,7 +36,7 @@ public class Validazione {
 	 * @return true se il formato è rispettato, false altrimenti.
 	 */
 	public static boolean cognome(String cognome) {
-		return (PATTERN_NOME_COGNOME.matcher(cognome).matches()) && (cognome !=null);
+		return (cognome !=null) && (PATTERN_NOME_COGNOME.matcher(cognome).matches());
 	}
 	
 	/**
@@ -46,7 +46,7 @@ public class Validazione {
 	 */
 	public static boolean email(String email) {
 		
-		return (PATTERN_EMAIL.matcher(email.toLowerCase()).matches()) && (email != null);
+		return (email != null) && (PATTERN_EMAIL.matcher(email.toLowerCase()).matches());
 
 	}
 	

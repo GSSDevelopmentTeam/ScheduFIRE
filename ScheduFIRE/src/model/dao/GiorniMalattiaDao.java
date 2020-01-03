@@ -38,7 +38,8 @@ public class GiorniMalattiaDao {
 		 PreparedStatement ps = null;
 		 ResultSet res = null;
 		 
-		 
+		 String query = "INSERT INTO schedufire.malattia (dataInizio, dataFine, emailCT, emailVF) "
+                 +"values(?, ?, ?, ?);";
 		 //controllo
 		 if(malattia == null) {
 			 return false;
@@ -49,11 +50,6 @@ public class GiorniMalattiaDao {
 		 try{
 			con = ConnessioneDB.getConnection();
 			// Esecuzione query
-			 String query = "INSERT INTO schedufire.malattia (dataInizio, dataFine, emailCT, emailVF) "
-                     +"values(?, ?, ?, ?);";
-			   
-			 
-			 
 				ps = con.prepareStatement(query);
 				
 				ps.setDate(1, malattia.getDataInizio());
@@ -62,8 +58,9 @@ public class GiorniMalattiaDao {
 				ps.setString(4, malattia.getEmailVF());
 			    res = ps.getResultSet();
 			    
-			    if(ps.executeUpdate() == 1) 
+			    if(ps.executeUpdate() > 0) 
 			    	aggiunta = true;
+			    con.commit();
 		 }finally {
 					ConnessioneDB.releaseConnection(con);
 				}
@@ -76,23 +73,25 @@ public class GiorniMalattiaDao {
 	  
 	 public static List<GiorniMalattiaBean> ottieniMalattie(String email) {
 			
-			String emailVF, emailCT;
-			Date dataInizio, dataFine;
-			int idPeriodo;
+			String emailVF;
+			String emailCT;
+			Date dataInizio;
+			Date dataFine;
 			PreparedStatement ps;
 			ResultSet rs;
 			GiorniMalattiaBean malattia;
+			int idMalattia;
 			
 			List<GiorniMalattiaBean> periodiMalattia = new ArrayList<GiorniMalattiaBean>();
 			
 			String malattieSQL = "SELECT m.id, m.dataInizio, m.dataFine, m.emailCT, m.emailVF " +
 					"FROM Malattia m WHERE m.emailVF = ? AND m.dataFine >= CURDATE();";
 
-			try(Connection connessione = ConnessioneDB.getConnection()){
-				
+			try{
+				Connection con= ConnessioneDB.getConnection();
 				emailVF = email;
 				
-				ps = connessione.prepareStatement(malattieSQL);
+				ps = con.prepareStatement(malattieSQL);
 				ps.setString(1, emailVF);
 				
 				rs = ps.executeQuery();
@@ -100,12 +99,12 @@ public class GiorniMalattiaDao {
 				while(rs.next()) {
 					malattia = new GiorniMalattiaBean();
 					
-					idPeriodo = rs.getInt("id");
+					idMalattia = rs.getInt("id");
 					emailCT = rs.getString("emailCT");
 					dataInizio = rs.getDate("dataInizio");
 					dataFine = rs.getDate("dataFine");
 					
-					malattia.setId(idPeriodo);
+					malattia.setId(idMalattia);
 					malattia.setEmailVF(emailVF);
 					malattia.setEmailCT(emailCT);
 					malattia.setDataInizio(dataInizio);
@@ -120,6 +119,3 @@ public class GiorniMalattiaDao {
 			return periodiMalattia;
 		}
 }
-
-
-

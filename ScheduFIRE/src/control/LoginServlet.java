@@ -1,6 +1,7 @@
 package control;
 
 import java.io.IOException;
+import java.security.NoSuchAlgorithmException;
 import java.util.Base64;
 
 import javax.servlet.RequestDispatcher;
@@ -15,6 +16,8 @@ import model.bean.CapoTurnoBean;
 import model.bean.CredenzialiBean;
 import model.dao.CapoTurnoDao;
 import model.dao.UserDao;
+import util.Notifiche;
+import util.PasswordSha256;
 
 /**
  * Servlet implementation class LoginServlet
@@ -50,12 +53,6 @@ public class LoginServlet extends HttpServlet {
 
 		}
 		else {
-
-
-
-
-
-
 			response.setContentType("text/html");
 
 			String username = request.getParameter("Username");
@@ -63,8 +60,12 @@ public class LoginServlet extends HttpServlet {
 			if (username == null || username.equals(""))
 				request.getRequestDispatcher("/JSP/LoginJSP.jsp").forward(request, response);
 			else {
-				String passwordBase64format = Base64.getEncoder().encodeToString(password.getBytes());
-
+				String passwordBase256format;
+				try {
+					
+					passwordBase256format = PasswordSha256.getEncodedpassword(password);
+				
+				
 				UserDao credenziali = new UserDao();
 				CredenzialiBean utente = credenziali.login(username);
 
@@ -73,14 +74,12 @@ public class LoginServlet extends HttpServlet {
 					request.getRequestDispatcher("/JSP/LoginJSP.jsp").forward(request, response);
 				} else {
 
-					if (passwordBase64format.equals(utente.getPassword())) {
-
-
-
+					if (passwordBase256format.equals(utente.getPassword())) {
 						session.setAttribute("ruolo", utente.getRuolo());
 						if (utente.getRuolo().equalsIgnoreCase("capoturno")) {
 							CapoTurnoBean capoturno=CapoTurnoDao.ottieni(username);
 							session.setAttribute("capoturno", capoturno);
+							session.setAttribute("notifiche", new Notifiche());
 							response.sendRedirect("HomeCTServlet");
 							return;
 							//RequestDispatcher dispatcher = request.getRequestDispatcher("WebContent\\JSP\\LoginJSP.jsp");
@@ -99,7 +98,13 @@ public class LoginServlet extends HttpServlet {
 					}
 
 				}
+				
+			} catch (NoSuchAlgorithmException e) {
+				
+				e.printStackTrace();
 			}
+
 		}
+	}
 	}
 }

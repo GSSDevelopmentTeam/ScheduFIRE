@@ -17,15 +17,18 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.json.JSONArray;
 
+import model.bean.CapoTurnoBean;
 import model.bean.FerieBean;
 import model.bean.GiorniMalattiaBean;
 import model.bean.VigileDelFuocoBean;
 import model.dao.FerieDao;
 import model.dao.GiorniMalattiaDao;
 import model.dao.VigileDelFuocoDao;
+import util.GiornoLavorativo;
 
 /**
  * Servlet implementation class PeriodiDiMalattiaServlet
@@ -53,7 +56,7 @@ public class PeriodiDiMalattiaServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		if(request.getParameter("JSON")!=null && request.getParameter("visFerie") != null ) {
+		if(request.getParameter("JSON")!=null && request.getParameter("visMalattia")!=null ) {
 					String emailVF = request.getParameter("emailVF");
 					
 					if( emailVF == null )
@@ -73,84 +76,11 @@ public class PeriodiDiMalattiaServlet extends HttpServlet {
 					response.getWriter().append(array.toString());
 						}
 		
-		
-		else if(request.getParameter("JSON")!=null && request.getParameter("aggiunta")!=null )
-		{   
-		    String emailCT = "mail55";
-		    String emailVF = request.getParameter("emailVF");
-			String dataIniz = request.getParameter("dataInizio");
-			String dataFin = request.getParameter("dataFine"); 
-			Date dataInizio = null;
-		    Date dataFine = null;
-				   
-					if( emailCT == null )
-						throw new ScheduFIREException();
-					if( dataFin == null )
-						throw new ScheduFIREException();
-		    
-			    String annoIniz=dataIniz.substring(0, 4);
-			    String meseIniz=dataIniz.substring(5, 7);
-			    String giornoIniz=dataIniz.substring(8, 10);
-			    String annoFin=dataFin.substring(0, 4);
-			    String meseFin=dataFin.substring(5, 7);
-			    String giornoFin=dataFin.substring(8, 10);
-			    
-			    
-			    String datainiz = annoIniz+"-"+meseIniz+"-"+giornoIniz;
-			    String datafin = annoFin+"-"+meseFin+"-"+giornoFin;
-			    
-			    DateFormat df = new SimpleDateFormat ("d/M/yyyy");
-			    df.setLenient (false);
-			   
-			    
-			    try {
-					dataInizio = (Date) df.parse (datainiz);
-				} catch (ParseException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-			    try {
-					dataFine = (Date) df.parse (datafin);
-				} catch (ParseException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-				
-			    GiorniMalattiaBean malattia = new GiorniMalattiaBean(0, dataInizio, dataFine, emailCT, emailVF);
-			    
-				malattia.setId(0);
-				malattia.setDataInizio(dataInizio);//date
-				malattia.setDataFine(dataFine);//date
-				malattia.setEmailCT(emailCT);
-				malattia.setEmailVF(emailVF);
-			
-			   if( ! GiorniMalattiaDao.addMalattia(malattia)) 
-					throw new ScheduFIREException();
-			
-		}
 		else {
 		ArrayList<VigileDelFuocoBean> listaVigili = new ArrayList<VigileDelFuocoBean>(VigileDelFuocoDao.ottieni());
 		
 		request.setAttribute("listaVigili", listaVigili);
 		request.getRequestDispatcher("JSP/GestioneMalattiaJSP.jsp").forward(request, response);
-	}
-			/*DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d/MM/yyyy");
-		
-				Date inizio = Date.parse(request.getParameter("data_inizio"), formatter);
-				LocalDate fine = LocalDate.parse(request.getParameter("data_fine"), formatter);;
-		
-		
-				if( inizio == null || fine == null) {
-					
-				}
-				else {
-					int v = 8;
-					GiorniMalattiaBean malattia = new GiorniMalattiaBean(v, inizio, fine, "mail55", "mail14");
-					
-					GiorniMalattiaDao x = new GiorniMalattiaDao();	
-					x.addMalattia(malattia);
-				}*/
-	}
-	
-
+  }
+ }
 }
