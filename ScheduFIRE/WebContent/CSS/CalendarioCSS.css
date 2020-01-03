@@ -63,7 +63,7 @@ body{
 
 .container-year {
 	overflow:hidden;
-	color: black;
+	color: #343a40;
 	font-family: Rod;
 	text-align: center;
 	font-size: 200%;
@@ -133,6 +133,31 @@ flex:1 -> prende il resto del container*/
 	background-color: #57b7b7;
 }
 
+#giornoCorrente:hover{
+	color:white;
+	font-style: italic;
+}
+
+#giornoLavorativoDiurno:hover{
+	color:white;
+	font-style: italic;
+}
+
+#giornoLavorativoNotturno:hover{
+	color:white;
+	font-style: italic;
+}
+
+#giornoCorrenteLavorativoDiurno:hover{
+	color:white;
+	font-style: italic;
+}
+
+#giornoCorrenteLavorativoNotturno:hover{
+	color:white;
+	font-style: italic;
+}
+
 .grid-days {
 	display: grid;
 	grid-template-columns: auto auto auto auto auto auto auto;
@@ -179,15 +204,6 @@ non ha la proprietà :hover*/
 }
 
 
-.grid-item:hover {
-	background-color: #454d55;
-	color:white;
-	cursor:default;
-	transition: color .2s ease-in-out,background-color .7s;
-}
-
-
-
 /*menù DROPDOWN dei mesi*/
 .grid-chose-month{
 	display:grid;
@@ -197,8 +213,8 @@ non ha la proprietà :hover*/
 
 .dropbtn {
 	background-color: white;
-	border-bottom: 2px solid black !important;
-	color: black;
+	border-bottom: 2px solid #343a40 !important;
+	color: #343a40;
 	font-size: 150%;
 	border: none;
 	cursor: pointer;
@@ -221,14 +237,14 @@ non ha la proprietà :hover*/
 .dropdown-item {
 	font-size: 80%;
 	color: #4b4b4b;
-	padding: 12px 12px;
+	padding: 10px 10px;
 	text-decoration: none;
 	display: block;
 }
 
 .dropdown-content a:hover {
-	background-color: #f1f1f1;
-	color: black;
+	background-color: #454d55;
+	color: white;
 }
 
 .dropdown:hover .dropdown-content {
