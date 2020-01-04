@@ -76,8 +76,8 @@ public class CalendarioServlet extends HttpServlet {
 		//funzione per i giorni lavorativi
 		riempiLavorativo(mese, anno, days_work);
 
-		for(i=0; i<42; i++)
-			System.out.println(days_work[i]+"\n");
+		//for(i=0; i<42; i++)
+			//System.out.println(days_work[i]+"\n");
 
 		//INIZIO schedulazione dei vigili
 		//creo i 4 array per ogni squadra
