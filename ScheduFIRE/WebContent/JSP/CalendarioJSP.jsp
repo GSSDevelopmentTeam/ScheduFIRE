@@ -18,7 +18,7 @@
 	String vero = "true";
 	String falso = "false";
 	String editSquadre = "   Modifica squadre";
-	String[] days = {"  Lunedì  ", " Martedì  ", "Mercoledi ", " Giovedì  ", " Venerdì  ", "  Sabato  ", "   Domenica "};
+	String[] days = {"  LunedÃ¬  ", " MartedÃ¬  ", "Mercoledi ", " GiovedÃ¬  ", " VenerdÃ¬  ", "  Sabato  ", "   Domenica "};
 	String[] month = {"Gennaio", "Febbraio", "Marzo", "Aprile", "Maggio", "Giugno", "Luglio", "Agosto",
 			"Settembre", "Ottobre", "Novembre", "Dicembre"};
 	int giorno = (Integer) request.getAttribute("giorno");
@@ -43,52 +43,45 @@
 <body>
 	<!-- Barra Navigazione -->
 	<jsp:include page="HeaderJSP.jsp" />
-	
+
 	<!-- START: Container per calendario e schedulazione -->
 	<div class="containerAll">
-	
-			<%if(sala_operativa.isEmpty() && prima_partenza.isEmpty()
+
+		<%if(sala_operativa.isEmpty() && prima_partenza.isEmpty()
 				&& autoscala.isEmpty() && sala_operativa.isEmpty()) {%>
-				
-				<%//if(ruolo.equalsIgnoreCase("capoturno")){%>
-				<a href="#" class="edit" ><%=editSquadre%></a>
-				<%//} %>
-			
-			<%} %>
-		
+
+		<%//if(ruolo.equalsIgnoreCase("capoturno")){%>
+		<a href="#" class="edit"><%=editSquadre%></a>
+		<%//} %>
+
+		<%} %>
+
 		<!-- START: Container per il calendaio -->
 		<div class="container-calendar">
-			
+
 			<!-- START: container per (<-) anno (->) -->
 			<div class="container-year">
 				<a class="altroAnno"
-					href="CalendarioServlet?mese=<%=mese %>&anno=<%=anno-1 %>">
-					<img src="IMG/arrow/left-arrow-p.png"
-						 style="margin-right: 10px"
-					 	 onmouseover="this.src='IMG/arrow/left-arrow-d.png'"
-						 onmouseout="this.src='IMG/arrow/left-arrow-p.png'" />
-				</a>
-				
-				<span id="annoVisualizzato">
-					<%=anno%>
-				</span>
-				
-				<a class="altroAnno"
-					href="CalendarioServlet?mese=<%=mese %>&anno=<%=anno+1 %>">
-					<img src="IMG/arrow/right-arrow-p.png"
-						 style="margin-left:5px"
-						 onmouseover="this.src='IMG/arrow/right-arrow-d.png'"
-						 onmouseout="this.src='IMG/arrow/right-arrow-p.png'" />
+					href="CalendarioServlet?mese=<%=mese %>&anno=<%=anno-1 %>"> <img
+					src="IMG/arrow/left-arrow-p.png" style="margin-right: 10px"
+					onmouseover="this.src='IMG/arrow/left-arrow-d.png'"
+					onmouseout="this.src='IMG/arrow/left-arrow-p.png'" />
+				</a> <span id="annoVisualizzato"> <%=anno%>
+				</span> <a class="altroAnno"
+					href="CalendarioServlet?mese=<%=mese %>&anno=<%=anno+1 %>"> <img
+					src="IMG/arrow/right-arrow-p.png" style="margin-left: 5px"
+					onmouseover="this.src='IMG/arrow/right-arrow-d.png'"
+					onmouseout="this.src='IMG/arrow/right-arrow-p.png'" />
 				</a>
 			</div>
 			<!-- END: container per (<-) anno (->) -->
-			
+
 			<!-- START: container per la griglia dei mesi -->
 			<div class="grid-chose-month">
 				<div class="dropdown">
-				<input type="hidden" id="meseVisualizzato" value="<%=mese%>">
+					<input type="hidden" id="meseVisualizzato" value="<%=mese%>">
 					<button class="dropbtn" id="meseStringa"><%=month[mese-1]%>
-						<img src="IMG/arrow/arrow-down.png"/>
+						<img src="IMG/arrow/arrow-down.png" />
 					</button>
 					<div class="dropdown-content">
 						<%
@@ -119,8 +112,8 @@
 					for (i=0; i < days_month.length; i++) {							
 							if (days_month[i] < 0){
 								%>
-								<div class="item-empty"><%=empty%></div>
-								<%
+				<div class="item-empty"><%=empty%></div>
+				<%
 						} else
 							{
 								day++;
@@ -132,13 +125,13 @@
 								if (days_work[i]==1){
 									id = "giornoLavorativoDiurno";
 									img = "diurno";
-									onClick ="dayClicked(this)";
+									onClick ="dayClicked($(this).text())";
 								}
 								
 								if(days_work[i]==2){
 									id = "giornoLavorativoNotturno";
 									img = "notturno";
-									onClick ="dayClicked(this)";
+									onClick ="dayClicked($(this).text())";
 								}
 								
 								if(giorno==day && mese_corrente == mese && anno_corrente == anno && days_work[i]==1){
@@ -152,15 +145,16 @@
 								}							
 								
 								%>
-								<div class="grid-item" id="<%=id%>" onClick="<%=onClick %>" style="cursor: pointer;">
-										<img src="IMG/<%=img%>.png" alt=" "
-											 onerror="this.parentElement.innerHTML = '<%=day %>';"/>
-												<%=day%>
-									
-									<p id="turno"><%=days_turno[i] %></p>
-								</div>
-	
-								<%
+				<div class="grid-item" id="<%=id%>" onClick="<%=onClick %>"
+					style="cursor: pointer;">
+					<img src="IMG/<%=img%>.png" alt=" "
+						onerror="this.parentElement.innerHTML = '<%=day %>';" />
+					<%=day%>
+
+					<p id="turno"><%=days_turno[i] %></p>
+				</div>
+
+				<%
 								id = "";
 								img = "";
 								onClick="";
@@ -173,17 +167,18 @@
 
 		</div>
 		<!-- AND container per il calendario -->
-		
+
 		<div class="container-schedul" id="vibilibity">
-		<a class="info" id="informazione"></a>
-		
-		
+			<a class="info" id="informazione"></a>
+
+
 			<div class="wrapper">
-			
+
 				<div class="mansione">
 					<p>SALA OPERATIVA</p>
 				</div>
 				<div class="vigili">
+
 					<table id="SalaOperativa" class="table"></table>
 				</div>
 
@@ -192,6 +187,7 @@
 					<p>PRIMA PARTENZA</p>
 				</div>
 				<div class="vigili">
+
 					<table id="PrimaPartenza" class="table"></table>
 				</div>
 
@@ -200,6 +196,7 @@
 					<p>AUTO SCALA</p>
 				</div>
 				<div class="vigili">
+
 					<table id="AutoScala" class="table"></table>
 				</div>
 
@@ -208,21 +205,27 @@
 					<p>AUTO BOTTE</p>
 				</div>
 				<div class="vigili">
+
 					<table id="AutoBotte" class="table"></table>
 				</div>
 
 			</div>
 		</div>
-		
+
 	</div>
 	<!-- AND: container per calendario e schedulazione -->
-	
+
 	<script
 		src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js">
 	</script>
 
 	<!-- START: script per la funzione dayClicked() -->
 	<script>
+	$( document ).ready(function() {
+	    dayClicked(<%=giorno %>);
+	});
+	
+	
 		function setValore(input){
 			console.log(input);
 		}
@@ -239,14 +242,15 @@
 		var autoScala = $("#AutoScala");
 		var autoBotte = $("#AutoBotte");
 
-		var giorno = $(input).text();
+		var giorno = input;
+		if(giorno.toString().trim().indexOf("B")>0){
 		var i = giorno.toString().trim().indexOf("B");
 		giorno = giorno.toString().trim().substring(0,i);
+		}
 		var mese=$("#meseVisualizzato").val();
 		var anno=$("#annoVisualizzato").text();
 		
 		var meseStringa = $("#meseStringa").text();
-		$("#informazione").text("Composizione della squadra del "+giorno+" "+meseStringa+" "+anno);
 		
 		console.log("parametri passati");
 		console.log(giorno+" mese: "+mese+" anno: "+anno);
@@ -269,9 +273,12 @@
 				autoBotte.empty();
 				
 				
-				console.log(response);
+				console.log("response "+response);
 				var len = response.length; 
-				console.log(len);
+				console.log("len "+len);
+				if(len>0)
+					$("#informazione").text("Composizione della squadra del "+giorno+" "+meseStringa+" "+anno);
+
 				for (var i = 0; i < len; i++) {
 				vigile=response[i];
 					
@@ -304,6 +311,6 @@
 	}
 	</script>
 	<!-- AND: script per la funzione dayClicked() -->
-	
+
 </body>
 </html>
