@@ -1,6 +1,8 @@
 package control;
 
 import java.io.IOException;
+import java.sql.Date;
+import java.time.LocalDate;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -64,14 +66,23 @@ public class GestioneFerieServlet extends HttpServlet {
 			String email=request.getParameter("email");
 			List<FerieBean> ferie=FerieDao.ottieniFerieConcesse(email);
 			JSONArray array = new JSONArray();
+			JSONArray arrayrange = new JSONArray();
+			arrayrange.put(new Date(System.currentTimeMillis()));
+			Date datafinale=null;
 			for(FerieBean ferieBean:ferie) {
 
-				JSONArray arrayrange = new JSONArray();
 				arrayrange.put(ferieBean.getDataInizio());
-				arrayrange.put(ferieBean.getDataFine().toLocalDate());
 				array.put(arrayrange);
-
+				arrayrange=new JSONArray();
+				arrayrange.put(ferieBean.getDataFine().toLocalDate().plusDays(1));
+				datafinale=ferieBean.getDataFine();
 			}
+			if(datafinale!=null) 
+			arrayrange.put(datafinale.toLocalDate().plusDays(1));
+			else arrayrange.put(LocalDate.now().plusDays(1));
+
+			array.put(arrayrange);
+			
 			response.setContentType("application/json");
 			response.getWriter().append(array.toString());
 		}

@@ -24,10 +24,11 @@ if(ordinamentoObj.getClass().getSimpleName().equals("String"))
 <link rel="stylesheet" href="CSS/TableCSS.css">
 
 <body>
-	<%@ include file = "HeaderJSP.jsp" %>
-	
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-	
+	<jsp:include page="HeaderJSP.jsp" />
+
+	<script
+		src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
 	<script type="text/javascript">
 		
 		function mostraFormModifica(id) {

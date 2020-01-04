@@ -5,15 +5,9 @@
 <!DOCTYPE html>
 <html>
 <jsp:include page="StandardJSP.jsp" />
-
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>ScheduFIRE</title>
-<link rel="stylesheet"
-	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-<link rel="stylesheet" href="../CSS/HeaderCSS.css">
-<link rel="icon" href="../IMG/logoSF.png">
 <style>
 .fr {
 	height: 38px;
@@ -61,22 +55,11 @@ h2 {
 
 	<!-- ELENCO SQUADRE  -->
 <%
-	HashMap<VigileDelFuocoBean, String> squadraD = (HashMap<VigileDelFuocoBean, String>) session.getAttribute("squadraDiurno");
-	HashMap<VigileDelFuocoBean, String> squadraN = (HashMap<VigileDelFuocoBean, String>) session.getAttribute("squadraNotturno"); %>
-	
-	
-	<br><div class="d-flex justify-content-center" >
-    <form action="??" method=post>
-    <button type="button" class="btn btn-success btn-lg" value="Conferma" name="Conferma" style="margin:3px;">Conferma Squadre</button>
-    </form>
-    <a href="#Giorno"><button type="button" class="btn btn-danger btn-lg" style="margin:3px;">Sqaudra Diurna</button></a>
-	<a href="#Notte"><button type="button" class="btn btn-danger btn-lg" style="margin:3px;">Squadra Notturna</button></a>
-	</div>
-     <br>
+	HashMap<VigileDelFuocoBean, String> squadraD = (HashMap<VigileDelFuocoBean, String>) session.getAttribute("squadra");%>
      
      <!-- SQUADRA DIURNA -->
        <div class="d-flex justify-content-center">
-		<h2 id="Giorno"  style="font-weight:bold; font-size:36px;">Squadra Diurna</h2>
+		<h2 style="font-weight:bold; font-size:36px;">Giorno</h2>
 	</div>
 	<div class="d-flex justify-content-center">
 		<img src="Icon/caserma.png" class="fr">
@@ -260,199 +243,6 @@ h2 {
 			</tbody>
 		</table>
 	</div>
-	
-	  <!-- SQUADRA NOTTURNA -->
-       <div class="d-flex justify-content-center">
-		<h2 id="Notte"  style="font-weight:bold; font-size:36px;">Squadra Notturna</h2>
-	</div>
-	<div class="d-flex justify-content-center">
-		<img src="Icon/caserma.png" class="fr">
-		<h2>Sala Operativa</h2>
-	</div>
-
-	<div class="table-responsive">
-		<table class="table  table-hover" id="listaVigili">
-			<thead class="thead-dark">
-				<tr>
-					<th class="text-center">Grado</th>
-					<th class="text-center">Nome</th>
-					<th class="text-center">Cognome</th>
-					<th class="text-center">Mansione</th>
-					<th class="text-center">Modifica</th>
-				</tr>
-			</thead>
-
-			<tbody>
-				<% 
-				HashMap<VigileDelFuocoBean, String> squadra = (HashMap<VigileDelFuocoBean, String>) request.getAttribute("squadra");
-	            
-                it = squadraN.entrySet().iterator();
-                while (it.hasNext()) {
-                    Map.Entry coppia = (Map.Entry) it.next();
-                    VigileDelFuocoBean membro = (VigileDelFuocoBean) coppia.getKey();
-                    if (coppia.getKey() == "Sala Operativa") {	
-				%>
-
-				<tr>
-					<td class="text-center"><%=membro.getGrado()%></td>
-					<td class="text-center"><%=membro.getNome()%></td>
-					<td class="text-center"><%=membro.getCognome()%></td>
-					<td class="text-center"><%=membro.getMansione()%></td>
-					<td class="text-center"><button type="button"
-							class="btn btn-outline-secondary" data-toggle="modal"
-							data-target="#aggiungiVF" id="aggiungiVF"
-							onClick='apriFormVF("<%=membro.getEmail()%>")'>Sostituisci</button></td>
-					</td>
-				</tr>
-				<%
-                }
-                    it.remove();
-                }
-           		%>
-
-			</tbody>
-		</table>
-	</div>
-
-
-	<div class="d-flex justify-content-center">
-		<img src="Icon/sirena.png" class="fr">
-		<h2>Prima Partenza</h2>
-	</div>
-	<div class="table-responsive">
-		<table class="table  table-hover" id="listaVigili">
-			<thead class="thead-dark">
-				<tr>
-					<th class="text-center">Grado</th>
-					<th class="text-center">Nome</th>
-					<th class="text-center">Cognome</th>
-					<th class="text-center">Mansione</th>
-					<th class="text-center">Modifica</th>
-				</tr>
-			</thead>
-
-			<tbody>
-				<% 
-				it = squadraN.entrySet().iterator();
-                while (it.hasNext()) {
-                    Map.Entry coppia = (Map.Entry) it.next();
-                    VigileDelFuocoBean membro = (VigileDelFuocoBean) coppia.getKey();
-                    if (coppia.getKey() == "Prima Partenza") {	
-				%>
-
-				<tr>
-					<td class="text-center"><%=membro.getGrado()%></td>
-					<td class="text-center"><%=membro.getNome()%></td>
-					<td class="text-center"><%=membro.getCognome()%></td>
-					<td class="text-center"><%=membro.getMansione()%></td>
-					<td class="text-center"><button type="button"
-							class="btn btn-outline-secondary" data-toggle="modal"
-							data-target="#aggiungiVF" id="aggiungiVF"
-							onClick='apriFormVF("<%=membro.getEmail()%>")'>Sostituisci</button></td>
-					</td>
-				</tr>
-				<%
-                }
-                    it.remove();
-                }
-           		%>
-
-			</tbody>
-		</table>
-	</div>
-
-	<div class="d-flex justify-content-center">
-		<img src="Icon/autoscala.png" class="fr">
-		<h2>Auto Scala</h2>
-	</div>
-	<div class="table-responsive">
-		<table class="table  table-hover" id="listaVigili">
-			<thead class="thead-dark">
-				<tr>
-					<th class="text-center">Grado</th>
-					<th class="text-center">Nome</th>
-					<th class="text-center">Cognome</th>
-					<th class="text-center">Mansione</th>
-					<th class="text-center">Modifica</th>
-				</tr>
-			</thead>
-
-			<tbody>
-				<% 
-				it = squadraN.entrySet().iterator();
-                while (it.hasNext()) {
-                    Map.Entry coppia = (Map.Entry) it.next();
-                    VigileDelFuocoBean membro = (VigileDelFuocoBean) coppia.getKey();
-                    if (coppia.getKey() == "Autoscala") {	
-				%>
-
-				<tr>
-					<td class="text-center"><%=membro.getGrado()%></td>
-					<td class="text-center"><%=membro.getNome()%></td>
-					<td class="text-center"><%=membro.getCognome()%></td>
-					<td class="text-center"><%=membro.getMansione()%></td>
-					<td class="text-center"><button type="button"
-							class="btn btn-outline-secondary" data-toggle="modal"
-							data-target="#aggiungiVF" id="aggiungiVF"
-							onClick='apriFormVF("<%=membro.getEmail()%>")'>Sostituisci</button></td>
-					</td>
-				</tr>
-				<%
-                }
-                    it.remove();
-                }
-           		%>
-
-			</tbody>
-		</table>
-	</div>
-
-	<div class="d-flex justify-content-center">
-		<img src="Icon/idrante.png" class="fr">
-		<h2>Auto Botte</h2>
-	</div>
-	<div class="table-responsive">
-		<table class="table  table-hover" id="listaVigili">
-			<thead class="thead-dark">
-				<tr>
-					<th class="text-center">Grado</th>
-					<th class="text-center">Nome</th>
-					<th class="text-center">Cognome</th>
-					<th class="text-center">Mansione</th>
-					<th class="text-center">Modifica</th>
-				</tr>
-			</thead>
-
-			<tbody>
-				<% 
-                it = squadraN.entrySet().iterator();
-                while (it.hasNext()) {
-                    Map.Entry coppia = (Map.Entry) it.next();
-                    VigileDelFuocoBean membro = (VigileDelFuocoBean) coppia.getKey();
-                    if (coppia.getKey() == "Autobotte") {		
-				%>
-
-				<tr>
-					<td class="text-center"><%=membro.getGrado()%></td>
-					<td class="text-center"><%=membro.getNome()%></td>
-					<td class="text-center"><%=membro.getCognome()%></td>
-					<td class="text-center"><%=membro.getMansione()%></td>
-					<td class="text-center"><button type="button"
-							class="btn btn-outline-secondary" data-toggle="modal"
-							data-target="#aggiungiVF" id="aggiungiVF"
-							onClick='apriFormVF("<%=membro.getEmail()%>")'>Sostituisci</button></td>
-					</td>
-				</tr>
-				<%
-                }
-                    it.remove();
-                }
-           		%>
-
-			</tbody>
-		</table>
-	</div>
-
 
 	<script	src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 	<script src="JS/datePicker.js"></script>
@@ -466,7 +256,7 @@ h2 {
 		//Chiamata ajax alla servlet PersonaleDisponibileAJAX
 		$.ajax({
 			type : "POST",//Chiamata POST
-			url :"/ScheduFIRE/PersonaleDisponibileAJAX",//url della servlet che devo chiamare
+			url :"PersonaleDisponibileAJAX",//url della servlet che devo chiamare
 			data : {
 				"JSON" : true,
 				"aggiunta":true,

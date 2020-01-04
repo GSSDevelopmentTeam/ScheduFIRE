@@ -1,6 +1,9 @@
 <%@ page import="control.* "%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+<%@page import="java.util.*, model.bean.*, model.dao.*,util.*"%>
 <%
-	String ruolo = (String) session.getAttribute("ruolo");
+	String ruolo = (String) session.getAttribute("ruolo");	
 %>
 
 <script src="https:maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
@@ -18,16 +21,28 @@
  		<a><form action="Logout" method="POST">
  		<button class="inversesubmit" style="float:inherit;">Logout</button>
  		</form></a>
- 		<% if(ruolo.equalsIgnoreCase("capoturno")){ %>
+ 		<% if(ruolo.equalsIgnoreCase("capoturno")){ 
+ 		
+	Notifiche nt = (Notifiche) session.getAttribute("notifiche");
+	List<Notifica> note = nt.getListaNotifiche();
+	int dim = note.size();%>
  		<a><div class="dd" >
   <button type="button" class="db" >
-    <img src="IMG/notizia.png" style="height:50px; width:50px "><span class="badge">3</span>
+    <img src="IMG/notizia.png" style="height:50px; width:50px "><span class="badge"><%if (dim!=0)%><%=dim %></span>
   </button>
   <div class="ddc">
-    <button class="ntf gr"  >Notifica 1</button><span class="bdgdel"><button class="nn"><img src="IMG/delete.png" class="del"></button></span>
+  <%for (Notifica n:note){ %>
+  <form action="<%=n.getPath()%>" method="POST">
+  	<button class="ntf <% if(n.getSeverita()==1){%>gr<%}else{ if(n.getSeverita()==2){%>yl<%}else{%>rd<%}}%>"><%=n.getTesto() %></button>
+  </form>
+  <form actiont="" method="POST">
+  	<span class="bdgdel"><button class="nn"><img src="IMG/delete.png" class="del"></button></span>
+  </form> 
+  <%} %>
+  <!-- <button class="ntf gr"  >Notifica 1</button><span class="bdgdel"><button class="nn"><img src="IMG/delete.png" class="del"></button></span>
     <button class="ntf yl" >Notifica 2</button><span class="bdgdel"><button class="nn"><img src="IMG/delete.png" class="del"></button></span>
     <button class="ntf rd" >Il personale disponibile il 03/01/2020 non è sufficiente per creare il turno.</button>
-    <span class="bdgdel"><button class="nn"><img src="IMG/delete.png" class="del"></button></span>
+    <span class="bdgdel"><button class="nn"><img src="IMG/delete.png" class="del"></button></span> -->  
   </div>
 </div></a>
 
@@ -36,7 +51,7 @@
     <img src="IMG/men.png" style="height:50px; width:50px ">
   </button>
   <div class="ddc">
-   <form action="VisualizzaComposizioe" method="POST">
+   <form action="GeneraSquadreServlet" method="POST">
     <button class="cmd"><img src="Icon/CavallettoColorato.png" class="btl"><span class="rtlg">Gestione Squadra</span> </button>
   </form>
   <form action="CalendarioServlet" method="POST">
