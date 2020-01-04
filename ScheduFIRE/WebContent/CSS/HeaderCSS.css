@@ -86,8 +86,8 @@
 }
 
 .bdgdel {
-	margin-left:-23px;
-	margin-top:-7px;
+	margin-left:83px;
+	margin-top:-7;
 	position: absolute;
 	border-radius: 50px;
 	border:none;
@@ -97,8 +97,18 @@
 	border:none;
 	background: none;
 }
-.nn :hover{
-	background: none!important;
+
+span .nn:hover{
+	background-color: rgba(255,255,255,0.3);
+	border-radius: 60px;
+	border:outset;
+	border-color:white;
+	border-width: 0.5px;
+	padding:-4px;
+}
+
+span .del:hover{
+	margin-top:-3px;
 }
 
 .del{
@@ -159,14 +169,6 @@
 	border-radius: 10%;
 }
 
-
-.ddc button:hover {
-	background-color: rgba(0, 0, 0, 0.5)!important;
-	color: white;
-	border-radius: 25px;
-	
-}
-
 .dd:hover .ddc {
 	display: block;
 }
@@ -175,12 +177,15 @@
 	width: 30px;
 	height:30px;
 }
+.btl button:hover{
+	background-color: rgba(0, 0, 0, 0.3);
+}
 .rtlg {
 	float: right;
 }
 .ntf{
 	width: 98%;
-	border-radius: 25px;
+	border-radius: 15px;
 	border:outset;
 	border-width:1%;
 	margin:1%;
@@ -201,16 +206,14 @@
 .rd{
 	background-color: #ffaead!important;
 }
-.rd hover{
-	background-color: #B60000!important;
-	color:white;
+.ddc .rd:hover{
+	border-color: #B60000!important;
 }
 .gr{
 	background-color: #adffb0!important;
 }
-.gr hover{
-	background-color: #008000!important;
-	color:white;
+.ddc .gr:hover{
+	border-color: #008000!important;
 }
 .yl{
 	background-color:#fffdad!important;
