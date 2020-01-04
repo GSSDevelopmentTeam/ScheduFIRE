@@ -17,7 +17,9 @@ public class ListaSquadreDao {
 			ps.setDate(1, data);
 			ps.setInt(2, (GiornoLavorativo.isDiurno(data) ? 8 : 20));
 			ps.setString(3, emailCT);
-			return (ps.executeUpdate() == 1);
+			boolean done=(ps.executeUpdate() == 1);
+			con.commit();
+			return done;
 		} catch (SQLException e) {
 			throw new RuntimeException(e);
 		}

@@ -463,6 +463,11 @@
 						var riga = $("#tabellaRimozioneFerie td:contains('" + dataIniziale + "')").parent().remove();
 						console.log("eliminata ferie " + dataIniziale+" "+ dataFinale+" di "+email);
 						alertSuccesso("Rimozione ferie avvenuta con successo.");
+						var ferieAnnoCorrente= $("#listaVigili td:contains('" + email + "')")
+						.next('td').next('td');
+						var ferieAnnoPrecedente= ferieAnnoCorrente.next('td');
+						ferieAnnoCorrente.text(response[2]);
+						ferieAnnoPrecedente.text(response[1]);
 					}
 					else{
 						console.log("problema rimozione ferie " + dataIniziale+" "+ dataFinale+" di "+email);

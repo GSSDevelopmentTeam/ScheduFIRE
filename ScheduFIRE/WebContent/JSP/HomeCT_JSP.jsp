@@ -22,7 +22,6 @@
 	<form action="" method="POST">
 	<button class="btop"><img src="Icon/MalattieColore.png" >  <span class="rht">Gestione<br> Malattia</span></button>
 	</form></div>
-
  
   <div class="clm" >
   <form action="GestioneFerieServlet" method="POST">

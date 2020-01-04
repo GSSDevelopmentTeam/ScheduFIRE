@@ -612,4 +612,69 @@ public class VigileDelFuocoDao {
 		}
 	}
 
+	/**
+	 * Il metodo incrementa per ogni vigile del fuoco (nella mappa 'Key') il suo carico lavorativo
+	 * a seconda della squadra assegnata (nella mappa 'Value'). 
+	 * @param squadra Una mappa di Vigili del Fuoco e delle relative squadre 
+	 * @return true se l'operazione va a buon fine, false altrimenti.
+	 */
+	public static boolean caricoLavorativo(HashMap<VigileDelFuocoBean, String> squadra) {
+		try (Connection con = ConnessioneDB.getConnection()) {
+			PreparedStatement ps;
+			String incrementaCaricoLavorativo = "UPDATE Vigile Set caricolavoro = ? WHERE email = ?;";
+			int count = 0;
+
+			Iterator i = squadra.entrySet().iterator();
+			while (i.hasNext()) {
+				Map.Entry<VigileDelFuocoBean, String> pair = (Map.Entry<VigileDelFuocoBean, String>) i.next();
+				int toAdd = (	pair.getValue().equals("Prima Partenza") || 
+								pair.getValue().equals("Sala Operativa")) ? 3 :
+								(pair.getValue().equals("Auto Scala")) ? 2 : 1;
+				System.out.println("toAdd vale: "+toAdd+" per il vigile "+pair.getKey().getEmail());
+				ps = con.prepareStatement(incrementaCaricoLavorativo);
+				ps.setInt(1, pair.getKey().getCaricoLavoro() + toAdd);
+				ps.setString(2, pair.getKey().getEmail());
+				count = ps.executeUpdate();
+				con.commit();
+				i.remove();
+			}
+			
+			return (count == squadra.size());
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+		}
+	}
+	
+	
+	/**
+	 * Il metodo decrementa per ogni vigile del fuoco (nella mappa 'Key') il suo carico lavorativo
+	 * a seconda della squadra assegnata (nella mappa 'Value'). 
+	 * @param squadra Una mappa di Vigili del Fuoco e delle relative squadre 
+	 * @return true se l'operazione va a buon fine, false altrimenti.
+	 */
+	public static boolean removeCaricoLavorativo(HashMap<VigileDelFuocoBean, String> squadra) {
+		try (Connection con = ConnessioneDB.getConnection()) {
+			PreparedStatement ps;
+			String incrementaCaricoLavorativo = "UPDATE Vigile Set caricolavoro = ? WHERE email = ?;";
+
+			Iterator i = squadra.entrySet().iterator();
+			while (i.hasNext()) {
+				Map.Entry<VigileDelFuocoBean, String> pair = (Map.Entry<VigileDelFuocoBean, String>) i.next();
+				int toSub = (	pair.getValue().equals("Prima Partenza") || 
+								pair.getValue().equals("Sala Operativa")) ? 3 :
+								(pair.getValue().equals("Auto Scala")) ? 2 : 1;
+				ps = con.prepareStatement(incrementaCaricoLavorativo);
+				ps.setInt(1, pair.getKey().getCaricoLavoro() - toSub);
+				ps.setString(2, pair.getKey().getEmail());
+				ps.executeUpdate();
+				con.commit();
+				i.remove();
+			}
+			
+			return true;
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+		}
+	}
+
 }
