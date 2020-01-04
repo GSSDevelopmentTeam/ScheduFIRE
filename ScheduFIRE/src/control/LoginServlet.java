@@ -15,6 +15,7 @@ import model.bean.CapoTurnoBean;
 import model.bean.CredenzialiBean;
 import model.dao.CapoTurnoDao;
 import model.dao.UserDao;
+import util.Notifiche;
 
 /**
  * Servlet implementation class LoginServlet
@@ -58,6 +59,7 @@ public class LoginServlet extends HttpServlet {
 					session.setAttribute("capoturno", capoturno);
 					session.setAttribute("ruolo", utente.getRuolo());
 					if (utente.getRuolo().equalsIgnoreCase("capoturno")) {
+						session.setAttribute("notifiche", new Notifiche());
 						response.sendRedirect("HomeCTServlet");
 						//RequestDispatcher dispatcher = request.getRequestDispatcher("WebContent\\JSP\\LoginJSP.jsp");
 						//dispatcher.forward(request, response);

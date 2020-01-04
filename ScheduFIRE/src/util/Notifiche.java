@@ -20,6 +20,10 @@ public class Notifiche {
 
 	public Notifiche() {
 		listaNotifiche = new ArrayList<>();
+		listaNotifiche.add(new Notifica(3, "Test di una notifica grave", "/HomeCTServlet"));
+		listaNotifiche.add(new Notifica(2, "Test di una notifica media", "/HomeCTServlet"));
+		listaNotifiche.add(new Notifica(1, "Test di una notifica normale", "/HomeCTServlet"));
+		
 		update(UPDATE_PER_AVVIO);
 	}
 
