@@ -128,4 +128,45 @@ public class FerieDao {
 		
 		return aggiunta;
 	}
+	
+	public static boolean contieneGiorniConcessi(Date dataInizio, Date dataFine, String emailVF) {
+		boolean verifica = false;
+		int righe = 0;
+		PreparedStatement ps;
+		ResultSet rs;
+		
+		String verificaPeriodoSQL = "SELECT id FROM Ferie WHERE emailVF = ? dataInizio BETWEEN ? AND ? " + 
+									"OR dataFine BETWEEN ? AND ?;";
+		
+		try {
+			Connection connessione = null;
+			
+			try {
+				connessione = ConnessioneDB.getConnection();
+				
+				ps = connessione.prepareStatement(verificaPeriodoSQL);
+				ps.setString(1, emailVF);
+				ps.setDate(2, dataInizio);
+				ps.setDate(3, dataFine);
+				ps.setDate(4, dataInizio);
+				ps.setDate(5, dataFine);
+				
+				rs = ps.executeQuery();
+				
+				while(rs.next()) {
+					righe = rs.getInt("id");
+				}
+				
+				if(righe > 0)
+					verifica = true;
+				
+			}finally {
+				ConnessioneDB.releaseConnection(connessione);
+			}
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return verifica;
+	}
 }

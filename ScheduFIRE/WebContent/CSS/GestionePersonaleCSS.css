@@ -29,11 +29,11 @@ input {
 	outline:none;
 }
 
-.modifica {
+.modifica, .divPopupFormEliminazioneVF {
 	display: none;
 }
 
-#aggiungiVF, .modificaVF {
+#aggiungiVF, .modificaVF, #formEliminazioneVF {
 	border: solid;
 	border-color: #b60000;
 	border-width: 1.5px;
@@ -79,7 +79,8 @@ input {
 	font-weight: bold;
 }
 
-#divPopup {
+#divPopup, .divPopupFormEliminazioneVF {
+	
 	  display: none; /* Hidden by default */
 	  position: fixed; /* Stay in place */
 	  margin-right:auto;
@@ -94,10 +95,18 @@ input {
 	  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
 	  padding-top: 60px;
 	  
-
 }
 
-.form-popup {
+#formEliminazioneVF {
+	top: 10%;
+}
+
+#labelCancellazione {
+	color: black;
+	font-weight: bold;
+}
+
+.form-popup, #formEliminazioneVF {
 	background-color: #fefefe;
 	margin: 0 auto; /* 5% from the top, 15% from the bottom and centered */
 	width: 50%; /* Could be more or less, depending on screen size */
@@ -114,5 +123,18 @@ input {
 		
 	text-align: center;
 
+}
+
+#formEliminazioneVF {
+	border: solid;
+	border-color: #b60000;
+	border-width: 1.5px;
+	box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0
+		rgba(0, 0, 0, 0.19);
+	background-color: #FFFFFF;
+}
+
+#aggiungiVF {
+	margin: 0 auto;
 }
 

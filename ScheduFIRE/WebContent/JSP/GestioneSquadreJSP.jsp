@@ -295,7 +295,7 @@ h2 {
                 while (it.hasNext()) {
                     Map.Entry coppia = (Map.Entry) it.next();
                     VigileDelFuocoBean membro = (VigileDelFuocoBean) coppia.getKey();
-                    if (coppia.getKey() == "Sala Operativa") {	
+                    if (coppia.getValue().equals("Sala Operativa")) {	
 				%>
 
 				<tr>
@@ -311,7 +311,6 @@ h2 {
 				</tr>
 				<%
                 }
-                    it.remove();
                 }
            		%>
 
@@ -342,7 +341,7 @@ h2 {
                 while (it.hasNext()) {
                     Map.Entry coppia = (Map.Entry) it.next();
                     VigileDelFuocoBean membro = (VigileDelFuocoBean) coppia.getKey();
-                    if (coppia.getKey() == "Prima Partenza") {	
+                    if (coppia.getValue().equals("Prima Partenza")) {	
 				%>
 
 				<tr>
@@ -358,7 +357,6 @@ h2 {
 				</tr>
 				<%
                 }
-                    it.remove();
                 }
            		%>
 
@@ -388,7 +386,7 @@ h2 {
                 while (it.hasNext()) {
                     Map.Entry coppia = (Map.Entry) it.next();
                     VigileDelFuocoBean membro = (VigileDelFuocoBean) coppia.getKey();
-                    if (coppia.getKey() == "Auto Scala") {	
+                    if (coppia.getValue().equals("Auto Scala")) {	
 				%>
 
 				<tr>
@@ -404,7 +402,6 @@ h2 {
 				</tr>
 				<%
                 }
-                    it.remove();
                 }
            		%>
 
@@ -434,7 +431,7 @@ h2 {
                 while (it.hasNext()) {
                     Map.Entry coppia = (Map.Entry) it.next();
                     VigileDelFuocoBean membro = (VigileDelFuocoBean) coppia.getKey();
-                    if (coppia.getKey() == "Auto Botte") {		
+                    if (coppia.getValue().equals("Auto Botte")) {		
 				%>
 
 				<tr>
@@ -450,7 +447,6 @@ h2 {
 				</tr>
 				<%
                 }
-                    it.remove();
                 }
            		%>
 
