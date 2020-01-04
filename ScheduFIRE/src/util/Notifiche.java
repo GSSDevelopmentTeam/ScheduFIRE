@@ -137,6 +137,10 @@ public class Notifiche {
 		}
 		else return true;
 	}
+	
+	public List<Notifica> getListaNotifiche() {
+		return listaNotifiche;
+	}
 
 	/**
 	 * Utilizzare solo nella fase di avvio
