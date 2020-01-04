@@ -17,11 +17,11 @@
 
 <!-- ----------------------- -->
 	<!-- Page content -->
-	<div class="w3-content w3-padding center" style="max-width: 1564px; text-align: center">
+	<br><br><div class="w3-content w3-padding center" style="max-width: 1564px; text-align: center">
 
 
 		<!--  Tabella Accesso -->
-		<div
+		<br><br><div
 			class="tb th  w3-auto w3-display-middle w3-center w3-margin-bottom  w3-hide-small">
 
 			<form action="Login" method="POST">
