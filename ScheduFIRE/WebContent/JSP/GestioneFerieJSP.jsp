@@ -628,6 +628,7 @@ div.container__days {
 					+ dataFinale.text());
 		}
 
+
 		function rimuoviFerie() {
 			var dataIniziale = $("#rimozioneDataIniziale").val();
 			var dataFinale = $("#rimozioneDataFinale").val();
