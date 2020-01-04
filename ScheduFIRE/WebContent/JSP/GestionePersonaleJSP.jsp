@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+<%@ page language="java" 
 	pageEncoding="ISO-8859-1" import="java.util.*, model.bean.*"%>
 <%
 
@@ -24,7 +24,7 @@ if(ordinamentoObj.getClass().getSimpleName().equals("String"))
 	href="./CSS/GestionePersonaleCSS.css">
 
 <body>
-	<%@ include file="HeaderJSP.jsp"%>
+	<jsp:include page="HeaderJSP.jsp" />
 
 	<script
 		src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
@@ -71,6 +71,37 @@ if(ordinamentoObj.getClass().getSimpleName().equals("String"))
 			
 		}
 		
+		function sceltaMansione(element) {
+		
+			form = element.parentNode.parentNode;
+			
+			idGradiCapoSquadra = form.id + "GradoCapoSquadra";
+			
+			idGradi = form.id + "Gradi";
+			
+		
+			if(element.value === "Capo Squadra") {
+				
+				$("#" + idGradiCapoSquadra).show("slow");
+				
+				$("#" + idGradi).hide("slow");
+				
+				$("#" + form.id + "Grado1").prop("checked", false);
+				$("#" + form.id + "Grado2").prop("checked", false);
+				$("#" + form.id + "Grado3").prop("checked", false);
+				
+			} else {
+				
+				$("#" + idGradiCapoSquadra).hide("slow");
+				
+				$("#" + idGradi).show("slow");
+				
+				$("#" + form.id + "Grado0").prop("checked", false);
+				
+			}
+			
+		}
+		
 		//Validazione form
 		
 		/*
@@ -93,14 +124,14 @@ if(ordinamentoObj.getClass().getSimpleName().equals("String"))
 			var email = document.getElementById(id + "Email");
 			var grado = document.getElementById(id + "Grado");
 			var mansione = document.getElementById(id + "Mansione");
-			
+			/*
 			alert(cognome.id);
 			alert(cognome.value);
 			alert((cognome.value === ""))
 			alert((cognome.value === "undefined"))
 			alert(nome.value.test("^[A-Z]{1}[a-z]{0,19}+$"))
 			alert(cognome.value.test("^[A-Z]{1}[a-z]{0,19}+$"))
-			
+			*/
 			if( (nome.value === "") || (nome.value === "undefined") || 
 					!nome.value.test("^[A-Z]{1}[a-z]{0,19}+$") ) {
 				
@@ -118,7 +149,7 @@ if(ordinamentoObj.getClass().getSimpleName().equals("String"))
 				
 			}
 			else if( (email.value === "") || (email.value === "undefined") || 
-					!email.value.test("^[A-Za-z]{2,}[1-9]*[0-9]*$") ) {
+					!email.value.test("^[A-Za-z]+\.[A-Za-z]+[1-9]*[0-9]*$") ) {
 
 				email.focus();
 				alert("Email errata!");
@@ -367,79 +398,223 @@ if(ordinamentoObj.getClass().getSimpleName().equals("String"))
 								</label> <br> <br> <label> Email: <input
 									id=<%= "modificaVF" + id + "Email" %> type="text"
 									name="emailNuova" value=<%= vf.getEmail() %>>@vigilfuoco.it
-								</label> <br> <br> <label> Grado: <%
-											if( "Qualificato".equals(vf.getGrado()) ) {
-											%> <select id=<%= "modificaVF" + id + "Grado" %>
-									name="gradoNuovo">
-										<option value="">-</option>
-										<option value="Qualificato" selected>Qualificato</option>
-										<option value="Esperto">Esperto</option>
-										<option value="Coordinatore">Coordinatore</option>
-								</select> <%
-											} else if( "Esperto".equals(vf.getGrado()) ) {
-											%> <select id=<%= "modificaVF" + id + "Grado" %>
-									name="gradoNuovo">
-										<option value="">-</option>
-										<option value="Qualificato">Qualificato</option>
-										<option value="Esperto" selected>Esperto</option>
-										<option value="Coordinatore">Coordinatore</option>
-								</select> <%
-											} else if( "Coordinatore".equals(vf.getGrado()) ) {
-											%> <select id=<%= "modificaVF" + id + "Grado" %>
-									name="gradoNuovo">
-										<option value="">-</option>
-										<option value="Qualificato">Qualificato</option>
-										<option value="Esperto">Esperto</option>
-										<option value="Coordinatore" selected>Coordinatore</option>
-								</select> <% 
-											} else { 
-											%> <select id=<%= "modificaVF" + id + "Grado" %>
-									name="gradoNuovo">
-										<option value="" selected>-</option>
-										<option value="Qualificato">Qualificato</option>
-										<option value="Esperto">Esperto</option>
-										<option value="Coordinatore">Coordinatore</option>
-								</select> <% 
-											} 
-											%>
+								</label> <br> <br> 
+								
+								<% if( vf.getMansione().equals("Capo Squadra") ) { %>
+								
+									<div class = "mansione">
+			
+										Mansione: <br>
+										
+									 	<input id=<%= "modificaVF" + id + "Mansione1" %> type = "radio" name = "mansioneNuova"
+									 	 value = "Capo Squadra" onclick = "sceltaMansione(this)" checked > Capo Squadra <br>
+										<input id=<%= "modificaVF" + id + "Mansione2" %>  type = "radio" name = "mansioneNuova"
+										 value = "Autista" onclick = "sceltaMansione(this)"> Autista <br>
+										<input id=<%= "modificaVF" + id + "Mansione3" %>  type = "radio" name = "mansioneNuova"
+										 value = "Vigile" onclick = "sceltaMansione(this)"> Vigile <br>
+						
+									</div> <br> 
+								
+								<% } else if ( vf.getMansione().equals("Autista") ) { %>
+								
+									<div class = "mansione">
+			
+										Mansione: <br>
+										
+									 	<input id=<%= "modificaVF" + id + "Mansione1" %> type = "radio" name = "mansioneNuova"
+									 	 value = "Capo Squadra" onclick = "sceltaMansione(this)"> Capo Squadra <br>
+										<input id=<%= "modificaVF" + id + "Mansione2" %>  type = "radio" name = "mansioneNuova"
+										 value = "Autista" onclick = "sceltaMansione(this)" checked> Autista <br>
+										<input id=<%= "modificaVF" + id + "Mansione3" %>  type = "radio" name = "mansioneNuova"
+										 value = "Vigile" onclick = "sceltaMansione(this)"> Vigile <br>
+						
+									</div> <br> 
+								
+								<% } else if ( vf.getMansione().equals("Vigile") ) { %>
+								
+									<div class = "mansione">
+			
+										Mansione: <br>
+										
+									 	<input id=<%= "modificaVF" + id + "Mansione1" %> type = "radio" name = "mansioneNuova"
+									 	 value = "Capo Squadra" onclick = "sceltaMansione(this)"> Capo Squadra <br>
+										<input id=<%= "modificaVF" + id + "Mansione2" %>  type = "radio" name = "mansioneNuova"
+										 value = "Autista" onclick = "sceltaMansione(this)"> Autista <br>
+										<input id=<%= "modificaVF" + id + "Mansione3" %>  type = "radio" name = "mansioneNuova"
+										 value = "Vigile" onclick = "sceltaMansione(this)" checked> Vigile <br>
+						
+									</div> <br> 
+								
+								<% } else { %>
+									
+									<div class = "mansione">
+			
+										Mansione: <br>
+										
+									 	<input id=<%= "modificaVF" + id + "Mansione1" %> type = "radio" name = "mansioneNuova"
+									 	 value = "Capo Squadra" onclick = "sceltaMansione(this)"> Capo Squadra <br>
+										<input id=<%= "modificaVF" + id + "Mansione2" %>  type = "radio" name = "mansioneNuova"
+										 value = "Autista" onclick = "sceltaMansione(this)"> Autista <br>
+										<input id=<%= "modificaVF" + id + "Mansione3" %>  type = "radio" name = "mansioneNuova"
+										 value = "Vigile" onclick = "sceltaMansione(this)"> Vigile <br>
+						
+									</div> <br> 
+									
+								<% } %>
+								
+								<% if( vf.getGrado().equals("Semplice") && vf.getMansione().equals("Capo Squadra") ) { %>
+								
+									 <div id =  <%= "modificaVF" + id + "GradoCapoSquadra" %> class = "grado" style = "display: block">
+								
+										Grado: <br>
+										
+									 	<input id=<%= "modificaVF" + id + "Grado0" %>  type = "checkbox"
+									 	 name = "gradoNuovo" value = "Esperto"> Esperto <br>
+						
+								 	</div> 
+									 
+									 <div id =  <%= "modificaVF" + id + "Gradi" %> class = "grado" style = "display: hidden" >
+									 
+									 	Grado: <br>
+									 
+										<input id=<%= "modificaVF" + id + "Grado1" %>  type = "radio" 
+										name = "gradoNuovo" value = "Esperto"> Esperto <br>
+										<input id=<%= "modificaVF" + id + "Grado2" %>  type = "radio" 
+										name = "gradoNuovo" value = "Qualificato"> Qualificato <br>
+										<input id=<%= "modificaVF" + id + "Grado3" %>  type = "radio" 
+										name = "gradoNuovo" value = "Coordinatore"> Coordinatore <br>
+								
+									 </div>
+								
+								<% } else if( vf.getGrado().equals("Esperto") && vf.getMansione().equals("Capo Squadra") ) { %>
 
-								</label> <label> Mansione: <%
-											if( "Capo Squadra".equals(vf.getMansione()) ) {
-											%> <select id=<%= "modificaVF" + id + "Mansione" %>
-									name="mansioneNuova">
-										<option value="">-</option>
-										<option value="Capo Squadra" selected>Capo Squadra</option>
-										<option value="Autista">Autista</option>
-										<option value="Vigile">Vigile</option>
-								</select> <%
-											} else if( "Autista".equals(vf.getMansione()) ) {
-											%> <select id=<%= "modificaVF" + id + "Mansione" %>
-									name="mansioneNuova">
-										<option value="">-</option>
-										<option value="Capo Squadra">Capo Squadra</option>
-										<option value="Autista" selected>Autista</option>
-										<option value="Vigile">Vigile</option>
-								</select> <%
-											} else if( "Vigile".equals(vf.getMansione()) ) {
-											%> <select id=<%= "modificaVF" + id + "Mansione" %>
-									name="mansioneNuova">
-										<option value="">-</option>
-										<option value="Capo Squadra">Capo Squadra</option>
-										<option value="Autista">Autista</option>
-										<option value="Vigile" selected>Vigile</option>
-								</select> <%
-											} else {
-											%> <select id=<%= "modificaVF" + id + "Mansione" %>
-									name="mansioneNuova">
-										<option value="" selected>-</option>
-										<option value="Capo Squadra">Capo Squadra</option>
-										<option value="Autista">Autista</option>
-										<option value="Vigile">Vigile</option>
-								</select> <%
-											}
-											%>
+									<div id =  <%= "modificaVF" + id + "GradoCapoSquadra" %> class = "grado" style = "display: block">
+								
+										Grado: <br>
+										
+									 	<input id=<%= "modificaVF" + id + "Grado0" %>  type = "checkbox"
+									 	 name = "gradoNuovo" value = "Esperto" checked> Esperto <br>
+						
+								 	</div> 
+									 
+									 <div id =  <%= "modificaVF" + id + "Gradi" %> class = "grado" style = "display: hidden" >
+									 
+									 	Grado: <br>
+									 
+										<input id=<%= "modificaVF" + id + "Grado1" %>  type = "radio" 
+										name = "gradoNuovo" value = "Esperto"> Esperto <br>
+										<input id=<%= "modificaVF" + id + "Grado2" %>  type = "radio" 
+										name = "gradoNuovo" value = "Qualificato"> Qualificato <br>
+										<input id=<%= "modificaVF" + id + "Grado3" %>  type = "radio" 
+										name = "gradoNuovo" value = "Coordinatore"> Coordinatore <br>
+								
+									 </div>
 
-								</label> <br> <br> <label> Giorni di ferie dell'anno
+								<% } else if( vf.getGrado().equals("Qualificato") && ( vf.getMansione().equals("Autista")
+										|| vf.getMansione().equals("Vigile") ) ) { %>
+										
+									<div id =  <%= "modificaVF" + id + "GradoCapoSquadra" %> class = "grado" style = "display: hidden">
+								
+										Grado: <br>
+										
+									 	<input id=<%= "modificaVF" + id + "Grado0" %>  type = "checkbox"
+									 	 name = "gradoNuovo" value = "Esperto"> Esperto <br>
+						
+								 	</div> 
+									 
+									 <div id =  <%= "modificaVF" + id + "Gradi" %> class = "grado" style = "display: block" >
+									 
+									 	Grado: <br>
+									 
+										<input id=<%= "modificaVF" + id + "Grado1" %>  type = "radio" 
+										name = "gradoNuovo" value = "Esperto"> Esperto <br>
+										<input id=<%= "modificaVF" + id + "Grado2" %>  type = "radio" 
+										name = "gradoNuovo" value = "Qualificato" checked> Qualificato <br>
+										<input id=<%= "modificaVF" + id + "Grado3" %>  type = "radio" 
+										name = "gradoNuovo" value = "Coordinatore"> Coordinatore <br>
+								
+									 </div>
+								
+								
+								<% } else if( vf.getGrado().equals("Coordinatore") && ( vf.getMansione().equals("Autista")
+										|| vf.getMansione().equals("Vigile") ) ) { %>
+			
+									<div id =  <%= "modificaVF" + id + "GradoCapoSquadra" %> class = "grado" style = "display: hidden">
+								
+										Grado: <br>
+										
+									 	<input id=<%= "modificaVF" + id + "Grado0" %>  type = "checkbox"
+									 	 name = "gradoNuovo" value = "Esperto"> Esperto <br>
+						
+								 	</div> 
+									 
+									 <div id =  <%= "modificaVF" + id + "Gradi" %> class = "grado" style = "display: block" >
+									 
+									 	Grado: <br>
+									 
+										<input id=<%= "modificaVF" + id + "Grado1" %>  type = "radio" 
+										name = "gradoNuovo" value = "Esperto"> Esperto <br>
+										<input id=<%= "modificaVF" + id + "Grado2" %>  type = "radio" 
+										name = "gradoNuovo" value = "Qualificato" > Qualificato <br>
+										<input id=<%= "modificaVF" + id + "Grado3" %>  type = "radio" 
+										name = "gradoNuovo" value = "Coordinatore" checked> Coordinatore <br>
+								
+									 </div>
+			
+								<% } else if( vf.getGrado().equals("Esperto") && ( vf.getMansione().equals("Autista")
+										|| vf.getMansione().equals("Vigile") ) ) { %>
+										
+									<div id =  <%= "modificaVF" + id + "GradoCapoSquadra" %> class = "grado" style = "display: hidden">
+								
+										Grado: <br>
+										
+									 	<input id=<%= "modificaVF" + id + "Grado0" %>  type = "checkbox"
+									 	 name = "gradoNuovo" value = "Esperto"> Esperto <br>
+						
+								 	</div> 
+									 
+									 <div id =  <%= "modificaVF" + id + "Gradi" %> class = "grado" style = "display: block" >
+									 
+									 	Grado: <br>
+									 
+										<input id=<%= "modificaVF" + id + "Grado1" %>  type = "radio" 
+										name = "gradoNuovo" value = "Esperto" checked> Esperto <br>
+										<input id=<%= "modificaVF" + id + "Grado2" %>  type = "radio" 
+										name = "gradoNuovo" value = "Qualificato" > Qualificato <br>
+										<input id=<%= "modificaVF" + id + "Grado3" %>  type = "radio" 
+										name = "gradoNuovo" value = "Coordinatore" > Coordinatore <br>
+								
+									 </div>	
+										
+								<% } else { %>
+								
+									<div id =  <%= "modificaVF" + id + "GradoCapoSquadra" %> class = "grado" style = "display: block">
+								
+										Grado: <br>
+										
+									 	<input id=<%= "modificaVF" + id + "Grado0" %>  type = "checkbox"
+									 	 name = "gradoNuovo" value = "Esperto"> Esperto <br>
+						
+								 	</div> 
+									 
+									 <div id =  <%= "modificaVF" + id + "Gradi" %> class = "grado" style = "display: block" >
+									 
+									 	Grado: <br>
+									 
+										<input id=<%= "modificaVF" + id + "Grado1" %>  type = "radio" 
+										name = "gradoNuovo" value = "Esperto"> Esperto <br>
+										<input id=<%= "modificaVF" + id + "Grado2" %>  type = "radio" 
+										name = "gradoNuovo" value = "Qualificato" > Qualificato <br>
+										<input id=<%= "modificaVF" + id + "Grado3" %>  type = "radio" 
+										name = "gradoNuovo" value = "Coordinatore" > Coordinatore <br>
+								
+									 </div>	
+								
+								<% } %>
+			
+								<br> 
+
+								<label> Giorni di ferie dell'anno
 									corrente: <input type="number"
 									name=giorniFerieAnnoCorrenteNuovi
 									value=<%= vf.getGiorniFerieAnnoCorrente() %> min="0">
@@ -504,7 +679,44 @@ if(ordinamentoObj.getClass().getSimpleName().equals("String"))
 				name="cognome">
 			</label> <br> <br> <label> Email: <input
 				id="aggiungiVFEmail" type="text" name="email">@vigilfuoco.it
-			</label> <br> <br> <label> Grado: <select
+			</label> <br> <br>
+			
+			<div class = "mansione">
+			
+				Mansione: <br>
+				
+			 	<input id = "aggiungiVFMansione1" type = "radio" name = "mansione"
+			 	 value = "Capo Squadra" onclick = "sceltaMansione(this)"> Capo Squadra <br>
+				<input id = "aggiungiVFMansione2" type = "radio" name = "mansione"
+				 value = "Autista" onclick = "sceltaMansione(this)"> Autista <br>
+				<input id = "aggiungiVFMansione3" type = "radio" name = "mansione"
+				 value = "Vigile" onclick = "sceltaMansione(this)"> Vigile <br>
+	
+			</div> <br> 
+			
+				
+			 
+			 <div id = "aggiungiVFGradoCapoSquadra" class = "grado">
+			
+				Grado: <br>
+				
+			 	<input id = "aggiungiVFGrado0" type = "checkbox" name = "grado" value = "Esperto"> Esperto <br>
+
+			 </div> 
+			 
+			 <div id = "aggiungiVFGradi" class = "grado">
+			 
+			 	Grado: <br>
+			 
+				<input id = "aggiungiVFGrado1" type = "radio" name = "grado" value = "Esperto"> Esperto <br>
+				<input id = "aggiungiVFGrado2" type = "radio" name = "grado" value = "Qualificato"> Qualificato <br>
+				<input id = "aggiungiVFGrado3" type = "radio" name = "grado" value = "Coordinatore"> Coordinatore <br>
+		
+			 </div> 
+			
+			
+			<!--  
+			<label> Grado: <select
 				id="aggiungiVFGrado" name="grado">
 					<option value="">-</option>
 					<option value="Qualificato">Qualificato</option>
@@ -518,7 +730,12 @@ if(ordinamentoObj.getClass().getSimpleName().equals("String"))
 					<option value="Autista">Autista</option>
 					<option value="Vigile">Vigile</option>
 			</select>
-			</label> <br> <br> <label> Giorni di ferie dell'anno
+			</label>
+			-->
+			
+			<br>
+			
+			<label> Giorni di ferie dell'anno
 				corrente: <input type="number" name="giorniFerieAnnoCorrente"
 				min="0" value="0">
 			</label> <br> <br> <label> Giorni di ferie degli anni
@@ -536,6 +753,8 @@ if(ordinamentoObj.getClass().getSimpleName().equals("String"))
 			<br> <br>
 
 		</form>
+		
+		<br> <br> <br>
 
 	</div>
 

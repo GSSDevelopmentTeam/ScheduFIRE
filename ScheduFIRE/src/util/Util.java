@@ -120,8 +120,8 @@ public class Util {
 		List<ComponenteDellaSquadraBean> toReturn = new ArrayList<>();
 		SquadraBean salaOp = new SquadraBean("Sala Operativa", 3, data);
 		SquadraBean primaP = new SquadraBean("Prima Partenza", 3, data);
-		SquadraBean autoSc = new SquadraBean("Autoscala", 2, data);
-		SquadraBean autoBo = new SquadraBean("Autobotte", 1, data);
+		SquadraBean autoSc = new SquadraBean("Auto Scala", 2, data);
+		SquadraBean autoBo = new SquadraBean("Auto Botte", 1, data);
 		boolean vigileAutoSc=false;
 		boolean vigileAutoBo=false;
 
@@ -168,8 +168,8 @@ public class Util {
 		List<ComponenteDellaSquadraBean> toReturn = new ArrayList<>();
 		SquadraBean salaOp = new SquadraBean("Sala Operativa", 3, data);
 		SquadraBean primaP = new SquadraBean("Prima Partenza", 3, data);
-		SquadraBean autoSc = new SquadraBean("Autoscala", 2, data);
-		SquadraBean autoBo = new SquadraBean("Autobotte", 1, data);
+		SquadraBean autoSc = new SquadraBean("Auto Scala", 2, data);
+		SquadraBean autoBo = new SquadraBean("Auto Botte", 1, data);
 		int contaSala = 0;
 		int contaPrim = 0;
 		int contaAutS = 0;

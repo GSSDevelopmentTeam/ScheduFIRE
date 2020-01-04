@@ -10,19 +10,19 @@
 }
 
 .logo{
-	width: 150%;
-	height: 130%;
+	width: 140%;
+	height: 125%;
 	padding:7px;
-	margin-top:-22%;
-	margin-left:-25%
+	margin-top:-17%;
+	margin-left:-20%
 }
 
 .round{
 	margin-left:5px;
 	border-radius: 50%;
 	background: rgb(255, 255, 255);
-	width: 80px;
-	height: 80px;
+	width: 110px;
+	height: 110px;
 	box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0
 		rgba(0, 0, 0, 0.19);
 }
@@ -74,9 +74,47 @@
 .rf{
 	float:right;	
 	margin-top:15px;
-	margin-right:25px;
 }
 
+.badge {
+	position: absolute;
+	padding: 3px 8px;
+	border-radius: 50%;
+	background-color:white;
+	color: #B60000;
+	font-size: 10px;
+}
+
+.bdgdel {
+	margin-left:83px;
+	margin-top:-7;
+	position: absolute;
+	border-radius: 50px;
+	border:none;
+	background: none;
+}
+.nn{
+	border:none;
+	background: none;
+}
+
+span .nn:hover{
+	background-color: rgba(255,255,255,0.3);
+	border-radius: 60px;
+	border:outset;
+	border-color:white;
+	border-width: 0.5px;
+	padding:-4px;
+}
+
+span .del:hover{
+	margin-top:-3px;
+}
+
+.del{
+	width: 20px;
+	height: 20px;
+}
 .nl{float:right;
 	border:none;
 	background:none;
@@ -116,25 +154,45 @@
 	z-index: 1;
 }
 
+.ddc .cmd:hover{
+	background-color:#dddddd;
+}
+
 .dd:hover .db {
 	background-color: rgba(0, 0, 0, 0.3);
 	border-radius: 10%;
 }
 
-
-.ddc button:hover {
-	background-color: rgba(0, 0, 0, 0.3)!important;
-	color: white;
-	
-}
-
 .dd:hover .ddc {
 	display: block;
 }
+.btl{
+	align-items:flex-start;
+	width: 30px;
+	height:30px;
+}
+.btl button:hover{
+	background-color: rgba(0, 0, 0, 0.3);
+}
+.rtlg {
+	float: right;
+}
 .ntf{
 	width: 98%;
+	border-radius: 15px;
+	border:outset;
+	border-width:1%;
+	margin:1%;
+	box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+}
+.cmd{
+	text-align:left;
+	background-color:white;	
+	width: 100%;
+	height:60px;
 	border-radius: 25px;
 	border:outset;
+	border-color:#c0c0c0;
 	border-width:1%;
 	margin:1%;
 	box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
@@ -142,21 +200,18 @@
 .rd{
 	background-color: #ffaead!important;
 }
-.rd hover{
-	background-color: #B60000!important;
-	color:white;
+.ddc .rd:hover{
+	border-color: #B60000!important;
 }
 .gr{
 	background-color: #adffb0!important;
 }
-.gr hover{
-	background-color: #008000!important;
-	color:white;
+.ddc .gr:hover{
+	border-color: #008000!important;
 }
 .yl{
 	background-color:#fffdad!important;
 }
-.yl hover {
-	background-color:#d7d700!important;
-	color:white;
+.ddc  .yl:hover {
+	border-color:#d7d700!important;
 }

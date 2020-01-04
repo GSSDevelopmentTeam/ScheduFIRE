@@ -13,15 +13,11 @@ h2{
 	color: #b60000;
 }
 
-span{
-	color:#B60000;
-	font-size:20px;
-}
-
 input {
 	border: solid;
 	border-color: #000000;
 	border-width: 0.5px;
+	border-radius:10px;
 	text-align: center;
 	background-color: #e1e1e1;
 	box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0
@@ -29,7 +25,7 @@ input {
 	outline:none;
 }
 
-.modifica, .divPopupFormEliminazioneVF {
+.modifica, .divPopupFormEliminazioneVF, .grado {
 	display: none;
 }
 
@@ -37,6 +33,7 @@ input {
 	border: solid;
 	border-color: #b60000;
 	border-width: 1.5px;
+	border-radius:10px;
 	box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0
 		rgba(0, 0, 0, 0.19);
 	margin-right: 100px;
@@ -137,4 +134,3 @@ input {
 #aggiungiVF {
 	margin: 0 auto;
 }
-
