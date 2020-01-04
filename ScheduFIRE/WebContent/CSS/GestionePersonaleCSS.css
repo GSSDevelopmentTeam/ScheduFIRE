@@ -25,7 +25,7 @@ input {
 	outline:none;
 }
 
-.modifica, .divPopupFormEliminazioneVF {
+.modifica, .divPopupFormEliminazioneVF, .grado {
 	display: none;
 }
 
@@ -134,4 +134,3 @@ input {
 #aggiungiVF {
 	margin: 0 auto;
 }
-

@@ -17,7 +17,7 @@ public class Validazione {
 	
 	private static final String[] MANSIONI = {"Capo Squadra", "Autista", "Vigile"};
 	
-	private static final String[] GRADI = {"Qualificato", "Esperto", "Coordinatore"};
+	private static final String[] GRADI = {"Qualificato", "Esperto", "Coordinatore", "Semplice"};
 	
 	private static final String[] TURNI = {"B"};
 	
