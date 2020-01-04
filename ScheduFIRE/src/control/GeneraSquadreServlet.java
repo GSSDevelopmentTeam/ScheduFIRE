@@ -60,38 +60,89 @@ public class GeneraSquadreServlet extends HttpServlet {
 		Date giornoSuccessivo=Date.valueOf(data.toLocalDate().plusDays(1));
 
 
+
+
+
+		//Se si vuole salvare la squadra sul db
 		if(request.getParameter("salva")!=null) {
 			@SuppressWarnings("unchecked")
 			HashMap<VigileDelFuocoBean, String> squadraDiurno = (HashMap<VigileDelFuocoBean, String>) 
 			sessione.getAttribute("squadraDiurno");
 			@SuppressWarnings("unchecked")
 			HashMap<VigileDelFuocoBean, String> squadraNotturno = (HashMap<VigileDelFuocoBean, String>) 
-					sessione.getAttribute("squadraNotturno");
+			sessione.getAttribute("squadraNotturno");
 			List<ComponenteDellaSquadraBean> listaDiurno = vigileToComponente(squadraDiurno, data);	
 			List<ComponenteDellaSquadraBean> listaNotturno = vigileToComponente(squadraNotturno, giornoSuccessivo);			
 			CapoTurnoBean capoturno=(CapoTurnoBean)sessione.getAttribute("capoturno");
-			if((!ListaSquadreDao.aggiungiSquadre(data, capoturno.getEmail())) ||
-					(!SquadraDao.aggiungiSquadra(data)) ||
-					(!ComponenteDellaSquadraDao.setComponenti(listaDiurno)) ||
-					(!VigileDelFuocoDao.caricoLavorativo(squadraDiurno))){
-				throw new ScheduFIREException("Errore nelle Query SQL");
-			}	
-			if((!ListaSquadreDao.aggiungiSquadre(giornoSuccessivo, capoturno.getEmail())) ||
-					(!SquadraDao.aggiungiSquadra(giornoSuccessivo)) ||
-					(!ComponenteDellaSquadraDao.setComponenti(listaNotturno)) ||
-					(!VigileDelFuocoDao.caricoLavorativo(squadraNotturno))){
-				throw new ScheduFIREException("Errore nelle Query SQL");
-			}	
-			//SendMail.sendMail(data);
-			sessione.removeAttribute("squadraDiurno");
-			sessione.removeAttribute("squadraNotturno");
-			request.getRequestDispatcher("JSP/HomeCT_JSP.jsp").forward(request, response);
+
+			
+			//Se le squadre da salvare sono sul db, le rimuovo dal db restituendo i carichi di lavoro
+			if(ListaSquadreDao.isEsistente(data)) {
+					ArrayList<ComponenteDellaSquadraBean> componentiDiurnoDaRimuovere=ComponenteDellaSquadraDao.getComponenti(data);
+					ArrayList<ComponenteDellaSquadraBean> componentiNotturnoDaRimuovere=ComponenteDellaSquadraDao.getComponenti(giornoSuccessivo);
+					HashMap<VigileDelFuocoBean, String> squadraDaRimuovereDiurno=Util.ottieniSquadra(data);
+					HashMap<VigileDelFuocoBean, String> squadraDaRimuovereNotturno=Util.ottieniSquadra(giornoSuccessivo);
+					ComponenteDellaSquadraDao.removeComponenti(componentiDiurnoDaRimuovere);
+					if(		!ComponenteDellaSquadraDao.removeComponenti(componentiDiurnoDaRimuovere))
+					{
+						throw new ScheduFIREException("Errore nelle Query SQL");
+					}	
+					if(	!ComponenteDellaSquadraDao.removeComponenti(componentiNotturnoDaRimuovere))
+					{
+						throw new ScheduFIREException("Errore nelle Query SQL");
+					}	
+					if( !VigileDelFuocoDao.removeCaricoLavorativo(squadraDaRimuovereDiurno)) 
+					{
+						throw new ScheduFIREException("Errore nelle Query SQL");
+					}	
+					if(	!VigileDelFuocoDao.removeCaricoLavorativo(squadraDaRimuovereNotturno))
+					{
+						throw new ScheduFIREException("Errore nelle Query SQL");
+					}	
+					
+					//
+					if(		(!ComponenteDellaSquadraDao.setComponenti(listaDiurno)) ||
+							(!VigileDelFuocoDao.caricoLavorativo(squadraDiurno))){
+						throw new ScheduFIREException("Errore nelle Query SQL");
+					}	
+					if(		(!ComponenteDellaSquadraDao.setComponenti(listaNotturno)) ||
+							(!VigileDelFuocoDao.caricoLavorativo(squadraNotturno))){
+						throw new ScheduFIREException("Errore nelle Query SQL");
+					}
+
+					
+					
+					
+			//Se non sono già sul db, le salvo normalmente		
+			} else {
+				if((!ListaSquadreDao.aggiungiSquadre(data, capoturno.getEmail())) ||
+						(!SquadraDao.aggiungiSquadra(data)) ||
+						(!ComponenteDellaSquadraDao.setComponenti(listaDiurno)) ||
+						(!VigileDelFuocoDao.caricoLavorativo(squadraDiurno))){
+					throw new ScheduFIREException("Errore nelle Query SQL");
+				}	
+				if((!ListaSquadreDao.aggiungiSquadre(giornoSuccessivo, capoturno.getEmail())) ||
+						(!SquadraDao.aggiungiSquadra(giornoSuccessivo)) ||
+						(!ComponenteDellaSquadraDao.setComponenti(listaNotturno)) ||
+						(!VigileDelFuocoDao.caricoLavorativo(squadraNotturno))){
+					throw new ScheduFIREException("Errore nelle Query SQL");
+				}
+			}
+			
+	
+				//SendMail.sendMail(data);
+				sessione.removeAttribute("squadraDiurno");
+				sessione.removeAttribute("squadraNotturno");
+				response.sendRedirect("HomeCTServlet");
+				return;
+			
+			
 
 
 		}
-		
-		
-		
+
+
+
 
 
 		System.out.println("Sto tentando di generare le squadre per il giorno "+data);
@@ -99,6 +150,32 @@ public class GeneraSquadreServlet extends HttpServlet {
 		//Se le squadre sono già state generate e sono in sessione
 		if(sessione.getAttribute("squadraDiurno") != null) {
 			System.out.println("Attributo squadra in sessione non nullo");
+			HashMap<VigileDelFuocoBean, String> squadraDiurno=(HashMap<VigileDelFuocoBean, String>)sessione.getAttribute("squadraDiurno");
+			HashMap<VigileDelFuocoBean, String> squadraNotturno=(HashMap<VigileDelFuocoBean, String>)sessione.getAttribute("squadraNotturno");
+			Iterator it = squadraDiurno.entrySet().iterator();
+
+			//Controllo se sono ancora tutti disponibili o a qualcuno è stata assegnata ferie o malattia
+			//Se assegnata, cancello le squadre dalla sessione e faccio dispatch a se stessa, in modo che le rigenera
+			boolean nonDisponibile=false;
+			while (it.hasNext()) {
+				Map.Entry coppia = (Map.Entry) it.next();
+				VigileDelFuocoBean membro = (VigileDelFuocoBean) coppia.getKey();
+				if(!VigileDelFuocoDao.isDisponibile(membro.getEmail(), data))
+					nonDisponibile=true;
+			}
+			it = squadraNotturno.entrySet().iterator();
+			while (it.hasNext()) {
+				Map.Entry coppia = (Map.Entry) it.next();
+				VigileDelFuocoBean membro = (VigileDelFuocoBean) coppia.getKey();
+				if(!VigileDelFuocoDao.isDisponibile(membro.getEmail(), giornoSuccessivo))
+					nonDisponibile=true;
+			}
+			if(nonDisponibile) {
+				sessione.removeAttribute("squadraDiurno");
+				sessione.removeAttribute("squadraNotturno");
+				request.getRequestDispatcher("GeneraSquadreServlet").forward(request, response);
+				return;
+			}
 			request.setAttribute("nonSalvata",true);
 			request.getRequestDispatcher("JSP/GestioneSquadreJSPTEST.jsp").forward(request, response);
 
