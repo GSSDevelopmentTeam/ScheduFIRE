@@ -7,11 +7,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
 
 import model.ConnessioneDB;
 import model.bean.VigileDelFuocoBean;
@@ -22,7 +19,6 @@ import model.bean.VigileDelFuocoBean;
  * @author Eugenio Sottile 
  * @author Nicola Labanca
  * @author Alfredo Giuliano
- * @author Emanuele Bombardelli
  */
 
 public class VigileDelFuocoDao {
@@ -43,8 +39,8 @@ public class VigileDelFuocoDao {
 												"order by giorniferieannocorrente", "order by giorniferieannoprecedente"};
 	
 	/**
-	 * Si occupa del salvataggio dei dati di un Vigile del Fuoco nel database.
-	 * @param vf Il vigile da memorizzare del database
+	 * Si occupa del salvataggio dei dati di un VigileDelFuocoBean nel database.
+	 * @param vf ï¿½ un oggetto di tipo VigileDelFuocoBean da memorizzare del database
 	 * @return true se l'operazione va a buon fine, false altrimenti
 	 */
 	public static boolean salva(VigileDelFuocoBean vf) {
@@ -85,9 +81,9 @@ public class VigileDelFuocoDao {
 	} 
 	
 	/**
-	 * Si occupa dell'ottenimento di un Vigile del Fuoco dal database data la sua chiave.
-	 * @param chiaveEmail una stringa contenente la mail del Vigile
-	 * @return il Vigile identificato da chiaveEmail (può essere null)
+	 * Si occupa dell'ottenimento di un VigileDelFuocoBean dal database data la sua chiave.
+	 * @param chiaveEmail ï¿½ una stringa che identifica un VigileDelFuocoBean nel database
+	 * @return Un tipo VigileDelFuocoBean identificato da chiaveEmail, null altrimenti
 	 */
 	public static VigileDelFuocoBean ottieni(String chiaveEmail) {
 		
@@ -517,7 +513,7 @@ public class VigileDelFuocoDao {
 		ResultSet rs;
 		int feriePrecedenti = 0;
 		
-		String FerieAnnoPSQL = "SELECT giorniFerieAnnoPrecedente FROM Vigile WHERE email = ?;";
+		String FerieAnnoPSQL = "SELECT giorniFerieAnnoPrecedente FROM Vigile WHERE emailVF = ?;";
 		
 		try{
 			Connection connessione=null;
@@ -527,7 +523,7 @@ public class VigileDelFuocoDao {
 				ps = connessione.prepareStatement(FerieAnnoPSQL);
 				ps.setString(1, emailVF);
 				rs = ps.executeQuery();
-				rs.next();
+			
 				feriePrecedenti = rs.getInt("giorniFerieAnnoPrecedente");
 			}
 			finally {
@@ -545,7 +541,7 @@ public class VigileDelFuocoDao {
 		ResultSet rs;
 		int ferieCorrenti = 0;
 		
-		String FerieAnnoCSQL = "SELECT giorniFerieAnnoCorrente FROM Vigile WHERE email = ?;";
+		String FerieAnnoCSQL = "SELECT giorniFerieAnnoCorrente FROM Vigile WHERE emailVF = ?;";
 		
 		try{
 			Connection connessione=null;
@@ -555,7 +551,7 @@ public class VigileDelFuocoDao {
 				ps = connessione.prepareStatement(FerieAnnoCSQL);
 				ps.setString(1, emailVF);
 				rs = ps.executeQuery();
-				rs.next();
+			
 				ferieCorrenti = rs.getInt("giorniFerieAnnoCorrente");
 			}
 			finally {
@@ -571,7 +567,7 @@ public class VigileDelFuocoDao {
 	public static void aggiornaFeriePrecedenti(String emailVF, int numeroFerie) {
 		PreparedStatement ps;
 		
-		String aggiornaFeriePSQL = "UPDATE Vigile SET giorniFerieAnnoPrecedente = ? WHERE email = ?;";
+		String aggiornaFeriePSQL = "UPDATE Vigile SET giorniFerieAnnoPrecedente = ? WHERE emailVF = ?;";
 		
 		try{
 			Connection connessione=null;
@@ -595,7 +591,7 @@ public class VigileDelFuocoDao {
 	public static void aggiornaFerieCorrenti(String emailVF, int numeroFerie) {
 		PreparedStatement ps;
 		
-		String aggiornaFerieCSQL = "UPDATE Vigile SET giorniFerieAnnoCorrente = ? WHERE email = ?;";
+		String aggiornaFerieCSQL = "UPDATE Vigile SET giorniFerieAnnoCorrente = ? WHERE emailVF = ?;";
 		
 		try{
 			Connection connessione=null;
@@ -625,23 +621,57 @@ public class VigileDelFuocoDao {
 	public static boolean caricoLavorativo(HashMap<VigileDelFuocoBean, String> squadra) {
 		try (Connection con = ConnessioneDB.getConnection()) {
 			PreparedStatement ps;
-			String incrementaCaricoLavorativo = "UPDATE Vigile Set caricolavoro = ? WHERE emailVF = ?;";
+			String incrementaCaricoLavorativo = "UPDATE Vigile Set caricolavoro = ? WHERE email = ?;";
 			int count = 0;
 
 			Iterator i = squadra.entrySet().iterator();
 			while (i.hasNext()) {
 				Map.Entry<VigileDelFuocoBean, String> pair = (Map.Entry<VigileDelFuocoBean, String>) i.next();
-				int toAdd = (pair.getValue() == "Prima Partenza" || pair.getValue() == "Sala Operativa") ? 3 :
-					(pair.getValue() == "Auto Scala") ? 2 : 1;
+				int toAdd = (	pair.getValue().equals("Prima Partenza") || 
+								pair.getValue().equals("Sala Operativa")) ? 3 :
+								(pair.getValue().equals("Auto Scala")) ? 2 : 1;
+				System.out.println("toAdd vale: "+toAdd+" per il vigile "+pair.getKey().getEmail());
 				ps = con.prepareStatement(incrementaCaricoLavorativo);
 				ps.setInt(1, pair.getKey().getCaricoLavoro() + toAdd);
 				ps.setString(2, pair.getKey().getEmail());
 				count = ps.executeUpdate();
-				
+				con.commit();
 				i.remove();
 			}
 			
 			return (count == squadra.size());
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+		}
+	}
+	
+	
+	/**
+	 * Il metodo decrementa per ogni vigile del fuoco (nella mappa 'Key') il suo carico lavorativo
+	 * a seconda della squadra assegnata (nella mappa 'Value'). 
+	 * @param squadra Una mappa di Vigili del Fuoco e delle relative squadre 
+	 * @return true se l'operazione va a buon fine, false altrimenti.
+	 */
+	public static boolean removeCaricoLavorativo(HashMap<VigileDelFuocoBean, String> squadra) {
+		try (Connection con = ConnessioneDB.getConnection()) {
+			PreparedStatement ps;
+			String incrementaCaricoLavorativo = "UPDATE Vigile Set caricolavoro = ? WHERE email = ?;";
+
+			Iterator i = squadra.entrySet().iterator();
+			while (i.hasNext()) {
+				Map.Entry<VigileDelFuocoBean, String> pair = (Map.Entry<VigileDelFuocoBean, String>) i.next();
+				int toSub = (	pair.getValue().equals("Prima Partenza") || 
+								pair.getValue().equals("Sala Operativa")) ? 3 :
+								(pair.getValue().equals("Auto Scala")) ? 2 : 1;
+				ps = con.prepareStatement(incrementaCaricoLavorativo);
+				ps.setInt(1, pair.getKey().getCaricoLavoro() - toSub);
+				ps.setString(2, pair.getKey().getEmail());
+				ps.executeUpdate();
+				con.commit();
+				i.remove();
+			}
+			
+			return true;
 		} catch (SQLException e) {
 			throw new RuntimeException(e);
 		}

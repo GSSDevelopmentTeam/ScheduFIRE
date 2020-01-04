@@ -22,8 +22,8 @@ FOREIGN KEY (username) REFERENCES Credenziali(username)
         
         
 CREATE TABLE Vigile (
-email 									VARCHAR(50) 	NOT NULL,
-nome 									VARCHAR(20) 	NOT NULL,
+email 										VARCHAR(50) 	NOT NULL,
+nome 										VARCHAR(20) 	NOT NULL,
 cognome 								VARCHAR(20) 	NOT NULL,
 turno 										CHAR(1) 			NOT NULL,
 mansione 								VARCHAR(50) 	NOT NULL,

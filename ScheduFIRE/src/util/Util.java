@@ -6,9 +6,7 @@ import java.util.Base64;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -117,8 +115,56 @@ public class Util {
 		List<ComponenteDellaSquadraBean> toReturn = new ArrayList<>();
 		SquadraBean salaOp = new SquadraBean("Sala Operativa", 3, data);
 		SquadraBean primaP = new SquadraBean("Prima Partenza", 3, data);
-		SquadraBean autoSc = new SquadraBean("Autoscala", 2, data);
-		SquadraBean autoBo = new SquadraBean("Autobotte", 1, data);
+		SquadraBean autoSc = new SquadraBean("Auto Scala", 2, data);
+		SquadraBean autoBo = new SquadraBean("Auto Botte", 1, data);
+		boolean vigileAutoSc=false;
+		boolean vigileAutoBo=false;
+
+		//Aggiungo gli autisti
+		toReturn.add(new ComponenteDellaSquadraBean(primaP.getTipologia(), autista.get(0).getEmail(), data));
+		toReturn.add(new ComponenteDellaSquadraBean(autoSc.getTipologia(), autista.get(1).getEmail(), data));
+		toReturn.add(new ComponenteDellaSquadraBean(autoBo.getTipologia(), autista.get(2).getEmail(), data));
+	
+		//Aggiungo i vigili
+		toReturn.add(new ComponenteDellaSquadraBean(salaOp.getTipologia(), vigile.get(0).getEmail(), data));
+		toReturn.add(new ComponenteDellaSquadraBean(salaOp.getTipologia(), vigile.get(1).getEmail(), data));
+		toReturn.add(new ComponenteDellaSquadraBean(primaP.getTipologia(), vigile.get(2).getEmail(), data));
+		toReturn.add(new ComponenteDellaSquadraBean(primaP.getTipologia(), vigile.get(3).getEmail(), data));
+		toReturn.add(new ComponenteDellaSquadraBean(primaP.getTipologia(), vigile.get(4).getEmail(), data));
+		if(vigile.size()>5) {
+			toReturn.add(new ComponenteDellaSquadraBean(autoSc.getTipologia(), vigile.get(5).getEmail(), data));
+			vigileAutoSc=true;
+		}
+		if(vigile.size()>6) {
+			toReturn.add(new ComponenteDellaSquadraBean(autoBo.getTipologia(), vigile.get(6).getEmail(), data));
+			vigileAutoBo=true;
+		}
+	
+		//Aggiungo i caposquadra
+		toReturn.add(new ComponenteDellaSquadraBean(salaOp.getTipologia(), caposquadra.get(0).getEmail(), data));
+		toReturn.add(new ComponenteDellaSquadraBean(primaP.getTipologia(), caposquadra.get(1).getEmail(), data));
+		if(!vigileAutoSc) {
+			toReturn.add(new ComponenteDellaSquadraBean(autoSc.getTipologia(), caposquadra.get(2).getEmail(), data));
+			caposquadra.remove(2);
+		}
+		if(!vigileAutoBo) {
+		toReturn.add(new ComponenteDellaSquadraBean(autoBo.getTipologia(), caposquadra.get(2).getEmail(), data));
+		}
+		
+		return toReturn;
+	}
+	
+	
+	
+	
+	
+	private static List<ComponenteDellaSquadraBean> assegnaMansioniOld(List<VigileDelFuocoBean> caposquadra,
+			List<VigileDelFuocoBean> autista, List<VigileDelFuocoBean> vigile, Date data) {
+		List<ComponenteDellaSquadraBean> toReturn = new ArrayList<>();
+		SquadraBean salaOp = new SquadraBean("Sala Operativa", 3, data);
+		SquadraBean primaP = new SquadraBean("Prima Partenza", 3, data);
+		SquadraBean autoSc = new SquadraBean("Auto Scala", 2, data);
+		SquadraBean autoBo = new SquadraBean("Auto Botte", 1, data);
 		int contaSala = 0;
 		int contaPrim = 0;
 		int contaAutS = 0;
@@ -212,7 +258,8 @@ public class Util {
 				throw new ScheduFIREException("Devi essere capoturno per poter accedere a questa funzionalit�");
 		}
 	}
-	
+
+
 }	
 
 

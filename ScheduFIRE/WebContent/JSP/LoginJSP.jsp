@@ -9,15 +9,9 @@
 	<!-- Barra Navigazione -->
 	<jsp:include page="HeaderJSP.jsp" />
 
-<!--------- Alert NON Ok ----------------->
 
-<div class="alert alert-danger flex alert-dismissible fade in text-center fixed-top" id="erroreLogin" style="display: none;position:fixed;z-index: 99999; width:100%">
-  <strong>Errore!</strong> <span>Errore..</span>
-</div>
-
-<!-- ----------------------- -->
 	<!-- Page content -->
-	<div class="w3-content w3-padding" style="max-width: 1564px">
+	<div class="w3-content w3-padding center" style="max-width: 1564px; text-align: center">
 
 
 		<!--  Tabella Accesso -->
@@ -30,26 +24,23 @@
 
 				<p style="font-size: 23px">Effettua l'accesso con le tue
 					credenziali</p>
-
-				<div class="tbR ">
+				
+				<div class="d-flex justify-content-center" >
 					<div class="input-container">
 						<i class="fa fa-user icon"></i> <input class="input-field"
 							type="text" id="user1" placeholder="Username" name="Username">
-
-					</div>
+				</div>
 				</div>
 				<br>
-
-				<div class="tbR ">
+				<div class="d-flex justify-content-center" >
 					<div class="input-container">
 						<i class="fa fa-key icon"></i> <input class="input-field"
 							type="password" placeholder="Password" name="Password"
 							id="myInput">
-
-					</div>
 				</div>
-				<br> <input type="checkbox" onclick="show()" class="center">Mostra
-				Password
+				</div>
+				 <input type="checkbox" onclick="show()" class="center">Mostra
+				Password<br>
 
 				<script>
 					function show() {
@@ -61,7 +52,7 @@
 						}
 					}
 				</script>
-				<br> <br> <input type="submit" class="submit center"
+				<br>  <input type="submit" class="btn btn-outline-secondary btn-lg"
 					value="Accedi">
 			</form>
 			<br>
@@ -83,16 +74,17 @@
 
 			<div class="tbPss w3-display-middle"
 				style="border-radius: 10px; margin-left: 50px;">
+				<div class="d-flex justify-content-center" >
 				<div class="input-container">
 					<i class="fa fa-envelope icon"></i> <input class="input-field"
 						type="text" placeholder="E-Mail" name="Email">
 				</div>
-
-				<button type="submit" class="submit">Recupera Password</button>
+				</div><br>
+				<button type="submit" class="btn btn-outline-secondary">Recupera Password</button><br>
 				<span style="margin-left: 5px;">
-					<button type="button"
+					<br><button type="button"
 						onclick="document.getElementById('id01').style.display='none'"
-						class="inversesubmit">Cancel</button>
+						class="btn btn-outline-danger">Annulla</button>
 				</span>
 			</div>
 		<!-- </form> -->
@@ -108,29 +100,6 @@
 				modal.style.display = "none";
 			}
 		}
-		
-		
-		function alertInsuccesso(input){
-			$("#erroreLogin span").text(input);
-			$("#erroreLogin").fadeTo(4000, 500).slideUp(500, function(){
-			    $("#success-alert").slideUp(500);
-			});
-			
-		}
-		
-		
-		$( document ).ready(function() {
-		   
-		
-		<% if(request.getAttribute("usernameErrato")!=null) { %>
-		alertInsuccesso("Username errato!");
-		<% } %>
-		
-		
-		<% if(request.getAttribute("passwordErrata")!=null) { %>
-		alertInsuccesso("Password errata!");
-		<% } %>
-		});
 	</script>
 
 

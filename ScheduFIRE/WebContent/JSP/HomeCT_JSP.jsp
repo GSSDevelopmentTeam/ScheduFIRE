@@ -11,7 +11,7 @@
 	
 <div class="rw" style="margin:50px;">
   <div class="clm">
-  <form action="VisualizzaComposizioe" method="POST">
+  <form action="" method="POST">
     <button class="btop"><img src="Icon/CavallettoColorato.png"><span class="rht">Gestione <br> Squadra</span> </button>
   </form></div>
     <div class="clm" >
@@ -19,10 +19,9 @@
 	<button class="btop"><img src="Icon/calendarioColori.png"> <span class="rht"> Visualizza <br> Calendario</span></button>
 	</form></div>
 	<div class="clm">
-	<form action="PeriodiDiMalattiaServlet" method="POST">
+	<form action="" method="POST">
 	<button class="btop"><img src="Icon/MalattieColore.png" >  <span class="rht">Gestione<br> Malattia</span></button>
 	</form></div>
-
  
   <div class="clm" >
   <form action="GestioneFerieServlet" method="POST">
