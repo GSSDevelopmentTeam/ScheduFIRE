@@ -130,7 +130,7 @@ div.container__days {
 
 
 					<button type="button" class="btn btn-outline-warning"
-						id="bottoneRimuoviFerie" onclick="rimuoviFerie31()"
+						id="bottoneRimuoviFerie" onclick="rimuoviFerie()"
 						data-dismiss="modal" disabled>Rimuovi ferie</button>
 
 				</div>
@@ -412,8 +412,7 @@ div.container__days {
 						
 					},
 					onSelect : function() {
-						$('#bottoneRimuoviFerie').prop("disabled",
-								false);
+						$('#bottoneRimuoviFerie').prop("disabled", false);
 							},
 					
 						
@@ -647,14 +646,16 @@ div.container__days {
 						success : function(response) {
 							var booleanRisposta = response[0];
 							if (booleanRisposta) {
-								var riga = $(
-										"#tabellaRimozioneFerie td:contains('"
-												+ dataIniziale + "')").parent()
-										.remove();
-								console.log("eliminata ferie " + dataIniziale
-										+ " " + dataFinale + " di " + email);
+								var ferieAnnoCorrente = $(
+										"#listaVigili td:contains('" + email
+												+ "')").next('td').next('td');
+								var ferieAnnoPrecedente = ferieAnnoCorrente
+										.next('td');
+								ferieAnnoCorrente.text(response[2]);
+								ferieAnnoPrecedente.text(response[1]);
 								alertSuccesso("Rimozione ferie avvenuta con successo.");
 							} else {
+								
 								console.log("problema rimozione ferie "
 										+ dataIniziale + " " + dataFinale
 										+ " di " + email);
@@ -662,6 +663,7 @@ div.container__days {
 								alertInsuccesso("Rimozione ferie non avvenuta a causa di un errore imprevisto.");
 							}
 						},
+						
 						error : function(jqXHR, textStatus, errorThrown) {
 
 							$(document.body).html(jqXHR.responseText);
