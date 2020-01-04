@@ -56,6 +56,31 @@ public class ComponenteDellaSquadraDao {
 		}
 	}
 
+	public static boolean removeComponenti(List<ComponenteDellaSquadraBean> componenti) {
+		try(Connection con = ConnessioneDB.getConnection()) {
+			for(ComponenteDellaSquadraBean comp : componenti) {
+				rimuoviDalDb(comp, con);
+				con.commit();
+			}
+			return true;
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+		}
+	}
+	
+	
+	private static int rimuoviDalDb(ComponenteDellaSquadraBean comp, Connection con) throws SQLException {
+		System.out.println("Componente della squadra: "+comp.getEmailVF()+" , "+comp.getTipologiaSquadra()+" , "+comp.getGiornoLavorativo());
+		PreparedStatement ps = con.prepareStatement("DELETE FROM ComponenteDellaSquadra WHERE emailVF = ? AND tipologia = ? AND giornoLavorativo = ? ;");
+		ps.setString(1, comp.getEmailVF());
+		ps.setString(2, comp.getTipologiaSquadra());
+		ps.setDate(3, comp.getGiornoLavorativo());
+		int righe=ps.executeUpdate();
+		System.out.println("righe modificate: "+righe);
+		return righe;
+
+	}
+	
 	public static boolean setComponenti(List<ComponenteDellaSquadraBean> componenti) {
 		try(Connection con = ConnessioneDB.getConnection()) {
 			int count = 0;
@@ -68,6 +93,8 @@ public class ComponenteDellaSquadraDao {
 			throw new RuntimeException(e);
 		}
 	}
+	
+	
 
 	private static int aggiungiAlDb(ComponenteDellaSquadraBean comp, Connection con) throws SQLException {
 		System.out.println("Componente della squadra: "+comp.getEmailVF()+" , "+comp.getTipologiaSquadra()+" , "+comp.getGiornoLavorativo());
