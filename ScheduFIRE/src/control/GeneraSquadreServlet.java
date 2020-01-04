@@ -2,6 +2,7 @@ package control;
 
 import java.io.IOException;
 import java.sql.Date;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -24,6 +25,8 @@ import model.bean.VigileDelFuocoBean;
 import model.dao.ComponenteDellaSquadraDao;
 import model.dao.ListaSquadreDao;
 import model.dao.SquadraDao;
+import model.dao.VigileDelFuocoDao;
+import util.GiornoLavorativo;
 import util.Util;
 
 /**
@@ -196,7 +199,15 @@ public class GeneraSquadreServlet extends HttpServlet {
 		}
 
 
-		List<ComponenteDellaSquadraBean> listaDiurno = Util.generaSquadra(data);
+		List<ComponenteDellaSquadraBean> listaDiurno = new ArrayList<>();
+		try {
+			listaDiurno = Util.generaSquadra(data);
+		} catch (NotEnoughMembersException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		
+		
 
 		//Mi ricavo il personale disponibile restante, rimuovendo quelli schedulati
 		List<VigileDelFuocoBean> disponibili=VigileDelFuocoDao.getDisponibili(giornoSuccessivo);

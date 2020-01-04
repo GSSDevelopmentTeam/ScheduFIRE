@@ -7,8 +7,11 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 import model.ConnessioneDB;
 import model.bean.VigileDelFuocoBean;
@@ -675,6 +678,11 @@ public class VigileDelFuocoDao {
 		} catch (SQLException e) {
 			throw new RuntimeException(e);
 		}
+	}
+
+	public static boolean isDisponibile(String email, Date giornoSuccessivo) {
+		// TODO Auto-generated method stub
+		return false;
 	}
 
 }

@@ -3,6 +3,7 @@ package model.dao;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import model.ConnessioneDB;
@@ -20,6 +21,17 @@ public class ListaSquadreDao {
 			boolean done=(ps.executeUpdate() == 1);
 			con.commit();
 			return done;
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	public static boolean isEsistente(Date data) {
+		try(Connection con = ConnessioneDB.getConnection()) {
+			PreparedStatement ps = con.prepareStatement("SELECT * FROM listasquadre WHERE data = ?;");
+			ps.setDate(1, data);
+			ResultSet rs = ps.executeQuery();
+			return(rs.next());
 		} catch (SQLException e) {
 			throw new RuntimeException(e);
 		}

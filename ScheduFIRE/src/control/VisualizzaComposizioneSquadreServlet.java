@@ -11,6 +11,8 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
 import model.bean.ComponenteDellaSquadraBean;
 import model.bean.VigileDelFuocoBean;
 import model.dao.ComponenteDellaSquadraDao;
@@ -36,6 +38,7 @@ public class VisualizzaComposizioneSquadreServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HashMap<VigileDelFuocoBean, String> squadra;
+		HttpSession sessione = request.getSession();
 		Date data=Date.valueOf(request.getParameter("data"));
 		squadra=Util.ottieniSquadra(data);
 		System.out.println("squadra: "+squadra);
