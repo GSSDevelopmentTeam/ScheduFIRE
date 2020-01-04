@@ -85,7 +85,7 @@ div.container__days {
 						data-dismiss="modal">Annulla</button>
 
 
-					<button type="button" class="btn btn-outline-warning"
+					<button type="button" class="btn btn-outline-primary"
 						id="bottoneAggiungiFerie" onclick="aggiungiFerie()"
 						data-dismiss="modal" disabled>Aggiungi ferie</button>
 
@@ -293,6 +293,7 @@ div.container__days {
 	<script src="https://buttons.github.io/buttons.js"></script>
 	<script
 		src="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.js"></script>
+	<script src="JS/ferieJS.js"></script>
 
 
 	<script>
@@ -315,7 +316,7 @@ div.container__days {
 				onSelect : function() {
 					if ($("#dataInizio").val() != "") {
 
-						var differenza = calcolaGiorniFerie();
+						var differenza = calcolaGiorniFerie($("#dataInizio").val(),$("#dataFine").val());
 
 						var email = $("#emailAggiuntaFerie").val();
 						var ferieAnnoCorrente = $(
@@ -444,12 +445,12 @@ div.container__days {
 			});
 		}
 
-		function calcolaGiorniFerie() {
+		function calcolaGiorniFerie(iniz,fin) {
 			var giornoLavorativo = moment("24/12/2019", 'DD/MM/YYYY');
 			var differenza = 0;
-			var inizio = moment(document.getElementById("dataInizio").value,
+			var inizio = moment(iniz,
 					'DD/MM/YYYY');
-			var fine = moment(document.getElementById("dataFine").value,
+			var fine = moment(fin,
 					'DD/MM/YYYY');
 			console.log(inizio);
 			console.log(fine);
@@ -504,14 +505,18 @@ div.container__days {
 					$(".contenutiModal").css('background-color', '#e6e6e6');
 					
 					
-					
+					/*
 					$( "a.day-item" ).hover(
 							  function() {
-							    console.log("hover");
+								  var giorno=$(this).text();
+								  var mese=$(this).parent().parent().children("div .month-item-header").children("div").text().trim();
+							    console.log("hover "+giorno+ " , "+mese);
 							  }, function() {
 								    console.log("non hover");
 							  }
 							);
+					*/
+					
 				},
 				error : function(jqXHR, textStatus, errorThrown) {
 
