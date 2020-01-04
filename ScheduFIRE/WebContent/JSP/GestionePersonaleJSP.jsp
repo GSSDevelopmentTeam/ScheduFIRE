@@ -24,7 +24,7 @@ if(ordinamentoObj.getClass().getSimpleName().equals("String"))
 	href="./CSS/GestionePersonaleCSS.css">
 
 <body>
-	<%@ include file="HeaderJSP.jsp"%>
+	<jsp:include page="HeaderJSP.jsp" />
 
 	<script
 		src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>

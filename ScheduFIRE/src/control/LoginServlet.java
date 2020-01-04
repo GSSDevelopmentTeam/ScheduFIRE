@@ -16,6 +16,7 @@ import model.bean.CapoTurnoBean;
 import model.bean.CredenzialiBean;
 import model.dao.CapoTurnoDao;
 import model.dao.UserDao;
+import util.Notifiche;
 import util.PasswordSha256;
 
 /**
@@ -52,12 +53,6 @@ public class LoginServlet extends HttpServlet {
 
 		}
 		else {
-
-
-
-
-
-
 			response.setContentType("text/html");
 
 			String username = request.getParameter("Username");
@@ -80,13 +75,11 @@ public class LoginServlet extends HttpServlet {
 				} else {
 
 					if (passwordBase256format.equals(utente.getPassword())) {
-
-
-
 						session.setAttribute("ruolo", utente.getRuolo());
 						if (utente.getRuolo().equalsIgnoreCase("capoturno")) {
 							CapoTurnoBean capoturno=CapoTurnoDao.ottieni(username);
 							session.setAttribute("capoturno", capoturno);
+							session.setAttribute("notifiche", new Notifiche());
 							response.sendRedirect("HomeCTServlet");
 							return;
 							//RequestDispatcher dispatcher = request.getRequestDispatcher("WebContent\\JSP\\LoginJSP.jsp");
