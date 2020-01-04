@@ -36,7 +36,7 @@ body{
 	background-color: #454d55;
 	color:white;
 	text-decoration: none;
-	transition: color .6s ease-in-out,background-color .5s;
+	transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
 }
 
 /*contenitore per il calendario*/
@@ -183,7 +183,6 @@ non ha la proprietà :hover*/
 	background-color: #454d55;
 	color:white;
 	cursor:default;
-	transition: color .2s ease-in-out,background-color .7s;
 }
 
 

@@ -63,8 +63,8 @@
 						data-dismiss="modal">Annulla</button>
 
 
-					<button type="button" class="btn btn-outline-warning" id="bottoneAggiungiFerie" onclick="aggiungiFerie()" 
-					data-dismiss="modal" disabled>Aggiungi ferie</button>
+					<button type="button" class="btn btn-outline-warning" id="bottoneAggiungiFerie" onclick="aggiungiFerie()" disabled>Aggiungi
+						ferie</button>
 
 				</div>
 			</div>
@@ -171,7 +171,7 @@
 				%>
 
 				<tr>
-					<td class="text-center"><img src="Grado/<%=vigile.getGrado() %>.png" style="height:25%" onerror="this.parentElement.innerHTML='Non disponibile';"></td>
+					<td class="text-center"><%=vigile.getGrado()%></td>
 					<td class="text-center"><%=vigile.getNome()%></td>
 					<td class="text-center"><%=vigile.getCognome()%></td>
 					<td class="text-center"><%=vigile.getEmail()%></td>
@@ -234,21 +234,7 @@
 							.next('td').next('td');
 							var ferieAnnoPrecedente= ferieAnnoCorrente.next('td');
 							var totaleFerie=parseInt(ferieAnnoCorrente.text())+parseInt(ferieAnnoPrecedente.text());
-							if(differenza==0){
-								picker.setOptions({
-									startDate : null,
-									endDate : null
-								});
-								$("#dataInizio").val("");
-								$("#dataFine").val("");
-								$("#messaggioFerie1").text("Nei giorni selezionati non cade neanche un giorno lavorativo.");
-								$("#messaggioFerie2").text("");
-								$("#messaggioFerie1").attr("style","color:red");
-								$("#messaggioFerie2").attr("style","color:red");
-								 $('#bottoneAggiungiFerie').prop("disabled", true);
-								 alertInsuccesso("Nei giorni selezionati non cade neanche un giorno lavorativo.");
-							}
-							else if (totaleFerie<differenza){
+							if (totaleFerie<differenza){
 								picker.setOptions({
 									startDate : null,
 									endDate : null
@@ -357,12 +343,7 @@
 							"Aggiunta ferie per " + nome.text() + " "
 									+ cognome.text());
 					$(".contenutiModal").css('background-color', '#e6e6e6');
-				},
-				error: function(jqXHR, textStatus, errorThrown) {
-
-	                $(document.body).html(jqXHR.responseText);
-
-	            },
+				}
 			});
 
 		}
@@ -421,19 +402,29 @@
 						$(bottone).attr("data-target", "#menuConferma");
 						$(bottone).text("Rimuovi");
 						$(bottone).attr("onclick", "setDate(this)");
+
 						colonnaBottone.appendChild(bottone);
 						rigaTabella.appendChild(colonnaBottone);
+						/*
+						var colonnaBottone = document.createElement("TD");
+						var link=document.createElement("a");
+						$(link).attr("href", "dadecidere");
+						var icona=document.createElement("img");
+						$(icona).attr("src", "IMG/edit.png");
+						$(icona).attr("data-toggle", "modal");
+						$(icona).attr("data-target", "#exampleModalCenter");
+						link.appendChild(icona);
+						colonnaBottone.appendChild(link);
+						rigaTabella.appendChild(colonnaBottone);
+						
+						*/
+						
 						console.log("data iniziale: " + dataIniziale
 								+ " ,data finale: " + dataFinale);
 						
 					}
 
-				},
-				error: function(jqXHR, textStatus, errorThrown) {
-
-	                $(document.body).html(jqXHR.responseText);
-
-	            },
+				}
 			});
 		}
 		
@@ -478,12 +469,7 @@
 						apriFormRimozione(email);
 						alertInsuccesso("Rimozione ferie non avvenuta a causa di un errore imprevisto.");
 					}
-				},
-				error: function(jqXHR, textStatus, errorThrown) {
-
-	                $(document.body).html(jqXHR.responseText);
-
-	            },
+				}
 			});	
 		}
 		
@@ -519,12 +505,7 @@
 						apriFormAggiunta(email);
 						alertInsuccesso("Aggiunta ferie non avvenuta a causa di un errore imprevisto.");
 					}
-				},
-				error: function(jqXHR, textStatus, errorThrown) {
-
-	                $(document.body).html(jqXHR.responseText);
-
-	            },
+				}
 			});	
 		}
 	</script>

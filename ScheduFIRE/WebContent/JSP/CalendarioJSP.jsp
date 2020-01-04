@@ -3,8 +3,7 @@
 
 <%@ page import="control.* "%>
 
-<%  String ruolo = "";
-		ruolo= (String) session.getAttribute("ruolo");%>
+<%  String ruolo = (String) session.getAttribute("ruolo");%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -51,9 +50,9 @@
 		<div class="container-calendar">
 
 			<!-- Accesso effettuato dal capoturno -->
-			<%if(ruolo.equalsIgnoreCase("capoturno")){%>
+			<%//if(ruolo.equalsIgnoreCase("capoturno")){%>
 			<a href="#" class="edit" ><%=editSquadre%></a>
-			<%} %>
+			<%//} %>
 			
 			<!-- START: container per (<-) anno (->) -->
 			<div class="container-year">
@@ -197,6 +196,7 @@
 			</div>
 
 		</div>
+
 	</div>
 	<!-- AND: container per calendario e schedulazione -->
 	
