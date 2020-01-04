@@ -37,20 +37,18 @@ public class VisualizzaComposizioneSquadreServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		boolean debug = true;
+		
 		HttpSession sessione = request.getSession();
-			
 		HashMap<VigileDelFuocoBean, String> squadra;
-		if(request.getParameter("lista") == null) {
-			Date data = (Date) request.getAttribute("data");
-			squadra = Util.ottieniSquadra(data);
-			request.setAttribute("nonSalvata", false);
-		}
-		else if(!debug) {
-			squadra = (HashMap<VigileDelFuocoBean, String>) request.getAttribute("lista");
-			request.setAttribute("nonSalvata", true);
-		}
-		else {
+		Date data=Date.valueOf(request.getParameter("data"));
+		squadra=Util.ottieniSquadra(data);
+		System.out.println("squadra: "+squadra);
+		sessione.setAttribute("squadra", squadra);
+		request.setAttribute("nonSalvata", false);
+		request.getRequestDispatcher("JSP/GestioneSquadreJSP.jsp").forward(request, response);
+		
+		
+		/*
 			squadra = new HashMap<>();
 			squadra.put(new VigileDelFuocoBean("Mario", "Rossi", "mario.rossi", "B", "Autista", "turnob", "Coordinatore", 0, 0), "Prima Partenza");
 			squadra.put(new VigileDelFuocoBean("Giuseppe", "Rossi", "giuseppe.rossi", "B", "Vigile", "turnob", "Coordinatore", 0, 0), "Prima Partenza");
@@ -66,9 +64,8 @@ public class VisualizzaComposizioneSquadreServlet extends HttpServlet {
 			
 			squadra.put(new VigileDelFuocoBean("Pasquale", "Rossi", "pasquale.rossi", "B", "Autista", "turnob", "Coordinatore", 0, 0), "Auto Botte");
 			squadra.put(new VigileDelFuocoBean("Donna", "Rossi", "donna.rossi", "B", "Capo Squadra", "turnob", "Esperto", 0, 0), "Auto Botte");
-		}
-		sessione.setAttribute("squadra", squadra);
-		request.getRequestDispatcher("JSP/GestioneSquadreJSP").forward(request, response);
+		
+*/		
 	}
 
 	/**

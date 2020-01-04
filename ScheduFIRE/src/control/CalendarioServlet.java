@@ -85,8 +85,10 @@ public class CalendarioServlet extends HttpServlet {
 		//funzione per il nome del turno
 		riempiTurno(mese, anno, days_turno);
 
+
 		for(i=0; i<42; i++)
 			System.out.println(days_turno[i]+"\n");
+
 
 		//INIZIO schedulazione dei vigili
 		//creo i 4 array per ogni squadra

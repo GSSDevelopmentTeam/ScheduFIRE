@@ -29,7 +29,8 @@ public class FerieDao {
 		List<FerieBean> periodi = new ArrayList<FerieBean>();
 		
 		String ferieSQL = "SELECT f.id, f.dataInizio, f.dataFine, f.emailCT, f.emailVF " +
-							"FROM Ferie f WHERE f.emailVF = ? AND f.dataFine >= CURDATE();";
+							"FROM Ferie f WHERE f.emailVF = ? AND f.dataFine >= CURDATE()"
+							+ "ORDER BY dataInizio;";
 		
 		try(Connection connessione = ConnessioneDB.getConnection()){
 			
@@ -127,5 +128,100 @@ public class FerieDao {
 		}
 		
 		return aggiunta;
+	}
+	
+	public static boolean contieneGiorniConcessi(Date dataInizio, Date dataFine, String emailVF) {
+		boolean verifica = false;
+		int righe = 0;
+		PreparedStatement ps;
+		ResultSet rs;
+		String verificaPeriodoSQL = "SELECT id FROM Ferie WHERE emailVF = ? AND (dataInizio BETWEEN ? AND ? " + 
+									"OR dataFine BETWEEN ? AND ?);";
+		
+		try {
+			Connection connessione = null;
+			
+			try {
+				connessione = ConnessioneDB.getConnection();
+				
+				ps = connessione.prepareStatement(verificaPeriodoSQL);
+				ps.setString(1, emailVF);
+				ps.setDate(2, dataInizio);
+				ps.setDate(3, dataFine);
+				ps.setDate(4, dataInizio);
+				ps.setDate(5, dataFine);
+				
+				rs = ps.executeQuery();
+				
+				while(rs.next()) {
+					righe = rs.getInt("id");
+				}
+				
+				if(righe > 0)
+					verifica = true;
+				
+			}finally {
+				ConnessioneDB.releaseConnection(connessione);
+			}
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}
+		System.out.println("Verifica: "+verifica);
+		return verifica;
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	public static List<FerieBean> ferieInRange(Date dataInizio, Date dataFine, String emailVF) {
+		PreparedStatement ps;
+		ResultSet rs;
+		String verificaPeriodoSQL = "SELECT * FROM Ferie WHERE "
+				+ "emailVF = ? AND ((dataInizio BETWEEN ? AND ? OR dataFine BETWEEN ? AND ?) "
+				+ "OR (dataInizio < ? AND dataFine > ?) OR (dataInizio < ? AND dataFine > ?)) ORDER BY dataInizio;";
+		List<FerieBean> ferie=new ArrayList<>();
+
+		try {
+			Connection connessione = null;
+			
+			try {
+				connessione = ConnessioneDB.getConnection();
+				
+				ps = connessione.prepareStatement(verificaPeriodoSQL);
+				ps.setString(1, emailVF);
+				ps.setDate(2, dataInizio);
+				ps.setDate(3, dataFine);
+				ps.setDate(4, dataInizio);
+				ps.setDate(5, dataFine);
+				ps.setDate(6, dataInizio);
+				ps.setDate(7, dataInizio);
+				ps.setDate(8, dataFine);
+				ps.setDate(9, dataFine);
+
+				
+				rs = ps.executeQuery();
+				while(rs.next()) {
+					FerieBean f=new FerieBean();
+					f.setId(rs.getInt("id"));
+					f.setEmailVF(rs.getString("emailVF"));
+					f.setEmailCT(rs.getString("emailCT"));
+					f.setDataInizio(rs.getDate("dataInizio"));
+					f.setDataFine(rs.getDate("dataFine"));
+					ferie.add(f);
+				}
+				
+				
+			}finally {
+				ConnessioneDB.releaseConnection(connessione);
+			}
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}
+		return ferie;
 	}
 }
