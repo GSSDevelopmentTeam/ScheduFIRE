@@ -32,17 +32,13 @@
   </button>
   <div class="ddc">
   <%for (Notifica n:note){ %>
+    <form action="" method="POST">
+  	<span class="bdgdel"><button tye="submit" class="nn" value="<%=n%>" name="notifica"><img src="IMG/delete.png" class="del"></button></span>
+  </form>
   <form action="<%=n.getPath()%>" method="POST">
   	<button class="ntf <% if(n.getSeverita()==1){%>gr<%}else{ if(n.getSeverita()==2){%>yl<%}else{%>rd<%}}%>"><%=n.getTesto() %></button>
-  </form>
-  <form actiont="" method="POST">
-  	<span class="bdgdel"><button class="nn"><img src="IMG/delete.png" class="del"></button></span>
   </form> 
-  <%} %>
-  <!-- <button class="ntf gr"  >Notifica 1</button><span class="bdgdel"><button class="nn"><img src="IMG/delete.png" class="del"></button></span>
-    <button class="ntf yl" >Notifica 2</button><span class="bdgdel"><button class="nn"><img src="IMG/delete.png" class="del"></button></span>
-    <button class="ntf rd" >Il personale disponibile il 03/01/2020 non è sufficiente per creare il turno.</button>
-    <span class="bdgdel"><button class="nn"><img src="IMG/delete.png" class="del"></button></span> -->  
+  <%} %> 
   </div>
 </div></a>
 
