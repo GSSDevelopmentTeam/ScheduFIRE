@@ -30,6 +30,7 @@
 	String mese_stringa = (String) request.getAttribute("meseStringa");
 	int[] days_month = (int[]) request.getAttribute("days_month");
 	int[] days_work = (int[]) request.getAttribute("days_work");
+	String[] days_turno = (String[]) request.getAttribute("days_turno");
 	ArrayList<String> sala_operativa = (ArrayList<String>) request.getAttribute("sala_operativa");
 	ArrayList<String> prima_partenza = (ArrayList<String>) request.getAttribute("prima_partenza");
 	ArrayList<String> autoscala = (ArrayList<String>) request.getAttribute("autoscala");
@@ -110,60 +111,61 @@
 				<%
 					}
 					int day = 0;
-					int i = 0;
+					int i,j;
 					String id = "";
 					String img = "";
 					String onClick ="";
 					
-					for (i=0; i < days_month.length; i++) {
-						if (days_month[i] < 0){
-							%>
-							<div class="item-empty"><%=empty%></div>
-							<%
-					} else
-						{
-							day++;
-						
-							if(giorno==day && mese_corrente == mese && anno_corrente == anno){
-								id ="giornoCorrente";
+					for (i=0; i < days_month.length; i++) {							
+							if (days_month[i] < 0){
+								%>
+								<div class="item-empty"><%=empty%></div>
+								<%
+						} else
+							{
+								day++;
+							
+								if(giorno==day && mese_corrente == mese && anno_corrente == anno){
+									id ="giornoCorrente";
+								}
+								
+								if (days_work[i]==1){
+									id = "giornoLavorativoDiurno";
+									img = "diurno";
+									onClick ="dayClicked(this)";
+								}
+								
+								if(days_work[i]==2){
+									id = "giornoLavorativoNotturno";
+									img = "notturno";
+									onClick ="dayClicked(this)";
+								}
+								
+								if(giorno==day && mese_corrente == mese && anno_corrente == anno && days_work[i]==1){
+									id = "giornoCorrenteLavorativoDiurno";
+									img = "diurno";
+								}
+								
+								if(giorno==day && mese_corrente == mese && anno_corrente == anno && days_work[i]==2){
+									id = "giornoCorrenteLavorativoNotturno";
+									img = "notturno";
+								}							
+								
+								%>
+								<div class="grid-item" id="<%=id%>" onClick="<%=onClick %>" style="cursor: pointer;">
+										<img src="IMG/<%=img%>.png" alt=" "
+											 onerror="this.parentElement.innerHTML = '<%=day %>';"/>
+												<%=day%>
+									
+									<p id="turno"><%=days_turno[i] %></p>
+								</div>
+	
+								<%
+								id = "";
+								img = "";
+								onClick="";
 							}
-							
-							if (days_work[i]==1){
-								id = "giornoLavorativoDiurno";
-								img = "diurno";
-								onClick ="dayClicked(this)";
-							}
-							
-							if(days_work[i]==2){
-								id = "giornoLavorativoNotturno";
-								img = "notturno";
-								onClick ="dayClicked(this)";
-							}
-							
-							if(giorno==day && mese_corrente == mese && anno_corrente == anno && days_work[i]==1){
-								id = "giornoCorrenteLavorativoDiurno";
-								img = "diurno";
-							}
-							
-							if(giorno==day && mese_corrente == mese && anno_corrente == anno && days_work[i]==2){
-								id = "giornoCorrenteLavorativoNotturno";
-								img = "notturno";
-							}							
-							
-							%>
-							<div class="grid-item" id="<%=id%>" onClick="<%=onClick %>" style="cursor: pointer;">
-
-							<img src="IMG/<%=img%>.png" alt=" "
-								 onerror="this.parentElement.innerHTML = '<%=day %>';"/>
-							<%=day%>
-							</div>
-
-							<%
-							id = "";
-							img = "";
-							onClick="";
 						}
-					}
 				%>
 
 			</div>
@@ -254,11 +256,13 @@
 		var autoBotte = $("#AutoBotte");
 
 		var giorno = $(input).text();
+		var i = giorno.toString().trim().indexOf("B");
+		giorno = giorno.toString().trim().substring(0,i);
 		var mese=$("#meseVisualizzato").val();
 		var anno=$("#annoVisualizzato").text();
 		
 		var meseStringa = $("#meseStringa").text();
-		$("#informazione").text("Composizione della squadra del"+giorno+" "+meseStringa+" "+anno);
+		$("#informazione").text("Composizione della squadra del "+giorno+" "+meseStringa+" "+anno);
 		
 		console.log("parametri passati");
 		console.log(giorno+" mese: "+mese+" anno: "+anno);

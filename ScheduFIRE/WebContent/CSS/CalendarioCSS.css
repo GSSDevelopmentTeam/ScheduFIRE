@@ -9,6 +9,11 @@ body{
   box-sizing: border-box;
 }
 
+p#turno{
+	font-size: 50%;
+	padding:0;
+}
+
 .containerAll {
 	position:relative;
 	margin-top: 3px;
@@ -183,11 +188,11 @@ flex:1 -> prende il resto del container*/
 (->ovvero le parti del calendario che non hanno elementi)
 non ha la proprietà :hover*/
 .grid-item {
-	color: #343a40;
+	color: #434a52;
 	background-color: white;
 	border-bottom: 0.1px solid #343a40;
 	border-top: 0.1 px solid #343a40;
-	padding: 10%;
+	padding: 2%;
 	font-size: 200%;
 	text-align: center;
 	font-family: Verdana;
