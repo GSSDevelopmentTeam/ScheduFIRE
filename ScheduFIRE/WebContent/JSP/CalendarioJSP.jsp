@@ -18,7 +18,7 @@
 	String vero = "true";
 	String falso = "false";
 	String editSquadre = "   Modifica squadre";
-	String[] days = {"  Lunedì  ", " Martedì  ", "Mercoledi ", " Giovedì  ", " Venerdì  ", "  Sabato  ", "   Domenica "};
+	String[] days = {"  LunedÃ¬  ", " MartedÃ¬  ", "Mercoledi ", " GiovedÃ¬  ", " VenerdÃ¬  ", "  Sabato  ", "   Domenica "};
 	String[] month = {"Gennaio", "Febbraio", "Marzo", "Aprile", "Maggio", "Giugno", "Luglio", "Agosto",
 			"Settembre", "Ottobre", "Novembre", "Dicembre"};
 	int giorno = (Integer) request.getAttribute("giorno");
@@ -178,9 +178,6 @@
 					<p>SALA OPERATIVA</p>
 				</div>
 				<div class="vigili">
-					<%for(String s:sala_operativa){%>
-					<table id="SalaOperativa" class="table"><%=s %></table>
-					<%} %>
 
 					<table id="SalaOperativa" class="table"></table>
 				</div>
@@ -190,9 +187,6 @@
 					<p>PRIMA PARTENZA</p>
 				</div>
 				<div class="vigili">
-					<%for(String s:prima_partenza){%>
-					<table id="PrimaPartenza" class="table"><%=s %></table>
-					<%} %>
 
 					<table id="PrimaPartenza" class="table"></table>
 				</div>
@@ -202,9 +196,6 @@
 					<p>AUTO SCALA</p>
 				</div>
 				<div class="vigili">
-					<%for(String s:autoscala){%>
-					<table id="AutoScala" class="table"><%=s %></table>
-					<%} %>
 
 					<table id="AutoScala" class="table"></table>
 				</div>
@@ -214,9 +205,6 @@
 					<p>AUTO BOTTE</p>
 				</div>
 				<div class="vigili">
-					<%for(String s:sala_operativa){%>
-					<table id="AutoBotte" class="table"><%=s %></table>
-					<%} %>
 
 					<table id="AutoBotte" class="table"></table>
 				</div>
