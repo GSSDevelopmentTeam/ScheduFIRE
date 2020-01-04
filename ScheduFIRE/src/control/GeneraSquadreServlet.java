@@ -181,7 +181,7 @@ public class GeneraSquadreServlet extends HttpServlet {
 				return;
 			}
 			request.setAttribute("nonSalvata",true);
-			request.getRequestDispatcher("JSP/GestioneSquadreJSPTEST.jsp").forward(request, response);
+			request.getRequestDispatcher("JSP/GestioneSquadreJSP.jsp").forward(request, response);
 
 			return;
 		}
@@ -195,7 +195,7 @@ public class GeneraSquadreServlet extends HttpServlet {
 			sessione.setAttribute("squadraDiurno", squadraDiurno);
 			sessione.setAttribute("squadraNotturno", squadraNotturno);
 			request.setAttribute("nonSalvata",false);
-			request.getRequestDispatcher("JSP/GestioneSquadreJSPTEST.jsp").forward(request, response);
+			request.getRequestDispatcher("JSP/GestioneSquadreJSP.jsp").forward(request, response);
 			return;
 		}
 
@@ -266,7 +266,7 @@ public class GeneraSquadreServlet extends HttpServlet {
 		sessione.setAttribute("squadraDiurno", squadraDiurno);
 		sessione.setAttribute("squadraNotturno", squadraNotturno);
 		request.setAttribute("nonSalvata",true);
-		request.getRequestDispatcher("JSP/GestioneSquadreJSPTEST.jsp").forward(request, response);
+		request.getRequestDispatcher("JSP/GestioneSquadreJSP.jsp").forward(request, response);
 
 
 
