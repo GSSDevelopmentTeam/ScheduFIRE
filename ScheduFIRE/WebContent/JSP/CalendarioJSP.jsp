@@ -184,10 +184,6 @@
 					<p>SALA OPERATIVA</p>
 				</div>
 				<div class="vigili">
-					<%for(String s:sala_operativa){%>
-						<table id="SalaOperativa" class="table"><%=s %></table>
-					<%} %>
-					
 					<table id="SalaOperativa" class="table"></table>
 				</div>
 
@@ -196,10 +192,6 @@
 					<p>PRIMA PARTENZA</p>
 				</div>
 				<div class="vigili">
-					<%for(String s:prima_partenza){%>
-						<table id="PrimaPartenza" class="table"><%=s %></table>
-					<%} %>
-					
 					<table id="PrimaPartenza" class="table"></table>
 				</div>
 
@@ -208,10 +200,6 @@
 					<p>AUTO SCALA</p>
 				</div>
 				<div class="vigili">
-					<%for(String s:autoscala){%>
-						<table id="AutoScala" class="table"><%=s %></table>
-					<%} %>
-					
 					<table id="AutoScala" class="table"></table>
 				</div>
 
@@ -220,10 +208,6 @@
 					<p>AUTO BOTTE</p>
 				</div>
 				<div class="vigili">
-					<%for(String s:sala_operativa){%>
-						<table id="AutoBotte" class="table"><%=s %></table>
-					<%} %>
-					
 					<table id="AutoBotte" class="table"></table>
 				</div>
 
