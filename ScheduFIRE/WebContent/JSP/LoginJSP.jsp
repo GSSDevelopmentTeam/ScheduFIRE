@@ -9,13 +9,7 @@
 	<!-- Barra Navigazione -->
 	<jsp:include page="HeaderJSP.jsp" />
 
-<!--------- Alert NON Ok ----------------->
 
-<div class="alert alert-danger flex alert-dismissible fade in text-center fixed-top" id="erroreLogin" style="display: none;position:fixed;z-index: 99999; width:100%">
-  <strong>Errore!</strong> <span>Errore..</span>
-</div>
-
-<!-- ----------------------- -->
 	<!-- Page content -->
 	<div class="w3-content w3-padding center" style="max-width: 1564px; text-align: center">
 
@@ -106,29 +100,6 @@
 				modal.style.display = "none";
 			}
 		}
-		
-		
-		function alertInsuccesso(input){
-			$("#erroreLogin span").text(input);
-			$("#erroreLogin").fadeTo(4000, 500).slideUp(500, function(){
-			    $("#success-alert").slideUp(500);
-			});
-			
-		}
-		
-		
-		$( document ).ready(function() {
-		   
-		
-		<% if(request.getAttribute("usernameErrato")!=null) { %>
-		alertInsuccesso("Username errato!");
-		<% } %>
-		
-		
-		<% if(request.getAttribute("passwordErrata")!=null) { %>
-		alertInsuccesso("Password errata!");
-		<% } %>
-		});
 	</script>
 
 

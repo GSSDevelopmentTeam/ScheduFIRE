@@ -1,10 +1,6 @@
 <%@ page import="control.* "%>
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
-<%@page import="java.util.*, model.bean.*, model.dao.*"%>
 <%
 	String ruolo = (String) session.getAttribute("ruolo");
-	//Notifiche lstnot = (Notifiche) session.getAttribute("notifiche");
 %>
 
 <script src="https:maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>

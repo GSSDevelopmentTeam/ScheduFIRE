@@ -2,7 +2,6 @@ package control;
 
 import java.io.IOException;
 import java.sql.Date;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -25,8 +24,6 @@ import model.bean.VigileDelFuocoBean;
 import model.dao.ComponenteDellaSquadraDao;
 import model.dao.ListaSquadreDao;
 import model.dao.SquadraDao;
-import model.dao.VigileDelFuocoDao;
-import util.GiornoLavorativo;
 import util.Util;
 
 /**
@@ -36,20 +33,19 @@ import util.Util;
 @WebServlet(description = "Servlet per la generazione delle squadre", urlPatterns = { "/GeneraSquadreServlet" })
 public class GeneraSquadreServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-
-	/**
-	 * @see HttpServlet#HttpServlet()
-	 */
-	public GeneraSquadreServlet() {
-		super();
-		// TODO Auto-generated constructor stub
-	}
+       
+    /**
+     * @see HttpServlet#HttpServlet()
+     */
+    public GeneraSquadreServlet() {
+        super();
+        // TODO Auto-generated constructor stub
+    }
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException,NotEnoughMembersException {
-		Util.isCapoTurno(request);
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession sessione = request.getSession();
 		Date data=new Date(System.currentTimeMillis());
 
@@ -150,20 +146,13 @@ public class GeneraSquadreServlet extends HttpServlet {
 				listaNotturno.add(comp);
 			}
 			else {
-				String mansione=VigileDelFuocoDao.ottieni(componente.getEmailVF()).getMansione();
-				VigileDelFuocoBean vigileNuovo=null;
-				for(VigileDelFuocoBean v :disponibili) {
-					if (v.getMansione().equals(mansione)) {
-						vigileNuovo=v;
-						break;
-					}
-				}
-				if(vigileNuovo!=null) {
-					listaNotturno.add(new ComponenteDellaSquadraBean(componente.getTipologiaSquadra(), vigileNuovo.getEmail(), Date.valueOf(componente.getGiornoLavorativo().toLocalDate().plusDays(1))));
-				}
-				else
-					throw new NotEnoughMembersException("Non ci sono abbastanza vigili per il turno notturno");
+				try {
+					List<ComponenteDellaSquadraBean> lista = Util.generaSquadra(data);
+					request.setAttribute("lista", lista);
+					request.getRequestDispatcher("/VisualizzaComposizioneSquadreServlet").forward(request, response);				
+				} catch (NotEnoughMembersException e) {
 
+				}
 			}
 		}
 
@@ -230,8 +219,6 @@ public class GeneraSquadreServlet extends HttpServlet {
 		 */
 	}
 
-
-	//Trasforma l hashmap nei componenti della squadra
 	private List<ComponenteDellaSquadraBean> vigileToComponente(HashMap<VigileDelFuocoBean, String> squadra, Date data) {
 		List<ComponenteDellaSquadraBean> toReturn = new ArrayList<>();
 		@SuppressWarnings("rawtypes")

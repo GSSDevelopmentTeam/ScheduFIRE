@@ -6,9 +6,7 @@ import java.util.Base64;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -61,19 +59,16 @@ public class Util {
 		List<VigileDelFuocoBean> vigile = new ArrayList<>();
 
 		for(VigileDelFuocoBean membro : disponibili) {
-			System.out.println("Mansione: "+membro.getMansione());
-			if(membro.getMansione().toLowerCase().equals("capo squadra")) {
+			if(membro.getMansione().toLowerCase() == "capo squadra") {
 				caposquadra.add(membro);
 			}
-			else if(membro.getMansione().toLowerCase().equals("autista")) {
+			else if(membro.getMansione().toLowerCase() == "autista") {
 				autista.add(membro);
 			}
-			else if(membro.getMansione().toLowerCase().equals("vigile")) {
+			else if(membro.getMansione().toLowerCase() == "vigile") {
 				vigile.add(membro);
 			}
 		}
-		System.out.println("Vigili disponibili: "+disponibili.size());
-		System.out.println("Capisquadra: "+caposquadra.size()+" ,autisti: "+ autista.size()+" ,vigili: "+ vigile.size());
 		//Controlliamo se abbiamo abbastanza personale per fare squadra, altrimenti lanciamo l'eccezione
 		if(abbastanzaPerTurno(caposquadra.size(), autista.size(), vigile.size())) {
 			//Ordiniamo in ordine ascendente
@@ -227,13 +222,6 @@ public class Util {
 
 		return toReturn;
 	}
-	
-	
-	
-	
-	
-	
-	
 
 	public static HashMap<VigileDelFuocoBean, String> ottieniSquadra(Date data) {
 		List<ComponenteDellaSquadraBean> lista = ComponenteDellaSquadraDao.getComponenti(data);
@@ -270,7 +258,8 @@ public class Util {
 				throw new ScheduFIREException("Devi essere capoturno per poter accedere a questa funzionalit�");
 		}
 	}
-	
+
+
 }	
 
 
