@@ -165,7 +165,8 @@ public class PersonaleDisponibileAJAX extends HttpServlet {
 			}
 			
 		}
-
+		
+		request.setAttribute("tiposquadra",tipo);
 		request.setAttribute("vigili", nuovoelenco);
 		request.setAttribute("email", email);		
 		request.getRequestDispatcher("JSP/PersonaleDisponibileAJAXJSP.jsp").forward(request, response);
