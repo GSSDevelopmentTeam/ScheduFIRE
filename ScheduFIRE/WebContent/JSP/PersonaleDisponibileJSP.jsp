@@ -1,7 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"
     		import="java.util.ArrayList,java.util.Iterator, model.bean.*, model.dao.*" 
     		%>
+<!DOCTYPE html>
+<html>
 <jsp:include page="StandardJSP.jsp" />
+
+
+<body>
 <!-- Barra Navigazione -->
 	<jsp:include page="HeaderJSP.jsp" />
 	
@@ -58,4 +63,5 @@
 		</table>
 		</div>
 	</section>
-
+	</body>
+</html>

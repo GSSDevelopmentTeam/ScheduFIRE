@@ -1,27 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@page import="java.util.ArrayList, model.bean.*, model.dao.*"%>
-
+<!DOCTYPE html>
 <html>
 <head>
 <jsp:include page="StandardJSP.jsp" />
-<style>
-
-div.month-item-weekdays-row {
-  min-width: 280px !important
-
-}
-
-
-div.container__days {
-  min-width: 270px !important
-
-}
-
-* {
-  box-sizing: border-box;
-}
-</style>
+<link type="text/css" rel="stylesheet" href="./CSS/GestionePersonaleCSS.css">
 </head>
 <body>
 
