@@ -107,7 +107,7 @@ h2 {
 					<td class="text-center"><button type="button"
 							class="btn btn-outline-secondary" data-toggle="modal"
 							data-target="#aggiungiVF" id="aggiungiVF"
-							onClick='apriFormVF("<%=membro.getEmail()%>")'>Sostituisci</button></td>
+							onClick='apriFormVF("<%=membro.getEmail()%>","<%=membro.getMansione()%>","1")'>Sostituisci</button></td>
 					</td>
 				</tr>
 				<%
@@ -153,7 +153,7 @@ h2 {
 					<td class="text-center"><button type="button"
 							class="btn btn-outline-secondary" data-toggle="modal"
 							data-target="#aggiungiVF" id="aggiungiVF"
-							onClick='apriFormVF("<%=membro.getEmail()%>")'>Sostituisci</button></td>
+							onClick='apriFormVF("<%=membro.getEmail()%>","<%=membro.getMansione()%>","1")'>Sostituisci</button></td>
 					</td>
 				</tr>
 				<%
@@ -198,7 +198,7 @@ h2 {
 					<td class="text-center"><button type="button"
 							class="btn btn-outline-secondary" data-toggle="modal"
 							data-target="#aggiungiVF" id="aggiungiVF"
-							onClick='apriFormVF("<%=membro.getEmail()%>")'>Sostituisci</button></td>
+							onClick='apriFormVF("<%=membro.getEmail()%>","<%=membro.getMansione()%>","1")'>Sostituisci</button></td>
 					</td>
 				</tr>
 				<%
@@ -243,7 +243,7 @@ h2 {
 					<td class="text-center"><button type="button"
 							class="btn btn-outline-secondary" data-toggle="modal"
 							data-target="#aggiungiVF" id="aggiungiVF"
-							onClick='apriFormVF("<%=membro.getEmail()%>")'>Sostituisci</button></td>
+							onClick='apriFormVF("<%=membro.getEmail()%>","<%=membro.getMansione()%>","1")'>Sostituisci</button></td>
 					</td>
 				</tr>
 				<%
@@ -294,7 +294,7 @@ h2 {
 					<td class="text-center"><button type="button"
 							class="btn btn-outline-secondary" data-toggle="modal"
 							data-target="#aggiungiVF" id="aggiungiVF"
-							onClick='apriFormVF("<%=membro.getEmail()%>")'>Sostituisci</button></td>
+							onClick='apriFormVF("<%=membro.getEmail()%>","<%=membro.getMansione()%>","2")'>Sostituisci</button></td>
 					</td>
 				</tr>
 				<%
@@ -341,7 +341,7 @@ h2 {
 					<td class="text-center"><button type="button"
 							class="btn btn-outline-secondary" data-toggle="modal"
 							data-target="#aggiungiVF" id="aggiungiVF"
-							onClick='apriFormVF("<%=membro.getEmail()%>")'>Sostituisci</button></td>
+							onClick='apriFormVF("<%=membro.getEmail()%>","<%=membro.getMansione()%>","2")'>Sostituisci</button></td>
 					</td>
 				</tr>
 				<%
@@ -387,7 +387,7 @@ h2 {
 					<td class="text-center"><button type="button"
 							class="btn btn-outline-secondary" data-toggle="modal"
 							data-target="#aggiungiVF" id="aggiungiVF"
-							onClick='apriFormVF("<%=membro.getEmail()%>")'>Sostituisci</button></td>
+							onClick='apriFormVF("<%=membro.getEmail()%>","<%=membro.getMansione()%>","2")'>Sostituisci</button></td>
 					</td>
 				</tr>
 				<%
@@ -433,7 +433,7 @@ h2 {
 					<td class="text-center"><button type="button"
 							class="btn btn-outline-secondary" data-toggle="modal"
 							data-target="#aggiungiVF" id="aggiungiVF"
-							onClick='apriFormVF("<%=membro.getEmail()%>")'>Sostituisci</button></td>
+							onClick='apriFormVF("<%=membro.getEmail()%>","<%=membro.getMansione()%>","2")'>Sostituisci</button></td>
 					</td>
 				</tr>
 				<%
@@ -455,7 +455,7 @@ h2 {
 
 	<script>
 
-	function apriFormVF(input) {
+	function apriFormVF(input,rule,sq) {
 		//Chiamata ajax alla servlet PersonaleDisponibileAJAX
 		$.ajax({
 			type : "POST",//Chiamata POST
@@ -464,6 +464,8 @@ h2 {
 				"JSON" : true,
 				"aggiunta":true,
 				"email" : input,
+				"mansione" : rule,
+				"tiposquadra" : sq
 			},			
 			success : function(response) {//Operazione da eseguire una volta terminata la chiamata alla servlet.
 				$("#appendElenco").remove();

@@ -117,54 +117,56 @@ public class PersonaleDisponibileAJAX extends HttpServlet {
 
 		//prendo i vigili del fuoco disponibili alla data odierna
 		ArrayList<VigileDelFuocoBean> vigili=VigileDelFuocoDao.getDisponibili(giorno);
-		ArrayList<ComponenteDellaSquadraBean> componenti=ComponenteDellaSquadraDao.getComponenti(giorno);
-		//Collections.sort(vigili, new VigileComparator());
-		Collections.sort(componenti, new ComponenteComparator());
 
-		//Prendo l'email del VF da sostituire
+
+		//Prendo l'email del VF da sostituire, il ruolo e il tipo di squadra
 		String email=request.getParameter("email");
-		//Ricavo il ruolo del VF da sostituire
-		String ruolo=null;
+		String ruolo= request.getParameter("mansione");
+		String tipo = request.getParameter("tiposquadra");
+		System.out.println(email+ruolo+tipo);
+		int tp= Integer.parseInt(tipo);
+		
 		HttpSession session = request.getSession();
-		HashMap<VigileDelFuocoBean, String> squadra = (HashMap<VigileDelFuocoBean, String>) session.getAttribute("squadra");		
-		Iterator it = squadra.entrySet().iterator();
-		while (it.hasNext()) {
-			Map.Entry coppia = (Map.Entry) it.next();
-			VigileDelFuocoBean membro = (VigileDelFuocoBean) coppia.getKey();
-			if(membro.getEmail().equalsIgnoreCase(email)) {
-				ruolo = membro.getMansione();
-				break;
+		HashMap<VigileDelFuocoBean, String> squadra=null;
+		if(tp==1) {
+		squadra = (HashMap<VigileDelFuocoBean, String>) session.getAttribute("squadraDiurno");	
+		} else {
+			if(tp==2) {
+				squadra = (HashMap<VigileDelFuocoBean, String>) session.getAttribute("squadraNotturno");
+			}else {
+				squadra = (HashMap<VigileDelFuocoBean, String>) session.getAttribute("squadra");
 			}
-			it.remove();
 		}
 
 		//Confronto se nell'ArrayList dei vigili ci sono quelli già inseriti nelle squadre 
 		ArrayList<VigileDelFuocoBean> nuovoelenco = new ArrayList<VigileDelFuocoBean>();
-		it = squadra.entrySet().iterator();
+		for(int i=0; i<vigili.size();i++) {
+		boolean trovato= false;
+		Iterator it = squadra.entrySet().iterator();
 		while (it.hasNext()) {
 			Map.Entry coppia = (Map.Entry) it.next();
-			VigileDelFuocoBean membro = (VigileDelFuocoBean) coppia.getKey();
-			boolean trovato= false;
-			//confronto il membro nella squadra con tutta la lista di vigili disponibili
-			for(int i=0; i<vigili.size();i++) {
-				if(!membro.getEmail().equalsIgnoreCase(vigili.get(i).getEmail())) {
+			VigileDelFuocoBean membro = (VigileDelFuocoBean) coppia.getKey();			
+			//confronto il membro nella squadra con tutta la lista di vigili disponibili			
+				if(membro.getEmail().equalsIgnoreCase(vigili.get(i).getEmail())) {
 					trovato = true;
-					break;
-				}
+					System.out.println(trovato);
+				}	
+				if(trovato) break;
+				it.remove();
 			}
 			//Se il vigile non è presente nell'HashMap lo inserisco nel nuovo arrayList, controllando se è dello stesso ruolo del VF rimosso
 			if(trovato==false) {
 				if(ruolo!=null) {
-					if(membro.getMansione().equalsIgnoreCase(ruolo)) {
-						nuovoelenco.add(membro);
+					if(vigili.get(i).getMansione().equalsIgnoreCase(ruolo)) {
+						System.out.println();
+						nuovoelenco.add(vigili.get(i));
 					}
 				}
 			}
-			it.remove();
+			
 		}
 
 		request.setAttribute("vigili", nuovoelenco);
-		request.setAttribute("componenti", componenti);
 		request.setAttribute("email", email);		
 		request.getRequestDispatcher("JSP/PersonaleDisponibileAJAXJSP.jsp").forward(request, response);
 
