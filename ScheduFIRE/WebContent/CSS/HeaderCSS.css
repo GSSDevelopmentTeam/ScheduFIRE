@@ -4,10 +4,12 @@
 }
 
 .topnav {
-  overflow: hidden;
-  background-color:#b60000 ;
-  padding:5px; 
-}
+  	background-color: #b60000;
+    padding: 5px;
+    margin-top: 3%;
+    height: 60px;
+    
+ }
 
 .logo{
 	width: 140%;
@@ -19,10 +21,11 @@
 
 .round{
 	margin-left:5px;
+	margin-top:-25%;
 	border-radius: 50%;
 	background: rgb(255, 255, 255);
-	width: 110px;
-	height: 110px;
+	width: 120px;
+	height: 120px;
 	box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0
 		rgba(0, 0, 0, 0.19);
 }
@@ -135,30 +138,54 @@ span .del:hover{
 	border: none;
 	outline: none;
 	padding: 14px 16px;
+	right:7%;
 	margin: 0;
 	width: 100%;
 	background-color: #B60000;
+	margin-top:-55%;
+	height: 55px;
+}
+.dn{
+	border: none;
+	outline: none;
+	padding: 14px 16px;
+	right:10%;
+	margin: 0;
+	width: 100%;
+	background-color: #B60000;
+	margin-top:-55%;
+	height: 55px;
 }
 
 .ddc {
 	display: none;
 	position: fixed;
-	right: 20px;
-	top: 8%;
+	right: 8%;
+	top: 14%;
 	z-index: 999;
 	width: 10%;
 	background:none;
 	min-width: 230px;
 	z-index: 1;
+	background-color: rgba(255,255,255,0.9);
+	border-radius:15px;
+	padding:0.3%;
 }
 
+.lgt{
+	float:inherit;
+	right:1%;
+}
 .ddc .cmd:hover{
 	background-color:#dddddd;
 }
 
-.dd:hover .db {
-	background-color: rgba(0, 0, 0, 0.3);
-	border-radius: 10%;
+.dd .db:hover {
+	background-color: rgba(255, 255, 255, 0.4);	
+}
+
+.dd .dn:hover {
+	background-color: rgba(255, 255, 255, 0.4);
 }
 
 .dd:hover .ddc {
@@ -196,20 +223,22 @@ span .del:hover{
 	box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
 }
 .rd{
-	background-color: #ffaead!important;
+	border-color: #B60000;
+	
 }
 .ddc .rd:hover{
-	border-color: #B60000!important;
+	background-color: #ffaead;
 }
 .gr{
-	background-color: #adffb0!important;
+	border-color: #008000;
+	
 }
 .ddc .gr:hover{
-	border-color: #008000!important;
+	background-color: #adffb0;
 }
 .yl{
-	background-color:#fffdad!important;
+	border-color:#d7d700;
 }
 .ddc  .yl:hover {
-	border-color:#d7d700!important;
+	background-color:#fffdad;
 }
