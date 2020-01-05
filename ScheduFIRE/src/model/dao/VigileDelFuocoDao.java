@@ -39,8 +39,13 @@ public class VigileDelFuocoDao {
 	
 	public static final int ORDINA_PER_GIORNI_FERIE_ANNI_PRECEDENTI = 4;
 	
+	public static final int ORDINA_PER_MANSIONE = 5;
+	
+	public static final int ORDINA_PER_GRADO = 6;
+	
 	private static final String[] ORDINAMENTI = {"order by nome", "order by cognome", "order by caricolavoro",
-												"order by giorniferieannocorrente", "order by giorniferieannoprecedente"};
+												"order by giorniferieannocorrente", "order by giorniferieannoprecedente",
+												"order by mansione", "order by grado"};
 	
 	/**
 	 * Si occupa del salvataggio dei dati di un Vigile del Fuoco nel database.
@@ -207,7 +212,7 @@ public class VigileDelFuocoDao {
 	 */
 	public static Collection<VigileDelFuocoBean> ottieni(int ordinamento) {
 		
-		if(ordinamento < 0 || ordinamento > 4)
+		if(ordinamento < 0 || ordinamento > 6)
 			//lancio eccezione
 			;
 		
