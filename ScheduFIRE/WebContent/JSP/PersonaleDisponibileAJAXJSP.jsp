@@ -37,6 +37,8 @@
 			</tbody>
 		</table>
 		
-<% String email = (String) request.getParameter("email"); %>
+<% String email = (String) request.getParameter("email"); 
+	String tipo = (String) request.getParameter("tiposquadra");%>
 	<input type="hidden" name="email" value="<%=email%>">
+	<input type="hidden"  name="tiposquadra" value="<%=tipo%>">
 </div>

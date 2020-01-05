@@ -1,5 +1,4 @@
-<%@ page language="java" 
-	pageEncoding="ISO-8859-1" import="java.util.*, model.bean.*"%>
+<%@ page language="java" pageEncoding="ISO-8859-1" import="java.util.*, model.bean.*"%>
 <%
 
 Collection<VigileDelFuocoBean> vigili = null;
@@ -20,8 +19,7 @@ if(ordinamentoObj.getClass().getSimpleName().equals("String"))
 
 <%@ include file="StandardJSP.jsp"%>
 
-<link type="text/css" rel="stylesheet"
-	href="./CSS/GestionePersonaleCSS.css">
+<link type="text/css" rel="stylesheet" href="./CSS/GestionePersonaleCSS.css">
 
 <body>
 	<jsp:include page="HeaderJSP.jsp" />

@@ -18,6 +18,7 @@ import model.dao.ComponenteDellaSquadraDao;
 import model.dao.FerieDao;
 import model.dao.VigileDelFuocoDao;
 import util.GiornoLavorativo;
+import util.Notifiche;
 import util.Util;
 
 /**
@@ -92,11 +93,11 @@ public class AggiungiFerieServlet extends HttpServlet {
 			else {
 				String mansioneVF=VigileDelFuocoDao.ottieni(emailVF).getMansione();
 				if(!isPresentiNumeroMinimo(dataInizio, dataFine,mansioneVF)) 
-					throw new ScheduFIREException("Personale insufficiente. Impossibile inserire ferie");
+					throw new ScheduFIREException("Personale minore di 13 unità. Impossibile inserire ferie");
 			
+				if(ComponenteDellaSquadraDao.isComponente(emailVF, dataInizio)) 
+					Notifiche.update(Notifiche.UPDATE_SQUADRE_PER_FERIE, dataInizio, dataFine, emailVF);;
 
-				if(ComponenteDellaSquadraDao.isComponente(emailVF, dataInizio))
-					throw new ScheduFIREException("Impossibile inserire ferie. Vigile gi� inserito in squadra");
 				int feriePrecedenti=VigileDelFuocoDao.ottieniNumeroFeriePrecedenti(emailVF);
 				int ferieCorrenti=VigileDelFuocoDao.ottieniNumeroFerieCorrenti(emailVF);
 				int totaleFerie=feriePrecedenti+ferieCorrenti;
