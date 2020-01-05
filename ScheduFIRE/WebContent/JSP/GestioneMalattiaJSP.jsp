@@ -1,23 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@page import="java.util.ArrayList, model.bean.*, model.dao.*"%>
-
+<!DOCTYPE html>
 <html>
-	<jsp:include page="StandardJSP.jsp" />
-	
-	<style>
-	
-	div.month-item-weekdays-row {
-	  min-width: 280px !important
-	
-	}
-	
-	
-	div.container__days {
-	  min-width: 270px !important
-	
-	}
-	</style>
+	<jsp:include page="StandardJSP.jsp" />	
+	<link type="text/css" rel="stylesheet" href="./CSS/GestioneCSS.css">
 	
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 	<script src="JS/datePicker.js"></script>
