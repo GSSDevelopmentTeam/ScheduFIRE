@@ -3,6 +3,8 @@ package control;
 import java.io.IOException;
 import java.sql.Date;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -91,8 +93,48 @@ public class GestioneFerieServlet extends HttpServlet {
 			response.getWriter().append(array.toString());
 		}
 		else {
-			List<VigileDelFuocoBean> listaVigili = VigileDelFuocoDao.ottieni();
-
+			
+			//Ottenimento parametro
+			String ordinamento = request.getParameter("ordinamento");
+			
+			//Se il parametro non � settato, l'ordinamento sarà quello di default
+			if(ordinamento == null)
+				ordinamento = "";
+			
+			//Ottenimento della collezione di VigiliDelFuoco
+			
+			Collection<VigileDelFuocoBean> vigili = null;
+			
+			switch(ordinamento) {
+			case "nome": 
+				vigili = VigileDelFuocoDao.ottieni(VigileDelFuocoDao.ORDINA_PER_NOME);
+				break;
+			case "cognome": 
+				vigili = VigileDelFuocoDao.ottieni(VigileDelFuocoDao.ORDINA_PER_COGNOME);
+				break;
+			case "mansione": 
+				vigili = VigileDelFuocoDao.ottieni(VigileDelFuocoDao.ORDINA_PER_MANSIONE);
+				break;
+			case "grado": 
+				vigili = VigileDelFuocoDao.ottieni(VigileDelFuocoDao.ORDINA_PER_GRADO);
+				break;
+			case "giorniFerieAnnoCorrente": 
+				vigili = VigileDelFuocoDao.ottieni(VigileDelFuocoDao.ORDINA_PER_GIORNI_FERIE_ANNO_CORRENTE);
+				break;
+			case "giorniFerieAnnoPrecedente": 
+				vigili = VigileDelFuocoDao.ottieni(VigileDelFuocoDao.ORDINA_PER_GIORNI_FERIE_ANNI_PRECEDENTI);
+				break;
+			default:
+				vigili = VigileDelFuocoDao.ottieni(VigileDelFuocoDao.ORDINA_PER_COGNOME);
+				ordinamento = "cognome";
+			}
+			
+			
+			List<VigileDelFuocoBean> listaVigili = new ArrayList<VigileDelFuocoBean>(vigili);
+			
+			//Passasggio del tipo di ordinamento ottenuto
+			request.setAttribute("ordinamento", ordinamento);
+			
 			request.setAttribute("listaVigili", listaVigili);
 			request.getRequestDispatcher("JSP/GestioneFerieJSP.jsp").forward(request, response);
 		}

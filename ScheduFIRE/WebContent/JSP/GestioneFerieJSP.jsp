@@ -32,6 +32,92 @@ div.container__days {
 		style="color: #B60000 !Important">Gestione Ferie</h2>
 
 
+<!-- form per l'ordinamento della lista dei VF-->
+		<%
+		Object ordinamentoObj = request.getAttribute("ordinamento");
+		String ordinamento = (String) ordinamentoObj;
+		%>
+	<form action="./GestioneFerieServlet">
+			<div align="center">
+				<label>Ordinamento lista: &nbsp&nbsp&nbsp</label>
+				<select class="custom-select" name="ordinamento" 
+				onchange="this.form.submit()"  style="width: 15%">
+
+					<%
+					if( ordinamento != null ) {
+						if( ordinamento.equals("nome") ) {
+					%>
+					<option value="nome" selected>Nome</option>
+					<option value="cognome">Cognome</option>
+					<option value="mansione">Mansione</option>
+					<option value="grado">Grado</option>
+					<option value="giorniFerieAnnoCorrente">Ferie anno corrente</option>
+					<option value="giorniFerieAnnoPrecedente">Ferie anno precedente</option>
+					
+					
+					<%
+						} else if( ordinamento.equals("cognome") ) {		
+						%>
+					<option value="nome" >Nome</option>
+					<option value="cognome" selected>Cognome</option>
+					<option value="mansione">Mansione</option>
+					<option value="grado">Grado</option>
+					<option value="giorniFerieAnnoCorrente">Ferie anno corrente</option>
+					<option value="giorniFerieAnnoPrecedente">Ferie anno precedente</option>
+					<%
+						} else if( ordinamento.equals("mansione") ) {		
+						%>
+					<option value="nome">Nome</option>
+					<option value="cognome">Cognome</option>
+					<option value="mansione"selected>Mansione</option>
+					<option value="grado">Grado</option>
+					<option value="giorniFerieAnnoCorrente">Ferie anno corrente</option>
+					<option value="giorniFerieAnnoPrecedente">Ferie anno precedente</option>
+					<%
+						} else if( ordinamento.equals("grado") ) {		
+						%>
+					<option value="nome" >Nome</option>
+					<option value="cognome">Cognome</option>
+					<option value="mansione">Mansione</option>
+					<option value="grado" selected>Grado</option>
+					<option value="giorniFerieAnnoCorrente">Ferie anno corrente</option>
+					<option value="giorniFerieAnnoPrecedente">Ferie anno precedente</option>
+					<%
+						} else if( ordinamento.equals("giorniFerieAnnoCorrente") ) {		
+						%>
+					<option value="nome" >Nome</option>
+					<option value="cognome">Cognome</option>
+					<option value="mansione">Mansione</option>
+					<option value="grado">Grado</option>
+					<option value="giorniFerieAnnoCorrente" selected>Ferie anno corrente</option>
+					<option value="giorniFerieAnnoPrecedente">Ferie anno precedente</option>
+					<%
+						} else if( ordinamento.equals("giorniFerieAnnoPrecedente") ) {		
+						%>
+					<option value="nome">Nome</option>
+					<option value="cognome">Cognome</option>
+					<option value="mansione">Mansione</option>
+					<option value="grado">Grado</option>
+					<option value="giorniFerieAnnoCorrente">Ferie anno corrente</option>
+					<option value="giorniFerieAnnoPrecedente" selected>Ferie anno precedente</option>
+					<%}
+					}
+					else {%>
+					
+					<option value="nome" >Nome</option>
+					<option value="cognome"selected>Cognome</option>
+					<option value="mansione">Mansione</option>
+					<option value="grado">Grado</option>
+					<option value="giorniFerieAnnoCorrente">Ferie anno corrente</option>
+					<option value="feriePrec">Ferie anno precedente</option>
+					<%} %>
+
+				</select>
+			</div>
+		</form>
+
+
+
 
 	<!--------- Alert Ok----------------->
 
@@ -258,7 +344,7 @@ div.container__days {
 
 				<tr>
 					<td class="text-center"><img
-						src="Grado/<%=vigile.getGrado()%>.png" style="height: 25%"
+						src="Grado/<%=vigile.getGrado()%>.png" width=16%
 						onerror="this.parentElement.innerHTML='Non disponibile';"></td>
 					<td class="text-center"><%=vigile.getNome()%></td>
 					<td class="text-center"><%=vigile.getCognome()%></td>

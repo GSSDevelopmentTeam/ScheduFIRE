@@ -11,7 +11,7 @@
 	<h2 class="d-flex justify-content-center" style="color:#B60000!Important">Personale Disponibile</h2>
 	<h5 class="d-flex justify-content-center" ><%=request.getAttribute("titolo")==null ? "" : request.getAttribute("titolo") %></h5>
 		<div class="table-responsive">
-		<table class="table  table-hover" id="listaVigili" >
+		<table class="table  table-hover" id="listaVigili"  style="table-layout: fixed">
 			<thead class="thead-dark">
 				<tr>
 					<th class="text-center">Grado</th>
@@ -33,7 +33,7 @@
 				%>
 
 					<tr>
-						<td class="text-center"><img src="Grado/<%=vigile.getGrado() %>.png" style="height:25%" onerror="this.parentElement.innerHTML='Non disponibile';"></td>
+						<td class="text-center"><img src="Grado/<%=vigile.getGrado() %>.png" width=16% onerror="this.parentElement.innerHTML='Non disponibile';"></td>
 						<td class="text-center"><%=vigile.getNome() %></td>
 						<td class="text-center"><%=vigile.getCognome() %></td>
 						<td class="text-center"><%=vigile.getEmail() %></td>
