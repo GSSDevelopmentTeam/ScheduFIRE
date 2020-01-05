@@ -49,14 +49,14 @@ public class ModificaComposizioneSquadreServlet extends HttpServlet {
 		Date data = Date.valueOf(request.getParameter("data"));
 		String oldVF =request.getParameter("email");
 		String newVF =request.getParameter("VFnew");
-		
+
 		if(request.getParameter("salva")!=null) {
 			@SuppressWarnings("unchecked")
 			HashMap<VigileDelFuocoBean, String> squadraDiurno = (HashMap<VigileDelFuocoBean, String>) 
 			sessione.getAttribute("squadraDiurno");
 			@SuppressWarnings("unchecked")
 			HashMap<VigileDelFuocoBean, String> squadraNotturno = (HashMap<VigileDelFuocoBean, String>) 
-					sessione.getAttribute("squadraNotturno");
+			sessione.getAttribute("squadraNotturno");
 			List<ComponenteDellaSquadraBean> listaDiurno = vigileToComponente(squadraDiurno, data);	
 			List<ComponenteDellaSquadraBean> listaNotturno = vigileToComponente(squadraNotturno, giornoSuccessivo);			
 
@@ -79,9 +79,9 @@ public class ModificaComposizioneSquadreServlet extends HttpServlet {
 
 
 		}
-		
-		
-		
+
+
+
 		if(sessione.getAttribute("squadra")!=null) {
 			Map<VigileDelFuocoBean, String> squadra = (HashMap<VigileDelFuocoBean, String>) sessione.getAttribute("squadra");
 			for(VigileDelFuocoBean daModificare : squadra.keySet()) {
