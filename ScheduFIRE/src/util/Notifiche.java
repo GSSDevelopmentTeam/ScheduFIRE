@@ -21,6 +21,10 @@ public class Notifiche {
 
 	public Notifiche() {
 		listaNotifiche = new ArrayList<>();
+		listaNotifiche.add(new Notifica(3, "Test di una notifica grave", "HomeCTServlet"));
+		listaNotifiche.add(new Notifica(2, "Test di una notifica media, con stato d'errore medio e colore medio", "HomeCTServlet"));
+		listaNotifiche.add(new Notifica(1, "Test di una notifica normale, che per quanto sia normale essa è solo una notifica normale, dunque è normale che sia normale", "HomeCTServlet"));
+
 		update(UPDATE_PER_AVVIO);
 	}
 

@@ -72,8 +72,7 @@
 }
 
 .rf{
-	float:right;	
-	margin-top:15px;
+	float:right;
 }
 
 .badge {
@@ -138,7 +137,6 @@ span .del:hover{
 	padding: 14px 16px;
 	margin: 0;
 	width: 100%;
-	margin-top:-40%;
 	background-color: #B60000;
 }
 
@@ -146,7 +144,7 @@ span .del:hover{
 	display: none;
 	position: fixed;
 	right: 20px;
-	top: 13%;
+	top: 8%;
 	z-index: 999;
 	width: 10%;
 	background:none;
