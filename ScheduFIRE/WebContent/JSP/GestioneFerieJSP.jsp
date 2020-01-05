@@ -17,6 +17,10 @@ div.container__days {
   min-width: 270px !important
 
 }
+
+* {
+  box-sizing: border-box;
+}
 </style>
 </head>
 <body>

@@ -5,6 +5,20 @@
 <html>
 	<jsp:include page="StandardJSP.jsp" />
 	
+	<style>
+	
+	div.month-item-weekdays-row {
+	  min-width: 280px !important
+	
+	}
+	
+	
+	div.container__days {
+	  min-width: 270px !important
+	
+	}
+	</style>
+	
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 	<script src="JS/datePicker.js"></script>
 	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.min.js"></script>
@@ -12,14 +26,6 @@
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.js"></script>
 	
 	<body>
-	
-	
-	
-	<!-- Barra Navigazione -->
-	<jsp:include page="HeaderJSP.jsp" />
-	<h2 class="d-flex justify-content-center" style="color:#B60000!Important">Gestione Malattie</h2>
-	
-	
 	
 	<!-- Modal di aggiunta malattia-->
 	<div class="modal fade" id="aggiungiMalattia" tabindex="-1" role="dialog"
@@ -75,6 +81,57 @@
 </div>
 	
 	
+	<!-- Barra Navigazione -->
+	<jsp:include page="HeaderJSP.jsp" />
+	<h2 class="d-flex justify-content-center" style="color:#B60000!Important">Gestione Malattie</h2>
+	
+	<!-- form per l'ordinamento della lista dei VF-->
+		<%
+		Object ordinamentoObj = request.getAttribute("ordinamento");
+		String ordinamento = (String) ordinamentoObj;
+		%>
+	<form action="./PeriodiDiMalattiaServlet">
+			<div align="center">
+				<label>Lista ordinata per</label><br/>
+				<select class="custom-select" name="ordinamento" 
+				onchange="this.form.submit()"  style="width: 15%">
+
+					<%
+					if( ordinamento != null ) {
+						if( ordinamento.equals("nome") ) {
+					%>
+					<option value="nome" selected>Nome</option>
+					<option value="cognome">Cognome</option>
+					<option value="mansione">mansione</option>
+					<option value="grado">grado</option>
+					
+					<%
+						} else if( ordinamento.equals("cognome") ) {		
+						%>
+					<option value="nome">Nome</option>
+					<option value="cognome" selected>Cognome</option>
+					<option value="mansione">mansione</option>
+					<option value="grado">grado</option>
+					<%
+						} else if( ordinamento.equals("mansione") ) {		
+						%>
+					<option value="nome">Nome</option>
+					<option value="cognome">Cognome</option>
+					<option value="mansione" selected>mansione</option>
+					<option value="grado">grado</option>
+					<%
+						} else if( ordinamento.equals("grado") ) {		
+						%>
+					<option value="nome">Nome</option>
+					<option value="cognome">Cognome</option>
+					<option value="mansione">mansione</option>
+					<option value="grado" selected>grado</option>
+					<%}
+					}%>
+
+				</select>
+			</div>
+		</form>
 	
 	
 	<!-- body aggiungi malattia -->
@@ -83,8 +140,8 @@
 			<thead class="thead-dark">
 				<tr>
 					<th class="text-center"width = 16.66%>Grado</th>
-					<th class="text-center"width = 16.66%>Cognome</th>
 					<th class="text-center"width = 16.66%>Nome</th>
+					<th class="text-center"width = 16.66%>Cognome</th>
 					<th class="text-center"width = 16.66%>Email</th>
 					<th class="text-center"width = 16.66%>Mansione</th>
 					<th class="text-center"width = 16.66%>Inserisci Malattia</th>
@@ -100,15 +157,11 @@
 					%>
 					
 					<tr>
-						<td class="text-center">
-						<% if(vigile.getGrado().equals("Coordinatore")) {%><img src="Grado/Coordinatore.png" class="rounded mx-auto d-block" width = 22%; height=22%;>
-						<%} else if(vigile.getGrado().equals("Esperto")) {%><img src="Grado/Esperto.png" class="rounded mx-auto d-block" width = 22%; height=22%;>
-						<%} else {%><img src="Grado/Qualificato.png" class="rounded mx-auto d-block" width = 22%; height=22%;>
-						<%} %>
-						</td>
-						<td class="text-center"><%=vigile.getCognome()%></td>
+						<td class="text-center"><img src="Grado/<%=vigile.getGrado() %>.png" style="height:25%" 
+						onerror="this.parentElement.innerHTML='Non disponibile';"></td>
 						<td class="text-center"><%=vigile.getNome() %></td>
-						<td class="text-center"><%=vigile.getEmail() %></td>
+						<td class="text-center"><%=vigile.getCognome()%></td>
+						<td class="text-center"><%=vigile.getEmail() %>@vigilfuoco.it</td>
 						<td class="text-center"><%=vigile.getMansione()%></td>
 						<td class="text-center"><button class="pass btn btn-outline-secondary" 
 						data-toggle="modal" data-target="#aggiungiMalattia"
