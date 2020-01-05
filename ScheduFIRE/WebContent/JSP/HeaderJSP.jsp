@@ -19,7 +19,7 @@
 	  %>	
  	<div class="rf">
  		<a><form action="Logout" method="POST">
- 		<button class="inversesubmit" style="float:inherit;">Logout</button>
+ 		<button class="btn btn-secondary" style="float:inherit; top:8%">Logout</button>
  		</form></a>
  		<% if(ruolo.equalsIgnoreCase("capoturno")){ 
  		
