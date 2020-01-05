@@ -1,4 +1,4 @@
-package testing;
+package control;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -10,13 +10,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.junit.Before;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-
-import control.HomeCTServlet;
 
 class HomeCTServletTest {
 	
@@ -26,7 +25,7 @@ class HomeCTServletTest {
 	HomeCTServlet servlet;
 	ArgumentCaptor<String> captor;
 	
-	@BeforeAll
+	@Before
 	void setUp() {
 		MockitoAnnotations.initMocks(this);
 		servlet = new HomeCTServlet();
