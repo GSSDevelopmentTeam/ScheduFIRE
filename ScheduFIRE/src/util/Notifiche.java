@@ -1,6 +1,7 @@
 package util;
 
 import java.sql.Date;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -50,6 +51,10 @@ public class Notifiche {
 		else if(cause == 3) {
 			updateMalattia(from, to, vigile);
 		}
+		else if(cause == 4) {
+			updateSquadrePerFerie(from, to, vigile);
+		}
+
 		Collections.sort(listaNotifiche, (Notifica n1, Notifica n2) -> 
 		(n2.getSeverita() - n1.getSeverita()));
 	}
@@ -59,13 +64,13 @@ public class Notifiche {
 		while(!from.equals(to)) {
 			if(!ComponenteDellaSquadraDao.isComponente(vigile.getEmail(), from)) {
 				listaNotifiche.add(new Notifica(2, "" + vigile.getCognome() + " " + vigile.getNome() + 
-						" non potrà partecipare ad un turno a lui assegnato causa malattia.", "/ModificaSquadreServlet"));
+						" non potrï¿½ partecipare ad un turno a lui assegnato causa malattia.", "/ModificaSquadreServlet"));
 				break;
 			}
 			from = Date.valueOf(from.toLocalDate().plusDays(1L));
 		}
 	}
-
+	
 	private static void updateFerie(Date temp, Date to, VigileDelFuocoBean vigile) {
 		List<List<VigileDelFuocoBean>> disponibili = new ArrayList<>();
 		Date from = (Date) temp.clone();
@@ -90,6 +95,20 @@ public class Notifiche {
 		}
 
 	}
+	
+	private static void updateSquadrePerFerie(Date temp, Date to, VigileDelFuocoBean vigile) {
+		Date from = (Date) temp.clone();
+		SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
+		while(!from.equals(to)) {
+			if(ComponenteDellaSquadraDao.isComponente(vigile.getEmail(), from)) {
+				listaNotifiche.add(new Notifica(2, "" + vigile.getCognome() + " " + vigile.getNome() + 
+						" non sarÃ  presente\nnella squadra a cui Ã¨ stato assegnato (giorno " +
+						formatter.format(from).toString() + ") causa ferie.\nSOSTITUIRE IL VIGILE!", "/ModificaComposizioneSquadreServlet"));
+				break;
+			}
+			from = Date.valueOf(from.toLocalDate().plusDays(1L));
+		}
+	}
 
 	public static void rimuovi(Notifica toRemove) {
 		listaNotifiche.remove(toRemove);
@@ -105,7 +124,7 @@ public class Notifiche {
 		if(!conta(disponibili)) {
 			Date data = new Date(System.currentTimeMillis());
 			listaNotifiche.add(new Notifica(3, "Il personale disponibile il " + 
-					data.toString() + " non è sufficiente per creare il turno.", "/GestionePersonaleServlet"));
+					data.toString() + " non ï¿½ sufficiente per creare il turno.", "/GestionePersonaleServlet"));
 		}
 	}
 
@@ -156,4 +175,10 @@ public class Notifiche {
 	 * Utilizzare quando viene modificato un periodo di malattia
 	 */
 	public static final int UPDATE_PER_MALATTIA = 3;
+	
+	/**
+	 * Utilizzare quando vengono concesse ferie ad un vigile giÃ  schedulato
+	 */
+	public static final int UPDATE_SQUADRE_PER_FERIE = 4;
+
 }
