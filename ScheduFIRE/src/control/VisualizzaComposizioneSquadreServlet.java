@@ -37,14 +37,20 @@ public class VisualizzaComposizioneSquadreServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
 		HttpSession sessione = request.getSession();
 		HashMap<VigileDelFuocoBean, String> squadra;
 		Date data=Date.valueOf(request.getParameter("data"));
 		squadra=Util.ottieniSquadra(data);
-		System.out.println("squadra: "+squadra);
 		sessione.setAttribute("squadra", squadra);
+
+		if(!(boolean) request.getAttribute("nonSalvata")) {
+			
+		}
+		
 		request.setAttribute("nonSalvata", false);
+		
+		
+		
 		request.getRequestDispatcher("JSP/GestioneSquadreJSP.jsp").forward(request, response);
 		
 		

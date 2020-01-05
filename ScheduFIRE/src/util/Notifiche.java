@@ -107,7 +107,7 @@ public class Notifiche {
 			if(ComponenteDellaSquadraDao.isComponente(vigile.getEmail(), from)) {
 				listaNotifiche.add(new Notifica(2, "" + vigile.getCognome() + " " + vigile.getNome() + 
 						" non sarà presente\nnella squadra a cui è stato assegnato (giorno " +
-						formatter.format(from).toString() + ") causa ferie.\nSOSTITUIRE IL VIGILE!", "/ModificaComposizioneSquadreServlet"));
+						formatter.format(from).toString() + ") causa ferie.", "/ModificaComposizioneSquadreServlet"));
 				break;
 			}
 			from = Date.valueOf(from.toLocalDate().plusDays(1L));
