@@ -208,7 +208,7 @@ non ha la proprietà :hover*/
 	background-color: white;
 	border-bottom: 0.1px solid #343a40;
 	border-top: 0.1 px solid #343a40;
-	padding: 2%;
+	padding: 1%;
 	font-size: 200%;
 	text-align: center;
 	font-family: Verdana;
@@ -260,7 +260,6 @@ non ha la proprietà :hover*/
 .dropdown-item {
 	font-size: 80%;
 	color: #4b4b4b;
-	padding: 10px 10px;
 	text-decoration: none;
 	display: block;
 }
