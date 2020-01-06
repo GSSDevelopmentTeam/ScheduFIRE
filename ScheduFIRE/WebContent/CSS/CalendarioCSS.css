@@ -1,9 +1,8 @@
 /*contenitore per l'intero calendario*/
 
 body{
-	background-color: #ffffff;
+	background-color: #f2f2f2;
 	font-family: Verdana, Geneva, Tahoma, sans-serif;
-	line-height: 185% !important;
 }
 
 * {
@@ -21,11 +20,13 @@ p#turno{
 	margin-right: 10px;
 	display: flex;
 	width: 100%;
-	background-color: transparent;
+	height: 100%;
+	background-color: white;
 }
 
 .edit {
 	justify-content:center;
+	margin:4%;
 	background-color:white;
 	border: 1px solid #454d55;
 	color: #454d55;
@@ -34,18 +35,14 @@ p#turno{
 	text-align: center;
 	text-decoration: none;
 	cursor: pointer;
-	margin-right: 4%;
 }
 
 #bottoneGeneraSquadra{
 	display: none;
-	line-height: normal;
-	float:left;
 }
 
 #bottoneModificaSquadra{
 	display:none;
-	line-height: normal;
 }
 
 .edit:hover{
@@ -58,7 +55,7 @@ p#turno{
 /*contenitore per il calendario*/
 .container-calendar {
 	width: 70%;
-	background-color: transparent;
+	background-color: white;
 	font-family: Verdana;
 	border-right: 2px dotted black;
 }
@@ -89,7 +86,7 @@ p#turno{
 flex:1 -> prende il resto del container*/
 .container-schedul {
 	flex: 1;
-	height: 550px;
+	height: 600px;
 	overflow-y:scroll;
 	background-color: transparent;
 	font-family: Verdana;
@@ -208,7 +205,7 @@ non ha la proprietà :hover*/
 	background-color: white;
 	border-bottom: 0.1px solid #343a40;
 	border-top: 0.1 px solid #343a40;
-	padding: 1%;
+	padding: 2%;
 	font-size: 200%;
 	text-align: center;
 	font-family: Verdana;
@@ -260,6 +257,7 @@ non ha la proprietà :hover*/
 .dropdown-item {
 	font-size: 80%;
 	color: #4b4b4b;
+	padding: 10px 10px;
 	text-decoration: none;
 	display: block;
 }
@@ -277,5 +275,10 @@ non ha la proprietà :hover*/
 	background-color: white;
 }
 /*Fine menù dropdown dei mesi*/
+
+.info{
+	text-decoration: none;
+	color: black;
+}
 
 
