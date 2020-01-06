@@ -49,7 +49,7 @@ public class ModificaComposizioneSquadreServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession sessione = request.getSession();
-		Date data = Date.valueOf(request.getParameter("data"));
+		Date data = (Date) sessione.getAttribute("data");
 		String oldVF =request.getParameter("email");
 		String newVF =request.getParameter("VFnew");
 		int tipo = Integer.parseInt(request.getParameter("tiposquadra"));
