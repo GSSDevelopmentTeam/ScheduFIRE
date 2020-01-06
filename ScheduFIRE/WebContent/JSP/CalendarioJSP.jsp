@@ -167,7 +167,7 @@
 
 			<div >
 				<%
-					//if(ruolo.equalsIgnoreCase("capoturno")){
+					if(ruolo.equalsIgnoreCase("capoturno")){
 				%>
 
 				<form action="GeneraSquadreServlet" method="post">
@@ -182,7 +182,7 @@
 					</button>
 				</form>
 				<%
-					//}
+					}
 				%>
 			</div>
 
@@ -247,11 +247,13 @@
 		
 		function dayClicked(input) {
 
+		<%if(ruolo.equalsIgnoreCase("capoturno")){%>
 		var generaSquadra = document.getElementById('bottoneModificaSquadra');
 		generaSquadra.style.display ='none';	
 		
 		var generaSquadra = document.getElementById('bottoneGeneraSquadra');
 		generaSquadra.style.display ='none';
+		<%}%>
 		
 		$("#informazione").text("");
 			
@@ -300,9 +302,6 @@
 				console.log("len "+len);
 				
 				<%
-				//codice java per il settaggio della data 
-				Date dataCliccata = Date.valueOf(anno+"-"+mese+"-"+giorno);
-				session.setAttribute("data",dataCliccata);
 				//Codica Java per il calcolo del giorno diurno e notturno
 				boolean diurno = GiornoLavorativo.isDiurno(data);
 				boolean lavorativo = GiornoLavorativo.isLavorativo(data);
@@ -311,106 +310,121 @@
 				boolean schedulazione = GiornoLavorativo.turnoIsEmpty(prossimoTurno);
 				mese=LocalDate.now().getMonthValue();
 				anno=LocalDate.now().getYear();
+				if(ruolo.equalsIgnoreCase("capoturno")){
 				%>
 				
 
-				var dt = new Date();
-				var hour = dt.getHours();
-				var minute = dt.getMinutes();
-				
-				if(len>0){
-					$("#informazione").text("Composizione della squadra del "+giorno+" "+meseStringa+" "+anno);
+					var dt = new Date();
+					var hour = dt.getHours();
+					var minute = dt.getMinutes();
 					
-					var schedulazione = document.getElementById('schedulazione');
-					schedulazione.style.display ='block';
-					
-					if(giorno == <%=giorno%> && mese == <%=mese%> && anno == <%=anno%> && <%=schedulazione%>){
-						$("#informazione").text("Non è presente nessuna schedulazione per il turno successivo"+
-								" al seguente");
-						var generaSquadra = document.getElementById('bottoneGeneraSquadra');
-						generaSquadra.style.display ='block';
-					}
-					
-					if(giorno == <%=giorno%> && mese == <%=mese%> && anno == <%=anno%>){
+					if(len>0){
+						$("#informazione").text("Composizione della squadra del "+giorno+" "+meseStringa+" "+anno);
 						
-						if(<%=diurno%>){	
+						var schedulazione = document.getElementById('schedulazione');
+						schedulazione.style.display ='block';
+						
+						if(giorno == <%=giorno%> && mese == <%=mese%> && anno == <%=anno%> && <%=schedulazione%>){
+							$("#informazione").text("Non è presente nessuna schedulazione per il turno successivo"+
+									" al seguente");
+							var generaSquadra = document.getElementById('bottoneGeneraSquadra');
+							generaSquadra.style.display ='block';
+						}
+						
+						if(giorno == <%=giorno%> && mese == <%=mese%> && anno == <%=anno%>){
 							
-							if(hour <= 19 && minute <= 59){
-								var generaSquadra = document.getElementById('bottoneModificaSquadra');
-								generaSquadra.style.display ='block';
-							}
-							
-						}	else if (<%=lavorativo%> && !<%=diurno%>){
-							
-								var generaSquadra = document.getElementById('bottoneModificaSquadra');
-								generaSquadra.style.display ='block';
+							if(<%=diurno%>){	
 								
-						}	else if (<%=ieriLavorativo%> && !<%=lavorativo%>){
-								if(hour <= 7 && minute <= 59){
+								if(hour <= 19 && minute <= 59){
 									var generaSquadra = document.getElementById('bottoneModificaSquadra');
 									generaSquadra.style.display ='block';
 								}
-							}
+								
+							}	else if (<%=lavorativo%> && !<%=diurno%>){
+								
+									var generaSquadra = document.getElementById('bottoneModificaSquadra');
+									generaSquadra.style.display ='block';
+									
+							}	else if (<%=ieriLavorativo%> && !<%=lavorativo%>){
+									if(hour <= 7 && minute <= 59){
+										var generaSquadra = document.getElementById('bottoneModificaSquadra');
+										generaSquadra.style.display ='block';
+									}
+								}
+							
+							 }
 						
-						 }
-					
-					
-				}else{
-					
-					$("#informazione").text("Non sono presenti squadre per il giorno "+giorno+" "+meseStringa+" "+anno);
-					
-					var schedulazione = document.getElementById('schedulazione');
-					schedulazione.style.display ='none';
-					
-					if(giorno == <%=giorno%> && mese == <%=mese%> && anno == <%=anno%> && <%=schedulazione%>){
-						$("#informazione").text("Non è presente nessuna schedulazione per il prossimo"+
-								" turno. Genera la suadra per il turno successivo");
-						var generaSquadra = document.getElementById('bottoneGeneraSquadra');
-						generaSquadra.style.display ='block';
+						
+					}else{
+						
+						$("#informazione").text("Non sono presenti squadre per il giorno "+giorno+" "+meseStringa+" "+anno);
+						
+						var schedulazione = document.getElementById('schedulazione');
+						schedulazione.style.display ='none';
+						
+						if(giorno == <%=giorno%> && mese == <%=mese%> && anno == <%=anno%> && <%=schedulazione%>){
+							$("#informazione").text("Non è presente nessuna schedulazione per il prossimo"+
+									" turno. Genera la suadra per il turno successivo");
+							var generaSquadra = document.getElementById('bottoneGeneraSquadra');
+							generaSquadra.style.display ='block';
+						}
+		
 					}
+					
+					if(giorno < <%=giorno%> || mese < <%=mese%> || anno < <%=anno%>){
+						
+						$("#informazione").text("Il turno per il giorno "+giorno+" "+meseStringa+" "+anno+
+								" è gia passato, per tanto puoi solo visionare il turno.");
+						
+						var generaSquadra = document.getElementById('bottoneGeneraSquadra');
+						generaSquadra.style.display ='none';
+						
+						var generaSquadra = document.getElementById('bottoneModificaSquadra');
+						generaSquadra.style.display ='none';
+					}
+				<%}%>
 	
+				if(len>0){
+					
+					$("#informazione").text("Composizione della squadra del "+giorno+" "+meseStringa+" "+anno);	
+					var v = document.getElementById('schedulazione');
+					v.style.display ='block';
+
+					for (var i = 0; i < len; i++) {
+					vigile=response[i];
+						
+							var rigaTabella = document.createElement("TR");
+							if(vigile.tipologia=="Sala Operativa"){
+							  salaOperativa.append(rigaTabella);
+							}
+							else if(vigile.tipologia=="Prima Partenza"){
+							  primaPartenza.append(rigaTabella);
+							}
+							else if(vigile.tipologia=="Auto Scala"){
+								  autoScala.append(rigaTabella);
+								}
+							else if(vigile.tipologia=="Auto Botte"){
+								  autoBotte.append(rigaTabella);
+								}
+							  var colonnaNome = document.createElement("TD");
+							  var nome=document.createTextNode(vigile.nome);
+							   colonnaNome.appendChild(nome);
+							  rigaTabella.appendChild(colonnaNome);
+							  
+							  var colonnaCognome = document.createElement("TD");
+							  var cognome=document.createTextNode(vigile.cognome);
+							   colonnaCognome.appendChild(cognome);
+							  rigaTabella.appendChild(colonnaCognome);
+						
+					}
+				}
+				else{
+					$("#informazione").text("OSP! Per la data del "+giorno+" "+meseStringa+" "+anno +
+							" non è presente nessuna schedulazione!");
+					var v = document.getElementById('schedulazione');
+					v.style.display ='none';
 				}
 				
-				if(giorno < <%=giorno%> || mese < <%=mese%> || anno < <%=anno%>){
-					
-					$("#informazione").text("Il turno per il giorno "+giorno+" "+meseStringa+" "+anno+
-							" è gia passato, per tanto puoi solo visionare il turno.");
-					
-					var generaSquadra = document.getElementById('bottoneGeneraSquadra');
-					generaSquadra.style.display ='none';
-					
-					var generaSquadra = document.getElementById('bottoneModificaSquadra');
-					generaSquadra.style.display ='none';
-				}
-	
-
-				for (var i = 0; i < len; i++) {
-				vigile=response[i];
-					
-						var rigaTabella = document.createElement("TR");
-						if(vigile.tipologia=="Sala Operativa"){
-						  salaOperativa.append(rigaTabella);
-						}
-						else if(vigile.tipologia=="Prima Partenza"){
-						  primaPartenza.append(rigaTabella);
-						}
-						else if(vigile.tipologia=="Auto Scala"){
-							  autoScala.append(rigaTabella);
-							}
-						else if(vigile.tipologia=="Auto Botte"){
-							  autoBotte.append(rigaTabella);
-							}
-						  var colonnaNome = document.createElement("TD");
-						  var nome=document.createTextNode(vigile.nome);
-						   colonnaNome.appendChild(nome);
-						  rigaTabella.appendChild(colonnaNome);
-						  
-						  var colonnaCognome = document.createElement("TD");
-						  var cognome=document.createTextNode(vigile.cognome);
-						   colonnaCognome.appendChild(cognome);
-						  rigaTabella.appendChild(colonnaCognome);
-					
-				}
 				
 
 			}
