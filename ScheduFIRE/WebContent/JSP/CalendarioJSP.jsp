@@ -1,3 +1,5 @@
+<%@page import="java.time.LocalDate"%>
+<%@page import="java.time.LocalDateTime"%>
 <%@page import="java.sql.Date"%>
 <%@page import="util.GiornoLavorativo"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
@@ -5,8 +7,10 @@
 
 <%@ page import="control.* "%>
 
-<%  String ruolo = "";
-		ruolo= (String) session.getAttribute("ruolo");%>
+<%
+	String ruolo = "";
+	ruolo = (String) session.getAttribute("ruolo");
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -17,18 +21,19 @@
 <title>ScheduFIRE</title>
 <%
 	String empty = " ";
-	String[] days = {"  Lunedi'  ", " Martedi'  ", "Mercoledi' ", " Giovedi'  ", " Venerdi'  ", "  Sabato  ", "   Domenica "};
+	String[] days = {"  Lunedi'  ", " Martedi'  ", "Mercoledi' ", " Giovedi'  ", " Venerdi'  ", "  Sabato  ",
+			"   Domenica "};
 	String[] month = {"Gennaio", "Febbraio", "Marzo", "Aprile", "Maggio", "Giugno", "Luglio", "Agosto",
 			"Settembre", "Ottobre", "Novembre", "Dicembre"};
 	//giorno, mese e anno correnti
 	int giorno = (Integer) request.getAttribute("giorno");
 	int mese = (Integer) request.getAttribute("mese");
 	int anno = (Integer) request.getAttribute("anno");
-	
+
 	java.sql.Date data = (java.sql.Date) request.getAttribute("date");
 	int primoGiorno = (Integer) request.getAttribute("primo_giorno");
-	int anno_corrente = Integer.parseInt ((String) request.getAttribute("anno_corrente"));
-	int mese_corrente = Integer.parseInt ((String) request.getAttribute("mese_corrente"));
+	int anno_corrente = Integer.parseInt((String) request.getAttribute("anno_corrente"));
+	int mese_corrente = Integer.parseInt((String) request.getAttribute("mese_corrente"));
 	String mese_stringa = (String) request.getAttribute("meseStringa");
 	int[] days_month = (int[]) request.getAttribute("days_month");
 	int[] days_work = (int[]) request.getAttribute("days_work");
@@ -36,7 +41,6 @@
 
 	//print per controllare se i dati passati dalla servlet sono giusti!
 	System.out.println("CalendarioJSP, correnti-> " + giorno + "/" + mese + "/" + anno + " -- " + mese_stringa);
-	
 %>
 </head>
 <body>
@@ -52,13 +56,13 @@
 			<!-- START: container per (<-) anno (->) -->
 			<div class="container-year">
 				<a class="altroAnno"
-					href="CalendarioServlet?mese=<%=mese %>&anno=<%=anno-1 %>"> <img
+					href="CalendarioServlet?mese=<%=mese%>&anno=<%=anno - 1%>"> <img
 					src="IMG/arrow/left-arrow-p.png" style="margin-right: 10px"
 					onmouseover="this.src='IMG/arrow/left-arrow-d.png'"
 					onmouseout="this.src='IMG/arrow/left-arrow-p.png'" />
 				</a> <span id="annoVisualizzato"> <%=anno%>
 				</span> <a class="altroAnno"
-					href="CalendarioServlet?mese=<%=mese %>&anno=<%=anno+1 %>"> <img
+					href="CalendarioServlet?mese=<%=mese%>&anno=<%=anno + 1%>"> <img
 					src="IMG/arrow/right-arrow-p.png" style="margin-left: 5px"
 					onmouseover="this.src='IMG/arrow/right-arrow-d.png'"
 					onmouseout="this.src='IMG/arrow/right-arrow-p.png'" />
@@ -70,7 +74,7 @@
 			<div class="grid-chose-month">
 				<div class="dropdown">
 					<input type="hidden" id="meseVisualizzato" value="<%=mese%>">
-					<button class="dropbtn" id="meseStringa"><%=month[mese-1]%>
+					<button class="dropbtn" id="meseStringa"><%=month[mese - 1]%>
 						<img src="IMG/arrow/arrow-down.png" />
 					</button>
 					<div class="dropdown-content">
@@ -78,8 +82,10 @@
 							for (int k = 0; k <= 11; k++) {
 						%>
 						<a class="dropdown-item"
-							href="CalendarioServlet?mese=<%=k+1 %>&anno=<%=anno%>"><%=month[k]%></a>
-						<%	}	%>
+							href="CalendarioServlet?mese=<%=k + 1%>&anno=<%=anno%>"><%=month[k]%></a>
+						<%
+							}
+						%>
 					</div>
 				</div>
 			</div>
@@ -94,62 +100,60 @@
 				<%
 					}
 					int day = 0;
-					int i,j;
+					int i, j;
 					String id = "";
 					String img = "";
-					String onClick ="";
-					
-					for (i=0; i < days_month.length; i++) {							
-							if (days_month[i] < 0){
-								%>
+					String onClick = "";
+
+					for (i = 0; i < days_month.length; i++) {
+						if (days_month[i] < 0) {
+				%>
 				<div class="item-empty"><%=empty%></div>
 				<%
-						} else
-							{
-								day++;
-							
-								if(giorno==day && mese_corrente == mese && anno_corrente == anno){
-									id ="giornoCorrente";
-								}
-								
-								if (days_work[i]==1){
-									id = "giornoLavorativoDiurno";
-									img = "diurno";
-									onClick ="dayClicked($(this).text())";
-								}
-								
-								if(days_work[i]==2){
-									id = "giornoLavorativoNotturno";
-									img = "notturno";
-									onClick ="dayClicked($(this).text())";
-								}
-								
-								if(giorno==day && mese_corrente == mese && anno_corrente == anno && days_work[i]==1){
-									id = "giornoCorrenteLavorativoDiurno";
-									img = "diurno";
-								}
-								
-								if(giorno==day && mese_corrente == mese && anno_corrente == anno && days_work[i]==2){
-									id = "giornoCorrenteLavorativoNotturno";
-									img = "notturno";
-								}							
-								
-								%>
-								<div class="grid-item" id="<%=id%>" onClick="<%=onClick %>"
-									style="cursor: pointer;">
-									<img src="IMG/<%=img%>.png" alt=" "
-										onerror="this.parentElement.innerHTML = '<%=day %>';" />
-									<%=day%>
-				
-									<p id="turno"><%=days_turno[i] %></p>
-								</div>
+					} else {
+							day++;
+
+							if (giorno == day && mese_corrente == mese && anno_corrente == anno) {
+								id = "giornoCorrente";
+							}
+
+							if (days_work[i] == 1) {
+								id = "giornoLavorativoDiurno";
+								img = "diurno";
+								onClick = "dayClicked($(this).text())";
+							}
+
+							if (days_work[i] == 2) {
+								id = "giornoLavorativoNotturno";
+								img = "notturno";
+								onClick = "dayClicked($(this).text())";
+							}
+
+							if (giorno == day && mese_corrente == mese && anno_corrente == anno && days_work[i] == 1) {
+								id = "giornoCorrenteLavorativoDiurno";
+								img = "diurno";
+							}
+
+							if (giorno == day && mese_corrente == mese && anno_corrente == anno && days_work[i] == 2) {
+								id = "giornoCorrenteLavorativoNotturno";
+								img = "notturno";
+							}
+				%>
+				<div class="grid-item" id="<%=id%>" onClick="<%=onClick%>"
+					style="cursor: pointer;">
+					<img src="IMG/<%=img%>.png" alt=" "
+						onerror="this.parentElement.innerHTML = '<%=day%>';" />
+					<%=day%>
+
+					<p id="turno"><%=days_turno[i]%></p>
+				</div>
 
 				<%
-								id = "";
-								img = "";
-								onClick="";
-							}
+					id = "";
+							img = "";
+							onClick = "";
 						}
+					}
 				%>
 
 			</div>
@@ -160,26 +164,30 @@
 
 		<div class="container-schedul" id="visilibity">
 			<a class="info" id="informazione"></a>
-			
-				<div>
-					<%//if(ruolo.equalsIgnoreCase("capoturno")){%>
-					
-							<form action="GeneraSquadreServlet" method="post">
-								<button type="submit" id="bottoneGeneraSquadra"
-										class="edit">Genera Squadre
-								</button>	
-							</form>
-						
-						<form action="ModificaComposizioneSquadreServlet" method="post">
-							<button type="submit" id="bottoneModificaSquadra"
-									class="edit">Modifica Squadre
-							</button>
-						</form>
-					<%//} %>
-				</div>
-				
+
+			<div >
+				<%
+					if(ruolo.equalsIgnoreCase("capoturno")){
+				%>
+
+				<form action="GeneraSquadreServlet" method="post">
+					<button type="submit" id="bottoneGeneraSquadra" class="edit">
+						Genera squadre <br> per il turno successivo
+					</button>
+				</form>
+
+				<form action="ModificaComposizioneSquadreServlet" method="post">
+					<button type="submit" id="bottoneModificaSquadra" class="edit">
+						Modifica squadre
+					</button>
+				</form>
+				<%
+					}
+				%>
+			</div>
+
 			<div class="wrapper" id="schedulazione">
-			
+
 				<div class="mansione">
 					<p>SALA OPERATIVA</p>
 				</div>
@@ -217,9 +225,9 @@
 
 			</div>
 		</div>
-		
 
-				
+
+
 
 	</div>
 	<!-- AND: container per calendario e schedulazione -->
@@ -231,15 +239,21 @@
 	<!-- START: script per la funzione dayClicked() -->
 	<script>
 	$( document ).ready(function() {
-	    dayClicked(<%=giorno %>);
+	    dayClicked(<%=giorno%>);
 	});
 	
 	
-		function setValore(input){
-			console.log(input);
-		}
+
 		
 		function dayClicked(input) {
+
+		<%if(ruolo.equalsIgnoreCase("capoturno")){%>
+		var generaSquadra = document.getElementById('bottoneModificaSquadra');
+		generaSquadra.style.display ='none';	
+		
+		var generaSquadra = document.getElementById('bottoneGeneraSquadra');
+		generaSquadra.style.display ='none';
+		<%}%>
 		
 		$("#informazione").text("");
 			
@@ -282,66 +296,137 @@
 				primaPartenza.empty();
 				autoScala.empty();
 				autoBotte.empty();
-				
-				
+
 				console.log("response "+response);
 				var len = response.length; 
 				console.log("len "+len);
 				
-				if(len>0){
-					$("#informazione").text("Composizione della squadra del "+giorno+" "+meseStringa+" "+anno);
-					
-					var schedulazione = document.getElementById('schedulazione');
-					schedulazione.style.display ='block';
-					
-					var generaSquadra = document.getElementById('bottoneGeneraSquadra');
-					generaSquadra.style.display ='none';
-					
-					var generaSquadra = document.getElementById('bottoneModificaSquadra');
-					generaSquadra.style.display ='block';
-					
-				}else{
-					$("#informazione").text("Non sono presenti squadre per questo giorno");
-					
-					var schedulazione = document.getElementById('schedulazione');
-					schedulazione.style.display ='none';
-					
-					var generaSquadra = document.getElementById('bottoneGeneraSquadra');
-					generaSquadra.style.display ='block';
-					
-					var generaSquadra = document.getElementById('bottoneModificaSquadra');
-					generaSquadra.style.display ='none';
-				}
-                    
-					
+				<%
+				//Codica Java per il calcolo del giorno diurno e notturno
+				boolean diurno = GiornoLavorativo.isDiurno(data);
+				boolean lavorativo = GiornoLavorativo.isLavorativo(data);
+				boolean ieriLavorativo= GiornoLavorativo.isLavorativo(Date.valueOf(data.toLocalDate().plusDays(-1)));
+				Date prossimoTurno= Date.valueOf(data.toLocalDate().plusDays(4));
+				boolean schedulazione = GiornoLavorativo.turnoIsEmpty(prossimoTurno);
+				mese=LocalDate.now().getMonthValue();
+				anno=LocalDate.now().getYear();
+				if(ruolo.equalsIgnoreCase("capoturno")){
+				%>
+				
 
-				for (var i = 0; i < len; i++) {
-				vigile=response[i];
+					var dt = new Date();
+					var hour = dt.getHours();
+					var minute = dt.getMinutes();
 					
-						var rigaTabella = document.createElement("TR");
-						if(vigile.tipologia=="Sala Operativa"){
-						  salaOperativa.append(rigaTabella);
+					if(len>0){
+						$("#informazione").text("Composizione della squadra del "+giorno+" "+meseStringa+" "+anno);
+						
+						var schedulazione = document.getElementById('schedulazione');
+						schedulazione.style.display ='block';
+						
+						if(giorno == <%=giorno%> && mese == <%=mese%> && anno == <%=anno%> && <%=schedulazione%>){
+							$("#informazione").text("Non è presente nessuna schedulazione per il turno successivo"+
+									" al seguente");
+							var generaSquadra = document.getElementById('bottoneGeneraSquadra');
+							generaSquadra.style.display ='block';
 						}
-						else if(vigile.tipologia=="Prima Partenza"){
-						  primaPartenza.append(rigaTabella);
+						
+						if(giorno == <%=giorno%> && mese == <%=mese%> && anno == <%=anno%>){
+							
+							if(<%=diurno%>){	
+								
+								if(hour <= 19 && minute <= 59){
+									var generaSquadra = document.getElementById('bottoneModificaSquadra');
+									generaSquadra.style.display ='block';
+								}
+								
+							}	else if (<%=lavorativo%> && !<%=diurno%>){
+								
+									var generaSquadra = document.getElementById('bottoneModificaSquadra');
+									generaSquadra.style.display ='block';
+									
+							}	else if (<%=ieriLavorativo%> && !<%=lavorativo%>){
+									if(hour <= 7 && minute <= 59){
+										var generaSquadra = document.getElementById('bottoneModificaSquadra');
+										generaSquadra.style.display ='block';
+									}
+								}
+							
+							 }
+						
+						
+					}else{
+						
+						$("#informazione").text("Non sono presenti squadre per il giorno "+giorno+" "+meseStringa+" "+anno);
+						
+						var schedulazione = document.getElementById('schedulazione');
+						schedulazione.style.display ='none';
+						
+						if(giorno == <%=giorno%> && mese == <%=mese%> && anno == <%=anno%> && <%=schedulazione%>){
+							$("#informazione").text("Non è presente nessuna schedulazione per il prossimo"+
+									" turno. Genera la suadra per il turno successivo");
+							var generaSquadra = document.getElementById('bottoneGeneraSquadra');
+							generaSquadra.style.display ='block';
 						}
-						else if(vigile.tipologia=="Auto Scala"){
-							  autoScala.append(rigaTabella);
-							}
-						else if(vigile.tipologia=="Auto Botte"){
-							  autoBotte.append(rigaTabella);
-							}
-						  var colonnaNome = document.createElement("TD");
-						  var nome=document.createTextNode(vigile.nome);
-						   colonnaNome.appendChild(nome);
-						  rigaTabella.appendChild(colonnaNome);
-						  
-						  var colonnaCognome = document.createElement("TD");
-						  var cognome=document.createTextNode(vigile.cognome);
-						   colonnaCognome.appendChild(cognome);
-						  rigaTabella.appendChild(colonnaCognome);
+		
+					}
 					
+					if(giorno < <%=giorno%> || mese < <%=mese%> || anno < <%=anno%>){
+						
+						$("#informazione").text("Il turno per il giorno "+giorno+" "+meseStringa+" "+anno+
+								" è gia passato, per tanto puoi solo visionare il turno.");
+						
+						var generaSquadra = document.getElementById('bottoneGeneraSquadra');
+						generaSquadra.style.display ='none';
+						
+						var generaSquadra = document.getElementById('bottoneModificaSquadra');
+						generaSquadra.style.display ='none';
+					}
+				<%}%>
+	
+				if(len>0){
+					
+					$("#informazione").text("Composizione della squadra del "+giorno+" "+meseStringa+" "+anno);	
+					var v = document.getElementById('schedulazione');
+					v.style.display ='block';
+
+					for (var i = 0; i < len; i++) {
+					vigile=response[i];
+						
+							var rigaTabella = document.createElement("TR");
+							if(vigile.tipologia=="Sala Operativa"){
+							  salaOperativa.append(rigaTabella);
+							}
+							else if(vigile.tipologia=="Prima Partenza"){
+							  primaPartenza.append(rigaTabella);
+							}
+							else if(vigile.tipologia=="Auto Scala"){
+								  autoScala.append(rigaTabella);
+								}
+							else if(vigile.tipologia=="Auto Botte"){
+								  autoBotte.append(rigaTabella);
+								}
+							  var colonnaNome = document.createElement("TD");
+							  var nome=document.createTextNode(vigile.nome);
+							   colonnaNome.appendChild(nome);
+							  rigaTabella.appendChild(colonnaNome);
+							  
+							  var colonnaCognome = document.createElement("TD");
+							  var cognome=document.createTextNode(vigile.cognome);
+							   colonnaCognome.appendChild(cognome);
+							  rigaTabella.appendChild(colonnaCognome);
+						
+					}
 				}
+				else{
+					$("#informazione").text("OSP! Per la data del "+giorno+" "+meseStringa+" "+anno +
+							" non è presente nessuna schedulazione!");
+					var v = document.getElementById('schedulazione');
+					v.style.display ='none';
+				}
+				
+				
+
 			}
 		});
 	}

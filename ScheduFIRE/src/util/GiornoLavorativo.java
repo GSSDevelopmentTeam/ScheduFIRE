@@ -5,6 +5,13 @@ import java.text.SimpleDateFormat;
 import java.time.Duration;
 import java.time.LocalDate;
 import java.time.ZoneId;
+import java.util.ArrayList;
+import java.util.List;
+
+import model.bean.ComponenteDellaSquadraBean;
+import model.bean.VigileDelFuocoBean;
+import model.dao.ComponenteDellaSquadraDao;
+import model.dao.VigileDelFuocoDao;
 
 /**
  * Classe che si occupa della gestione del giorno lavorativo. 
@@ -106,6 +113,17 @@ public class GiornoLavorativo {
 		return Date.valueOf(fine);
 	}
 	
+	/**
+	 * 
+	 * @param data giorno in cui si vuole controllare se esiste o meno una squadra
+	 * @return true se la squadra non esiste, false se esiste
+	 */
+	public static boolean turnoIsEmpty(Date data){
+		ArrayList<ComponenteDellaSquadraBean> componenti=ComponenteDellaSquadraDao.getComponenti(data);
+		if(componenti.isEmpty())
+			return true;
+		return false;
+	}
 	
 	private static int differenza(Date data){
 		LocalDate start=LocalDate.of(2019, 12, 20);
