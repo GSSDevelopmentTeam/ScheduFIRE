@@ -35,7 +35,7 @@ public class CalendarioServlet extends HttpServlet {
 
 		Date date = new Date(System.currentTimeMillis());
 		String dataCorrente = date.toString();
-
+		
 		//variabili contengono il numero dell'anno mese e giorno in formato stringa 
 		String anno_stringa_numero = dataCorrente.substring(0, 4);
 		String mese_stringa_numero = dataCorrente.substring(5, 7);
@@ -88,66 +88,8 @@ public class CalendarioServlet extends HttpServlet {
 
 		for(i=0; i<42; i++)
 			System.out.println(days_turno[i]+"\n");
-
-
-		//INIZIO schedulazione dei vigili
-		//creo i 4 array per ogni squadra
-		//conterranno i nomi dei vigili del fuoco
-		ArrayList<String> sala_operativa = new ArrayList<>();
-		ArrayList<String> prima_partenza = new ArrayList<>();
-		ArrayList<String> autoscala = new ArrayList<>();
-		ArrayList<String> autobotte = new ArrayList<>();
-
-
-		//return: email, tipologia e giorno lavorativo:
-		ArrayList<ComponenteDellaSquadraBean> componenti_squadra = new ArrayList<>();  //bean
-		componenti_squadra = ComponenteDellaSquadraDao.getComponenti(date);
-
-
-		VigileDelFuocoBean vf_bean = new VigileDelFuocoBean();	//bean vf
-
-		String tipologia, email, cognome_nome;
-		for(ComponenteDellaSquadraBean c_s: componenti_squadra) {
-
-			//tipologia -> sala_operativa, prima_partenza, autoscala, autobotte
-			tipologia = c_s.getTipologiaSquadra();
-
-			//email del vf in pos i
-			email = c_s.getEmailVF();
-
-			//ottengo il vf bean con la email data
-			vf_bean = VigileDelFuocoDao.ottieni(email);
-
-			cognome_nome = vf_bean.getCognome() + " " + vf_bean.getNome();
-
-			switch (tipologia) {
-			case "Sala Operativa":
-				sala_operativa.add(cognome_nome);
-				break;
-			case "Prima Partenza":
-				prima_partenza.add(cognome_nome);
-				break;
-			case "Auto Scala":
-				autoscala.add(cognome_nome);
-				break;
-			case "Auto Botte":
-				autobotte.add(cognome_nome);
-				break;
-			default: 
-				System.out.println("Parametro nome squadra non valido."
-						+ "LINEA 126 CalendarioServlet");
-				break;
-			}
-		}
-		// FINE schedulazione vigili
-
-		//attributi passati al CalendarioJSP.jsp
-		//array delle squadre
-		request.setAttribute("sala_operativa", sala_operativa);
-		request.setAttribute("prima_partenza", prima_partenza);
-		request.setAttribute("autoscala", autoscala);
-		request.setAttribute("autobotte", autobotte);
-
+		
+		request.setAttribute("date", date);
 		request.setAttribute("anno_corrente", anno_stringa_numero);
 		request.setAttribute("mese_corrente", mese_stringa_numero);
 		request.setAttribute("anno", anno);

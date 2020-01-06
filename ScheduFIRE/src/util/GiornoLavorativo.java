@@ -59,10 +59,7 @@ public class GiornoLavorativo {
 			            turno="B1";
 			        else if(resto==28 || resto==29)
 			            turno="B8";
-	        }
-	        
-	        
-	 
+	        }	 
 	        return turno;
 	    }
 	 
