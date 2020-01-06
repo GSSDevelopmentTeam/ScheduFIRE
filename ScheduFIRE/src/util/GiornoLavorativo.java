@@ -67,8 +67,8 @@ public class GiornoLavorativo {
 	    }
 	 
 	/**
-	 * @param data , la data del giorno di cui si vuole sapere se lavorativo o meno
-	 * @return true se il giorno è lavorativo, false altrimenti
+	 * @param data  la data del giorno di cui si vuole sapere se lavorativo o meno
+	 * @return true se il giorno ï¿½ lavorativo, false altrimenti
 	 */
 	public static boolean isLavorativo(Date data) {
 		int differenza=differenza(data);
@@ -82,8 +82,8 @@ public class GiornoLavorativo {
 	}
 	
 	/**
-	 * @param data , la data del giorno di cui si vuole sapere se il turno lavorativo è diurno o meno
-	 * @return true se il turno di lavoro è diurno, false altrimenti
+	 * @param data  la data del giorno di cui si vuole sapere se il turno lavorativo ï¿½ diurno o meno
+	 * @return true se il turno di lavoro ï¿½ diurno, false altrimenti
 	 */
 	public static boolean isDiurno(Date data) {
 		if(isLavorativo(data)) {
@@ -97,8 +97,8 @@ public class GiornoLavorativo {
 	}
 	
 	/**
-	 * @param data , la data del giorno da cui parte la misurazione
-	 * @return data, la data del prossimo giorno lavorativo,escluso il giorno stesso passato come parametro
+	 * @param data  la data del giorno da cui parte la misurazione
+	 * @return data la data del prossimo giorno lavorativo,escluso il giorno stesso passato come parametro
 	 */
 	public static Date nextLavorativo(Date data) {
 		LocalDate fine=data.toLocalDate();
@@ -108,6 +108,23 @@ public class GiornoLavorativo {
 			while (!isLavorativo(Date.valueOf(fine)));
 		return Date.valueOf(fine);
 	}
+	
+	
+	/**
+	 * @param data  la data del giorno da cui parte la misurazione
+	 * @return data la data del precedente giorno lavorativo,escluso il giorno stesso passato come parametro
+	 */
+	public static Date precLavorativo(Date data) {
+		LocalDate fine=data.toLocalDate();
+		do {
+			fine=fine.plusDays(-1);
+		} 
+			while (!isLavorativo(Date.valueOf(fine)));
+		return Date.valueOf(fine);
+	}
+	
+	
+	
 	
 	
 	private static int differenza(Date data){
