@@ -66,8 +66,8 @@ h2 {
 	
 	
 	<br><div class="d-flex justify-content-center" >
-    <form action="??" method=post>
-    <button type="button" class="btn btn-success btn-lg" value="Conferma" name="Conferma" style="margin:3px;">Conferma Squadre</button>
+    <form action="GeneraSquadreServlet" method=post>
+    <button type="button" class="btn btn-success btn-lg" value="salva" name="salva" style="margin:3px;">Conferma Squadre</button>
     </form>
     <a href="#Giorno"><button type="button" class="btn btn-danger btn-lg" style="margin:3px;">Sqaudra Diurna</button></a>
 	<a href="#Notte"><button type="button" class="btn btn-danger btn-lg" style="margin:3px;">Squadra Notturna</button></a>
@@ -288,7 +288,7 @@ h2 {
                 while (in.hasNext()) {
                     Map.Entry coppia = (Map.Entry) in.next();
                     VigileDelFuocoBean membro = (VigileDelFuocoBean) coppia.getKey();
-                    if (coppia.getValue() == "Sala Operativa") {	
+                    if (coppia.getValue().equals("Sala Operativa")) {	
                     	
 				%>
 
@@ -335,7 +335,7 @@ h2 {
                 while (in.hasNext()) {
                     Map.Entry coppia = (Map.Entry) in.next();
                     VigileDelFuocoBean membro = (VigileDelFuocoBean) coppia.getKey();
-                    if (coppia.getValue() == "Prima Partenza") {	
+                    if (coppia.getValue().equals("Prima Partenza")) {	
 				%>
 
 				<tr>
@@ -380,7 +380,7 @@ h2 {
                 while (in.hasNext()) {
                     Map.Entry coppia = (Map.Entry) in.next();
                     VigileDelFuocoBean mb = (VigileDelFuocoBean) coppia.getKey();
-                    if (coppia.getValue() == "Auto Scala") {	
+                    if (coppia.getValue().equals("Auto Scala")) {	
 				%>
 
 				<tr>
@@ -425,7 +425,7 @@ h2 {
                 while (in.hasNext()) {
                     Map.Entry coppia = (Map.Entry) in.next();
                     VigileDelFuocoBean membro = (VigileDelFuocoBean) coppia.getKey();
-                    if (coppia.getValue() == "Auto Botte") {		
+                    if (coppia.getValue().equals("Auto Botte")) {		
 				%>
 
 				<tr>
