@@ -40,5 +40,24 @@ public class ListaSquadreDao {
 			throw new RuntimeException(e);
 		}
 	}
+	
+	
+	/**
+	 * @param data verranno cancellate tutte le Listesquadre precedenti a questa data
+	 */
+	public static void rimuoviTutte(Date data) {
+		String sql = "DELETE FROM ListaSquadre WHERE giornoLavorativo < ? ;";
+		
+		try(Connection con = ConnessioneDB.getConnection()) {
+			PreparedStatement ps = con.prepareStatement(sql);
+			ps.setDate(1, data);
+			ps.executeUpdate();
+			con.commit();
+			return;
+		}
+		catch (SQLException e) {
+			throw new RuntimeException(e);
+		}
+	}
 
 }

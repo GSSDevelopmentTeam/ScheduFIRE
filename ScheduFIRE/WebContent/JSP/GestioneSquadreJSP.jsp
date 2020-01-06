@@ -14,7 +14,6 @@
 	width: 38px;
 	float: left;
 }
-
 h2 {
 	color: #B60000;
 }
@@ -506,9 +505,7 @@ h2 {
 					$(response).appendTo("#appendElenco");
 				}
 			});
-
 		}
-
 		function salvaSquadra() {
 			$.ajax({
 				type : "POST",
@@ -518,7 +515,6 @@ h2 {
 				},
 				async : false,
 				dataType : "json"
-
 			});
 		}
 	</script>

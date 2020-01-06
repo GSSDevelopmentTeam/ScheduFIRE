@@ -38,7 +38,7 @@
 				%>
 
 					<tr>
-						<td class="text-center"><img src="Grado/<%=vigile.getGrado() %>.png" width=16% onerror="this.parentElement.innerHTML='Non disponibile';"></td>
+						<td class="text-center"><img src="Grado/<%=vigile.getGrado() %>.png" width=20% onerror="this.parentElement.innerHTML='Non disponibile';"></td>
 						<td class="text-center"><%=vigile.getNome() %></td>
 						<td class="text-center"><%=vigile.getCognome() %></td>
 						<td class="text-center"><%=vigile.getEmail() %></td>
