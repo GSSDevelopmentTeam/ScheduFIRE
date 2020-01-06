@@ -1,6 +1,5 @@
 <%@page import="java.util.HashMap"%>
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@page import="java.util.*, model.bean.*, model.dao.*"%>
 <!DOCTYPE html>
 <html>
@@ -56,7 +55,14 @@ h2 {
 	<!-- ELENCO SQUADRE  -->
 <%
 	HashMap<VigileDelFuocoBean, String> squadraD = (HashMap<VigileDelFuocoBean, String>) session.getAttribute("squadraDiurno");
-	HashMap<VigileDelFuocoBean, String> squadraN = (HashMap<VigileDelFuocoBean, String>) session.getAttribute("squadraNotturno"); %>
+	HashMap<VigileDelFuocoBean, String> squadraN = (HashMap<VigileDelFuocoBean, String>) session.getAttribute("squadraNotturno");
+	if(squadraN!=null) {System.out.println("squadra Notturna presa");}else {System.out.println("Squadra Notturna Assente");}
+	Iterator in = squadraN.entrySet().iterator();
+                while (in.hasNext()) {
+                    Map.Entry coppia = (Map.Entry) in.next();
+                    VigileDelFuocoBean membro = (VigileDelFuocoBean) coppia.getKey();
+                    System.out.println(membro.getNome());}
+                    %>
 	
 	
 	<br><div class="d-flex justify-content-center" >
@@ -107,7 +113,7 @@ h2 {
 					<td class="text-center"><button type="button"
 							class="btn btn-outline-secondary" data-toggle="modal"
 							data-target="#aggiungiVF" id="aggiungiVF"
-							onClick='apriFormVF("<%=membro.getEmail()%>")'>Sostituisci</button></td>
+							onClick='apriFormVF("<%=membro.getEmail()%>","<%=membro.getMansione()%>","1")'>Sostituisci</button></td>
 					</td>
 				</tr>
 				<%
@@ -153,7 +159,7 @@ h2 {
 					<td class="text-center"><button type="button"
 							class="btn btn-outline-secondary" data-toggle="modal"
 							data-target="#aggiungiVF" id="aggiungiVF"
-							onClick='apriFormVF("<%=membro.getEmail()%>")'>Sostituisci</button></td>
+							onClick='apriFormVF("<%=membro.getEmail()%>","<%=membro.getMansione()%>","1")'>Sostituisci</button></td>
 					</td>
 				</tr>
 				<%
@@ -198,7 +204,7 @@ h2 {
 					<td class="text-center"><button type="button"
 							class="btn btn-outline-secondary" data-toggle="modal"
 							data-target="#aggiungiVF" id="aggiungiVF"
-							onClick='apriFormVF("<%=membro.getEmail()%>")'>Sostituisci</button></td>
+							onClick='apriFormVF("<%=membro.getEmail()%>","<%=membro.getMansione()%>","1")'>Sostituisci</button></td>
 					</td>
 				</tr>
 				<%
@@ -243,7 +249,7 @@ h2 {
 					<td class="text-center"><button type="button"
 							class="btn btn-outline-secondary" data-toggle="modal"
 							data-target="#aggiungiVF" id="aggiungiVF"
-							onClick='apriFormVF("<%=membro.getEmail()%>")'>Sostituisci</button></td>
+							onClick='apriFormVF("<%=membro.getEmail()%>","<%=membro.getMansione()%>","1")'>Sostituisci</button></td>
 					</td>
 				</tr>
 				<%
@@ -278,12 +284,12 @@ h2 {
 
 			<tbody>
 				<% 
-	            
-                it = squadraN.entrySet().iterator();
-                while (it.hasNext()) {
-                    Map.Entry coppia = (Map.Entry) it.next();
+                 in = squadraN.entrySet().iterator();
+                while (in.hasNext()) {
+                    Map.Entry coppia = (Map.Entry) in.next();
                     VigileDelFuocoBean membro = (VigileDelFuocoBean) coppia.getKey();
-                    if (coppia.getKey() == "Sala Operativa") {	
+                    if (coppia.getValue() == "Sala Operativa") {	
+                    	
 				%>
 
 				<tr>
@@ -294,12 +300,11 @@ h2 {
 					<td class="text-center"><button type="button"
 							class="btn btn-outline-secondary" data-toggle="modal"
 							data-target="#aggiungiVF" id="aggiungiVF"
-							onClick='apriFormVF("<%=membro.getEmail()%>")'>Sostituisci</button></td>
+							onClick='apriFormVF("<%=membro.getEmail()%>","<%=membro.getMansione()%>","2")'>Sostituisci</button></td>
 					</td>
 				</tr>
 				<%
                 }
-                    it.remove();
                 }
            		%>
 
@@ -326,11 +331,11 @@ h2 {
 
 			<tbody>
 				<% 
-				it = squadraN.entrySet().iterator();
-                while (it.hasNext()) {
-                    Map.Entry coppia = (Map.Entry) it.next();
+				in = squadraN.entrySet().iterator();
+                while (in.hasNext()) {
+                    Map.Entry coppia = (Map.Entry) in.next();
                     VigileDelFuocoBean membro = (VigileDelFuocoBean) coppia.getKey();
-                    if (coppia.getKey() == "Prima Partenza") {	
+                    if (coppia.getValue() == "Prima Partenza") {	
 				%>
 
 				<tr>
@@ -341,12 +346,11 @@ h2 {
 					<td class="text-center"><button type="button"
 							class="btn btn-outline-secondary" data-toggle="modal"
 							data-target="#aggiungiVF" id="aggiungiVF"
-							onClick='apriFormVF("<%=membro.getEmail()%>")'>Sostituisci</button></td>
+							onClick='apriFormVF("<%=membro.getEmail()%>","<%=membro.getMansione()%>","2")'>Sostituisci</button></td>
 					</td>
 				</tr>
 				<%
                 }
-                    it.remove();
                 }
            		%>
 
@@ -372,27 +376,26 @@ h2 {
 
 			<tbody>
 				<% 
-				it = squadraN.entrySet().iterator();
-                while (it.hasNext()) {
-                    Map.Entry coppia = (Map.Entry) it.next();
-                    VigileDelFuocoBean membro = (VigileDelFuocoBean) coppia.getKey();
-                    if (coppia.getKey() == "Auto Scala") {	
+				in = squadraN.entrySet().iterator();
+                while (in.hasNext()) {
+                    Map.Entry coppia = (Map.Entry) in.next();
+                    VigileDelFuocoBean mb = (VigileDelFuocoBean) coppia.getKey();
+                    if (coppia.getValue() == "Auto Scala") {	
 				%>
 
 				<tr>
-					<td class="text-center"><img src="Grado/<%=membro.getGrado() %>.png" style="height:25%" onerror="this.parentElement.innerHTML='Non disponibile';"></td>
-					<td class="text-center"><%=membro.getNome()%></td>
-					<td class="text-center"><%=membro.getCognome()%></td>
-					<td class="text-center"><%=membro.getMansione()%></td>
+					<td class="text-center"><img src="Grado/<%=mb.getGrado()%>.png" style="height:25%" onerror="this.parentElement.innerHTML='Non disponibile';"></td>
+					<td class="text-center"><%=mb.getNome()%></td>
+					<td class="text-center"><%=mb.getCognome()%></td>
+					<td class="text-center"><%=mb.getMansione()%></td>
 					<td class="text-center"><button type="button"
 							class="btn btn-outline-secondary" data-toggle="modal"
 							data-target="#aggiungiVF" id="aggiungiVF"
-							onClick='apriFormVF("<%=membro.getEmail()%>")'>Sostituisci</button></td>
+							onClick='apriFormVF("<%=mb.getEmail()%>","<%=mb.getMansione()%>","2")'>Sostituisci</button></td>
 					</td>
 				</tr>
 				<%
                 }
-                    it.remove();
                 }
            		%>
 
@@ -418,11 +421,11 @@ h2 {
 
 			<tbody>
 				<% 
-                it = squadraN.entrySet().iterator();
-                while (it.hasNext()) {
-                    Map.Entry coppia = (Map.Entry) it.next();
+                in = squadraN.entrySet().iterator();
+                while (in.hasNext()) {
+                    Map.Entry coppia = (Map.Entry) in.next();
                     VigileDelFuocoBean membro = (VigileDelFuocoBean) coppia.getKey();
-                    if (coppia.getKey() == "Auto Botte") {		
+                    if (coppia.getValue() == "Auto Botte") {		
 				%>
 
 				<tr>
@@ -433,12 +436,11 @@ h2 {
 					<td class="text-center"><button type="button"
 							class="btn btn-outline-secondary" data-toggle="modal"
 							data-target="#aggiungiVF" id="aggiungiVF"
-							onClick='apriFormVF("<%=membro.getEmail()%>")'>Sostituisci</button></td>
+							onClick='apriFormVF("<%=membro.getEmail()%>","<%=membro.getMansione()%>","2")'>Sostituisci</button></td>
 					</td>
 				</tr>
 				<%
                 }
-                    it.remove();
                 }
            		%>
 
@@ -455,7 +457,7 @@ h2 {
 
 	<script>
 
-	function apriFormVF(input) {
+	function apriFormVF(input,rule,sq) {
 		//Chiamata ajax alla servlet PersonaleDisponibileAJAX
 		$.ajax({
 			type : "POST",//Chiamata POST
@@ -464,6 +466,8 @@ h2 {
 				"JSON" : true,
 				"aggiunta":true,
 				"email" : input,
+				"mansione" : rule,
+				"tiposquadra" : sq
 			},			
 			success : function(response) {//Operazione da eseguire una volta terminata la chiamata alla servlet.
 				$("#appendElenco").remove();

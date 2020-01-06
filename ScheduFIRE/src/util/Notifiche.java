@@ -21,6 +21,10 @@ public class Notifiche {
 
 	public Notifiche() {
 		listaNotifiche = new ArrayList<>();
+		listaNotifiche.add(new Notifica(3, "Test di una notifica grave", "HomeCTServlet"));
+		listaNotifiche.add(new Notifica(2, "Test di una notifica media, con stato d'errore medio e colore medio", "HomeCTServlet"));
+		listaNotifiche.add(new Notifica(1, "Test di una notifica normale, che per quanto sia normale essa Ë solo una notifica normale, dunque Ë normale che sia normale", "HomeCTServlet"));
+
 		update(UPDATE_PER_AVVIO);
 	}
 
@@ -103,7 +107,7 @@ public class Notifiche {
 			if(ComponenteDellaSquadraDao.isComponente(vigile.getEmail(), from)) {
 				listaNotifiche.add(new Notifica(2, "" + vigile.getCognome() + " " + vigile.getNome() + 
 						" non sar√† presente\nnella squadra a cui √® stato assegnato (giorno " +
-						formatter.format(from).toString() + ") causa ferie.\nSOSTITUIRE IL VIGILE!", "/ModificaComposizioneSquadreServlet"));
+						formatter.format(from).toString() + ") causa ferie.", "/ModificaComposizioneSquadreServlet"));
 				break;
 			}
 			from = Date.valueOf(from.toLocalDate().plusDays(1L));

@@ -1,23 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@page import="java.util.ArrayList, model.bean.*, model.dao.*"%>
-
+<!DOCTYPE html>
 <html>
 <head>
 <jsp:include page="StandardJSP.jsp" />
-<style>
-
-div.month-item-weekdays-row {
-  min-width: 280px !important
-
-}
-
-
-div.container__days {
-  min-width: 270px !important
-
-}
-</style>
+<link type="text/css" rel="stylesheet" href="./CSS/GestionePersonaleCSS.css">
 </head>
 <body>
 
@@ -26,6 +14,92 @@ div.container__days {
 	<jsp:include page="HeaderJSP.jsp" />
 	<h2 class="d-flex justify-content-center"
 		style="color: #B60000 !Important">Gestione Ferie</h2>
+
+
+<!-- form per l'ordinamento della lista dei VF-->
+		<%
+		Object ordinamentoObj = request.getAttribute("ordinamento");
+		String ordinamento = (String) ordinamentoObj;
+		%>
+	<form action="./GestioneFerieServlet">
+			<div align="center">
+				<label>Ordinamento lista: &nbsp&nbsp&nbsp</label>
+				<select class="custom-select" name="ordinamento" 
+				onchange="this.form.submit()"  style="width: 15%">
+
+					<%
+					if( ordinamento != null ) {
+						if( ordinamento.equals("nome") ) {
+					%>
+					<option value="nome" selected>Nome</option>
+					<option value="cognome">Cognome</option>
+					<option value="mansione">Mansione</option>
+					<option value="grado">Grado</option>
+					<option value="giorniFerieAnnoCorrente">Ferie anno corrente</option>
+					<option value="giorniFerieAnnoPrecedente">Ferie anno precedente</option>
+					
+					
+					<%
+						} else if( ordinamento.equals("cognome") ) {		
+						%>
+					<option value="nome" >Nome</option>
+					<option value="cognome" selected>Cognome</option>
+					<option value="mansione">Mansione</option>
+					<option value="grado">Grado</option>
+					<option value="giorniFerieAnnoCorrente">Ferie anno corrente</option>
+					<option value="giorniFerieAnnoPrecedente">Ferie anno precedente</option>
+					<%
+						} else if( ordinamento.equals("mansione") ) {		
+						%>
+					<option value="nome">Nome</option>
+					<option value="cognome">Cognome</option>
+					<option value="mansione"selected>Mansione</option>
+					<option value="grado">Grado</option>
+					<option value="giorniFerieAnnoCorrente">Ferie anno corrente</option>
+					<option value="giorniFerieAnnoPrecedente">Ferie anno precedente</option>
+					<%
+						} else if( ordinamento.equals("grado") ) {		
+						%>
+					<option value="nome" >Nome</option>
+					<option value="cognome">Cognome</option>
+					<option value="mansione">Mansione</option>
+					<option value="grado" selected>Grado</option>
+					<option value="giorniFerieAnnoCorrente">Ferie anno corrente</option>
+					<option value="giorniFerieAnnoPrecedente">Ferie anno precedente</option>
+					<%
+						} else if( ordinamento.equals("giorniFerieAnnoCorrente") ) {		
+						%>
+					<option value="nome" >Nome</option>
+					<option value="cognome">Cognome</option>
+					<option value="mansione">Mansione</option>
+					<option value="grado">Grado</option>
+					<option value="giorniFerieAnnoCorrente" selected>Ferie anno corrente</option>
+					<option value="giorniFerieAnnoPrecedente">Ferie anno precedente</option>
+					<%
+						} else if( ordinamento.equals("giorniFerieAnnoPrecedente") ) {		
+						%>
+					<option value="nome">Nome</option>
+					<option value="cognome">Cognome</option>
+					<option value="mansione">Mansione</option>
+					<option value="grado">Grado</option>
+					<option value="giorniFerieAnnoCorrente">Ferie anno corrente</option>
+					<option value="giorniFerieAnnoPrecedente" selected>Ferie anno precedente</option>
+					<%}
+					}
+					else {%>
+					
+					<option value="nome" >Nome</option>
+					<option value="cognome"selected>Cognome</option>
+					<option value="mansione">Mansione</option>
+					<option value="grado">Grado</option>
+					<option value="giorniFerieAnnoCorrente">Ferie anno corrente</option>
+					<option value="feriePrec">Ferie anno precedente</option>
+					<%} %>
+
+				</select>
+			</div>
+		</form>
+
 
 
 
@@ -85,7 +159,7 @@ div.container__days {
 						data-dismiss="modal">Annulla</button>
 
 
-					<button type="button" class="btn btn-outline-warning"
+					<button type="button" class="btn btn-outline-primary"
 						id="bottoneAggiungiFerie" onclick="aggiungiFerie()"
 						data-dismiss="modal" disabled>Aggiungi ferie</button>
 
@@ -254,7 +328,7 @@ div.container__days {
 
 				<tr>
 					<td class="text-center"><img
-						src="Grado/<%=vigile.getGrado()%>.png" style="height: 25%"
+						src="Grado/<%=vigile.getGrado()%>.png" width=16%
 						onerror="this.parentElement.innerHTML='Non disponibile';"></td>
 					<td class="text-center"><%=vigile.getNome()%></td>
 					<td class="text-center"><%=vigile.getCognome()%></td>
@@ -293,6 +367,7 @@ div.container__days {
 	<script src="https://buttons.github.io/buttons.js"></script>
 	<script
 		src="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.js"></script>
+	<script src="JS/ferieJS.js"></script>
 
 
 	<script>
@@ -315,7 +390,7 @@ div.container__days {
 				onSelect : function() {
 					if ($("#dataInizio").val() != "") {
 
-						var differenza = calcolaGiorniFerie();
+						var differenza = calcolaGiorniFerie($("#dataInizio").val(),$("#dataFine").val());
 
 						var email = $("#emailAggiuntaFerie").val();
 						var ferieAnnoCorrente = $(
@@ -444,12 +519,12 @@ div.container__days {
 			});
 		}
 
-		function calcolaGiorniFerie() {
+		function calcolaGiorniFerie(iniz,fin) {
 			var giornoLavorativo = moment("24/12/2019", 'DD/MM/YYYY');
 			var differenza = 0;
-			var inizio = moment(document.getElementById("dataInizio").value,
+			var inizio = moment(iniz,
 					'DD/MM/YYYY');
-			var fine = moment(document.getElementById("dataFine").value,
+			var fine = moment(fin,
 					'DD/MM/YYYY');
 			console.log(inizio);
 			console.log(fine);
@@ -504,14 +579,18 @@ div.container__days {
 					$(".contenutiModal").css('background-color', '#e6e6e6');
 					
 					
-					
+					/*
 					$( "a.day-item" ).hover(
 							  function() {
-							    console.log("hover");
+								  var giorno=$(this).text();
+								  var mese=$(this).parent().parent().children("div .month-item-header").children("div").text().trim();
+							    console.log("hover "+giorno+ " , "+mese);
 							  }, function() {
 								    console.log("non hover");
 							  }
 							);
+					*/
+					
 				},
 				error : function(jqXHR, textStatus, errorThrown) {
 

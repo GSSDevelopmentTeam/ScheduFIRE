@@ -59,14 +59,10 @@ public class AggiungiMalattiaServlet extends HttpServlet {
 		int giorniMalattia=0;
 		
 		
-		/*HttpSession sessione = request.getSession();
+		HttpSession sessione = request.getSession();
 		CapoTurnoBean capoTurno = (CapoTurnoBean) sessione.getAttribute("capoturno");;
 		String emailCT = capoTurno.getEmail();
-
-				if( emailCT == null )
-					throw new ScheduFIREException("Errore nella sessione");*/
-		String emailCT = "capoturno";
-				
+					
 				int annoInizio=Integer.parseInt(dataIniz.substring(6, 10));
 				int meseInizio=Integer.parseInt(dataIniz.substring(3, 5));
 				int giornoInizio=Integer.parseInt(dataIniz.substring(0, 2));

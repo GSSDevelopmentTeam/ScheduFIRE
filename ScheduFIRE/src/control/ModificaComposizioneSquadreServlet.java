@@ -2,9 +2,12 @@ package control;
 
 import java.io.IOException;
 import java.sql.Date;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -49,79 +52,52 @@ public class ModificaComposizioneSquadreServlet extends HttpServlet {
 		Date data = Date.valueOf(request.getParameter("data"));
 		String oldVF =request.getParameter("email");
 		String newVF =request.getParameter("VFnew");
-		
-		if(request.getParameter("salva")!=null) {
-			@SuppressWarnings("unchecked")
-			HashMap<VigileDelFuocoBean, String> squadraDiurno = (HashMap<VigileDelFuocoBean, String>) 
-			sessione.getAttribute("squadraDiurno");
-			@SuppressWarnings("unchecked")
-			HashMap<VigileDelFuocoBean, String> squadraNotturno = (HashMap<VigileDelFuocoBean, String>) 
-					sessione.getAttribute("squadraNotturno");
-			List<ComponenteDellaSquadraBean> listaDiurno = vigileToComponente(squadraDiurno, data);	
-			List<ComponenteDellaSquadraBean> listaNotturno = vigileToComponente(squadraNotturno, giornoSuccessivo);			
-
-			if((!ListaSquadreDao.aggiungiSquadre(data, (String) sessione.getAttribute("email"))) ||
-					(!SquadraDao.aggiungiSquadra(data)) ||
-					(!ComponenteDellaSquadraDao.setComponenti(listaDiurno)) ||
-					(!VigileDelFuocoDao.caricoLavorativo(squadraDiurno))){
-				throw new ScheduFIREException("Errore nelle Query SQL");
-			}	
-			if((!ListaSquadreDao.aggiungiSquadre(giornoSuccessivo, (String) sessione.getAttribute("email"))) ||
-					(!SquadraDao.aggiungiSquadra(giornoSuccessivo)) ||
-					(!ComponenteDellaSquadraDao.setComponenti(listaNotturno)) ||
-					(!VigileDelFuocoDao.caricoLavorativo(squadraNotturno))){
-				throw new ScheduFIREException("Errore nelle Query SQL");
-			}	
-			SendMail.sendMail(data);
-			sessione.removeAttribute("squadraDiurno");
-			sessione.removeAttribute("squadraNotturno");
-			request.getRequestDispatcher("JSP/HomeCT_JSP.jsp").forward(request, response);
-
-
+		int tipo = Integer.parseInt(request.getParameter("tiposquadra"));
+		Map<VigileDelFuocoBean, String> squadra = new HashMap<>();
+		switch(tipo) {
+		case 1: 
+			squadra = (HashMap<VigileDelFuocoBean, String>) sessione.getAttribute("squadraDiurno");
+			break;
+		case 2:
+			squadra = (HashMap<VigileDelFuocoBean, String>) sessione.getAttribute("squadraNotturno");
+			break;
+		case 3:
+			squadra = (HashMap<VigileDelFuocoBean, String>) sessione.getAttribute("squadra");
+			break;
+		default:
+			throw new ScheduFIREException("C'e stato un errore. Riprova più tardi.");
 		}
+
+		Iterator i = squadra.entrySet().iterator();
 		
-		
-		
-		if(sessione.getAttribute("squadra")!=null) {
-			Map<VigileDelFuocoBean, String> squadra = (HashMap<VigileDelFuocoBean, String>) sessione.getAttribute("squadra");
-			for(VigileDelFuocoBean daModificare : squadra.keySet()) {
-				if(daModificare.getEmail().equals(oldVF)) {
-					VigileDelFuocoBean daAggiungere = VigileDelFuocoDao.ottieni(newVF);
-					String mansione = squadra.remove(daModificare);
-					squadra.put(daAggiungere, mansione);
-				}
+		while(i.hasNext()) {
+			Map.Entry<VigileDelFuocoBean, String> coppia = (Map.Entry<VigileDelFuocoBean, String>) i.next();
+			VigileDelFuocoBean oldVigile = coppia.getKey();
+			if(oldVigile.getEmail().equals(oldVF)) {
+				String mansione = squadra.remove(oldVigile);
+				VigileDelFuocoBean newVigile = VigileDelFuocoDao.ottieni(newVF);
+				squadra.put(newVigile, mansione);
+				break;
 			}
 		}
-		else {
-			Map<VigileDelFuocoBean, String> squadraDiurno = (HashMap<VigileDelFuocoBean, String>) sessione.getAttribute("squadraDiurno");
-			Map<VigileDelFuocoBean, String> squadraNotturno = (HashMap<VigileDelFuocoBean, String>) sessione.getAttribute("squadraNotturno");
-			if(GiornoLavorativo.isDiurno(data)) {
-				for(VigileDelFuocoBean daModificare : squadraDiurno.keySet()) {
-					if(daModificare.getEmail().equals(oldVF)) {
-						VigileDelFuocoBean daAggiungere = VigileDelFuocoDao.ottieni(newVF);
-						String mansione = squadraDiurno.remove(daModificare);
-						squadraDiurno.put(daAggiungere, mansione);
-					}
-				}
-			}else {
-				for(VigileDelFuocoBean daModificare : squadraNotturno.keySet()) {
-					if(daModificare.getEmail().equals(oldVF)) {
-						VigileDelFuocoBean daAggiungere = VigileDelFuocoDao.ottieni(newVF);
-						String mansione = squadraNotturno.remove(daModificare);
-						squadraNotturno.put(daAggiungere, mansione);
-					}
-				}
-
-			}
-
-		}
-
-
 
 		request.getRequestDispatcher("JSP/GestioneSquadreJSP.jsp").forward(request, response);
 		return;
 
 	}
+	
+	private List<ComponenteDellaSquadraBean> vigileToComponente(HashMap<VigileDelFuocoBean, String> squadra, Date data) {
+		List<ComponenteDellaSquadraBean> toReturn = new ArrayList<>();
+		@SuppressWarnings("rawtypes")
+		Iterator i = squadra.entrySet().iterator();
+		while(i.hasNext()) {
+			@SuppressWarnings("unchecked")
+			Map.Entry<VigileDelFuocoBean, String> coppia = (Entry<VigileDelFuocoBean, String>) i.next();
+			toReturn.add(new ComponenteDellaSquadraBean(coppia.getValue(), coppia.getKey().getEmail(), data));
+		}
+		return toReturn;
+	}
+
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
