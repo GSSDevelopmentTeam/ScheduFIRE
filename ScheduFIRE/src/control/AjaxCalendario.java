@@ -50,9 +50,10 @@ public class AjaxCalendario extends HttpServlet{
 			return;
 		}
 		Date data=Date.valueOf(LocalDate.of(anno, mese, giorno));
-
+		
 		//data per modifica composizione squadre
 		request.setAttribute("data", data);
+		request.setAttribute("tiposquadra",3);
 		
 		ArrayList<ComponenteDellaSquadraBean> componenti=ComponenteDellaSquadraDao.getComponenti(data);
 		List<VigileDelFuocoBean> vigili=VigileDelFuocoDao.getDisponibili(data);
