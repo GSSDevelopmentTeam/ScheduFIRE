@@ -5,6 +5,7 @@ import java.sql.Date;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.util.ArrayList;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -21,6 +22,7 @@ import model.dao.ComponenteDellaSquadraDao;
 import model.dao.GiorniMalattiaDao;
 import model.dao.VigileDelFuocoDao;
 import util.GiornoLavorativo;
+import util.Notifiche;
 
 /**
  * Servlet implementation class AggiungiMalattiaServlet
@@ -60,7 +62,7 @@ public class AggiungiMalattiaServlet extends HttpServlet {
 		
 		
 		HttpSession sessione = request.getSession();
-		CapoTurnoBean capoTurno = (CapoTurnoBean) sessione.getAttribute("capoturno");;
+		CapoTurnoBean capoTurno = (CapoTurnoBean) sessione.getAttribute("capoturno");
 		String emailCT = capoTurno.getEmail();
 					
 				int annoInizio=Integer.parseInt(dataIniz.substring(6, 10));
@@ -77,15 +79,25 @@ public class AggiungiMalattiaServlet extends HttpServlet {
 				dataInizio = Date.valueOf(inizioMalattia);
 				dataFine = Date.valueOf(fineMalattia);
 				
-				while( inizioMalattia.compareTo(fineMalattia )<=0) {
-					if (GiornoLavorativo.isLavorativo(Date.valueOf( inizioMalattia )))
-						giorniMalattia++;
-					 inizioMalattia = inizioMalattia .plusDays(1);
-				}
+						ArrayList<Date> malattiaSchedu = new ArrayList<Date>();
+						
+						Date in = (Date) Date.valueOf(inizioMalattia).clone();
+						
+							while(!in.equals(Date.valueOf(fineMalattia))) {
+								if(GiornoLavorativo.isLavorativo(in) == true) {
+									if(ComponenteDellaSquadraDao.isComponente(emailVF, in) == true) {
+										malattiaSchedu.add(in);
+									}
+								}
+								in = Date.valueOf(in.toLocalDate().plusDays(1L));
+							}
+						
+						if(malattiaSchedu.isEmpty() == false) {
+							Date inizioS = malattiaSchedu.get(0);
+							Date fineS = malattiaSchedu.get((malattiaSchedu.size())-1);
+							Notifiche.update(Notifiche.UPDATE_PER_MALATTIA, dataInizio, dataFine, emailVF);
+						}
 				
-				if(giorniMalattia==0) {
-					throw new ScheduFIREException("Selezionare un periodo che contiene solamente giorni lavorativi!");
-				}
 				
 				 GiorniMalattiaBean malattia = new GiorniMalattiaBean();
 				    
@@ -105,32 +117,7 @@ public class AggiungiMalattiaServlet extends HttpServlet {
 				
 				response.getWriter().append(array.toString());
 			}
-		
-		
-		/*
-		 * Controlla se il VF è già stato schedulato nel periodo interessato dalla malattia
-		 * @param emailVF , stringa contenente la mail del VF da controllare
-		 * @param dataInizio , data di inizio malattia
-		 * @param dataFine , data di fine malattia 
-         * @return true se il VF è schedulato, false altrimenti.
-		 */
-		/*private Date schedulato(String emailVF, Date dataInizio, Date dataFine) {
-         	boolean presente = false;
-			final String formato = "yyyy-MM-dd";
-			
-				DateFormat df = new SimpleDateFormat(formato);
-				String inizio = df.format(dataInizio);
-				String fine = df.format(dataFine);
-
-			if(ComponenteDellaSquadraDao.isComponente(emailVF, dataInizio) == true){
-				schedulato= true;
-			}
-			else {
-				return schedulato;
-			}
-			
-		}*/
-		}
+	    }	
 	}
 
 
