@@ -53,8 +53,6 @@ public class GeneraSquadreServlet extends HttpServlet {
 		HttpSession sessione = request.getSession();
 		Date data=new Date(System.currentTimeMillis());
 
-
-
 		//Se è diurno, nextLavorativo restiuisce il giorno successivo, non il turno successivo
 		if(GiornoLavorativo.isDiurno(data)) {
 			data=Date.valueOf(LocalDate.now().plusDays(1));
@@ -79,71 +77,70 @@ public class GeneraSquadreServlet extends HttpServlet {
 			List<ComponenteDellaSquadraBean> listaNotturno = vigileToComponente(squadraNotturno, giornoSuccessivo);			
 			CapoTurnoBean capoturno=(CapoTurnoBean)sessione.getAttribute("capoturno");
 
-			
+
 			//Se le squadre da salvare sono sul db, le rimuovo dal db restituendo i carichi di lavoro
 			if(ListaSquadreDao.isEsistente(data)) {
-					ArrayList<ComponenteDellaSquadraBean> componentiDiurnoDaRimuovere=ComponenteDellaSquadraDao.getComponenti(data);
-					ArrayList<ComponenteDellaSquadraBean> componentiNotturnoDaRimuovere=ComponenteDellaSquadraDao.getComponenti(giornoSuccessivo);
-					HashMap<VigileDelFuocoBean, String> squadraDaRimuovereDiurno=Util.ottieniSquadra(data);
-					HashMap<VigileDelFuocoBean, String> squadraDaRimuovereNotturno=Util.ottieniSquadra(giornoSuccessivo);
-					ComponenteDellaSquadraDao.removeComponenti(componentiDiurnoDaRimuovere);
-					if(		!ComponenteDellaSquadraDao.removeComponenti(componentiDiurnoDaRimuovere))
-					{
-						throw new ScheduFIREException("Errore nelle Query SQL");
-					}	
-					if(	!ComponenteDellaSquadraDao.removeComponenti(componentiNotturnoDaRimuovere))
-					{
-						throw new ScheduFIREException("Errore nelle Query SQL");
-					}	
-					if( !VigileDelFuocoDao.removeCaricoLavorativo(squadraDaRimuovereDiurno)) 
-					{
-						throw new ScheduFIREException("Errore nelle Query SQL");
-					}	
-					if(	!VigileDelFuocoDao.removeCaricoLavorativo(squadraDaRimuovereNotturno))
-					{
-						throw new ScheduFIREException("Errore nelle Query SQL");
-					}	
-					
-					//
-					if(		(!ComponenteDellaSquadraDao.setComponenti(listaDiurno)) ||
-							(!VigileDelFuocoDao.caricoLavorativo(squadraDiurno))){
-						throw new ScheduFIREException("Errore nelle Query SQL");
-					}	
-					if(		(!ComponenteDellaSquadraDao.setComponenti(listaNotturno)) ||
-							(!VigileDelFuocoDao.caricoLavorativo(squadraNotturno))){
-						throw new ScheduFIREException("Errore nelle Query SQL");
-					}
+				ArrayList<ComponenteDellaSquadraBean> componentiDiurnoDaRimuovere=ComponenteDellaSquadraDao.getComponenti(data);
+				ArrayList<ComponenteDellaSquadraBean> componentiNotturnoDaRimuovere=ComponenteDellaSquadraDao.getComponenti(giornoSuccessivo);
+				HashMap<VigileDelFuocoBean, String> squadraDaRimuovereDiurno=Util.ottieniSquadra(data);
+				HashMap<VigileDelFuocoBean, String> squadraDaRimuovereNotturno=Util.ottieniSquadra(giornoSuccessivo);
+				if(	!ComponenteDellaSquadraDao.removeComponenti(componentiDiurnoDaRimuovere))
+				{
+					throw new ScheduFIREException("Errore nelle Query SQL");
+				}	
+				if(	!ComponenteDellaSquadraDao.removeComponenti(componentiNotturnoDaRimuovere))
+				{
+					throw new ScheduFIREException("Errore nelle Query SQL");
+				}	
+				if( !VigileDelFuocoDao.removeCaricoLavorativo(squadraDaRimuovereDiurno)) 
+				{
+					throw new ScheduFIREException("Errore nelle Query SQL");
+				}	
+				if(	!VigileDelFuocoDao.removeCaricoLavorativo(squadraDaRimuovereNotturno))
+				{
+					throw new ScheduFIREException("Errore nelle Query SQL");
+				}	
 
-					
-					
-					
-			//Se non sono già sul db, le salvo normalmente		
+				//
+				if(		(!ComponenteDellaSquadraDao.setComponenti(listaDiurno)) ||
+						(!VigileDelFuocoDao.caricoLavorativo(squadraDiurno))){
+					throw new ScheduFIREException("Errore nelle Query SQL");
+				}	
+				if(		(!ComponenteDellaSquadraDao.setComponenti(listaNotturno)) ||
+						(!VigileDelFuocoDao.caricoLavorativo(squadraNotturno))){
+					throw new ScheduFIREException("Errore nelle Query SQL");
+				}
+
+
+
+
+				//Se non sono già sul db, le salvo normalmente		
 			} else {
-				
+
 
 				if((!ListaSquadreDao.aggiungiSquadre(data, capoturno.getEmail())) ||
 						(!SquadraDao.aggiungiSquadra(data)) ||
 						(!ComponenteDellaSquadraDao.setComponenti(listaDiurno))){
 					throw new ScheduFIREException("Errore nelle Query SQL");
 				}	
-				 VigileDelFuocoDao.caricoLavorativo(squadraDiurno);
+				VigileDelFuocoDao.caricoLavorativo(squadraDiurno);
 				if((!ListaSquadreDao.aggiungiSquadre(giornoSuccessivo, capoturno.getEmail())) ||
 						(!SquadraDao.aggiungiSquadra(giornoSuccessivo)) ||
 						(!ComponenteDellaSquadraDao.setComponenti(listaNotturno)))
-						{
+				{
 					throw new ScheduFIREException("Errore nelle Query SQL");
 				}
 				VigileDelFuocoDao.caricoLavorativo(squadraNotturno);
 			}
-			
-	
-				//SendMail.sendMail(data);
-				sessione.removeAttribute("squadraDiurno");
-				sessione.removeAttribute("squadraNotturno");
-				response.sendRedirect("HomeCTServlet");
-				return;
-			
-			
+
+
+			//SendMail.sendMail(data);
+			sessione.removeAttribute("squadraDiurno");
+			sessione.removeAttribute("squadraNotturno");
+			response.sendRedirect("HomeCTServlet");
+			return;
+
+
 
 
 		}

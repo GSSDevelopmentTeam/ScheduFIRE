@@ -18,16 +18,14 @@
  <%} if(ruolo!= null){
 	  %>	
  	<div class="rf">
- 		<a><form action="Logout" method="POST">
- 		<button class="btn btn-secondary" style="float:inherit; top:8%">Logout</button>
- 		</form></a>
+ 		
  		<% if(ruolo.equalsIgnoreCase("capoturno")){ 
  		
 	Notifiche nt = (Notifiche) session.getAttribute("notifiche");
 	List<Notifica> note = nt.getListaNotifiche();
 	int dim = note.size();%>
  		<a><div class="dd" >
-  <button type="button" class="db" >
+  <button type="button" class="dn" >
     <img src="IMG/notizia.png" style="height:50px; width:50px "><span class="badge"><%if (dim!=0)%><%=dim %></span>
   </button>
   <div class="ddc">
@@ -69,6 +67,9 @@
  
 </div></a>
  		<%} %>
+ 		<a><form action="Logout" method="POST">
+ 		<button class="btn btn-outline-light btn-lg lgt">Logout</button>
+ 		</form></a>
  	</div>
  	<%} %>
  	
