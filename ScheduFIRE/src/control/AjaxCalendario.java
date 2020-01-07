@@ -4,6 +4,7 @@ package control;
 import java.io.IOException;
 import java.sql.Date;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,7 +18,9 @@ import org.json.*;
 import model.bean.ComponenteDellaSquadraBean;
 import model.bean.VigileDelFuocoBean;
 import model.dao.ComponenteDellaSquadraDao;
+import model.dao.ListaSquadreDao;
 import model.dao.VigileDelFuocoDao;
+import util.GiornoLavorativo;
 
 /**
  * @author Alfredo Giuliano
@@ -58,10 +61,12 @@ public class AjaxCalendario extends HttpServlet{
 		
 		ArrayList<ComponenteDellaSquadraBean> componenti=ComponenteDellaSquadraDao.getComponenti(data);
 		List<VigileDelFuocoBean> vigili=VigileDelFuocoDao.getDisponibili(data);
-			
 		
+		
+		//array che contiene la schedulazione delle squadre
 		JSONArray array = new JSONArray();
-		
+		array.put(isModificabile(data));
+		array.put(isGenerabile(data));
 		for (ComponenteDellaSquadraBean componente:componenti){
 			for(VigileDelFuocoBean vigile : vigili) {
 				if (vigile.getEmail().equals(componente.getEmailVF())){
@@ -77,11 +82,101 @@ public class AjaxCalendario extends HttpServlet{
 		}
 		response.setContentType("application/json");
 		response.getWriter().append(array.toString());
-		
-
-		
 
 	}
+	
+	
+	private boolean isModificabile(Date giornoCliccato) {
+        LocalDateTime ora=LocalDateTime.now();
+        LocalDate giornoCliccatoLD=giornoCliccato.toLocalDate();
+        boolean isModificabile=false;
+        Date oraDate=Date.valueOf(ora.toLocalDate());
+        if(GiornoLavorativo.isDiurno(oraDate))
+            oraDate=Date.valueOf(LocalDate.now().plusDays(1));
+        LocalDate prossimoDiurno=GiornoLavorativo.nextLavorativo(oraDate).toLocalDate();
+        LocalDate prossimoNotturno=prossimoDiurno.plusDays(1);
+ 
+ 
+ 
+        //Se ho cliccato un giorno diurno
+        if(GiornoLavorativo.isDiurno(giornoCliccato)) {
+ 
+ 
+            //Se il giorno cliccato è proprio oggi, e sono meno delle 19 59, quindi ancora durante il turno diurno, posso modificarlo
+            if(giornoCliccatoLD.compareTo(ora.toLocalDate())==0 && ora.getHour()<=19 && ora.getMinute()<=59) {
+                isModificabile=true;
+            }
+ 
+            
+            //Se ho cliccato il giorno diurno del turno successivo e già esiste nel database, posso modificarlo
+            else if(giornoCliccatoLD.compareTo(prossimoDiurno)==0 && ListaSquadreDao.isEsistente(giornoCliccato)) {
+                isModificabile=true;
+            }
+ 
+        }
+ 
+        //Se ho cliccato un giorno notturno
+        else if(!GiornoLavorativo.isDiurno(giornoCliccato) && GiornoLavorativo.isLavorativo(giornoCliccato)) {
+ 
+            //Se è ieri, quindi il giorno cliccato precede di 1 giorno oggi e sono meno delle 7 59, 
+            // quindi ancora durante il turno notturno, posso modificarlo
+            if(giornoCliccatoLD.compareTo(ora.toLocalDate())==-1 && ora.getHour()<=7 && ora.getMinute()<=59) {
+ 
+                isModificabile=true;
+            }
+ 
+            //Se il giorno cliccato è proprio oggi
+            else if(giornoCliccatoLD.compareTo(ora.toLocalDate())==0) {
+                isModificabile=true;
+ 
+            }
+ 
+            //Se ho cliccato il giorno notturno del turno successivo e già esiste nel database, posso modificarlo
+            else if(giornoCliccatoLD.compareTo(prossimoNotturno)==0 && ListaSquadreDao.isEsistente(giornoCliccato)) {
+                isModificabile=true;
+            }
+ 
+        }
+ 
+        return isModificabile;
+    }
+    
+    
+    private boolean isGenerabile(Date giornoCliccato) {
+        LocalDateTime ora=LocalDateTime.now();
+        LocalDate giornoCliccatoLD=giornoCliccato.toLocalDate();
+        boolean isGenerabile=false;
+        Date oraDate=Date.valueOf(ora.toLocalDate());
+        if(GiornoLavorativo.isDiurno(oraDate))
+            oraDate=Date.valueOf(LocalDate.now().plusDays(1));
+        LocalDate prossimoDiurno=GiornoLavorativo.nextLavorativo(oraDate).toLocalDate();
+        LocalDate prossimoNotturno=prossimoDiurno.plusDays(1);
+ 
+        //Se ho cliccato un giorno diurno
+        if(GiornoLavorativo.isDiurno(giornoCliccato)) {
+ 
+ 
+            //Se ho cliccato il giorno diurno del turno successivo e non esiste nel database, posso generarlo
+            if(giornoCliccatoLD.compareTo(prossimoDiurno)==0 && !ListaSquadreDao.isEsistente(giornoCliccato)) {
+                isGenerabile=true;
+            }
+ 
+        }
+ 
+        //Se ho cliccato un giorno notturno
+        else if(!GiornoLavorativo.isDiurno(giornoCliccato) && GiornoLavorativo.isLavorativo(giornoCliccato)) {
+ 
+            
+ 
+            //Se ho cliccato il giorno diurno del turno successivo e non esiste nel database, posso generarlo
+             if(giornoCliccatoLD.compareTo(prossimoNotturno)==0 && !ListaSquadreDao.isEsistente(giornoCliccato)) {
+                isGenerabile=true;
+            }
+ 
+        }
+ 
+        return isGenerabile;
+    }
 
 }
 
