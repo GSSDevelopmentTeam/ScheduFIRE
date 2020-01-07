@@ -38,7 +38,6 @@
 	int[] days_month = (int[]) request.getAttribute("days_month");
 	int[] days_work = (int[]) request.getAttribute("days_work");
 	String[] days_turno = (String[]) request.getAttribute("days_turno");
-
 %>
 </head>
 <body>
@@ -163,24 +162,24 @@
 		<div class="container-schedul" id="visilibity">
 			<a class="info" id="informazione"></a>
 
-			<div >
+			<div>
 				<%
-					if(ruolo.equalsIgnoreCase("capoturno")){
+					//if(ruolo.equalsIgnoreCase("capoturno")){
 				%>
 
 				<form action="GeneraSquadreServlet" method="post">
-					<button type="submit" id="bottoneGeneraSquadra" class="edit">
-						Genera squadre <br> per il turno successivo
-					</button>
+					<button type="submit" id="bottoneGeneraSquadra" class="edit">Genera
+						Squadre</button>
 				</form>
 
-				<form action="ModificaComposizioneSquadreServlet" method="post">
+				<form action="ModificaComposizioneSquadreServlet?tiposquadra=3"
+					method="post" id="modData">
 					<button type="submit" id="bottoneModificaSquadra" class="edit">
-						Modifica squadre
+						Modifica Squadre
 					</button>
 				</form>
 				<%
-					}
+					//}
 				%>
 			</div>
 
@@ -236,13 +235,14 @@
 
 	<!-- START: script per la funzione dayClicked() -->
 	<script>
-	<%if(GiornoLavorativo.isLavorativo(data)){%>
+	<%if (GiornoLavorativo.isLavorativo(data)) {%>
 		$( document ).ready(function() {
 		    dayClicked(<%=giorno%>);
 		    imgMoonSun();
 		});
 	<%}%>
 	
+		
 		
 		function dayClicked(input) {
 			
@@ -260,6 +260,7 @@
 		var primaPartenza = $("#PrimaPartenza");
 		var autoScala = $("#AutoScala");
 		var autoBotte = $("#AutoBotte");
+		
 
 		var giorno = input;
 		if(giorno.toString().trim().indexOf("B")>0){
@@ -336,9 +337,10 @@
 						  rigaTabella.appendChild(colonnaCognome);
 					
 				}
-				
+				var red = 'ModificaComposizioneSquadreServlet?tiposquadra=3&data=' + anno.trim() + '-' + mese.trim() + '-' + giorno.trim();
+				$("#modData").attr("action", red);
 
-			}
+			} 
 		});
 	}
 	</script>

@@ -1,7 +1,7 @@
 <%@page import="java.util.HashMap"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@page import="java.util.*, model.bean.*, model.dao.*"%>
+<%@page import="java.util.*, model.bean.*, model.dao.*, java.sql.Date"%>
 <!DOCTYPE html>
 <html>
 <jsp:include page="StandardJSP.jsp" />
@@ -62,12 +62,14 @@ h2 {
 
 	<!-- ELENCO SQUADRE  -->
 <%
+
 	HashMap<VigileDelFuocoBean, String> squadraD = (HashMap<VigileDelFuocoBean, String>) session.getAttribute("squadra");
 	Date data = (Date) request.getAttribute("dataModifica");%>
+
      
      <!-- SQUADRA DIURNA -->
        <div class="d-flex justify-content-center">
-		<h2 style="font-weight:bold; font-size:36px;">Giorno</h2>
+		<h2 style="font-weight:bold; font-size:36px;">Squadra del <%=data %></h2>
 	</div>
 	<p class="d-flex justify-content-center"></p>
 	<div class="d-flex justify-content-center">
@@ -90,7 +92,7 @@ h2 {
 			<tbody>
 				<% 
 	            
-                Iterator it = squadraD.entrySet().iterator();
+                Iterator it = squadra.entrySet().iterator();
                 while (it.hasNext()) {
                     Map.Entry coppia = (Map.Entry) it.next();
                     VigileDelFuocoBean membro = (VigileDelFuocoBean) coppia.getKey();
@@ -136,7 +138,7 @@ h2 {
 
 			<tbody>
 				<% 
-				it = squadraD.entrySet().iterator();
+				it = squadra.entrySet().iterator();
                 while (it.hasNext()) {
                     Map.Entry coppia = (Map.Entry) it.next();
                     VigileDelFuocoBean membro = (VigileDelFuocoBean) coppia.getKey();
@@ -182,7 +184,7 @@ h2 {
 
 			<tbody>
 				<% 
-				it = squadraD.entrySet().iterator();
+				it = squadra.entrySet().iterator();
                 while (it.hasNext()) {
                     Map.Entry coppia = (Map.Entry) it.next();
                     VigileDelFuocoBean membro = (VigileDelFuocoBean) coppia.getKey();
@@ -228,7 +230,7 @@ h2 {
 
 			<tbody>
 				<% 
-                it = squadraD.entrySet().iterator();
+                it = squadra.entrySet().iterator();
                 while (it.hasNext()) {
                     Map.Entry coppia = (Map.Entry) it.next();
                     VigileDelFuocoBean membro = (VigileDelFuocoBean) coppia.getKey();

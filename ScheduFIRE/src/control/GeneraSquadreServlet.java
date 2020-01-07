@@ -134,8 +134,7 @@ public class GeneraSquadreServlet extends HttpServlet {
 
 
 			//SendMail.sendMail(data);
-			sessione.removeAttribute("squadraDiurno");
-			sessione.removeAttribute("squadraNotturno");
+			
 			response.sendRedirect("HomeCTServlet");
 			return;
 
