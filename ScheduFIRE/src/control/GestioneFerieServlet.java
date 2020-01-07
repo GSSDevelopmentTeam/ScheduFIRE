@@ -118,8 +118,8 @@ public class GestioneFerieServlet extends HttpServlet {
 			case "grado": 
 				vigili = VigileDelFuocoDao.ottieni(VigileDelFuocoDao.ORDINA_PER_GRADO);
 				break;
-			case "giorniFerieAnnoCorrente": 
-				vigili = VigileDelFuocoDao.ottieni(VigileDelFuocoDao.ORDINA_PER_GIORNI_FERIE_ANNO_CORRENTE);
+			case "giorniFerie": 
+				vigili = VigileDelFuocoDao.ottieni(VigileDelFuocoDao.ORDINA_PER_FERIE_TOTALI);
 				break;
 			case "giorniFerieAnnoPrecedente": 
 				vigili = VigileDelFuocoDao.ottieni(VigileDelFuocoDao.ORDINA_PER_GIORNI_FERIE_ANNI_PRECEDENTI);

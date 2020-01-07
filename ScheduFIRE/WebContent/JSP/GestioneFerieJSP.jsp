@@ -35,8 +35,7 @@
 					<option value="cognome">Cognome</option>
 					<option value="mansione">Mansione</option>
 					<option value="grado">Grado</option>
-					<option value="giorniFerieAnnoCorrente">Ferie anno corrente</option>
-					<option value="giorniFerieAnnoPrecedente">Ferie anno precedente</option>
+					<option value="giorniFerie">Ferie</option>
 					
 					
 					<%
@@ -46,8 +45,7 @@
 					<option value="cognome" selected>Cognome</option>
 					<option value="mansione">Mansione</option>
 					<option value="grado">Grado</option>
-					<option value="giorniFerieAnnoCorrente">Ferie anno corrente</option>
-					<option value="giorniFerieAnnoPrecedente">Ferie anno precedente</option>
+					<option value="giorniFerie">Ferie</option>
 					<%
 						} else if( ordinamento.equals("mansione") ) {		
 						%>
@@ -55,8 +53,7 @@
 					<option value="cognome">Cognome</option>
 					<option value="mansione"selected>Mansione</option>
 					<option value="grado">Grado</option>
-					<option value="giorniFerieAnnoCorrente">Ferie anno corrente</option>
-					<option value="giorniFerieAnnoPrecedente">Ferie anno precedente</option>
+					<option value="giorniFerie">Ferie</option>
 					<%
 						} else if( ordinamento.equals("grado") ) {		
 						%>
@@ -64,36 +61,26 @@
 					<option value="cognome">Cognome</option>
 					<option value="mansione">Mansione</option>
 					<option value="grado" selected>Grado</option>
-					<option value="giorniFerieAnnoCorrente">Ferie anno corrente</option>
-					<option value="giorniFerieAnnoPrecedente">Ferie anno precedente</option>
+					<option value="giorniFerie">Ferie</option>
 					<%
-						} else if( ordinamento.equals("giorniFerieAnnoCorrente") ) {		
+						} else if( ordinamento.equals("ferie") ) {		
 						%>
 					<option value="nome" >Nome</option>
 					<option value="cognome">Cognome</option>
 					<option value="mansione">Mansione</option>
 					<option value="grado">Grado</option>
-					<option value="giorniFerieAnnoCorrente" selected>Ferie anno corrente</option>
-					<option value="giorniFerieAnnoPrecedente">Ferie anno precedente</option>
+					<option value="giorniFerie" selected>Ferie</option>
 					<%
-						} else if( ordinamento.equals("giorniFerieAnnoPrecedente") ) {		
+						} 		
 						%>
-					<option value="nome">Nome</option>
-					<option value="cognome">Cognome</option>
-					<option value="mansione">Mansione</option>
-					<option value="grado">Grado</option>
-					<option value="giorniFerieAnnoCorrente">Ferie anno corrente</option>
-					<option value="giorniFerieAnnoPrecedente" selected>Ferie anno precedente</option>
 					<%}
-					}
 					else {%>
 					
 					<option value="nome" >Nome</option>
 					<option value="cognome"selected>Cognome</option>
 					<option value="mansione">Mansione</option>
 					<option value="grado">Grado</option>
-					<option value="giorniFerieAnnoCorrente">Ferie anno corrente</option>
-					<option value="feriePrec">Ferie anno precedente</option>
+					<option value="giorniFerie">Ferie</option>
 					<%} %>
 					
 
@@ -304,18 +291,13 @@
 			<thead class="thead-dark">
 				<tr>
 					<th class=" text-center">Grado</th>
+					<th class="text-center">Mansione</th>
 					<th class="text-center">Nome</th>
 					<th class="text-center">Cognome</th>
 					<th class="text-center">Email</th>
-					<th class="text-center">Mansione</th>
-					<th class="text-center">Ferie anno<br>corrente
-					</th>
-					<th class="text-center">Ferie anno<br> precedente
-					</th>
-					<th class="text-center">Inserisci <br> periodo di ferie
-					</th>
-					<th class="text-center">Rimuovi <br>periodo di ferie
-					</th>
+					<th class="text-center">Ferie</th>
+					<th class="text-center">Inserisci ferie</th>
+					<th class="text-center">Rimuovi ferie</th>
 				</tr>
 			</thead>
 
@@ -332,12 +314,11 @@
 					<td class="text-center"><img
 						src="Grado/<%=vigile.getGrado()%>.png" width=30%
 						onerror="this.parentElement.innerHTML='Non disponibile';"></td>
+					<td class="text-center"><%=vigile.getMansione()%></td>
 					<td class="text-center"><%=vigile.getNome()%></td>
 					<td class="text-center"><%=vigile.getCognome()%></td>
 					<td class="text-center"><%=vigile.getEmail()%></td>
-					<td class="text-center"><%=vigile.getMansione()%></td>
-					<td class="text-center" id="ferieCorrenti"><%=vigile.getGiorniFerieAnnoCorrente()%></td>
-					<td class="text-center" id="feriePrecedenti"><%=vigile.getGiorniFerieAnnoPrecedente()%></td>
+					<td class="text-center" id="ferie"><%=vigile.getGiorniFerieAnnoCorrente() + vigile.getGiorniFerieAnnoPrecedente()%></td>
 					<td class="text-center"><button type="button"
 							class="btn btn-outline-secondary" data-toggle="modal"
 							data-target="#aggiungiFerie"
@@ -727,13 +708,8 @@
 						success : function(response) {
 							var booleanRisposta = response[0];
 							if (booleanRisposta) {
-								var ferieAnnoCorrente = $(
-										"#listaVigili td:contains('" + email
-												+ "')").next('td').next('td');
-								var ferieAnnoPrecedente = ferieAnnoCorrente
-										.next('td');
-								ferieAnnoCorrente.text(response[2]);
-								ferieAnnoPrecedente.text(response[1]);
+								var ferie = $("#listaVigili td:contains('" +email+ "')").next('td');
+					            ferie.text(response[2] + response[1]);
 								alertSuccesso("Rimozione ferie avvenuta con successo.");
 							} else {
 								
@@ -778,13 +754,8 @@
 								console.log("inserite ferie " + dataIniziale
 										+ " " + dataFinale + " di " + email);
 								alertSuccesso("Inserimento ferie avvenuto con successo.");
-								var ferieAnnoCorrente = $(
-										"#listaVigili td:contains('" + email
-												+ "')").next('td').next('td');
-								var ferieAnnoPrecedente = ferieAnnoCorrente
-										.next('td');
-								ferieAnnoCorrente.text(response[2]);
-								ferieAnnoPrecedente.text(response[1]);
+								var ferie = $("#listaVigili td:contains('" +email+ "')").next('td');
+					            ferie.text(response[2] + response[1]);
 							} else {
 								console.log("problema inserimento ferie "
 										+ dataIniziale + " " + dataFinale
