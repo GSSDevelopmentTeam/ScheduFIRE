@@ -2,7 +2,10 @@ package control;
 
 import java.io.IOException;
 import java.sql.Date;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.util.ArrayList;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -15,9 +18,11 @@ import org.json.JSONArray;
 
 import model.bean.CapoTurnoBean;
 import model.bean.GiorniMalattiaBean;
+import model.dao.ComponenteDellaSquadraDao;
 import model.dao.GiorniMalattiaDao;
 import model.dao.VigileDelFuocoDao;
 import util.GiornoLavorativo;
+import util.Notifiche;
 
 /**
  * Servlet implementation class AggiungiMalattiaServlet
@@ -48,23 +53,18 @@ public class AggiungiMalattiaServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		if(request.getParameter("JSON")!=null && request.getParameter("inserisci") != null) {
 			
-		String emailCT = "mail55";
 	    String emailVF = request.getParameter("emailVF");
 		String dataIniz = request.getParameter("dataInizio");
 		String dataFin = request.getParameter("dataFine");
 		Date dataInizio = null;
 	    Date dataFine = null;
 		int giorniMalattia=0;
-
-	    
-	   HttpSession sessione = request.getSession();
-		CapoTurnoBean capoTurno = (CapoTurnoBean) sessione.getAttribute("capoturno");;
-		/*String emailCT = capoTurno.getEmail();*/
-			   
-				if( emailCT == null )
-					throw new ScheduFIREException("Errore nella sessione");
-				
-				
+		
+		
+		HttpSession sessione = request.getSession();
+		CapoTurnoBean capoTurno = (CapoTurnoBean) sessione.getAttribute("capoturno");
+		String emailCT = capoTurno.getEmail();
+					
 				int annoInizio=Integer.parseInt(dataIniz.substring(6, 10));
 				int meseInizio=Integer.parseInt(dataIniz.substring(3, 5));
 				int giornoInizio=Integer.parseInt(dataIniz.substring(0, 2));
@@ -72,23 +72,32 @@ public class AggiungiMalattiaServlet extends HttpServlet {
 				int meseFine=Integer.parseInt(dataFin.substring(3, 5));
 				int giornoFine=Integer.parseInt(dataFin.substring(0, 2));
 				
-				
+				//ottiene un'istanza di LocalDate dalle stringhe relative a giorno, mese ed anno
 				LocalDate inizioMalattia = LocalDate.of(annoInizio, meseInizio, giornoInizio);
 				LocalDate fineMalattia = LocalDate.of(annoFine, meseFine, giornoFine);
 
-				dataInizio = Date.valueOf(LocalDate.of(annoInizio, meseInizio, giornoInizio));
-				dataFine = Date.valueOf(LocalDate.of(annoFine, meseFine, giornoFine));
+				dataInizio = Date.valueOf(inizioMalattia);
+				dataFine = Date.valueOf(fineMalattia);
 				
-				while( inizioMalattia.compareTo(fineMalattia )<=0) {
-					if (GiornoLavorativo.isLavorativo(Date.valueOf( inizioMalattia )))
-						giorniMalattia++;
-					 inizioMalattia = inizioMalattia .plusDays(1);
-				}
+						ArrayList<Date> malattiaSchedu = new ArrayList<Date>();
+						
+						Date in = (Date) Date.valueOf(inizioMalattia).clone();
+						
+							while(!in.equals(Date.valueOf(fineMalattia))) {
+								if(GiornoLavorativo.isLavorativo(in) == true) {
+									if(ComponenteDellaSquadraDao.isComponente(emailVF, in) == true) {
+										malattiaSchedu.add(in);
+									}
+								}
+								in = Date.valueOf(in.toLocalDate().plusDays(1L));
+							}
+						
+						if(malattiaSchedu.isEmpty() == false) {
+							Date inizioS = malattiaSchedu.get(0);
+							Date fineS = malattiaSchedu.get((malattiaSchedu.size())-1);
+							Notifiche.update(Notifiche.UPDATE_PER_MALATTIA, dataInizio, dataFine, emailVF);
+						}
 				
-				if(giorniMalattia==0) {
-					throw new ScheduFIREException("Selezionare un periodo che contiene solamente giorni lavorativi!");
-				}
-
 				
 				 GiorniMalattiaBean malattia = new GiorniMalattiaBean();
 				    
@@ -97,15 +106,18 @@ public class AggiungiMalattiaServlet extends HttpServlet {
 					malattia.setDataFine(dataFine);
 					malattia.setEmailCT(emailCT);
 					malattia.setEmailVF(emailVF);
+					JSONArray array = new JSONArray();
 					
-				   if( ! GiorniMalattiaDao.addMalattia(malattia)) 
-						throw new ScheduFIREException("Errore nel DataBase");
+				   if(GiorniMalattiaDao.addMalattia(malattia) == true) 
+					  array.put(true);
+				   else {
+					   array.put(false);
+				   }
 				response.setContentType("application/json");
-				JSONArray array = new JSONArray();
-
+				
 				response.getWriter().append(array.toString());
 			}
-		}
+	    }	
 	}
 
 

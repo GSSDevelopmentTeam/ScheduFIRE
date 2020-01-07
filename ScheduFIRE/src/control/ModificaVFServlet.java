@@ -102,11 +102,24 @@ public class ModificaVFServlet extends HttpServlet {
 		if( ! Validazione.giorniFerieAnniPrecedenti(giorniFerieAnnoPrecedenteNuovi) )
 			throw new ParametroInvalidoException("Il parametro 'Giorni Ferie Anno Precedente' Ã¨ errato!");
 		
+		//Se il grado non è settato e la mansione è Capo Squadra, il grado sarà 'Semplice'
+		if( mansioneNuova.equals("Capo Squadra") && gradoNuovo == null )
+			gradoNuovo = "Semplice";
+		
 		if( ! Validazione.grado(gradoNuovo) )
 			throw new ParametroInvalidoException("Il parametro 'grado' Ã¨ errato!");
 		
 		if( ! Validazione.email(emailNuova) )
 			throw new ParametroInvalidoException("Il parametro 'email' Ã¨ errato!");
+		
+		//Controllo mansione
+		if( mansioneNuova.equals("Capo Squadra") && ( gradoNuovo.equals("Qualificato") 
+				|| gradoNuovo.equals("Coordinatore") ) ) 
+			throw new ParametroInvalidoException("Un Capo Squadra può essere solamente Esperto o Semplice!");
+		
+		if( (mansioneNuova.equals("Autista") || mansioneNuova.equals("Vigile") )  
+				&&  gradoNuovo.equals("Semplice") ) 
+			throw new ParametroInvalidoException("Il parametro 'grado' è errato!");
 	
 		//Settaggio nuovi parametri
 		vf.setNome(nomeNuovo);

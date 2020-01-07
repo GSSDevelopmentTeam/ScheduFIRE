@@ -18,35 +18,31 @@ import model.dao.ComponenteDellaSquadraDao;
 import model.dao.FerieDao;
 import model.dao.VigileDelFuocoDao;
 import util.GiornoLavorativo;
+import util.Notifiche;
 import util.Util;
 
 /**
- * Servlet implementation class AggiungiFerieServlet
+ * Servlet per la concessione e salvataggio delle ferie di un Vigile del Fuoco
+ * @author Nicola Labanca 
+ * @author Alfredo Giuliano
  */
+
 @WebServlet("/AggiungiFerieServlet")
 public class AggiungiFerieServlet extends HttpServlet {
+	
 	private static final long serialVersionUID = 1L;
 
-	/**
-	 * @see HttpServlet#HttpServlet()
-	 */
 	public AggiungiFerieServlet() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
-	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		doPost(request, response);
 	}
 
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
+		
+		//Istanziazione ed inizializzazione variabili
 		Date dataInizio = null;
 		Date dataFine = null;
 		LocalDate inizio;
@@ -55,12 +51,14 @@ public class AggiungiFerieServlet extends HttpServlet {
 		boolean aggiunta = false;
 		int numeroGiorniFerie=0;
 
+		//Ottenimento oggetto capoturnoBean dalla sessione in modo da ricavare l'email
 		HttpSession sessione = request.getSession();
 		CapoTurnoBean capoTurno = (CapoTurnoBean) sessione.getAttribute("capoturno");;
 		String emailCT = capoTurno.getEmail();
 
 		emailVF = request.getParameter("email");
 
+		//Prelevamento data di inizio e di fine del periodo di ferie
 		String dataIniziale = request.getParameter("dataIniziale");
 		String dataFinale = request.getParameter("dataFinale");
 
@@ -74,45 +72,74 @@ public class AggiungiFerieServlet extends HttpServlet {
 		fine=LocalDate.of(annoFinale, meseFinale, giornoFinale);
 		dataInizio = Date.valueOf(inizio);
 		dataFine = Date.valueOf(fine);
+		
+		//Aggiornamento notifiche
+		Notifiche.update(Notifiche.UPDATE_PER_FERIE, dataInizio, dataFine, emailVF);
 
-
-
+		//Conteggio del numero di giorni lavorativi presenti nel periodo di ferie  
 		while(inizio.compareTo(fine)<=0) {
 			if (GiornoLavorativo.isLavorativo(Date.valueOf(inizio)))
 				numeroGiorniFerie++;
 			inizio=inizio.plusDays(1);
 		}
-
-		if(numeroGiorniFerie==0) {
-			throw new ScheduFIREException("Selezionato un periodo contenente giorni non lavorativi!");
-		}
-
-		else {
-			String mansioneVF=VigileDelFuocoDao.ottieni(emailVF).getMansione();
-			if(!isPresentiNumeroMinimo(dataInizio, dataFine,mansioneVF)) 
-				throw new ScheduFIREException("Personale insufficiente. Impossibile inserire ferie");
-			
-
-			if(ComponenteDellaSquadraDao.isComponente(emailVF, dataInizio))
-				throw new ScheduFIREException("Impossibile inserire ferie. Vigile gi� inserito in squadra");
-			int feriePrecedenti=VigileDelFuocoDao.ottieniNumeroFeriePrecedenti(emailVF);
-			int ferieCorrenti=VigileDelFuocoDao.ottieniNumeroFerieCorrenti(emailVF);
-			int totaleFerie=feriePrecedenti+ferieCorrenti;
-			if(totaleFerie<numeroGiorniFerie)
-				throw new ScheduFIREException("Giorni di ferie insufficienti");
-			else {
-				if(feriePrecedenti>=numeroGiorniFerie)
-					VigileDelFuocoDao.aggiornaFeriePrecedenti(emailVF, feriePrecedenti-numeroGiorniFerie);
-				else {
-					VigileDelFuocoDao.aggiornaFeriePrecedenti(emailVF, 0);
-					numeroGiorniFerie-=feriePrecedenti;
-					VigileDelFuocoDao.aggiornaFerieCorrenti(emailVF, ferieCorrenti-numeroGiorniFerie);
-				}
-				aggiunta =FerieDao.aggiungiPeriodoFerie(emailCT, emailVF, dataInizio, dataFine);
+		
+		/**
+		 * Controlli necessari prima di concedere le ferie:
+		 * 1) Se il periodo contiene dei giorni di ferie già concessi, si lancia un'eccezione
+		 * 2) Se il numero dei giorni è uguale a zero, si lancia un'eccezione
+		 * Superati questi due controlli si entra nel blocco else dove si effettuano le operazioni
+		 * necessarie alla concessione dei giorni di ferie. 
+		 */
+		if(FerieDao.contieneGiorniConcessi(dataInizio, dataFine, emailVF))
+			throw new ScheduFIREException("Selezionato un periodo contenente giorni di ferie già concessi precedentemente");
+		else
+			if(numeroGiorniFerie == 0) {
+				throw new ScheduFIREException("Selezionato un periodo contenente giorni non lavorativi!");
 			}
-
-
+			else {
+				//Ottenimento mansione vigile selezionato
+				String mansioneVF = VigileDelFuocoDao.ottieni(emailVF).getMansione();
+				
+				/**
+				 * Controllo se si raggiunge il numero minimo di vigile in caserma
+				 * ALtrimenti si lancia un'eccezione
+				 */
+				if(!isPresentiNumeroMinimo(dataInizio, dataFine,mansioneVF)) 
+					throw new ScheduFIREException("Personale minore di 13 unità. Impossibile inserire ferie");
+				
+				/**
+				 * Controllo il vigile è già stato schedulato. In questo caso, si concedono
+				 * le ferie e si aggiorna il CT mediante una notifica che lo avvisa 
+				 * di dover sostituire dalla squadra il vigile a cui sono state concesse le ferie
+				 */
+				if(ComponenteDellaSquadraDao.isComponente(emailVF, dataInizio)) 
+					Notifiche.update(Notifiche.UPDATE_SQUADRE_PER_FERIE, dataInizio, dataFine, emailVF);
+				
+				//Ottenimento numero totale giorni di ferie a disposizione del VF
+				int feriePrecedenti = VigileDelFuocoDao.ottieniNumeroFeriePrecedenti(emailVF);
+				int ferieCorrenti = VigileDelFuocoDao.ottieniNumeroFerieCorrenti(emailVF);
+				int totaleFerie = feriePrecedenti + ferieCorrenti;
+				
+				/**
+				 * Sottrazione delle ferie da concedere, dal numero di ferie a disposizione del VF
+				 * Se ha a disposizione ferie accumulate degli anni precedenti si scalano i giorni prima
+				 * da li e successivamente dai giorni di ferie dell'anno in corso
+				 */
+				if(totaleFerie < numeroGiorniFerie)
+					throw new ScheduFIREException("Giorni di ferie insufficienti");
+				else {
+					if(feriePrecedenti >= numeroGiorniFerie)
+						VigileDelFuocoDao.aggiornaFeriePrecedenti(emailVF, feriePrecedenti-numeroGiorniFerie);
+					else {
+						VigileDelFuocoDao.aggiornaFeriePrecedenti(emailVF, 0);
+						numeroGiorniFerie -= feriePrecedenti;
+						VigileDelFuocoDao.aggiornaFerieCorrenti(emailVF, ferieCorrenti-numeroGiorniFerie);
+					}
+						//Concessione Ferie. Salvataggio del periodo nel DataBase 
+						aggiunta = FerieDao.aggiungiPeriodoFerie(emailCT, emailVF, dataInizio, dataFine);
+				}
 		}
+		
 		response.setContentType("application/json");
 		JSONArray array = new JSONArray();
 
@@ -130,7 +157,7 @@ public class AggiungiFerieServlet extends HttpServlet {
 	}
 
 
-
+	//Metodo che verifica se nel periodo di ferie richiesto sono preseti almeno il numero minimo di VF
 	private boolean isPresentiNumeroMinimo(Date dataIniziale, Date dataFinale, String mansioneVF) {
 
 		boolean sufficienti = true;
@@ -143,7 +170,7 @@ public class AggiungiFerieServlet extends HttpServlet {
 		//per tutto il periodo considerato
 		while(inizio.compareTo(fine) <= 0) {
 			
-			//se � un giorno lavorativo
+			//se e' un giorno lavorativo
 			if(GiornoLavorativo.isLavorativo(Date.valueOf(inizio))) {
 				int capiSquadra = 0; 
 				int autisti = 0;

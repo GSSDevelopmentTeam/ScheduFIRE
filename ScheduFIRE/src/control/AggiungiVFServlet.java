@@ -93,7 +93,7 @@ public class AggiungiVFServlet extends HttpServlet {
 		//Conversione parametri da Stringa ad interi
 		Integer giorniFerieAnnoCorrente = Integer.parseInt(giorniFerieAnnoCorrenteStringa); 
 		Integer giorniFerieAnnoPrecedente = Integer.parseInt(giorniFerieAnnoPrecedenteStringa);
-
+	
 		//Controlli
 		if( ! Validazione.nome(nome) )
 			throw new ParametroInvalidoException("Il parametro 'nome' è errato!");
@@ -113,9 +113,22 @@ public class AggiungiVFServlet extends HttpServlet {
 		if( ! Validazione.giorniFerieAnniPrecedenti(giorniFerieAnnoPrecedente) )
 			throw new ParametroInvalidoException("Il parametro 'Giorni Ferie Anno Precedente' è errato!");
 		
+		//Se il grado non è settato e la mansione è Capo Squadra, il grado sarà 'Semplice'
+		if( mansione.equals("Capo Squadra") && grado == null )
+			grado = "Semplice";
+		
 		if( ! Validazione.grado(grado) )
 			throw new ParametroInvalidoException("Il parametro 'grado' è errato!");
-
+		
+		//Controllo mansione
+		if( mansione.equals("Capo Squadra") && ( grado.equals("Qualificato") 
+				|| grado.equals("Coordinatore") ) ) 
+			throw new ParametroInvalidoException("Un Capo Squadra può essere solamente Esperto o Semplice!");
+		
+		if( (mansione.equals("Autista") || mansione.equals("Vigile") )  
+				&&  grado.equals("Semplice") ) 
+			throw new ParametroInvalidoException("Il parametro 'grado' è errato!");
+			
 		// Instanziazione dell'oggetto VigileDelFuocoBean
 		VigileDelFuocoBean vf = new VigileDelFuocoBean(nome, cognome, email, turno, mansione, username, grado,
 														giorniFerieAnnoCorrente, giorniFerieAnnoPrecedente);

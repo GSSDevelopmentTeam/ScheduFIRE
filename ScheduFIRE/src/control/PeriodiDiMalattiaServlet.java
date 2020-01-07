@@ -6,6 +6,7 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.time.*;
 import java.time.format.DateTimeFormatter;
@@ -56,11 +57,12 @@ public class PeriodiDiMalattiaServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		//ottiene i giorni di malattia per un determinato VF
 		if(request.getParameter("JSON")!=null && request.getParameter("visMalattia")!=null ) {
-					String emailVF = request.getParameter("emailVF");
-					
-					if( emailVF == null )
-						throw new ScheduFIREException();
+			String emailVF = request.getParameter("emailVF");
+			
+			if( emailVF == null )
+				throw new ScheduFIREException();
 			
 					List<GiorniMalattiaBean> GiorniMalattiaBean = GiorniMalattiaDao.ottieniMalattie(emailVF);
 					JSONArray array = new JSONArray();
@@ -77,10 +79,37 @@ public class PeriodiDiMalattiaServlet extends HttpServlet {
 						}
 		
 		else {
-		ArrayList<VigileDelFuocoBean> listaVigili = new ArrayList<VigileDelFuocoBean>(VigileDelFuocoDao.ottieni());
+			
+			//Ottenimento parametro
+			String ordinamento = request.getParameter("ordinamento");
+			
+			//Se il parametro non è settato, l'ordinamento sarà quello di default
+			if(ordinamento == null)
+				ordinamento = "cognome";
+			
+			//ottiene la lista dei VF dal DataBase
+			ArrayList<VigileDelFuocoBean> listaVigili = null;
+			
+			switch(ordinamento) {
+			case "nome": 
+				listaVigili =  new ArrayList<VigileDelFuocoBean>(VigileDelFuocoDao.ottieni(VigileDelFuocoDao.ORDINA_PER_NOME));
+				break;
+			case "cognome": 
+				listaVigili =  new ArrayList<VigileDelFuocoBean>(VigileDelFuocoDao.ottieni(VigileDelFuocoDao.ORDINA_PER_COGNOME));
+				break;
+			case "mansione": 
+				listaVigili =  new ArrayList<VigileDelFuocoBean>(VigileDelFuocoDao.ottieni(VigileDelFuocoDao.ORDINA_PER_MANSIONE));
+				break;
+			case "grado": 
+				listaVigili =  new ArrayList<VigileDelFuocoBean>(VigileDelFuocoDao.ottieni(VigileDelFuocoDao.ORDINA_PER_GRADO));
+				break;
+			}
+
+		//Passasggio del tipo di ordinamento richiesto
+		request.setAttribute("ordinamento", ordinamento);
 		
 		request.setAttribute("listaVigili", listaVigili);
-		request.getRequestDispatcher("JSP/GestioneMalattiaJSP.jsp").forward(request, response);
+		request.getRequestDispatcher("/JSP/GestioneMalattiaJSP.jsp").forward(request, response);
   }
  }
 }

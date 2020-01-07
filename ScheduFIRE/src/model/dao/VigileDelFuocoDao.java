@@ -18,7 +18,7 @@ import model.bean.VigileDelFuocoBean;
 
 /**
  * Classe che si occupa della gestione dei dati 
- * persistenti relativi all'entitï¿½ 'VigileDelFuoco'
+ * persistenti relativi all'entita' 'VigileDelFuoco'
  * @author Eugenio Sottile 
  * @author Nicola Labanca
  * @author Alfredo Giuliano
@@ -39,8 +39,13 @@ public class VigileDelFuocoDao {
 	
 	public static final int ORDINA_PER_GIORNI_FERIE_ANNI_PRECEDENTI = 4;
 	
+	public static final int ORDINA_PER_MANSIONE = 5;
+	
+	public static final int ORDINA_PER_GRADO = 6;
+	
 	private static final String[] ORDINAMENTI = {"order by nome", "order by cognome", "order by caricolavoro",
-												"order by giorniferieannocorrente", "order by giorniferieannoprecedente"};
+												"order by giorniferieannocorrente", "order by giorniferieannoprecedente",
+												"order by mansione", "order by grado"};
 	
 	/**
 	 * Si occupa del salvataggio dei dati di un Vigile del Fuoco nel database.
@@ -87,7 +92,7 @@ public class VigileDelFuocoDao {
 	/**
 	 * Si occupa dell'ottenimento di un Vigile del Fuoco dal database data la sua chiave.
 	 * @param chiaveEmail una stringa contenente la mail del Vigile
-	 * @return il Vigile identificato da chiaveEmail (può essere null)
+	 * @return il Vigile identificato da chiaveEmail (puï¿½ essere null)
 	 */
 	public static VigileDelFuocoBean ottieni(String chiaveEmail) {
 		
@@ -207,7 +212,7 @@ public class VigileDelFuocoDao {
 	 */
 	public static Collection<VigileDelFuocoBean> ottieni(int ordinamento) {
 		
-		if(ordinamento < 0 || ordinamento > 4)
+		if(ordinamento < 0 || ordinamento > 6)
 			//lancio eccezione
 			;
 		
@@ -407,6 +412,47 @@ public class VigileDelFuocoDao {
 		}
 	}
 	
+	
+	/**
+	 * @param data , la data del giorno di cui si vuole avere la lista dei vigili disponibili
+	 * @return una lista di VigileDelFuocoBean che hanno attributo adoperabile=true 
+	 * 			e non sono in ferie o malattia nella data passata come parametro
+	 */
+	public static boolean isDisponibile(String email, Date data){
+		try(Connection con = ConnessioneDB.getConnection()) {
+			
+			// Query di ricerca
+			PreparedStatement ps = con.prepareStatement("(SELECT v.email, v.nome, v.cognome, v.turno, v.mansione, "
+					+ "v.giorniferieannocorrente, v.giorniferieannoprecedente, v.caricolavoro, v.adoperabile, v.grado, v.username " + 
+					" FROM Vigile v " + 
+					" WHERE v.adoperabile=true AND v.email=? AND NOT EXISTS " + 
+					" (SELECT *" + 
+					" FROM Malattia m " + 
+					" WHERE m.emailVF= v.email AND ? BETWEEN m.dataInizio AND m.dataFine)" + 
+					" AND NOT EXISTS" + 
+					" (SELECT *" + 
+					" FROM Ferie f " + 
+					" WHERE f.emailVF= v.email AND ? BETWEEN f.dataInizio AND f.dataFine))"
+					+ " ORDER BY v.cognome;");
+			ps.setString(1, email);
+			ps.setDate(2, data);
+			ps.setDate(3, data);
+			ResultSet rs = ps.executeQuery();
+
+			boolean disponibile=false;
+			if(rs.next()) {
+				disponibile=true;
+			}
+			
+			return disponibile;
+			
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+		}
+		
+	}
+	
+	
 	/**
 	 * Questo metodo si occupa di prelevare la lista completa dei VF presenti nel dataBase. 
 	 * @return una lista di VigileDelFuocoBean ordinata in base alla mansione piÃ¹ importante.
@@ -511,7 +557,12 @@ public class VigileDelFuocoDao {
 		
 		return listaVigili;
 	}
-	
+
+	/**
+	 * Si occupa del prelevamento del numero di ferie accumulate negli anni precedenti dal VF, dal dataBase.
+	 * @param emailVF (String): L'email del VF del quale si ha bisogno del numero di ferie degli anni precedenti
+	 * @return feriePrecedenti (int): numero di ferie a disposizione degli anni precedenti
+	 */
 	public static int ottieniNumeroFeriePrecedenti(String emailVF) {
 		PreparedStatement ps;
 		ResultSet rs;
@@ -539,7 +590,12 @@ public class VigileDelFuocoDao {
 		
 		return feriePrecedenti;
 	}
-	
+
+	/**
+	 * Si occupa del prelevamento del numero di ferie dell'anno corrente a disposizione del VF, dal dataBase.
+	 * @param emailVF (String): L'email del VF del quale si ha bisogno del numero di ferie degli anni precedenti
+	 * @return ferieCorrenti (int): numero di ferie a disposizione relative all'anno corrente
+	 */
 	public static int ottieniNumeroFerieCorrenti(String emailVF) {
 		PreparedStatement ps;
 		ResultSet rs;
@@ -568,6 +624,11 @@ public class VigileDelFuocoDao {
 		return ferieCorrenti;
 	}
 	
+	/**
+	 * Si occupa dell'aggiornamento nel dataBase, del numero di ferie accumulate negli anni precedenti dal VF
+	 * @param emailVF (String): L'email del VF per il quale bisogna aggiornare il numero di ferie degli anni precedenti
+	 * @param numeroFerie (int): Il nuovo numero di ferie relative all'anno precedente, da inserire nel dataBase
+	 */
 	public static void aggiornaFeriePrecedenti(String emailVF, int numeroFerie) {
 		PreparedStatement ps;
 		
@@ -591,7 +652,12 @@ public class VigileDelFuocoDao {
 			e.printStackTrace();
 		}
 	}
-	
+
+	/**
+	 * Si occupa dell'aggiornamento nel dataBase, del numero di ferie relativo all'anno corrente, a disposizione del VF
+	 * @param emailVF (String): L'email del VF per il quale bisogna aggiornare il numero di ferie relativo all'anno corrente
+	 * @param numeroFerie (int): Il nuovo numero di ferie relativo all'anno corrente, da inserire nel dataBase
+	 */
 	public static void aggiornaFerieCorrenti(String emailVF, int numeroFerie) {
 		PreparedStatement ps;
 		
@@ -625,23 +691,57 @@ public class VigileDelFuocoDao {
 	public static boolean caricoLavorativo(HashMap<VigileDelFuocoBean, String> squadra) {
 		try (Connection con = ConnessioneDB.getConnection()) {
 			PreparedStatement ps;
-			String incrementaCaricoLavorativo = "UPDATE Vigile Set caricolavoro = ? WHERE emailVF = ?;";
+			String incrementaCaricoLavorativo = "UPDATE Vigile Set caricolavoro = ? WHERE email = ?;";
 			int count = 0;
 
 			Iterator i = squadra.entrySet().iterator();
 			while (i.hasNext()) {
 				Map.Entry<VigileDelFuocoBean, String> pair = (Map.Entry<VigileDelFuocoBean, String>) i.next();
-				int toAdd = (pair.getValue() == "Prima Partenza" || pair.getValue() == "Sala Operativa") ? 3 :
-					(pair.getValue() == "Auto Scala") ? 2 : 1;
+				int toAdd = (	pair.getValue().equals("Prima Partenza") || 
+								pair.getValue().equals("Sala Operativa")) ? 3 :
+								(pair.getValue().equals("Auto Scala")) ? 2 : 1;
+				System.out.println("toAdd vale: "+toAdd+" per il vigile "+pair.getKey().getEmail());
 				ps = con.prepareStatement(incrementaCaricoLavorativo);
 				ps.setInt(1, pair.getKey().getCaricoLavoro() + toAdd);
 				ps.setString(2, pair.getKey().getEmail());
 				count = ps.executeUpdate();
-				
+				con.commit();
 				i.remove();
 			}
 			
 			return (count == squadra.size());
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+		}
+	}
+	
+	
+	/**
+	 * Il metodo decrementa per ogni vigile del fuoco (nella mappa 'Key') il suo carico lavorativo
+	 * a seconda della squadra assegnata (nella mappa 'Value'). 
+	 * @param squadra Una mappa di Vigili del Fuoco e delle relative squadre 
+	 * @return true se l'operazione va a buon fine, false altrimenti.
+	 */
+	public static boolean removeCaricoLavorativo(HashMap<VigileDelFuocoBean, String> squadra) {
+		try (Connection con = ConnessioneDB.getConnection()) {
+			PreparedStatement ps;
+			String incrementaCaricoLavorativo = "UPDATE Vigile Set caricolavoro = ? WHERE email = ?;";
+
+			Iterator i = squadra.entrySet().iterator();
+			while (i.hasNext()) {
+				Map.Entry<VigileDelFuocoBean, String> pair = (Map.Entry<VigileDelFuocoBean, String>) i.next();
+				int toSub = (	pair.getValue().equals("Prima Partenza") || 
+								pair.getValue().equals("Sala Operativa")) ? 3 :
+								(pair.getValue().equals("Auto Scala")) ? 2 : 1;
+				ps = con.prepareStatement(incrementaCaricoLavorativo);
+				ps.setInt(1, pair.getKey().getCaricoLavoro() - toSub);
+				ps.setString(2, pair.getKey().getEmail());
+				ps.executeUpdate();
+				con.commit();
+				i.remove();
+			}
+			
+			return true;
 		} catch (SQLException e) {
 			throw new RuntimeException(e);
 		}
