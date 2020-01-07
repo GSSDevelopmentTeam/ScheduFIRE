@@ -86,8 +86,7 @@ public class LoginServlet extends HttpServlet {
 							//RequestDispatcher dispatcher = request.getRequestDispatcher("WebContent\\JSP\\LoginJSP.jsp");
 							//dispatcher.forward(request, response);
 						} else {
-							session.setMaxInactiveInterval(3600) // 1 ora;
-							response.sendRedirect("CalendarioServlet");
+							session.setMaxInactiveInterval(3600); // 1 ora							response.sendRedirect("CalendarioServlet");
 							return;
 							//RequestDispatcher dispatcher = request.getRequestDispatcher("/CalendarioServlet");
 							//dispatcher.forward(request, response);
