@@ -13,7 +13,7 @@
 	<!-- Barra Navigazione -->
 	<jsp:include page="HeaderJSP.jsp" />
 	<h2 class="d-flex justify-content-center"
-		style="color: #B60000 !Important">Gestione Ferie</h2>
+		style="margin-top: 3%; color: #B60000 !Important ">Gestione Ferie</h2>
 
 
 <!-- form per l'ordinamento della lista dei VF-->
