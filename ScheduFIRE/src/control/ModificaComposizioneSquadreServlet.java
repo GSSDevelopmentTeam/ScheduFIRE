@@ -51,7 +51,7 @@ public class ModificaComposizioneSquadreServlet extends HttpServlet {
 		HttpSession sessione = request.getSession();
 		Date data = (Date) sessione.getAttribute("data");
 		String oldVF =request.getParameter("email");
-		String newVF =request.getParameter("VFnew");
+		String newVF =request.getParameter("VFNew");
 		int tipo = Integer.parseInt(request.getParameter("tiposquadra"));
 		Map<VigileDelFuocoBean, String> squadra = new HashMap<>();
 		switch(tipo) {
@@ -65,9 +65,9 @@ public class ModificaComposizioneSquadreServlet extends HttpServlet {
 			squadra = (HashMap<VigileDelFuocoBean, String>) sessione.getAttribute("squadra");
 			break;
 		default:
-			throw new ScheduFIREException("C'e stato un errore. Riprova più tardi.");
+			throw new ScheduFIREException("C'e stato un errore. Riprova piï¿½ tardi.");
 		}
-
+		System.out.println("squadra: "+squadra);
 		Iterator i = squadra.entrySet().iterator();
 		
 		while(i.hasNext()) {
