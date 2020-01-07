@@ -1,5 +1,5 @@
-insert into Credenziali values ("turnoB","dHVybm9C","vigiledelfuoco");
-insert into Credenziali values ("capoturno","Y2Fwb3R1cm5v","capoturno");
+insert into Credenziali values ("turnoB","220EDACE958D53B8A30AEC59FF0C1B93934DCEE7FA526712888B44ED236B737D","vigiledelfuoco");
+insert into Credenziali values ("capoturno","BCEE59C152CF518D3C6FBBCE6EB4E7CA3757323D5939A59B816197DFAA372EE4","capoturno");
 
 insert into Vigile values("mail","nome","cognome","B","mansione",20,0,0,true,"Qualificato","turnoB");
 insert into Vigile values("michele73","michele","sica","B","Capo Squadra",20,0,0,true,"Coordinatore","turnoB");
@@ -30,7 +30,6 @@ insert into Capoturno values("capoturno","capoturno","capoturno","b","capoturno"
 insert into listasquadre values("2019-12-24",8,"capoturno");
 insert into listasquadre values("2019-12-25",20,"capoturno");
 insert into listasquadre values("2020-01-02",20,"capoturno");
-insert into listasquadre values("2020-01-05",8,"capoturno");
 
 
 
@@ -49,12 +48,6 @@ insert into squadra values("Prima Partenza","2020-01-02",3);
 insert into squadra values("Auto Scala","2020-01-02",2);
 insert into squadra values("Auto Botte","2020-01-02",1);
 insert into squadra values("Sala Operativa","2020-01-02",3);
-
-insert into squadra values("Prima Partenza","2020-01-05",3);
-insert into squadra values("Auto Scala","2020-01-05",2);
-insert into squadra values("Auto Botte","2020-01-05",1);
-insert into squadra values("Sala Operativa","2020-01-05",3);
-
 
 
 
@@ -98,22 +91,6 @@ insert into componentedellasquadra values ("mail8","Auto Scala","2020-01-02");
 insert into componentedellasquadra values ("mail18","Auto Scala","2020-01-02");
 insert into componentedellasquadra values ("mail11","Auto Botte","2020-01-02");
 insert into componentedellasquadra values ("mail23","Auto Botte","2020-01-02");
-
-
-
-insert into componentedellasquadra values ("michele73","Sala Operativa","2020-01-05");
-insert into componentedellasquadra values ("mail13","Sala Operativa","2020-01-05");
-insert into componentedellasquadra values ("mail21","Sala Operativa","2020-01-05");
-insert into componentedellasquadra values ("mail4","Prima Partenza","2020-01-05");
-insert into componentedellasquadra values ("mail9","Prima Partenza","2020-01-05");
-insert into componentedellasquadra values ("mail15","Prima Partenza","2020-01-05");
-insert into componentedellasquadra values ("mail16","Prima Partenza","2020-01-05");
-insert into componentedellasquadra values ("mail17","Prima Partenza","2020-01-05");
-insert into componentedellasquadra values ("mail8","Auto Scala","2020-01-05");
-insert into componentedellasquadra values ("mail18","Auto Scala","2020-01-05");
-insert into componentedellasquadra values ("mail11","Auto Botte","2020-01-05");
-insert into componentedellasquadra values ("mail23","Auto Botte","2020-01-05");
-
 
 
 
