@@ -8,12 +8,11 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
-import model.bean.CredenzialiBean;
 import model.bean.VigileDelFuocoBean;
 
 import model.dao.VigileDelFuocoDao;
+import util.Util;
 
 /**
  * Servlet che si occupa dell'ottenimento di una collezione di VigileDelFuocoBean dal database.
@@ -36,22 +35,9 @@ public class GestionePersonaleServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		/*
-		//Ottenimento oggetto sessione dalla richiesta
-		HttpSession session = request.getSession();
-				
-		//Ottenimento credenziali dell'utente dalla sessione
-		CredenzialiBean credenziali = (CredenzialiBean) session.getAttribute("credenziali"); 
-				
-		//Controllo credenziali
-		if( credenziali == null )
-			//lancio eccezione
-			;
 		
-		if( credenziali.getRuolo() == "vigile" ) //definire bene la stringa
-			//lancio eccezione
-			;
-		*/
+		//Controllo login
+		Util.isCapoTurno(request);
 		
 		//Ottenimento parametro
 		String ordinamento = request.getParameter("ordinamento");
