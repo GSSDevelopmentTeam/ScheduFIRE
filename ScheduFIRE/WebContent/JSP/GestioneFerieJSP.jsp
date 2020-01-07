@@ -6,6 +6,13 @@
 <head>
 <jsp:include page="StandardJSP.jsp" />
 <link type="text/css" rel="stylesheet" href="./CSS/GestionePersonaleCSS.css">
+<style>	
+.table td, .table th {
+    padding: 1.5px!important;
+    vertical-align: top;
+    border-top: 1px solid #dee2e6;
+}
+</style>
 </head>
 <body>
 
@@ -128,7 +135,7 @@
 		aria-labelledby="exampleModalCenterTitle" aria-hidden="true"
 		style="display: none">
 		<div class="modal-dialog modal-dialog-centered" role="document">
-			<div class="modal-content contenutiModal" style="min-width: 500px; min-height: 500px;">
+			<div class="modal-content contenutiModal" style="min-width: 500px; min-height: 550px;">
 				<div class="modal-header">
 					<h5 class="modal-title" id="titoloAggiuntaFerie">Aggiunta
 						ferie</h5>
@@ -141,8 +148,9 @@
 					<input type="hidden" name="email" id="emailAggiuntaFerie">
 					<div class=" row justify-content-center">
 						<input id="dataInizio" placeholder="Giorno iniziale" readonly
-							size="34" /> <input id="dataFine" placeholder="Giorno finale"
-							readonly size="34" />
+							size="34" style="margin-bottom: 1%;" /> 
+							<input id="dataFine" placeholder="Giorno finale"
+							readonly size="34" style="margin-bottom: 2%;"/>
 					</div>
 					<div class="text-center" id="messaggioFerie1"></div>
 					<div class="text-center" id="messaggioFerie2"></div>
@@ -155,7 +163,7 @@
 						data-dismiss="modal">Annulla</button>
 
 
-					<button type="button" class="btn btn-outline-primary"
+					<button type="button" class="btn btn-outline-success"
 						id="bottoneAggiungiFerie" onclick="aggiungiFerie()"
 						data-dismiss="modal" disabled>Aggiungi ferie</button>
 
@@ -174,7 +182,7 @@
 		aria-labelledby="exampleModalCenterTitle" aria-hidden="true"
 		style="display: none">
 		<div class="modal-dialog modal-dialog-centered" role="document">
-			<div class="modal-content contenutiModal" style="min-width: 500px; min-height: 500px;">
+			<div class="modal-content contenutiModal" style="min-width: 500px; min-height: 550px;">
 				<div class="modal-header">
 					<h5 class="modal-title" id="titoloRimuoviFerie">Rimuovi ferie</h5>
 					<button type="button" class="close" data-dismiss="modal"
@@ -186,8 +194,9 @@
 					<input type="hidden" name="email" id="emailRimozioneFerie">
 					<div class=" row justify-content-center">
 						<input id="rimozioneDataIniziale" placeholder="Giorno iniziale"
-							readonly size="34" /> <input id="rimozioneDataFinale"
-							placeholder="Giorno finale" readonly size="34" />
+							readonly size="34" style="margin-bottom: 1%;"/> 
+						<input id="rimozioneDataFinale"
+							placeholder="Giorno finale" readonly size="34" style="margin-bottom: 2%" />
 					</div>
 					<div class="text-center" id="messaggioFerie1"></div>
 					<div class="text-center" id="messaggioFerie2"></div>
@@ -199,7 +208,7 @@
 						data-dismiss="modal">Annulla</button>
 
 
-					<button type="button" class="btn btn-outline-warning"
+					<button type="button" class="btn btn-outline-success"
 						id="bottoneRimuoviFerie" onclick="rimuoviFerie()"
 						data-dismiss="modal" disabled>Rimuovi ferie</button>
 
