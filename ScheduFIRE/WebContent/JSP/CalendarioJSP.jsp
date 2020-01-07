@@ -162,25 +162,22 @@
 		<div class="container-schedul" id="visilibity">
 			<a class="info" id="informazione"></a>
 
-			<div>
-				<%
-					//if(ruolo.equalsIgnoreCase("capoturno")){
-				%>
+			<div >
 
-				<form action="GeneraSquadreServlet" method="post">
-					<button type="submit" id="bottoneGeneraSquadra" class="edit">Genera
-						Squadre</button>
+
+				<form action="GeneraSquadreServlet" method="POST">
+					<button type="submit" id="bottoneGeneraSquadra" class="edit">
+						Genera squadre <br> per il turno successivo
+					</button>
 				</form>
 
-				<form action="ModificaComposizioneSquadreServlet?tiposquadra=3"
-					method="post" id="modData">
+				<form action="ModificaComposizioneSquadreServlet?tiposquadra=3" method="POST">
+
 					<button type="submit" id="bottoneModificaSquadra" class="edit">
 						Modifica Squadre
 					</button>
 				</form>
-				<%
-					//}
-				%>
+
 			</div>
 
 			<div class="wrapper" id="schedulazione">
@@ -290,26 +287,27 @@
 				autoBotte.empty();
 
 				var len = response.length;
-				
 				var isModificabile = response[0];
 				var isGenerabile = response[1];	
 				$("#informazione").text("Squadre relative al giorno "+giorno+"/ "+mese+" /"+anno);
 	
 				if(len<=2){
-					$("#informazione").text("OPS! Non sono ancora state generate squadre per il  giorno "+giorno+"/ "+mese+" /"+anno);
+					$("#informazione").text("Non sono ancora state generate squadre per il  giorno "+giorno+"/ "+mese+" /"+anno);
 					schedulazione.style.display ='none';
 				}else{
 					schedulazione.style.display ='block';
 				}
 					
 				
-				
+				<%if(ruolo.equalsIgnoreCase("capoturno")){%>
 				if(isModificabile){
 					bottoneModificaSquadra.style.display ='block';
 				}
 				if(isGenerabile){
 					bottoneGeneraSquadra.style.display ='block';
 				}
+				<%}%>
+				
 				for (var i = 2; i < len; i++) {
 				vigile=response[i];
 					
