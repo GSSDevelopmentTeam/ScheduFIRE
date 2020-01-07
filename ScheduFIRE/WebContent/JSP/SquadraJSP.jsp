@@ -18,6 +18,13 @@
 h2 {
 	color: #B60000;
 }
+
+.table td, .table th {
+    padding: 1.5px!important;
+    vertical-align: top;
+    border-top: 1px solid #dee2e6;
+}
+
 </style>
 </head>
 
@@ -62,6 +69,7 @@ h2 {
        <div class="d-flex justify-content-center">
 		<h2 style="font-weight:bold; font-size:36px;">Squadra del <%=data %></h2>
 	</div>
+	<p class="d-flex justify-content-center"></p>
 	<div class="d-flex justify-content-center">
 		<img src="Icon/caserma.png" class="fr">
 		<h2>Sala Operativa</h2>
@@ -97,7 +105,7 @@ h2 {
 					<td class="text-center"><button type="button"
 							class="btn btn-outline-secondary" data-toggle="modal"
 							data-target="#aggiungiVF" id="aggiungiVF"
-							onClick='apriFormVF("<%=membro.getEmail()%>","<%=membro.getMansione()%>","3")'>Sostituisci</button></td>
+							onClick='apriFormVF("<%=membro.getEmail()%>","<%=membro.getMansione()%>","3","<%=data%>")'>Sostituisci</button></td>
 					</td>
 				</tr>
 				<%
@@ -109,7 +117,7 @@ h2 {
 		</table>
 	</div>
 
-
+<p class="d-flex justify-content-center"></p>
 	<div class="d-flex justify-content-center">
 		<img src="Icon/sirena.png" class="fr">
 		<h2>Prima Partenza</h2>
@@ -143,7 +151,7 @@ h2 {
 					<td class="text-center"><button type="button"
 							class="btn btn-outline-secondary" data-toggle="modal"
 							data-target="#aggiungiVF" id="aggiungiVF"
-							onClick='apriFormVF("<%=membro.getEmail()%>","<%=membro.getMansione()%>","3")'>Sostituisci</button></td>
+							onClick='apriFormVF("<%=membro.getEmail()%>","<%=membro.getMansione()%>","3","<%=data%>")'>Sostituisci</button></td>
 					</td>
 				</tr>
 				<%
@@ -155,6 +163,7 @@ h2 {
 		</table>
 	</div>
 
+<p class="d-flex justify-content-center"></p>
 	<div class="d-flex justify-content-center">
 		<img src="Icon/autoscala.png" class="fr">
 		<h2>Auto Scala</h2>
@@ -188,7 +197,7 @@ h2 {
 					<td class="text-center"><button type="button"
 							class="btn btn-outline-secondary" data-toggle="modal"
 							data-target="#aggiungiVF" id="aggiungiVF"
-							onClick='apriFormVF("<%=membro.getEmail()%>","<%=membro.getMansione()%>","3")'>Sostituisci</button></td>
+							onClick='apriFormVF("<%=membro.getEmail()%>","<%=membro.getMansione()%>","3","<%=data%>")'>Sostituisci</button></td>
 					</td>
 				</tr>
 				<%
@@ -200,6 +209,7 @@ h2 {
 		</table>
 	</div>
 
+<p class="d-flex justify-content-center"></p>
 	<div class="d-flex justify-content-center">
 		<img src="Icon/idrante.png" class="fr">
 		<h2>Auto Botte</h2>
@@ -233,7 +243,7 @@ h2 {
 					<td class="text-center"><button type="button"
 							class="btn btn-outline-secondary" data-toggle="modal"
 							data-target="#aggiungiVF" id="aggiungiVF"
-							onClick='apriFormVF("<%=membro.getEmail()%>","<%=membro.getMansione()%>","3")'>Sostituisci</button></td>
+							onClick='apriFormVF("<%=membro.getEmail()%>","<%=membro.getMansione()%>","3","<%=data%>")'>Sostituisci</button></td>
 					</td>
 				</tr>
 				<%
@@ -253,7 +263,7 @@ h2 {
 
 	<script>
 
-	function apriFormVF(input,rule,sq) {
+	function apriFormVF(input,rule,sq,dt) {
 		//Chiamata ajax alla servlet PersonaleDisponibileAJAX
 		$.ajax({
 			type : "POST",//Chiamata POST
@@ -263,7 +273,8 @@ h2 {
 				"aggiunta":true,
 				"email" : input,
 				"mansione" : rule,
-				"tiposquadra" : sq
+				"tiposquadra" : sq,
+				"dataModifica" : dt
 			},			
 			success : function(response) {//Operazione da eseguire una volta terminata la chiamata alla servlet.
 				$("#appendElenco").remove();
