@@ -49,10 +49,20 @@ public class ModificaComposizioneSquadreServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession sessione = request.getSession();
-		
-		Date data = Date.valueOf(request.getParameter("data"));
-		
-		if(data == null) {
+
+
+		try {
+			Date data = Date.valueOf(request.getParameter("data"));
+			Map<VigileDelFuocoBean, String> squadra = Util.ottieniSquadra(data);
+			System.out.println(squadra);
+			System.out.println(data);
+			sessione.setAttribute("squadra", squadra);
+			request.setAttribute("data", data);
+			request.getRequestDispatcher("JSP/SquadraJSP.jsp").forward(request, response);
+
+		}
+
+		catch(IllegalArgumentException e) {
 			String oldVF =request.getParameter("email");
 			String newVF =request.getParameter("VFNew");
 			int tipo = Integer.parseInt(request.getParameter("tiposquadra"));
@@ -64,12 +74,15 @@ public class ModificaComposizioneSquadreServlet extends HttpServlet {
 			case 2:
 				squadra = (HashMap<VigileDelFuocoBean, String>) sessione.getAttribute("squadraNotturno");
 				break;
+			case 3:
+				squadra = (HashMap<VigileDelFuocoBean, String>) sessione.getAttribute("squadra");
+				break;
 			default:
 				throw new ScheduFIREException("C'e stato un errore. Riprova pi� tardi.");
 			}
 			System.out.println("squadra: "+squadra);
 			Iterator i = squadra.entrySet().iterator();
-			
+
 			while(i.hasNext()) {
 				Map.Entry<VigileDelFuocoBean, String> coppia = (Map.Entry<VigileDelFuocoBean, String>) i.next();
 				VigileDelFuocoBean oldVigile = coppia.getKey();
@@ -80,22 +93,20 @@ public class ModificaComposizioneSquadreServlet extends HttpServlet {
 					break;
 				}
 			}
-
-			request.getRequestDispatcher("JSP/GestioneSquadreJSP.jsp").forward(request, response);
+			switch(tipo) {
+			case 1: case 2:
+				request.getRequestDispatcher("JSP/GestioneSquadreJSP.jsp").forward(request, response);
+				break;
+			case 3:
+				request.setAttribute("data", Date.valueOf(request.getParameter("data")));
+				request.getRequestDispatcher("JSP/SquadraJSP.jsp").forward(request, response);
+				break;
+			}
 			return;
-		}
-		
-		else {
-			Map<VigileDelFuocoBean, String> squadra = Util.ottieniSquadra(data);
-			System.out.println(squadra);
-			System.out.println(data);
-			sessione.setAttribute("squadra", squadra);
-			sessione.setAttribute("data", data);
-			request.getRequestDispatcher("JSP/SquadraJSP.jsp").forward(request, response);
 		}
 
 	}
-	
+
 	private List<ComponenteDellaSquadraBean> vigileToComponente(HashMap<VigileDelFuocoBean, String> squadra, Date data) {
 		List<ComponenteDellaSquadraBean> toReturn = new ArrayList<>();
 		@SuppressWarnings("rawtypes")

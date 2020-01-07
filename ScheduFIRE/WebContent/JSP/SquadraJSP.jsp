@@ -22,6 +22,7 @@ h2 {
 </head>
 
 <body>
+<%Date data = (Date) request.getAttribute("data"); %>
 
 	<!-- Barra Navigazione -->
 	<jsp:include page="HeaderJSP.jsp" />
@@ -36,7 +37,7 @@ h2 {
 					<h5 class="modal-title" id="titoloAggiuntaFerie">Personale
 						Disponibile</h5>
 				</div>
-				<form action="ModificaComposizioneSquadreServlet" method="POST">
+				<form action="ModificaComposizioneSquadreServlet?tiposquadra=3&data=<%=data.toString() %>" method="POST">
 <!-- Nel form verranno passate l'email del VF da sostituire con nome "email" e quella del VF da inserire con nome "VFNew" -->
 					<div class="modal-body" id="elenco">
 						<div id="appendiElenco"></div>
@@ -55,8 +56,7 @@ h2 {
 
 	<!-- ELENCO SQUADRE  -->
 <%
-	HashMap<VigileDelFuocoBean, String> squadra = (HashMap<VigileDelFuocoBean, String>) session.getAttribute("squadra");
-	Date data = (Date) session.getAttribute("data"); %>
+	HashMap<VigileDelFuocoBean, String> squadra = (HashMap<VigileDelFuocoBean, String>) session.getAttribute("squadra"); %>
      
      <!-- SQUADRA DIURNA -->
        <div class="d-flex justify-content-center">
