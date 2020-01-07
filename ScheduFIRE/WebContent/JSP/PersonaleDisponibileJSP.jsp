@@ -34,11 +34,11 @@
 					for(ComponenteDellaSquadraBean componente : componenti){
 						for(Iterator<VigileDelFuocoBean> i=vigili.iterator();i.hasNext();){
 							VigileDelFuocoBean vigile=i.next();
-							if (vigile.getEmail().equals(componente.getEmailVF())){		
+							if (vigile.getEmail().equals(componente.getEmailVF())){	
 				%>
 
 					<tr>
-						<td class="text-center"><img src="Grado/<%=vigile.getGrado() %>.png" width=20% onerror="this.parentElement.innerHTML='Non disponibile';"></td>
+						<td class="text-center"><img src="Grado/<%=vigile.getMansione().equals("Capo Squadra") && vigile.getGrado().equals("Esperto")?"EspertoCapoSquadra":vigile.getGrado() %>.png" width=20% onerror="this.parentElement.innerHTML='Non disponibile';"></td>
 						<td class="text-center"><%=vigile.getNome() %></td>
 						<td class="text-center"><%=vigile.getCognome() %></td>
 						<td class="text-center"><%=vigile.getEmail() %></td>
@@ -49,7 +49,7 @@
 					for(VigileDelFuocoBean vigile: vigili){
 					%>
 					<tr>
-						<td class="text-center"><img src="Grado/<%=vigile.getGrado() %>.png" style="height:25%" onerror="this.parentElement.innerHTML='Non disponibile';"></td>
+						<td class="text-center"><img src="Grado/<%=vigile.getMansione().equals("Capo Squadra") && vigile.getGrado().equals("Esperto")?"EspertoCapoSquadra":vigile.getGrado() %>.png" width=20% onerror="this.parentElement.innerHTML='Non disponibile';"></td>
 						<td class="text-center"><%=vigile.getNome() %></td>
 						<td class="text-center"><%=vigile.getCognome() %></td>
 						<td class="text-center"><%=vigile.getEmail() %></td>

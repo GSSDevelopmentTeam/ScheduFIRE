@@ -36,7 +36,7 @@
 					<option value="mansione">Mansione</option>
 					<option value="grado">Grado</option>
 					<option value="giorniFerieAnnoCorrente">Ferie anno corrente</option>
-					<option value="giorniFerieAnnoPrecedente">Ferie anno precedente</option>
+					<option value="giorniFerieAnnoPrecedente">Ferie anni precedenti</option>
 					
 					
 					<%
@@ -47,7 +47,7 @@
 					<option value="mansione">Mansione</option>
 					<option value="grado">Grado</option>
 					<option value="giorniFerieAnnoCorrente">Ferie anno corrente</option>
-					<option value="giorniFerieAnnoPrecedente">Ferie anno precedente</option>
+					<option value="giorniFerieAnnoPrecedente">Ferie anni precedenti</option>
 					<%
 						} else if( ordinamento.equals("mansione") ) {		
 						%>
@@ -56,7 +56,7 @@
 					<option value="mansione"selected>Mansione</option>
 					<option value="grado">Grado</option>
 					<option value="giorniFerieAnnoCorrente">Ferie anno corrente</option>
-					<option value="giorniFerieAnnoPrecedente">Ferie anno precedente</option>
+					<option value="giorniFerieAnnoPrecedente">Ferie anni precedenti</option>
 					<%
 						} else if( ordinamento.equals("grado") ) {		
 						%>
@@ -65,7 +65,7 @@
 					<option value="mansione">Mansione</option>
 					<option value="grado" selected>Grado</option>
 					<option value="giorniFerieAnnoCorrente">Ferie anno corrente</option>
-					<option value="giorniFerieAnnoPrecedente">Ferie anno precedente</option>
+					<option value="giorniFerieAnnoPrecedente">Ferie anni precedenti</option>
 					<%
 						} else if( ordinamento.equals("giorniFerieAnnoCorrente") ) {		
 						%>
@@ -74,7 +74,7 @@
 					<option value="mansione">Mansione</option>
 					<option value="grado">Grado</option>
 					<option value="giorniFerieAnnoCorrente" selected>Ferie anno corrente</option>
-					<option value="giorniFerieAnnoPrecedente">Ferie anno precedente</option>
+					<option value="giorniFerieAnnoPrecedente">Ferie anni precedenti</option>
 					<%
 						} else if( ordinamento.equals("giorniFerieAnnoPrecedente") ) {		
 						%>
@@ -83,7 +83,7 @@
 					<option value="mansione">Mansione</option>
 					<option value="grado">Grado</option>
 					<option value="giorniFerieAnnoCorrente">Ferie anno corrente</option>
-					<option value="giorniFerieAnnoPrecedente" selected>Ferie anno precedente</option>
+					<option value="giorniFerieAnnoPrecedente" selected>Ferie anni precedenti</option>
 					<%}
 					}
 					else {%>
@@ -93,7 +93,7 @@
 					<option value="mansione">Mansione</option>
 					<option value="grado">Grado</option>
 					<option value="giorniFerieAnnoCorrente">Ferie anno corrente</option>
-					<option value="feriePrec">Ferie anno precedente</option>
+					<option value="feriePrec">Ferie anni precedenti</option>
 					<%} %>
 					
 
@@ -310,7 +310,7 @@
 					<th class="text-center">Mansione</th>
 					<th class="text-center">Ferie anno<br>corrente
 					</th>
-					<th class="text-center">Ferie anno<br> precedente
+					<th class="text-center">Ferie anni<br> precedenti
 					</th>
 					<th class="text-center">Inserisci <br> periodo di ferie
 					</th>
