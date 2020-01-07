@@ -6,6 +6,13 @@
 <head>
 <jsp:include page="StandardJSP.jsp" />
 <link type="text/css" rel="stylesheet" href="./CSS/GestionePersonaleCSS.css">
+<style>	
+.table td, .table th {
+    padding: 1.5px!important;
+    vertical-align: top;
+    border-top: 1px solid #dee2e6;
+}
+</style>
 </head>
 <body>
 
