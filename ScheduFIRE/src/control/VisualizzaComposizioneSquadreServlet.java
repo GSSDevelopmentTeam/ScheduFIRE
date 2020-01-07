@@ -4,7 +4,10 @@ import java.io.IOException;
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -13,9 +16,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import model.bean.CapoTurnoBean;
 import model.bean.ComponenteDellaSquadraBean;
 import model.bean.VigileDelFuocoBean;
 import model.dao.ComponenteDellaSquadraDao;
+import model.dao.ListaSquadreDao;
+import model.dao.SquadraDao;
 import model.dao.VigileDelFuocoDao;
 import util.Util;
 
@@ -38,40 +44,48 @@ public class VisualizzaComposizioneSquadreServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession sessione = request.getSession();
-		HashMap<VigileDelFuocoBean, String> squadra;
 		Date data=Date.valueOf(request.getParameter("data"));
-		squadra=Util.ottieniSquadra(data);
-		sessione.setAttribute("squadra", squadra);
 
-		if(!(boolean) request.getAttribute("nonSalvata")) {
-			
+		if(request.getAttribute("nonSalvata") != null) {
+			@SuppressWarnings("unchecked")
+			HashMap<VigileDelFuocoBean, String> squadra=(HashMap<VigileDelFuocoBean, String>)sessione.getAttribute("squadra");
+			CapoTurnoBean capoturno=(CapoTurnoBean)sessione.getAttribute("capoturno");
+			//Se le squadre da salvare sono sul db, le rimuovo dal db restituendo i carichi di lavoro
+			if(ListaSquadreDao.isEsistente(data)) {
+				ArrayList<ComponenteDellaSquadraBean> componentiDaRimuovere=ComponenteDellaSquadraDao.getComponenti(data);
+				HashMap<VigileDelFuocoBean, String> squadraDaRimuovere=Util.ottieniSquadra(data);
+				List<ComponenteDellaSquadraBean> lista = vigileToComponente(squadra, data);
+				if(!ComponenteDellaSquadraDao.removeComponenti(componentiDaRimuovere)) {
+					throw new ScheduFIREException("Errore nelle Query SQL");
+				}	
+				if(!VigileDelFuocoDao.removeCaricoLavorativo(squadraDaRimuovere)) {
+					throw new ScheduFIREException("Errore nelle Query SQL");
+				}	
+
+
+				//
+				if((!ComponenteDellaSquadraDao.setComponenti(lista)) ||
+						(!VigileDelFuocoDao.caricoLavorativo(squadra))){
+					throw new ScheduFIREException("Errore nelle Query SQL");
+				}	
+			} 
+			response.sendRedirect("HomeCTServlet");
+			return;
 		}
-		
 		request.setAttribute("nonSalvata", false);
-		
-		
-		
-		request.getRequestDispatcher("JSP/GestioneSquadreJSP.jsp").forward(request, response);
-		
-		
-		/*
-			squadra = new HashMap<>();
-			squadra.put(new VigileDelFuocoBean("Mario", "Rossi", "mario.rossi", "B", "Autista", "turnob", "Coordinatore", 0, 0), "Prima Partenza");
-			squadra.put(new VigileDelFuocoBean("Giuseppe", "Rossi", "giuseppe.rossi", "B", "Vigile", "turnob", "Coordinatore", 0, 0), "Prima Partenza");
-			squadra.put(new VigileDelFuocoBean("Luca", "Rossi", "luca.rossi", "B", "Capo Squadra", "turnob", "Esperto", 0, 0), "Prima Partenza");
-			squadra.put(new VigileDelFuocoBean("Gennaro", "Rossi", "gennaro.rossi", "B", "Vigile", "turnob", "Qualificato", 0, 0), "Prima Partenza");
-			
-			squadra.put(new VigileDelFuocoBean("Ciro", "Rossi", "ciro.rossi", "B", "Capo Squadra", "turnob", "Esperto", 0, 0), "Sala Operativa");
-			squadra.put(new VigileDelFuocoBean("Giuseppe", "Rossi", "giuseppe.rossi", "B", "Vigile", "turnob", "Coordinatore", 0, 0), "Sala Operativa");
-			squadra.put(new VigileDelFuocoBean("Pia", "Rossi", "pia.rossi", "B", "Vigile", "turnob", "Coordinatore", 0, 0), "Sala Operativa");
-			
-			squadra.put(new VigileDelFuocoBean("Alfredo", "Rossi", "alfredo.rossi", "B", "Autista", "turnob", "Coordinatore", 0, 0), "Auto Scala");
-			squadra.put(new VigileDelFuocoBean("Lorenzo", "Rossi", "lorenzo.rossi", "B", "Vigile", "turnob", "Qualificato", 0, 0), "Auto Scala");
-			
-			squadra.put(new VigileDelFuocoBean("Pasquale", "Rossi", "pasquale.rossi", "B", "Autista", "turnob", "Coordinatore", 0, 0), "Auto Botte");
-			squadra.put(new VigileDelFuocoBean("Donna", "Rossi", "donna.rossi", "B", "Capo Squadra", "turnob", "Esperto", 0, 0), "Auto Botte");
-		
-*/		
+		request.getRequestDispatcher("JSP/GestioneSquadreJSP.jsp").forward(request, response);	
+	}
+	
+	private List<ComponenteDellaSquadraBean> vigileToComponente(HashMap<VigileDelFuocoBean, String> squadra, Date data) {
+		List<ComponenteDellaSquadraBean> toReturn = new ArrayList<>();
+		@SuppressWarnings("rawtypes")
+		Iterator i = squadra.entrySet().iterator();
+		while(i.hasNext()) {
+			@SuppressWarnings("unchecked")
+			Map.Entry<VigileDelFuocoBean, String> coppia = (Entry<VigileDelFuocoBean, String>) i.next();
+			toReturn.add(new ComponenteDellaSquadraBean(coppia.getValue(), coppia.getKey().getEmail(), data));
+		}
+		return toReturn;
 	}
 
 	/**

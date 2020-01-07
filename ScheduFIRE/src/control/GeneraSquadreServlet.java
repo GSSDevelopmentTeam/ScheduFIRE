@@ -17,6 +17,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.json.JSONObject;
+
 import com.sendmail.SendMail;
 
 import model.bean.CapoTurnoBean;
@@ -62,11 +64,8 @@ public class GeneraSquadreServlet extends HttpServlet {
 		Date giornoSuccessivo=Date.valueOf(data.toLocalDate().plusDays(1));
 
 
-
-
-
 		//Se si vuole salvare la squadra sul db
-		if(request.getParameter("salva")!=null) {
+		if(request.getParameter("salva")!= null) {
 			@SuppressWarnings("unchecked")
 			HashMap<VigileDelFuocoBean, String> squadraDiurno=(HashMap<VigileDelFuocoBean, String>)sessione.getAttribute("squadraDiurno");
 			@SuppressWarnings("unchecked")

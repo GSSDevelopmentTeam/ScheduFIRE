@@ -5,7 +5,6 @@ import java.sql.Date;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -16,7 +15,6 @@ import javax.servlet.http.HttpServletResponse;
 import model.bean.ComponenteDellaSquadraBean;
 import model.bean.VigileDelFuocoBean;
 import model.dao.ComponenteDellaSquadraDao;
-import model.dao.ListaSquadreDao;
 import model.dao.VigileDelFuocoDao;
 import util.GiornoLavorativo;
 
@@ -37,7 +35,7 @@ public class CalendarioServlet extends HttpServlet {
 
 		Date date = new Date(System.currentTimeMillis());
 		String dataCorrente = date.toString();
-
+		
 		//variabili contengono il numero dell'anno mese e giorno in formato stringa 
 		String anno_stringa_numero = dataCorrente.substring(0, 4);
 		String mese_stringa_numero = dataCorrente.substring(5, 7);
@@ -62,7 +60,7 @@ public class CalendarioServlet extends HttpServlet {
 		int [] days_work = new int [42];
 		for(i=0; i<=41; i++)
 			days_work[i]=-1;
-
+		
 		//array dei turni lavorativi
 		String[] days_turno = new String [42];
 		for(i=0; i<=41; i++)
@@ -90,7 +88,7 @@ public class CalendarioServlet extends HttpServlet {
 
 		for(i=0; i<42; i++)
 			System.out.println(days_turno[i]+"\n");
-
+		
 		request.setAttribute("date", date);
 		request.setAttribute("anno_corrente", anno_stringa_numero);
 		request.setAttribute("mese_corrente", mese_stringa_numero);
@@ -179,13 +177,13 @@ public class CalendarioServlet extends HttpServlet {
 		}
 
 	}
-
+	
 	private void riempiLavorativo(int mese, int anno, int[] days_work) {
-
-		// -1 -> giorno non da calendario
-		// 1 -> giorno lavorativo diurno
-		//2 -> giorno lavorativo notturno
-
+		
+		 // -1 -> giorno non da calendario
+		 // 1 -> giorno lavorativo diurno
+		 //2 -> giorno lavorativo notturno
+	
 		//per vedere qual è il primo giorno del mese
 		LocalDate local=LocalDate.of(anno,mese,1);
 		String primoGiorno = local.getDayOfWeek().toString();
@@ -284,7 +282,7 @@ public class CalendarioServlet extends HttpServlet {
 	}
 
 	private void riempiTurno(int mese, int anno, String[] days_turno) {
-
+		
 		LocalDate local=LocalDate.of(anno,mese,1);
 		String primoGiorno = local.getDayOfWeek().toString();
 
@@ -355,37 +353,5 @@ public class CalendarioServlet extends HttpServlet {
 			break;
 		}
 	}
-
-	/*VECCHIO METODO PER IL SETTAGGIO DEI BOTTONI
-	 * private void riempiBottoni() {
-		LocalDateTime ora=LocalDateTime.now();
-		Date oraDate=new Date(System.currentTimeMillis());
-		Date ieri=Date.valueOf(LocalDate.now().plusDays(-1));
-		ArrayList<Integer> bottoneModifica=new ArrayList<>();
-		if(GiornoLavorativo.isDiurno(oraDate)) {
-			if(ora.getHour()<=19 && ora.getMinute()<=59) {
-				bottoneModifica.add(ora.getDayOfMonth());
-				bottoneModifica.add(ora.getDayOfMonth()+1);
-			}
-			else
-				bottoneModifica.add(ora.getDayOfMonth()+1);
-		}
-		else if(GiornoLavorativo.isLavorativo(oraDate) && !GiornoLavorativo.isDiurno(oraDate)) {
-			bottoneModifica.add(ora.getDayOfMonth());
-		}
-		else if(GiornoLavorativo.isLavorativo(ieri) && ora.getHour()<=7 && ora.getMinute()<=59) {
-			if(ora.getDayOfMonth()>1)
-				bottoneModifica.add(ora.getDayOfMonth()-1);
-		}
-		Date prossimoLavorativo=GiornoLavorativo.nextLavorativo(oraDate);
-		if(GiornoLavorativo.isDiurno(oraDate)) {
-			prossimoLavorativo=GiornoLavorativo.nextLavorativo(Date.valueOf(oraDate.toLocalDate().plusDays(1)));
-		}
-		if(ListaSquadreDao.isEsistente(prossimoLavorativo)) {
-			bottoneModifica.add(prossimoLavorativo.toLocalDate().getDayOfYear());
-			bottoneModifica.add(prossimoLavorativo.toLocalDate().getDayOfYear()+1);
-
-		}
-	}*/
 
 }

@@ -95,10 +95,12 @@
 					<option value="giorniFerieAnnoCorrente">Ferie anno corrente</option>
 					<option value="feriePrec">Ferie anno precedente</option>
 					<%} %>
+					
 
 				</select>
 			</div>
 		</form>
+		<br>
 
 
 
@@ -298,10 +300,10 @@
 
 
 	<div class="table-responsive">
-		<table class="table  table-hover" id="listaVigili">
+		<table class="table  table-hover" id="listaVigili" style="table-layout: fixed">
 			<thead class="thead-dark">
 				<tr>
-					<th class="text-center">Grado</th>
+					<th class=" text-center">Grado</th>
 					<th class="text-center">Nome</th>
 					<th class="text-center">Cognome</th>
 					<th class="text-center">Email</th>
@@ -328,7 +330,7 @@
 
 				<tr>
 					<td class="text-center"><img
-						src="Grado/<%=vigile.getGrado()%>.png" width=16%
+						src="Grado/<%=vigile.getGrado()%>.png" width=30%
 						onerror="this.parentElement.innerHTML='Non disponibile';"></td>
 					<td class="text-center"><%=vigile.getNome()%></td>
 					<td class="text-center"><%=vigile.getCognome()%></td>
