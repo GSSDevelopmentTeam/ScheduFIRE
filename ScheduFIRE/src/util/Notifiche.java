@@ -63,12 +63,15 @@ public class Notifiche {
 		(n2.getSeverita() - n1.getSeverita()));
 	}
 
+
 	private static void updateMalattia(Date temp, Date to, VigileDelFuocoBean vigile) {
 		Date from = (Date) temp.clone();
+		SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
 		while(!from.equals(to)) {
-			if(!ComponenteDellaSquadraDao.isComponente(vigile.getEmail(), from)) {
-				listaNotifiche.add(new Notifica(2, "" + vigile.getCognome() + " " + vigile.getNome() + 
-						" non potrï¿½ partecipare ad un turno a lui assegnato causa malattia.", "/ModificaSquadreServlet"));
+			if(ComponenteDellaSquadraDao.isComponente(vigile.getEmail(), from)) {
+				listaNotifiche.add(new Notifica(3, "" + vigile.getCognome() + " " + vigile.getNome() + 
+						" non potrà partecipare ad un turno a lui assegnato causa malattia.<br/>(giorno dal\r\n" + 
+											formatter.format(from).toString() + " al "+ formatter.format(to).toString()+")", "/ModificaSquadreServlet"));
 				break;
 			}
 			from = Date.valueOf(from.toLocalDate().plusDays(1L));
@@ -113,8 +116,9 @@ public class Notifiche {
 			from = Date.valueOf(from.toLocalDate().plusDays(1L));
 		}
 	}
-
-	public static void rimuovi(Notifica toRemove) {
+	
+	
+	public void rimuovi(Notifica toRemove) {
 		listaNotifiche.remove(toRemove);
 	}
 
@@ -184,5 +188,4 @@ public class Notifiche {
 	 * Utilizzare quando vengono concesse ferie ad un vigile giÃ  schedulato
 	 */
 	public static final int UPDATE_SQUADRE_PER_FERIE = 4;
-
 }

@@ -18,7 +18,7 @@ import model.bean.VigileDelFuocoBean;
 
 /**
  * Classe che si occupa della gestione dei dati 
- * persistenti relativi all'entit� 'VigileDelFuoco'
+ * persistenti relativi all'entita' 'VigileDelFuoco'
  * @author Eugenio Sottile 
  * @author Nicola Labanca
  * @author Alfredo Giuliano
@@ -557,7 +557,12 @@ public class VigileDelFuocoDao {
 		
 		return listaVigili;
 	}
-	
+
+	/**
+	 * Si occupa del prelevamento del numero di ferie accumulate negli anni precedenti dal VF, dal dataBase.
+	 * @param emailVF (String): L'email del VF del quale si ha bisogno del numero di ferie degli anni precedenti
+	 * @return feriePrecedenti (int): numero di ferie a disposizione degli anni precedenti
+	 */
 	public static int ottieniNumeroFeriePrecedenti(String emailVF) {
 		PreparedStatement ps;
 		ResultSet rs;
@@ -585,7 +590,12 @@ public class VigileDelFuocoDao {
 		
 		return feriePrecedenti;
 	}
-	
+
+	/**
+	 * Si occupa del prelevamento del numero di ferie dell'anno corrente a disposizione del VF, dal dataBase.
+	 * @param emailVF (String): L'email del VF del quale si ha bisogno del numero di ferie degli anni precedenti
+	 * @return ferieCorrenti (int): numero di ferie a disposizione relative all'anno corrente
+	 */
 	public static int ottieniNumeroFerieCorrenti(String emailVF) {
 		PreparedStatement ps;
 		ResultSet rs;
@@ -614,6 +624,11 @@ public class VigileDelFuocoDao {
 		return ferieCorrenti;
 	}
 	
+	/**
+	 * Si occupa dell'aggiornamento nel dataBase, del numero di ferie accumulate negli anni precedenti dal VF
+	 * @param emailVF (String): L'email del VF per il quale bisogna aggiornare il numero di ferie degli anni precedenti
+	 * @param numeroFerie (int): Il nuovo numero di ferie relative all'anno precedente, da inserire nel dataBase
+	 */
 	public static void aggiornaFeriePrecedenti(String emailVF, int numeroFerie) {
 		PreparedStatement ps;
 		
@@ -637,7 +652,12 @@ public class VigileDelFuocoDao {
 			e.printStackTrace();
 		}
 	}
-	
+
+	/**
+	 * Si occupa dell'aggiornamento nel dataBase, del numero di ferie relativo all'anno corrente, a disposizione del VF
+	 * @param emailVF (String): L'email del VF per il quale bisogna aggiornare il numero di ferie relativo all'anno corrente
+	 * @param numeroFerie (int): Il nuovo numero di ferie relativo all'anno corrente, da inserire nel dataBase
+	 */
 	public static void aggiornaFerieCorrenti(String emailVF, int numeroFerie) {
 		PreparedStatement ps;
 		
