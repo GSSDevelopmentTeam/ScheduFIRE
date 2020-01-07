@@ -118,7 +118,7 @@ public class Notifiche {
 	}
 	
 	
-	public static void rimuovi(Notifica toRemove) {
+	public void rimuovi(Notifica toRemove) {
 		listaNotifiche.remove(toRemove);
 	}
 
