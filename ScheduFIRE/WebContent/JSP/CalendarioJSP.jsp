@@ -1,3 +1,5 @@
+<%@page import="java.time.LocalDate"%>
+<%@page import="java.time.LocalDateTime"%>
 <%@page import="java.sql.Date"%>
 <%@page import="util.GiornoLavorativo"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
@@ -5,8 +7,10 @@
 
 <%@ page import="control.* "%>
 
-<%  String ruolo = "";
-		ruolo= (String) session.getAttribute("ruolo");%>
+<%
+	String ruolo = "";
+	ruolo = (String) session.getAttribute("ruolo");
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -17,26 +21,23 @@
 <title>ScheduFIRE</title>
 <%
 	String empty = " ";
-	String[] days = {"  Lunedi'  ", " Martedi'  ", "Mercoledi' ", " Giovedi'  ", " Venerdi'  ", "  Sabato  ", "   Domenica "};
+	String[] days = {"  Lunedi'  ", " Martedi'  ", "Mercoledi' ", " Giovedi'  ", " Venerdi'  ", "  Sabato  ",
+			"   Domenica "};
 	String[] month = {"Gennaio", "Febbraio", "Marzo", "Aprile", "Maggio", "Giugno", "Luglio", "Agosto",
 			"Settembre", "Ottobre", "Novembre", "Dicembre"};
 	//giorno, mese e anno correnti
 	int giorno = (Integer) request.getAttribute("giorno");
 	int mese = (Integer) request.getAttribute("mese");
 	int anno = (Integer) request.getAttribute("anno");
-	
+
 	java.sql.Date data = (java.sql.Date) request.getAttribute("date");
 	int primoGiorno = (Integer) request.getAttribute("primo_giorno");
-	int anno_corrente = Integer.parseInt ((String) request.getAttribute("anno_corrente"));
-	int mese_corrente = Integer.parseInt ((String) request.getAttribute("mese_corrente"));
+	int anno_corrente = Integer.parseInt((String) request.getAttribute("anno_corrente"));
+	int mese_corrente = Integer.parseInt((String) request.getAttribute("mese_corrente"));
 	String mese_stringa = (String) request.getAttribute("meseStringa");
 	int[] days_month = (int[]) request.getAttribute("days_month");
 	int[] days_work = (int[]) request.getAttribute("days_work");
 	String[] days_turno = (String[]) request.getAttribute("days_turno");
-
-	//print per controllare se i dati passati dalla servlet sono giusti!
-	System.out.println("CalendarioJSP, correnti-> " + giorno + "/" + mese + "/" + anno + " -- " + mese_stringa);
-	
 %>
 </head>
 <body>
@@ -52,13 +53,13 @@
 			<!-- START: container per (<-) anno (->) -->
 			<div class="container-year">
 				<a class="altroAnno"
-					href="CalendarioServlet?mese=<%=mese %>&anno=<%=anno-1 %>"> <img
+					href="CalendarioServlet?mese=<%=mese%>&anno=<%=anno - 1%>"> <img
 					src="IMG/arrow/left-arrow-p.png" style="margin-right: 10px"
 					onmouseover="this.src='IMG/arrow/left-arrow-d.png'"
 					onmouseout="this.src='IMG/arrow/left-arrow-p.png'" />
 				</a> <span id="annoVisualizzato"> <%=anno%>
 				</span> <a class="altroAnno"
-					href="CalendarioServlet?mese=<%=mese %>&anno=<%=anno+1 %>"> <img
+					href="CalendarioServlet?mese=<%=mese%>&anno=<%=anno + 1%>"> <img
 					src="IMG/arrow/right-arrow-p.png" style="margin-left: 5px"
 					onmouseover="this.src='IMG/arrow/right-arrow-d.png'"
 					onmouseout="this.src='IMG/arrow/right-arrow-p.png'" />
@@ -70,16 +71,18 @@
 			<div class="grid-chose-month">
 				<div class="dropdown">
 					<input type="hidden" id="meseVisualizzato" value="<%=mese%>">
-					<button class="dropbtn" id="meseStringa"><%=month[mese-1]%>
-						<img src="IMG/arrow/arrow-down.png" />
+					<button class="dropbtn" id="meseStringa"><%=month[mese - 1]%>
+						<img src="IMG/arrow/dropdown.png" />
 					</button>
 					<div class="dropdown-content">
 						<%
 							for (int k = 0; k <= 11; k++) {
 						%>
 						<a class="dropdown-item"
-							href="CalendarioServlet?mese=<%=k+1 %>&anno=<%=anno%>"><%=month[k]%></a>
-						<%	}	%>
+							href="CalendarioServlet?mese=<%=k + 1%>&anno=<%=anno%>"><%=month[k]%></a>
+						<%
+							}
+						%>
 					</div>
 				</div>
 			</div>
@@ -94,62 +97,60 @@
 				<%
 					}
 					int day = 0;
-					int i,j;
+					int i, j;
 					String id = "";
 					String img = "";
-					String onClick ="";
-					
-					for (i=0; i < days_month.length; i++) {							
-							if (days_month[i] < 0){
-								%>
+					String onClick = "";
+
+					for (i = 0; i < days_month.length; i++) {
+						if (days_month[i] < 0) {
+				%>
 				<div class="item-empty"><%=empty%></div>
 				<%
-						} else
-							{
-								day++;
-							
-								if(giorno==day && mese_corrente == mese && anno_corrente == anno){
-									id ="giornoCorrente";
-								}
-								
-								if (days_work[i]==1){
-									id = "giornoLavorativoDiurno";
-									img = "diurno";
-									onClick ="dayClicked($(this).text())";
-								}
-								
-								if(days_work[i]==2){
-									id = "giornoLavorativoNotturno";
-									img = "notturno";
-									onClick ="dayClicked($(this).text())";
-								}
-								
-								if(giorno==day && mese_corrente == mese && anno_corrente == anno && days_work[i]==1){
-									id = "giornoCorrenteLavorativoDiurno";
-									img = "diurno";
-								}
-								
-								if(giorno==day && mese_corrente == mese && anno_corrente == anno && days_work[i]==2){
-									id = "giornoCorrenteLavorativoNotturno";
-									img = "notturno";
-								}							
-								
-								%>
-								<div class="grid-item" id="<%=id%>" onClick="<%=onClick %>"
-									style="cursor: pointer;">
-									<img src="IMG/<%=img%>.png" alt=" "
-										onerror="this.parentElement.innerHTML = '<%=day %>';" />
-									<%=day%>
-				
-									<p id="turno"><%=days_turno[i] %></p>
-								</div>
+					} else {
+							day++;
+
+							if (giorno == day && mese_corrente == mese && anno_corrente == anno) {
+								id = "giornoCorrente";
+							}
+
+							if (days_work[i] == 1) {
+								id = "giornoLavorativoDiurno";
+								img = "diurno.png";
+								onClick = "dayClicked($(this).text())";
+							}
+
+							if (days_work[i] == 2) {
+								id = "giornoLavorativoNotturno";
+								img = "notturno.png";
+								onClick = "dayClicked($(this).text())";
+							}
+
+							if (giorno == day && mese_corrente == mese && anno_corrente == anno && days_work[i] == 1) {
+								id = "giornoCorrenteLavorativoDiurno";
+								img = "diurno.png";
+							}
+
+							if (giorno == day && mese_corrente == mese && anno_corrente == anno && days_work[i] == 2) {
+								id = "giornoCorrenteLavorativoNotturno";
+								img = "notturno.png";
+							}
+				%>
+				<div class="grid-item" id="<%=id%>" onClick="<%=onClick%>"
+					style="cursor: pointer;">
+					<img id="imgMoonSun" src="IMG/<%=img%>" alt=" "
+						onerror="this.parentElement.innerHTML = '<%=day%>';" />
+					<%=day%>
+
+					<p id="turno"><%=days_turno[i]%></p>
+				</div>
 
 				<%
-								id = "";
-								img = "";
-								onClick="";
-							}
+					id = "";
+							img = "";
+							onClick = "";
 						}
+					}
 				%>
 
 			</div>
@@ -160,26 +161,30 @@
 
 		<div class="container-schedul" id="visilibity">
 			<a class="info" id="informazione"></a>
-			
-				<div>
-					<%//if(ruolo.equalsIgnoreCase("capoturno")){%>
-					
-							<form action="GeneraSquadreServlet" method="post">
-								<button type="submit" id="bottoneGeneraSquadra"
-										class="edit">Genera Squadre
-								</button>	
-							</form>
-						
-						<form action="ModificaComposizioneSquadreServlet" method="post">
-							<button type="submit" id="bottoneModificaSquadra"
-									class="edit">Modifica Squadre
-							</button>
-						</form>
-					<%//} %>
-				</div>
-				
+
+			<div>
+				<%
+					//if(ruolo.equalsIgnoreCase("capoturno")){
+				%>
+
+				<form action="GeneraSquadreServlet" method="post">
+					<button type="submit" id="bottoneGeneraSquadra" class="edit">Genera
+						Squadre</button>
+				</form>
+
+				<form action="ModificaComposizioneSquadreServlet?tiposquadra=3"
+					method="post" id="modData">
+					<button type="submit" id="bottoneModificaSquadra" class="edit">
+						Modifica Squadre
+					</button>
+				</form>
+				<%
+					//}
+				%>
+			</div>
+
 			<div class="wrapper" id="schedulazione">
-			
+
 				<div class="mansione">
 					<p>SALA OPERATIVA</p>
 				</div>
@@ -217,9 +222,9 @@
 
 			</div>
 		</div>
-		
 
-				
+
+
 
 	</div>
 	<!-- AND: container per calendario e schedulazione -->
@@ -230,28 +235,32 @@
 
 	<!-- START: script per la funzione dayClicked() -->
 	<script>
-	$( document ).ready(function() {
-	    dayClicked(<%=giorno %>);
-	});
+	<%if (GiornoLavorativo.isLavorativo(data)) {%>
+		$( document ).ready(function() {
+		    dayClicked(<%=giorno%>);
+		    imgMoonSun();
+		});
+	<%}%>
 	
-	
-		function setValore(input){
-			console.log(input);
-		}
+		
 		
 		function dayClicked(input) {
-		
-		$("#informazione").text("");
 			
 		var v = document.getElementById('visilibity');
 		v.style.display ='block';
-			
-		console.log("parte funzione dayClicked()");
+		
+		var schedulazione = document.getElementById('schedulazione');
+		var bottoneGeneraSquadra = document.getElementById('bottoneGeneraSquadra');
+		var bottoneModificaSquadra = document.getElementById('bottoneModificaSquadra');
+		
+		bottoneModificaSquadra.style.display ='none';
+		bottoneGeneraSquadra.style.display ='none';
 
 		var salaOperativa = $("#SalaOperativa");
 		var primaPartenza = $("#PrimaPartenza");
 		var autoScala = $("#AutoScala");
 		var autoBotte = $("#AutoBotte");
+		
 
 		var giorno = input;
 		if(giorno.toString().trim().indexOf("B")>0){
@@ -262,9 +271,6 @@
 		var anno=$("#annoVisualizzato").text();
 		
 		var meseStringa = $("#meseStringa").text();
-		
-		console.log("parametri passati");
-		console.log(giorno+" mese: "+mese+" anno: "+anno);
 		
 		$.ajax({
 			type:"POST",
@@ -282,40 +288,29 @@
 				primaPartenza.empty();
 				autoScala.empty();
 				autoBotte.empty();
-				
-				
-				console.log("response "+response);
-				var len = response.length; 
-				console.log("len "+len);
-				
-				if(len>0){
-					$("#informazione").text("Composizione della squadra del "+giorno+" "+meseStringa+" "+anno);
-					
-					var schedulazione = document.getElementById('schedulazione');
-					schedulazione.style.display ='block';
-					
-					var generaSquadra = document.getElementById('bottoneGeneraSquadra');
-					generaSquadra.style.display ='none';
-					
-					var generaSquadra = document.getElementById('bottoneModificaSquadra');
-					generaSquadra.style.display ='block';
-					
-				}else{
-					$("#informazione").text("Non sono presenti squadre per questo giorno");
-					
-					var schedulazione = document.getElementById('schedulazione');
-					schedulazione.style.display ='none';
-					
-					var generaSquadra = document.getElementById('bottoneGeneraSquadra');
-					generaSquadra.style.display ='block';
-					
-					var generaSquadra = document.getElementById('bottoneModificaSquadra');
-					generaSquadra.style.display ='none';
-				}
-                    
-					
 
-				for (var i = 0; i < len; i++) {
+				var len = response.length;
+				
+				var isModificabile = response[0];
+				var isGenerabile = response[1];	
+				$("#informazione").text("Squadre relative al giorno "+giorno+"/ "+mese+" /"+anno);
+	
+				if(len<=2){
+					$("#informazione").text("OPS! Non sono ancora state generate squadre per il  giorno "+giorno+"/ "+mese+" /"+anno);
+					schedulazione.style.display ='none';
+				}else{
+					schedulazione.style.display ='block';
+				}
+					
+				
+				
+				if(isModificabile){
+					bottoneModificaSquadra.style.display ='block';
+				}
+				if(isGenerabile){
+					bottoneGeneraSquadra.style.display ='block';
+				}
+				for (var i = 2; i < len; i++) {
 				vigile=response[i];
 					
 						var rigaTabella = document.createElement("TR");
@@ -342,7 +337,10 @@
 						  rigaTabella.appendChild(colonnaCognome);
 					
 				}
-			}
+				var red = 'ModificaComposizioneSquadreServlet?tiposquadra=3&data=' + anno.trim() + '-' + mese.trim() + '-' + giorno.trim();
+				$("#modData").attr("action", red);
+
+			} 
 		});
 	}
 	</script>

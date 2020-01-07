@@ -1,6 +1,8 @@
 package control;
 
 import java.io.IOException;
+import java.util.ArrayList;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -32,7 +34,17 @@ public class RimuoviNotificheServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession sessione = request.getSession();
 		Notifiche notifiche = (Notifiche) sessione.getAttribute("notifiche");
-		notifiche.rimuovi((Notifica) request.getAttribute("notifica"));
+		ArrayList<Notifica> nn = (ArrayList<Notifica>) notifiche.getListaNotifiche();
+		String indice = (String) request.getParameter("indice");
+		int id = Integer.parseInt(indice);
+		if(indice == null)System.out.println("NON HAI PASSATO UN CAZZO");
+		for (Notifica notifica:nn) {
+			if(notifica.getId() == id) {
+				notifiche.rimuovi(notifica);
+				break;
+			}
+		}
+		sessione.setAttribute("notifiche",notifiche);
 	}
 
 	/**

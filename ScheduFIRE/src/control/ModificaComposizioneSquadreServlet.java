@@ -49,40 +49,50 @@ public class ModificaComposizioneSquadreServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession sessione = request.getSession();
-		Date data = (Date) sessione.getAttribute("data");
-		String oldVF =request.getParameter("email");
-		String newVF =request.getParameter("VFnew");
-		int tipo = Integer.parseInt(request.getParameter("tiposquadra"));
-		Map<VigileDelFuocoBean, String> squadra = new HashMap<>();
-		switch(tipo) {
-		case 1: 
-			squadra = (HashMap<VigileDelFuocoBean, String>) sessione.getAttribute("squadraDiurno");
-			break;
-		case 2:
-			squadra = (HashMap<VigileDelFuocoBean, String>) sessione.getAttribute("squadraNotturno");
-			break;
-		case 3:
-			squadra = (HashMap<VigileDelFuocoBean, String>) sessione.getAttribute("squadra");
-			break;
-		default:
-			throw new ScheduFIREException("C'e stato un errore. Riprova più tardi.");
-		}
-
-		Iterator i = squadra.entrySet().iterator();
 		
-		while(i.hasNext()) {
-			Map.Entry<VigileDelFuocoBean, String> coppia = (Map.Entry<VigileDelFuocoBean, String>) i.next();
-			VigileDelFuocoBean oldVigile = coppia.getKey();
-			if(oldVigile.getEmail().equals(oldVF)) {
-				String mansione = squadra.remove(oldVigile);
-				VigileDelFuocoBean newVigile = VigileDelFuocoDao.ottieni(newVF);
-				squadra.put(newVigile, mansione);
+		Date data = Date.valueOf(request.getParameter("data"));
+		
+		if(data == null) {
+			String oldVF =request.getParameter("email");
+			String newVF =request.getParameter("VFNew");
+			int tipo = Integer.parseInt(request.getParameter("tiposquadra"));
+			Map<VigileDelFuocoBean, String> squadra = new HashMap<>();
+			switch(tipo) {
+			case 1: 
+				squadra = (HashMap<VigileDelFuocoBean, String>) sessione.getAttribute("squadraDiurno");
 				break;
+			case 2:
+				squadra = (HashMap<VigileDelFuocoBean, String>) sessione.getAttribute("squadraNotturno");
+				break;
+			default:
+				throw new ScheduFIREException("C'e stato un errore. Riprova piï¿½ tardi.");
 			}
-		}
+			System.out.println("squadra: "+squadra);
+			Iterator i = squadra.entrySet().iterator();
+			
+			while(i.hasNext()) {
+				Map.Entry<VigileDelFuocoBean, String> coppia = (Map.Entry<VigileDelFuocoBean, String>) i.next();
+				VigileDelFuocoBean oldVigile = coppia.getKey();
+				if(oldVigile.getEmail().equals(oldVF)) {
+					String mansione = squadra.remove(oldVigile);
+					VigileDelFuocoBean newVigile = VigileDelFuocoDao.ottieni(newVF);
+					squadra.put(newVigile, mansione);
+					break;
+				}
+			}
 
-		request.getRequestDispatcher("JSP/GestioneSquadreJSP.jsp").forward(request, response);
-		return;
+			request.getRequestDispatcher("JSP/GestioneSquadreJSP.jsp").forward(request, response);
+			return;
+		}
+		
+		else {
+			Map<VigileDelFuocoBean, String> squadra = Util.ottieniSquadra(data);
+			System.out.println(squadra);
+			System.out.println(data);
+			sessione.setAttribute("squadra", squadra);
+			sessione.setAttribute("data", data);
+			request.getRequestDispatcher("JSP/SquadraJSP.jsp").forward(request, response);
+		}
 
 	}
 	

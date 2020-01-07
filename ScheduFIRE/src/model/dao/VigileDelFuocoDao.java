@@ -18,7 +18,7 @@ import model.bean.VigileDelFuocoBean;
 
 /**
  * Classe che si occupa della gestione dei dati 
- * persistenti relativi all'entit� 'VigileDelFuoco'
+ * persistenti relativi all'entita' 'VigileDelFuoco'
  * @author Eugenio Sottile 
  * @author Nicola Labanca
  * @author Alfredo Giuliano
@@ -43,9 +43,11 @@ public class VigileDelFuocoDao {
 	
 	public static final int ORDINA_PER_GRADO = 6;
 	
+	public static final int ORDINA_PER_FERIE_TOTALI = 7;
+	
 	private static final String[] ORDINAMENTI = {"order by nome", "order by cognome", "order by caricolavoro",
 												"order by giorniferieannocorrente", "order by giorniferieannoprecedente",
-												"order by mansione", "order by grado"};
+												"order by mansione", "order by grado", "ORDER BY ferie DESC"};
 	
 	/**
 	 * Si occupa del salvataggio dei dati di un Vigile del Fuoco nel database.
@@ -212,14 +214,14 @@ public class VigileDelFuocoDao {
 	 */
 	public static Collection<VigileDelFuocoBean> ottieni(int ordinamento) {
 		
-		if(ordinamento < 0 || ordinamento > 6)
+		if(ordinamento < 0 || ordinamento > 7)
 			//lancio eccezione
 			;
 		
 		try(Connection con = ConnessioneDB.getConnection()) {
 			
 			// Esecuzione query
-			PreparedStatement ps = con.prepareStatement("select * from Vigile where adoperabile = true " +
+			PreparedStatement ps = con.prepareStatement("select *, (giorniferieannocorrente + giorniferieannoprecedente) as ferie from Vigile where adoperabile = true " +
 														ORDINAMENTI[ordinamento] + ";");
 			ResultSet rs = ps.executeQuery();
 			
@@ -265,6 +267,31 @@ public class VigileDelFuocoDao {
 			throw new RuntimeException(e);
 		}
 	
+	}
+	
+	/**
+	 * Si occupa dell'ottenimento del valore minimo di Carico di lavoro
+	 * tra i Vigili del Fuoco presenti nel database
+	 * @return il minimo Carico di Lavoro
+	 */
+	public static int getCaricoLavoroMinimo() {
+		
+		try(Connection con = ConnessioneDB.getConnection()) {
+			
+			// Esecuzione query
+			PreparedStatement ps = con.prepareStatement("select MIN(caricolavoro) as minimo from Vigile where adoperabile = true;");
+			ResultSet rs = ps.executeQuery();
+			int minimo = 0;
+			if(rs.next())
+				minimo = rs.getInt("minimo");
+
+			return minimo;
+				
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+		}
+		
+		
 	}
 	
 	/**
@@ -557,7 +584,12 @@ public class VigileDelFuocoDao {
 		
 		return listaVigili;
 	}
-	
+
+	/**
+	 * Si occupa del prelevamento del numero di ferie accumulate negli anni precedenti dal VF, dal dataBase.
+	 * @param emailVF (String): L'email del VF del quale si ha bisogno del numero di ferie degli anni precedenti
+	 * @return feriePrecedenti (int): numero di ferie a disposizione degli anni precedenti
+	 */
 	public static int ottieniNumeroFeriePrecedenti(String emailVF) {
 		PreparedStatement ps;
 		ResultSet rs;
@@ -585,7 +617,12 @@ public class VigileDelFuocoDao {
 		
 		return feriePrecedenti;
 	}
-	
+
+	/**
+	 * Si occupa del prelevamento del numero di ferie dell'anno corrente a disposizione del VF, dal dataBase.
+	 * @param emailVF (String): L'email del VF del quale si ha bisogno del numero di ferie degli anni precedenti
+	 * @return ferieCorrenti (int): numero di ferie a disposizione relative all'anno corrente
+	 */
 	public static int ottieniNumeroFerieCorrenti(String emailVF) {
 		PreparedStatement ps;
 		ResultSet rs;
@@ -614,6 +651,11 @@ public class VigileDelFuocoDao {
 		return ferieCorrenti;
 	}
 	
+	/**
+	 * Si occupa dell'aggiornamento nel dataBase, del numero di ferie accumulate negli anni precedenti dal VF
+	 * @param emailVF (String): L'email del VF per il quale bisogna aggiornare il numero di ferie degli anni precedenti
+	 * @param numeroFerie (int): Il nuovo numero di ferie relative all'anno precedente, da inserire nel dataBase
+	 */
 	public static void aggiornaFeriePrecedenti(String emailVF, int numeroFerie) {
 		PreparedStatement ps;
 		
@@ -637,7 +679,12 @@ public class VigileDelFuocoDao {
 			e.printStackTrace();
 		}
 	}
-	
+
+	/**
+	 * Si occupa dell'aggiornamento nel dataBase, del numero di ferie relativo all'anno corrente, a disposizione del VF
+	 * @param emailVF (String): L'email del VF per il quale bisogna aggiornare il numero di ferie relativo all'anno corrente
+	 * @param numeroFerie (int): Il nuovo numero di ferie relativo all'anno corrente, da inserire nel dataBase
+	 */
 	public static void aggiornaFerieCorrenti(String emailVF, int numeroFerie) {
 		PreparedStatement ps;
 		
@@ -682,13 +729,13 @@ public class VigileDelFuocoDao {
 								(pair.getValue().equals("Auto Scala")) ? 2 : 1;
 				System.out.println("toAdd vale: "+toAdd+" per il vigile "+pair.getKey().getEmail());
 				ps = con.prepareStatement(incrementaCaricoLavorativo);
-				ps.setInt(1, pair.getKey().getCaricoLavoro() + toAdd);
+				VigileDelFuocoBean vigile=VigileDelFuocoDao.ottieni(pair.getKey().getEmail());
+				ps.setInt(1, vigile.getCaricoLavoro() + toAdd);
 				ps.setString(2, pair.getKey().getEmail());
-				count = ps.executeUpdate();
+				count += ps.executeUpdate();
 				con.commit();
-				i.remove();
 			}
-			
+			System.out.println("conto carico lavorativo "+count);
 			return (count == squadra.size());
 		} catch (SQLException e) {
 			throw new RuntimeException(e);

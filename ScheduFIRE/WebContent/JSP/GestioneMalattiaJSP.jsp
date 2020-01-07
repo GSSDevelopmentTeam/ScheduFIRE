@@ -4,14 +4,25 @@
 <!DOCTYPE html>
 <html>
 	<jsp:include page="StandardJSP.jsp" />	
-	<link type="text/css" rel="stylesheet" href="./CSS/GestioneCSS.css">
+	<link type="text/css" rel="stylesheet" href="./CSS/GestionePersonaleCSS.css">
 	
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+	<script
+		src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 	<script src="JS/datePicker.js"></script>
-	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.min.js"></script>
+	<script type="text/javascript"
+		src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.min.js"></script>
 	<script src="https://buttons.github.io/buttons.js"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.js"></script>
-	
+	<script
+		src="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.js"></script>
+	<script src="JS/ferieJS.js"></script>
+	<style>
+			
+.table td, .table th {
+    padding: 1.5px!important;
+    vertical-align: top;
+    border-top: 1px solid #dee2e6;
+}
+	</style>
 	<body>
 	
 	<!-- Modal di aggiunta malattia-->
@@ -28,7 +39,7 @@
 					</button>
 				</div>
 				<div class="modal-body">
-					<p type="hidden" hidden="hidden" name="email" id="emailAggiuntaMalattia"></p>
+					<p hidden="hidden" name="email" id="emailAggiuntaMalattia"></p>
 					<div class=" row justify-content-center">
 						<input id="dataInizio" placeholder="Giorno iniziale" size="34" /> 
 						<input id="dataFine" placeholder="Giorno finale" size="34" />
@@ -40,7 +51,9 @@
 				</div>
 
 				<div class="modal-footer">
-	  			<button type="button" class="btn btn-outline-warning" data-toggle ="modal"  data-target ="#menuConferma">Aggiungi Malattia</button>
+	  			<button type="button" class="btn btn-outline-primary" id="botAggiungiMalattia" 
+	  			data-toggle ="modal"  data-target ="#menuConferma" 
+	  			data-dismiss="modal" disabled>Aggiungi Malattia</button>
 					<button type="button" class="btn btn-outline-danger" data-dismiss="modal">Annulla</button>
 
 				</div>
@@ -61,7 +74,7 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-outline-danger" data-dismiss="modal">Annulla</button>
-        <button type="button" class="btn btn-outline-secondary" data-dismiss="modal" onClick = "inserisciMalattia()">inserisci</button>
+        <button type="button" class="btn btn-outline-secondary" data-dismiss="modal"onClick = "inserisciMalattia()">inserisci</button>
       </div>
     </div>
   </div>
@@ -79,7 +92,7 @@
 		%>
 	<form action="./PeriodiDiMalattiaServlet">
 			<div align="center">
-				<label>Lista ordinata per</label><br/>
+				<label>Lista ordinata per</label>
 				<select class="custom-select" name="ordinamento" 
 				onchange="this.form.submit()"  style="width: 15%">
 
@@ -166,7 +179,8 @@
 
 <!--avvenuto inserimento-->
 
-<div class="alert alert-success flex alert-dismissible fade in text-center fixed-top" id="inserimentoOk" style="display: none;position:fixed;z-index: 99999; width:100%">
+<div class="alert alert-success flex alert-dismissible fade in text-center fixed-top" id="inserimentoOk" 
+style="display: none;position:fixed;z-index: 99999; width:100%">
   <strong>Operazione riuscita!</strong> <span>Malattia aggiunta correttamente..</span>
 </div>
 
@@ -199,8 +213,52 @@
 						showTooltip:false,
 						onError : function(error) {
 							alertInsuccesso("Nel periodo selezionato risultano già dei giorni di malattia");
-						}
-					});	
+						},
+						onSelect : function() {
+						
+							var differenza = calcolaGiorniMalattia($("#dataInizio").val(),$("#dataFine").val());
+							
+							$("#messaggioMalattia1").text("Periodo selezionato correttamente.");
+							$("#messaggioMalattia2").text("Hai selezionato " + differenza + " giorni di malattia.");
+							$("#messaggioMalattia1").attr("style","color:green");
+							$("#messaggioMalattia2").attr("style","color:green");
+							$('#botAggiungiMalattia').prop("disabled",false);
+								}});	
+			
+			function calcolaGiorniMalattia(inizale,finale) {
+				//trasformo le date nel formato aaaammgg 
+				anno1 = parseInt(inizale.substr(6),10);
+				mese1 = parseInt(inizale.substr(3, 2),10);
+				giorno1 = parseInt(inizale.substr(0, 2),10);
+			     
+				anno2 = parseInt(finale.substr(6),10);
+				mese2 = parseInt(finale.substr(3, 2),10);
+				giorno2 = parseInt(finale.substr(0, 2),10);
+				
+		        data1str = anno1+mese1+giorno1;
+				data2str = anno2+mese2+giorno2;
+				//controllo se la date sono uguali
+		        if (data2str-data1str == 0) {
+		            return 1;
+		        }else{
+
+				anno1 = parseInt(inizale.substr(6),10);
+				mese1 = parseInt(inizale.substr(3, 2),10);
+				giorno1 = parseInt(inizale.substr(0, 2),10);
+			     
+				anno2 = parseInt(finale.substr(6),10);
+				mese2 = parseInt(finale.substr(3, 2),10);
+				giorno2 = parseInt(finale.substr(0, 2),10);
+
+			    var dataok1=new Date(anno1, mese1-1, giorno1);
+				var dataok2=new Date(anno2, mese2-1, giorno2);
+				
+				differenza = dataok2-dataok1;    
+				giorni_differenza = new String(1+differenza/86400000);
+				
+				return giorni_differenza;}
+			}
+			
 			
 			function apriFormAggiunta(input) {
 				console.log("parte funzione apriformAggiunta di " + input);
@@ -211,6 +269,8 @@
 				$("#dataInizio").val("");
 				$("#dataFine").val("");
 				picker.setLockDays([]);
+				$("#messaggioMalattia1").text("");
+				$("#messaggioMalattia2").text("");
 				
 				$.ajax({
 					type : "POST",
@@ -230,15 +290,11 @@
         				
         				var cognome = $(".table td:contains('" + input + "')").prev('td');
         				var nome = $(cognome).prev('td');
-        			
-        				
-       
+    
         			$("#titoloAggiuntaMalattia").text(
         						"Aggiunta malattia per " + nome.text() + " "+ cognome.text());
-						
-						$('#formAggiunta').show();
-						
-						$(".contenutiModal").css('background-color', '#e6e6e6');
+        			$('#formAggiunta').show();	
+					$(".contenutiModal").css('background-color', '#e6e6e6');
 					}
 					
 				});
@@ -269,6 +325,7 @@
 					 var Risposta=response[0];
 					 if(Risposta){
 						 alertSuccesso();
+						 
 					 }
 					 else{
 						 apriFormAggiunta();
@@ -279,20 +336,22 @@
 		}
 
 			</script>
-			
 			<script>
-			function alertInsuccesso(){
+			
+			function alertInsuccesso(input){
+				$("#inserimentoNoOk span").text(input);
 				$("#inserimentoNoOk").fadeTo(4000, 500).slideUp(500, function(){
 				    $("#success-alert").slideUp(500);
 				});
-				
 			}
 			
-			function alertSuccesso(){
+			function alertSuccesso(input){
+				$("#inserimentoOk span").text(input);
 				$("#inserimentoOk").fadeTo(4000, 500).slideUp(500, function(){
 				    $("#success-alert").slideUp(500);
 				});
 			}
 			</script>
+
 	</body>
 </html>

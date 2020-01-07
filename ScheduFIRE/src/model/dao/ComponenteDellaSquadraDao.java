@@ -88,6 +88,7 @@ public class ComponenteDellaSquadraDao {
 				count += aggiungiAlDb(comp, con);
 				con.commit();
 			}
+			System.out.println("Conto set componente "+count);
 			return (count == componenti.size());
 		} catch (SQLException e) {
 			throw new RuntimeException(e);
