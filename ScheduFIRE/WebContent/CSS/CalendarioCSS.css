@@ -39,6 +39,10 @@ p#turno{
 
 #bottoneGeneraSquadra{
 	display: none;
+	line-height: normal;
+	position: fixed;
+	text-transform: uppercase;
+
 }
 
 #bottoneModificaSquadra{
@@ -94,12 +98,8 @@ flex:1 -> prende il resto del container*/
 	padding-left: 1%;
 }
 
-#visilibity{
-	display:none;
-}
-
 #schedulazione{
-	visibility: visible;
+	display:none;
 }
 
 /*per la schedulazione delle squadre*/
@@ -199,7 +199,7 @@ flex:1 -> prende il resto del container*/
 
 /*grid-item e item-empty sono uguali, solo che item-empty
 (->ovvero le parti del calendario che non hanno elementi)
-non ha la proprietà :hover*/
+non ha la proprietÃ  :hover*/
 .grid-item {
 	color: #434a52;
 	background-color: white;
@@ -224,7 +224,7 @@ non ha la proprietà :hover*/
 }
 
 
-/*menù DROPDOWN dei mesi*/
+/*menÃ¹ DROPDOWN dei mesi*/
 .grid-chose-month{
 	display:grid;
 	justify-content: center;
@@ -274,7 +274,7 @@ non ha la proprietà :hover*/
 .dropdown:hover .dropbtn {
 	background-color: white;
 }
-/*Fine menù dropdown dei mesi*/
+/*Fine menÃ¹ dropdown dei mesi*/
 
 .info{
 	text-decoration: none;

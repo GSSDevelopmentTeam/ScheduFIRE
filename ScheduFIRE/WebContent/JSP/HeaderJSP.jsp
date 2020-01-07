@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@page import="java.util.*, model.bean.*,util.*"%>
+<%@page import="java.util.*, model.bean.*, util.*"%>
+
 <%
 	String ruolo = (String) session.getAttribute("ruolo");	
 %>
@@ -28,12 +29,12 @@
     <img src="IMG/notizia.png" style="height:50px; width:50px "><span class="badge"><%if (dim!=0)%><%=dim %></span>
   </button>
   <div class="ddc">
-  <%for (Notifica n:note){ %>
-    <form action="" method="POST">
-  	<span class="bdgdel"><button tye="submit" class="nn" value="<%=n%>" name="notifica"><img src="IMG/delete.png" class="del"></button></span>
-  </form>
-  <form action="<%=n.getPath()%>" method="POST">
-  	<button class="ntf <% if(n.getSeverita()==1){%>gr<%}else{ if(n.getSeverita()==2){%>yl<%}else{%>rd<%}}%>"><%=n.getTesto() %></button>
+  <%for (int i=0; i<dim;i++){ %>
+    
+  	<span class="bdgdel"><button type="submit" class="nn" id="rimuoviNotifica" onClick='rimuoviNotifica("<%=i%>")'><img src="IMG/delete.png" class="del"></button></span>
+  
+  <form action="<%=note.get(i).getPath() %>" method="POST">
+  	<button class="ntf <% if(note.get(i).getSeverita()==1){%>gr<%}else{ if(note.get(i).getSeverita()==2){%>yl<%}else{%>rd<%}}%>"><%=note.get(i).getTesto() %></button>
   </form> 
   <%} %> 
   </div>
@@ -73,3 +74,20 @@
  	<%} %>
  	
 </div>
+
+
+<script>
+function rimuoviNotifica(input) {
+	//Chiamata ajax alla servlet PersonaleDisponibileAJAX
+	$.ajax({
+		type : "POST",//Chiamata POST
+		url : "/ScheduFIRE/RimuoviNotificheServlet",//url della servlet che devo chiamare
+		data : {
+			"indice" : input
+		},
+		success : function(response) {//Operazione da eseguire una volta terminata la chiamata alla servlet.
+			window.location.reload(window.location.pathname);
+		}
+	});
+}
+</script>
