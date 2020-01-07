@@ -40,7 +40,8 @@ p#turno{
 #bottoneGeneraSquadra{
 	display: none;
 	line-height: normal;
-	float:left;
+	position: fixed;
+	text-transform: uppercase;
 }
 
 #bottoneModificaSquadra{
@@ -97,12 +98,8 @@ flex:1 -> prende il resto del container*/
 	padding-left: 1%;
 }
 
-#visilibity{
-	display:none;
-}
-
 #schedulazione{
-	visibility: visible;
+	display:none;
 }
 
 /*per la schedulazione delle squadre*/
