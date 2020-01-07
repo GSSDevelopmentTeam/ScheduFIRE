@@ -78,7 +78,7 @@ public class LoginServlet extends HttpServlet {
 						session.setAttribute("ruolo", utente.getRuolo());
 						if (utente.getRuolo().equalsIgnoreCase("capoturno")) {
 							CapoTurnoBean capoturno=CapoTurnoDao.ottieni(username);
-							session.setMaxInactiveInterval(3600); //1 ora
+							session.setMaxInactiveInterval(1200); //20 min
 							session.setAttribute("capoturno", capoturno);
 							session.setAttribute("notifiche", new Notifiche());
 							response.sendRedirect("HomeCTServlet");
@@ -86,7 +86,7 @@ public class LoginServlet extends HttpServlet {
 							//RequestDispatcher dispatcher = request.getRequestDispatcher("WebContent\\JSP\\LoginJSP.jsp");
 							//dispatcher.forward(request, response);
 						} else {
-							session.setMaxInactiveInterval(3600); // 1 ora
+							session.setMaxInactiveInterval(1200); // 20 min
 							response.sendRedirect("CalendarioServlet");
 							return;
 							//RequestDispatcher dispatcher = request.getRequestDispatcher("/CalendarioServlet");
