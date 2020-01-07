@@ -55,8 +55,8 @@ h2 {
 
 	<!-- ELENCO SQUADRE  -->
 <%
-	HashMap<VigileDelFuocoBean, String> squadraD = (HashMap<VigileDelFuocoBean, String>) session.getAttribute("squadra");
-	Date%>
+	HashMap<VigileDelFuocoBean, String> squadra = (HashMap<VigileDelFuocoBean, String>) session.getAttribute("squadra");
+	Date data = (Date) session.getAttribute("data"); %>
      
      <!-- SQUADRA DIURNA -->
        <div class="d-flex justify-content-center">
@@ -82,7 +82,7 @@ h2 {
 			<tbody>
 				<% 
 	            
-                Iterator it = squadraD.entrySet().iterator();
+                Iterator it = squadra.entrySet().iterator();
                 while (it.hasNext()) {
                     Map.Entry coppia = (Map.Entry) it.next();
                     VigileDelFuocoBean membro = (VigileDelFuocoBean) coppia.getKey();
@@ -128,7 +128,7 @@ h2 {
 
 			<tbody>
 				<% 
-				it = squadraD.entrySet().iterator();
+				it = squadra.entrySet().iterator();
                 while (it.hasNext()) {
                     Map.Entry coppia = (Map.Entry) it.next();
                     VigileDelFuocoBean membro = (VigileDelFuocoBean) coppia.getKey();
@@ -173,7 +173,7 @@ h2 {
 
 			<tbody>
 				<% 
-				it = squadraD.entrySet().iterator();
+				it = squadra.entrySet().iterator();
                 while (it.hasNext()) {
                     Map.Entry coppia = (Map.Entry) it.next();
                     VigileDelFuocoBean membro = (VigileDelFuocoBean) coppia.getKey();
@@ -218,7 +218,7 @@ h2 {
 
 			<tbody>
 				<% 
-                it = squadraD.entrySet().iterator();
+                it = squadra.entrySet().iterator();
                 while (it.hasNext()) {
                     Map.Entry coppia = (Map.Entry) it.next();
                     VigileDelFuocoBean membro = (VigileDelFuocoBean) coppia.getKey();

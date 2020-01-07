@@ -33,6 +33,7 @@
 	int[] days_month = (int[]) request.getAttribute("days_month");
 	int[] days_work = (int[]) request.getAttribute("days_work");
 	String[] days_turno = (String[]) request.getAttribute("days_turno");
+	String modData = ((Date) request.getAttribute("data")).toString();
 
 	//print per controllare se i dati passati dalla servlet sono giusti!
 	System.out.println("CalendarioJSP, correnti-> " + giorno + "/" + mese + "/" + anno + " -- " + mese_stringa);
@@ -135,14 +136,14 @@
 								}							
 								
 								%>
-								<div class="grid-item" id="<%=id%>" onClick="<%=onClick %>"
-									style="cursor: pointer;">
-									<img src="IMG/<%=img%>.png" alt=" "
-										onerror="this.parentElement.innerHTML = '<%=day %>';" />
-									<%=day%>
-				
-									<p id="turno"><%=days_turno[i] %></p>
-								</div>
+				<div class="grid-item" id="<%=id%>" onClick="<%=onClick %>"
+					style="cursor: pointer;">
+					<img src="IMG/<%=img%>.png" alt=" "
+						onerror="this.parentElement.innerHTML = '<%=day %>';" />
+					<%=day%>
+
+					<p id="turno"><%=days_turno[i] %></p>
+				</div>
 
 				<%
 								id = "";
@@ -160,26 +161,26 @@
 
 		<div class="container-schedul" id="visilibity">
 			<a class="info" id="informazione"></a>
-			
-				<div>
-					<%//if(ruolo.equalsIgnoreCase("capoturno")){%>
-					
-							<form action="GeneraSquadreServlet" method="post">
-								<button type="submit" id="bottoneGeneraSquadra"
-										class="edit">Genera Squadre
-								</button>	
-							</form>
-						
-						<form action="ModificaComposizioneSquadreServlet?tiposquadra=3" method="post">
-							<button type="submit" id="bottoneModificaSquadra"
-									class="edit">Modifica Squadre
-							</button>
-						</form>
-					<%//} %>
-				</div>
-				
+
+			<div>
+				<%//if(ruolo.equalsIgnoreCase("capoturno")){%>
+
+				<form action="GeneraSquadreServlet" method="post">
+					<button type="submit" id="bottoneGeneraSquadra" class="edit">Genera
+						Squadre</button>
+				</form>
+
+				<form
+					action="ModificaComposizioneSquadreServlet?tiposquadra=3&data=<%=modData %>"
+					method="post">
+					<button type="submit" id="bottoneModificaSquadra" class="edit">Modifica
+						Squadre</button>
+				</form>
+				<%//} %>
+			</div>
+
 			<div class="wrapper" id="schedulazione">
-			
+
 				<div class="mansione">
 					<p>SALA OPERATIVA</p>
 				</div>
@@ -217,9 +218,9 @@
 
 			</div>
 		</div>
-		
 
-				
+
+
 
 	</div>
 	<!-- AND: container per calendario e schedulazione -->

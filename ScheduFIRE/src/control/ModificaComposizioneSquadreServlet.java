@@ -49,7 +49,7 @@ public class ModificaComposizioneSquadreServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession sessione = request.getSession();
-		Date data = (Date) request.getAttribute("data");
+		Date data = Date.valueOf(request.getParameter("data"));
 		
 		if(request.getAttribute("data") != null) {
 			String oldVF =request.getParameter("email");
@@ -86,7 +86,10 @@ public class ModificaComposizioneSquadreServlet extends HttpServlet {
 		
 		else {
 			Map<VigileDelFuocoBean, String> squadra = Util.ottieniSquadra(data);
+			System.out.println(squadra);
+			System.out.println(data);
 			sessione.setAttribute("squadra", squadra);
+			sessione.setAttribute("data", data);
 			request.getRequestDispatcher("JSP/SquadraJSP.jsp").forward(request, response);
 		}
 
