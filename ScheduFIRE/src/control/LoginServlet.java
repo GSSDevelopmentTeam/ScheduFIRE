@@ -1,6 +1,7 @@
 package control;
 
 import java.io.IOException;
+import java.security.NoSuchAlgorithmException;
 import java.util.Base64;
 
 import javax.servlet.RequestDispatcher;
@@ -11,8 +12,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import model.bean.CapoTurnoBean;
 import model.bean.CredenzialiBean;
+import model.dao.CapoTurnoDao;
 import model.dao.UserDao;
+import util.Notifiche;
+import util.PasswordSha256;
 
 /**
  * Servlet implementation class LoginServlet
@@ -32,44 +37,74 @@ public class LoginServlet extends HttpServlet {
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		response.setContentType("text/html");
+		HttpSession session = request.getSession();
 
-		String username = request.getParameter("Username");
-		String password = request.getParameter("Password");
-		if (username == null || username.equals(""))
-			request.getRequestDispatcher("/JSP/LoginJSP.jsp").forward(request, response);
+		//Controllo se l utente è già loggato e lo rimando alla pagina corretta
+		if(session.getAttribute("ruolo")!=null) {
+			String ruolo=(String)session.getAttribute("ruolo");
+			if (ruolo.equalsIgnoreCase("capoturno")) {
+				response.sendRedirect("HomeCTServlet");
+				return;
+			} else {
+				response.sendRedirect("CalendarioServlet");
+				return;
+			}
+
+
+		}
 		else {
-			String passwordBase64format = Base64.getEncoder().encodeToString(password.getBytes());
+			response.setContentType("text/html");
 
-			UserDao credenziali = new UserDao();
-			CredenzialiBean utente = credenziali.login(username);
-
-			if (utente == null) {
-				request.setAttribute("usernameErrato", true);
+			String username = request.getParameter("Username");
+			String password = request.getParameter("Password");
+			if (username == null || username.equals(""))
 				request.getRequestDispatcher("/JSP/LoginJSP.jsp").forward(request, response);
+			else {
+				String passwordBase256format;
+				try {
+					
+					passwordBase256format = PasswordSha256.getEncodedpassword(password);
+				
+				
+				UserDao credenziali = new UserDao();
+				CredenzialiBean utente = credenziali.login(username);
+
+				if (utente == null) {
+					request.setAttribute("usernameErrato", true);
+					request.getRequestDispatcher("/JSP/LoginJSP.jsp").forward(request, response);
 				} else {
 
-				if (passwordBase64format.equals(utente.getPassword())) {
-
-					HttpSession session = request.getSession();
-					session.setAttribute("ruolo", utente.getRuolo());
-					if (utente.getRuolo().equalsIgnoreCase("capoturno")) {
-						response.sendRedirect("HomeCTServlet");
-						//RequestDispatcher dispatcher = request.getRequestDispatcher("WebContent\\JSP\\LoginJSP.jsp");
-						//dispatcher.forward(request, response);
-					} else {
-						response.sendRedirect("CalendarioServlet");
-						//RequestDispatcher dispatcher = request.getRequestDispatcher("/CalendarioServlet");
-						//dispatcher.forward(request, response);
+					if (passwordBase256format.equals(utente.getPassword())) {
+						session.setAttribute("ruolo", utente.getRuolo());
+						if (utente.getRuolo().equalsIgnoreCase("capoturno")) {
+							CapoTurnoBean capoturno=CapoTurnoDao.ottieni(username);
+							session.setAttribute("capoturno", capoturno);
+							session.setAttribute("notifiche", new Notifiche());
+							response.sendRedirect("HomeCTServlet");
+							return;
+							//RequestDispatcher dispatcher = request.getRequestDispatcher("WebContent\\JSP\\LoginJSP.jsp");
+							//dispatcher.forward(request, response);
+						} else {
+							response.sendRedirect("CalendarioServlet");
+							return;
+							//RequestDispatcher dispatcher = request.getRequestDispatcher("/CalendarioServlet");
+							//dispatcher.forward(request, response);
+						}
 					}
-				}
-				else {
-					request.setAttribute("passwordErrata", true);
-					request.getRequestDispatcher("/JSP/LoginJSP.jsp").forward(request, response);
+					else {
+						request.setAttribute("passwordErrata", true);
+						request.getRequestDispatcher("/JSP/LoginJSP.jsp").forward(request, response);
+
+					}
 
 				}
-
+				
+			} catch (NoSuchAlgorithmException e) {
+				
+				e.printStackTrace();
 			}
+
 		}
+	}
 	}
 }
