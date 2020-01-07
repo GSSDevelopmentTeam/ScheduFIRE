@@ -20,8 +20,10 @@ if(ordinamentoObj.getClass().getSimpleName().equals("String"))
 
 <%@ include file="StandardJSP.jsp"%>
 
+
 <link type="text/css" rel="stylesheet"
 	href="./CSS/GestionePersonaleCSS.css">
+
 
 <body>
 	<jsp:include page="HeaderJSP.jsp" />
@@ -123,7 +125,7 @@ if(ordinamentoObj.getClass().getSimpleName().equals("String"))
 		Questa funzione viene invocata ad ogni submit di ogni form di modifica
 		presente nella pagina ed al submit del form di aggiunta di un VF.
 		Come parametro alla funzione viene passato l'id del form.
-		L'id di ogni elemento del form è formato dall'id del form concatenato
+		L'id di ogni elemento del form Ã¨ formato dall'id del form concatenato
 		il nome dell'elemento. 
 		(Es. id form = "form1", di conseguenza l'id dell'elemento che deve
 		contenere il nome sara "form1Nome")
@@ -395,7 +397,7 @@ if(ordinamentoObj.getClass().getSimpleName().equals("String"))
 										value=<%= vf.getUsername() %>>
 										
 									<input id = "buttonCancella" type="submit" class="btn btn-outline-success" 
-										data-toggle="modal" class="button" value="Sì">
+										data-toggle="modal" class="button" value="SÃ¬">
 									
 									&ensp;
 										

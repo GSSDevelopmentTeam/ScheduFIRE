@@ -5,7 +5,14 @@
 <html>
 <jsp:include page="StandardJSP.jsp" />
 
+<style>
 
+.table td, .table th {
+    padding: 1.5px!important;
+    vertical-align: top;
+    border-top: 1px solid #dee2e6;
+}
+</style>
 <body>
 <!-- Barra Navigazione -->
 	<jsp:include page="HeaderJSP.jsp" />
