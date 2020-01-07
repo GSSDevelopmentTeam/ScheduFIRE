@@ -51,7 +51,7 @@ public class ModificaComposizioneSquadreServlet extends HttpServlet {
 		HttpSession sessione = request.getSession();
 		Date data = (Date) sessione.getAttribute("data");
 		String oldVF =request.getParameter("email");
-		String newVF =request.getParameter("VFnew");
+		String newVF =request.getParameter("VFNew");
 		int tipo = Integer.parseInt(request.getParameter("tiposquadra"));
 		Map<VigileDelFuocoBean, String> squadra = new HashMap<>();
 		switch(tipo) {
