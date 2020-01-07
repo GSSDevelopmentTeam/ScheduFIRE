@@ -1,7 +1,6 @@
-<%@ page import="control.* "%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@page import="java.util.*, model.bean.*, model.dao.*,util.*"%>
+<%@page import="java.util.*, model.bean.*,util.*"%>
 <%
 	String ruolo = (String) session.getAttribute("ruolo");	
 %>
