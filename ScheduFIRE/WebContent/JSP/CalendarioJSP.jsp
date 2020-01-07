@@ -170,7 +170,7 @@
 								</button>	
 							</form>
 						
-						<form action="ModificaComposizioneSquadreServlet" method="post">
+						<form action="ModificaComposizioneSquadreServlet?tiposquadra=3" method="post">
 							<button type="submit" id="bottoneModificaSquadra"
 									class="edit">Modifica Squadre
 							</button>

@@ -1,7 +1,7 @@
 <%@page import="java.util.HashMap"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@page import="java.util.*, model.bean.*, model.dao.*"%>
+<%@page import="java.util.*, model.bean.*, model.dao.*, java.sql.Date"%>
 <!DOCTYPE html>
 <html>
 <jsp:include page="StandardJSP.jsp" />
@@ -55,11 +55,12 @@ h2 {
 
 	<!-- ELENCO SQUADRE  -->
 <%
-	HashMap<VigileDelFuocoBean, String> squadraD = (HashMap<VigileDelFuocoBean, String>) session.getAttribute("squadra");%>
+	HashMap<VigileDelFuocoBean, String> squadraD = (HashMap<VigileDelFuocoBean, String>) session.getAttribute("squadra");
+	Date%>
      
      <!-- SQUADRA DIURNA -->
        <div class="d-flex justify-content-center">
-		<h2 style="font-weight:bold; font-size:36px;">Giorno</h2>
+		<h2 style="font-weight:bold; font-size:36px;">Squadra del <%=data %></h2>
 	</div>
 	<div class="d-flex justify-content-center">
 		<img src="Icon/caserma.png" class="fr">
