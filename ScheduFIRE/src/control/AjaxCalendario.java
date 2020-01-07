@@ -13,7 +13,6 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import org.json.*;
 import model.bean.ComponenteDellaSquadraBean;
@@ -36,7 +35,6 @@ public class AjaxCalendario extends HttpServlet{
 	
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
 		String giornostr = request.getParameter("giorno").trim();
 		String mesestr = request.getParameter("mese").trim();
 		String annostr = request.getParameter("anno").trim();

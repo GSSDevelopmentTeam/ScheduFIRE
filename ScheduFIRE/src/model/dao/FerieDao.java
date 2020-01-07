@@ -10,13 +10,20 @@ import java.util.List;
 import model.ConnessioneDB;
 import model.bean.FerieBean;
 
+/**
+ * Classe che si occupa della gestione dei dati 
+ * persistenti relativi all'entita' "Ferie"
+ * @author Nicola Labanca
+ * @author Alfredo Giuliano
+ */
 
 public class FerieDao {
 
-	public FerieDao() {
-		// TODO Auto-generated constructor stub
-	}
-	
+	/**
+	 * Si occupa del prelevamento dal dataBase, dei periodi di ferie concessi ad un VF.
+	 * @param email (String): L'email del VF per il quale si ha bisogno di avere la lista di ferie concesse
+	 * @return periodi (List): Lista dei periodi di ferie concessi al VF
+	 */
 	public static List<FerieBean> ottieniFerieConcesse(String email) {
 		
 		String emailVF, emailCT;
@@ -64,6 +71,13 @@ public class FerieDao {
 		return periodi;
 	}
 	
+	/**
+	 * Si occupa della rimozione dal dataBase, di un periodo o giorno di ferie concesso ad un VF.
+	 * @param emailVF (String): L'email del VF per il quale si ha bisogno di rimuovere le ferie
+	 * @param dataInizio (Date): Data di inizio delle ferie
+	 * @param dataFine (Date): Data di fine dellle ferie
+	 * @return rimozione: true se andata a buon fine, false altrimenti
+	 */
 	public static boolean rimuoviPeriodoFerie(String emailVF, Date dataInizio, Date dataFine) {
 		
 		boolean rimozione = false;
@@ -95,6 +109,14 @@ public class FerieDao {
 		return rimozione;
 	}
 	
+	/**
+	 * Si occupa dell'aggiunta nel dataBase, di un periodo o giorni di ferie concessi ad un VF.
+	 * @param emailCT (String): L'email del CT che aggiunge le ferie
+	 * @param emailVF (String): L'email del VF al quale si concedono le ferie
+	 * @param dataInizio (Date): Data di inizio delle ferie
+	 * @param dataFine (Date): Data di fine dellle ferie
+	 * @return aggiunta: true se andata a buon fine, false altrimenti
+	 */
 	public static boolean aggiungiPeriodoFerie(String emailCT, String emailVF, Date dataInizio, Date dataFine) {
 		
 		boolean aggiunta = false;
@@ -130,6 +152,13 @@ public class FerieDao {
 		return aggiunta;
 	}
 	
+	/**
+	 * Si occupa di controllare se il periodo di ferie da concedere, contiene giorni già concessi al VF.
+	 * @param dataInizio (Date): Data di inizio delle ferie
+	 * @param dataFine (Date): Data di fine dellle ferie
+	 * @param emailVF (String): L'email del VF oggetto del controllo
+	 * @return aggiunta: false se il periodo non contiene giorni già concessi precedentemente, true altrimenti
+	 */
 	public static boolean contieneGiorniConcessi(Date dataInizio, Date dataFine, String emailVF) {
 		boolean verifica = false;
 		int righe = 0;
@@ -170,20 +199,21 @@ public class FerieDao {
 		return verifica;
 	}
 	
-	
-	
-	
-	
-	
-	
-	
-	
+	/**
+	 * Si occupa di controllare se il periodo di ferie da concedere, contiene giorni già concessi al VF.
+	 * @param dataInizio (Date): Data di inizio delle ferie
+	 * @param dataFine (Date): Data di fine dellle ferie
+	 * @param emailVF (String): L'email del VF oggetto del controllo
+	 * @return ferie (List): Lista di periodi in cui sia incluso almeno un giorno compreso nel periodo che va
+	 * da dataInizio a dataFine del vigile con emailVF
+	 */
 	public static List<FerieBean> ferieInRange(Date dataInizio, Date dataFine, String emailVF) {
 		PreparedStatement ps;
 		ResultSet rs;
 		String verificaPeriodoSQL = "SELECT * FROM Ferie WHERE "
 				+ "emailVF = ? AND ((dataInizio BETWEEN ? AND ? OR dataFine BETWEEN ? AND ?) "
 				+ "OR (dataInizio < ? AND dataFine > ?) OR (dataInizio < ? AND dataFine > ?)) ORDER BY dataInizio;";
+		
 		List<FerieBean> ferie=new ArrayList<>();
 
 		try {
@@ -206,7 +236,7 @@ public class FerieDao {
 				
 				rs = ps.executeQuery();
 				while(rs.next()) {
-					FerieBean f=new FerieBean();
+					FerieBean f = new FerieBean();
 					f.setId(rs.getInt("id"));
 					f.setEmailVF(rs.getString("emailVF"));
 					f.setEmailCT(rs.getString("emailCT"));
