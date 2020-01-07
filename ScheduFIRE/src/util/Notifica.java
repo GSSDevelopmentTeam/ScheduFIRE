@@ -4,11 +4,21 @@ public class Notifica {
 	private int severita;
 	private String testo;
 	private String path;
+	private int id;
 	
-	public Notifica(int severita, String testo, String path) {
+	public Notifica(int severita, String testo, String path, int id) {
 		this.severita = severita;
 		this.testo = testo;
 		this.path = path;
+		this.id = id;
+	}
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
 	}
 
 	public int getSeverita() {
