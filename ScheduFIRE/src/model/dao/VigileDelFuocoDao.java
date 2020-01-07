@@ -685,10 +685,10 @@ public class VigileDelFuocoDao {
 				VigileDelFuocoBean vigile=VigileDelFuocoDao.ottieni(pair.getKey().getEmail());
 				ps.setInt(1, vigile.getCaricoLavoro() + toAdd);
 				ps.setString(2, pair.getKey().getEmail());
-				count = ps.executeUpdate();
+				count += ps.executeUpdate();
 				con.commit();
 			}
-			
+			System.out.println("conto carico lavorativo "+count);
 			return (count == squadra.size());
 		} catch (SQLException e) {
 			throw new RuntimeException(e);
