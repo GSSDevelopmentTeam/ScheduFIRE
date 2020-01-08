@@ -77,6 +77,7 @@ public class ModificaComposizioneSquadreServlet extends HttpServlet {
 			sessione.setAttribute("squadra", squadra);
 			request.setAttribute("data", data);
 			request.getRequestDispatcher("JSP/SquadraJSP.jsp").forward(request, response);
+			return;
 
 		}
 
