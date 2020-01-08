@@ -1,6 +1,7 @@
 package util;
 
 import java.sql.Date;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Base64;
 import java.util.Collections;
@@ -18,6 +19,7 @@ import model.bean.ComponenteDellaSquadraBean;
 import model.bean.SquadraBean;
 import model.bean.VigileDelFuocoBean;
 import model.dao.*;
+
 
 /**
  * La classe Util contiene diversi metodi statici utili per essere chiamati
@@ -271,6 +273,67 @@ public class Util {
 		}
 	}
 	
+	
+	
+	
+	/**
+	 * Verifica se sono la una delle due date passate è il primo giorno lavorativo dell'anno, se lo è cancella dal database
+	 * il calendario dell'anno precedente e aggiorna le ferie ai vigili 
+	 * @param diurnoDate il giorno lavorativo diurno
+	 * @param notturnoDate il giorno lavorativo notturno
+	 */
+	public static void aggiornaDB(Date diurnoDate,Date notturnoDate) {
+		LocalDate diurno=diurnoDate.toLocalDate();
+		LocalDate notturno=notturnoDate.toLocalDate();
+		boolean modifica=false;
+		int annoNuovo=0;
+		LocalDate precLavorativo=GiornoLavorativo.precLavorativo(diurnoDate).toLocalDate();
+		
+		//Se l'anno del diurno è diverso da quello del notturno, sto cambiando anno
+		if(diurno.getYear()!=notturno.getYear()) {
+			modifica=true;
+			annoNuovo=notturno.getYear();
+		}
+
+		//Se il diurno ha un anno diverso dal precedente giorno lavorativo, sto in un nuovo anno
+		else if(diurno.getYear()!= precLavorativo.getYear()) {
+			modifica=true;	
+			annoNuovo=diurno.getYear();
+		}
+		
+		
+		if(modifica==true) {
+			setFerie();
+			Date inizioAnnoNuovo=Date.valueOf(LocalDate.of(annoNuovo, 1, 1));
+			ComponenteDellaSquadraDao.rimuoviTutti(inizioAnnoNuovo);
+			SquadraDao.rimuoviTutti(inizioAnnoNuovo);
+			ListaSquadreDao.rimuoviTutte(inizioAnnoNuovo);
+			System.out.println("rimozione avvenuta con successo");
+		}
+		
+	}
+	
+	public static List<VigileDelFuocoBean> compareVigile(List<VigileDelFuocoBean> lista) {
+		
+			List<VigileDelFuocoBean> listaC = new ArrayList<VigileDelFuocoBean>(lista);
+			
+			Collections.sort(listaC, new VigileComparator());
+			
+			return listaC;
+	}
+	
+	
+	private static void setFerie() {
+		List<VigileDelFuocoBean> vigili=VigileDelFuocoDao.ottieni();
+		for(VigileDelFuocoBean vigile:vigili) {
+			int ferieAnnoPrecedente=vigile.getGiorniFerieAnnoPrecedente();
+			int ferieAnnoCorrente=vigile.getGiorniFerieAnnoCorrente();
+			ferieAnnoPrecedente+=ferieAnnoCorrente;
+			VigileDelFuocoDao.aggiornaFeriePrecedenti(vigile.getEmail(), ferieAnnoPrecedente);
+			VigileDelFuocoDao.aggiornaFerieCorrenti(vigile.getEmail(), 22);
+		}
+	}
+	
 }	
 
 
@@ -299,5 +362,21 @@ class ComponenteComparator implements Comparator<ComponenteDellaSquadraBean> {
 		}
 		return -comparazione;
 	}
+}
+	
+	class VigileComparator implements Comparator<VigileDelFuocoBean> {
+
+		@Override
+		public int compare(VigileDelFuocoBean o1, VigileDelFuocoBean o2) {
+			String mansione1=o1.getMansione();
+			String mansione2=o2.getMansione();
+			if (mansione1.equals("Capo Squadra") && mansione2.equals("Capo Squadra"))
+				return o1.getCognome().compareTo(o2.getCognome());
+			if(mansione1.equals("Capo Squadra"))
+				return -1;
+			if(mansione2.equals("Capo Squadra"))
+				return 1;
+			return o1.getMansione().compareTo(o2.getMansione());
+		}
 }
 

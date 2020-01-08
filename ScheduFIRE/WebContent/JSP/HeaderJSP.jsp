@@ -26,16 +26,17 @@
 	int dim = note.size();%>
  		<a><div class="dd" >
   <button type="button" class="dn" >
-    <img src="IMG/notizia.png" style="height:50px; width:50px "><span class="badge"><%if (dim!=0)%><%=dim %></span>
+    <img src="IMG/notizia.png" style="height:50px; width:50px "><span class="badge" id="qt"><%if (dim!=0)%><%=dim %></span>
   </button>
   <div class="ddc">
   <%for (int i=0; i<dim;i++){ %>
-    
-  	<span class="bdgdel"><button type="submit" class="nn" id="rimuoviNotifica" onClick='rimuoviNotifica("<%=i%>")'><img src="IMG/delete.png" class="del"></button></span>
+    <div  id="<%=note.get(i).getId()%>">
+  	<span class="bdgdel"><button type="submit" class="nn" id="rimuoviNotifica" onClick='rimuoviNotifica("<%=note.get(i).getId()%>")'><img src="IMG/delete.png" class="del"></button></span>
   
   <form action="<%=note.get(i).getPath() %>" method="POST">
-  	<button class="ntf <% if(note.get(i).getSeverita()==1){%>gr<%}else{ if(note.get(i).getSeverita()==2){%>yl<%}else{%>rd<%}}%>"><%=note.get(i).getTesto() %></button>
-  </form> 
+  	<button class="ntf <% if(note.get(i).getSeverita()==1){%>gr<%}else{ if(note.get(i).getSeverita()==2){%>yl<%}else{%>rd<%}}%>"><%=note.get(i).getTesto() %><%=note.get(i).getId() %></button>
+  </form>
+  </div> 
   <%} %> 
   </div>
 </div></a>
@@ -45,6 +46,9 @@
     <img src="IMG/men.png" style="height:50px; width:50px ">
   </button>
   <div class="ddc">
+   <form action="HomeCTServlet" method="POST">
+    <button class="cmd" id="tornahome"><img src="IMG/logoSF.png" class="btl"><span class="rtlg">Home</span> </button>
+  </form>
    <form action="GeneraSquadreServlet" method="POST">
     <button class="cmd"><img src="Icon/CavallettoColorato.png" class="btl"><span class="rtlg">Gestione Squadra</span> </button>
   </form>
@@ -61,7 +65,7 @@
 	<button class="cmd"><img src="Icon/MalattieColore.png" class="btl" ><span class="rtlg">Gestione Malattia</span></button>
   </form>
   <form action="PersonaleDisponibile" method="POST">
-	<button class="cmd"><img src="Icon/ominiVF.png" class="btl"	><span class="rtlg">Personale Disponibile</button>
+	<button class="cmd" id="dispo"><img src="Icon/ominiVF.png" class="btl"	><span class="rtlg">Personale Disponibile</button>
   </form>
   </div>
  
@@ -86,7 +90,10 @@ function rimuoviNotifica(input) {
 			"indice" : input
 		},
 		success : function(response) {//Operazione da eseguire una volta terminata la chiamata alla servlet.
-			window.location.reload(window.location.pathname);
+			$("#"+input).hide();
+			$("#qt").text($("#qt").text()-1);
+			if($("#qt").text()==0)	
+				$("#qt").text("");
 		}
 	});
 }

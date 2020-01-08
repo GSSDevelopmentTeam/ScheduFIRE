@@ -55,25 +55,6 @@
 }
 
 
-.inversesubmit{
-	background-color: white;
-	color: #b60000;
-	font-weight: bold;
-	padding: 7px 20px;
-	text-align: center;
-	display: inline-block;
-	font-size: 16px;
-	border-radius: 7px;
-	box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0
-		rgba(0, 0, 0, 0.19);
-	cursor: pointer;
-}
-
-.inversesubmit:hover {
-	background-color: #b60000;
-	color: white;
-}
-
 .rf{
 	float:right;
 }
@@ -89,7 +70,7 @@
 
 .bdgdel {
 	margin-left:83px;
-	margin-top:-7;
+	margin-top:-7px;
 	position: absolute;
 	border-radius: 50px;
 	border:none;
@@ -101,21 +82,18 @@
 }
 
 span .nn:hover{
-	background-color: rgba(255,255,255,0.3);
-	border-radius: 60px;
-	border:outset;
-	border-color:white;
-	border-width: 0.5px;
-	padding:-4px;
+	background-color: none;
+	border:none;
 }
 
 span .del:hover{
-	margin-top:-3px;
+	margin-top:-10px;
 }
 
 .del{
 	width: 20px;
 	height: 20px;
+	margin-top:-7px;
 }
 .nl{float:right;
 	border:none;
@@ -167,8 +145,7 @@ span .del:hover{
 	background:none;
 	min-width: 230px;
 	z-index: 1;
-	background-color: rgba(255,255,255,0.9);
-	border-radius:15px;
+	border-radius:5px;
 	padding:0.3%;
 }
 
@@ -204,27 +181,42 @@ span .del:hover{
 }
 .ntf{
 	width: 98%;
-	border-radius: 15px;
-	border:outset;
-	border-width:1%;
-	margin:1%;
+	border-left:solid;
+	border-right:none;
+	border-bottom:none;
+	border-top:none;
+	border-width:4px;
+	margin:0.5%;
+	border-radius: 4px;	
 	box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
 }
-.cmd{
-	text-align:left;
-	background-color:white;	
-	width: 100%;
-	height:60px;
-	border-radius: 25px;
-	border:outset;
-	border-color:#c0c0c0;
-	border-width:1%;
-	margin:1%;
-	box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+.cmd {
+    border-color: #454d55;
+    border-right: 1px outset;
+    border-top: 1px inset;
+    border-left: 1px inset;
+    border-bottom: none;
+    background-color: #FFFFFF;
+    text-align: left;
+    width: 100%;
+    height: 60px;
 }
 .rd{
-	border-color: #B60000;
-	
+	border-color: #B60000;	
+}
+#tornahome{
+	border-top-left-radius: 5px;
+	border-top-right-radius: 5px;
+}
+#dispo{
+	border-color: #454d55;
+    border-bottom: 1px outset;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+    border-bottom:1px outset;
+	border-right: 1px outset;
+    border-left: 1px inset;
+    border-top:1px inset;    
 }
 .ddc .rd:hover{
 	background-color: #ffaead;

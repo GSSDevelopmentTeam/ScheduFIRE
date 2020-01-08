@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"
-    		import="java.util.ArrayList,java.util.Iterator, model.bean.*, model.dao.*" 
+    		import="java.util.ArrayList,java.util.Iterator, model.bean.*, model.dao.*, java.sql.Date" 
 %>
 
 
@@ -9,9 +9,9 @@
 			<thead class="thead-dark">
 				<tr>
 					<th class="text-center">Grado</th>
+					<th class="text-center">Mansione</th>
 					<th class="text-center">Nome</th>
 					<th class="text-center">Cognome</th>
-					<th class="text-center">Mansione</th>
 					<th class="text-center">   </th>
 				</tr>
 			</thead>
@@ -27,9 +27,9 @@
 
 					<tr>
 						<td class="text-center"><img src="Grado/<%=vigile.getGrado() %>.png" style="height:25%" onerror="this.parentElement.innerHTML='Non disponibile';"></td>
-						<td class="text-center"><%=vigile.getNome() %></td>
-						<td class="text-center"><%=vigile.getCognome() %></td>
 						<td class="text-center"><%=vigile.getMansione() %></td>
+						<td class="text-center"><strong><%=vigile.getNome() %></strong></td>
+						<td class="text-center"><strong><%=vigile.getCognome() %></strong></td>
 						<td class="text-center"> <input type="radio" value="<%=vigile.getEmail() %>" name="VFNew"></td>
 					</tr>
 					<% } }
@@ -38,7 +38,9 @@
 		</table>
 		
 <% String email = (String) request.getParameter("email"); 
-	String tipo = (String) request.getParameter("tiposquadra");%>
+	String tipo = (String) request.getParameter("tiposquadra");
+	Date data = (Date) request.getAttribute("dataModifica");%>
 	<input type="hidden" name="email" value="<%=email%>">
 	<input type="hidden"  name="tiposquadra" value="<%=tipo%>">
+	<input type="hidden"  name="dataModifica" value="<%=data%>">
 </div>
