@@ -35,7 +35,7 @@ h2 {
 </head>
 
 <body>
-
+<div id="inizio"></div>
 	<!-- Barra Navigazione -->
 	<jsp:include page="HeaderJSP.jsp" />
 
@@ -58,7 +58,7 @@ h2 {
 					<div class="modal-footer">
 						<button type="button" class="btn btn-outline-danger"
 							data-dismiss="modal">Annulla</button>
-						<button class="btn btn-outline-success" id="aggiungi" disabled=true>Aggiungi</button>
+						<button class="btn btn-outline-success" id="aggiungi" disabled>Aggiungi</button>
 					</div>
 				</form>
 			</div>
@@ -87,7 +87,7 @@ h2 {
 					onmouseout="this.src='IMG/arrow/up-arrow-p.png'" /></a>
 
 		<div class="d-flex justify-content-center">
-		<h2 id="inizio">Gestione Squadre</h2>
+		<h2 >Gestione Squadre</h2>
 	</div>
 	<br>
 	<div class="d-flex justify-content-center">
@@ -575,7 +575,7 @@ h2 {
 		}
 		
 		function attivapulsante(){
-			$("#aggiuni").Button.disabled=false
+			$("#agg").prop("diab")
 		}
 	</script>
 

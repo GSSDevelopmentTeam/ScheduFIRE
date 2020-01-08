@@ -62,6 +62,7 @@ session.removeAttribute("risultato");
 </style>
 
 <body>
+<div id="inizio"></div>
 	<jsp:include page="HeaderJSP.jsp" />
 
 	<script
@@ -282,7 +283,7 @@ session.removeAttribute("risultato");
 	
 		<br>
 
-<a href="#titolo" class=" back-up"><img src="IMG/arrow/up-arrow-p.png" style="margin-left: 5px;"
+<a href="#inizio" class=" back-up"><img src="IMG/arrow/up-arrow-p.png" style="margin-left: 5px;"
 					onmouseover="this.src='IMG/arrow/up-arrow-d.png'"
 					onmouseout="this.src='IMG/arrow/up-arrow-p.png'" /></a>
 
