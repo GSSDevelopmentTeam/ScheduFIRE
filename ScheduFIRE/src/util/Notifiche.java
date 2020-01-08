@@ -144,15 +144,24 @@ public class Notifiche {
 		Date from = (Date) temp.clone();
 		VigileDelFuocoBean vigile = VigileDelFuocoDao.ottieni(email);
 		SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
+		List<String> dateAssenza = new ArrayList<String>();
+		
 		while(!from.equals(to)) {
 			if(ComponenteDellaSquadraDao.isComponente(vigile.getEmail(), from)) {
-				listaNotifiche.add(new Notifica(2, "" + vigile.getCognome() + " " + vigile.getNome() + 
-						" non sarà presente\nnella squadra a cui è stato assegnato (deriodo di malattia dal " +
-						formatter.format(from).toString() + " al "+to+") causa Malattia.", "/ModificaComposizioneSquadreServlet",generateId()));
-				break;
+				dateAssenza.add(formatter.format(from).toString());
 			}
 			from = Date.valueOf(from.toLocalDate().plusDays(1L));
 		}
+		String notifica = vigile.getCognome() + " " + vigile.getNome() + 
+				" " + "non sarà presente nella squadra a cui è stato assegnato\n";
+		if(dateAssenza.size() == 1) {
+			notifica.concat(" per il giorno " + dateAssenza.get(0) + " causa ferie.");
+		}
+		else {
+			notifica.concat(" per il periodo dal " + dateAssenza.get(0) + " al " 
+		+ dateAssenza.get(dateAssenza.size()-1));
+		}
+		listaNotifiche.add(new Notifica(2, notifica, "/ModificaComposizioneSquadreServlet",generateId()));
 	}
 	
 	

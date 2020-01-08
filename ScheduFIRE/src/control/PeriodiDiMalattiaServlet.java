@@ -139,9 +139,6 @@ public class PeriodiDiMalattiaServlet extends HttpServlet {
 			case "cognome": 
 				listaVigili =  new ArrayList<VigileDelFuocoBean>(VigileDelFuocoDao.ottieni(VigileDelFuocoDao.ORDINA_PER_COGNOME));
 				break;
-			case "mansione": 
-				listaVigili =  new ArrayList<VigileDelFuocoBean>(VigileDelFuocoDao.ottieni(VigileDelFuocoDao.ORDINA_PER_MANSIONE));
-				break;
 			case "grado": 
 				listaVigili =  new ArrayList<VigileDelFuocoBean>(VigileDelFuocoDao.ottieni(VigileDelFuocoDao.ORDINA_PER_GRADO));
 				break;
@@ -149,9 +146,6 @@ public class PeriodiDiMalattiaServlet extends HttpServlet {
 
 		//Passasggio del tipo di ordinamento richiesto
 		request.setAttribute("ordinamento", ordinamento);
-		
-		listaVigili = (ArrayList<VigileDelFuocoBean>) Util.compareVigile(listaVigili);
-		
 		request.setAttribute("listaVigili", listaVigili);
 		request.getRequestDispatcher("/JSP/GestioneMalattiaJSP.jsp").forward(request, response);
   }
