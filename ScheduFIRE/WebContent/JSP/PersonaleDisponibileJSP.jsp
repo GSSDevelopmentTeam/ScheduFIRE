@@ -52,7 +52,7 @@
 					for(ComponenteDellaSquadraBean componente : componenti){
 						for(Iterator<VigileDelFuocoBean> i=vigili.iterator();i.hasNext();){
 							VigileDelFuocoBean vigile=i.next();
-							if (vigile.getEmail().equals(componente.getEmailVF())){		
+							if (vigile.getEmail().equals(componente.getEmailVF())){	
 				%>
 
 					<tr>
