@@ -35,7 +35,7 @@ public class ComponenteDellaSquadraDao {
 			ps.setDate(1, data);
 			ResultSet rs = ps.executeQuery();
 			ArrayList<ComponenteDellaSquadraBean> componenti=new ArrayList<>();
-			
+
 			//Iterazione dei risultati
 			while(rs.next()) {
 				String email = rs.getString("emailVF");
@@ -67,8 +67,8 @@ public class ComponenteDellaSquadraDao {
 			throw new RuntimeException(e);
 		}
 	}
-	
-	
+
+
 	private static int rimuoviDalDb(ComponenteDellaSquadraBean comp, Connection con) throws SQLException {
 		System.out.println("Componente della squadra: "+comp.getEmailVF()+" , "+comp.getTipologiaSquadra()+" , "+comp.getGiornoLavorativo());
 		PreparedStatement ps = con.prepareStatement("DELETE FROM ComponenteDellaSquadra WHERE emailVF = ? AND tipologia = ? AND giornoLavorativo = ? ;");
@@ -80,7 +80,7 @@ public class ComponenteDellaSquadraDao {
 		return righe;
 
 	}
-	
+
 	public static boolean setComponenti(List<ComponenteDellaSquadraBean> componenti) {
 		try(Connection con = ConnessioneDB.getConnection()) {
 			int count = 0;
@@ -88,13 +88,14 @@ public class ComponenteDellaSquadraDao {
 				count += aggiungiAlDb(comp, con);
 				con.commit();
 			}
+			System.out.println("Conto set componente "+count);
 			return (count == componenti.size());
 		} catch (SQLException e) {
 			throw new RuntimeException(e);
 		}
 	}
-	
-	
+
+
 
 	private static int aggiungiAlDb(ComponenteDellaSquadraBean comp, Connection con) throws SQLException {
 		System.out.println("Componente della squadra: "+comp.getEmailVF()+" , "+comp.getTipologiaSquadra()+" , "+comp.getGiornoLavorativo());
@@ -107,31 +108,31 @@ public class ComponenteDellaSquadraDao {
 		return ps.executeUpdate();
 
 	}
-	
+
 	public static boolean isComponente(String emailVF, Date giornoLavorativo) {
-		
+
 		PreparedStatement ps;
 		boolean schedulato = false;
-		
+
 		String componenteSQL = "SELECT * FROM ComponenteDellaSquadra WHERE emailVF = ? AND giornoLavorativo = ?;";
-		
+
 		try(Connection connessione = ConnessioneDB.getConnection()){
-			
+
 			ps = connessione.prepareStatement(componenteSQL);
 			ps.setString(1, emailVF);
 			ps.setDate(2, giornoLavorativo);
-			
+
 			ResultSet rs = ps.executeQuery();
 			if(rs.next()) 
 				schedulato = true;
-			
+
 		}catch(SQLException e) {
 			e.printStackTrace();
 		}
-		
+
 		return schedulato;
 	}
-	
+
 	public static List<ComponenteDellaSquadraBean> getSquadreRelative(Date from, Date to, VigileDelFuocoBean vigile) {
 		String mailVF = vigile.getEmail();
 		String sql = "SELECT * "
@@ -140,13 +141,13 @@ public class ComponenteDellaSquadraDao {
 				+ "AND (giornoLavorativo BETWEEN ? AND ?);";
 		try(Connection con = ConnessioneDB.getConnection()) {
 			List<ComponenteDellaSquadraBean> toReturn = new ArrayList<>();
-			
+
 			PreparedStatement ps = con.prepareStatement(sql);
 			ps.setString(1, mailVF);
 			ps.setDate(2, from);
 			ps.setDate(3, to);
 			ResultSet rs = ps.executeQuery();
-			
+
 			while(rs.next()) {
 				String tipologiaSquadra = rs.getString("tipologia");
 				String emailVF = rs.getString("emailVF");
@@ -158,6 +159,37 @@ public class ComponenteDellaSquadraDao {
 			throw new RuntimeException(e);
 		}
 	}
+
+	
+	
+	/**
+	 * Serve a cancellare tutti i componentiDellaSquadra precedenti a questa data
+	 * @param data la data di partenza
+	 */
+	public static void rimuoviTutti(Date data) {
+		String sql = "DELETE FROM ComponenteDellaSquadra WHERE giornoLavorativo < ? ;";
+		
+		try(Connection con = ConnessioneDB.getConnection()) {
+			PreparedStatement ps = con.prepareStatement(sql);
+			ps.setDate(1, data);
+			ps.executeUpdate();
+			con.commit();
+			return;
+		}
+		catch (SQLException e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+
+
+
+
+
+
+
+
+
 	/*
 	 * Per ordinare l'array di componenti della squadra in base alla tipologia della squadra di appartenenza
 	 * con priorit� a sala operativa, poi prima partenza, poi auto scala e infine auto botte.
@@ -181,9 +213,9 @@ public class ComponenteDellaSquadraDao {
 		}
 	}
 
-	
-	
-	
-	
+
+
+
+
 
 }

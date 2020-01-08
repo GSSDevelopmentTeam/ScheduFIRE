@@ -2,7 +2,6 @@
 
 body{
 	background-color: #f2f2f2;
-	font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 
 h2, section, div, h4, form {
@@ -134,3 +133,4 @@ input {
 #aggiungiVF {
 	margin: 0 auto;
 }
+

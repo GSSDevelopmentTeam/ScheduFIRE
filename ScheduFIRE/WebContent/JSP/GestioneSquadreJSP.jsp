@@ -14,9 +14,22 @@
 	width: 38px;
 	float: left;
 }
-
 h2 {
 	color: #B60000;
+}
+
+.table td, .table th {
+    padding: 1.5px!important;
+    vertical-align: top;
+    border-top: 1px solid #dee2e6;
+}
+
+.back-up{
+	border:none;
+	background:none;	
+    position: fixed;
+    bottom: 5%;
+    right: 5%;
 }
 </style>
 </head>
@@ -37,16 +50,15 @@ h2 {
 						Disponibile</h5>
 				</div>
 				<form action="ModificaComposizioneSquadreServlet" method="POST">
-<!-- Nel form verranno passate l'email del VF da sostituire con nome "email" e quella del VF da inserire con nome "VFNew" -->
+					<!-- Nel form verranno passate l'email del VF da sostituire con nome "email" e quella del VF da inserire con nome "VFNew" -->
 					<div class="modal-body" id="elenco">
 						<div id="appendiElenco"></div>
 					</div>
 
 					<div class="modal-footer">
 						<button type="button" class="btn btn-outline-danger"
-							
-						data-dismiss="modal">Annulla</button>
-						<button class="btn btn-outline-secondary">Aggiungi</button>
+							data-dismiss="modal">Annulla</button>
+						<button class="btn btn-outline-success" id="aggiungi" disabled=true>Aggiungi</button>
 					</div>
 				</form>
 			</div>
@@ -54,24 +66,51 @@ h2 {
 	</div>
 
 	<!-- ELENCO SQUADRE  -->
-<%
-	HashMap<VigileDelFuocoBean, String> squadraD = (HashMap<VigileDelFuocoBean, String>) session.getAttribute("squadraDiurno");
-	HashMap<VigileDelFuocoBean, String> squadraN = (HashMap<VigileDelFuocoBean, String>) session.getAttribute("squadraNotturno"); %>
-	
-	
-	<br><div class="d-flex justify-content-center" >
-    <form action="??" method=post>
-    <button type="button" class="btn btn-success btn-lg" value="Conferma" name="Conferma" style="margin:3px;">Conferma Squadre</button>
-    </form>
-    <a href="#Giorno"><button type="button" class="btn btn-danger btn-lg" style="margin:3px;">Sqaudra Diurna</button></a>
-	<a href="#Notte"><button type="button" class="btn btn-danger btn-lg" style="margin:3px;">Squadra Notturna</button></a>
+	<%
+		HashMap<VigileDelFuocoBean, String> squadraD = (HashMap<VigileDelFuocoBean, String>) session
+				.getAttribute("squadraDiurno");
+		HashMap<VigileDelFuocoBean, String> squadraN = (HashMap<VigileDelFuocoBean, String>) session
+				.getAttribute("squadraNotturno");
+		Date giorno = (Date) request.getAttribute("dataDiurno");
+		Date notte = (Date) request.getAttribute("dataNotturno");
+		
+		Iterator in = squadraN.entrySet().iterator();
+		while (in.hasNext()) {
+			Map.Entry coppia = (Map.Entry) in.next();
+			VigileDelFuocoBean membro = (VigileDelFuocoBean) coppia.getKey();
+			System.out.println(membro.getNome());
+		}
+	%>
+
+<a href="#inizio" class=" back-up"><img src="IMG/arrow/up-arrow-p.png" style="margin-left: 5px;"
+					onmouseover="this.src='IMG/arrow/up-arrow-d.png'"
+					onmouseout="this.src='IMG/arrow/up-arrow-p.png'" /></a>
+
+		<div class="d-flex justify-content-center">
+		<h2 id="inizio">Gestione Squadre</h2>
 	</div>
-     <br>
-     
-     <!-- SQUADRA DIURNA -->
-       <div class="d-flex justify-content-center">
-		<h2 id="Giorno"  style="font-weight:bold; font-size:36px;">Squadra Diurna</h2>
+	<br>
+	<div class="d-flex justify-content-center">
+		<form action="GeneraSquadreServlet?salva=true" method=post>
+			<button type="submit" class="btn btn-outline-success btn-lg" value="salva"
+				name="salva" style="margin: 3px;">Conferma
+				Squadre</button>
+		</form>
+		<a href="#Giorno"><button type="button"
+				class="btn btn-outline-secondary btn-lg" style="margin: 3px;">Squadra
+				Diurna</button></a> <a href="#Notte"><button type="button"
+				class="btn btn-outline-secondary btn-lg" style="margin: 3px;">Squadra
+				Notturna</button></a><a href="#Disp"><button type="button"
+				class="btn btn-outline-secondary btn-lg" style="margin: 3px;">Personale Disponibile</button></a>
 	</div>
+	<br>
+
+	<!-- SQUADRA DIURNA -->
+	<div class="d-flex justify-content-center">
+		<h2 id="Giorno" style="font-weight: bold; font-size: 36px;">Squadra
+			Diurna <%=giorno %></h2>
+	</div>
+	<p class="d-flex justify-content-center"></p>
 	<div class="d-flex justify-content-center">
 		<img src="Icon/caserma.png" class="fr">
 		<h2>Sala Operativa</h2>
@@ -82,44 +121,45 @@ h2 {
 			<thead class="thead-dark">
 				<tr>
 					<th class="text-center">Grado</th>
+					<th class="text-center">Mansione</th>
 					<th class="text-center">Nome</th>
 					<th class="text-center">Cognome</th>
-					<th class="text-center">Mansione</th>
 					<th class="text-center">Modifica</th>
 				</tr>
 			</thead>
 
 			<tbody>
-				<% 
-	            
-                Iterator it = squadraD.entrySet().iterator();
-                while (it.hasNext()) {
-                    Map.Entry coppia = (Map.Entry) it.next();
-                    VigileDelFuocoBean membro = (VigileDelFuocoBean) coppia.getKey();
-                    if (coppia.getValue().equals("Sala Operativa")) {	
+				<%
+					Iterator it = squadraD.entrySet().iterator();
+					while (it.hasNext()) {
+						Map.Entry coppia = (Map.Entry) it.next();
+						VigileDelFuocoBean membro = (VigileDelFuocoBean) coppia.getKey();
+						if (coppia.getValue().equals("Sala Operativa")) {
 				%>
 
 				<tr>
-					<td class="text-center"><img src="Grado/<%=membro.getGrado() %>.png" style="height:25%" onerror="this.parentElement.innerHTML='Non disponibile';"></td>
-					<td class="text-center"><%=membro.getNome()%></td>
-					<td class="text-center"><%=membro.getCognome()%></td>
+					<td class="text-center"><img
+						src="Grado/<%=membro.getGrado()%>.png" style="height: 25%"
+						onerror="this.parentElement.innerHTML='Non disponibile';"></td>
 					<td class="text-center"><%=membro.getMansione()%></td>
+					<td class="text-center"><strong><%=membro.getNome()%></strong></td>
+					<td class="text-center"><strong><%=membro.getCognome()%></strong></td>
 					<td class="text-center"><button type="button"
 							class="btn btn-outline-secondary" data-toggle="modal"
 							data-target="#aggiungiVF" id="aggiungiVF"
-							onClick='apriFormVF("<%=membro.getEmail()%>")'>Sostituisci</button></td>
+							onClick='apriFormVF("<%=membro.getEmail()%>","<%=membro.getMansione()%>","1","<%=giorno%>")'>Sostituisci</button></td>
 					</td>
 				</tr>
 				<%
-                }
-                }
-           		%>
+					}
+					}
+				%>
 
 			</tbody>
 		</table>
 	</div>
 
-
+<p class="d-flex justify-content-center"></p>
 	<div class="d-flex justify-content-center">
 		<img src="Icon/sirena.png" class="fr">
 		<h2>Prima Partenza</h2>
@@ -129,42 +169,45 @@ h2 {
 			<thead class="thead-dark">
 				<tr>
 					<th class="text-center">Grado</th>
+					<th class="text-center">Mansione</th>
 					<th class="text-center">Nome</th>
 					<th class="text-center">Cognome</th>
-					<th class="text-center">Mansione</th>
 					<th class="text-center">Modifica</th>
 				</tr>
 			</thead>
 
 			<tbody>
-				<% 
-				it = squadraD.entrySet().iterator();
-                while (it.hasNext()) {
-                    Map.Entry coppia = (Map.Entry) it.next();
-                    VigileDelFuocoBean membro = (VigileDelFuocoBean) coppia.getKey();
-                    if (coppia.getValue().equals("Prima Partenza")) {	
+				<%
+					it = squadraD.entrySet().iterator();
+					while (it.hasNext()) {
+						Map.Entry coppia = (Map.Entry) it.next();
+						VigileDelFuocoBean membro = (VigileDelFuocoBean) coppia.getKey();
+						if (coppia.getValue().equals("Prima Partenza")) {
 				%>
 
 				<tr>
-					<td class="text-center"><img src="Grado/<%=membro.getGrado() %>.png" style="height:25%" onerror="this.parentElement.innerHTML='Non disponibile';"></td>
-					<td class="text-center"><%=membro.getNome()%></td>
-					<td class="text-center"><%=membro.getCognome()%></td>
+					<td class="text-center"><img
+						src="Grado/<%=membro.getGrado()%>.png" style="height: 25%"
+						onerror="this.parentElement.innerHTML='Non disponibile';"></td>
 					<td class="text-center"><%=membro.getMansione()%></td>
+					<td class="text-center"><strong><%=membro.getNome()%></strong></td>
+					<td class="text-center"><strong><%=membro.getCognome()%></strong></td>
 					<td class="text-center"><button type="button"
 							class="btn btn-outline-secondary" data-toggle="modal"
 							data-target="#aggiungiVF" id="aggiungiVF"
-							onClick='apriFormVF("<%=membro.getEmail()%>")'>Sostituisci</button></td>
+							onClick='apriFormVF("<%=membro.getEmail()%>","<%=membro.getMansione()%>","1","<%=giorno%>")'>Sostituisci</button></td>
 					</td>
 				</tr>
 				<%
-                }
-                }
-           		%>
+					}
+					}
+				%>
 
 			</tbody>
 		</table>
 	</div>
 
+<p class="d-flex justify-content-center"></p>
 	<div class="d-flex justify-content-center">
 		<img src="Icon/autoscala.png" class="fr">
 		<h2>Auto Scala</h2>
@@ -174,42 +217,45 @@ h2 {
 			<thead class="thead-dark">
 				<tr>
 					<th class="text-center">Grado</th>
+					<th class="text-center">Mansione</th>
 					<th class="text-center">Nome</th>
 					<th class="text-center">Cognome</th>
-					<th class="text-center">Mansione</th>
 					<th class="text-center">Modifica</th>
 				</tr>
 			</thead>
 
 			<tbody>
-				<% 
-				it = squadraD.entrySet().iterator();
-                while (it.hasNext()) {
-                    Map.Entry coppia = (Map.Entry) it.next();
-                    VigileDelFuocoBean membro = (VigileDelFuocoBean) coppia.getKey();
-                    if (coppia.getValue().equals("Auto Scala")) {	
+				<%
+					it = squadraD.entrySet().iterator();
+					while (it.hasNext()) {
+						Map.Entry coppia = (Map.Entry) it.next();
+						VigileDelFuocoBean membro = (VigileDelFuocoBean) coppia.getKey();
+						if (coppia.getValue().equals("Auto Scala")) {
 				%>
 
 				<tr>
-					<td class="text-center"><img src="Grado/<%=membro.getGrado() %>.png" style="height:25%" onerror="this.parentElement.innerHTML='Non disponibile';"></td>
-					<td class="text-center"><%=membro.getNome()%></td>
-					<td class="text-center"><%=membro.getCognome()%></td>
+					<td class="text-center"><img
+						src="Grado/<%=membro.getGrado()%>.png" style="height: 25%"
+						onerror="this.parentElement.innerHTML='Non disponibile';"></td>
 					<td class="text-center"><%=membro.getMansione()%></td>
+					<td class="text-center"><strong><%=membro.getNome()%></strong></td>
+					<td class="text-center"><strong><%=membro.getCognome()%></strong></td>
 					<td class="text-center"><button type="button"
 							class="btn btn-outline-secondary" data-toggle="modal"
 							data-target="#aggiungiVF" id="aggiungiVF"
-							onClick='apriFormVF("<%=membro.getEmail()%>")'>Sostituisci</button></td>
+							onClick='apriFormVF("<%=membro.getEmail()%>","<%=membro.getMansione()%>","1","<%=giorno%>")'>Sostituisci</button></td>
 					</td>
 				</tr>
 				<%
-                }
-                }
-           		%>
+					}
+					}
+				%>
 
 			</tbody>
 		</table>
 	</div>
 
+<p class="d-flex justify-content-center"></p>
 	<div class="d-flex justify-content-center">
 		<img src="Icon/idrante.png" class="fr">
 		<h2>Auto Botte</h2>
@@ -219,46 +265,62 @@ h2 {
 			<thead class="thead-dark">
 				<tr>
 					<th class="text-center">Grado</th>
+					<th class="text-center">Mansione</th>
 					<th class="text-center">Nome</th>
 					<th class="text-center">Cognome</th>
-					<th class="text-center">Mansione</th>
 					<th class="text-center">Modifica</th>
 				</tr>
 			</thead>
 
 			<tbody>
-				<% 
-                it = squadraD.entrySet().iterator();
-                while (it.hasNext()) {
-                    Map.Entry coppia = (Map.Entry) it.next();
-                    VigileDelFuocoBean membro = (VigileDelFuocoBean) coppia.getKey();
-                    if (coppia.getValue().equals("Auto Botte")) {		
+				<%
+					it = squadraD.entrySet().iterator();
+					while (it.hasNext()) {
+						Map.Entry coppia = (Map.Entry) it.next();
+						VigileDelFuocoBean membro = (VigileDelFuocoBean) coppia.getKey();
+						if (coppia.getValue().equals("Auto Botte")) {
 				%>
 
 				<tr>
-					<td class="text-center"><img src="Grado/<%=membro.getGrado() %>.png" style="height:25%" onerror="this.parentElement.innerHTML='Non disponibile';"></td>
-					<td class="text-center"><%=membro.getNome()%></td>
-					<td class="text-center"><%=membro.getCognome()%></td>
+					<td class="text-center"><img
+						src="Grado/<%=membro.getGrado()%>.png" style="height: 25%"
+						onerror="this.parentElement.innerHTML='Non disponibile';"></td>
 					<td class="text-center"><%=membro.getMansione()%></td>
+					<td class="text-center"><strong><%=membro.getNome()%></strong></td>
+					<td class="text-center"><strong><%=membro.getCognome()%></strong></td>
 					<td class="text-center"><button type="button"
 							class="btn btn-outline-secondary" data-toggle="modal"
 							data-target="#aggiungiVF" id="aggiungiVF"
-							onClick='apriFormVF("<%=membro.getEmail()%>")'>Sostituisci</button></td>
+							onClick='apriFormVF("<%=membro.getEmail()%>","<%=membro.getMansione()%>","1","<%=giorno%>")'>Sostituisci</button></td>
 					</td>
 				</tr>
 				<%
-                }
-                }
-           		%>
+					}
+					}
+				%>
 
 			</tbody>
 		</table>
 	</div>
 	
-	  <!-- SQUADRA NOTTURNA -->
-       <div class="d-flex justify-content-center">
-		<h2 id="Notte"  style="font-weight:bold; font-size:36px;">Squadra Notturna</h2>
+	<br>
+	<div class="d-flex justify-content-center">
+		<form action="GeneraSquadreServlet?salva=true" method=post>
+		<a href="#Giorno"><button type="button"
+				class="btn btn-outline-secondary btn-lg" style="margin: 3px;">Squadra
+				Diurna</button></a> <a href="#Notte"><button type="button"
+				class="btn btn-outline-secondary btn-lg" style="margin: 3px;">Squadra
+				Notturna</button></a><a href="#Disp"><button type="button"
+				class="btn btn-outline-secondary btn-lg" style="margin: 3px;">Personale Disponibile</button></a>
 	</div>
+	<br>
+	
+	<!-- SQUADRA NOTTURNA -->
+	<div class="d-flex justify-content-center">
+		<h2 id="Notte" style="font-weight: bold; font-size: 36px;">Squadra
+			Notturna <%=notte %></h2>
+	</div>
+	<p class="d-flex justify-content-center"></p>
 	<div class="d-flex justify-content-center">
 		<img src="Icon/caserma.png" class="fr">
 		<h2>Sala Operativa</h2>
@@ -269,45 +331,45 @@ h2 {
 			<thead class="thead-dark">
 				<tr>
 					<th class="text-center">Grado</th>
+					<th class="text-center">Mansione</th>
 					<th class="text-center">Nome</th>
 					<th class="text-center">Cognome</th>
-					<th class="text-center">Mansione</th>
 					<th class="text-center">Modifica</th>
 				</tr>
 			</thead>
 
 			<tbody>
-				<% 
-	            
-                it = squadraN.entrySet().iterator();
-                while (it.hasNext()) {
-                    Map.Entry coppia = (Map.Entry) it.next();
-                    VigileDelFuocoBean membro = (VigileDelFuocoBean) coppia.getKey();
-                    if (coppia.getKey() == "Sala Operativa") {	
+				<%
+					in = squadraN.entrySet().iterator();
+					while (in.hasNext()) {
+						Map.Entry coppia = (Map.Entry) in.next();
+						VigileDelFuocoBean membro = (VigileDelFuocoBean) coppia.getKey();
+						if (coppia.getValue().equals("Sala Operativa")) {
 				%>
 
 				<tr>
-					<td class="text-center"><img src="Grado/<%=membro.getGrado() %>.png" style="height:25%" onerror="this.parentElement.innerHTML='Non disponibile';"></td>
-					<td class="text-center"><%=membro.getNome()%></td>
-					<td class="text-center"><%=membro.getCognome()%></td>
+					<td class="text-center"><img
+						src="Grado/<%=membro.getGrado()%>.png" style="height: 25%"
+						onerror="this.parentElement.innerHTML='Non disponibile';"></td>
 					<td class="text-center"><%=membro.getMansione()%></td>
+					<td class="text-center"><strong><%=membro.getNome()%></strong></td>
+					<td class="text-center"><strong><%=membro.getCognome()%></strong></td>
 					<td class="text-center"><button type="button"
 							class="btn btn-outline-secondary" data-toggle="modal"
 							data-target="#aggiungiVF" id="aggiungiVF"
-							onClick='apriFormVF("<%=membro.getEmail()%>")'>Sostituisci</button></td>
+							onClick='apriFormVF("<%=membro.getEmail()%>","<%=membro.getMansione()%>","2","<%=notte%>")'>Sostituisci</button></td>
 					</td>
 				</tr>
 				<%
-                }
-                    it.remove();
-                }
-           		%>
+					}
+					}
+				%>
 
 			</tbody>
 		</table>
 	</div>
 
-
+<p class="d-flex justify-content-center"></p>
 	<div class="d-flex justify-content-center">
 		<img src="Icon/sirena.png" class="fr">
 		<h2>Prima Partenza</h2>
@@ -317,43 +379,45 @@ h2 {
 			<thead class="thead-dark">
 				<tr>
 					<th class="text-center">Grado</th>
+					<th class="text-center">Mansione</th>
 					<th class="text-center">Nome</th>
 					<th class="text-center">Cognome</th>
-					<th class="text-center">Mansione</th>
 					<th class="text-center">Modifica</th>
 				</tr>
 			</thead>
 
 			<tbody>
-				<% 
-				it = squadraN.entrySet().iterator();
-                while (it.hasNext()) {
-                    Map.Entry coppia = (Map.Entry) it.next();
-                    VigileDelFuocoBean membro = (VigileDelFuocoBean) coppia.getKey();
-                    if (coppia.getKey() == "Prima Partenza") {	
+				<%
+					in = squadraN.entrySet().iterator();
+					while (in.hasNext()) {
+						Map.Entry coppia = (Map.Entry) in.next();
+						VigileDelFuocoBean membro = (VigileDelFuocoBean) coppia.getKey();
+						if (coppia.getValue().equals("Prima Partenza")) {
 				%>
 
 				<tr>
-					<td class="text-center"><img src="Grado/<%=membro.getGrado() %>.png" style="height:25%" onerror="this.parentElement.innerHTML='Non disponibile';"></td>
-					<td class="text-center"><%=membro.getNome()%></td>
-					<td class="text-center"><%=membro.getCognome()%></td>
+					<td class="text-center"><img
+						src="Grado/<%=membro.getGrado()%>.png" style="height: 25%"
+						onerror="this.parentElement.innerHTML='Non disponibile';"></td>
 					<td class="text-center"><%=membro.getMansione()%></td>
+					<td class="text-center"><strong><%=membro.getNome()%></strong></td>
+					<td class="text-center"><strong><%=membro.getCognome()%></strong></td>
 					<td class="text-center"><button type="button"
 							class="btn btn-outline-secondary" data-toggle="modal"
 							data-target="#aggiungiVF" id="aggiungiVF"
-							onClick='apriFormVF("<%=membro.getEmail()%>")'>Sostituisci</button></td>
+							onClick='apriFormVF("<%=membro.getEmail()%>","<%=membro.getMansione()%>","2","<%=notte%>")'>Sostituisci</button></td>
 					</td>
 				</tr>
 				<%
-                }
-                    it.remove();
-                }
-           		%>
+					}
+					}
+				%>
 
 			</tbody>
 		</table>
 	</div>
 
+<p class="d-flex justify-content-center"></p>
 	<div class="d-flex justify-content-center">
 		<img src="Icon/autoscala.png" class="fr">
 		<h2>Auto Scala</h2>
@@ -363,43 +427,45 @@ h2 {
 			<thead class="thead-dark">
 				<tr>
 					<th class="text-center">Grado</th>
+					<th class="text-center">Mansione</th>
 					<th class="text-center">Nome</th>
 					<th class="text-center">Cognome</th>
-					<th class="text-center">Mansione</th>
 					<th class="text-center">Modifica</th>
 				</tr>
 			</thead>
 
 			<tbody>
-				<% 
-				it = squadraN.entrySet().iterator();
-                while (it.hasNext()) {
-                    Map.Entry coppia = (Map.Entry) it.next();
-                    VigileDelFuocoBean membro = (VigileDelFuocoBean) coppia.getKey();
-                    if (coppia.getKey() == "Auto Scala") {	
+				<%
+					in = squadraN.entrySet().iterator();
+					while (in.hasNext()) {
+						Map.Entry coppia = (Map.Entry) in.next();
+						VigileDelFuocoBean mb = (VigileDelFuocoBean) coppia.getKey();
+						if (coppia.getValue().equals("Auto Scala")) {
 				%>
 
 				<tr>
-					<td class="text-center"><img src="Grado/<%=membro.getGrado() %>.png" style="height:25%" onerror="this.parentElement.innerHTML='Non disponibile';"></td>
-					<td class="text-center"><%=membro.getNome()%></td>
-					<td class="text-center"><%=membro.getCognome()%></td>
-					<td class="text-center"><%=membro.getMansione()%></td>
+					<td class="text-center"><img
+						src="Grado/<%=mb.getGrado()%>.png" style="height: 25%"
+						onerror="this.parentElement.innerHTML='Non disponibile';"></td>
+					<td class="text-center"><%=mb.getMansione()%></td>
+					<td class="text-center"><strong><%=mb.getNome()%></strong></td>
+					<td class="text-center"><strong><%=mb.getCognome()%></strong></td>
 					<td class="text-center"><button type="button"
 							class="btn btn-outline-secondary" data-toggle="modal"
 							data-target="#aggiungiVF" id="aggiungiVF"
-							onClick='apriFormVF("<%=membro.getEmail()%>")'>Sostituisci</button></td>
+							onClick='apriFormVF("<%=mb.getEmail()%>","<%=mb.getMansione()%>","2","<%=notte%>")'>Sostituisci</button></td>
 					</td>
 				</tr>
 				<%
-                }
-                    it.remove();
-                }
-           		%>
+					}
+					}
+				%>
 
 			</tbody>
 		</table>
 	</div>
 
+<p class="d-flex justify-content-center"></p>
 	<div class="d-flex justify-content-center">
 		<img src="Icon/idrante.png" class="fr">
 		<h2>Auto Botte</h2>
@@ -409,71 +475,108 @@ h2 {
 			<thead class="thead-dark">
 				<tr>
 					<th class="text-center">Grado</th>
+					<th class="text-center">Mansione</th>
 					<th class="text-center">Nome</th>
 					<th class="text-center">Cognome</th>
-					<th class="text-center">Mansione</th>
 					<th class="text-center">Modifica</th>
 				</tr>
 			</thead>
 
 			<tbody>
-				<% 
-                it = squadraN.entrySet().iterator();
-                while (it.hasNext()) {
-                    Map.Entry coppia = (Map.Entry) it.next();
-                    VigileDelFuocoBean membro = (VigileDelFuocoBean) coppia.getKey();
-                    if (coppia.getKey() == "Auto Botte") {		
+				<%
+					in = squadraN.entrySet().iterator();
+					while (in.hasNext()) {
+						Map.Entry coppia = (Map.Entry) in.next();
+						VigileDelFuocoBean membro = (VigileDelFuocoBean) coppia.getKey();
+						if (coppia.getValue().equals("Auto Botte")) {
 				%>
 
 				<tr>
-					<td class="text-center"><img src="Grado/<%=membro.getGrado() %>.png" style="height:25%" onerror="this.parentElement.innerHTML='Non disponibile';"></td>
-					<td class="text-center"><%=membro.getNome()%></td>
-					<td class="text-center"><%=membro.getCognome()%></td>
+					<td class="text-center"><img
+						src="Grado/<%=membro.getGrado()%>.png" style="height: 25%"
+						onerror="this.parentElement.innerHTML='Non disponibile';"></td>
 					<td class="text-center"><%=membro.getMansione()%></td>
+					<td class="text-center"><strong><%=membro.getNome()%></strong></td>
+					<td class="text-center"><strong><%=membro.getCognome()%></strong></td>
 					<td class="text-center"><button type="button"
 							class="btn btn-outline-secondary" data-toggle="modal"
 							data-target="#aggiungiVF" id="aggiungiVF"
-							onClick='apriFormVF("<%=membro.getEmail()%>")'>Sostituisci</button></td>
+							onClick='apriFormVF("<%=membro.getEmail()%>","<%=membro.getMansione()%>","2","<%=notte%>")'>Sostituisci</button></td>
 					</td>
 				</tr>
 				<%
-                }
-                    it.remove();
-                }
-           		%>
+					}
+					}
+				%>
 
 			</tbody>
 		</table>
 	</div>
+	<div class="d-flex justify-content-center">
+		<form action="GeneraSquadreServlet?salva=true" method=post>
+		<a href="#Giorno"><button type="button"
+				class="btn btn-outline-secondary btn-lg" style="margin: 3px;">Squadra
+				Diurna</button></a> <a href="#Notte"><button type="button"
+				class="btn btn-outline-secondary btn-lg" style="margin: 3px;">Squadra
+				Notturna</button></a><a href="#Disp"><button type="button"
+				class="btn btn-outline-secondary btn-lg" style="margin: 3px;">Personale Disponibile</button></a>
+	</div>
+	<br>
+	<div class="d-flex justify-content-center" id="Disp">
+		<h2 >Personale Disponibile </h2>
+	</div>
+	<div id="personale">
+	</div>
 
 
-	<script	src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+	<script
+		src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 	<script src="JS/datePicker.js"></script>
-	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.min.js"></script>
+	<script type="text/javascript"
+		src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.min.js"></script>
 	<script src="https://buttons.github.io/buttons.js"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.js"></script>
+	<script
+		src="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.js"></script>
 
 	<script>
-
-	function apriFormVF(input) {
-		//Chiamata ajax alla servlet PersonaleDisponibileAJAX
-		$.ajax({
-			type : "POST",//Chiamata POST
-			url :"/ScheduFIRE/PersonaleDisponibileAJAX",//url della servlet che devo chiamare
-			data : {
-				"JSON" : true,
-				"aggiunta":true,
-				"email" : input,
-			},			
-			success : function(response) {//Operazione da eseguire una volta terminata la chiamata alla servlet.
-				$("#appendElenco").remove();
-				$("<div id='appendElenco'></div>").appendTo("#elenco");
-				$(response).appendTo("#appendElenco");					
-			}
-		});
-
-	}
-
+	$(document).ready(function(){
+		caricoPersonale();});
+	
+		function apriFormVF(input, rule, sq, dt) {
+			//Chiamata ajax alla servlet PersonaleDisponibileAJAX
+			$.ajax({
+				type : "POST",//Chiamata POST
+				url : "/ScheduFIRE/PersonaleDisponibileAJAX",//url della servlet che devo chiamare
+				data : {
+					"JSON" : true,
+					"aggiunta" : true,
+					"email" : input,
+					"mansione" : rule,
+					"tiposquadra" : sq,
+					"dataModifica" : dt
+				},
+				success : function(response) {//Operazione da eseguire una volta terminata la chiamata alla servlet.
+					$("#appendElenco").remove();
+					$("<div id='appendElenco'></div>").appendTo("#elenco");
+					$(response).appendTo("#appendElenco");
+				}
+			});
+		}
+		
+		function caricoPersonale() {
+			//Chiamata ajax alla servlet PersonaleDisponibileAJAX
+			$.ajax({
+				type : "POST",//Chiamata POST
+				url : "/ScheduFIRE/PersonaleServlet",//url della servlet che devo chiamare
+				success : function(response) {//Operazione da eseguire una volta terminata la chiamata alla servlet.
+						$(response).appendTo("#personale");
+				}
+			});
+		}
+		
+		function attivapulsante(){
+			$("#aggiuni").Button.disabled=false
+		}
 	</script>
 
 

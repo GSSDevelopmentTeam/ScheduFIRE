@@ -8,12 +8,11 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
-import model.bean.CredenzialiBean;
 import model.bean.VigileDelFuocoBean;
 
 import model.dao.VigileDelFuocoDao;
+import util.Util;
 
 /**
  * Servlet che si occupa dell'ottenimento di una collezione di VigileDelFuocoBean dal database.
@@ -36,64 +35,62 @@ public class GestionePersonaleServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		/*
-		//Ottenimento oggetto sessione dalla richiesta
-		HttpSession session = request.getSession();
-				
-		//Ottenimento credenziali dell'utente dalla sessione
-		CredenzialiBean credenziali = (CredenzialiBean) session.getAttribute("credenziali"); 
-				
-		//Controllo credenziali
-		if( credenziali == null )
-			//lancio eccezione
-			;
 		
-		if( credenziali.getRuolo() == "vigile" ) //definire bene la stringa
-			//lancio eccezione
-			;
-		*/
+		//Controllo login
+		Util.isCapoTurno(request);
 		
-		//Ottenimento parametro
+		//Ottenimento parametri
 		String ordinamento = request.getParameter("ordinamento");
 		
 		//Se il parametro non è settato, l'ordinamento sarà quello di default
 		if(ordinamento == null)
 			ordinamento = "";
-		
+	
 		//Ottenimento della collezione di VigiliDelFuoco
 		
+		Collection<VigileDelFuocoBean> capiSquadra = null;
+		Collection<VigileDelFuocoBean> autisti = null;
 		Collection<VigileDelFuocoBean> vigili = null;
 		
 		switch(ordinamento) {
 		case "nome": 
-			vigili = VigileDelFuocoDao.ottieni(VigileDelFuocoDao.ORDINA_PER_NOME);
+			capiSquadra = VigileDelFuocoDao.ottieniCapiSquadra(VigileDelFuocoDao.ORDINA_PER_NOME);
+			autisti = VigileDelFuocoDao.ottieniAutisti(VigileDelFuocoDao.ORDINA_PER_NOME);
+			vigili = VigileDelFuocoDao.ottieniVigili(VigileDelFuocoDao.ORDINA_PER_NOME);
 			break;
 		case "cognome": 
-			vigili = VigileDelFuocoDao.ottieni(VigileDelFuocoDao.ORDINA_PER_COGNOME);
+			capiSquadra = VigileDelFuocoDao.ottieniCapiSquadra(VigileDelFuocoDao.ORDINA_PER_COGNOME);
+			autisti = VigileDelFuocoDao.ottieniAutisti(VigileDelFuocoDao.ORDINA_PER_COGNOME);
+			vigili = VigileDelFuocoDao.ottieniVigili(VigileDelFuocoDao.ORDINA_PER_COGNOME);
 			break;
 		case "caricoLavoro": 
-			vigili = VigileDelFuocoDao.ottieni(VigileDelFuocoDao.ORDINA_PER_CARICO_LAVORO);
+			capiSquadra = VigileDelFuocoDao.ottieniCapiSquadra(VigileDelFuocoDao.ORDINA_PER_CARICO_LAVORO);
+			autisti = VigileDelFuocoDao.ottieniAutisti(VigileDelFuocoDao.ORDINA_PER_CARICO_LAVORO);
+			vigili = VigileDelFuocoDao.ottieniVigili(VigileDelFuocoDao.ORDINA_PER_CARICO_LAVORO);
 			break;
-		case "giorniFerieAnnoCorrente": 
-			vigili = VigileDelFuocoDao.ottieni(VigileDelFuocoDao.ORDINA_PER_GIORNI_FERIE_ANNO_CORRENTE);
-			break;
-		case "giorniFerieAnnoPrecedente": 
-			vigili = VigileDelFuocoDao.ottieni(VigileDelFuocoDao.ORDINA_PER_GIORNI_FERIE_ANNI_PRECEDENTI);
+		case "ferie": 
+			capiSquadra = VigileDelFuocoDao.ottieniCapiSquadra(VigileDelFuocoDao.ORDINA_PER_FERIE_TOTALI);
+			autisti = VigileDelFuocoDao.ottieniAutisti(VigileDelFuocoDao.ORDINA_PER_FERIE_TOTALI);
+			vigili = VigileDelFuocoDao.ottieniVigili(VigileDelFuocoDao.ORDINA_PER_FERIE_TOTALI);
 			break;
 		default:
-			vigili = VigileDelFuocoDao.ottieni(VigileDelFuocoDao.ORDINA_PER_COGNOME);
+			capiSquadra = VigileDelFuocoDao.ottieniCapiSquadra(VigileDelFuocoDao.ORDINA_PER_COGNOME);
+			autisti = VigileDelFuocoDao.ottieniAutisti(VigileDelFuocoDao.ORDINA_PER_COGNOME);
+			vigili = VigileDelFuocoDao.ottieniVigili(VigileDelFuocoDao.ORDINA_PER_COGNOME);
 			ordinamento = "cognome";
 		}
 		
 		//Controllo collezione
-		if(vigili == null)
+		if(capiSquadra == null || autisti == null || vigili == null)
 			throw new GestionePersonaleException("Non è stato possibile ottenere"
-												+ " la lista di Vigile del Fuoco");
+												+ " la lista del personale di Vigili del Fuoco");
 		
-		//Passaggio della collezione di VigiliDelFuoco come attributo
+		//Passaggio delle collezioni di VigiliDelFuoco come attributo
+		request.setAttribute("capiSquadra", capiSquadra);
+		request.setAttribute("autisti", autisti);
 		request.setAttribute("vigili", vigili);
 		
-		//Passasggio del tipo di ordinamento ottenuto
+		//Passasggio dei tipi di ordinamento ottenuti
 		request.setAttribute("ordinamento", ordinamento);
 		
 		// Reindirizzamento alla jsp

@@ -10,12 +10,10 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import model.bean.CapoTurnoBean;
-import model.bean.CredenzialiBean;
 import model.bean.VigileDelFuocoBean;
 
-import model.dao.CapoTurnoDao;
 import model.dao.VigileDelFuocoDao;
-
+import util.Util;
 import util.Validazione;
 
 /**
@@ -44,28 +42,17 @@ public class AggiungiVFServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
+		//Controllo login
+		Util.isCapoTurno(request);
+		
 		//Ottenimento oggetto sessione dalla richiesta
 		HttpSession session = request.getSession();
 		
-		//Ottenimento credenziali dell'utente dalla sessione
-		CredenzialiBean credenziali = (CredenzialiBean) session.getAttribute("credenziali"); 
-		/*
-		//Controllo credenziali
-		if( credenziali == null )
-			throw new ScheduFIREException();
+		//Rimozione flag per l'esito dell'operazione
+		session.removeAttribute("risultato");
 		
-		
-		if( credenziali.getRuolo() == "vigile" ) //definire bene la stringa
-			throw new ScheduFIREException();
-		
-		//Ottenimento dati del CapoTurno
-		CapoTurnoBean ct = CapoTurnoDao.ottieni(credenziali.getUsername());
-		
-		//Controllo CapoTurno
-		if(ct == null)
-			throw new ScheduFIREException();
-
-		 */
+		//Ottengo i dati del Capo Turno dalla sessione
+		CapoTurnoBean ct = (CapoTurnoBean) session.getAttribute("capoturno");
 		
 		//Ottenimento parametro email dalla richiesta
 		String email = request.getParameter("email");;
@@ -77,9 +64,9 @@ public class AggiungiVFServlet extends HttpServlet {
 		// Ottenimento parametri del VF dalla richiesta
 		String nome = request.getParameter("nome");;
 		String cognome = request.getParameter("cognome");;
-		String turno = /*ct.getTurno()*/ "B";
+		String turno = ct.getTurno();
 		String mansione = request.getParameter("mansione");;
-		String username = "turnoB"/* + ct.getTurno()*/;
+		String username = "turno" + ct.getTurno();
 		String grado = request.getParameter("grado");
 		String giorniFerieAnnoCorrenteStringa = request.getParameter("giorniFerieAnnoCorrente");
 		String giorniFerieAnnoPrecedenteStringa = request.getParameter("giorniFerieAnnoPrecedente");
@@ -128,10 +115,16 @@ public class AggiungiVFServlet extends HttpServlet {
 		if( (mansione.equals("Autista") || mansione.equals("Vigile") )  
 				&&  grado.equals("Semplice") ) 
 			throw new ParametroInvalidoException("Il parametro 'grado' è errato!");
+		
+		email += "@vigilfuoco.it";
 			
 		// Instanziazione dell'oggetto VigileDelFuocoBean
 		VigileDelFuocoBean vf = new VigileDelFuocoBean(nome, cognome, email, turno, mansione, username, grado,
 														giorniFerieAnnoCorrente, giorniFerieAnnoPrecedente);
+		
+		//Settaggio carico di lavoro
+		int caricoLavoro = VigileDelFuocoDao.getCaricoLavoroMinimo();
+		vf.setCaricoLavoro(caricoLavoro);
 		
 		//Controllo se il Vigile del Fuoco è già presente nel database
 		VigileDelFuocoBean vigileDb = null;
@@ -139,7 +132,6 @@ public class AggiungiVFServlet extends HttpServlet {
 			
 			//Se il Vigile del Fuoco è già presente nel database ed è adoperabile si lancia l'eccezione
 			if(vigileDb.isAdoperabile()) {
-				
 				throw new GestionePersonaleException("Il vigile del fuoco è già presente nel sistema!");
 				
 			} else {
@@ -160,9 +152,11 @@ public class AggiungiVFServlet extends HttpServlet {
 				throw new GestionePersonaleException("L'inserimento del vigile del fuoco non è andato a buon fine!");
 
 		}
+		
+		session.setAttribute("risultato", "L'inserimento del Vigile del Fuoco è avvenuto con successo!");
 
 		// Reindirizzamento alla jsp
-		request.getRequestDispatcher("/GestionePersonaleServlet").forward(request, response);
+		response.sendRedirect("./GestionePersonaleServlet");
 			
 	}
 

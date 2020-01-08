@@ -2,6 +2,8 @@ package control;
 
 import java.io.IOException;
 import java.sql.Date;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import javax.servlet.ServletException;
@@ -33,7 +35,7 @@ public class CalendarioServlet extends HttpServlet {
 
 		Date date = new Date(System.currentTimeMillis());
 		String dataCorrente = date.toString();
-
+		
 		//variabili contengono il numero dell'anno mese e giorno in formato stringa 
 		String anno_stringa_numero = dataCorrente.substring(0, 4);
 		String mese_stringa_numero = dataCorrente.substring(5, 7);
@@ -58,6 +60,11 @@ public class CalendarioServlet extends HttpServlet {
 		int [] days_work = new int [42];
 		for(i=0; i<=41; i++)
 			days_work[i]=-1;
+		
+		//array dei turni lavorativi
+		String[] days_turno = new String [42];
+		for(i=0; i<=41; i++)
+			days_turno[i]="";
 
 
 		String meseJSP = request.getParameter("mese");
@@ -72,71 +79,15 @@ public class CalendarioServlet extends HttpServlet {
 		}
 
 		//funzione per riempire il calendario
-		riempiCalendario(mese, anno, days_month);
+		int len = riempiCalendario(mese, anno, days_month);
 		//funzione per i giorni lavorativi
 		riempiLavorativo(mese, anno, days_work);
-
-		//for(i=0; i<42; i++)
-			//System.out.println(days_work[i]+"\n");
-
-		//INIZIO schedulazione dei vigili
-		//creo i 4 array per ogni squadra
-		//conterranno i nomi dei vigili del fuoco
-		ArrayList<String> sala_operativa = new ArrayList<>();
-		ArrayList<String> prima_partenza = new ArrayList<>();
-		ArrayList<String> autoscala = new ArrayList<>();
-		ArrayList<String> autobotte = new ArrayList<>();
-
-
-		//return: email, tipologia e giorno lavorativo:
-		ArrayList<ComponenteDellaSquadraBean> componenti_squadra = new ArrayList<>();  //bean
-		componenti_squadra = ComponenteDellaSquadraDao.getComponenti(date);
-
-
-		VigileDelFuocoBean vf_bean = new VigileDelFuocoBean();	//bean vf
-
-		String tipologia, email, cognome_nome;
-		for(ComponenteDellaSquadraBean c_s: componenti_squadra) {
-
-			//tipologia -> sala_operativa, prima_partenza, autoscala, autobotte
-			tipologia = c_s.getTipologiaSquadra();
-
-			//email del vf in pos i
-			email = c_s.getEmailVF();
-
-			//ottengo il vf bean con la email data
-			vf_bean = VigileDelFuocoDao.ottieni(email);
-
-			cognome_nome = vf_bean.getCognome() + " " + vf_bean.getNome();
-
-			switch (tipologia) {
-			case "Sala Operativa":
-				sala_operativa.add(cognome_nome);
-				break;
-			case "Prima Partenza":
-				prima_partenza.add(cognome_nome);
-				break;
-			case "Auto Scala":
-				autoscala.add(cognome_nome);
-				break;
-			case "Auto Botte":
-				autobotte.add(cognome_nome);
-				break;
-			default: 
-				System.out.println("Parametro nome squadra non valido."
-						+ "LINEA 126 CalendarioServlet");
-				break;
-			}
-		}
-		// FINE schedulazione vigili
-
-		//attributi passati al CalendarioJSP.jsp
-		//array delle squadre
-		request.setAttribute("sala_operativa", sala_operativa);
-		request.setAttribute("prima_partenza", prima_partenza);
-		request.setAttribute("autoscala", autoscala);
-		request.setAttribute("autobotte", autobotte);
-
+		//funzione per il nome del turno
+		riempiTurno(mese, anno, days_turno);
+		
+		
+		
+		request.setAttribute("date", date);
 		request.setAttribute("anno_corrente", anno_stringa_numero);
 		request.setAttribute("mese_corrente", mese_stringa_numero);
 		request.setAttribute("anno", anno);
@@ -145,6 +96,8 @@ public class CalendarioServlet extends HttpServlet {
 		request.setAttribute("meseStringa", month[mese-1]);
 		request.setAttribute("days_month", days_month);
 		request.setAttribute("days_work", days_work);
+		request.setAttribute("days_turno", days_turno);
+		request.setAttribute("len", len);
 
 		//dispatcher a calendario JSP
 		request.getRequestDispatcher("JSP/CalendarioJSP.jsp").forward(request, response); 
@@ -164,9 +117,7 @@ public class CalendarioServlet extends HttpServlet {
 		return bisestile;
 	}
 
-
-	private void riempiCalendario (int mese, int anno, int[] days_month) {
-
+	private int riempiCalendario (int mese, int anno, int[] days_month) {
 
 		//per vedere qual è il primo giorno del mese
 		LocalDate local=LocalDate.of(anno,mese,1);
@@ -185,6 +136,10 @@ public class CalendarioServlet extends HttpServlet {
 		case "SUNDAY": day = 6; break; //domenica
 		default: break;
 		}
+		
+		int len;
+		
+
 
 		int i;
 
@@ -197,12 +152,35 @@ public class CalendarioServlet extends HttpServlet {
 					days_month[i] = giorno;
 					giorno++;
 				}
-			} else {
+				
+			switch (day) {
+			case 0 : len = 8; break; 
+			case 1 : len = 8; break; 
+			case 2 : len = 8; break; 
+			case 3 : len = 8; break;
+			case 4 : len = 8; break; 
+			default: len = 0;
+			}
+
+			}
+			else {
 				for(i=day;i<=27+day;i++) {
 					days_month[i] = giorno;
 					giorno++;
 				}
-			}			
+			}
+			
+			switch (day) {
+			case 0 : len = 8; break; 
+			case 1 : len = 8; break; 
+			case 2 : len = 8; break; 
+			case 3 : len = 8; break;
+			case 4 : len = 8; break;
+			case 5 : len = 8; break; 
+			default: len = 0;
+			}
+			
+			
 			break;
 
 		case 11: case 4: case 6: case 9: //mesi di 30 giorni
@@ -210,6 +188,13 @@ public class CalendarioServlet extends HttpServlet {
 			for (i=day; i<=29+day; i++) {
 				days_month[i] = giorno;
 				giorno ++;
+			}
+			
+			switch (day) {
+			case 0 : len = 8; break; 
+			case 1 : len = 8; break; 
+			case 2 : len = 8; break;
+			default: len = 0;
 			}
 
 			break;
@@ -220,18 +205,30 @@ public class CalendarioServlet extends HttpServlet {
 				days_month[i] = giorno;
 				giorno++;
 			}
+			
+			switch (day) {
+			case 0 : len = 8; break; 
+			case 1 : len = 8; break; 
+			case 2 : len = 8; break; 
+			case 3 : len = 7; break;
+			case 4 : len = 7; break;
+			default: len = 0;
+			}
 
 			break;
 		}
+		
+
+		return len;
 
 	}
-	/*
-	 * -1 -> giorno non da calendario
-	 * 1 -> giorno lavorativo diurno
-	 * 2 -> giorno lavorativo notturno
-	 */
+	
 	private void riempiLavorativo(int mese, int anno, int[] days_work) {
-
+		
+		 // -1 -> giorno non da calendario
+		 // 1 -> giorno lavorativo diurno
+		 //2 -> giorno lavorativo notturno
+	
 		//per vedere qual è il primo giorno del mese
 		LocalDate local=LocalDate.of(anno,mese,1);
 		String primoGiorno = local.getDayOfWeek().toString();
@@ -329,5 +326,77 @@ public class CalendarioServlet extends HttpServlet {
 
 	}
 
+	private void riempiTurno(int mese, int anno, String[] days_turno) {
+		
+		LocalDate local=LocalDate.of(anno,mese,1);
+		String primoGiorno = local.getDayOfWeek().toString();
+
+		int day=-1;
+
+		switch (primoGiorno) {
+
+		case "MONDAY": day = 0; break; //lunedì
+		case "TUESDAY": day = 1; break; //martedì
+		case "WEDNESDAY": day = 2; break; //mercoledì
+		case "THURSDAY": day = 3; break; //giovedì
+		case "FRIDAY": day = 4; break; //venerdì
+		case "SATURDAY": day = 5; break; //sabato
+		case "SUNDAY": day = 6; break; //domenica
+		default: break;
+		}
+
+		int i;
+		String data_stringa = "";
+		Date data;
+
+
+		int giorno =1;
+		switch (mese) {
+		case 2: //mese febbraio
+
+			if(isBisestile(anno)) { //anno bisestile
+				for(i=day;i<=28+day;i++) {
+					data_stringa= anno+"-"+mese+"-"+giorno;
+					giorno++;
+					data = Date.valueOf(data_stringa);
+					if(GiornoLavorativo.isLavorativo(data))
+						days_turno[i] = GiornoLavorativo.nomeTurnoB(data);
+				}
+			} else {
+				for(i=day;i<=27+day;i++) {
+					data_stringa= anno+"-"+mese+"-"+giorno;
+					giorno++;
+					data = Date.valueOf(data_stringa);
+					if(GiornoLavorativo.isLavorativo(data))
+						days_turno[i] = GiornoLavorativo.nomeTurnoB(data);
+				}
+			}			
+			break;
+
+		case 11: case 4: case 6: case 9: //mesi di 30 giorni
+
+			for (i=day; i<=29+day; i++) {
+				data_stringa= anno+"-"+mese+"-"+giorno;
+				giorno++;
+				data = Date.valueOf(data_stringa);
+				if(GiornoLavorativo.isLavorativo(data))
+					days_turno[i] = GiornoLavorativo.nomeTurnoB(data);			
+			}
+
+			break;
+
+		default: // mesi di 31 giorni
+
+			for (i=day; i<=30+day; i++) {
+				data_stringa= anno+"-"+mese+"-"+giorno;
+				giorno++;
+				data = Date.valueOf(data_stringa);
+				if(GiornoLavorativo.isLavorativo(data))
+					days_turno[i] = GiornoLavorativo.nomeTurnoB(data);			
+			}
+
+			break;
+		}
+	}
 
 }

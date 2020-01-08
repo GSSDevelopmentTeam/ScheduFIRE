@@ -6,8 +6,7 @@
 body {
 	background-image: url("../IMG/DSC_0066.png");
 	background-size:cover;
-	background-repeat:no-repeat;	
-	font-family: Verdana, Geneva, Tahoma, sans-serif;
+	background-repeat:no-repeat;
 } 
 
 /*'FontAwesome'!important*/
@@ -107,7 +106,7 @@ b {
 .icon {
 	padding: 10px;
 	background: #b60000;
-	color: white;
+	color:#FFFFFF;
 	min-width: 50px;
 	text-align: center;
 	box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0

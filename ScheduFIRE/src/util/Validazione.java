@@ -13,7 +13,7 @@ public class Validazione {
 	
 	private static final Pattern PATTERN_NOME_COGNOME = Pattern.compile("^[A-Z]{1}[a-z]{0,19}+$");
 	
-	private static final Pattern PATTERN_EMAIL = Pattern.compile("^[A-Za-z]+\\.[A-Za-z]+[1-9]*[0-9]*$"); 
+	private static final Pattern PATTERN_EMAIL = Pattern.compile("[A-Za-z]+([1-9][0-9]*)?\\.[A-Za-z]+"); 
 	
 	private static final String[] MANSIONI = {"Capo Squadra", "Autista", "Vigile"};
 	
