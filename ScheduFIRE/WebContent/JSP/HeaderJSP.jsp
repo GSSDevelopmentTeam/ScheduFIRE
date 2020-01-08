@@ -46,6 +46,9 @@
     <img src="IMG/men.png" style="height:50px; width:50px ">
   </button>
   <div class="ddc">
+   <form action="HomeCTServlet" method="POST">
+    <button class="cmd" id="tornahome"><img src="IMG/logoSF.png" class="btl"><span class="rtlg">Home</span> </button>
+  </form>
    <form action="GeneraSquadreServlet" method="POST">
     <button class="cmd"><img src="Icon/CavallettoColorato.png" class="btl"><span class="rtlg">Gestione Squadra</span> </button>
   </form>
@@ -62,7 +65,7 @@
 	<button class="cmd"><img src="Icon/MalattieColore.png" class="btl" ><span class="rtlg">Gestione Malattia</span></button>
   </form>
   <form action="PersonaleDisponibile" method="POST">
-	<button class="cmd"><img src="Icon/ominiVF.png" class="btl"	><span class="rtlg">Personale Disponibile</button>
+	<button class="cmd" id="dispo"><img src="Icon/ominiVF.png" class="btl"	><span class="rtlg">Personale Disponibile</button>
   </form>
   </div>
  

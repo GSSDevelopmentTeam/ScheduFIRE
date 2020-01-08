@@ -12,11 +12,24 @@
     vertical-align: top;
     border-top: 1px solid #dee2e6;
 }
+
+.back-up{
+	border-radius: 50px;
+    font-size: 30px;
+    width: 60px;
+    position: fixed;
+    bottom: 5%;
+    right: 5%;
+    background-color:#FFFFFF;
+	box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0
+		rgba(0, 0, 0, 0.19);
+
 .container__days{
 min-width: 270px;
 }
 .month-item-weekdays-row{
 min-width: 265px;
+
 }
 </style>
 </head>
@@ -25,7 +38,9 @@ min-width: 265px;
 
 	<!-- Barra Navigazione -->
 	<jsp:include page="HeaderJSP.jsp" />
-	<h2 class="d-flex justify-content-center"
+	
+	<a href="#inizio"><button class=" back-up btn btn-outline-secondary"> ^ </button></a>
+	<h2 class="d-flex justify-content-center" id="inizio"
 		style="margin-top: 3%; color: #B60000 !Important ">Gestione Ferie</h2>
 
 
@@ -142,7 +157,7 @@ min-width: 265px;
 		aria-labelledby="exampleModalCenterTitle" aria-hidden="true"
 		style="display: none">
 		<div class="modal-dialog modal-dialog-centered" role="document">
-			<div class="modal-content contenutiModal" style="min-width: 610px; min-height: 670px;">
+			<div class="modal-content contenutiModal" style="min-width: 550px; min-height: 670px;">
 				<div class="modal-header">
 					<h5 class="modal-title" id="titoloAggiuntaFerie">Aggiunta
 						ferie</h5>
@@ -191,7 +206,7 @@ min-width: 265px;
 		aria-labelledby="exampleModalCenterTitle" aria-hidden="true"
 		style="display: none">
 		<div class="modal-dialog modal-dialog-centered" role="document">
-			<div class="modal-content contenutiModal" style="min-width: 500px; min-height: 550px;">
+			<div class="modal-content contenutiModal" style="min-width: 550px; min-height: 670px;">
 				<div class="modal-header">
 					<h5 class="modal-title" id="titoloRimuoviFerie">Rimuovi ferie</h5>
 					<button type="button" class="close" data-dismiss="modal"
@@ -199,6 +214,7 @@ min-width: 265px;
 						<span aria-hidden="true">&times; </span>
 					</button>
 				</div>
+				<p>Per selezionare un solo giorno, cliccare due volte sulla data desiderata.</p>
 				<div class="modal-body">
 					<input type="hidden" name="email" id="emailRimozioneFerie">
 					<div class=" row justify-content-center">
@@ -404,13 +420,10 @@ min-width: 265px;
 						var differenza = calcolaGiorniFerie($("#dataInizio").val(),$("#dataFine").val());
 
 						var email = $("#emailAggiuntaFerie").val();
-						var ferieAnnoCorrente = $(
+						var ferie = $(
 								"#listaVigili td:contains('" + email + "')")
-								.next('td').next('td');
-						var ferieAnnoPrecedente = ferieAnnoCorrente
 								.next('td');
-						var totaleFerie = parseInt(ferieAnnoCorrente.text())
-								+ parseInt(ferieAnnoPrecedente.text());
+						var totaleFerie = parseInt(ferie.text());
 						if (differenza == 0) {
 							picker.setOptions({
 								startDate : null,
@@ -451,10 +464,7 @@ min-width: 265px;
 									.attr("style", "color:red");
 							$('#bottoneAggiungiFerie').prop("disabled",
 									true);
-							alertInsuccesso("Hai selezionato un periodo troppo grande.Hai a disposizione "
-									+ totaleFerie
-									+ " giorni di ferie, ne hai selezionati "
-									+ differenza);
+							alertInsuccesso("Hai selezionato un periodo troppo grande.");
 
 						} else {
 							$("#messaggioFerie1").text(
@@ -468,10 +478,7 @@ min-width: 265px;
 									"color:green");
 							$('#bottoneAggiungiFerie').prop("disabled",
 									false);
-							alertSuccesso("Hai selezionato correttamente il periodo di ferie. Hai a disposizione "
-									+ totaleFerie
-									+ " giorni di ferie, ne hai selezionati "
-									+ differenza);
+							alertSuccesso("Hai selezionato correttamente il periodo di ferie.");
 						}
 					}
 				}
