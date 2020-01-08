@@ -1,12 +1,15 @@
 package util;
 
 import java.sql.Date;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Base64;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -16,6 +19,7 @@ import model.bean.ComponenteDellaSquadraBean;
 import model.bean.SquadraBean;
 import model.bean.VigileDelFuocoBean;
 import model.dao.*;
+
 
 /**
  * La classe Util contiene diversi metodi statici utili per essere chiamati
@@ -59,16 +63,19 @@ public class Util {
 		List<VigileDelFuocoBean> vigile = new ArrayList<>();
 
 		for(VigileDelFuocoBean membro : disponibili) {
-			if(membro.getMansione().toLowerCase() == "capo squadra") {
+			System.out.println("Mansione: "+membro.getMansione());
+			if(membro.getMansione().toLowerCase().equals("capo squadra")) {
 				caposquadra.add(membro);
 			}
-			else if(membro.getMansione().toLowerCase() == "autista") {
+			else if(membro.getMansione().toLowerCase().equals("autista")) {
 				autista.add(membro);
 			}
-			else if(membro.getMansione().toLowerCase() == "vigile") {
+			else if(membro.getMansione().toLowerCase().equals("vigile")) {
 				vigile.add(membro);
 			}
 		}
+		System.out.println("Vigili disponibili: "+disponibili.size());
+		System.out.println("Capisquadra: "+caposquadra.size()+" ,autisti: "+ autista.size()+" ,vigili: "+ vigile.size());
 		//Controlliamo se abbiamo abbastanza personale per fare squadra, altrimenti lanciamo l'eccezione
 		if(abbastanzaPerTurno(caposquadra.size(), autista.size(), vigile.size())) {
 			//Ordiniamo in ordine ascendente
@@ -115,8 +122,56 @@ public class Util {
 		List<ComponenteDellaSquadraBean> toReturn = new ArrayList<>();
 		SquadraBean salaOp = new SquadraBean("Sala Operativa", 3, data);
 		SquadraBean primaP = new SquadraBean("Prima Partenza", 3, data);
-		SquadraBean autoSc = new SquadraBean("Autoscala", 2, data);
-		SquadraBean autoBo = new SquadraBean("Autobotte", 1, data);
+		SquadraBean autoSc = new SquadraBean("Auto Scala", 2, data);
+		SquadraBean autoBo = new SquadraBean("Auto Botte", 1, data);
+		boolean vigileAutoSc=false;
+		boolean vigileAutoBo=false;
+
+		//Aggiungo gli autisti
+		toReturn.add(new ComponenteDellaSquadraBean(primaP.getTipologia(), autista.get(0).getEmail(), data));
+		toReturn.add(new ComponenteDellaSquadraBean(autoSc.getTipologia(), autista.get(1).getEmail(), data));
+		toReturn.add(new ComponenteDellaSquadraBean(autoBo.getTipologia(), autista.get(2).getEmail(), data));
+	
+		//Aggiungo i vigili
+		toReturn.add(new ComponenteDellaSquadraBean(salaOp.getTipologia(), vigile.get(0).getEmail(), data));
+		toReturn.add(new ComponenteDellaSquadraBean(salaOp.getTipologia(), vigile.get(1).getEmail(), data));
+		toReturn.add(new ComponenteDellaSquadraBean(primaP.getTipologia(), vigile.get(2).getEmail(), data));
+		toReturn.add(new ComponenteDellaSquadraBean(primaP.getTipologia(), vigile.get(3).getEmail(), data));
+		toReturn.add(new ComponenteDellaSquadraBean(primaP.getTipologia(), vigile.get(4).getEmail(), data));
+		if(vigile.size()>5) {
+			toReturn.add(new ComponenteDellaSquadraBean(autoSc.getTipologia(), vigile.get(5).getEmail(), data));
+			vigileAutoSc=true;
+		}
+		if(vigile.size()>6) {
+			toReturn.add(new ComponenteDellaSquadraBean(autoBo.getTipologia(), vigile.get(6).getEmail(), data));
+			vigileAutoBo=true;
+		}
+	
+		//Aggiungo i caposquadra
+		toReturn.add(new ComponenteDellaSquadraBean(salaOp.getTipologia(), caposquadra.get(0).getEmail(), data));
+		toReturn.add(new ComponenteDellaSquadraBean(primaP.getTipologia(), caposquadra.get(1).getEmail(), data));
+		if(!vigileAutoSc) {
+			toReturn.add(new ComponenteDellaSquadraBean(autoSc.getTipologia(), caposquadra.get(2).getEmail(), data));
+			caposquadra.remove(2);
+		}
+		if(!vigileAutoBo) {
+		toReturn.add(new ComponenteDellaSquadraBean(autoBo.getTipologia(), caposquadra.get(2).getEmail(), data));
+		}
+		
+		return toReturn;
+	}
+	
+	
+	
+	
+	
+	private static List<ComponenteDellaSquadraBean> assegnaMansioniOld(List<VigileDelFuocoBean> caposquadra,
+			List<VigileDelFuocoBean> autista, List<VigileDelFuocoBean> vigile, Date data) {
+		List<ComponenteDellaSquadraBean> toReturn = new ArrayList<>();
+		SquadraBean salaOp = new SquadraBean("Sala Operativa", 3, data);
+		SquadraBean primaP = new SquadraBean("Prima Partenza", 3, data);
+		SquadraBean autoSc = new SquadraBean("Auto Scala", 2, data);
+		SquadraBean autoBo = new SquadraBean("Auto Botte", 1, data);
 		int contaSala = 0;
 		int contaPrim = 0;
 		int contaAutS = 0;
@@ -174,6 +229,38 @@ public class Util {
 
 		return toReturn;
 	}
+	
+	public static void sostituisciVigile(Date data, String mailVFDaSostituire) throws ScheduFIREException {
+		List<ComponenteDellaSquadraBean> lista = ComponenteDellaSquadraDao.getComponenti(data);
+		HashMap<VigileDelFuocoBean, String> squadra = ottieniSquadra(data);
+		
+		if(!ComponenteDellaSquadraDao.removeComponenti(lista) ||
+				!VigileDelFuocoDao.removeCaricoLavorativo(squadra)) {
+			throw new ScheduFIREException("Errore nelle query di sostituzione ferie");
+		}
+		
+		List<VigileDelFuocoBean> disponibili = VigileDelFuocoDao.getDisponibili(data);
+		Collections.sort(disponibili, (VigileDelFuocoBean v1, VigileDelFuocoBean v2) ->
+			(v1.getCaricoLavoro() - v2.getCaricoLavoro()));
+		VigileDelFuocoBean sostituto = disponibili.get(0);
+		for(int i = 0; i < lista.size(); i++) {
+			ComponenteDellaSquadraBean membro = lista.get(i);
+			if(membro.getEmailVF().equals(mailVFDaSostituire)) {
+				lista.set(i, new ComponenteDellaSquadraBean(membro.getTipologiaSquadra(), 
+						sostituto.getEmail(), membro.getGiornoLavorativo()));
+				String mansione = squadra.remove(membro);
+				squadra.put(sostituto, mansione);
+				break;
+			}
+		}
+		
+		if(!ComponenteDellaSquadraDao.setComponenti(lista) ||
+				!VigileDelFuocoDao.caricoLavorativo(squadra)) {
+			throw new ScheduFIREException("Errore nelle query di sostituzione ferie");
+		}
+		
+	}
+	
 
 	public static HashMap<VigileDelFuocoBean, String> ottieniSquadra(Date data) {
 		List<ComponenteDellaSquadraBean> lista = ComponenteDellaSquadraDao.getComponenti(data);
@@ -210,8 +297,68 @@ public class Util {
 				throw new ScheduFIREException("Devi essere capoturno per poter accedere a questa funzionalit�");
 		}
 	}
+	
+	
+	
+	
+	/**
+	 * Verifica se sono la una delle due date passate è il primo giorno lavorativo dell'anno, se lo è cancella dal database
+	 * il calendario dell'anno precedente e aggiorna le ferie ai vigili 
+	 * @param diurnoDate il giorno lavorativo diurno
+	 * @param notturnoDate il giorno lavorativo notturno
+	 */
+	public static void aggiornaDB(Date diurnoDate,Date notturnoDate) {
+		LocalDate diurno=diurnoDate.toLocalDate();
+		LocalDate notturno=notturnoDate.toLocalDate();
+		boolean modifica=false;
+		int annoNuovo=0;
+		LocalDate precLavorativo=GiornoLavorativo.precLavorativo(diurnoDate).toLocalDate();
+		
+		//Se l'anno del diurno è diverso da quello del notturno, sto cambiando anno
+		if(diurno.getYear()!=notturno.getYear()) {
+			modifica=true;
+			annoNuovo=notturno.getYear();
+		}
 
-
+		//Se il diurno ha un anno diverso dal precedente giorno lavorativo, sto in un nuovo anno
+		else if(diurno.getYear()!= precLavorativo.getYear()) {
+			modifica=true;	
+			annoNuovo=diurno.getYear();
+		}
+		
+		
+		if(modifica==true) {
+			setFerie();
+			Date inizioAnnoNuovo=Date.valueOf(LocalDate.of(annoNuovo, 1, 1));
+			ComponenteDellaSquadraDao.rimuoviTutti(inizioAnnoNuovo);
+			SquadraDao.rimuoviTutti(inizioAnnoNuovo);
+			ListaSquadreDao.rimuoviTutte(inizioAnnoNuovo);
+			System.out.println("rimozione avvenuta con successo");
+		}
+		
+	}
+	
+	public static List<VigileDelFuocoBean> compareVigile(List<VigileDelFuocoBean> lista) {
+		
+			List<VigileDelFuocoBean> listaC = new ArrayList<VigileDelFuocoBean>(lista);
+			
+			Collections.sort(listaC, new VigileComparator());
+			
+			return listaC;
+	}
+	
+	
+	private static void setFerie() {
+		List<VigileDelFuocoBean> vigili=VigileDelFuocoDao.ottieni();
+		for(VigileDelFuocoBean vigile:vigili) {
+			int ferieAnnoPrecedente=vigile.getGiorniFerieAnnoPrecedente();
+			int ferieAnnoCorrente=vigile.getGiorniFerieAnnoCorrente();
+			ferieAnnoPrecedente+=ferieAnnoCorrente;
+			VigileDelFuocoDao.aggiornaFeriePrecedenti(vigile.getEmail(), ferieAnnoPrecedente);
+			VigileDelFuocoDao.aggiornaFerieCorrenti(vigile.getEmail(), 22);
+		}
+	}
+	
 }	
 
 
@@ -240,5 +387,21 @@ class ComponenteComparator implements Comparator<ComponenteDellaSquadraBean> {
 		}
 		return -comparazione;
 	}
+}
+	
+	class VigileComparator implements Comparator<VigileDelFuocoBean> {
+
+		@Override
+		public int compare(VigileDelFuocoBean o1, VigileDelFuocoBean o2) {
+			String mansione1=o1.getMansione();
+			String mansione2=o2.getMansione();
+			if (mansione1.equals("Capo Squadra") && mansione2.equals("Capo Squadra"))
+				return o1.getCognome().compareTo(o2.getCognome());
+			if(mansione1.equals("Capo Squadra"))
+				return -1;
+			if(mansione2.equals("Capo Squadra"))
+				return 1;
+			return o1.getMansione().compareTo(o2.getMansione());
+		}
 }
 

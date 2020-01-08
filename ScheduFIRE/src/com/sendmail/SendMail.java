@@ -27,9 +27,22 @@ public class SendMail {
 	 */
 	public static void sendMail(Date data) {
 		//Lista dei destinatari
-		EmailDao allEmail = new EmailDao();
+		
 		ArrayList<String>  email = new ArrayList<String>();
-		email=allEmail.getEmail();
+		/*
+		 * EmailDao allEmail = new EmailDao();
+		 * email=allEmail.getEmail();*/
+		
+		
+		email.add("c.cipolletta2@studenti.unisa.it");
+		email.add("f.perillo11@stduenti.unisa.it");
+		email.add("e.sottile@studenti.unisa.it");
+		email.add("g.annunziata49@studenti.unisa.it");
+		email.add("e.bombardelli@studenti.unisa.it");
+		email.add("a.giuliano21@studenti.unisa.it");
+		email.add("n.labanca3@studenti.unisa.it");
+		email.add("b.bruno4@studenti.unisa.it");
+		
 
 		//L'id del mittente
 		String from = "schedufire@gmail.com";
@@ -37,17 +50,17 @@ public class SendMail {
 		//Supponendo che tu stia inviando e-mail da e-mail smtp
 		String host = "smtp.gmail.com";
 
-		//Ottieni proprietà del sistema
-		Properties proprietà = System.getProperties();
+		//Ottieni proprieta del sistema
+		Properties proprieta = System.getProperties();
 
 		//setup mail server
-		proprietà.put("mail.smtp.host", host);
-		proprietà.put("mail.smtp.port", "465");
-		proprietà.put("mail.smtp.ssl.enable", "true");
-		proprietà.put("mail.smtp.auth", "true");
+		proprieta.put("mail.smtp.host", host);
+		proprieta.put("mail.smtp.port", "465");
+		proprieta.put("mail.smtp.ssl.enable", "true");
+		proprieta.put("mail.smtp.auth", "true");
 
 		// Prende la sessione in oggetto // e passa l'username e password
-		Session session = Session.getInstance(proprietà, new javax.mail.Authenticator() {
+		Session session = Session.getInstance(proprieta, new javax.mail.Authenticator() {
 			protected PasswordAuthentication getPasswordAuthentication() {
 				return new PasswordAuthentication("schedufire@gmail.com", "schedufire20");
 			}

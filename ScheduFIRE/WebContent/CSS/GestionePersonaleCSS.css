@@ -2,7 +2,6 @@
 
 body{
 	background-color: #f2f2f2;
-	font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 
 h2, section, div, h4, form {
@@ -13,16 +12,11 @@ h2{
 	color: #b60000;
 }
 
-span{
-	color:#B60000;
-	font-size:20px;
-}
-
 input {
 	border: solid;
 	border-color: #000000;
-	border-width: 0.5px;; 
-	border-radius: 10px;
+	border-width: 0.5px;
+	border-radius:10px;
 	text-align: center;
 	background-color: #e1e1e1;
 	box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0
@@ -30,15 +24,15 @@ input {
 	outline:none;
 }
 
-.modifica {
+.modifica, .divPopupFormEliminazioneVF, .grado {
 	display: none;
 }
 
-#aggiungiVF, .modificaVF {
+#aggiungiVF, .modificaVF, #formEliminazioneVF {
 	border: solid;
 	border-color: #b60000;
-	border-width: 1.5px;; 
-	border-radius: 50px;
+	border-width: 1.5px;
+	border-radius:10px;
 	box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0
 		rgba(0, 0, 0, 0.19);
 	margin-right: 100px;
@@ -70,7 +64,6 @@ input {
 	display: inline-block;
 	font-size: 16px;
 	font-weight:bold;
-	border-radius: 7px;
 	box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0
 		rgba(0, 0, 0, 0.19);
 	cursor: pointer;
@@ -82,9 +75,12 @@ input {
 	font-weight: bold;
 }
 
-#divPopup {
+#divPopup, .divPopupFormEliminazioneVF {
+	
 	  display: none; /* Hidden by default */
 	  position: fixed; /* Stay in place */
+	  margin-right:auto;
+	  margin-left:auto;
 	  z-index: 1; /* Sit on top */
 	  left: 0;
 	  top: 0;
@@ -95,11 +91,19 @@ input {
 	  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
 	  padding-top: 60px;
 	  
-
 }
 
-.form-popup {
-	ackground-color: #fefefe;
+#formEliminazioneVF {
+	top: 10%;
+}
+
+#labelCancellazione {
+	color: black;
+	font-weight: bold;
+}
+
+.form-popup, #formEliminazioneVF {
+	background-color: #fefefe;
 	margin: 0 auto; /* 5% from the top, 15% from the bottom and centered */
 	width: 50%; /* Could be more or less, depending on screen size */
 	  
@@ -109,12 +113,24 @@ input {
 	border:inset;
 	border-color:#575757;
 	border-width: 0.5px;
-	border-radius: 5%;
 	resize: vertical;
 	box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0
 		rgba(0, 0, 0, 0.19);
 		
 	text-align: center;
 
+}
+
+#formEliminazioneVF {
+	border: solid;
+	border-color: #b60000;
+	border-width: 1.5px;
+	box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0
+		rgba(0, 0, 0, 0.19);
+	background-color: #FFFFFF;
+}
+
+#aggiungiVF {
+	margin: 0 auto;
 }
 

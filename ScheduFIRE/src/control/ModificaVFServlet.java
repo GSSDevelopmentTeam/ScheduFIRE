@@ -8,9 +8,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import model.bean.CredenzialiBean;
 import model.bean.VigileDelFuocoBean;
 import model.dao.VigileDelFuocoDao;
+import util.Util;
 import util.Validazione;
 
 /**
@@ -35,27 +35,23 @@ public class ModificaVFServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
+		//Controllo login
+		Util.isCapoTurno(request);
+		
 		//Ottenimento oggetto sessione dalla richiesta
 		HttpSession session = request.getSession();
-				
-		//Ottenimento credenziali dell'utente dalla sessione
-		CredenzialiBean credenziali = (CredenzialiBean) session.getAttribute("credenziali"); 
-		/*
-		//Controllo credenziali
-		if( credenziali == null )
-			throw new ScheduFIREException();
-
 		
-		if( credenziali.getRuolo() == "vigile" ) //definire bene la stringa
-			throw new ScheduFIREException();
-
-		*/
+		//Rimozione flag per l'esito dell'operazione
+		session.removeAttribute("risultato");
+		
 		//Ottenimento parametro email dalla richiesta
 		String emailVecchia = request.getParameter("emailVecchia");
-		
+
 		//Controllo email
 		if( ! Validazione.email(emailVecchia) )
 			throw new ParametroInvalidoException("Il parametro 'email' Ã¨ errato!");
+		
+		emailVecchia += "@vigilfuoco.it";
 		
 		//Ottenimento Vigile del Fuoco dal database
 		VigileDelFuocoBean vf = VigileDelFuocoDao.ottieni(emailVecchia);
@@ -102,11 +98,26 @@ public class ModificaVFServlet extends HttpServlet {
 		if( ! Validazione.giorniFerieAnniPrecedenti(giorniFerieAnnoPrecedenteNuovi) )
 			throw new ParametroInvalidoException("Il parametro 'Giorni Ferie Anno Precedente' Ã¨ errato!");
 		
+		//Se il grado non è settato e la mansione è Capo Squadra, il grado sarà 'Semplice'
+		if( mansioneNuova.equals("Capo Squadra") && gradoNuovo == null )
+			gradoNuovo = "Semplice";
+		
 		if( ! Validazione.grado(gradoNuovo) )
 			throw new ParametroInvalidoException("Il parametro 'grado' Ã¨ errato!");
 		
 		if( ! Validazione.email(emailNuova) )
 			throw new ParametroInvalidoException("Il parametro 'email' Ã¨ errato!");
+		
+		//Controllo mansione
+		if( mansioneNuova.equals("Capo Squadra") && ( gradoNuovo.equals("Qualificato") 
+				|| gradoNuovo.equals("Coordinatore") ) ) 
+			throw new ParametroInvalidoException("Un Capo Squadra può essere solamente Esperto o Semplice!");
+		
+		if( (mansioneNuova.equals("Autista") || mansioneNuova.equals("Vigile") )  
+				&&  gradoNuovo.equals("Semplice") ) 
+			throw new ParametroInvalidoException("Il parametro 'grado' è errato!");
+		
+		emailNuova += "@vigilfuoco.it";
 	
 		//Settaggio nuovi parametri
 		vf.setNome(nomeNuovo);
@@ -131,8 +142,10 @@ public class ModificaVFServlet extends HttpServlet {
 		
 		}
 		
+		session.setAttribute("risultato", "La modifica del Vigile del Fuoco è avvenuto con successo!");
+		
 		// Reindirizzamento alla jsp
-		request.getRequestDispatcher("/GestionePersonaleServlet").forward(request, response);
+		response.sendRedirect("./GestionePersonaleServlet");
 		
 	}
 
