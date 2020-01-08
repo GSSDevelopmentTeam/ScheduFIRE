@@ -35,6 +35,8 @@ public class AjaxCalendario extends HttpServlet{
 	
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
+		
 		String giornostr = request.getParameter("giorno").trim();
 		String mesestr = request.getParameter("mese").trim();
 		String annostr = request.getParameter("anno").trim();
@@ -52,9 +54,10 @@ public class AjaxCalendario extends HttpServlet{
 		}
 		Date data=Date.valueOf(LocalDate.of(anno, mese, giorno));
 		
+		
+		
 		//data per modifica composizione squadre
 		request.setAttribute("data", data);
-		request.setAttribute("tiposquadra",3);
 		
 		ArrayList<ComponenteDellaSquadraBean> componenti=ComponenteDellaSquadraDao.getComponenti(data);
 		List<VigileDelFuocoBean> vigili=VigileDelFuocoDao.getDisponibili(data);
