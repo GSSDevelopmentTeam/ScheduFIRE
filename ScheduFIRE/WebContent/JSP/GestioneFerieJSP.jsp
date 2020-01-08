@@ -60,9 +60,7 @@
 					%>
 					<option value="nome" selected>Nome</option>
 					<option value="cognome">Cognome</option>
-					<option value="mansione">Mansione</option>
 					<option value="grado">Grado</option>
-
 					<option value="giorniFerie">Ferie</option>
 					
 					
@@ -71,25 +69,14 @@
 						%>
 					<option value="nome" >Nome</option>
 					<option value="cognome" selected>Cognome</option>
-					<option value="mansione">Mansione</option>
 					<option value="grado">Grado</option>
-
 					<option value="giorniFerie">Ferie</option>
-					<%
-						} else if( ordinamento.equals("mansione") ) {		
-						%>
-					<option value="nome">Nome</option>
-					<option value="cognome">Cognome</option>
-					<option value="mansione"selected>Mansione</option>
-					<option value="grado">Grado</option>
-
-					<option value="giorniFerie">Ferie</option>
+					
 					<%
 						} else if( ordinamento.equals("grado") ) {		
 						%>
 					<option value="nome" >Nome</option>
 					<option value="cognome">Cognome</option>
-					<option value="mansione">Mansione</option>
 					<option value="grado" selected>Grado</option>
 
 					<option value="giorniFerie">Ferie</option>
@@ -98,7 +85,6 @@
 						%>
 					<option value="nome" >Nome</option>
 					<option value="cognome">Cognome</option>
-					<option value="mansione">Mansione</option>
 					<option value="grado">Grado</option>
 					<option value="giorniFerie" selected>Ferie</option>
 					<%
@@ -110,7 +96,6 @@
 					
 					<option value="nome" >Nome</option>
 					<option value="cognome"selected>Cognome</option>
-					<option value="mansione">Mansione</option>
 					<option value="grado">Grado</option>
 
 					<option value="giorniFerie">Ferie</option>
@@ -335,7 +320,6 @@
 			<thead class="thead-dark">
 				<tr>
 					<th class=" text-center">Grado</th>
-					<th class="text-center">Mansione</th>
 					<th class="text-center">Nome</th>
 					<th class="text-center">Cognome</th>
 					<th class="text-center">Email</th>
@@ -361,7 +345,6 @@
 					<td class="text-center"><img
 						src="Grado/<%=vigile.getGrado()%>.png" width=30%
 						onerror="this.parentElement.innerHTML='Non disponibile';"></td>
-					<td class="text-center"><%=vigile.getMansione()%></td>
 					<td class="text-center"><strong><%=vigile.getNome()%></strong></td>
 					<td class="text-center"><strong><%=vigile.getCognome()%></strong></td>
 					<td class="text-center"><%=vigile.getEmail()%></td>
@@ -394,7 +377,6 @@
 			<thead class="thead-dark">
 				<tr>
 					<th class=" text-center">Grado</th>
-					<th class="text-center">Mansione</th>
 					<th class="text-center">Nome</th>
 					<th class="text-center">Cognome</th>
 					<th class="text-center">Email</th>
@@ -417,7 +399,6 @@
 					<td class="text-center"><img
 						src="Grado/<%=vigile.getGrado()%>.png" width=30%
 						onerror="this.parentElement.innerHTML='Non disponibile';"></td>
-					<td class="text-center"><%=vigile.getMansione()%></td>
 					<td class="text-center"><strong><%=vigile.getNome()%></strong></td>
 					<td class="text-center"><strong><%=vigile.getCognome()%></strong></td>
 					<td class="text-center"><%=vigile.getEmail()%></td>
@@ -450,7 +431,6 @@
 			<thead class="thead-dark">
 				<tr>
 					<th class=" text-center">Grado</th>
-					<th class="text-center">Mansione</th>
 					<th class="text-center">Nome</th>
 					<th class="text-center">Cognome</th>
 					<th class="text-center">Email</th>
@@ -473,7 +453,6 @@
 					<td class="text-center"><img
 						src="Grado/<%=vigile.getGrado()%>.png" width=30%
 						onerror="this.parentElement.innerHTML='Non disponibile';"></td>
-					<td class="text-center"><%=vigile.getMansione()%></td>
 					<td class="text-center"><strong><%=vigile.getNome()%></strong></td>
 					<td class="text-center"><strong><%=vigile.getCognome()%></strong></td>
 					<td class="text-center"><%=vigile.getEmail()%></td>
