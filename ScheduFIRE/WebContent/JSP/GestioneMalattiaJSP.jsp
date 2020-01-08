@@ -22,9 +22,20 @@
     vertical-align: top;
     border-top: 1px solid #dee2e6;
 }
+.back-up{
+	border-radius: 50px;
+    font-size: 30px;
+    width: 60px;
+    position: fixed;
+    bottom: 5%;
+    right: 5%;
+    background-color:#FFFFFF;
+	box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0
+		rgba(0, 0, 0, 0.19);
+}
 	</style>
 	<body>
-	
+	<a href="#inizio"><button class=" back-up btn btn-outline-secondary"> ^ </button></a>
 	<!-- Modal di aggiunta malattia-->
 	<div class="modal fade" id="aggiungiMalattia" tabindex="-1" role="dialog"
 		aria-labelledby="exampleModalCenterTitle" aria-hidden="true" style="display: none">
@@ -144,6 +155,7 @@
 	<!-- Barra Navigazione -->
 	<jsp:include page="HeaderJSP.jsp" />
 	<h2 class="d-flex  justify-content-center" style="margin-top:3% ;color:#B60000!Important">Gestione Malattie</h2>
+
 	
 	<!-- form per l'ordinamento della lista dei VF-->
 		<%
@@ -196,7 +208,7 @@
 	
 	
 	<!-- body aggiungi malattia -->
-	<div class="table-responsive">
+	<div class="table-responsive" >
 		<table class="table  table-hover" id="listaVigili">
 			<thead class="thead-dark">
 				<tr>
@@ -223,8 +235,9 @@
 						onerror="this.parentElement.innerHTML='Non disponibile';"></td>
 						<td class="text-center"><%=vigile.getMansione()%></td>
 						<td class="text-center"><%=vigile.getNome() %></td>
-						<td class="text-center"><%=vigile.getCognome()%></td>
+            <td class="text-center"><%=vigile.getCognome()%></td>
 						<td class="text-center"><%=vigile.getEmail() %></td>
+
 						<td class="text-center"><button class="pass btn btn-outline-secondary" 
 						data-toggle="modal" data-target="#aggiungiMalattia"
 						onClick='apriFormAggiunta("<%=vigile.getEmail()%>")'>Aggiungi Malattia</button></td>
