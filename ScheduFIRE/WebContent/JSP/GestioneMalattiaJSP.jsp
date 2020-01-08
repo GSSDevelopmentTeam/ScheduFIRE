@@ -23,15 +23,11 @@
     border-top: 1px solid #dee2e6;
 }
 .back-up{
-	border-radius: 50px;
-    font-size: 30px;
-    width: 60px;
+	border:none;
+	background:none;	
     position: fixed;
     bottom: 5%;
     right: 5%;
-    background-color:#FFFFFF;
-	box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0
-		rgba(0, 0, 0, 0.19);
 }
 .container__days{
 min-width: 270px;
@@ -41,7 +37,9 @@ min-width: 265px;
 }
 	</style>
 	<body>
-	<a href="#inizio"><button class=" back-up btn btn-outline-secondary"> ^ </button></a>
+	<a href="#inizio" class=" back-up"><img src="IMG/arrow/up-arrow-p.png" style="margin-left: 5px;"
+					onmouseover="this.src='IMG/arrow/up-arrow-d.png'"
+					onmouseout="this.src='IMG/arrow/up-arrow-p.png'" /></a>
 	<!-- Modal di aggiunta malattia-->
 	<div class="modal fade" id="aggiungiMalattia" tabindex="-1" role="dialog"
 		aria-labelledby="exampleModalCenterTitle" aria-hidden="true" style="display: none">
@@ -160,7 +158,7 @@ min-width: 265px;
 	
 	<!-- Barra Navigazione -->
 	<jsp:include page="HeaderJSP.jsp" />
-	<h2 class="d-flex  justify-content-center" style="margin-top:3% ;color:#B60000!Important">Gestione Malattie</h2>
+	<h2 class="d-flex  justify-content-center" style="margin-top:3% ;color:#B60000!Important" id="inizio">Gestione Malattie</h2>
 
 	
 	<!-- form per l'ordinamento della lista dei VF-->
@@ -242,7 +240,8 @@ min-width: 265px;
 						onerror="this.parentElement.innerHTML='Non disponibile';"></td>
 						<td class="text-center"><%=vigile.getMansione()%></td>
 						<td class="text-center"><strong><%=vigile.getNome() %></strong></td>
-            			<td class="text-center"><strong><%=vigile.getCognome()%></strong></td>
+
+			            <td class="text-center"><strong><%=vigile.getCognome()%></strong></td>
 						<td class="text-center"><%=vigile.getEmail() %></td>
 
 						<td class="text-center"><button class="pass btn btn-outline-secondary" 

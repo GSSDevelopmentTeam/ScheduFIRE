@@ -52,13 +52,32 @@ public class ModificaComposizioneSquadreServlet extends HttpServlet {
 
 
 		try {
+			Map<VigileDelFuocoBean, String> squadra = new HashMap<>();
 			Date data = Date.valueOf(request.getParameter("data"));
-			Map<VigileDelFuocoBean, String> squadra = Util.ottieniSquadra(data);
-			System.out.println(squadra);
-			System.out.println(data);
+			if(request.getParameter("email")!= null) {
+				squadra = (HashMap<VigileDelFuocoBean, String>) sessione.getAttribute("squadra");
+				String oldVF = request.getParameter("email");
+				String newVF = request.getParameter("VFNew");
+				Iterator i = squadra.entrySet().iterator();
+
+				while(i.hasNext()) {
+					Map.Entry<VigileDelFuocoBean, String> coppia = (Map.Entry<VigileDelFuocoBean, String>) i.next();
+					VigileDelFuocoBean oldVigile = coppia.getKey();
+					if(oldVigile.getEmail().equals(oldVF)) {
+						String mansione = squadra.remove(oldVigile);
+						VigileDelFuocoBean newVigile = VigileDelFuocoDao.ottieni(newVF);
+						squadra.put(newVigile, mansione);
+						break;
+					}
+				}
+			}
+			else {
+				squadra = Util.ottieniSquadra(data);
+			}
 			sessione.setAttribute("squadra", squadra);
 			request.setAttribute("data", data);
 			request.getRequestDispatcher("JSP/SquadraJSP.jsp").forward(request, response);
+			return;
 
 		}
 

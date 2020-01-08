@@ -79,11 +79,13 @@ public class CalendarioServlet extends HttpServlet {
 		}
 
 		//funzione per riempire il calendario
-		riempiCalendario(mese, anno, days_month);
+		int len = riempiCalendario(mese, anno, days_month);
 		//funzione per i giorni lavorativi
 		riempiLavorativo(mese, anno, days_work);
 		//funzione per il nome del turno
 		riempiTurno(mese, anno, days_turno);
+		
+		
 		
 		request.setAttribute("date", date);
 		request.setAttribute("anno_corrente", anno_stringa_numero);
@@ -95,6 +97,7 @@ public class CalendarioServlet extends HttpServlet {
 		request.setAttribute("days_month", days_month);
 		request.setAttribute("days_work", days_work);
 		request.setAttribute("days_turno", days_turno);
+		request.setAttribute("len", len);
 
 		//dispatcher a calendario JSP
 		request.getRequestDispatcher("JSP/CalendarioJSP.jsp").forward(request, response); 
@@ -114,7 +117,7 @@ public class CalendarioServlet extends HttpServlet {
 		return bisestile;
 	}
 
-	private void riempiCalendario (int mese, int anno, int[] days_month) {
+	private int riempiCalendario (int mese, int anno, int[] days_month) {
 
 		//per vedere qual è il primo giorno del mese
 		LocalDate local=LocalDate.of(anno,mese,1);
@@ -133,6 +136,10 @@ public class CalendarioServlet extends HttpServlet {
 		case "SUNDAY": day = 6; break; //domenica
 		default: break;
 		}
+		
+		int len;
+		
+
 
 		int i;
 
@@ -145,12 +152,35 @@ public class CalendarioServlet extends HttpServlet {
 					days_month[i] = giorno;
 					giorno++;
 				}
-			} else {
+				
+			switch (day) {
+			case 0 : len = 8; break; 
+			case 1 : len = 8; break; 
+			case 2 : len = 8; break; 
+			case 3 : len = 8; break;
+			case 4 : len = 8; break; 
+			default: len = 0;
+			}
+
+			}
+			else {
 				for(i=day;i<=27+day;i++) {
 					days_month[i] = giorno;
 					giorno++;
 				}
-			}			
+			}
+			
+			switch (day) {
+			case 0 : len = 8; break; 
+			case 1 : len = 8; break; 
+			case 2 : len = 8; break; 
+			case 3 : len = 8; break;
+			case 4 : len = 8; break;
+			case 5 : len = 8; break; 
+			default: len = 0;
+			}
+			
+			
 			break;
 
 		case 11: case 4: case 6: case 9: //mesi di 30 giorni
@@ -158,6 +188,13 @@ public class CalendarioServlet extends HttpServlet {
 			for (i=day; i<=29+day; i++) {
 				days_month[i] = giorno;
 				giorno ++;
+			}
+			
+			switch (day) {
+			case 0 : len = 8; break; 
+			case 1 : len = 8; break; 
+			case 2 : len = 8; break;
+			default: len = 0;
 			}
 
 			break;
@@ -168,9 +205,21 @@ public class CalendarioServlet extends HttpServlet {
 				days_month[i] = giorno;
 				giorno++;
 			}
+			
+			switch (day) {
+			case 0 : len = 8; break; 
+			case 1 : len = 8; break; 
+			case 2 : len = 8; break; 
+			case 3 : len = 7; break;
+			case 4 : len = 7; break;
+			default: len = 0;
+			}
 
 			break;
 		}
+		
+
+		return len;
 
 	}
 	
