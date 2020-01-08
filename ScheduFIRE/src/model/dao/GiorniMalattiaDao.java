@@ -70,6 +70,44 @@ public class GiorniMalattiaDao {
 			
 			return aggiunta;
 		}
+	 
+	 
+	 
+		 public static boolean addMalattia(Date dataInizio, Date dataFine, String emailCT, String emailVF) {
+			 GiorniMalattiaBean malattia = new GiorniMalattiaBean(0, dataInizio, dataFine, emailCT, emailVF);
+			 boolean aggiunta = false;
+			 PreparedStatement ps = null;
+			 ResultSet res = null;
+			 
+			 String query = "INSERT INTO schedufire.malattia (dataInizio, dataFine, emailCT, emailVF) "
+	                 +"values(?, ?, ?, ?);";
+		
+			 try {
+					Connection con = null;
+			 
+			 try{
+				con = ConnessioneDB.getConnection();
+				// Esecuzione query
+					ps = con.prepareStatement(query);
+					
+					ps.setDate(1, malattia.getDataInizio());
+					ps.setDate(2, malattia.getDataFine());
+					ps.setString(3, malattia.getEmailCT());
+					ps.setString(4, malattia.getEmailVF());
+				    res = ps.getResultSet();
+				    
+				    if(ps.executeUpdate() > 0) 
+				    	aggiunta = true;
+				    con.commit();
+			 }finally {
+						ConnessioneDB.releaseConnection(con);
+					}
+				}catch(SQLException e) {
+					e.printStackTrace();
+				}
+				
+				return aggiunta;
+			}
 	  
 	 public static List<GiorniMalattiaBean> ottieniMalattie(String email) {
 			

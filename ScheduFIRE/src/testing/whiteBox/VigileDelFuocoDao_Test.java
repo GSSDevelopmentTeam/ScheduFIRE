@@ -10,6 +10,7 @@ import java.sql.SQLException;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import model.ConnessioneDB;
 
@@ -67,7 +68,7 @@ class VigileDelFuocoDao_Test {
 
 	@Test
 	void testOttieniNumeroFeriePrecedenti() throws SQLException {
-		mock(ConnessioneDB.class);
+		//PowerMockito.mockStatic(ConnessioneDB.class);
 		
 		when(ConnessioneDB.getConnection()).thenReturn(connessioneMock);
 		when(connessioneMock.prepareStatement(anyString())).thenReturn(psMock);
@@ -103,7 +104,7 @@ class VigileDelFuocoDao_Test {
 	void testRemoveCaricoLavorativo() {
 		fail("Not yet implemented");
 	}
-	
+
 	@Mock
 	Connection connessioneMock;
 	

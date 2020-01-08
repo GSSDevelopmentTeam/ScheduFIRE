@@ -112,8 +112,18 @@ public class AggiungiFerieServlet extends HttpServlet {
 				 * le ferie e si aggiorna il CT mediante una notifica che lo avvisa 
 				 * di dover sostituire dalla squadra il vigile a cui sono state concesse le ferie
 				 */
-				if(ComponenteDellaSquadraDao.isComponente(emailVF, dataInizio)) 
-					Notifiche.update(Notifiche.UPDATE_SQUADRE_PER_FERIE, dataInizio, dataFine, emailVF);
+				int i=0;
+				
+				while(i<numeroGiorniFerie) {
+					if(ComponenteDellaSquadraDao.isComponente(emailVF, dataInizio)) { 
+						Notifiche.update(Notifiche.UPDATE_SQUADRE_PER_FERIE, dataInizio, dataFine, emailVF);
+						i++;
+					}
+					else{
+						dataInizio = Date.valueOf(dataInizio.toLocalDate().plusDays(1));
+						i++;
+					}
+				}
 				
 				//Ottenimento numero totale giorni di ferie a disposizione del VF
 				int feriePrecedenti = VigileDelFuocoDao.ottieniNumeroFeriePrecedenti(emailVF);
