@@ -63,15 +63,15 @@ public class PersonaleDisponibileAJAX extends HttpServlet {
 
 
 		/*
-		 * Per ricavare se nel momento in cui viene chiamata la servlet si è nel turno lavorativo o meno, prendo in considerazione
-		 * 3 possibilità: 
-		 * 1) il giorno considerato è lavorativo ed è il giorno con turno diurno;
-		 * 2) il giorno considerato è lavorativo ed è il giorno con turno notturno;
-		 * 3) non è un giorno lavorativo.
+		 * Per ricavare se nel momento in cui viene chiamata la servlet si ï¿½ nel turno lavorativo o meno, prendo in considerazione
+		 * 3 possibilitï¿½: 
+		 * 1) il giorno considerato ï¿½ lavorativo ed ï¿½ il giorno con turno diurno;
+		 * 2) il giorno considerato ï¿½ lavorativo ed ï¿½ il giorno con turno notturno;
+		 * 3) non ï¿½ un giorno lavorativo.
 		 * Delle prime due ho poi valutato se nell'istante in cui si chiama la servlet il turno:
 		 * 1)deve ancora iniziare
-		 * 2)è in corso
-		 * 3)è terminato
+		 * 2)ï¿½ in corso
+		 * 3)ï¿½ terminato
 		 * 
 		 */
 
@@ -79,30 +79,30 @@ public class PersonaleDisponibileAJAX extends HttpServlet {
 		//giorno lavorativo e turno diurno
 		if(GiornoLavorativo.isLavorativo(giorno) && GiornoLavorativo.isDiurno(giorno)) {
 			if(ora.isBefore(inizioDiurno)) {
-				request.setAttribute("titolo", "Il turno lavorativo diurno inizierà tra poco, il personale disponibile sarà il seguente");
+				request.setAttribute("titolo", "Il turno lavorativo diurno inizierï¿½ tra poco, il personale disponibile sarï¿½ il seguente");
 			}
 			else if(ora.isAfter(inizioDiurno) && ora.isBefore(fineDiurno)) {
-				request.setAttribute("titolo", "Il personale disponibile è il seguente");
+				request.setAttribute("titolo", "Il personale disponibile ï¿½ il seguente");
 			}
 			else {
 				giorno=GiornoLavorativo.nextLavorativo(giorno);
 				String giornoLavoro=""+giorno.toLocalDate().getDayOfMonth()+" "+Mese(giorno.toLocalDate().getMonthValue())+" "+giorno.toLocalDate().getYear();
-				request.setAttribute("titolo", "Il personale disponibile per domani "+giornoLavoro+" sarà il seguente");
+				request.setAttribute("titolo", "Il personale disponibile per domani "+giornoLavoro+" sarï¿½ il seguente");
 
 			}
 		}
 		//giorno lavorativo e turno notturno
 		else if(GiornoLavorativo.isLavorativo(giorno) && !GiornoLavorativo.isDiurno(giorno)) {
 			if(ora.isBefore(inizioNotturno)) {
-				request.setAttribute("titolo", "Il turno lavorativo notturno inizierà tra poco, il personale disponibile sarà il seguente");
+				request.setAttribute("titolo", "Il turno lavorativo notturno inizierï¿½ tra poco, il personale disponibile sarï¿½ il seguente");
 			}
 			else if(ora.isAfter(inizioNotturno) && ora.isBefore(fineNotturno)) {
-				request.setAttribute("titolo", "Il personale disponibile è il seguente");
+				request.setAttribute("titolo", "Il personale disponibile ï¿½ il seguente");
 			}
 			else {
 				giorno=GiornoLavorativo.nextLavorativo(giorno);
 				String giornoLavoro=""+giorno.toLocalDate().getDayOfMonth()+" "+Mese(giorno.toLocalDate().getMonthValue())+" "+giorno.toLocalDate().getYear();
-				request.setAttribute("titolo", "Il personale disponibile per il giorno "+ giornoLavoro +" sarà il seguente");
+				request.setAttribute("titolo", "Il personale disponibile per il giorno "+ giornoLavoro +" sarï¿½ il seguente");
 			}
 
 		}
@@ -110,7 +110,7 @@ public class PersonaleDisponibileAJAX extends HttpServlet {
 		else {
 			giorno=GiornoLavorativo.nextLavorativo(giorno);
 			String giornoLavoro=""+giorno.toLocalDate().getDayOfMonth()+" "+Mese(giorno.toLocalDate().getMonthValue())+" "+giorno.toLocalDate().getYear();
-			request.setAttribute("titolo", "Il personale disponibile per il giorno "+ giornoLavoro +" sarà il seguente");
+			request.setAttribute("titolo", "Il personale disponibile per il giorno "+ giornoLavoro +" sarï¿½ il seguente");
 
 		}
 
@@ -142,7 +142,7 @@ public class PersonaleDisponibileAJAX extends HttpServlet {
 			}
 		}
 
-		//Confronto se nell'ArrayList dei vigili ci sono quelli già inseriti nelle squadre 
+		//Confronto se nell'ArrayList dei vigili ci sono quelli giï¿½ inseriti nelle squadre 
 		ArrayList<VigileDelFuocoBean> nuovoelenco = new ArrayList<VigileDelFuocoBean>();
 		for(int i=0; i<vigili.size();i++) {
 		boolean trovato= false;
@@ -156,9 +156,8 @@ public class PersonaleDisponibileAJAX extends HttpServlet {
 					System.out.println(trovato);
 				}	
 				if(trovato) break;
-				it.remove();
 			}
-			//Se il vigile non è presente nell'HashMap lo inserisco nel nuovo arrayList, controllando se è dello stesso ruolo del VF rimosso
+			//Se il vigile non ï¿½ presente nell'HashMap lo inserisco nel nuovo arrayList, controllando se ï¿½ dello stesso ruolo del VF rimosso
 			if(trovato==false) {
 				if(ruolo!=null) {
 					if(vigili.get(i).getMansione().equalsIgnoreCase(ruolo)) {
@@ -225,7 +224,7 @@ public class PersonaleDisponibileAJAX extends HttpServlet {
 
 		/*
 		 * Per ordinare l'array di componenti della squadra in base alla tipologia della squadra di appartenenza
-		 * con priorità a sala operativa, poi prima partenza, poi auto scala e infine auto botte.
+		 * con prioritï¿½ a sala operativa, poi prima partenza, poi auto scala e infine auto botte.
 		 * In caso di tipologia uguale, ordina in base al cognome che ricava dalla mail
 		 * essendo la mail composta sempre da nome<numero>.cognome
 		 * 

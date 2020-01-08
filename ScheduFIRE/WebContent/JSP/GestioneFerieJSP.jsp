@@ -42,6 +42,7 @@
 					<option value="cognome">Cognome</option>
 					<option value="mansione">Mansione</option>
 					<option value="grado">Grado</option>
+
 					<option value="giorniFerie">Ferie</option>
 					
 					
@@ -52,6 +53,7 @@
 					<option value="cognome" selected>Cognome</option>
 					<option value="mansione">Mansione</option>
 					<option value="grado">Grado</option>
+
 					<option value="giorniFerie">Ferie</option>
 					<%
 						} else if( ordinamento.equals("mansione") ) {		
@@ -60,6 +62,7 @@
 					<option value="cognome">Cognome</option>
 					<option value="mansione"selected>Mansione</option>
 					<option value="grado">Grado</option>
+
 					<option value="giorniFerie">Ferie</option>
 					<%
 						} else if( ordinamento.equals("grado") ) {		
@@ -68,6 +71,7 @@
 					<option value="cognome">Cognome</option>
 					<option value="mansione">Mansione</option>
 					<option value="grado" selected>Grado</option>
+
 					<option value="giorniFerie">Ferie</option>
 					<%
 						} else if( ordinamento.equals("ferie") ) {		
@@ -76,10 +80,12 @@
 					<option value="cognome">Cognome</option>
 					<option value="mansione">Mansione</option>
 					<option value="grado">Grado</option>
+
 					<option value="giorniFerie" selected>Ferie</option>
 					<%
 						} 		
 						%>
+
 					<%}
 					else {%>
 					
@@ -87,6 +93,7 @@
 					<option value="cognome"selected>Cognome</option>
 					<option value="mansione">Mansione</option>
 					<option value="grado">Grado</option>
+
 					<option value="giorniFerie">Ferie</option>
 					<%} %>
 					
@@ -304,6 +311,7 @@
 					<th class="text-center">Nome</th>
 					<th class="text-center">Cognome</th>
 					<th class="text-center">Email</th>
+
 					<th class="text-center">Ferie</th>
 					<th class="text-center">Inserisci ferie</th>
 					<th class="text-center">Rimuovi ferie</th>

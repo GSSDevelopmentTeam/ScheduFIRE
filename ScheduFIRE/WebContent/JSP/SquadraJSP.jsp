@@ -1,7 +1,7 @@
 <%@page import="java.util.HashMap"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@page import="java.util.*, model.bean.*, model.dao.*"%>
+<%@page import="java.util.*, model.bean.*, model.dao.*, java.sql.Date"%>
 <!DOCTYPE html>
 <html>
 <jsp:include page="StandardJSP.jsp" />
@@ -41,6 +41,7 @@ h2 {
 </head>
 
 <body>
+<%Date data = (Date) request.getAttribute("data"); %>
 
 	<!-- Barra Navigazione -->
 	<jsp:include page="HeaderJSP.jsp" />
@@ -55,7 +56,7 @@ h2 {
 					<h5 class="modal-title" id="titoloAggiuntaFerie">Personale
 						Disponibile</h5>
 				</div>
-				<form action="ModificaComposizioneSquadreServlet" method="POST">
+				<form action="ModificaComposizioneSquadreServlet?tiposquadra=3&data=<%=data.toString() %>" method="POST">
 <!-- Nel form verranno passate l'email del VF da sostituire con nome "email" e quella del VF da inserire con nome "VFNew" -->
 					<div class="modal-body" id="elenco">
 						<div id="appendiElenco"></div>
@@ -74,14 +75,15 @@ h2 {
 
 	<!-- ELENCO SQUADRE  -->
 <%
-	HashMap<VigileDelFuocoBean, String> squadraD = (HashMap<VigileDelFuocoBean, String>) session.getAttribute("squadra");
-	Date data = (Date) request.getAttribute("dataModifica");%>
+	HashMap<VigileDelFuocoBean, String> squadra = (HashMap<VigileDelFuocoBean, String>) session.getAttribute("squadra"); %>
      
      <a href="#inizio"><button class=" back-up btn btn-outline-secondary"> ^ </button></a>
      
      <!-- SQUADRA DIURNA -->
-       <div class="d-flex justify-content-center" id="inizio">
-		<h2 style="font-weight:bold; font-size:36px;">Giorno</h2>
+
+       <div class="d-flex justify-content-center">
+		<h2 style="font-weight:bold; font-size:36px;">Squadra del <%=data %></h2>
+
 	</div>
 	<p class="d-flex justify-content-center"></p>
 	<div class="d-flex justify-content-center">
@@ -104,7 +106,7 @@ h2 {
 			<tbody>
 				<% 
 	            
-                Iterator it = squadraD.entrySet().iterator();
+                Iterator it = squadra.entrySet().iterator();
                 while (it.hasNext()) {
                     Map.Entry coppia = (Map.Entry) it.next();
                     VigileDelFuocoBean membro = (VigileDelFuocoBean) coppia.getKey();
@@ -150,7 +152,7 @@ h2 {
 
 			<tbody>
 				<% 
-				it = squadraD.entrySet().iterator();
+				it = squadra.entrySet().iterator();
                 while (it.hasNext()) {
                     Map.Entry coppia = (Map.Entry) it.next();
                     VigileDelFuocoBean membro = (VigileDelFuocoBean) coppia.getKey();
@@ -196,7 +198,7 @@ h2 {
 
 			<tbody>
 				<% 
-				it = squadraD.entrySet().iterator();
+				it = squadra.entrySet().iterator();
                 while (it.hasNext()) {
                     Map.Entry coppia = (Map.Entry) it.next();
                     VigileDelFuocoBean membro = (VigileDelFuocoBean) coppia.getKey();
@@ -242,7 +244,7 @@ h2 {
 
 			<tbody>
 				<% 
-                it = squadraD.entrySet().iterator();
+                it = squadra.entrySet().iterator();
                 while (it.hasNext()) {
                     Map.Entry coppia = (Map.Entry) it.next();
                     VigileDelFuocoBean membro = (VigileDelFuocoBean) coppia.getKey();

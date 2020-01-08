@@ -38,7 +38,6 @@
 	int[] days_month = (int[]) request.getAttribute("days_month");
 	int[] days_work = (int[]) request.getAttribute("days_work");
 	String[] days_turno = (String[]) request.getAttribute("days_turno");
-
 %>
 </head>
 <body>
@@ -164,24 +163,21 @@
 			<a class="info" id="informazione"></a>
 
 			<div >
-				<%
-					if(ruolo.equalsIgnoreCase("capoturno")){
-				%>
 
-				<form action="GeneraSquadreServlet" method="post">
+
+				<form action="GeneraSquadreServlet" method="POST">
 					<button type="submit" id="bottoneGeneraSquadra" class="edit">
 						Genera squadre <br> per il turno successivo
 					</button>
 				</form>
 
-				<form action="ModificaComposizioneSquadreServlet" method="post">
+				<form action="ModificaComposizioneSquadreServlet?tiposquadra=3" method="POST">
+
 					<button type="submit" id="bottoneModificaSquadra" class="edit">
-						Modifica squadre
+						Modifica Squadre
 					</button>
 				</form>
-				<%
-					}
-				%>
+
 			</div>
 
 			<div class="wrapper" id="schedulazione">
@@ -236,13 +232,14 @@
 
 	<!-- START: script per la funzione dayClicked() -->
 	<script>
-	<%if(GiornoLavorativo.isLavorativo(data)){%>
+	<%if (GiornoLavorativo.isLavorativo(data)) {%>
 		$( document ).ready(function() {
 		    dayClicked(<%=giorno%>);
 		    imgMoonSun();
 		});
 	<%}%>
 	
+		
 		
 		function dayClicked(input) {
 			
@@ -260,6 +257,7 @@
 		var primaPartenza = $("#PrimaPartenza");
 		var autoScala = $("#AutoScala");
 		var autoBotte = $("#AutoBotte");
+		
 
 		var giorno = input;
 		if(giorno.toString().trim().indexOf("B")>0){
@@ -289,26 +287,27 @@
 				autoBotte.empty();
 
 				var len = response.length;
-				
 				var isModificabile = response[0];
 				var isGenerabile = response[1];	
 				$("#informazione").text("Squadre relative al giorno "+giorno+"/ "+mese+" /"+anno);
 	
 				if(len<=2){
-					$("#informazione").text("OPS! Non sono ancora state generate squadre per il  giorno "+giorno+"/ "+mese+" /"+anno);
+					$("#informazione").text("Non sono ancora state generate squadre per il  giorno "+giorno+"/ "+mese+" /"+anno);
 					schedulazione.style.display ='none';
 				}else{
 					schedulazione.style.display ='block';
 				}
 					
 				
-				
+				<%if(ruolo.equalsIgnoreCase("capoturno")){%>
 				if(isModificabile){
 					bottoneModificaSquadra.style.display ='block';
 				}
 				if(isGenerabile){
 					bottoneGeneraSquadra.style.display ='block';
 				}
+				<%}%>
+				
 				for (var i = 2; i < len; i++) {
 				vigile=response[i];
 					
@@ -336,9 +335,10 @@
 						  rigaTabella.appendChild(colonnaCognome);
 					
 				}
-				
+				var red = 'ModificaComposizioneSquadreServlet?tiposquadra=3&data=' + anno.trim() + '-' + mese.trim() + '-' + giorno.trim();
+				$("#modData").attr("action", red);
 
-			}
+			} 
 		});
 	}
 	</script>

@@ -84,10 +84,6 @@ public class CalendarioServlet extends HttpServlet {
 		riempiLavorativo(mese, anno, days_work);
 		//funzione per il nome del turno
 		riempiTurno(mese, anno, days_turno);
-
-
-		for(i=0; i<42; i++)
-			System.out.println(days_turno[i]+"\n");
 		
 		request.setAttribute("date", date);
 		request.setAttribute("anno_corrente", anno_stringa_numero);
