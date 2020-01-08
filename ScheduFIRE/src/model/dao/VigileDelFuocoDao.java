@@ -43,9 +43,11 @@ public class VigileDelFuocoDao {
 	
 	public static final int ORDINA_PER_GRADO = 6;
 	
+	public static final int ORDINA_PER_FERIE_TOTALI = 7;
+	
 	private static final String[] ORDINAMENTI = {"order by nome", "order by cognome", "order by caricolavoro",
 												"order by giorniferieannocorrente", "order by giorniferieannoprecedente",
-												"order by mansione", "order by grado"};
+												"order by mansione", "order by grado", "ORDER BY ferie DESC"};
 	
 	/**
 	 * Si occupa del salvataggio dei dati di un Vigile del Fuoco nel database.
@@ -212,14 +214,14 @@ public class VigileDelFuocoDao {
 	 */
 	public static Collection<VigileDelFuocoBean> ottieni(int ordinamento) {
 		
-		if(ordinamento < 0 || ordinamento > 6)
+		if(ordinamento < 0 || ordinamento > 7)
 			//lancio eccezione
 			;
 		
 		try(Connection con = ConnessioneDB.getConnection()) {
 			
 			// Esecuzione query
-			PreparedStatement ps = con.prepareStatement("select * from Vigile where adoperabile = true " +
+			PreparedStatement ps = con.prepareStatement("select *, (giorniferieannocorrente + giorniferieannoprecedente) as ferie from Vigile where adoperabile = true " +
 														ORDINAMENTI[ordinamento] + ";");
 			ResultSet rs = ps.executeQuery();
 			
@@ -265,6 +267,31 @@ public class VigileDelFuocoDao {
 			throw new RuntimeException(e);
 		}
 	
+	}
+	
+	/**
+	 * Si occupa dell'ottenimento del valore minimo di Carico di lavoro
+	 * tra i Vigili del Fuoco presenti nel database
+	 * @return il minimo Carico di Lavoro
+	 */
+	public static int getCaricoLavoroMinimo() {
+		
+		try(Connection con = ConnessioneDB.getConnection()) {
+			
+			// Esecuzione query
+			PreparedStatement ps = con.prepareStatement("select MIN(caricolavoro) as minimo from Vigile where adoperabile = true;");
+			ResultSet rs = ps.executeQuery();
+			int minimo = 0;
+			if(rs.next())
+				minimo = rs.getInt("minimo");
+
+			return minimo;
+				
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+		}
+		
+		
 	}
 	
 	/**
