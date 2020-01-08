@@ -23,6 +23,14 @@ h2 {
     vertical-align: top;
     border-top: 1px solid #dee2e6;
 }
+
+.back-up{
+	border:none;
+	background:none;	
+    position: fixed;
+    bottom: 5%;
+    right: 5%;
+}
 </style>
 </head>
 
@@ -74,7 +82,9 @@ h2 {
 		}
 	%>
 
-<a href="#inizio"><button class=" btn btn--outline-secondary"></button></a>
+<a href="#inizio"><button class=" back-up"><img src="IMG/arrow/up-arrow-p.png" style="margin-left: 5px; width: 45px; height: 45px;"
+					onmouseover="this.src='IMG/arrow/up-arrow-d.png'"
+					onmouseout="this.src='IMG/arrow/up-arrow-p.png'" /></button></a>
 
 	<br>
 	<div class="d-flex justify-content-center" id="inizio">
@@ -84,7 +94,7 @@ h2 {
 				Squadre</button>
 		</form>
 		<a href="#Giorno"><button type="button"
-				class="btn btn-outline-secondary btn-lg" style="margin: 3px;">Sqaudra
+				class="btn btn-outline-secondary btn-lg" style="margin: 3px;">Squadra
 				Diurna</button></a> <a href="#Notte"><button type="button"
 				class="btn btn-outline-secondary btn-lg" style="margin: 3px;">Squadra
 				Notturna</button></a><a href="#Disp"><button type="button"
@@ -108,9 +118,9 @@ h2 {
 			<thead class="thead-dark">
 				<tr>
 					<th class="text-center">Grado</th>
+					<th class="text-center">Mansione</th>
 					<th class="text-center">Nome</th>
 					<th class="text-center">Cognome</th>
-					<th class="text-center">Mansione</th>
 					<th class="text-center">Modifica</th>
 				</tr>
 			</thead>
@@ -128,9 +138,9 @@ h2 {
 					<td class="text-center"><img
 						src="Grado/<%=membro.getGrado()%>.png" style="height: 25%"
 						onerror="this.parentElement.innerHTML='Non disponibile';"></td>
+					<td class="text-center"><%=membro.getMansione()%></td>
 					<td class="text-center"><%=membro.getNome()%></td>
 					<td class="text-center"><%=membro.getCognome()%></td>
-					<td class="text-center"><%=membro.getMansione()%></td>
 					<td class="text-center"><button type="button"
 							class="btn btn-outline-secondary" data-toggle="modal"
 							data-target="#aggiungiVF" id="aggiungiVF"
@@ -156,9 +166,9 @@ h2 {
 			<thead class="thead-dark">
 				<tr>
 					<th class="text-center">Grado</th>
+					<th class="text-center">Mansione</th>
 					<th class="text-center">Nome</th>
 					<th class="text-center">Cognome</th>
-					<th class="text-center">Mansione</th>
 					<th class="text-center">Modifica</th>
 				</tr>
 			</thead>
@@ -176,9 +186,9 @@ h2 {
 					<td class="text-center"><img
 						src="Grado/<%=membro.getGrado()%>.png" style="height: 25%"
 						onerror="this.parentElement.innerHTML='Non disponibile';"></td>
+					<td class="text-center"><%=membro.getMansione()%></td>
 					<td class="text-center"><%=membro.getNome()%></td>
 					<td class="text-center"><%=membro.getCognome()%></td>
-					<td class="text-center"><%=membro.getMansione()%></td>
 					<td class="text-center"><button type="button"
 							class="btn btn-outline-secondary" data-toggle="modal"
 							data-target="#aggiungiVF" id="aggiungiVF"
@@ -204,9 +214,9 @@ h2 {
 			<thead class="thead-dark">
 				<tr>
 					<th class="text-center">Grado</th>
+					<th class="text-center">Mansione</th>
 					<th class="text-center">Nome</th>
 					<th class="text-center">Cognome</th>
-					<th class="text-center">Mansione</th>
 					<th class="text-center">Modifica</th>
 				</tr>
 			</thead>
@@ -224,9 +234,9 @@ h2 {
 					<td class="text-center"><img
 						src="Grado/<%=membro.getGrado()%>.png" style="height: 25%"
 						onerror="this.parentElement.innerHTML='Non disponibile';"></td>
+					<td class="text-center"><%=membro.getMansione()%></td>
 					<td class="text-center"><%=membro.getNome()%></td>
 					<td class="text-center"><%=membro.getCognome()%></td>
-					<td class="text-center"><%=membro.getMansione()%></td>
 					<td class="text-center"><button type="button"
 							class="btn btn-outline-secondary" data-toggle="modal"
 							data-target="#aggiungiVF" id="aggiungiVF"
@@ -252,9 +262,9 @@ h2 {
 			<thead class="thead-dark">
 				<tr>
 					<th class="text-center">Grado</th>
+					<th class="text-center">Mansione</th>
 					<th class="text-center">Nome</th>
 					<th class="text-center">Cognome</th>
-					<th class="text-center">Mansione</th>
 					<th class="text-center">Modifica</th>
 				</tr>
 			</thead>
@@ -272,9 +282,9 @@ h2 {
 					<td class="text-center"><img
 						src="Grado/<%=membro.getGrado()%>.png" style="height: 25%"
 						onerror="this.parentElement.innerHTML='Non disponibile';"></td>
+					<td class="text-center"><%=membro.getMansione()%></td>
 					<td class="text-center"><%=membro.getNome()%></td>
 					<td class="text-center"><%=membro.getCognome()%></td>
-					<td class="text-center"><%=membro.getMansione()%></td>
 					<td class="text-center"><button type="button"
 							class="btn btn-outline-secondary" data-toggle="modal"
 							data-target="#aggiungiVF" id="aggiungiVF"
@@ -294,7 +304,7 @@ h2 {
 	<div class="d-flex justify-content-center">
 		<form action="GeneraSquadreServlet?salva=true" method=post>
 		<a href="#Giorno"><button type="button"
-				class="btn btn-outline-secondary btn-lg" style="margin: 3px;">Sqaudra
+				class="btn btn-outline-secondary btn-lg" style="margin: 3px;">Squadra
 				Diurna</button></a> <a href="#Notte"><button type="button"
 				class="btn btn-outline-secondary btn-lg" style="margin: 3px;">Squadra
 				Notturna</button></a><a href="#Disp"><button type="button"
@@ -318,9 +328,9 @@ h2 {
 			<thead class="thead-dark">
 				<tr>
 					<th class="text-center">Grado</th>
+					<th class="text-center">Mansione</th>
 					<th class="text-center">Nome</th>
 					<th class="text-center">Cognome</th>
-					<th class="text-center">Mansione</th>
 					<th class="text-center">Modifica</th>
 				</tr>
 			</thead>
@@ -338,9 +348,9 @@ h2 {
 					<td class="text-center"><img
 						src="Grado/<%=membro.getGrado()%>.png" style="height: 25%"
 						onerror="this.parentElement.innerHTML='Non disponibile';"></td>
+					<td class="text-center"><%=membro.getMansione()%></td>
 					<td class="text-center"><%=membro.getNome()%></td>
 					<td class="text-center"><%=membro.getCognome()%></td>
-					<td class="text-center"><%=membro.getMansione()%></td>
 					<td class="text-center"><button type="button"
 							class="btn btn-outline-secondary" data-toggle="modal"
 							data-target="#aggiungiVF" id="aggiungiVF"
@@ -366,9 +376,9 @@ h2 {
 			<thead class="thead-dark">
 				<tr>
 					<th class="text-center">Grado</th>
+					<th class="text-center">Mansione</th>
 					<th class="text-center">Nome</th>
 					<th class="text-center">Cognome</th>
-					<th class="text-center">Mansione</th>
 					<th class="text-center">Modifica</th>
 				</tr>
 			</thead>
@@ -386,9 +396,9 @@ h2 {
 					<td class="text-center"><img
 						src="Grado/<%=membro.getGrado()%>.png" style="height: 25%"
 						onerror="this.parentElement.innerHTML='Non disponibile';"></td>
+					<td class="text-center"><%=membro.getMansione()%></td>
 					<td class="text-center"><%=membro.getNome()%></td>
 					<td class="text-center"><%=membro.getCognome()%></td>
-					<td class="text-center"><%=membro.getMansione()%></td>
 					<td class="text-center"><button type="button"
 							class="btn btn-outline-secondary" data-toggle="modal"
 							data-target="#aggiungiVF" id="aggiungiVF"
@@ -414,9 +424,9 @@ h2 {
 			<thead class="thead-dark">
 				<tr>
 					<th class="text-center">Grado</th>
+					<th class="text-center">Mansione</th>
 					<th class="text-center">Nome</th>
 					<th class="text-center">Cognome</th>
-					<th class="text-center">Mansione</th>
 					<th class="text-center">Modifica</th>
 				</tr>
 			</thead>
@@ -434,9 +444,9 @@ h2 {
 					<td class="text-center"><img
 						src="Grado/<%=mb.getGrado()%>.png" style="height: 25%"
 						onerror="this.parentElement.innerHTML='Non disponibile';"></td>
+					<td class="text-center"><%=mb.getMansione()%></td>
 					<td class="text-center"><%=mb.getNome()%></td>
 					<td class="text-center"><%=mb.getCognome()%></td>
-					<td class="text-center"><%=mb.getMansione()%></td>
 					<td class="text-center"><button type="button"
 							class="btn btn-outline-secondary" data-toggle="modal"
 							data-target="#aggiungiVF" id="aggiungiVF"
@@ -462,9 +472,9 @@ h2 {
 			<thead class="thead-dark">
 				<tr>
 					<th class="text-center">Grado</th>
+					<th class="text-center">Mansione</th>
 					<th class="text-center">Nome</th>
 					<th class="text-center">Cognome</th>
-					<th class="text-center">Mansione</th>
 					<th class="text-center">Modifica</th>
 				</tr>
 			</thead>
@@ -482,9 +492,9 @@ h2 {
 					<td class="text-center"><img
 						src="Grado/<%=membro.getGrado()%>.png" style="height: 25%"
 						onerror="this.parentElement.innerHTML='Non disponibile';"></td>
+					<td class="text-center"><%=membro.getMansione()%></td>
 					<td class="text-center"><%=membro.getNome()%></td>
 					<td class="text-center"><%=membro.getCognome()%></td>
-					<td class="text-center"><%=membro.getMansione()%></td>
 					<td class="text-center"><button type="button"
 							class="btn btn-outline-secondary" data-toggle="modal"
 							data-target="#aggiungiVF" id="aggiungiVF"
@@ -502,7 +512,7 @@ h2 {
 	<div class="d-flex justify-content-center">
 		<form action="GeneraSquadreServlet?salva=true" method=post>
 		<a href="#Giorno"><button type="button"
-				class="btn btn-outline-secondary btn-lg" style="margin: 3px;">Sqaudra
+				class="btn btn-outline-secondary btn-lg" style="margin: 3px;">Squadra
 				Diurna</button></a> <a href="#Notte"><button type="button"
 				class="btn btn-outline-secondary btn-lg" style="margin: 3px;">Squadra
 				Notturna</button></a><a href="#Disp"><button type="button"

@@ -12,25 +12,36 @@
     vertical-align: top;
     border-top: 1px solid #dee2e6;
 }
+.back-up{
+	border-radius: 50px;
+    font-size: 30px;
+    width: 60px;
+    position: fixed;
+    bottom: 5%;
+    right: 5%;
+    background-color:#FFFFFF;
+	box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0
+		rgba(0, 0, 0, 0.19);
+}
 </style>
 <body>
 <!-- Barra Navigazione -->
 	<jsp:include page="HeaderJSP.jsp" />
 	
-
+<a href="#inizio"><button class=" back-up btn btn-outline-secondary"> ^ </button></a>
 <section>
 	
-	<h2 class="d-flex justify-content-center" style="color:#B60000!Important">Personale Disponibile</h2>
+	<h2 class="d-flex justify-content-center" style="color:#B60000!Important" id="inizio">Personale Disponibile</h2>
 	<h5 class="d-flex justify-content-center" ><%=request.getAttribute("titolo")==null ? "" : request.getAttribute("titolo") %></h5>
 		<div class="table-responsive">
 		<table class="table  table-hover" id="listaVigili"  style="table-layout: fixed">
 			<thead class="thead-dark">
 				<tr>
 					<th class="text-center">Grado</th>
+					<th class="text-center">Mansione</th>
 					<th class="text-center">Nome</th>
 					<th class="text-center">Cognome</th>
 					<th class="text-center">Email</th>
-					<th class="text-center">Mansione</th>
 					<th class="text-center">Squadra</th>
 				</tr>
 			</thead>
@@ -45,22 +56,22 @@
 				%>
 
 					<tr>
-						<td class="text-center"><img src="Grado/<%=vigile.getMansione().equals("Capo Squadra") && vigile.getGrado().equals("Esperto")?"EspertoCapoSquadra":vigile.getGrado() %>.png" width=20% onerror="this.parentElement.innerHTML='Non disponibile';"></td>
+						<td class="text-center"><img src="Grado/<%=vigile.getGrado() %>.png" width=20% onerror="this.parentElement.innerHTML='Non disponibile';"></td>
+						<td class="text-center"><%=vigile.getMansione() %></td>
 						<td class="text-center"><%=vigile.getNome() %></td>
 						<td class="text-center"><%=vigile.getCognome() %></td>
 						<td class="text-center"><%=vigile.getEmail() %></td>
-						<td class="text-center"><%=vigile.getMansione() %></td>
 						<td class="text-center"><%=componente.getTipologiaSquadra() %></td>
 					</tr>
 					<% ; i.remove(); } } }
 					for(VigileDelFuocoBean vigile: vigili){
 					%>
 					<tr>
-						<td class="text-center"><img src="Grado/<%=vigile.getMansione().equals("Capo Squadra") && vigile.getGrado().equals("Esperto")?"EspertoCapoSquadra":vigile.getGrado() %>.png" width=20% onerror="this.parentElement.innerHTML='Non disponibile';"></td>
+						<td class="text-center"><img src="Grado/<%=vigile.getGrado() %>.png" style="height:25%" onerror="this.parentElement.innerHTML='Non disponibile';"></td>
+						<td class="text-center"><%=vigile.getMansione() %></td>
 						<td class="text-center"><%=vigile.getNome() %></td>
 						<td class="text-center"><%=vigile.getCognome() %></td>
 						<td class="text-center"><%=vigile.getEmail() %></td>
-						<td class="text-center"><%=vigile.getMansione() %></td>
 						<td class="text-center"></td>
 					</tr>
 

@@ -8,6 +8,18 @@ body{
   box-sizing: border-box;
 }
 
+.back-up{
+	border-radius: 50px;
+    font-size: 30px;
+    width: 60px;
+    position: fixed;
+    bottom: 5%;
+    right: 5%;
+    background-color:#FFFFFF;
+	box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0
+		rgba(0, 0, 0, 0.19);
+}
+
 p#turno{
 	font-size: 50%;
 	padding:0;
@@ -20,13 +32,13 @@ p#turno{
 	display: flex;
 	width: 100%;
 	height: 100%;
-	background-color: white;
+	background-color: transparent;
 }
 
 .edit {
 	justify-content:center;
 	margin:4%;
-	background-color:white;
+	background-color:transparent;
 	border: 1px solid #454d55;
 	color: #454d55;
 	padding: 7px;
@@ -58,7 +70,7 @@ p#turno{
 /*contenitore per il calendario*/
 .container-calendar {
 	width: 70%;
-	background-color: white;
+	background-color: transparent;
 	font-family: Verdana;
 	border-right: 2px dotted black;
 }
@@ -70,7 +82,7 @@ p#turno{
 }
 
 .altroAnno{
-	background-color: white;
+	background-color: transparent;
 	color: black;
 	font-size: 40%;
 	border: none;
@@ -106,7 +118,7 @@ flex:1 -> prende il resto del container*/
   align-items:center;
   grid-template-columns: auto;
   grid-template-rows: auto;
-  background-color: #fff;
+  background-color: transparent;
   color: #343a40;
 }
 
@@ -192,8 +204,9 @@ flex:1 -> prende il resto del container*/
 	display: grid;
 	grid-template-columns: auto auto auto auto auto auto auto;
 	background-color: transparent;
-	padding: 2%;
+	margin:2%;
 	font-family: Verdana;
+	border: 2px solid black;
 }
 
 /*grid-item e item-empty sono uguali, solo che item-empty
@@ -201,7 +214,7 @@ flex:1 -> prende il resto del container*/
 non ha la proprietà :hover*/
 .grid-item {
 	color: #434a52;
-	background-color: white;
+	background-color: transparent;
 	border-bottom: 0.1px solid #343a40;
 	border-top: 0.1 px solid #343a40;
 	padding: 2%;
@@ -212,7 +225,7 @@ non ha la proprietà :hover*/
 }
 
 .item-empty{
-	background-color: white;
+	background-color: transparent;
 	border-bottom: 0.1px solid #808080;
 	border-top: 0.1 px solid #808080;
 	padding: 10%;
@@ -231,7 +244,7 @@ non ha la proprietà :hover*/
 }
 
 .dropbtn {
-	background-color: white;
+	background-color: transparent;
 	border-bottom: 2px solid #343a40 !important;
 	color: #343a40;
 	font-size: 150%;
@@ -242,6 +255,7 @@ non ha la proprietà :hover*/
 .dropdown {
 	position: relative;
 	display: inline-block;
+	background-color: transparent;
 }
 
 .dropdown-content {
@@ -249,15 +263,18 @@ non ha la proprietà :hover*/
 	position: absolute;
 	background-color: #f9f9f9;
 	min-width: 16px;
+	width: 147px;
 	box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
 	z-index: 1;
 }
 
 .dropdown-item {
 	font-size: 80%;
+	font-weight:bold;
 	color: #4b4b4b;
 	padding: 10px 10px;
 	text-decoration: none;
+	text-align:center;
 	display: block;
 }
 
@@ -271,7 +288,7 @@ non ha la proprietà :hover*/
 }
 
 .dropdown:hover .dropbtn {
-	background-color: white;
+	background-color: transparent;
 }
 /*Fine menù dropdown dei mesi*/
 

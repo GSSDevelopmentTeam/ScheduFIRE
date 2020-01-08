@@ -24,6 +24,7 @@ h2 {
 	vertical-align: top;
 	border-top: 1px solid #dee2e6;
 }
+
 </style>
 </head>
 
@@ -82,6 +83,7 @@ h2 {
 				value="salva" name="salva" style="margin: 3px;">Conferma
 				Modifiche</button>
 		</form>
+
 	</div>
 	<p class="d-flex justify-content-center"></p>
 	<div class="d-flex justify-content-center">

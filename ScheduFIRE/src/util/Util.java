@@ -20,6 +20,7 @@ import model.bean.SquadraBean;
 import model.bean.VigileDelFuocoBean;
 import model.dao.*;
 
+
 /**
  * La classe Util contiene diversi metodi statici utili per essere chiamati
  * da diverse classi del sistema. 
@@ -316,6 +317,15 @@ public class Util {
 		
 	}
 	
+	public static List<VigileDelFuocoBean> compareVigile(List<VigileDelFuocoBean> lista) {
+		
+			List<VigileDelFuocoBean> listaC = new ArrayList<VigileDelFuocoBean>(lista);
+			
+			Collections.sort(listaC, new VigileComparator());
+			
+			return listaC;
+	}
+	
 	
 	private static void setFerie() {
 		List<VigileDelFuocoBean> vigili=VigileDelFuocoDao.ottieni();
@@ -356,5 +366,21 @@ class ComponenteComparator implements Comparator<ComponenteDellaSquadraBean> {
 		}
 		return -comparazione;
 	}
+}
+	
+	class VigileComparator implements Comparator<VigileDelFuocoBean> {
+
+		@Override
+		public int compare(VigileDelFuocoBean o1, VigileDelFuocoBean o2) {
+			String mansione1=o1.getMansione();
+			String mansione2=o2.getMansione();
+			if (mansione1.equals("Capo Squadra") && mansione2.equals("Capo Squadra"))
+				return o1.getCognome().compareTo(o2.getCognome());
+			if(mansione1.equals("Capo Squadra"))
+				return -1;
+			if(mansione2.equals("Capo Squadra"))
+				return 1;
+			return o1.getMansione().compareTo(o2.getMansione());
+		}
 }
 

@@ -32,6 +32,7 @@
 
 	java.sql.Date data = (java.sql.Date) request.getAttribute("date");
 	int primoGiorno = (Integer) request.getAttribute("primo_giorno");
+	int len = (Integer) request.getAttribute("len");
 	int anno_corrente = Integer.parseInt((String) request.getAttribute("anno_corrente"));
 	int mese_corrente = Integer.parseInt((String) request.getAttribute("mese_corrente"));
 	String mese_stringa = (String) request.getAttribute("meseStringa");
@@ -43,9 +44,9 @@
 <body>
 	<!-- Barra Navigazione -->
 	<jsp:include page="HeaderJSP.jsp" />
-
+<a href="#inizio"><button class=" back-up btn btn-outline-secondary"> ^ </button></a>
 	<!-- START: Container per calendario e schedulazione -->
-	<div class="containerAll">
+	<div class="containerAll" id="inizio">
 
 		<!-- START: Container per il calendaio -->
 		<div class="container-calendar">
@@ -102,12 +103,13 @@
 					String img = "";
 					String onClick = "";
 
-					for (i = 0; i < days_month.length; i++) {
+					
+					for (i = 0; i< days_month.length-len; i++) {
 						if (days_month[i] < 0) {
 				%>
 				<div class="item-empty"><%=empty%></div>
 				<%
-					} else {
+					} else{
 							day++;
 
 							if (giorno == day && mese_corrente == mese && anno_corrente == anno) {
@@ -146,7 +148,7 @@
 				</div>
 
 				<%
-					id = "";
+							id = "";
 							img = "";
 							onClick = "";
 						}
@@ -162,25 +164,22 @@
 		<div class="container-schedul" id="visilibity">
 			<a class="info" id="informazione"></a>
 
-			<div>
-				<%
-					//if(ruolo.equalsIgnoreCase("capoturno")){
-				%>
+			<div >
 
-				<form action="GeneraSquadreServlet" method="post">
-					<button type="submit" id="bottoneGeneraSquadra" class="edit">Genera
-						Squadre</button>
+
+				<form action="GeneraSquadreServlet" method="POST">
+					<button type="submit" id="bottoneGeneraSquadra" class="edit">
+						Genera squadre <br> per il turno successivo
+					</button>
 				</form>
 
-				<form action="ModificaComposizioneSquadreServlet?tiposquadra=3"
-					method="post" id="modData">
+				<form action="ModificaComposizioneSquadreServlet?tiposquadra=3" method="POST">
+
 					<button type="submit" id="bottoneModificaSquadra" class="edit">
 						Modifica Squadre
 					</button>
 				</form>
-				<%
-					//}
-				%>
+
 			</div>
 
 			<div class="wrapper" id="schedulazione">
@@ -290,26 +289,27 @@
 				autoBotte.empty();
 
 				var len = response.length;
-				
 				var isModificabile = response[0];
 				var isGenerabile = response[1];	
 				$("#informazione").text("Squadre relative al giorno "+giorno+"/ "+mese+" /"+anno);
 	
 				if(len<=2){
-					$("#informazione").text("OPS! Non sono ancora state generate squadre per il  giorno "+giorno+"/ "+mese+" /"+anno);
+					$("#informazione").text("Non sono ancora state generate squadre per il  giorno "+giorno+"/ "+mese+" /"+anno);
 					schedulazione.style.display ='none';
 				}else{
 					schedulazione.style.display ='block';
 				}
 					
 				
-				
+				<%if(ruolo.equalsIgnoreCase("capoturno")){%>
 				if(isModificabile){
 					bottoneModificaSquadra.style.display ='block';
 				}
 				if(isGenerabile){
 					bottoneGeneraSquadra.style.display ='block';
 				}
+				<%}%>
+				
 				for (var i = 2; i < len; i++) {
 				vigile=response[i];
 					
