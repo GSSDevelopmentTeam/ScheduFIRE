@@ -230,11 +230,36 @@ public class Util {
 		return toReturn;
 	}
 	
-	
-	
-	
-	
-	
+	public static void sostituisciVigile(Date data, String mailVFDaSostituire) throws ScheduFIREException {
+		List<ComponenteDellaSquadraBean> lista = ComponenteDellaSquadraDao.getComponenti(data);
+		HashMap<VigileDelFuocoBean, String> squadra = ottieniSquadra(data);
+		
+		if(!ComponenteDellaSquadraDao.removeComponenti(lista) ||
+				!VigileDelFuocoDao.removeCaricoLavorativo(squadra)) {
+			throw new ScheduFIREException("Errore nelle query di sostituzione ferie");
+		}
+		
+		List<VigileDelFuocoBean> disponibili = VigileDelFuocoDao.getDisponibili(data);
+		Collections.sort(disponibili, (VigileDelFuocoBean v1, VigileDelFuocoBean v2) ->
+			(v1.getCaricoLavoro() - v2.getCaricoLavoro()));
+		VigileDelFuocoBean sostituto = disponibili.get(0);
+		for(int i = 0; i < lista.size(); i++) {
+			ComponenteDellaSquadraBean membro = lista.get(i);
+			if(membro.getEmailVF().equals(mailVFDaSostituire)) {
+				lista.set(i, new ComponenteDellaSquadraBean(membro.getTipologiaSquadra(), 
+						sostituto.getEmail(), membro.getGiornoLavorativo()));
+				String mansione = squadra.remove(membro);
+				squadra.put(sostituto, mansione);
+				break;
+			}
+		}
+		
+		if(!ComponenteDellaSquadraDao.setComponenti(lista) ||
+				!VigileDelFuocoDao.caricoLavorativo(squadra)) {
+			throw new ScheduFIREException("Errore nelle query di sostituzione ferie");
+		}
+		
+	}
 	
 
 	public static HashMap<VigileDelFuocoBean, String> ottieniSquadra(Date data) {

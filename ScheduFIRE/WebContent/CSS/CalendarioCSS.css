@@ -8,6 +8,14 @@ body{
   box-sizing: border-box;
 }
 
+.back-up{
+	border:none;
+	background:none;	
+    position: fixed;
+    bottom: 5%;
+    right: 5%;
+    }
+
 p#turno{
 	font-size: 50%;
 	padding:0;
@@ -192,9 +200,9 @@ flex:1 -> prende il resto del container*/
 	display: grid;
 	grid-template-columns: auto auto auto auto auto auto auto;
 	background-color: transparent;
-	padding: 2%;
+	margin:2%;
 	font-family: Verdana;
-	border: 1px solid black;
+	border: 2px solid black;
 }
 
 /*grid-item e item-empty sono uguali, solo che item-empty
