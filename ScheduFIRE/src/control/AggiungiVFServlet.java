@@ -48,6 +48,9 @@ public class AggiungiVFServlet extends HttpServlet {
 		//Ottenimento oggetto sessione dalla richiesta
 		HttpSession session = request.getSession();
 		
+		//Rimozione flag per l'esito dell'operazione
+		session.removeAttribute("risultato");
+		
 		//Ottengo i dati del Capo Turno dalla sessione
 		CapoTurnoBean ct = (CapoTurnoBean) session.getAttribute("capoturno");
 		
@@ -149,6 +152,8 @@ public class AggiungiVFServlet extends HttpServlet {
 				throw new GestionePersonaleException("L'inserimento del vigile del fuoco non è andato a buon fine!");
 
 		}
+		
+		session.setAttribute("risultato", "L'inserimento del Vigile del Fuoco è avvenuto con successo!");
 
 		// Reindirizzamento alla jsp
 		response.sendRedirect("./GestionePersonaleServlet");
