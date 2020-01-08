@@ -85,8 +85,7 @@ public class GiorniMalattiaDao {
 			List<GiorniMalattiaBean> periodiMalattia = new ArrayList<GiorniMalattiaBean>();
 			
 			String malattieSQL = "SELECT m.id, m.dataInizio, m.dataFine, m.emailCT, m.emailVF " +
-					"FROM Malattia m WHERE m.emailVF = ? AND m.dataFine >= CURDATE();";
-
+					"FROM Malattia m WHERE m.emailVF = ? AND m.dataFine >= CURDATE() ORDER BY dataInizio;";
 			try{
 				Connection con= ConnessioneDB.getConnection();
 				emailVF = email;
@@ -117,5 +116,85 @@ public class GiorniMalattiaDao {
 			}
 			
 			return periodiMalattia;
+		}
+	 
+	 
+	 
+		public static List<GiorniMalattiaBean> malattiaInRange(Date dataInizio, Date dataFine, String emailVF) {
+			PreparedStatement ps;
+			ResultSet rs;
+			String verificaPeriodoSQL = "SELECT * FROM schedufire.malattia WHERE "
+					+ "emailVF = ? AND ((dataInizio BETWEEN ? AND ? OR dataFine BETWEEN ? AND ?) "
+					+ "OR (dataInizio < ? AND dataFine > ?) OR (dataInizio < ? AND dataFine > ?)) ORDER BY dataInizio;";
+			
+			List<GiorniMalattiaBean> malattia = new ArrayList<GiorniMalattiaBean>();
+			try {
+				Connection con = null;
+				
+				try {
+					con = ConnessioneDB.getConnection();
+					
+					ps = con.prepareStatement(verificaPeriodoSQL);
+					ps.setString(1, emailVF);
+					ps.setDate(2, dataInizio);
+					ps.setDate(3, dataFine);
+					ps.setDate(4, dataInizio);
+					ps.setDate(5, dataFine);
+					ps.setDate(6, dataInizio);
+					ps.setDate(7, dataInizio);
+					ps.setDate(8, dataFine);
+					ps.setDate(9, dataFine);
+
+					rs = ps.executeQuery();
+					
+					while(rs.next()) {
+						GiorniMalattiaBean Gio = new GiorniMalattiaBean();
+						Gio.setId(rs.getInt("id"));
+						Gio.setDataInizio(rs.getDate("dataInizio"));
+						Gio.setDataFine(rs.getDate("dataFine"));
+						Gio.setEmailCT(rs.getString("emailCT"));
+						Gio.setEmailVF(rs.getString("emailVF"));
+						malattia.add(Gio);
+					}
+					
+					
+				}finally {
+					ConnessioneDB.releaseConnection(con);
+				}
+			}catch(SQLException e) {
+				e.printStackTrace();
+			}
+			return malattia;
+		}
+		
+		public static boolean rimuoviPeriodoDiMalattia(String emailVF, Date dataInizio, Date dataFine) {
+			
+			boolean rimozione = false;
+			PreparedStatement ps;
+			
+			String rimozioneMalattiaSQL = "DELETE FROM schedufire.malattia WHERE (emailVF = ? AND dataInizio = ? AND dataFine = ?);";
+			
+			try{
+				Connection con=null;
+				try {
+				con = ConnessioneDB.getConnection();
+				ps = con.prepareStatement(rimozioneMalattiaSQL);
+				ps.setString(1, emailVF);
+				ps.setDate(2, dataInizio);
+				ps.setDate(3, dataFine);
+				int righe=ps.executeUpdate();
+				con.commit();
+				if(righe>0)
+					rimozione = true;
+				}
+				finally {
+					ConnessioneDB.releaseConnection(con);
+					
+				}
+			}catch(SQLException e) {
+				e.printStackTrace();
+			}
+			
+			return rimozione;
 		}
 }

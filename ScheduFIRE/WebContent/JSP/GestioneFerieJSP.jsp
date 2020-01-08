@@ -12,6 +12,7 @@
     vertical-align: top;
     border-top: 1px solid #dee2e6;
 }
+
 .back-up{
 	border-radius: 50px;
     font-size: 30px;
@@ -22,6 +23,13 @@
     background-color:#FFFFFF;
 	box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0
 		rgba(0, 0, 0, 0.19);
+
+.container__days{
+min-width: 270px;
+}
+.month-item-weekdays-row{
+min-width: 265px;
+
 }
 </style>
 </head>
@@ -87,13 +95,12 @@
 
 					<option value="giorniFerie">Ferie</option>
 					<%
-						} else if( ordinamento.equals("ferie") ) {		
+						} else if( ordinamento.equals("giorniFerie") ) {		
 						%>
 					<option value="nome" >Nome</option>
 					<option value="cognome">Cognome</option>
 					<option value="mansione">Mansione</option>
 					<option value="grado">Grado</option>
-
 					<option value="giorniFerie" selected>Ferie</option>
 					<%
 						} 		
@@ -148,7 +155,7 @@
 		aria-labelledby="exampleModalCenterTitle" aria-hidden="true"
 		style="display: none">
 		<div class="modal-dialog modal-dialog-centered" role="document">
-			<div class="modal-content contenutiModal" style="min-width: 500px; min-height: 550px;">
+			<div class="modal-content contenutiModal" style="min-width: 550px; min-height: 670px;">
 				<div class="modal-header">
 					<h5 class="modal-title" id="titoloAggiuntaFerie">Aggiunta
 						ferie</h5>
@@ -157,12 +164,14 @@
 						<span aria-hidden="true">&times;</span>
 					</button>
 				</div>
+				<p>Per selezionare un solo giorno, cliccare due volte sulla data desiderata.</p>
 				<div class="modal-body">
 					<input type="hidden" name="email" id="emailAggiuntaFerie">
 					<div class=" row justify-content-center">
 						<input id="dataInizio" placeholder="Giorno iniziale" readonly
 							size="34" style="margin-bottom: 1%;" /> 
-							<input id="dataFine" placeholder="Giorno finale"
+						
+						<input id="dataFine" placeholder="Giorno finale"
 							readonly size="34" style="margin-bottom: 2%;"/>
 					</div>
 					<div class="text-center" id="messaggioFerie1"></div>
@@ -195,7 +204,7 @@
 		aria-labelledby="exampleModalCenterTitle" aria-hidden="true"
 		style="display: none">
 		<div class="modal-dialog modal-dialog-centered" role="document">
-			<div class="modal-content contenutiModal" style="min-width: 500px; min-height: 550px;">
+			<div class="modal-content contenutiModal" style="min-width: 550px; min-height: 670px;">
 				<div class="modal-header">
 					<h5 class="modal-title" id="titoloRimuoviFerie">Rimuovi ferie</h5>
 					<button type="button" class="close" data-dismiss="modal"
@@ -203,6 +212,7 @@
 						<span aria-hidden="true">&times; </span>
 					</button>
 				</div>
+				<p>Per selezionare un solo giorno, cliccare due volte sulla data desiderata.</p>
 				<div class="modal-body">
 					<input type="hidden" name="email" id="emailRimozioneFerie">
 					<div class=" row justify-content-center">
@@ -345,8 +355,8 @@
 						src="Grado/<%=vigile.getGrado()%>.png" width=30%
 						onerror="this.parentElement.innerHTML='Non disponibile';"></td>
 					<td class="text-center"><%=vigile.getMansione()%></td>
-					<td class="text-center"><%=vigile.getNome()%></td>
-					<td class="text-center"><%=vigile.getCognome()%></td>
+					<td class="text-center"><strong><%=vigile.getNome()%></strong></td>
+					<td class="text-center"><strong><%=vigile.getCognome()%></strong></td>
 					<td class="text-center"><%=vigile.getEmail()%></td>
 					<td class="text-center" id="ferie"><%=vigile.getGiorniFerieAnnoCorrente() + vigile.getGiorniFerieAnnoPrecedente()%></td>
 					<td class="text-center"><button type="button"
@@ -380,10 +390,11 @@
 	<script src="https://buttons.github.io/buttons.js"></script>
 	<script
 		src="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.js"></script>
-	<script src="JS/ferieJS.js"></script>
 
 
 	<script>
+	
+
 	var picker = new Litepicker(
 			{
 				element : document.getElementById('dataInizio'),
@@ -400,19 +411,17 @@
 				onError : function(error) {
 					alertInsuccesso("Nel periodo selezionato risultano già dei giorni di ferie.");
 				},
+				
 				onSelect : function() {
 					if ($("#dataInizio").val() != "") {
 
 						var differenza = calcolaGiorniFerie($("#dataInizio").val(),$("#dataFine").val());
 
 						var email = $("#emailAggiuntaFerie").val();
-						var ferieAnnoCorrente = $(
+						var ferie = $(
 								"#listaVigili td:contains('" + email + "')")
-								.next('td').next('td');
-						var ferieAnnoPrecedente = ferieAnnoCorrente
 								.next('td');
-						var totaleFerie = parseInt(ferieAnnoCorrente.text())
-								+ parseInt(ferieAnnoPrecedente.text());
+						var totaleFerie = parseInt(ferie.text());
 						if (differenza == 0) {
 							picker.setOptions({
 								startDate : null,
@@ -453,10 +462,7 @@
 									.attr("style", "color:red");
 							$('#bottoneAggiungiFerie').prop("disabled",
 									true);
-							alertInsuccesso("Hai selezionato un periodo troppo grande.Hai a disposizione "
-									+ totaleFerie
-									+ " giorni di ferie, ne hai selezionati "
-									+ differenza);
+							alertInsuccesso("Hai selezionato un periodo troppo grande.");
 
 						} else {
 							$("#messaggioFerie1").text(
@@ -470,13 +476,11 @@
 									"color:green");
 							$('#bottoneAggiungiFerie').prop("disabled",
 									false);
-							alertSuccesso("Hai selezionato correttamente il periodo di ferie. Hai a disposizione "
-									+ totaleFerie
-									+ " giorni di ferie, ne hai selezionati "
-									+ differenza);
+							alertSuccesso("Hai selezionato correttamente il periodo di ferie.");
 						}
 					}
 				}
+				
 
 			});
 	
@@ -501,7 +505,9 @@
 					},
 					onSelect : function() {
 						$('#bottoneRimuoviFerie').prop("disabled", false);
-							},
+							}
+							
+							
 					
 						
 
@@ -579,6 +585,7 @@
 				async : false,
 				success : function(response) {
 					picker.setLockDays(response);
+
 					$("#emailAggiuntaFerie").val(input)
 					console.log("settati giorni di ferie: " + response);
 					var cognome = $(".table td:contains('" + input + "')")
@@ -591,18 +598,19 @@
 									+ cognome.text());
 					$(".contenutiModal").css('background-color', '#e6e6e6');
 					
-					
-					/*
-					$( "a.day-item" ).hover(
+					/*$( "a.day-item" ).hover(
 							  function() {
 								  var giorno=$(this).text();
 								  var mese=$(this).parent().parent().children("div .month-item-header").children("div").text().trim();
 							    console.log("hover "+giorno+ " , "+mese);
+				                $("a.day-item :contains('"+giorno+"')").css({"color": "yellow", "font-size": "200%"});
+
 							  }, function() {
 								    console.log("non hover");
 							  }
 							);
 					*/
+					
 					
 				},
 				error : function(jqXHR, textStatus, errorThrown) {
