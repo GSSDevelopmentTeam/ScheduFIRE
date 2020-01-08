@@ -120,9 +120,9 @@ h2 {
 			<thead class="thead-dark">
 				<tr>
 					<th class="text-center">Grado</th>
+					<th class="text-center">Mansione</th>
 					<th class="text-center">Nome</th>
 					<th class="text-center">Cognome</th>
-					<th class="text-center">Mansione</th>
 					<th class="text-center">Modifica</th>
 				</tr>
 			</thead>
@@ -140,9 +140,9 @@ h2 {
 					<td class="text-center"><img
 						src="Grado/<%=membro.getGrado()%>.png" style="height: 25%"
 						onerror="this.parentElement.innerHTML='Non disponibile';"></td>
+					<td class="text-center"><%=membro.getMansione()%></td>
 					<td class="text-center"><%=membro.getNome()%></td>
 					<td class="text-center"><%=membro.getCognome()%></td>
-					<td class="text-center"><%=membro.getMansione()%></td>
 					<td class="text-center"><button type="button"
 							class="btn btn-outline-secondary" data-toggle="modal"
 							data-target="#aggiungiVF" id="aggiungiVF"
@@ -168,9 +168,9 @@ h2 {
 			<thead class="thead-dark">
 				<tr>
 					<th class="text-center">Grado</th>
+					<th class="text-center">Mansione</th>
 					<th class="text-center">Nome</th>
 					<th class="text-center">Cognome</th>
-					<th class="text-center">Mansione</th>
 					<th class="text-center">Modifica</th>
 				</tr>
 			</thead>
@@ -188,9 +188,9 @@ h2 {
 					<td class="text-center"><img
 						src="Grado/<%=membro.getGrado()%>.png" style="height: 25%"
 						onerror="this.parentElement.innerHTML='Non disponibile';"></td>
+					<td class="text-center"><%=membro.getMansione()%></td>
 					<td class="text-center"><%=membro.getNome()%></td>
 					<td class="text-center"><%=membro.getCognome()%></td>
-					<td class="text-center"><%=membro.getMansione()%></td>
 					<td class="text-center"><button type="button"
 							class="btn btn-outline-secondary" data-toggle="modal"
 							data-target="#aggiungiVF" id="aggiungiVF"
@@ -216,9 +216,9 @@ h2 {
 			<thead class="thead-dark">
 				<tr>
 					<th class="text-center">Grado</th>
+					<th class="text-center">Mansione</th>
 					<th class="text-center">Nome</th>
 					<th class="text-center">Cognome</th>
-					<th class="text-center">Mansione</th>
 					<th class="text-center">Modifica</th>
 				</tr>
 			</thead>
@@ -236,9 +236,9 @@ h2 {
 					<td class="text-center"><img
 						src="Grado/<%=membro.getGrado()%>.png" style="height: 25%"
 						onerror="this.parentElement.innerHTML='Non disponibile';"></td>
+					<td class="text-center"><%=membro.getMansione()%></td>
 					<td class="text-center"><%=membro.getNome()%></td>
 					<td class="text-center"><%=membro.getCognome()%></td>
-					<td class="text-center"><%=membro.getMansione()%></td>
 					<td class="text-center"><button type="button"
 							class="btn btn-outline-secondary" data-toggle="modal"
 							data-target="#aggiungiVF" id="aggiungiVF"
@@ -264,9 +264,9 @@ h2 {
 			<thead class="thead-dark">
 				<tr>
 					<th class="text-center">Grado</th>
+					<th class="text-center">Mansione</th>
 					<th class="text-center">Nome</th>
 					<th class="text-center">Cognome</th>
-					<th class="text-center">Mansione</th>
 					<th class="text-center">Modifica</th>
 				</tr>
 			</thead>
@@ -284,9 +284,9 @@ h2 {
 					<td class="text-center"><img
 						src="Grado/<%=membro.getGrado()%>.png" style="height: 25%"
 						onerror="this.parentElement.innerHTML='Non disponibile';"></td>
+					<td class="text-center"><%=membro.getMansione()%></td>
 					<td class="text-center"><%=membro.getNome()%></td>
 					<td class="text-center"><%=membro.getCognome()%></td>
-					<td class="text-center"><%=membro.getMansione()%></td>
 					<td class="text-center"><button type="button"
 							class="btn btn-outline-secondary" data-toggle="modal"
 							data-target="#aggiungiVF" id="aggiungiVF"
@@ -330,9 +330,9 @@ h2 {
 			<thead class="thead-dark">
 				<tr>
 					<th class="text-center">Grado</th>
+					<th class="text-center">Mansione</th>
 					<th class="text-center">Nome</th>
 					<th class="text-center">Cognome</th>
-					<th class="text-center">Mansione</th>
 					<th class="text-center">Modifica</th>
 				</tr>
 			</thead>
@@ -350,9 +350,9 @@ h2 {
 					<td class="text-center"><img
 						src="Grado/<%=membro.getGrado()%>.png" style="height: 25%"
 						onerror="this.parentElement.innerHTML='Non disponibile';"></td>
+					<td class="text-center"><%=membro.getMansione()%></td>
 					<td class="text-center"><%=membro.getNome()%></td>
 					<td class="text-center"><%=membro.getCognome()%></td>
-					<td class="text-center"><%=membro.getMansione()%></td>
 					<td class="text-center"><button type="button"
 							class="btn btn-outline-secondary" data-toggle="modal"
 							data-target="#aggiungiVF" id="aggiungiVF"
@@ -378,9 +378,9 @@ h2 {
 			<thead class="thead-dark">
 				<tr>
 					<th class="text-center">Grado</th>
+					<th class="text-center">Mansione</th>
 					<th class="text-center">Nome</th>
 					<th class="text-center">Cognome</th>
-					<th class="text-center">Mansione</th>
 					<th class="text-center">Modifica</th>
 				</tr>
 			</thead>
@@ -398,9 +398,9 @@ h2 {
 					<td class="text-center"><img
 						src="Grado/<%=membro.getGrado()%>.png" style="height: 25%"
 						onerror="this.parentElement.innerHTML='Non disponibile';"></td>
+					<td class="text-center"><%=membro.getMansione()%></td>
 					<td class="text-center"><%=membro.getNome()%></td>
 					<td class="text-center"><%=membro.getCognome()%></td>
-					<td class="text-center"><%=membro.getMansione()%></td>
 					<td class="text-center"><button type="button"
 							class="btn btn-outline-secondary" data-toggle="modal"
 							data-target="#aggiungiVF" id="aggiungiVF"
@@ -426,9 +426,9 @@ h2 {
 			<thead class="thead-dark">
 				<tr>
 					<th class="text-center">Grado</th>
+					<th class="text-center">Mansione</th>
 					<th class="text-center">Nome</th>
 					<th class="text-center">Cognome</th>
-					<th class="text-center">Mansione</th>
 					<th class="text-center">Modifica</th>
 				</tr>
 			</thead>
@@ -446,9 +446,9 @@ h2 {
 					<td class="text-center"><img
 						src="Grado/<%=mb.getGrado()%>.png" style="height: 25%"
 						onerror="this.parentElement.innerHTML='Non disponibile';"></td>
+					<td class="text-center"><%=mb.getMansione()%></td>
 					<td class="text-center"><%=mb.getNome()%></td>
 					<td class="text-center"><%=mb.getCognome()%></td>
-					<td class="text-center"><%=mb.getMansione()%></td>
 					<td class="text-center"><button type="button"
 							class="btn btn-outline-secondary" data-toggle="modal"
 							data-target="#aggiungiVF" id="aggiungiVF"
@@ -474,9 +474,9 @@ h2 {
 			<thead class="thead-dark">
 				<tr>
 					<th class="text-center">Grado</th>
+					<th class="text-center">Mansione</th>
 					<th class="text-center">Nome</th>
 					<th class="text-center">Cognome</th>
-					<th class="text-center">Mansione</th>
 					<th class="text-center">Modifica</th>
 				</tr>
 			</thead>
@@ -494,9 +494,9 @@ h2 {
 					<td class="text-center"><img
 						src="Grado/<%=membro.getGrado()%>.png" style="height: 25%"
 						onerror="this.parentElement.innerHTML='Non disponibile';"></td>
+					<td class="text-center"><%=membro.getMansione()%></td>
 					<td class="text-center"><%=membro.getNome()%></td>
 					<td class="text-center"><%=membro.getCognome()%></td>
-					<td class="text-center"><%=membro.getMansione()%></td>
 					<td class="text-center"><button type="button"
 							class="btn btn-outline-secondary" data-toggle="modal"
 							data-target="#aggiungiVF" id="aggiungiVF"

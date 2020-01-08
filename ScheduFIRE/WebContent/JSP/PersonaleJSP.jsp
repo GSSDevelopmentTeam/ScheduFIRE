@@ -29,8 +29,8 @@
 					<tr>
 						<td class="text-center"><img src="Grado/<%=vigile.getGrado() %>.png" style="height:25%" onerror="this.parentElement.innerHTML='Non disponibile';"></td>
 						<td class="text-center"><%=vigile.getMansione() %></td>
-						<td class="text-center"><%=vigile.getNome() %></td>
-						<td class="text-center"><%=vigile.getCognome() %></td>
+						<td class="text-center"><strong><%=vigile.getNome() %></strong></td>
+						<td class="text-center"><strong><%=vigile.getCognome() %></strong></td>
 					</tr>
 					<% } }
 					%>					
@@ -66,8 +66,8 @@
 					<tr>
 						<td class="text-center"><img src="Grado/<%=vigile.getGrado() %>.png" style="height:25%" onerror="this.parentElement.innerHTML='Non disponibile';"></td>
 						<td class="text-center"><%=vigile.getMansione() %></td>
-						<td class="text-center"><%=vigile.getNome() %></td>
-						<td class="text-center"><%=vigile.getCognome() %></td>
+						<td class="text-center"><strong><%=vigile.getNome() %></strong></td>
+						<td class="text-center"><strong><%=vigile.getCognome() %></strong></td>
 					</tr>
 					<% } }
 					%>					
