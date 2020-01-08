@@ -29,6 +29,12 @@
     bottom: 5%;
     right: 5%;
 }
+.container__days{
+min-width: 270px;
+}
+.month-item-weekdays-row{
+min-width: 265px;
+}
 	</style>
 	<body>
 	<a href="#inizio" class=" back-up"><img src="IMG/arrow/up-arrow-p.png" style="margin-left: 5px;"
@@ -229,10 +235,12 @@
 					%>
 					
 					<tr>
-						<td class="text-center"><img src="Grado/<%=vigile.getMansione().equals("Capo Squadra") && vigile.getGrado().equals("Esperto")?"EspertoCapoSquadra":vigile.getGrado() %>.png" width=20% 
+						<td class="text-center"><img
+						src="Grado/<%=vigile.getGrado()%>.png" width=25%
 						onerror="this.parentElement.innerHTML='Non disponibile';"></td>
 						<td class="text-center"><%=vigile.getMansione()%></td>
 						<td class="text-center"><strong><%=vigile.getNome() %></strong></td>
+
 			            <td class="text-center"><strong><%=vigile.getCognome()%></strong></td>
 						<td class="text-center"><%=vigile.getEmail() %></td>
 
@@ -391,8 +399,7 @@ style="display: none;position:fixed;z-index: 99999; width:100%">
         				var nome = $(cognome).prev('td');
     
         			$("#titoloAggiuntaMalattia").text(
-        						"Aggiunta malattia per " + nome.text() + " "+ cognome.text());
-        			//$('#formAggiunta').show();	
+        						"Aggiunta malattia per " + nome.text() + " "+ cognome.text());	
 					$(".contenutiModal").css('background-color', '#e6e6e6');
 					}
 					
@@ -401,6 +408,7 @@ style="display: none;position:fixed;z-index: 99999; width:100%">
 			
 			function apriFormRimozione(input) {
 				console.log("parte funzione apriformRimozione di " + input);
+				document.getElementById("emailAggiuntaMalattia").innerHTML = input;
 				picker2.setOptions({
 					startDate : null,
 					endDate : null
@@ -441,8 +449,8 @@ style="display: none;position:fixed;z-index: 99999; width:100%">
 							maxDate : dataFinale
 						});
 						
-						
 						var mail = document.getElementById("emailRimozioneMalattia");
+        				mail.innerHTML = input;
 						$(".contenutiModal").css('background-color', '#e6e6e6');
         				        				
         				var cognome = $(".table td:contains('" + input + "')").prev('td');
@@ -495,6 +503,7 @@ style="display: none;position:fixed;z-index: 99999; width:100%">
 				var dataIniziale = $("#rimozioneDataIniziale").val();
 				var dataFinale = $("#rimozioneDataFinale").val();
 				var emailVF = document.getElementById("emailRimozioneMalattia").innerHTML;
+				console.log("email = " + emailVF);
 				$.ajax({
 					type : "POST",
 					url : "RimozioneMalattiaServlet",

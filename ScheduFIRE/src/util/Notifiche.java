@@ -65,6 +65,9 @@ public class Notifiche {
 		else if(cause == 4) {
 			updateSquadrePerFerie(from, to, vigile);
 		}
+		else if(cause == 5) {
+			updateSquadrePerMalattia(from, to, mail);
+		}
 
 		Collections.sort(listaNotifiche, (Notifica n1, Notifica n2) -> 
 		(n2.getSeverita() - n1.getSeverita()));
@@ -131,6 +134,21 @@ public class Notifiche {
 		+ dateAssenza.get(dateAssenza.size()-1));
 		}
 		listaNotifiche.add(new Notifica(2, notifica, "/ModificaComposizioneSquadreServlet",generateId()));
+	}
+	
+	private static void updateSquadrePerMalattia(Date temp, Date to, String email) {
+		Date from = (Date) temp.clone();
+		VigileDelFuocoBean vigile = VigileDelFuocoDao.ottieni(email);
+		SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
+		while(!from.equals(to)) {
+			if(ComponenteDellaSquadraDao.isComponente(vigile.getEmail(), from)) {
+				listaNotifiche.add(new Notifica(2, "" + vigile.getCognome() + " " + vigile.getNome() + 
+						" non sarà presente\nnella squadra a cui è stato assegnato (deriodo di malattia dal " +
+						formatter.format(from).toString() + " al "+to+") causa Malattia.", "/ModificaComposizioneSquadreServlet",generateId()));
+				break;
+			}
+			from = Date.valueOf(from.toLocalDate().plusDays(1L));
+		}
 	}
 	
 	
@@ -204,4 +222,8 @@ public class Notifiche {
 	 * Utilizzare quando vengono concesse ferie ad un vigile già schedulato
 	 */
 	public static final int UPDATE_SQUADRE_PER_FERIE = 4;
+	/**
+	 * Utilizzare quando vengono concesse malattie ad un vigile già schedulato
+	 */
+	public static final int UPDATE_SQUADRE_PER_MALATTIA = 5;
 }
