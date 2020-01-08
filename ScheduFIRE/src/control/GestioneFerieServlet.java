@@ -5,6 +5,8 @@ import java.sql.Date;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -19,7 +21,6 @@ import model.bean.FerieBean;
 import model.bean.VigileDelFuocoBean;
 import model.dao.FerieDao;
 import model.dao.VigileDelFuocoDao;
-import util.Util;
 
 /**
  * Servlet implementation class GestioneFerieServlet
@@ -133,7 +134,7 @@ public class GestioneFerieServlet extends HttpServlet {
 			
 			List<VigileDelFuocoBean> listaVigili = new ArrayList<VigileDelFuocoBean>(vigili);
 			
-			listaVigili = Util.compareVigile(listaVigili);
+			Collections.sort(listaVigili, new VigileComparator());
 			
 			//Passasggio del tipo di ordinamento ottenuto
 			request.setAttribute("ordinamento", ordinamento);
@@ -143,5 +144,19 @@ public class GestioneFerieServlet extends HttpServlet {
 		}
 	}
 
+	class VigileComparator implements Comparator<VigileDelFuocoBean> {
 
+		@Override
+		public int compare(VigileDelFuocoBean o1, VigileDelFuocoBean o2) {
+			String mansione1=o1.getMansione();
+			String mansione2=o2.getMansione();
+			if (mansione1.equals("Capo Squadra") && mansione2.equals("Capo Squadra"))
+				return o1.getCognome().compareTo(o2.getCognome());
+			if(mansione1.equals("Capo Squadra"))
+				return -1;
+			if(mansione2.equals("Capo Squadra"))
+				return 1;
+			return o1.getMansione().compareTo(o2.getMansione());
+		}
+	}
 }
