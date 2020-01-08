@@ -9,9 +9,9 @@
 			<thead class="thead-dark">
 				<tr>
 					<th class="text-center">Grado</th>
+					<th class="text-center">Mansione</th>
 					<th class="text-center">Nome</th>
 					<th class="text-center">Cognome</th>
-					<th class="text-center">Mansione</th>
 					<th class="text-center">   </th>
 				</tr>
 			</thead>
@@ -27,10 +27,10 @@
 
 					<tr>
 						<td class="text-center"><img src="Grado/<%=vigile.getGrado() %>.png" style="height:25%" onerror="this.parentElement.innerHTML='Non disponibile';"></td>
-						<td class="text-center"><%=vigile.getNome() %></td>
-						<td class="text-center"><%=vigile.getCognome() %></td>
 						<td class="text-center"><%=vigile.getMansione() %></td>
-						<td class="text-center"> <input type="radio" value="<%=vigile.getEmail() %>" name="VFNew"></td>
+						<td class="text-center"><strong><%=vigile.getNome() %></strong></td>
+						<td class="text-center"><strong><%=vigile.getCognome() %></strong></td>
+						<td class="text-center"> <input type="radio" onClick='attivapulsante()' value="<%=vigile.getEmail() %>" name="VFNew"></td>
 					</tr>
 					<% } }
 					%>					

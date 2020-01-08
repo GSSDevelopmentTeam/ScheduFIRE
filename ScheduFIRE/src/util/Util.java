@@ -20,6 +20,7 @@ import model.bean.SquadraBean;
 import model.bean.VigileDelFuocoBean;
 import model.dao.*;
 
+
 /**
  * La classe Util contiene diversi metodi statici utili per essere chiamati
  * da diverse classi del sistema. 
@@ -229,11 +230,36 @@ public class Util {
 		return toReturn;
 	}
 	
-	
-	
-	
-	
-	
+	public static void sostituisciVigile(Date data, String mailVFDaSostituire) throws ScheduFIREException {
+		List<ComponenteDellaSquadraBean> lista = ComponenteDellaSquadraDao.getComponenti(data);
+		HashMap<VigileDelFuocoBean, String> squadra = ottieniSquadra(data);
+		
+		if(!ComponenteDellaSquadraDao.removeComponenti(lista) ||
+				!VigileDelFuocoDao.removeCaricoLavorativo(squadra)) {
+			throw new ScheduFIREException("Errore nelle query di sostituzione ferie");
+		}
+		
+		List<VigileDelFuocoBean> disponibili = VigileDelFuocoDao.getDisponibili(data);
+		Collections.sort(disponibili, (VigileDelFuocoBean v1, VigileDelFuocoBean v2) ->
+			(v1.getCaricoLavoro() - v2.getCaricoLavoro()));
+		VigileDelFuocoBean sostituto = disponibili.get(0);
+		for(int i = 0; i < lista.size(); i++) {
+			ComponenteDellaSquadraBean membro = lista.get(i);
+			if(membro.getEmailVF().equals(mailVFDaSostituire)) {
+				lista.set(i, new ComponenteDellaSquadraBean(membro.getTipologiaSquadra(), 
+						sostituto.getEmail(), membro.getGiornoLavorativo()));
+				String mansione = squadra.remove(membro);
+				squadra.put(sostituto, mansione);
+				break;
+			}
+		}
+		
+		if(!ComponenteDellaSquadraDao.setComponenti(lista) ||
+				!VigileDelFuocoDao.caricoLavorativo(squadra)) {
+			throw new ScheduFIREException("Errore nelle query di sostituzione ferie");
+		}
+		
+	}
 	
 
 	public static HashMap<VigileDelFuocoBean, String> ottieniSquadra(Date data) {
@@ -312,6 +338,15 @@ public class Util {
 		
 	}
 	
+	public static List<VigileDelFuocoBean> compareVigile(List<VigileDelFuocoBean> lista) {
+		
+			List<VigileDelFuocoBean> listaC = new ArrayList<VigileDelFuocoBean>(lista);
+			
+			Collections.sort(listaC, new VigileComparator());
+			
+			return listaC;
+	}
+	
 	
 	private static void setFerie() {
 		List<VigileDelFuocoBean> vigili=VigileDelFuocoDao.ottieni();
@@ -352,5 +387,21 @@ class ComponenteComparator implements Comparator<ComponenteDellaSquadraBean> {
 		}
 		return -comparazione;
 	}
+}
+	
+	class VigileComparator implements Comparator<VigileDelFuocoBean> {
+
+		@Override
+		public int compare(VigileDelFuocoBean o1, VigileDelFuocoBean o2) {
+			String mansione1=o1.getMansione();
+			String mansione2=o2.getMansione();
+			if (mansione1.equals("Capo Squadra") && mansione2.equals("Capo Squadra"))
+				return o1.getCognome().compareTo(o2.getCognome());
+			if(mansione1.equals("Capo Squadra"))
+				return -1;
+			if(mansione2.equals("Capo Squadra"))
+				return 1;
+			return o1.getMansione().compareTo(o2.getMansione());
+		}
 }
 

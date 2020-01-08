@@ -79,26 +79,6 @@ public class AggiungiMalattiaServlet extends HttpServlet {
 				dataInizio = Date.valueOf(inizioMalattia);
 				dataFine = Date.valueOf(fineMalattia);
 				
-						ArrayList<Date> malattiaSchedu = new ArrayList<Date>();
-						
-						Date in = (Date) Date.valueOf(inizioMalattia).clone();
-						
-							while(!in.equals(Date.valueOf(fineMalattia))) {
-								if(GiornoLavorativo.isLavorativo(in) == true) {
-									if(ComponenteDellaSquadraDao.isComponente(emailVF, in) == true) {
-										malattiaSchedu.add(in);
-									}
-								}
-								in = Date.valueOf(in.toLocalDate().plusDays(1L));
-							}
-						
-						if(malattiaSchedu.isEmpty() == false) {
-							Date inizioS = malattiaSchedu.get(0);
-							Date fineS = malattiaSchedu.get((malattiaSchedu.size())-1);
-							Notifiche.update(Notifiche.UPDATE_PER_MALATTIA, dataInizio, dataFine, emailVF);
-						}
-				
-				
 				 GiorniMalattiaBean malattia = new GiorniMalattiaBean();
 				    
 					malattia.setId(0);
@@ -107,6 +87,22 @@ public class AggiungiMalattiaServlet extends HttpServlet {
 					malattia.setEmailCT(emailCT);
 					malattia.setEmailVF(emailVF);
 					JSONArray array = new JSONArray();
+					
+					
+					
+					//notifica il CT se il Vigile è gia schedulato al momento dell'aggiunta della malattia
+					int numeroGiorniLavorativi = 0;
+					
+					while(inizioMalattia.compareTo(fineMalattia)<=0) {
+						if (GiornoLavorativo.isLavorativo(Date.valueOf(inizioMalattia)))
+							numeroGiorniLavorativi++;
+						inizioMalattia=((LocalDate) inizioMalattia).plusDays(1);
+					}
+					
+					for(int i = 0;i<numeroGiorniLavorativi; i++) {
+						if(ComponenteDellaSquadraDao.isComponente(emailVF, dataInizio)) 
+						Notifiche.update(Notifiche.UPDATE_SQUADRE_PER_MALATTIA, dataInizio, dataFine, emailVF);
+						}
 					
 				   if(GiorniMalattiaDao.addMalattia(malattia) == true) 
 					  array.put(true);

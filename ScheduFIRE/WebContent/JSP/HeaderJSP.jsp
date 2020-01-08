@@ -26,9 +26,10 @@
 	int dim = note.size();%>
  		<a><div class="dd" >
   <button type="button" class="dn" >
-    <img src="IMG/notizia.png" style="height:50px; width:50px "><span class="badge" id="qt"><%if (dim!=0)%><%=dim %></span>
+    <img src="Icon/notifica.png" id="men" style="height:50px; width:50px " onmouseover="this.src='Icon/notificAperta.png'"
+					onmouseout="this.src='Icon/notifica.png'"><span class="badge" id="qt"><%if (dim!=0)%><%=dim %></span>
   </button>
-  <div class="ddc">
+  <div class="ddc" id="notOpen" >
   <%for (int i=0; i<dim;i++){ %>
     <div  id="<%=note.get(i).getId()%>">
   	<span class="bdgdel"><button type="submit" class="nn" id="rimuoviNotifica" onClick='rimuoviNotifica("<%=note.get(i).getId()%>")'><img src="IMG/delete.png" class="del"></button></span>
@@ -43,9 +44,13 @@
 
 <a><div class="dd">
   <button type="button" class="db" >
-    <img src="IMG/men.png" style="height:50px; width:50px ">
+    <img src="IMG/men.png" id="men" style="height:50px; width:50px " onmouseover="this.src='Icon/menuAperto.png'"
+					onmouseout="this.src='IMG/men.png'">
   </button>
-  <div class="ddc">
+  <div class="ddc" >
+   <form action="HomeCTServlet" method="POST">
+    <button class="cmd" id="tornahome"><img src="IMG/logoSF.png" class="btl"><span class="rtlg">Home</span> </button>
+  </form>
    <form action="GeneraSquadreServlet" method="POST">
     <button class="cmd"><img src="Icon/CavallettoColorato.png" class="btl"><span class="rtlg">Gestione Squadra</span> </button>
   </form>
@@ -62,7 +67,7 @@
 	<button class="cmd"><img src="Icon/MalattieColore.png" class="btl" ><span class="rtlg">Gestione Malattia</span></button>
   </form>
   <form action="PersonaleDisponibile" method="POST">
-	<button class="cmd"><img src="Icon/ominiVF.png" class="btl"	><span class="rtlg">Personale Disponibile</button>
+	<button class="cmd" id="dispo"><img src="Icon/ominiVF.png" class="btl"	><span class="rtlg">Personale Disponibile</button>
   </form>
   </div>
  
@@ -94,4 +99,7 @@ function rimuoviNotifica(input) {
 		}
 	});
 }
+
+
+
 </script>

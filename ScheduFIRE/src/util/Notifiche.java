@@ -25,7 +25,7 @@ public class Notifiche {
 		listaNotifiche = new ArrayList<>();
 		listaNotifiche.add(new Notifica(3, "Test di una notifica grave", "HomeCTServlet", generateId()));
 		listaNotifiche.add(new Notifica(2, "Test di una notifica media, con stato d'errore medio e colore medio", "HomeCTServlet", generateId()));
-		listaNotifiche.add(new Notifica(1, "Test di una notifica normale, che per quanto sia normale essa � solo una notifica normale, dunque � normale che sia normale", "HomeCTServlet", generateId()));
+		listaNotifiche.add(new Notifica(1, "Test di una notifica normale, che per quanto sia normale essa � solo una notifica normale, dunque � normale che sia normale", "HomeCTServlet", generateId()));
 
 		update(UPDATE_PER_AVVIO);
 	}
@@ -65,6 +65,9 @@ public class Notifiche {
 		else if(cause == 4) {
 			updateSquadrePerFerie(from, to, vigile);
 		}
+		else if(cause == 5) {
+			updateSquadrePerMalattia(from, to, mail);
+		}
 
 		Collections.sort(listaNotifiche, (Notifica n1, Notifica n2) -> 
 		(n2.getSeverita() - n1.getSeverita()));
@@ -77,7 +80,8 @@ public class Notifiche {
 		while(!from.equals(to)) {
 			if(ComponenteDellaSquadraDao.isComponente(vigile.getEmail(), from)) {
 				listaNotifiche.add(new Notifica(3, "" + vigile.getCognome() + " " + vigile.getNome() + 
-						" non potr� partecipare ad un turno a lui assegnato causa malattia.<br/>(giorno dal\r\n" + 
+						" non potr� partecipare ad un turno a lui assegnato causa malattia.<br/>(giorno dal\r\n" + 
+
 											formatter.format(from).toString() + " al "+ formatter.format(to).toString()+")", "/ModificaSquadreServlet",generateId()));
 				break;
 			}
@@ -113,15 +117,51 @@ public class Notifiche {
 	private static void updateSquadrePerFerie(Date temp, Date to, VigileDelFuocoBean vigile) {
 		Date from = (Date) temp.clone();
 		SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
+		List<String> dateAssenza = new ArrayList<String>();
+		String notifica = vigile.getCognome() + " " + vigile.getNome() + 
+				" " + "non sarà presente nella squadra a cui è stato assegnato\n";
+		
+		if(from.compareTo(to) == 0) {
+			dateAssenza.add(formatter.format(from).toString());
+			notifica += " per il giorno " + dateAssenza.get(0) + " causa ferie.";
+		}
+		else {
+			while(!from.equals(to)) {
+				if(ComponenteDellaSquadraDao.isComponente(vigile.getEmail(), from)) {
+					dateAssenza.add(formatter.format(from).toString());
+				}
+				from = Date.valueOf(from.toLocalDate().plusDays(1L));
+			}
+		
+			if(dateAssenza.size() > 0)
+				notifica += " per il periodo dal " + dateAssenza.get(0) + " al " 
+						+ dateAssenza.get(dateAssenza.size()-1);
+		}
+			listaNotifiche.add(new Notifica(2, notifica, "/ModificaComposizioneSquadreServlet",generateId()));
+	}
+	
+	private static void updateSquadrePerMalattia(Date temp, Date to, String email) {
+		Date from = (Date) temp.clone();
+		VigileDelFuocoBean vigile = VigileDelFuocoDao.ottieni(email);
+		SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
+		List<String> dateAssenza = new ArrayList<String>();
+		
 		while(!from.equals(to)) {
 			if(ComponenteDellaSquadraDao.isComponente(vigile.getEmail(), from)) {
-				listaNotifiche.add(new Notifica(2, "" + vigile.getCognome() + " " + vigile.getNome() + 
-						" non sarà presente\nnella squadra a cui è stato assegnato (giorno " +
-						formatter.format(from).toString() + ") causa ferie.", "/ModificaComposizioneSquadreServlet",generateId()));
-				break;
+				dateAssenza.add(formatter.format(from).toString());
 			}
 			from = Date.valueOf(from.toLocalDate().plusDays(1L));
 		}
+		String notifica = vigile.getCognome() + " " + vigile.getNome() + 
+				" " + "non sarà presente nella squadra a cui è stato assegnato\n";
+		if(dateAssenza.size() == 1) {
+			notifica.concat(" per il giorno " + dateAssenza.get(0) + " causa ferie.");
+		}
+		else {
+			notifica.concat(" per il periodo dal " + dateAssenza.get(0) + " al " 
+		+ dateAssenza.get(dateAssenza.size()-1));
+		}
+		listaNotifiche.add(new Notifica(2, notifica, "/ModificaComposizioneSquadreServlet",generateId()));
 	}
 	
 	
@@ -195,4 +235,8 @@ public class Notifiche {
 	 * Utilizzare quando vengono concesse ferie ad un vigile già schedulato
 	 */
 	public static final int UPDATE_SQUADRE_PER_FERIE = 4;
+	/**
+	 * Utilizzare quando vengono concesse malattie ad un vigile già schedulato
+	 */
+	public static final int UPDATE_SQUADRE_PER_MALATTIA = 5;
 }

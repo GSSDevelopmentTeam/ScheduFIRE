@@ -7,6 +7,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 import java.time.*;
 import java.time.format.DateTimeFormatter;
@@ -30,6 +31,7 @@ import model.dao.FerieDao;
 import model.dao.GiorniMalattiaDao;
 import model.dao.VigileDelFuocoDao;
 import util.GiornoLavorativo;
+import util.Util;
 
 /**
  * Servlet implementation class PeriodiDiMalattiaServlet
@@ -63,22 +65,62 @@ public class PeriodiDiMalattiaServlet extends HttpServlet {
 			
 			if( emailVF == null )
 				throw new ScheduFIREException();
-			
-					List<GiorniMalattiaBean> GiorniMalattiaBean = GiorniMalattiaDao.ottieniMalattie(emailVF);
+					//giorni di malattia già concesse
+					List<GiorniMalattiaBean> giorniMalattia = GiorniMalattiaDao.ottieniMalattie(emailVF);
+					//giorni di ferie già concesse
+					List<FerieBean> ferie=FerieDao.ottieniFerieConcesse(emailVF);
+					
+					
 					JSONArray array = new JSONArray();
-					for(GiorniMalattiaBean giorniMalattiaBean:GiorniMalattiaBean) {
+					
+					//inserisco nell'array i giorni di ferie già concesse 
+					for(FerieBean ferieBean:ferie) {
+
+						JSONArray arrayrange = new JSONArray();
+						arrayrange.put(ferieBean.getDataInizio());
+						arrayrange.put(ferieBean.getDataFine().toLocalDate().plusDays(1));
+						array.put(arrayrange);
+					}
+					//inserisco nell'array i giorni di malattia già concesse 
+					for(GiorniMalattiaBean giorniMalattiaBean:giorniMalattia) {
 				
-					JSONArray arrayrange = new JSONArray();
-					arrayrange.put(giorniMalattiaBean.getDataInizio());
-					arrayrange.put(giorniMalattiaBean.getDataFine().toLocalDate().plusDays(1));
-					array.put(arrayrange);
-				
+						JSONArray arrayrange = new JSONArray();
+						arrayrange.put(giorniMalattiaBean.getDataInizio());
+						arrayrange.put(giorniMalattiaBean.getDataFine().toLocalDate().plusDays(1));
+						array.put(arrayrange);
 					}
 					response.setContentType("application/json");
 					response.getWriter().append(array.toString());
 						}
-		
-		else {
+		//Chiamata AJAX per visualizzare la lista delle malattie di un vigile da rimuovere
+		else if(request.getParameter("JSON")!=null && request.getParameter("rimozione")!=null ) {
+			String emailVF = request.getParameter("emailVF");
+			
+			List<GiorniMalattiaBean> giorniMalattia = GiorniMalattiaDao.ottieniMalattie(emailVF);
+			
+			JSONArray array = new JSONArray();
+			JSONArray arrayrange = new JSONArray();
+			
+			arrayrange.put(new Date(System.currentTimeMillis()));
+			Date datafinale=null;
+
+			for(GiorniMalattiaBean giorniMalattiaBean:giorniMalattia) {
+
+				arrayrange.put(giorniMalattiaBean.getDataInizio());
+				array.put(arrayrange);
+				arrayrange=new JSONArray();
+				arrayrange.put(giorniMalattiaBean.getDataFine().toLocalDate().plusDays(1));
+				datafinale=giorniMalattiaBean.getDataFine();
+			}
+			if(datafinale!=null) 
+			arrayrange.put(datafinale.toLocalDate().plusDays(1));
+			else arrayrange.put(LocalDate.now().plusDays(1));
+
+			array.put(arrayrange);
+			
+			response.setContentType("application/json");
+			response.getWriter().append(array.toString());
+		}else {
 			
 			//Ottenimento parametro
 			String ordinamento = request.getParameter("ordinamento");
@@ -97,9 +139,6 @@ public class PeriodiDiMalattiaServlet extends HttpServlet {
 			case "cognome": 
 				listaVigili =  new ArrayList<VigileDelFuocoBean>(VigileDelFuocoDao.ottieni(VigileDelFuocoDao.ORDINA_PER_COGNOME));
 				break;
-			case "mansione": 
-				listaVigili =  new ArrayList<VigileDelFuocoBean>(VigileDelFuocoDao.ottieni(VigileDelFuocoDao.ORDINA_PER_MANSIONE));
-				break;
 			case "grado": 
 				listaVigili =  new ArrayList<VigileDelFuocoBean>(VigileDelFuocoDao.ottieni(VigileDelFuocoDao.ORDINA_PER_GRADO));
 				break;
@@ -107,7 +146,6 @@ public class PeriodiDiMalattiaServlet extends HttpServlet {
 
 		//Passasggio del tipo di ordinamento richiesto
 		request.setAttribute("ordinamento", ordinamento);
-		
 		request.setAttribute("listaVigili", listaVigili);
 		request.getRequestDispatcher("/JSP/GestioneMalattiaJSP.jsp").forward(request, response);
   }

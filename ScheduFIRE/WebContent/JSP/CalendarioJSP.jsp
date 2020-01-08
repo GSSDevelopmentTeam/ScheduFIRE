@@ -32,6 +32,7 @@
 
 	java.sql.Date data = (java.sql.Date) request.getAttribute("date");
 	int primoGiorno = (Integer) request.getAttribute("primo_giorno");
+	int len = (Integer) request.getAttribute("len");
 	int anno_corrente = Integer.parseInt((String) request.getAttribute("anno_corrente"));
 	int mese_corrente = Integer.parseInt((String) request.getAttribute("mese_corrente"));
 	String mese_stringa = (String) request.getAttribute("meseStringa");
@@ -43,9 +44,9 @@
 <body>
 	<!-- Barra Navigazione -->
 	<jsp:include page="HeaderJSP.jsp" />
-
+					
 	<!-- START: Container per calendario e schedulazione -->
-	<div class="containerAll">
+	<div class="containerAll" id="inizio">
 
 		<!-- START: Container per il calendaio -->
 		<div class="container-calendar">
@@ -102,12 +103,13 @@
 					String img = "";
 					String onClick = "";
 
-					for (i = 0; i < days_month.length; i++) {
+					
+					for (i = 0; i< days_month.length-len; i++) {
 						if (days_month[i] < 0) {
 				%>
 				<div class="item-empty"><%=empty%></div>
 				<%
-					} else {
+					} else{
 							day++;
 
 							if (giorno == day && mese_corrente == mese && anno_corrente == anno) {
@@ -146,7 +148,7 @@
 				</div>
 
 				<%
-					id = "";
+							id = "";
 							img = "";
 							onClick = "";
 						}
@@ -171,8 +173,7 @@
 					</button>
 				</form>
 
-				<form action="ModificaComposizioneSquadreServlet?tiposquadra=3" method="POST">
-
+				<form id="modData" action="" method="POST">
 					<button type="submit" id="bottoneModificaSquadra" class="edit">
 						Modifica Squadre
 					</button>

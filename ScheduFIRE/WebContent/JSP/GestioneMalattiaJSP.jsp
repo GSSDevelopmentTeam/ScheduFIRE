@@ -22,9 +22,24 @@
     vertical-align: top;
     border-top: 1px solid #dee2e6;
 }
+.back-up{
+	border:none;
+	background:none;	
+    position: fixed;
+    bottom: 5%;
+    right: 5%;
+}
+.container__days{
+min-width: 270px;
+}
+.month-item-weekdays-row{
+min-width: 265px;
+}
 	</style>
 	<body>
-	
+	<a href="#inizio" class=" back-up"><img src="IMG/arrow/up-arrow-p.png" style="margin-left: 5px;"
+					onmouseover="this.src='IMG/arrow/up-arrow-d.png'"
+					onmouseout="this.src='IMG/arrow/up-arrow-p.png'" /></a>
 	<!-- Modal di aggiunta malattia-->
 	<div class="modal fade" id="aggiungiMalattia" tabindex="-1" role="dialog"
 		aria-labelledby="exampleModalCenterTitle" aria-hidden="true" style="display: none">
@@ -51,9 +66,9 @@
 				</div>
 
 				<div class="modal-footer">
-	  			<button type="button" class="btn btn-outline-primary" id="botAggiungiMalattia" 
+	  			<button type="button" class="btn btn-outline-success" id="botAggiungiMalattia" 
 	  			data-toggle ="modal"  data-target ="#menuConferma" 
-	  			data-dismiss="modal" disabled>Aggiungi Malattia</button>
+	  			data-dismiss="modal" disabled>Conferma</button>
 					<button type="button" class="btn btn-outline-danger" data-dismiss="modal">Annulla</button>
 
 				</div>
@@ -62,7 +77,68 @@
 	</div>
 	
 	
-	<!-- Modal di avviso aggiunta malattia-->
+
+<!-- Modal rimozione malattia -->
+<div class="modal fade" id="rimuoviMalattia" tabindex="-1" role="dialog"
+		aria-labelledby="exampleModalCenterTitle" aria-hidden="true"
+		style="display: none">
+		<div class="modal-dialog modal-dialog-centered" role="document">
+			<div class="modal-content contenutiModal">
+				<div class="modal-header">
+					<h5 class="modal-title" id="titoloRimozioneMalattia">Rimuovi Malattia</h5>
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close">
+						<span aria-hidden="true">&times; </span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<p hidden="hidden" name="email" id="emailRimozioneMalattia"></p>
+					<div class=" row justify-content-center">
+						<input id="rimozioneDataIniziale" placeholder="Giorno iniziale"
+							readonly size="34" /> <input id="rimozioneDataFinale"
+							placeholder="Giorno finale" readonly size="34" />
+					</div>
+					
+				<div class="text-center" id="messaggioMalattia1"></div>
+				<div class="text-center" id="messaggioMalattia2"></div>
+
+
+				</div>
+				<div class="modal-footer">
+				
+					<button type="button" class="btn btn-outline-success"
+					id="bottoneRimuoviMalattia" data-toggle ="modal"data-target ="#menuConfermaRimozione" 
+	  				data-dismiss="modal" disabled>Rimuovi</button>
+	  				
+					<button type="button" class="btn btn-outline-danger"
+						data-dismiss="modal">Annulla</button>
+
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	<!-- Modal di avviso rimozionemalattia-->
+ <div class="modal fade " id="menuConfermaRimozione" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-sm modal-dialog-centered" role="document">
+    <div class="modal-content">
+
+      <div class="modal-body">
+        <img src="IMG/fire.png" class="rounded mx-auto d-block">
+        <h4 class="modal-title text-center">Sei sicuro?</h4>
+        <p class="text-center">Vuoi rimuovere il periodo di malattia?<br> La procedura non può essere annullata.</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline-danger" data-dismiss="modal">Annulla</button>
+        <button type="button" class="btn btn-outline-success" data-dismiss="modal"onClick = "rimuoviMalattia()">Rimuovi</button>
+      </div>
+    </div>
+  </div>
+</div>
+	
+	
+
+		<!-- Modal di avviso aggiunta malattia-->
  <div class="modal fade " id="menuConferma" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
   <div class="modal-dialog modal-sm modal-dialog-centered" role="document">
     <div class="modal-content">
@@ -70,20 +146,21 @@
       <div class="modal-body">
         <img src="IMG/fire.png" class="rounded mx-auto d-block">
         <h4 class="modal-title text-center">Sei sicuro?</h4>
-        <p class="text-center">Vuoi inserire il periodo di malattia?<br> La procedura non può essere annullata.</p>
+        <p class="text-center">Vuoi inserire il periodo di malattia?
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-outline-danger" data-dismiss="modal">Annulla</button>
-        <button type="button" class="btn btn-outline-secondary" data-dismiss="modal"onClick = "inserisciMalattia()">inserisci</button>
+        <button type="button" class="btn btn-outline-success" data-dismiss="modal"onClick = "inserisciMalattia()">Inserisci</button>
       </div>
     </div>
   </div>
 </div>
 	
-	
 	<!-- Barra Navigazione -->
+	<div id="inizio"></div>
 	<jsp:include page="HeaderJSP.jsp" />
-	<h2 class="d-flex justify-content-center" style="color:#B60000!Important">Gestione Malattie</h2>
+	<h2 class="d-flex  justify-content-center" style="margin-top:3% ;color:#B60000!Important" >Gestione Malattie</h2>
+
 	
 	<!-- form per l'ordinamento della lista dei VF-->
 		<%
@@ -102,7 +179,6 @@
 					%>
 					<option value="nome" selected>Nome</option>
 					<option value="cognome">Cognome</option>
-					<option value="mansione">mansione</option>
 					<option value="grado">grado</option>
 					
 					<%
@@ -110,65 +186,187 @@
 						%>
 					<option value="nome">Nome</option>
 					<option value="cognome" selected>Cognome</option>
-					<option value="mansione">mansione</option>
 					<option value="grado">grado</option>
 					<%
-						} else if( ordinamento.equals("mansione") ) {		
+						}  else if( ordinamento.equals("grado") ) {		
 						%>
 					<option value="nome">Nome</option>
 					<option value="cognome">Cognome</option>
-					<option value="mansione" selected>mansione</option>
-					<option value="grado">grado</option>
-					<%
-						} else if( ordinamento.equals("grado") ) {		
-						%>
-					<option value="nome">Nome</option>
-					<option value="cognome">Cognome</option>
-					<option value="mansione">mansione</option>
 					<option value="grado" selected>grado</option>
 					<%}
 					}%>
 
 				</select>
 			</div>
+			<br>
 		</form>
 	
 	
 	<!-- body aggiungi malattia -->
-	<div class="table-responsive">
+	<div class="table-responsive" >
+	
+	<h4 class="d-flex justify-content-center" id="inizio"
+		style="margin-top: 0%; color: #B60000 !Important ">Capi Squadra</h4>
+	
 		<table class="table  table-hover" id="listaVigili">
 			<thead class="thead-dark">
 				<tr>
-					<th class="text-center"width = 16.66%>Grado</th>
-					<th class="text-center"width = 16.66%>Nome</th>
-					<th class="text-center"width = 16.66%>Cognome</th>
-					<th class="text-center"width = 16.66%>Email</th>
-					<th class="text-center"width = 16.66%>Mansione</th>
-					<th class="text-center"width = 16.66%>Inserisci Malattia</th>
+					<th class="text-center"width = 14.28%>Grado</th>
+					<th class="text-center"width = 14.28%>Mansione</th>
+					<th class="text-center"width = 14.28%>Nome</th>
+					<th class="text-center"width = 14.28%>Cognome</th>
+					<th class="text-center"width = 14.28%>Email</th>
+					<th class="text-center"width = 14.28%>Inserisci Malattia</th>
+					<th class="text-center"width = 14.28%>Rimuovi Malattia</th>
 				</tr>
 			</thead>
 				
 				<tbody>
-				 <%	ArrayList<VigileDelFuocoBean> listaVigili;
-						listaVigili= (ArrayList<VigileDelFuocoBean>) request.getAttribute("listaVigili");
+				 <%
+					ArrayList<VigileDelFuocoBean> listaVigili;
+					listaVigili = (ArrayList<VigileDelFuocoBean>) request.getAttribute("listaVigili");
+
+					for (int i = 0; i < listaVigili.size(); i++) {
+						VigileDelFuocoBean vigile = listaVigili.get(i);
 						
-						for(int i=0; i<listaVigili.size(); i++){
-							VigileDelFuocoBean vigile = listaVigili.get(i);
-					%>
+						if(vigile.getMansione().toUpperCase().equals("CAPO SQUADRA")){
+				%>
+
 					
 					<tr>
-						<td class="text-center"><img src="Grado/<%=vigile.getGrado() %>.png" style="height:25%" 
+						<td class="text-center"><img
+						src="Grado/<%=vigile.getGrado()%>.png" width=25%
 						onerror="this.parentElement.innerHTML='Non disponibile';"></td>
-						<td class="text-center"><%=vigile.getNome() %></td>
-						<td class="text-center"><%=vigile.getCognome()%></td>
-						<td class="text-center"><%=vigile.getEmail() %>@vigilfuoco.it</td>
 						<td class="text-center"><%=vigile.getMansione()%></td>
+						<td class="text-center"><strong><%=vigile.getNome() %></strong></td>
+
+			            <td class="text-center"><strong><%=vigile.getCognome()%></strong></td>
+						<td class="text-center"><%=vigile.getEmail() %></td>
+
 						<td class="text-center"><button class="pass btn btn-outline-secondary" 
 						data-toggle="modal" data-target="#aggiungiMalattia"
 						onClick='apriFormAggiunta("<%=vigile.getEmail()%>")'>Aggiungi Malattia</button></td>
+						<td class="text-center"><button type="button"
+							class="btn btn-outline-danger" data-toggle="modal"
+							data-target="#rimuoviMalattia"
+							onClick='apriFormRimozione("<%=vigile.getEmail()%>")'>Rimuovi
+							Malattia</button></td>
 					</tr>
 		
-<% } %> 				
+				<%
+						}
+					}
+				%>				
+				
+				</tbody>
+			
+			</table>
+			
+			<h4 class="d-flex justify-content-center" id="inizio"
+		style="margin-top: 1%; color: #B60000 !Important ">Autisti</h4>
+
+	
+		<table class="table  table-hover" id="listaVigili">
+			<thead class="thead-dark">
+				<tr>
+					<th class="text-center"width = 14.28%>Grado</th>
+					<th class="text-center"width = 14.28%>Mansione</th>
+					<th class="text-center"width = 14.28%>Nome</th>
+					<th class="text-center"width = 14.28%>Cognome</th>
+					<th class="text-center"width = 14.28%>Email</th>
+					<th class="text-center"width = 14.28%>Inserisci Malattia</th>
+					<th class="text-center"width = 14.28%>Rimuovi Malattia</th>
+				</tr>
+			</thead>
+				
+				<tbody>
+				 <%
+					for (int i = 0; i < listaVigili.size(); i++) {
+						VigileDelFuocoBean vigile = listaVigili.get(i);
+						
+						if(vigile.getMansione().toUpperCase().equals("AUTISTA")){
+				%>
+
+					
+					<tr>
+						<td class="text-center"><img
+						src="Grado/<%=vigile.getGrado()%>.png" width=25%
+						onerror="this.parentElement.innerHTML='Non disponibile';"></td>
+						<td class="text-center"><%=vigile.getMansione()%></td>
+						<td class="text-center"><strong><%=vigile.getNome() %></strong></td>
+
+			            <td class="text-center"><strong><%=vigile.getCognome()%></strong></td>
+						<td class="text-center"><%=vigile.getEmail() %></td>
+
+						<td class="text-center"><button class="pass btn btn-outline-secondary" 
+						data-toggle="modal" data-target="#aggiungiMalattia"
+						onClick='apriFormAggiunta("<%=vigile.getEmail()%>")'>Aggiungi Malattia</button></td>
+						<td class="text-center"><button type="button"
+							class="btn btn-outline-danger" data-toggle="modal"
+							data-target="#rimuoviMalattia"
+							onClick='apriFormRimozione("<%=vigile.getEmail()%>")'>Rimuovi
+							Malattia</button></td>
+					</tr>
+		
+				<%
+						}
+					}
+				%>						
+				
+				</tbody>
+			
+			</table>
+			
+			<h4 class="d-flex justify-content-center" id="inizio"
+		style="margin-top: 1%; color: #B60000 !Important ">Vigili</h4>
+
+	
+		<table class="table  table-hover" id="listaVigili">
+			<thead class="thead-dark">
+				<tr>
+					<th class="text-center"width = 14.28%>Grado</th>
+					<th class="text-center"width = 14.28%>Mansione</th>
+					<th class="text-center"width = 14.28%>Nome</th>
+					<th class="text-center"width = 14.28%>Cognome</th>
+					<th class="text-center"width = 14.28%>Email</th>
+					<th class="text-center"width = 14.28%>Inserisci Malattia</th>
+					<th class="text-center"width = 14.28%>Rimuovi Malattia</th>
+				</tr>
+			</thead>
+				
+				<tbody>
+				 <%
+					for (int i = 0; i < listaVigili.size(); i++) {
+						VigileDelFuocoBean vigile = listaVigili.get(i);
+						
+						if(vigile.getMansione().toUpperCase().equals("VIGILE")){
+				%>
+
+					
+					<tr>
+						<td class="text-center"><img
+						src="Grado/<%=vigile.getGrado()%>.png" width=25%
+						onerror="this.parentElement.innerHTML='Non disponibile';"></td>
+						<td class="text-center"><%=vigile.getMansione()%></td>
+						<td class="text-center"><strong><%=vigile.getNome() %></strong></td>
+
+			            <td class="text-center"><strong><%=vigile.getCognome()%></strong></td>
+						<td class="text-center"><%=vigile.getEmail() %></td>
+
+						<td class="text-center"><button class="pass btn btn-outline-secondary" 
+						data-toggle="modal" data-target="#aggiungiMalattia"
+						onClick='apriFormAggiunta("<%=vigile.getEmail()%>")'>Aggiungi Malattia</button></td>
+						<td class="text-center"><button type="button"
+							class="btn btn-outline-danger" data-toggle="modal"
+							data-target="#rimuoviMalattia"
+							onClick='apriFormRimozione("<%=vigile.getEmail()%>")'>Rimuovi
+							Malattia</button></td>
+					</tr>
+		
+				<%
+						}
+					}
+				%>						
 				
 				</tbody>
 			
@@ -224,6 +422,27 @@ style="display: none;position:fixed;z-index: 99999; width:100%">
 							$("#messaggioMalattia2").attr("style","color:green");
 							$('#botAggiungiMalattia').prop("disabled",false);
 								}});	
+			
+			var picker2 = new Litepicker(
+					{
+						element : document.getElementById('rimozioneDataIniziale'),
+						elementEnd : document.getElementById('rimozioneDataFinale'),
+						singleMode : false,
+						format : 'DD-MM-YYYY',
+						lang : 'it',
+						numberOfMonths : 1,
+						numberOfColumns : 1,
+						inlineMode : true,
+						minDate : new Date(),
+						disallowLockDaysInRange : false,
+						showTooltip : false,
+						onError : function(error) {
+							
+						},
+						onSelect : function() {
+							$('#bottoneRimuoviMalattia').prop("disabled", false);
+								},
+					});
 			
 			function calcolaGiorniMalattia(inizale,finale) {
 				//trasformo le date nel formato aaaammgg 
@@ -292,13 +511,70 @@ style="display: none;position:fixed;z-index: 99999; width:100%">
         				var nome = $(cognome).prev('td');
     
         			$("#titoloAggiuntaMalattia").text(
-        						"Aggiunta malattia per " + nome.text() + " "+ cognome.text());
-        			$('#formAggiunta').show();	
+        						"Aggiunta malattia per " + nome.text() + " "+ cognome.text());	
 					$(".contenutiModal").css('background-color', '#e6e6e6');
 					}
 					
 				});
-			}			
+			}		
+			
+			function apriFormRimozione(input) {
+				console.log("parte funzione apriformRimozione di " + input);
+				document.getElementById("emailAggiuntaMalattia").innerHTML = input;
+				picker2.setOptions({
+					startDate : null,
+					endDate : null
+				});
+				$("#rimozioneDataIniziale").val("");
+				$("#rimozioneDataFinale").val("");
+				picker.setLockDays([]);
+				$('#bottoneRimuoviMalattia').prop("disabled",
+						true);
+				
+				var inputDataIniziale = $("#rimozioneDataIniziale");
+				var inputDataFinale = $("#rimozioneDataFinale");
+				$(inputDataIniziale).val("");
+				$(inputDataFinale).val("");
+				picker.setLockDays([]);
+				$("#messaggioMalattia1").text("");
+				$("#messaggioMalattia2").text("");
+				
+				$.ajax({
+					type : "POST",
+					url : "PeriodiDiMalattiaServlet",
+					data : {
+						"JSON" : true,
+						"rimozione" : true,
+						"emailVF" : input,
+					},
+					dataType : "json",
+					async : false,
+					success : function(response) {
+						picker2.setLockDays(response);
+						var dataFinale;
+						for ( var i in response) {
+							var range = response[i];
+							dataFinale = range[1];
+							console.log("Data finale!!!! "+dataFinale);
+						}
+						picker2.setOptions({
+							maxDate : dataFinale
+						});
+						
+						var mail = document.getElementById("emailRimozioneMalattia");
+        				mail.innerHTML = input;
+						$(".contenutiModal").css('background-color', '#e6e6e6');
+        				        				
+        				var cognome = $(".table td:contains('" + input + "')").prev('td');
+        				var nome = $(cognome).prev('td');
+    
+        			$("#titoloRimozioneMalattia").text(
+        						"Aggiunta malattia per " + nome.text() + " "+ cognome.text());
+        				
+					$(".contenutiModal").css('background-color', '#e6e6e6');
+					}
+				});
+			}
 			</script>
 			
 			<script>
@@ -334,6 +610,43 @@ style="display: none;position:fixed;z-index: 99999; width:100%">
 				 },
 			});	
 		}
+			
+			function rimuoviMalattia(){
+				var dataIniziale = $("#rimozioneDataIniziale").val();
+				var dataFinale = $("#rimozioneDataFinale").val();
+				var emailVF = document.getElementById("emailRimozioneMalattia").innerHTML;
+				console.log("email = " + emailVF);
+				$.ajax({
+					type : "POST",
+					url : "RimozioneMalattiaServlet",
+					data : {
+						"dataIniziale" : dataIniziale,
+						"dataFinale" : dataFinale,
+						"emailVF" : emailVF,
+					},
+					dataType : "json",
+					async : true,
+					success : function(response) {
+						var booleanRisposta = response[0];
+						if (booleanRisposta == true) {
+							alertSuccesso("Rimozione malattia avvenuta con successo.");
+						} else {
+							
+							console.log("problema rimozione ferie "
+									+ dataIniziale + " " + dataFinale
+									+ " di " + email);
+							apriFormRimozione(email);
+							alertInsuccesso("Rimozione malattia non avvenuta a causa di un errore imprevisto.");
+						}
+					},
+					
+					error : function(jqXHR, textStatus, errorThrown) {
+
+						$(document.body).html(jqXHR.responseText);
+
+					},
+				});
+	}
 
 			</script>
 			<script>

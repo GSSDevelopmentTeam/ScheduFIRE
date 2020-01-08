@@ -12,20 +12,34 @@
     vertical-align: top;
     border-top: 1px solid #dee2e6;
 }
+
+.back-up{
+	border:none;
+	background:none;	
+    position: fixed;
+    bottom: 5%;
+    right: 5%;
+}
+
 .container__days{
-min-width: 270px;
+	min-width: 270px;
 }
 .month-item-weekdays-row{
-min-width: 265px;
+	min-width: 265px;
 }
+
 </style>
 </head>
 <body>
 
-
+<div id="inizio"></div>
 	<!-- Barra Navigazione -->
 	<jsp:include page="HeaderJSP.jsp" />
-	<h2 class="d-flex justify-content-center"
+	
+	<a href="#inizio" class=" back-up"><img src="IMG/arrow/up-arrow-p.png" 
+					onmouseover="this.src='IMG/arrow/up-arrow-d.png'"
+					onmouseout="this.src='IMG/arrow/up-arrow-p.png'" /></a>
+	<h2 class="d-flex justify-content-center" id="inizio"
 		style="margin-top: 3%; color: #B60000 !Important ">Gestione Ferie</h2>
 
 
@@ -80,13 +94,12 @@ min-width: 265px;
 
 					<option value="giorniFerie">Ferie</option>
 					<%
-						} else if( ordinamento.equals("ferie") ) {		
+						} else if( ordinamento.equals("giorniFerie") ) {		
 						%>
 					<option value="nome" >Nome</option>
 					<option value="cognome">Cognome</option>
 					<option value="mansione">Mansione</option>
 					<option value="grado">Grado</option>
-
 					<option value="giorniFerie" selected>Ferie</option>
 					<%
 						} 		
@@ -118,6 +131,7 @@ min-width: 265px;
 		class="alert alert-success flex alert-dismissible fade in text-center fixed-top"
 		id="rimozioneOk"
 		style="display: none; position: fixed; z-index: 99999; width: 100%">
+		<button type="button" class="close" onclick="nascondiOk()" aria-label="close">&times;</button>
 		<strong>Operazione riuscita!</strong> <span>Rimozione ferie
 			avvenuta con successo..</span>
 	</div>
@@ -130,6 +144,7 @@ min-width: 265px;
 		class="alert alert-danger flex alert-dismissible fade in text-center fixed-top"
 		id="rimozioneNoOk"
 		style="display: none; position: fixed; z-index: 99999; width: 100%">
+		<button type="button" class="close" onclick="nascondiNoOK()" aria-label="close">&times;</button>
 		<strong>Errore!</strong> <span>Rimozione ferie non avvenuta..</span>
 	</div>
 
@@ -141,7 +156,7 @@ min-width: 265px;
 		aria-labelledby="exampleModalCenterTitle" aria-hidden="true"
 		style="display: none">
 		<div class="modal-dialog modal-dialog-centered" role="document">
-			<div class="modal-content contenutiModal" style="min-width: 700px; min-height: 700px;">
+			<div class="modal-content contenutiModal" style="min-width: 550px; min-height: 670px;">
 				<div class="modal-header">
 					<h5 class="modal-title" id="titoloAggiuntaFerie">Aggiunta
 						ferie</h5>
@@ -150,12 +165,14 @@ min-width: 265px;
 						<span aria-hidden="true">&times;</span>
 					</button>
 				</div>
+				<p>Per selezionare un solo giorno, cliccare due volte sulla data desiderata.</p>
 				<div class="modal-body">
 					<input type="hidden" name="email" id="emailAggiuntaFerie">
 					<div class=" row justify-content-center">
 						<input id="dataInizio" placeholder="Giorno iniziale" readonly
 							size="34" style="margin-bottom: 1%;" /> 
-							<input id="dataFine" placeholder="Giorno finale"
+						
+						<input id="dataFine" placeholder="Giorno finale"
 							readonly size="34" style="margin-bottom: 2%;"/>
 					</div>
 					<div class="text-center" id="messaggioFerie1"></div>
@@ -188,7 +205,7 @@ min-width: 265px;
 		aria-labelledby="exampleModalCenterTitle" aria-hidden="true"
 		style="display: none">
 		<div class="modal-dialog modal-dialog-centered" role="document">
-			<div class="modal-content contenutiModal" style="min-width: 500px; min-height: 550px;">
+			<div class="modal-content contenutiModal" style="min-width: 550px; min-height: 670px;">
 				<div class="modal-header">
 					<h5 class="modal-title" id="titoloRimuoviFerie">Rimuovi ferie</h5>
 					<button type="button" class="close" data-dismiss="modal"
@@ -196,6 +213,7 @@ min-width: 265px;
 						<span aria-hidden="true">&times; </span>
 					</button>
 				</div>
+				<p>Per selezionare un solo giorno, cliccare due volte sulla data desiderata.</p>
 				<div class="modal-body">
 					<input type="hidden" name="email" id="emailRimozioneFerie">
 					<div class=" row justify-content-center">
@@ -309,7 +327,11 @@ min-width: 265px;
 
 
 	<div class="table-responsive">
-		<table class="table  table-hover" id="listaVigili" style="table-layout: fixed">
+	
+		<h4 class="d-flex justify-content-center" 
+		style="margin-top: 0%; color: #B60000 !Important ">Capi Squadra</h4>
+		
+		<table class="table  table-hover listaVigili" style="table-layout: fixed">
 			<thead class="thead-dark">
 				<tr>
 					<th class=" text-center">Grado</th>
@@ -331,6 +353,8 @@ min-width: 265px;
 
 					for (int i = 0; i < listaVigili.size(); i++) {
 						VigileDelFuocoBean vigile = listaVigili.get(i);
+						
+						if(vigile.getMansione().toUpperCase().equals("CAPO SQUADRA")){
 				%>
 
 				<tr>
@@ -355,6 +379,119 @@ min-width: 265px;
 				</tr>
 
 				<%
+						}
+					}
+				%>
+
+			</tbody>
+
+		</table>
+		
+		<h4 class="d-flex justify-content-center" id="inizio"
+		style="margin-top: 1%; color: #B60000 !Important ">Autisti</h4>
+		
+		<table class="table  table-hover listaVigili" style="table-layout: fixed">
+			<thead class="thead-dark">
+				<tr>
+					<th class=" text-center">Grado</th>
+					<th class="text-center">Mansione</th>
+					<th class="text-center">Nome</th>
+					<th class="text-center">Cognome</th>
+					<th class="text-center">Email</th>
+
+					<th class="text-center">Ferie</th>
+					<th class="text-center">Inserisci ferie</th>
+					<th class="text-center">Rimuovi ferie</th>
+				</tr>
+			</thead>
+
+			<tbody>
+				<%
+					for (int i = 0; i < listaVigili.size(); i++) {
+						VigileDelFuocoBean vigile = listaVigili.get(i);
+						
+						if(vigile.getMansione().toUpperCase().equals("AUTISTA")){
+				%>
+
+				<tr>
+					<td class="text-center"><img
+						src="Grado/<%=vigile.getGrado()%>.png" width=30%
+						onerror="this.parentElement.innerHTML='Non disponibile';"></td>
+					<td class="text-center"><%=vigile.getMansione()%></td>
+					<td class="text-center"><strong><%=vigile.getNome()%></strong></td>
+					<td class="text-center"><strong><%=vigile.getCognome()%></strong></td>
+					<td class="text-center"><%=vigile.getEmail()%></td>
+					<td class="text-center" id="ferie"><%=vigile.getGiorniFerieAnnoCorrente() + vigile.getGiorniFerieAnnoPrecedente()%></td>
+					<td class="text-center"><button type="button"
+							class="btn btn-outline-secondary" data-toggle="modal"
+							data-target="#aggiungiFerie"
+							onClick='apriFormAggiunta("<%=vigile.getEmail()%>")'>Aggiungi
+							Ferie</button></td>
+					<td class="text-center"><button type="button"
+							class="btn btn-outline-danger" data-toggle="modal"
+							data-target="#rimuoviFerie"
+							onClick='apriFormRimozione("<%=vigile.getEmail()%>")'>Rimuovi
+							Ferie</button></td>
+				</tr>
+
+				<%
+						}
+					}
+				%>
+
+			</tbody>
+
+		</table>
+		
+		<h4 class="d-flex justify-content-center" id="inizio"
+		style="margin-top: 1%; color: #B60000 !Important ">Vigili</h4>
+		
+		<table class="table  table-hover listaVigili" style="table-layout: fixed">
+			<thead class="thead-dark">
+				<tr>
+					<th class=" text-center">Grado</th>
+					<th class="text-center">Mansione</th>
+					<th class="text-center">Nome</th>
+					<th class="text-center">Cognome</th>
+					<th class="text-center">Email</th>
+
+					<th class="text-center">Ferie</th>
+					<th class="text-center">Inserisci ferie</th>
+					<th class="text-center">Rimuovi ferie</th>
+				</tr>
+			</thead>
+
+			<tbody>
+				<%
+					for (int i = 0; i < listaVigili.size(); i++) {
+						VigileDelFuocoBean vigile = listaVigili.get(i);
+						
+						if(vigile.getMansione().toUpperCase().equals("VIGILE")){
+				%>
+
+				<tr>
+					<td class="text-center"><img
+						src="Grado/<%=vigile.getGrado()%>.png" width=30%
+						onerror="this.parentElement.innerHTML='Non disponibile';"></td>
+					<td class="text-center"><%=vigile.getMansione()%></td>
+					<td class="text-center"><strong><%=vigile.getNome()%></strong></td>
+					<td class="text-center"><strong><%=vigile.getCognome()%></strong></td>
+					<td class="text-center"><%=vigile.getEmail()%></td>
+					<td class="text-center" id="ferie"><%=vigile.getGiorniFerieAnnoCorrente() + vigile.getGiorniFerieAnnoPrecedente()%></td>
+					<td class="text-center"><button type="button"
+							class="btn btn-outline-secondary" data-toggle="modal"
+							data-target="#aggiungiFerie"
+							onClick='apriFormAggiunta("<%=vigile.getEmail()%>")'>Aggiungi
+							Ferie</button></td>
+					<td class="text-center"><button type="button"
+							class="btn btn-outline-danger" data-toggle="modal"
+							data-target="#rimuoviFerie"
+							onClick='apriFormRimozione("<%=vigile.getEmail()%>")'>Rimuovi
+							Ferie</button></td>
+				</tr>
+
+				<%
+						}
 					}
 				%>
 
@@ -401,13 +538,10 @@ min-width: 265px;
 						var differenza = calcolaGiorniFerie($("#dataInizio").val(),$("#dataFine").val());
 
 						var email = $("#emailAggiuntaFerie").val();
-						var ferieAnnoCorrente = $(
-								"#listaVigili td:contains('" + email + "')")
-								.next('td').next('td');
-						var ferieAnnoPrecedente = ferieAnnoCorrente
+						var ferie = $(
+								".listaVigili td:contains('" + email + "')")
 								.next('td');
-						var totaleFerie = parseInt(ferieAnnoCorrente.text())
-								+ parseInt(ferieAnnoPrecedente.text());
+						var totaleFerie = parseInt(ferie.text());
 						if (differenza == 0) {
 							picker.setOptions({
 								startDate : null,
@@ -448,10 +582,7 @@ min-width: 265px;
 									.attr("style", "color:red");
 							$('#bottoneAggiungiFerie').prop("disabled",
 									true);
-							alertInsuccesso("Hai selezionato un periodo troppo grande.Hai a disposizione "
-									+ totaleFerie
-									+ " giorni di ferie, ne hai selezionati "
-									+ differenza);
+							alertInsuccesso("Hai selezionato un periodo troppo grande.");
 
 						} else {
 							$("#messaggioFerie1").text(
@@ -465,10 +596,7 @@ min-width: 265px;
 									"color:green");
 							$('#bottoneAggiungiFerie').prop("disabled",
 									false);
-							alertSuccesso("Hai selezionato correttamente il periodo di ferie. Hai a disposizione "
-									+ totaleFerie
-									+ " giorni di ferie, ne hai selezionati "
-									+ differenza);
+							alertSuccesso("Hai selezionato correttamente il periodo di ferie.");
 						}
 					}
 				}
@@ -517,17 +645,27 @@ min-width: 265px;
 
 		function alertInsuccesso(input) {
 			$("#rimozioneNoOk span").text(input);
-			$("#rimozioneNoOk").fadeTo(4000, 500).slideUp(500, function() {
-				$("#success-alert").slideUp(500);
+			$("#rimozioneNoOk span").show();
+			$("#rimozioneNoOk").fadeTo(4000, 500).slideUp(5000000, function() {
+				$("#success-alert").slideUp(5000000);
 			});
 
 		}
 
 		function alertSuccesso(input) {
 			$("#rimozioneOk span").text(input);
-			$("#rimozioneOk").fadeTo(4000, 500).slideUp(500, function() {
-				$("#success-alert").slideUp(500);
+			$("#rimozioneOk").show();
+			$("#rimozioneOk").fadeTo(4000, 500).slideUp(5000000, function() {
+				$("#success-alert").slideUp(5000000);
 			});
+		}
+		
+		function nascondiOk(){
+			document.getElementById("rimozioneOk").style.display="none";
+		}
+		
+		function nascondiNoOk(){
+			document.getElementById("rimozioneNoOk").style.display="none";
 		}
 
 		function calcolaGiorniFerie(iniz,fin) {
@@ -632,7 +770,7 @@ min-width: 265px;
 			var inputDataFinale = $("#rimozioneDataFinale");
 			$(inputDataIniziale).val("");
 			$(inputDataFinale).val("");
-			var cognome = $("#listaVigili td:contains('" + input + "')").prev(
+			var cognome = $(".listaVigili td:contains('" + input + "')").prev(
 					'td');
 			var nome = $(cognome).prev('td');
 			console.log("cognome: " + cognome.text() + " nome: " + nome.text());
@@ -738,7 +876,7 @@ min-width: 265px;
 						success : function(response) {
 							var booleanRisposta = response[0];
 							if (booleanRisposta) {
-								var ferie = $("#listaVigili td:contains('" +email+ "')").next('td');
+								var ferie = $(".listaVigili td:contains('" +email+ "')").next('td');
 					            ferie.text(response[2] + response[1]);
 								alertSuccesso("Rimozione ferie avvenuta con successo.");
 							} else {
@@ -779,12 +917,12 @@ min-width: 265px;
 						success : function(response) {
 							var booleanRisposta = response[0];
 							if (booleanRisposta) {
-								var riga = $("#listaVigili td:contains('"
+								var riga = $(".listaVigili td:contains('"
 										+ email + "')");
 								console.log("inserite ferie " + dataIniziale
 										+ " " + dataFinale + " di " + email);
 								alertSuccesso("Inserimento ferie avvenuto con successo.");
-								var ferie = $("#listaVigili td:contains('" +email+ "')").next('td');
+								var ferie = $(".listaVigili td:contains('" +email+ "')").next('td');
 					            ferie.text(response[2] + response[1]);
 							} else {
 								console.log("problema inserimento ferie "

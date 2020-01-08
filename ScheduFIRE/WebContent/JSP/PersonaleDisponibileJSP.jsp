@@ -19,8 +19,16 @@
 .month-item-weekdays-row {
 	min-width: 265px;
 }
+.back-up{
+	border:none;
+	background:none;	
+    position: fixed;
+    bottom: 5%;
+    right: 5%;
+}
 </style>
 <body>
+
 	<!-- Barra Navigazione -->
 	<jsp:include page="HeaderJSP.jsp" />
 
@@ -161,6 +169,7 @@
 
 		<div class="table-responsive">
 
+
 			<h4 class="d-flex justify-content-center" id="inizio"
 				style="margin-top: 0%; color: #B60000 !Important">Capi Squadra</h4>
 
@@ -168,12 +177,14 @@
 				style="table-layout: fixed">
 				<thead class="thead-dark">
 					<tr>
+
 						<th class="text-center">Grado</th>
 						<th class="text-center">Nome</th>
 						<th class="text-center">Cognome</th>
 						<th class="text-center">Email</th>
 						<th class="text-center">Disponibilità</th>
 						<th class="text-center">Squadra</th>
+
 					</tr>
 				</thead>
 
@@ -290,12 +301,14 @@
 				style="table-layout: fixed">
 				<thead class="thead-dark">
 					<tr>
+
 						<th class="text-center">Grado</th>
 						<th class="text-center">Nome</th>
 						<th class="text-center">Cognome</th>
 						<th class="text-center">Email</th>
 						<th class="text-center">Disponibilità</th>
 						<th class="text-center">Squadra</th>
+
 					</tr>
 				</thead>
 
