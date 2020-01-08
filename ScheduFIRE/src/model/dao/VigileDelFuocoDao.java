@@ -270,6 +270,31 @@ public class VigileDelFuocoDao {
 	}
 	
 	/**
+	 * Si occupa dell'ottenimento del valore minimo di Carico di lavoro
+	 * tra i Vigili del Fuoco presenti nel database
+	 * @return il minimo Carico di Lavoro
+	 */
+	public static int getCaricoLavoroMinimo() {
+		
+		try(Connection con = ConnessioneDB.getConnection()) {
+			
+			// Esecuzione query
+			PreparedStatement ps = con.prepareStatement("select MIN(caricolavoro) as minimo from Vigile where adoperabile = true;");
+			ResultSet rs = ps.executeQuery();
+			int minimo = 0;
+			if(rs.next())
+				minimo = rs.getInt("minimo");
+
+			return minimo;
+				
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+		}
+		
+		
+	}
+	
+	/**
 	 * Si occupa del settaggio del campo 'adoperabile' di un Vigile del Fuoco
 	 * nel database, identificato dalla sua chiave.
 	 * @param chiaveEmail � una stringa che identifica un VigileDelFuocoBean nel database
@@ -704,13 +729,13 @@ public class VigileDelFuocoDao {
 								(pair.getValue().equals("Auto Scala")) ? 2 : 1;
 				System.out.println("toAdd vale: "+toAdd+" per il vigile "+pair.getKey().getEmail());
 				ps = con.prepareStatement(incrementaCaricoLavorativo);
-				ps.setInt(1, pair.getKey().getCaricoLavoro() + toAdd);
+				VigileDelFuocoBean vigile=VigileDelFuocoDao.ottieni(pair.getKey().getEmail());
+				ps.setInt(1, vigile.getCaricoLavoro() + toAdd);
 				ps.setString(2, pair.getKey().getEmail());
-				count = ps.executeUpdate();
+				count += ps.executeUpdate();
 				con.commit();
-				i.remove();
 			}
-			
+			System.out.println("conto carico lavorativo "+count);
 			return (count == squadra.size());
 		} catch (SQLException e) {
 			throw new RuntimeException(e);

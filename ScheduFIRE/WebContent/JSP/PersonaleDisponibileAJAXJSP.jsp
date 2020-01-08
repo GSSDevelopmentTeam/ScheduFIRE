@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"
-    		import="java.util.ArrayList,java.util.Iterator, model.bean.*, model.dao.*" 
+    		import="java.util.ArrayList,java.util.Iterator, model.bean.*, model.dao.*, java.sql.Date" 
 %>
 
 
@@ -38,7 +38,9 @@
 		</table>
 		
 <% String email = (String) request.getParameter("email"); 
-	String tipo = (String) request.getParameter("tiposquadra");%>
+	String tipo = (String) request.getParameter("tiposquadra");
+	Date data = (Date) request.getAttribute("dataModifica");%>
 	<input type="hidden" name="email" value="<%=email%>">
 	<input type="hidden"  name="tiposquadra" value="<%=tipo%>">
+	<input type="hidden"  name="dataModifica" value="<%=data%>">
 </div>

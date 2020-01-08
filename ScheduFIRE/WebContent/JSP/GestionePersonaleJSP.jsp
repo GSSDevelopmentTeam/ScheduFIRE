@@ -1,4 +1,5 @@
-<%@ page language="java" pageEncoding="ISO-8859-1" import="java.util.*, model.bean.*"%>
+<%@ page language="java" 
+	pageEncoding="ISO-8859-1" import="java.util.*, model.bean.*"%>
 <%
 
 Collection<VigileDelFuocoBean> vigili = null;
@@ -19,7 +20,10 @@ if(ordinamentoObj.getClass().getSimpleName().equals("String"))
 
 <%@ include file="StandardJSP.jsp"%>
 
-<link type="text/css" rel="stylesheet" href="./CSS/GestionePersonaleCSS.css">
+
+<link type="text/css" rel="stylesheet"
+	href="./CSS/GestionePersonaleCSS.css">
+
 
 <body>
 	<jsp:include page="HeaderJSP.jsp" />
@@ -100,13 +104,28 @@ if(ordinamentoObj.getClass().getSimpleName().equals("String"))
 			
 		}
 		
+		function alertInsuccesso(input) {
+			$("#rimozioneNoOk span").text(input);
+			$("#rimozioneNoOk").fadeTo(4000, 500).slideUp(500, function() {
+				$("#success-alert").slideUp(500);
+			});
+
+		}
+
+		function alertSuccesso(input) {
+			$("#rimozioneOk span").text(input);
+			$("#rimozioneOk").fadeTo(4000, 500).slideUp(500, function() {
+				$("#success-alert").slideUp(500);
+			});
+		}
+		
 		//Validazione form
 		
 		/*
 		Questa funzione viene invocata ad ogni submit di ogni form di modifica
 		presente nella pagina ed al submit del form di aggiunta di un VF.
 		Come parametro alla funzione viene passato l'id del form.
-		L'id di ogni elemento del form è formato dall'id del form concatenato
+		L'id di ogni elemento del form Ã¨ formato dall'id del form concatenato
 		il nome dell'elemento. 
 		(Es. id form = "form1", di conseguenza l'id dell'elemento che deve
 		contenere il nome sara "form1Nome")
@@ -120,16 +139,14 @@ if(ordinamentoObj.getClass().getSimpleName().equals("String"))
 			var nome = document.getElementById(id + "Nome");
 			var cognome = document.getElementById(id + "Cognome");
 			var email = document.getElementById(id + "Email");
-			var grado = document.getElementById(id + "Grado");
-			var mansione = document.getElementById(id + "Mansione");
-			/*
-			alert(cognome.id);
-			alert(cognome.value);
-			alert((cognome.value === ""))
-			alert((cognome.value === "undefined"))
-			alert(nome.value.test("^[A-Z]{1}[a-z]{0,19}+$"))
-			alert(cognome.value.test("^[A-Z]{1}[a-z]{0,19}+$"))
-			*/
+			var mansione1 = document.getElementById(id + "Mansione1");
+			var mansione2 = document.getElementById(id + "Mansione2");
+			var mansione3 = document.getElementById(id + "Mansione3");
+			var grado0 = document.getElementById(id + "Grado0");
+			var grado1 = document.getElementById(id + "Grado1");
+			var grado2 = document.getElementById(id + "Grado2");
+			var grado3 = document.getElementById(id + "Grado3");
+			
 			if( (nome.value === "") || (nome.value === "undefined") || 
 					!nome.value.test("^[A-Z]{1}[a-z]{0,19}+$") ) {
 				
@@ -147,30 +164,29 @@ if(ordinamentoObj.getClass().getSimpleName().equals("String"))
 				
 			}
 			else if( (email.value === "") || (email.value === "undefined") || 
-					!email.value.test("^[A-Za-z]+\.[A-Za-z]+[1-9]*[0-9]*$") ) {
+					!email.value.test("[A-Za-z]+([1-9][0-9]*)?\.[A-Za-z]+") ) {
 
 				email.focus();
 				alert("Email errata!");
 				return false;
 				
 			}
-			else if( (grado.value !== "Qualificato") || (grado.value !== "Esperto") || 
-					 (grado.value !== "Coordinatore") ) {
+			else if( mansione1.value.checked !== "true" || mansione2.value.checked !== "true" 
+					|| mansione3.value.checked !== "true") {
 
-				grado.focus();
-				alert("Grado errato!");
-				return false;
-				
-			}
-			else if( (mansione.value !== "Capo Squadra") || (mansione.value !== "Autista") || 
-					(mansione.value !== "Vigile")  ) {
-
-				mansione.focus();
 				alert("Mansione errata!");
 				return false;
 				
 			}
-	
+			else if( ( mansione2.value.checked === "true" ||  mansione3.value.checked === "true" ) &&
+					( grado1.value.checked !== "true" || grado2.value.checked !== "true" ||
+						grado3.value.checked !== "true") ) {
+
+				alert("Grado errato!");
+				return false;
+				
+			}
+			
 			return true;
 			
 		}
@@ -186,7 +202,7 @@ if(ordinamentoObj.getClass().getSimpleName().equals("String"))
 		<form id="ordinamento" action="./GestionePersonaleServlet">
 			<div id="divOrdinamento">
 				Ordina per: <select id="selectOrdinamento" name="ordinamento"
-					onchange="this.form.submit()">
+					class = "custom-select" onchange="this.form.submit()" style = "width: 65%">
 
 					<%
 					if( ordinamento != null ) {
@@ -195,60 +211,48 @@ if(ordinamentoObj.getClass().getSimpleName().equals("String"))
 					<option value="nome" selected>Nome</option>
 					<option value="cognome">Cognome</option>
 					<option value="caricoLavoro">Carico di lavoro</option>
-					<option value="giorniFerieAnnoCorrente">Giorni di ferie
-						dell'anno corrente</option>
-					<option value="giorniFerieAnnoPrecedente">Giorni di ferie
-						degli anni precedenti</option>
+					<option value="giorniFerieAnnoCorrente">Ferie anno corrente</option>
+					<option value="giorniFerieAnnoPrecedente">Ferie anni precedenti</option>
 					<%
 						} else if( ordinamento.equals("cognome") ) {		
 						%>
 					<option value="nome">Nome</option>
 					<option value="cognome" selected>Cognome</option>
 					<option value="caricoLavoro">Carico di lavoro</option>
-					<option value="giorniFerieAnnoCorrente">Giorni di ferie
-						dell'anno corrente</option>
-					<option value="giorniFerieAnnoPrecedente">Giorni di ferie
-						degli anni precedenti</option>
+					<option value="giorniFerieAnnoCorrente">Ferie anno corrente</option>
+					<option value="giorniFerieAnnoPrecedente">Ferie anni precedenti</option>
 					<%
 						} else if( ordinamento.equals("caricoLavoro") ) {		
 						%>
 					<option value="nome">Nome</option>
 					<option value="cognome">Cognome</option>
 					<option value="caricoLavoro" selected>Carico di lavoro</option>
-					<option value="giorniFerieAnnoCorrente">Giorni di ferie
-						dell'anno corrente</option>
-					<option value="giorniFerieAnnoPrecedente">Giorni di ferie
-						degli anni precedenti</option>
+					<option value="giorniFerieAnnoCorrente">Ferie anno corrente</option>
+					<option value="giorniFerieAnnoPrecedente">Ferie anni precedenti</option>
 					<%
 						} else if( ordinamento.equals("giorniFerieAnnoCorrente") ) {		
 						%>
 					<option value="nome">Nome</option>
 					<option value="cognome">Cognome</option>
 					<option value="caricoLavoro">Carico di lavoro</option>
-					<option value="giorniFerieAnnoCorrente" selected>Giorni di
-						ferie dell'anno corrente</option>
-					<option value="giorniFerieAnnoPrecedente">Giorni di ferie
-						degli anni precedenti</option>
+					<option value="giorniFerieAnnoCorrente" selected>Ferie anno corrente</option>
+					<option value="giorniFerieAnnoPrecedente">Ferie anni precedenti</option>
 					<%
 						} else if( ordinamento.equals("giorniFerieAnnoPrecedente") ) {		
 						%>
 					<option value="nome">Nome</option>
 					<option value="cognome">Cognome</option>
 					<option value="caricoLavoro">Carico di lavoro</option>
-					<option value="giorniFerieAnnoCorrente">Giorni di ferie
-						dell'anno corrente</option>
-					<option value="giorniFerieAnnoPrecedente" selected>Giorni
-						di ferie degli anni precedenti</option>
+					<option value="giorniFerieAnnoCorrente">Ferie anno corrente</option>
+					<option value="giorniFerieAnnoPrecedente" selected>Ferie anni precedenti</option>
 					<%
 						} else {		
 						%>
 					<option value="nome">Nome</option>
 					<option value="cognome">Cognome</option>
 					<option value="caricoLavoro">Carico di lavoro</option>
-					<option value="giorniFerieAnnoCorrente">Giorni di ferie
-						dell'anno corrente</option>
-					<option value="giorniFerieAnnoPrecedente">Giorni di ferie
-						degli anni precedenti</option>
+					<option value="giorniFerieAnnoCorrente">Ferie anno corrente</option>
+					<option value="giorniFerieAnnoPrecedente">Ferie anni precedenti</option>
 					<%
 						}
 					}
@@ -263,6 +267,30 @@ if(ordinamentoObj.getClass().getSimpleName().equals("String"))
 			onclick="mostraFormAggiuta()">Aggiungi Vigile del Fuoco</button>
 
 		<br> <br>
+		
+			<!--------- Alert Ok----------------->
+	
+		<div
+			class="alert alert-success flex alert-dismissible fade in text-center fixed-top"
+			id="rimozioneOk"
+			style="display: none; position: fixed; z-index: 99999; width: 100%">
+			<strong>Operazione riuscita!</strong> <span>Rimozione ferie
+				avvenuta con successo..</span>
+		</div>
+	
+		<!-- ----------------------- -->
+	
+		<!--------- Alert NON Ok ----------------->
+	
+		<div
+			class="alert alert-danger flex alert-dismissible fade in text-center fixed-top"
+			id="rimozioneNoOk"
+			style="display: none; position: fixed; z-index: 99999; width: 100%">
+			<strong>Errore!</strong> <span>Rimozione ferie non avvenuta..</span>
+		</div>
+	
+		<!-- ----------------------- -->
+		
 
 		<% 
 				
@@ -273,14 +301,14 @@ if(ordinamentoObj.getClass().getSimpleName().equals("String"))
 			<table class="table  table-hover" id="listaVigili">
 				<thead class="thead-dark">
 					<tr>
-						<th class="text-center">Grado</th>
+						<th class="text-center" style = "width: 10%">Grado</th>
 						<th class="text-center">Nome</th>
 						<th class="text-center">Cognome</th>
 						<th class="text-center">Email</th>
 						<th class="text-center">Mansione</th>
 						<th class="text-center">Carico lavorativo</th>
-						<th class="text-center">Giorni di ferie<br>anno corrente</th>
-						<th class="text-center">Giorni di ferie<br>anni precedenti</th>
+						<th class="text-center">Ferie anno<br>corrente</th>
+						<th class="text-center">Ferie anni<br>precedenti</th>
 						<th class="text-center">Modifica</th>
 						<th class="text-center">Cancella</th>
 					</tr>
@@ -296,13 +324,21 @@ if(ordinamentoObj.getClass().getSimpleName().equals("String"))
 				<tbody>
 
 					<tr id=<%= "vigile" + id %> class="vigile">
-						<td class="text-center"><img src="Grado/<%=vf.getGrado() %>.png" style="height:25%" onerror="this.parentElement.innerHTML='Non disponibile';"></td>
+					
+						<td class="text-center">
+
+						<img src="Grado/<%=vf.getMansione().equals("Capo Squadra") && 
+						vf.getGrado().equals("Esperto")?"EspertoCapoSquadra":vf.getGrado() %>.png" 
+						width=40% onerror="this.parentElement.innerHTML='Non disponibile';"
+						title = <%= vf.getGrado() %>>
+						
+						</td>
 
 						<td class="text-center"><%= vf.getNome() %></td>
 
 						<td class="text-center"><%= vf.getCognome() %></td>
 
-						<td class="text-center"><%= vf.getEmail() %>@vigilfuoco.it</td>
+						<td class="text-center"><%= vf.getEmail() %></td>
 
 						<td class="text-center"><%= vf.getMansione() %></td>
 
@@ -341,7 +377,8 @@ if(ordinamentoObj.getClass().getSimpleName().equals("String"))
 	
 									<input type="hidden" name="cognome" value=<%= vf.getCognome() %>>
 	
-									<input type="hidden" name="email" value=<%= vf.getEmail() %>>
+									<input type="hidden" name="email" value= <%= vf.getEmail().
+									substring( 0 , vf.getEmail().indexOf("@") ) %>>
 	
 									<input type="hidden" name="turno" value=<%= vf.getTurno() %>>
 	
@@ -359,12 +396,12 @@ if(ordinamentoObj.getClass().getSimpleName().equals("String"))
 									<input type="hidden" name="username" 
 										value=<%= vf.getUsername() %>>
 										
-									<input id = "buttonCancella" type="submit" class="btn btn-outline-danger" 
-										data-toggle="modal" class="button" value="Sì">
+									<input id = "buttonCancella" type="submit" class="btn btn-outline-success" 
+										data-toggle="modal" class="button" value="SÃ¬">
 									
 									&ensp;
 										
-									<input type = "button" id = "buttonCancellaNo" class = "btn btn-danger"
+									<input type = "button" id = "buttonCancellaNo" class = "btn btn-outline-danger"
 										data-toggle="modal" value = "No" onclick = "chiudiFormCancellazione(this.parentNode)">
 										
 									<br> <br>
@@ -395,7 +432,7 @@ if(ordinamentoObj.getClass().getSimpleName().equals("String"))
 									name="cognomeNuovo" value=<%= vf.getCognome() %>>
 								</label> <br> <br> <label> Email: <input
 									id=<%= "modificaVF" + id + "Email" %> type="text"
-									name="emailNuova" value=<%= vf.getEmail() %>>@vigilfuoco.it
+									name="emailNuova" value= <%= vf.getEmail().substring( 0 , vf.getEmail().indexOf("@") ) %> >@vigilfuoco.it
 								</label> <br> <br> 
 								
 								<% if( vf.getMansione().equals("Capo Squadra") ) { %>
@@ -621,9 +658,9 @@ if(ordinamentoObj.getClass().getSimpleName().equals("String"))
 									name="giorniFerieAnnoPrecedenteNuovi"
 									value=<%= vf.getGiorniFerieAnnoPrecedente() %> min="0">
 								</label> <br> <br> <input type="hidden" name="emailVecchia"
-									value=<%= vf.getEmail() %>> 
+									value= <%= vf.getEmail().substring( 0 , vf.getEmail().indexOf("@") ) %> > 
 									
-									<Button type="submit" class="btn btn-outline-secondary"
+									<Button type="submit" class="btn btn-outline-success"
 									data-toggle="modal" class="button" value="Conferma" onsubmit="validazioneForm()">
 										Conferma
 									</Button>
@@ -712,25 +749,6 @@ if(ordinamentoObj.getClass().getSimpleName().equals("String"))
 		
 			 </div> 
 			
-			
-			<!--  
-			<label> Grado: <select
-				id="aggiungiVFGrado" name="grado">
-					<option value="">-</option>
-					<option value="Qualificato">Qualificato</option>
-					<option value="Esperto">Esperto</option>
-					<option value="Coordinatore">Coordinatore</option>
-			</select>
-			</label> <label> Mansione: <select id="aggiungiVFMansione"
-				name="mansione">
-					<option value="">-</option>
-					<option value="Capo Squadra">Capo Squadra</option>
-					<option value="Autista">Autista</option>
-					<option value="Vigile">Vigile</option>
-			</select>
-			</label>
-			-->
-			
 			<br>
 			
 			<label> Giorni di ferie dell'anno
@@ -742,7 +760,7 @@ if(ordinamentoObj.getClass().getSimpleName().equals("String"))
 			</label> <br> <br>
 			
 				<input id="buttonFormAggiungiVF" type="submit"
-				class="btn btn-outline-secondary" data-toggle="modal"
+				class="btn btn-outline-success" data-toggle="modal"
 				class="button" value="Aggiungi">
 				&nbsp;
 				<input type = "button" value="Chiudi"

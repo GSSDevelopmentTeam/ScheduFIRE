@@ -6,10 +6,9 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
-import model.bean.CredenzialiBean;
 import model.dao.VigileDelFuocoDao;
+import util.Util;
 import util.Validazione;
 
 /**
@@ -34,21 +33,9 @@ public class EliminaVFServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		//Ottenimento oggetto sessione dalla richiesta
-		HttpSession session = request.getSession();
-				
-		//Ottenimento credenziali dell'utente dalla sessione
-		CredenzialiBean credenziali = (CredenzialiBean) session.getAttribute("credenziali"); 
-		/*		
-		//Controllo credenziali
-		if( credenziali == null )
-			throw new ScheduFIREException();
-
+		//Controllo login
+		Util.isCapoTurno(request);
 		
-		if( credenziali.getRuolo() == "vigile" ) //definire bene la stringa
-			throw new ScheduFIREException();
-			
-		*/
 		//Ottenimento parametro email dalla richiesta
 		String email = request.getParameter("email");
 		
@@ -56,11 +43,11 @@ public class EliminaVFServlet extends HttpServlet {
 		if( ! Validazione.email(email) )
 			throw new ParametroInvalidoException("Il parametro 'email' è errato!");
 		
-		if( ! VigileDelFuocoDao.setAdoperabile(email, false))
+		if( ! VigileDelFuocoDao.setAdoperabile(email + "@vigilfuoco.it", false))
 			throw new GestionePersonaleException("La cancellazione del vigile del fuoco non è andata a buon fine!");
 		
 		// Reindirizzamento alla jsp
-		request.getRequestDispatcher("/GestionePersonaleServlet").forward(request, response);
+		response.sendRedirect("./GestionePersonaleServlet");
 		
 	}
 
