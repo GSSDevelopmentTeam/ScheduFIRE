@@ -35,14 +35,14 @@
 	</build>
 	<dependencies>
 
-		 <dependency>
-            <groupId>org.junit.jupiter</groupId>
-            <artifactId>junit-jupiter-engine</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.junit.platform</groupId>
-            <artifactId>junit-platform-runner</artifactId>
-        </dependency>
+		<dependency>
+			<groupId>org.junit.jupiter</groupId>
+			<artifactId>junit-jupiter-engine</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.junit.platform</groupId>
+			<artifactId>junit-platform-runner</artifactId>
+		</dependency>
 
 		<dependency>
 			<groupId>com.sun.mail</groupId>
@@ -70,8 +70,9 @@
 
 		<dependency>
 			<groupId>org.mockito</groupId>
-			<artifactId>mockito-core</artifactId>
+			<artifactId>mockito-all</artifactId>
 		</dependency>
+
 
 	</dependencies>
 	<dependencyManagement>
@@ -91,11 +92,7 @@
 				<artifactId>jquery</artifactId>
 				<version>3.4.1</version>
 			</dependency>
-			<dependency>
-				<groupId>org.mockito</groupId>
-				<artifactId>mockito-core</artifactId>
-				<version>3.2.4</version>
-			</dependency>
+
 			<dependency>
 				<groupId>org.webjars.npm</groupId>
 				<artifactId>popper.js</artifactId>
@@ -142,6 +139,11 @@
 				<groupId>org.opentest4j</groupId>
 				<artifactId>opentest4j</artifactId>
 				<version>1.2.0</version>
+			</dependency>
+			<dependency>
+				<groupId>org.mockito</groupId>
+				<artifactId>mockito-all</artifactId>
+				<version>2.0.2-beta</version>
 			</dependency>
 		</dependencies>
 	</dependencyManagement>
