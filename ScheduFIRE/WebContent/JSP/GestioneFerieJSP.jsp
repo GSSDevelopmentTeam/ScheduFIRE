@@ -6,6 +6,13 @@
 <head>
 <jsp:include page="StandardJSP.jsp" />
 <link type="text/css" rel="stylesheet" href="./CSS/GestionePersonaleCSS.css">
+<style>	
+.table td, .table th {
+    padding: 1.5px!important;
+    vertical-align: top;
+    border-top: 1px solid #dee2e6;
+}
+</style>
 </head>
 <body>
 
@@ -13,7 +20,7 @@
 	<!-- Barra Navigazione -->
 	<jsp:include page="HeaderJSP.jsp" />
 	<h2 class="d-flex justify-content-center"
-		style="color: #B60000 !Important">Gestione Ferie</h2>
+		style="margin-top: 3%; color: #B60000 !Important ">Gestione Ferie</h2>
 
 
 <!-- form per l'ordinamento della lista dei VF-->
@@ -35,8 +42,8 @@
 					<option value="cognome">Cognome</option>
 					<option value="mansione">Mansione</option>
 					<option value="grado">Grado</option>
-					<option value="giorniFerieAnnoCorrente">Ferie anno corrente</option>
-					<option value="giorniFerieAnnoPrecedente">Ferie anno precedente</option>
+
+					<option value="giorniFerie">Ferie</option>
 					
 					
 					<%
@@ -46,8 +53,8 @@
 					<option value="cognome" selected>Cognome</option>
 					<option value="mansione">Mansione</option>
 					<option value="grado">Grado</option>
-					<option value="giorniFerieAnnoCorrente">Ferie anno corrente</option>
-					<option value="giorniFerieAnnoPrecedente">Ferie anno precedente</option>
+
+					<option value="giorniFerie">Ferie</option>
 					<%
 						} else if( ordinamento.equals("mansione") ) {		
 						%>
@@ -55,8 +62,8 @@
 					<option value="cognome">Cognome</option>
 					<option value="mansione"selected>Mansione</option>
 					<option value="grado">Grado</option>
-					<option value="giorniFerieAnnoCorrente">Ferie anno corrente</option>
-					<option value="giorniFerieAnnoPrecedente">Ferie anno precedente</option>
+
+					<option value="giorniFerie">Ferie</option>
 					<%
 						} else if( ordinamento.equals("grado") ) {		
 						%>
@@ -64,36 +71,30 @@
 					<option value="cognome">Cognome</option>
 					<option value="mansione">Mansione</option>
 					<option value="grado" selected>Grado</option>
-					<option value="giorniFerieAnnoCorrente">Ferie anno corrente</option>
-					<option value="giorniFerieAnnoPrecedente">Ferie anno precedente</option>
+
+					<option value="giorniFerie">Ferie</option>
 					<%
-						} else if( ordinamento.equals("giorniFerieAnnoCorrente") ) {		
+						} else if( ordinamento.equals("ferie") ) {		
 						%>
 					<option value="nome" >Nome</option>
 					<option value="cognome">Cognome</option>
 					<option value="mansione">Mansione</option>
 					<option value="grado">Grado</option>
-					<option value="giorniFerieAnnoCorrente" selected>Ferie anno corrente</option>
-					<option value="giorniFerieAnnoPrecedente">Ferie anno precedente</option>
+
+					<option value="giorniFerie" selected>Ferie</option>
 					<%
-						} else if( ordinamento.equals("giorniFerieAnnoPrecedente") ) {		
+						} 		
 						%>
-					<option value="nome">Nome</option>
-					<option value="cognome">Cognome</option>
-					<option value="mansione">Mansione</option>
-					<option value="grado">Grado</option>
-					<option value="giorniFerieAnnoCorrente">Ferie anno corrente</option>
-					<option value="giorniFerieAnnoPrecedente" selected>Ferie anno precedente</option>
+
 					<%}
-					}
 					else {%>
 					
 					<option value="nome" >Nome</option>
 					<option value="cognome"selected>Cognome</option>
 					<option value="mansione">Mansione</option>
 					<option value="grado">Grado</option>
-					<option value="giorniFerieAnnoCorrente">Ferie anno corrente</option>
-					<option value="feriePrec">Ferie anno precedente</option>
+
+					<option value="giorniFerie">Ferie</option>
 					<%} %>
 					
 
@@ -134,7 +135,7 @@
 		aria-labelledby="exampleModalCenterTitle" aria-hidden="true"
 		style="display: none">
 		<div class="modal-dialog modal-dialog-centered" role="document">
-			<div class="modal-content contenutiModal" style="min-width: 500px; min-height: 500px;">
+			<div class="modal-content contenutiModal" style="min-width: 500px; min-height: 550px;">
 				<div class="modal-header">
 					<h5 class="modal-title" id="titoloAggiuntaFerie">Aggiunta
 						ferie</h5>
@@ -147,8 +148,9 @@
 					<input type="hidden" name="email" id="emailAggiuntaFerie">
 					<div class=" row justify-content-center">
 						<input id="dataInizio" placeholder="Giorno iniziale" readonly
-							size="34" /> <input id="dataFine" placeholder="Giorno finale"
-							readonly size="34" />
+							size="34" style="margin-bottom: 1%;" /> 
+							<input id="dataFine" placeholder="Giorno finale"
+							readonly size="34" style="margin-bottom: 2%;"/>
 					</div>
 					<div class="text-center" id="messaggioFerie1"></div>
 					<div class="text-center" id="messaggioFerie2"></div>
@@ -161,7 +163,7 @@
 						data-dismiss="modal">Annulla</button>
 
 
-					<button type="button" class="btn btn-outline-primary"
+					<button type="button" class="btn btn-outline-success"
 						id="bottoneAggiungiFerie" onclick="aggiungiFerie()"
 						data-dismiss="modal" disabled>Aggiungi ferie</button>
 
@@ -180,7 +182,7 @@
 		aria-labelledby="exampleModalCenterTitle" aria-hidden="true"
 		style="display: none">
 		<div class="modal-dialog modal-dialog-centered" role="document">
-			<div class="modal-content contenutiModal" style="min-width: 500px; min-height: 500px;">
+			<div class="modal-content contenutiModal" style="min-width: 500px; min-height: 550px;">
 				<div class="modal-header">
 					<h5 class="modal-title" id="titoloRimuoviFerie">Rimuovi ferie</h5>
 					<button type="button" class="close" data-dismiss="modal"
@@ -192,8 +194,9 @@
 					<input type="hidden" name="email" id="emailRimozioneFerie">
 					<div class=" row justify-content-center">
 						<input id="rimozioneDataIniziale" placeholder="Giorno iniziale"
-							readonly size="34" /> <input id="rimozioneDataFinale"
-							placeholder="Giorno finale" readonly size="34" />
+							readonly size="34" style="margin-bottom: 1%;"/> 
+						<input id="rimozioneDataFinale"
+							placeholder="Giorno finale" readonly size="34" style="margin-bottom: 2%" />
 					</div>
 					<div class="text-center" id="messaggioFerie1"></div>
 					<div class="text-center" id="messaggioFerie2"></div>
@@ -205,7 +208,7 @@
 						data-dismiss="modal">Annulla</button>
 
 
-					<button type="button" class="btn btn-outline-warning"
+					<button type="button" class="btn btn-outline-success"
 						id="bottoneRimuoviFerie" onclick="rimuoviFerie()"
 						data-dismiss="modal" disabled>Rimuovi ferie</button>
 
@@ -304,18 +307,14 @@
 			<thead class="thead-dark">
 				<tr>
 					<th class=" text-center">Grado</th>
+					<th class="text-center">Mansione</th>
 					<th class="text-center">Nome</th>
 					<th class="text-center">Cognome</th>
 					<th class="text-center">Email</th>
-					<th class="text-center">Mansione</th>
-					<th class="text-center">Ferie anno<br>corrente
-					</th>
-					<th class="text-center">Ferie anno<br> precedente
-					</th>
-					<th class="text-center">Inserisci <br> periodo di ferie
-					</th>
-					<th class="text-center">Rimuovi <br>periodo di ferie
-					</th>
+
+					<th class="text-center">Ferie</th>
+					<th class="text-center">Inserisci ferie</th>
+					<th class="text-center">Rimuovi ferie</th>
 				</tr>
 			</thead>
 
@@ -332,12 +331,11 @@
 					<td class="text-center"><img
 						src="Grado/<%=vigile.getGrado()%>.png" width=30%
 						onerror="this.parentElement.innerHTML='Non disponibile';"></td>
+					<td class="text-center"><%=vigile.getMansione()%></td>
 					<td class="text-center"><%=vigile.getNome()%></td>
 					<td class="text-center"><%=vigile.getCognome()%></td>
 					<td class="text-center"><%=vigile.getEmail()%></td>
-					<td class="text-center"><%=vigile.getMansione()%></td>
-					<td class="text-center" id="ferieCorrenti"><%=vigile.getGiorniFerieAnnoCorrente()%></td>
-					<td class="text-center" id="feriePrecedenti"><%=vigile.getGiorniFerieAnnoPrecedente()%></td>
+					<td class="text-center" id="ferie"><%=vigile.getGiorniFerieAnnoCorrente() + vigile.getGiorniFerieAnnoPrecedente()%></td>
 					<td class="text-center"><button type="button"
 							class="btn btn-outline-secondary" data-toggle="modal"
 							data-target="#aggiungiFerie"
@@ -727,13 +725,8 @@
 						success : function(response) {
 							var booleanRisposta = response[0];
 							if (booleanRisposta) {
-								var ferieAnnoCorrente = $(
-										"#listaVigili td:contains('" + email
-												+ "')").next('td').next('td');
-								var ferieAnnoPrecedente = ferieAnnoCorrente
-										.next('td');
-								ferieAnnoCorrente.text(response[2]);
-								ferieAnnoPrecedente.text(response[1]);
+								var ferie = $("#listaVigili td:contains('" +email+ "')").next('td');
+					            ferie.text(response[2] + response[1]);
 								alertSuccesso("Rimozione ferie avvenuta con successo.");
 							} else {
 								
@@ -778,13 +771,8 @@
 								console.log("inserite ferie " + dataIniziale
 										+ " " + dataFinale + " di " + email);
 								alertSuccesso("Inserimento ferie avvenuto con successo.");
-								var ferieAnnoCorrente = $(
-										"#listaVigili td:contains('" + email
-												+ "')").next('td').next('td');
-								var ferieAnnoPrecedente = ferieAnnoCorrente
-										.next('td');
-								ferieAnnoCorrente.text(response[2]);
-								ferieAnnoPrecedente.text(response[1]);
+								var ferie = $("#listaVigili td:contains('" +email+ "')").next('td');
+					            ferie.text(response[2] + response[1]);
 							} else {
 								console.log("problema inserimento ferie "
 										+ dataIniziale + " " + dataFinale
