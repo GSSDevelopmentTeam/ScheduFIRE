@@ -20,28 +20,18 @@ h2 {
 }
 
 .table td, .table th {
-    padding: 1.5px!important;
-    vertical-align: top;
-    border-top: 1px solid #dee2e6;
-}
-
-.back-up{
-	border-radius: 50px;
-    font-size: 30px;
-    width: 60px;
-    position: fixed;
-    bottom: 5%;
-    right: 5%;
-    background-color:#FFFFFF;
-	box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0
-		rgba(0, 0, 0, 0.19);
+	padding: 1.5px !important;
+	vertical-align: top;
+	border-top: 1px solid #dee2e6;
 }
 
 </style>
 </head>
 
 <body>
-<%Date data = (Date) request.getAttribute("data"); %>
+	<%
+		Date data = (Date) request.getAttribute("data");
+	%>
 
 	<!-- Barra Navigazione -->
 	<jsp:include page="HeaderJSP.jsp" />
@@ -56,16 +46,17 @@ h2 {
 					<h5 class="modal-title" id="titoloAggiuntaFerie">Personale
 						Disponibile</h5>
 				</div>
-				<form action="ModificaComposizioneSquadreServlet?tiposquadra=3&data=<%=data.toString() %>" method="POST">
-<!-- Nel form verranno passate l'email del VF da sostituire con nome "email" e quella del VF da inserire con nome "VFNew" -->
+				<form
+					action="ModificaComposizioneSquadreServlet?tiposquadra=3&data=<%=data.toString()%>"
+					method="POST">
+					<!-- Nel form verranno passate l'email del VF da sostituire con nome "email" e quella del VF da inserire con nome "VFNew" -->
 					<div class="modal-body" id="elenco">
 						<div id="appendiElenco"></div>
 					</div>
 
 					<div class="modal-footer">
 						<button type="button" class="btn btn-outline-danger"
-							
-						data-dismiss="modal">Annulla</button>
+							data-dismiss="modal">Annulla</button>
 						<button class="btn btn-outline-secondary">Aggiungi</button>
 					</div>
 				</form>
@@ -74,15 +65,24 @@ h2 {
 	</div>
 
 	<!-- ELENCO SQUADRE  -->
-<%
-	HashMap<VigileDelFuocoBean, String> squadra = (HashMap<VigileDelFuocoBean, String>) session.getAttribute("squadra"); %>
-     
-     <a href="#inizio"><button class=" back-up btn btn-outline-secondary"> ^ </button></a>
-     
-     <!-- SQUADRA DIURNA -->
+	<%
+		HashMap<VigileDelFuocoBean, String> squadra = (HashMap<VigileDelFuocoBean, String>) session
+				.getAttribute("squadra");
+	%>
 
-       <div class="d-flex justify-content-center">
-		<h2 style="font-weight:bold; font-size:36px;">Squadra del <%=data %></h2>
+	<!-- SQUADRA DIURNA -->
+	<div class="d-flex justify-content-center">
+		<h2 style="font-weight: bold; font-size: 36px;">
+			Squadra del
+			<%=data%></h2>
+	</div>
+
+	<div class="d-flex justify-content-center" id="inizio">
+		<form action="GeneraSquadreServlet?salva=true&calendario=true&data=<%=data.toString()%>" method=post>
+			<button type="submit" class="btn btn-outline-success btn-lg"
+				value="salva" name="salva" style="margin: 3px;">Conferma
+				Modifiche</button>
+		</form>
 
 	</div>
 	<p class="d-flex justify-content-center"></p>
@@ -104,17 +104,18 @@ h2 {
 			</thead>
 
 			<tbody>
-				<% 
-	            
-                Iterator it = squadra.entrySet().iterator();
-                while (it.hasNext()) {
-                    Map.Entry coppia = (Map.Entry) it.next();
-                    VigileDelFuocoBean membro = (VigileDelFuocoBean) coppia.getKey();
-                    if (coppia.getValue().equals("Sala Operativa")) {	
+				<%
+					Iterator it = squadra.entrySet().iterator();
+					while (it.hasNext()) {
+						Map.Entry coppia = (Map.Entry) it.next();
+						VigileDelFuocoBean membro = (VigileDelFuocoBean) coppia.getKey();
+						if (coppia.getValue().equals("Sala Operativa")) {
 				%>
 
 				<tr>
-					<td class="text-center"><img src="Grado/<%=membro.getGrado() %>.png" style="height:25%" onerror="this.parentElement.innerHTML='Non disponibile';"></td>
+					<td class="text-center"><img
+						src="Grado/<%=membro.getGrado()%>.png" style="height: 25%"
+						onerror="this.parentElement.innerHTML='Non disponibile';"></td>
 					<td class="text-center"><%=membro.getNome()%></td>
 					<td class="text-center"><%=membro.getCognome()%></td>
 					<td class="text-center"><%=membro.getMansione()%></td>
@@ -125,15 +126,15 @@ h2 {
 					</td>
 				</tr>
 				<%
-                }
-                }
-           		%>
+					}
+					}
+				%>
 
 			</tbody>
 		</table>
 	</div>
 
-<p class="d-flex justify-content-center"></p>
+	<p class="d-flex justify-content-center"></p>
 	<div class="d-flex justify-content-center">
 		<img src="Icon/sirena.png" class="fr">
 		<h2>Prima Partenza</h2>
@@ -151,16 +152,18 @@ h2 {
 			</thead>
 
 			<tbody>
-				<% 
-				it = squadra.entrySet().iterator();
-                while (it.hasNext()) {
-                    Map.Entry coppia = (Map.Entry) it.next();
-                    VigileDelFuocoBean membro = (VigileDelFuocoBean) coppia.getKey();
-                    if (coppia.getValue().equals("Prima Partenza")) {	
+				<%
+					it = squadra.entrySet().iterator();
+					while (it.hasNext()) {
+						Map.Entry coppia = (Map.Entry) it.next();
+						VigileDelFuocoBean membro = (VigileDelFuocoBean) coppia.getKey();
+						if (coppia.getValue().equals("Prima Partenza")) {
 				%>
 
 				<tr>
-					<td class="text-center"><img src="Grado/<%=membro.getGrado() %>.png" style="height:25%" onerror="this.parentElement.innerHTML='Non disponibile';"></td>
+					<td class="text-center"><img
+						src="Grado/<%=membro.getGrado()%>.png" style="height: 25%"
+						onerror="this.parentElement.innerHTML='Non disponibile';"></td>
 					<td class="text-center"><%=membro.getNome()%></td>
 					<td class="text-center"><%=membro.getCognome()%></td>
 					<td class="text-center"><%=membro.getMansione()%></td>
@@ -171,15 +174,15 @@ h2 {
 					</td>
 				</tr>
 				<%
-                }
-                }
-           		%>
+					}
+					}
+				%>
 
 			</tbody>
 		</table>
 	</div>
 
-<p class="d-flex justify-content-center"></p>
+	<p class="d-flex justify-content-center"></p>
 	<div class="d-flex justify-content-center">
 		<img src="Icon/autoscala.png" class="fr">
 		<h2>Auto Scala</h2>
@@ -197,16 +200,18 @@ h2 {
 			</thead>
 
 			<tbody>
-				<% 
-				it = squadra.entrySet().iterator();
-                while (it.hasNext()) {
-                    Map.Entry coppia = (Map.Entry) it.next();
-                    VigileDelFuocoBean membro = (VigileDelFuocoBean) coppia.getKey();
-                    if (coppia.getValue().equals("Auto Scala")) {	
+				<%
+					it = squadra.entrySet().iterator();
+					while (it.hasNext()) {
+						Map.Entry coppia = (Map.Entry) it.next();
+						VigileDelFuocoBean membro = (VigileDelFuocoBean) coppia.getKey();
+						if (coppia.getValue().equals("Auto Scala")) {
 				%>
 
 				<tr>
-					<td class="text-center"><img src="Grado/<%=membro.getGrado() %>.png" style="height:25%" onerror="this.parentElement.innerHTML='Non disponibile';"></td>
+					<td class="text-center"><img
+						src="Grado/<%=membro.getGrado()%>.png" style="height: 25%"
+						onerror="this.parentElement.innerHTML='Non disponibile';"></td>
 					<td class="text-center"><%=membro.getNome()%></td>
 					<td class="text-center"><%=membro.getCognome()%></td>
 					<td class="text-center"><%=membro.getMansione()%></td>
@@ -217,15 +222,15 @@ h2 {
 					</td>
 				</tr>
 				<%
-                }
-                }
-           		%>
+					}
+					}
+				%>
 
 			</tbody>
 		</table>
 	</div>
 
-<p class="d-flex justify-content-center"></p>
+	<p class="d-flex justify-content-center"></p>
 	<div class="d-flex justify-content-center">
 		<img src="Icon/idrante.png" class="fr">
 		<h2>Auto Botte</h2>
@@ -243,16 +248,18 @@ h2 {
 			</thead>
 
 			<tbody>
-				<% 
-                it = squadra.entrySet().iterator();
-                while (it.hasNext()) {
-                    Map.Entry coppia = (Map.Entry) it.next();
-                    VigileDelFuocoBean membro = (VigileDelFuocoBean) coppia.getKey();
-                    if (coppia.getValue().equals("Auto Botte")) {		
+				<%
+					it = squadra.entrySet().iterator();
+					while (it.hasNext()) {
+						Map.Entry coppia = (Map.Entry) it.next();
+						VigileDelFuocoBean membro = (VigileDelFuocoBean) coppia.getKey();
+						if (coppia.getValue().equals("Auto Botte")) {
 				%>
 
 				<tr>
-					<td class="text-center"><img src="Grado/<%=membro.getGrado() %>.png" style="height:25%" onerror="this.parentElement.innerHTML='Non disponibile';"></td>
+					<td class="text-center"><img
+						src="Grado/<%=membro.getGrado()%>.png" style="height: 25%"
+						onerror="this.parentElement.innerHTML='Non disponibile';"></td>
 					<td class="text-center"><%=membro.getNome()%></td>
 					<td class="text-center"><%=membro.getCognome()%></td>
 					<td class="text-center"><%=membro.getMansione()%></td>
@@ -263,44 +270,45 @@ h2 {
 					</td>
 				</tr>
 				<%
-                }
-                }
-           		%>
+					}
+					}
+				%>
 
 			</tbody>
 		</table>
 	</div>
 
-	<script	src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+	<script
+		src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 	<script src="JS/datePicker.js"></script>
-	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.min.js"></script>
+	<script type="text/javascript"
+		src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.min.js"></script>
 	<script src="https://buttons.github.io/buttons.js"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.js"></script>
+	<script
+		src="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.js"></script>
 
 	<script>
+		function apriFormVF(input, rule, sq, dt) {
+			//Chiamata ajax alla servlet PersonaleDisponibileAJAX
+			$.ajax({
+				type : "POST",//Chiamata POST
+				url : "PersonaleDisponibileAJAX",//url della servlet che devo chiamare
+				data : {
+					"JSON" : true,
+					"aggiunta" : true,
+					"email" : input,
+					"mansione" : rule,
+					"tiposquadra" : sq,
+					"dataModifica" : dt
+				},
+				success : function(response) {//Operazione da eseguire una volta terminata la chiamata alla servlet.
+					$("#appendElenco").remove();
+					$("<div id='appendElenco'></div>").appendTo("#elenco");
+					$(response).appendTo("#appendElenco");
+				}
+			});
 
-	function apriFormVF(input,rule,sq,dt) {
-		//Chiamata ajax alla servlet PersonaleDisponibileAJAX
-		$.ajax({
-			type : "POST",//Chiamata POST
-			url :"PersonaleDisponibileAJAX",//url della servlet che devo chiamare
-			data : {
-				"JSON" : true,
-				"aggiunta":true,
-				"email" : input,
-				"mansione" : rule,
-				"tiposquadra" : sq,
-				"dataModifica" : dt
-			},			
-			success : function(response) {//Operazione da eseguire una volta terminata la chiamata alla servlet.
-				$("#appendElenco").remove();
-				$("<div id='appendElenco'></div>").appendTo("#elenco");
-				$(response).appendTo("#appendElenco");					
-			}
-		});
-
-	}
-
+		}
 	</script>
 
 

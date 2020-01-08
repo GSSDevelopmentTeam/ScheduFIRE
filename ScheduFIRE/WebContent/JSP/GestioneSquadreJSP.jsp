@@ -89,8 +89,8 @@ h2 {
 	<br>
 	<div class="d-flex justify-content-center" id="inizio">
 		<form action="GeneraSquadreServlet?salva=true" method=post>
-			<button type="button" class="btn btn-outline-success btn-lg" value="salva"
-				name="salva" onclick="salvaSquadra()" style="margin: 3px;">Conferma
+			<button type="submit" class="btn btn-outline-success btn-lg" value="salva"
+				name="salva" style="margin: 3px;">Conferma
 				Squadre</button>
 		</form>
 		<a href="#Giorno"><button type="button"
@@ -557,17 +557,6 @@ h2 {
 					$("<div id='appendElenco'></div>").appendTo("#elenco");
 					$(response).appendTo("#appendElenco");
 				}
-			});
-		}
-		function salvaSquadra() {
-			$.ajax({
-				type : "POST",
-				url : "GeneraSquadreServlet",
-				data : {
-					"salva" : true
-				},
-				async : false,
-				dataType : "json"
 			});
 		}
 		
