@@ -157,8 +157,9 @@ min-width: 265px;
 </div>
 	
 	<!-- Barra Navigazione -->
+	<div id="inizio"></div>
 	<jsp:include page="HeaderJSP.jsp" />
-	<h2 class="d-flex  justify-content-center" style="margin-top:3% ;color:#B60000!Important" id="inizio">Gestione Malattie</h2>
+	<h2 class="d-flex  justify-content-center" style="margin-top:3% ;color:#B60000!Important" >Gestione Malattie</h2>
 
 	
 	<!-- form per l'ordinamento della lista dei VF-->

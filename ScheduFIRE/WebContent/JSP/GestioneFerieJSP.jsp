@@ -32,7 +32,7 @@
 </head>
 <body>
 
-
+<div id="inizio"></div>
 	<!-- Barra Navigazione -->
 	<jsp:include page="HeaderJSP.jsp" />
 	
@@ -328,7 +328,7 @@
 
 	<div class="table-responsive">
 	
-		<h4 class="d-flex justify-content-center" id="inizio"
+		<h4 class="d-flex justify-content-center" 
 		style="margin-top: 0%; color: #B60000 !Important ">Capi Squadra</h4>
 		
 		<table class="table  table-hover listaVigili" style="table-layout: fixed">

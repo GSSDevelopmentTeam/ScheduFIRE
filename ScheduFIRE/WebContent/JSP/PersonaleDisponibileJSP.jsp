@@ -21,6 +21,7 @@
 }
 </style>
 <body>
+<div id="inizio"></div>
 <!-- Barra Navigazione -->
 	<jsp:include page="HeaderJSP.jsp" />
 	
@@ -29,7 +30,7 @@
 					onmouseout="this.src='IMG/arrow/up-arrow-p.png'" /></a>
 <section>
 	
-	<h2 class="d-flex justify-content-center" style="color:#B60000!Important" id="inizio">Personale Disponibile</h2>
+	<h2 class="d-flex justify-content-center" style="color:#B60000!Important" >Personale Disponibile</h2>
 	<h5 class="d-flex justify-content-center" ><%=request.getAttribute("titolo")==null ? "" : request.getAttribute("titolo") %></h5>
 		<div class="table-responsive">
 		<table class="table  table-hover" id="listaVigili"  style="table-layout: fixed">
