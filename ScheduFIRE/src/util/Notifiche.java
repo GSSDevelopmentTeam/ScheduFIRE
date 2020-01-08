@@ -118,22 +118,26 @@ public class Notifiche {
 		Date from = (Date) temp.clone();
 		SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
 		List<String> dateAssenza = new ArrayList<String>();
-		while(!from.equals(to)) {
-			if(ComponenteDellaSquadraDao.isComponente(vigile.getEmail(), from)) {
-				dateAssenza.add(formatter.format(from).toString());
-			}
-			from = Date.valueOf(from.toLocalDate().plusDays(1L));
-		}
 		String notifica = vigile.getCognome() + " " + vigile.getNome() + 
 				" " + "non sarà presente nella squadra a cui è stato assegnato\n";
-		if(dateAssenza.size() == 1) {
-			notifica.concat(" per il giorno " + dateAssenza.get(0) + " causa ferie.");
+		
+		if(from.compareTo(to) == 0) {
+			dateAssenza.add(formatter.format(from).toString());
+			notifica += " per il giorno " + dateAssenza.get(0) + " causa ferie.";
 		}
 		else {
-			notifica.concat(" per il periodo dal " + dateAssenza.get(0) + " al " 
-		+ dateAssenza.get(dateAssenza.size()-1));
+			while(!from.equals(to)) {
+				if(ComponenteDellaSquadraDao.isComponente(vigile.getEmail(), from)) {
+					dateAssenza.add(formatter.format(from).toString());
+				}
+				from = Date.valueOf(from.toLocalDate().plusDays(1L));
+			}
+		
+			if(dateAssenza.size() > 0)
+				notifica += " per il periodo dal " + dateAssenza.get(0) + " al " 
+						+ dateAssenza.get(dateAssenza.size()-1);
 		}
-		listaNotifiche.add(new Notifica(2, notifica, "/ModificaComposizioneSquadreServlet",generateId()));
+			listaNotifiche.add(new Notifica(2, notifica, "/ModificaComposizioneSquadreServlet",generateId()));
 	}
 	
 	private static void updateSquadrePerMalattia(Date temp, Date to, String email) {
