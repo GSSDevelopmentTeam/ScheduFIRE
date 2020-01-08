@@ -8,6 +8,14 @@ body{
   box-sizing: border-box;
 }
 
+.back-up{
+	border:none;
+	background:none;	
+    position: fixed;
+    bottom: 5%;
+    right: 5%;
+    }
+
 p#turno{
 	font-size: 50%;
 	padding:0;
