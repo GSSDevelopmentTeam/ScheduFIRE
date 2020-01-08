@@ -230,11 +230,15 @@ public class Util {
 		return toReturn;
 	}
 	
-	
-	
-	
-	
-	
+	public static boolean aggiungiVigile(Date data, String mailVFDaSostituire) {
+		List<ComponenteDellaSquadraBean> lista = ComponenteDellaSquadraDao.getComponenti(data);
+		for(ComponenteDellaSquadraBean membro : lista) {
+			if(membro.getEmailVF().equals(mailVFDaSostituire)) {
+				
+			}
+		}
+		return false;
+	}
 	
 
 	public static HashMap<VigileDelFuocoBean, String> ottieniSquadra(Date data) {
