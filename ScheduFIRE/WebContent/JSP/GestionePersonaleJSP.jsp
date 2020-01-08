@@ -24,7 +24,25 @@ if(ordinamentoObj.getClass().getSimpleName().equals("String"))
 <link type="text/css" rel="stylesheet"
 	href="./CSS/GestionePersonaleCSS.css">
 
-
+<style>
+			
+.table td, .table th {
+    padding: 1.5px!important;
+    vertical-align: top;
+    border-top: 1px solid #dee2e6;
+}
+.back-up{
+	border-radius: 50px;
+    font-size: 30px;
+    width: 60px;
+    position: fixed;
+    bottom: 5%;
+    right: 5%;
+    background-color:#FFFFFF;
+	box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0
+		rgba(0, 0, 0, 0.19);
+}
+</style>
 <body>
 	<jsp:include page="HeaderJSP.jsp" />
 
@@ -196,7 +214,7 @@ if(ordinamentoObj.getClass().getSimpleName().equals("String"))
 	<section>
 
 		<br>
-
+<a href="#titolo"><button class=" back-up btn btn-outline-secondary"> ^ </button></a>
 		<h2 id="titolo">Gestione Personale</h2>
 
 		<form id="ordinamento" action="./GestionePersonaleServlet">

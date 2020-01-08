@@ -12,11 +12,24 @@
     vertical-align: top;
     border-top: 1px solid #dee2e6;
 }
+
+.back-up{
+	border-radius: 50px;
+    font-size: 30px;
+    width: 60px;
+    position: fixed;
+    bottom: 5%;
+    right: 5%;
+    background-color:#FFFFFF;
+	box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0
+		rgba(0, 0, 0, 0.19);
+
 .container__days{
 min-width: 270px;
 }
 .month-item-weekdays-row{
 min-width: 265px;
+
 }
 </style>
 </head>
@@ -25,7 +38,9 @@ min-width: 265px;
 
 	<!-- Barra Navigazione -->
 	<jsp:include page="HeaderJSP.jsp" />
-	<h2 class="d-flex justify-content-center"
+	
+	<a href="#inizio"><button class=" back-up btn btn-outline-secondary"> ^ </button></a>
+	<h2 class="d-flex justify-content-center" id="inizio"
 		style="margin-top: 3%; color: #B60000 !Important ">Gestione Ferie</h2>
 
 
