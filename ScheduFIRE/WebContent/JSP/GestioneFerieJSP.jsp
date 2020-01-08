@@ -14,15 +14,12 @@
 }
 
 .back-up{
-	border-radius: 50px;
-    font-size: 30px;
-    width: 60px;
+	border:none;
+	background:none;	
     position: fixed;
     bottom: 5%;
     right: 5%;
-    background-color:#FFFFFF;
-	box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0
-		rgba(0, 0, 0, 0.19);
+}
 
 .container__days{
 min-width: 270px;
@@ -39,7 +36,9 @@ min-width: 265px;
 	<!-- Barra Navigazione -->
 	<jsp:include page="HeaderJSP.jsp" />
 	
-	<a href="#inizio"><button class=" back-up btn btn-outline-secondary"> ^ </button></a>
+	<a href="#inizio" class=" back-up"><img src="IMG/arrow/up-arrow-p.png" 
+					onmouseover="this.src='IMG/arrow/up-arrow-d.png'"
+					onmouseout="this.src='IMG/arrow/up-arrow-p.png'" /></a>
 	<h2 class="d-flex justify-content-center" id="inizio"
 		style="margin-top: 3%; color: #B60000 !Important ">Gestione Ferie</h2>
 
@@ -132,6 +131,7 @@ min-width: 265px;
 		class="alert alert-success flex alert-dismissible fade in text-center fixed-top"
 		id="rimozioneOk"
 		style="display: none; position: fixed; z-index: 99999; width: 100%">
+		<button type="button" class="close" onclick="nascondiOk()" aria-label="close">&times;</button>
 		<strong>Operazione riuscita!</strong> <span>Rimozione ferie
 			avvenuta con successo..</span>
 	</div>
@@ -144,6 +144,7 @@ min-width: 265px;
 		class="alert alert-danger flex alert-dismissible fade in text-center fixed-top"
 		id="rimozioneNoOk"
 		style="display: none; position: fixed; z-index: 99999; width: 100%">
+		<button type="button" class="close" onclick="nascondiNoOK()" aria-label="close">&times;</button>
 		<strong>Errore!</strong> <span>Rimozione ferie non avvenuta..</span>
 	</div>
 
@@ -525,17 +526,27 @@ min-width: 265px;
 
 		function alertInsuccesso(input) {
 			$("#rimozioneNoOk span").text(input);
-			$("#rimozioneNoOk").fadeTo(4000, 500).slideUp(500, function() {
-				$("#success-alert").slideUp(500);
+			$("#rimozioneNoOk span").show();
+			$("#rimozioneNoOk").fadeTo(4000, 500).slideUp(5000000, function() {
+				$("#success-alert").slideUp(5000000);
 			});
 
 		}
 
 		function alertSuccesso(input) {
 			$("#rimozioneOk span").text(input);
-			$("#rimozioneOk").fadeTo(4000, 500).slideUp(500, function() {
-				$("#success-alert").slideUp(500);
+			$("#rimozioneOk").show();
+			$("#rimozioneOk").fadeTo(4000, 500).slideUp(5000000, function() {
+				$("#success-alert").slideUp(5000000);
 			});
+		}
+		
+		function nascondiOk(){
+			document.getElementById("rimozioneOk").style.display="none";
+		}
+		
+		function nascondiNoOk(){
+			document.getElementById("rimozioneNoOk").style.display="none";
 		}
 
 		function calcolaGiorniFerie(iniz,fin) {

@@ -13,22 +13,20 @@
     border-top: 1px solid #dee2e6;
 }
 .back-up{
-	border-radius: 50px;
-    font-size: 30px;
-    width: 60px;
+	border:none;
+	background:none;	
     position: fixed;
     bottom: 5%;
     right: 5%;
-    background-color:#FFFFFF;
-	box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0
-		rgba(0, 0, 0, 0.19);
 }
 </style>
 <body>
 <!-- Barra Navigazione -->
 	<jsp:include page="HeaderJSP.jsp" />
 	
-<a href="#inizio"><button class=" back-up btn btn-outline-secondary"> ^ </button></a>
+<a href="#inizio" class=" back-up"><img src="IMG/arrow/up-arrow-p.png" style="margin-left: 5px;"
+					onmouseover="this.src='IMG/arrow/up-arrow-d.png'"
+					onmouseout="this.src='IMG/arrow/up-arrow-p.png'" /></a>
 <section>
 	
 	<h2 class="d-flex justify-content-center" style="color:#B60000!Important" id="inizio">Personale Disponibile</h2>
@@ -58,8 +56,8 @@
 					<tr>
 						<td class="text-center"><img src="Grado/<%=vigile.getGrado() %>.png" width=20% onerror="this.parentElement.innerHTML='Non disponibile';"></td>
 						<td class="text-center"><%=vigile.getMansione() %></td>
-						<td class="text-center"><%=vigile.getNome() %></td>
-						<td class="text-center"><%=vigile.getCognome() %></td>
+						<td class="text-center"><strong><%=vigile.getNome() %></strong></td>
+						<td class="text-center"><strong><%=vigile.getCognome() %></strong></td>
 						<td class="text-center"><%=vigile.getEmail() %></td>
 						<td class="text-center"><%=componente.getTipologiaSquadra() %></td>
 					</tr>
@@ -69,8 +67,8 @@
 					<tr>
 						<td class="text-center"><img src="Grado/<%=vigile.getGrado() %>.png" style="height:25%" onerror="this.parentElement.innerHTML='Non disponibile';"></td>
 						<td class="text-center"><%=vigile.getMansione() %></td>
-						<td class="text-center"><%=vigile.getNome() %></td>
-						<td class="text-center"><%=vigile.getCognome() %></td>
+						<td class="text-center"><strong><%=vigile.getNome() %></strong></td>
+						<td class="text-center"><strong><%=vigile.getCognome() %></strong></td>
 						<td class="text-center"><%=vigile.getEmail() %></td>
 						<td class="text-center"></td>
 					</tr>
