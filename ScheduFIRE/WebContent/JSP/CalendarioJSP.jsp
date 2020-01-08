@@ -177,8 +177,7 @@
 					</button>
 				</form>
 
-				<form action="ModificaComposizioneSquadreServlet?tiposquadra=3" method="POST">
-
+				<form id="modData" action="" method="POST">
 					<button type="submit" id="bottoneModificaSquadra" class="edit">
 						Modifica Squadre
 					</button>
