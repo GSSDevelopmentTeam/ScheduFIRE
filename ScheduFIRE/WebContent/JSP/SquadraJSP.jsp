@@ -25,6 +25,18 @@ h2 {
     border-top: 1px solid #dee2e6;
 }
 
+.back-up{
+	border-radius: 50px;
+    font-size: 30px;
+    width: 60px;
+    position: fixed;
+    bottom: 5%;
+    right: 5%;
+    background-color:#FFFFFF;
+	box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0
+		rgba(0, 0, 0, 0.19);
+}
+
 </style>
 </head>
 
@@ -65,9 +77,13 @@ h2 {
 <%
 	HashMap<VigileDelFuocoBean, String> squadra = (HashMap<VigileDelFuocoBean, String>) session.getAttribute("squadra"); %>
      
+     <a href="#inizio"><button class=" back-up btn btn-outline-secondary"> ^ </button></a>
+     
      <!-- SQUADRA DIURNA -->
+
        <div class="d-flex justify-content-center">
 		<h2 style="font-weight:bold; font-size:36px;">Squadra del <%=data %></h2>
+
 	</div>
 	<p class="d-flex justify-content-center"></p>
 	<div class="d-flex justify-content-center">

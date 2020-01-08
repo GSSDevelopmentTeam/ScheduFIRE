@@ -23,6 +23,18 @@ h2 {
     vertical-align: top;
     border-top: 1px solid #dee2e6;
 }
+
+.back-up{
+	border-radius: 50px;
+    font-size: 30px;
+    width: 60px;
+    position: fixed;
+    bottom: 5%;
+    right: 5%;
+    background-color:#FFFFFF;
+	box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0
+		rgba(0, 0, 0, 0.19);
+}
 </style>
 </head>
 
@@ -74,7 +86,7 @@ h2 {
 		}
 	%>
 
-<a href="#inizio"><button class=" btn btn--outline-secondary"></button></a>
+<a href="#inizio"><button class=" back-up btn btn-outline-secondary"> ^ </button></a>
 
 	<br>
 	<div class="d-flex justify-content-center" id="inizio">
@@ -84,7 +96,7 @@ h2 {
 				Squadre</button>
 		</form>
 		<a href="#Giorno"><button type="button"
-				class="btn btn-outline-secondary btn-lg" style="margin: 3px;">Sqaudra
+				class="btn btn-outline-secondary btn-lg" style="margin: 3px;">Squadra
 				Diurna</button></a> <a href="#Notte"><button type="button"
 				class="btn btn-outline-secondary btn-lg" style="margin: 3px;">Squadra
 				Notturna</button></a><a href="#Disp"><button type="button"
@@ -294,7 +306,7 @@ h2 {
 	<div class="d-flex justify-content-center">
 		<form action="GeneraSquadreServlet?salva=true" method=post>
 		<a href="#Giorno"><button type="button"
-				class="btn btn-outline-secondary btn-lg" style="margin: 3px;">Sqaudra
+				class="btn btn-outline-secondary btn-lg" style="margin: 3px;">Squadra
 				Diurna</button></a> <a href="#Notte"><button type="button"
 				class="btn btn-outline-secondary btn-lg" style="margin: 3px;">Squadra
 				Notturna</button></a><a href="#Disp"><button type="button"
@@ -502,7 +514,7 @@ h2 {
 	<div class="d-flex justify-content-center">
 		<form action="GeneraSquadreServlet?salva=true" method=post>
 		<a href="#Giorno"><button type="button"
-				class="btn btn-outline-secondary btn-lg" style="margin: 3px;">Sqaudra
+				class="btn btn-outline-secondary btn-lg" style="margin: 3px;">Squadra
 				Diurna</button></a> <a href="#Notte"><button type="button"
 				class="btn btn-outline-secondary btn-lg" style="margin: 3px;">Squadra
 				Notturna</button></a><a href="#Disp"><button type="button"
