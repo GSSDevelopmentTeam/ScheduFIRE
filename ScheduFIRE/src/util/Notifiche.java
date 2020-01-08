@@ -71,7 +71,7 @@ public class Notifiche {
 			if(ComponenteDellaSquadraDao.isComponente(vigile.getEmail(), from)) {
 				listaNotifiche.add(new Notifica(3, "" + vigile.getCognome() + " " + vigile.getNome() + 
 						" non potrà partecipare ad un turno a lui assegnato causa malattia.<br/>(giorno dal\r\n" + 
-											formatter.format(from).toString() + " al "+ formatter.format(to).toString()+")", "/ModificaSquadreServlet"));
+											formatter.format(from).toString() + " al "+ formatter.format(to).toString()+")", "/ModificaComposizioneSquadreServlet"));
 				break;
 			}
 			from = Date.valueOf(from.toLocalDate().plusDays(1L));
