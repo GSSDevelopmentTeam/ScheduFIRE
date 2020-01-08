@@ -135,7 +135,7 @@
 		aria-labelledby="exampleModalCenterTitle" aria-hidden="true"
 		style="display: none">
 		<div class="modal-dialog modal-dialog-centered" role="document">
-			<div class="modal-content contenutiModal" style="min-width: 500px; min-height: 550px;">
+			<div class="modal-content contenutiModal" style="min-width: 700px; min-height: 700px;">
 				<div class="modal-header">
 					<h5 class="modal-title" id="titoloAggiuntaFerie">Aggiunta
 						ferie</h5>
@@ -332,8 +332,8 @@
 						src="Grado/<%=vigile.getGrado()%>.png" width=30%
 						onerror="this.parentElement.innerHTML='Non disponibile';"></td>
 					<td class="text-center"><%=vigile.getMansione()%></td>
-					<td class="text-center"><%=vigile.getNome()%></td>
-					<td class="text-center"><%=vigile.getCognome()%></td>
+					<td class="text-center"><strong><%=vigile.getNome()%></strong></td>
+					<td class="text-center"><strong><%=vigile.getCognome()%></strong></td>
 					<td class="text-center"><%=vigile.getEmail()%></td>
 					<td class="text-center" id="ferie"><%=vigile.getGiorniFerieAnnoCorrente() + vigile.getGiorniFerieAnnoPrecedente()%></td>
 					<td class="text-center"><button type="button"
