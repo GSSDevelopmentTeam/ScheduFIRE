@@ -31,6 +31,7 @@ import model.dao.FerieDao;
 import model.dao.GiorniMalattiaDao;
 import model.dao.VigileDelFuocoDao;
 import util.GiornoLavorativo;
+import util.Util;
 
 /**
  * Servlet implementation class PeriodiDiMalattiaServlet
@@ -148,6 +149,8 @@ public class PeriodiDiMalattiaServlet extends HttpServlet {
 
 		//Passasggio del tipo di ordinamento richiesto
 		request.setAttribute("ordinamento", ordinamento);
+		
+		listaVigili = (ArrayList<VigileDelFuocoBean>) Util.compareVigile(listaVigili);
 		
 		request.setAttribute("listaVigili", listaVigili);
 		request.getRequestDispatcher("/JSP/GestioneMalattiaJSP.jsp").forward(request, response);

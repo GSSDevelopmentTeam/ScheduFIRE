@@ -79,10 +79,6 @@ public class AggiungiMalattiaServlet extends HttpServlet {
 				dataInizio = Date.valueOf(inizioMalattia);
 				dataFine = Date.valueOf(fineMalattia);
 				
-				Date in = (Date) Date.valueOf(inizioMalattia).clone();
-				
-				
-				
 				 GiorniMalattiaBean malattia = new GiorniMalattiaBean();
 				    
 					malattia.setId(0);
@@ -91,6 +87,9 @@ public class AggiungiMalattiaServlet extends HttpServlet {
 					malattia.setEmailCT(emailCT);
 					malattia.setEmailVF(emailVF);
 					JSONArray array = new JSONArray();
+					
+					if(ComponenteDellaSquadraDao.isComponente(emailVF, dataInizio)) 
+						Notifiche.update(Notifiche.UPDATE_SQUADRE_PER_MALATTIA, dataInizio, dataFine, emailVF);
 					
 				   if(GiorniMalattiaDao.addMalattia(malattia) == true) 
 					  array.put(true);
