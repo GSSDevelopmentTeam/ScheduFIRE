@@ -25,6 +25,15 @@ h2 {
     border-top: 1px solid #dee2e6;
 }
 
+.back-up{
+	border-radius: 50px;
+    font-size: 30px;
+    width: 60px;
+    position: fixed;
+    bottom: 5%;
+    right: 5%;
+}
+
 </style>
 </head>
 
@@ -65,8 +74,10 @@ h2 {
 	HashMap<VigileDelFuocoBean, String> squadraD = (HashMap<VigileDelFuocoBean, String>) session.getAttribute("squadra");
 	Date data = (Date) request.getAttribute("dataModifica");%>
      
+     <a href="#inizio"><button class=" back-up btn btn-outline-secondary"> ^ </button></a>
+     
      <!-- SQUADRA DIURNA -->
-       <div class="d-flex justify-content-center">
+       <div class="d-flex justify-content-center" id="inizio">
 		<h2 style="font-weight:bold; font-size:36px;">Giorno</h2>
 	</div>
 	<p class="d-flex justify-content-center"></p>
