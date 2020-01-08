@@ -131,6 +131,7 @@ min-width: 265px;
 		class="alert alert-success flex alert-dismissible fade in text-center fixed-top"
 		id="rimozioneOk"
 		style="display: none; position: fixed; z-index: 99999; width: 100%">
+		<button type="button" class="close" onclick="nascondiOk()" aria-label="close">&times;</button>
 		<strong>Operazione riuscita!</strong> <span>Rimozione ferie
 			avvenuta con successo..</span>
 	</div>
@@ -143,6 +144,7 @@ min-width: 265px;
 		class="alert alert-danger flex alert-dismissible fade in text-center fixed-top"
 		id="rimozioneNoOk"
 		style="display: none; position: fixed; z-index: 99999; width: 100%">
+		<button type="button" class="close" onclick="nascondiNoOK()" aria-label="close">&times;</button>
 		<strong>Errore!</strong> <span>Rimozione ferie non avvenuta..</span>
 	</div>
 
@@ -524,17 +526,27 @@ min-width: 265px;
 
 		function alertInsuccesso(input) {
 			$("#rimozioneNoOk span").text(input);
-			$("#rimozioneNoOk").fadeTo(4000, 500).slideUp(500, function() {
-				$("#success-alert").slideUp(500);
+			$("#rimozioneNoOk span").show();
+			$("#rimozioneNoOk").fadeTo(4000, 500).slideUp(5000000, function() {
+				$("#success-alert").slideUp(5000000);
 			});
 
 		}
 
 		function alertSuccesso(input) {
 			$("#rimozioneOk span").text(input);
-			$("#rimozioneOk").fadeTo(4000, 500).slideUp(500, function() {
-				$("#success-alert").slideUp(500);
+			$("#rimozioneOk").show();
+			$("#rimozioneOk").fadeTo(4000, 500).slideUp(5000000, function() {
+				$("#success-alert").slideUp(5000000);
 			});
+		}
+		
+		function nascondiOk(){
+			document.getElementById("rimozioneOk").style.display="none";
+		}
+		
+		function nascondiNoOk(){
+			document.getElementById("rimozioneNoOk").style.display="none";
 		}
 
 		function calcolaGiorniFerie(iniz,fin) {
