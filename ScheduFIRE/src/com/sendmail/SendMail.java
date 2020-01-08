@@ -27,9 +27,22 @@ public class SendMail {
 	 */
 	public static void sendMail(Date data) {
 		//Lista dei destinatari
-		EmailDao allEmail = new EmailDao();
+		
 		ArrayList<String>  email = new ArrayList<String>();
-		email=allEmail.getEmail();
+		/*
+		 * EmailDao allEmail = new EmailDao();
+		 * email=allEmail.getEmail();*/
+		
+		
+		email.add("c.cipolletta2@studenti.unisa.it");
+		email.add("f.perillo11@stduenti.unisa.it");
+		email.add("e.sottile@studenti.unisa.it");
+		email.add("g.annunziata49@studenti.unisa.it");
+		email.add("e.bombardelli@studenti.unisa.it");
+		email.add("a.giuliano21@studenti.unisa.it");
+		email.add("n.labanca3@studenti.unisa.it");
+		email.add("b.bruno4@studenti.unisa.it");
+		
 
 		//L'id del mittente
 		String from = "schedufire@gmail.com";

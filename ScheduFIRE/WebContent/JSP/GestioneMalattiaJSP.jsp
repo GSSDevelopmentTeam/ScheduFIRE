@@ -15,7 +15,14 @@
 	<script
 		src="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.js"></script>
 	<script src="JS/ferieJS.js"></script>
-	
+	<style>
+			
+.table td, .table th {
+    padding: 1.5px!important;
+    vertical-align: top;
+    border-top: 1px solid #dee2e6;
+}
+	</style>
 	<body>
 	
 	<!-- Modal di aggiunta malattia-->

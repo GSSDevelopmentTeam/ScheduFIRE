@@ -18,14 +18,21 @@ import model.dao.VigileDelFuocoDao;
  */
 public class Notifiche {
 	private static List<Notifica> listaNotifiche;
+	private static int id;
 
 	public Notifiche() {
+		id = 0;
 		listaNotifiche = new ArrayList<>();
-		listaNotifiche.add(new Notifica(3, "Test di una notifica grave", "HomeCTServlet"));
-		listaNotifiche.add(new Notifica(2, "Test di una notifica media, con stato d'errore medio e colore medio", "HomeCTServlet"));
-		listaNotifiche.add(new Notifica(1, "Test di una notifica normale, che per quanto sia normale essa è solo una notifica normale, dunque è normale che sia normale", "HomeCTServlet"));
+		listaNotifiche.add(new Notifica(3, "Test di una notifica grave", "HomeCTServlet", generateId()));
+		listaNotifiche.add(new Notifica(2, "Test di una notifica media, con stato d'errore medio e colore medio", "HomeCTServlet", generateId()));
+		listaNotifiche.add(new Notifica(1, "Test di una notifica normale, che per quanto sia normale essa ï¿½ solo una notifica normale, dunque ï¿½ normale che sia normale", "HomeCTServlet", generateId()));
 
 		update(UPDATE_PER_AVVIO);
+	}
+
+	private static int generateId() {
+		id++;
+		return id;
 	}
 
 	/**
@@ -64,14 +71,15 @@ public class Notifiche {
 	}
 
 
-	private static void updateMalattia(Date temp, Date to, VigileDelFuocoBean vigile) {
+	private static  void updateMalattia(Date temp, Date to, VigileDelFuocoBean vigile) {
 		Date from = (Date) temp.clone();
 		SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
 		while(!from.equals(to)) {
 			if(ComponenteDellaSquadraDao.isComponente(vigile.getEmail(), from)) {
 				listaNotifiche.add(new Notifica(3, "" + vigile.getCognome() + " " + vigile.getNome() + 
-						" non potrà partecipare ad un turno a lui assegnato causa malattia.<br/>(giorno dal\r\n" + 
-											formatter.format(from).toString() + " al "+ formatter.format(to).toString()+")", "/ModificaComposizioneSquadreServlet"));
+						" non potrï¿½ partecipare ad un turno a lui assegnato causa malattia.<br/>(giorno dal\r\n" + 
+
+											formatter.format(from).toString() + " al "+ formatter.format(to).toString()+")", "/ModificaSquadreServlet",generateId()));
 				break;
 			}
 			from = Date.valueOf(from.toLocalDate().plusDays(1L));
@@ -91,14 +99,14 @@ public class Notifiche {
 		for(List<VigileDelFuocoBean> disponibiliAlGiorno : disponibili) {
 			if(!conta(disponibiliAlGiorno)) {
 				listaNotifiche.add(new Notifica(2, "Le ferie concesse a " + vigile.getCognome() + " " +
-						vigile.getNome() + " non rendono possibile la creazione di un turno", "/GestioneFerieServlet"));
+						vigile.getNome() + " non rendono possibile la creazione di un turno", "/GestioneFerieServlet",generateId()));
 				break;
 			}
 		}
 
 		if(controllaRestanti(vigile)) {
 			listaNotifiche.add(new Notifica(1, "" + vigile.getCognome() + " " +
-					vigile.getNome() + " ha terminato le ferie a lui disponibili", ""));
+					vigile.getNome() + " ha terminato le ferie a lui disponibili", "",generateId()));
 		}
 
 	}
@@ -110,7 +118,7 @@ public class Notifiche {
 			if(ComponenteDellaSquadraDao.isComponente(vigile.getEmail(), from)) {
 				listaNotifiche.add(new Notifica(2, "" + vigile.getCognome() + " " + vigile.getNome() + 
 						" non sarÃ  presente\nnella squadra a cui Ã¨ stato assegnato (giorno " +
-						formatter.format(from).toString() + ") causa ferie.", "/ModificaComposizioneSquadreServlet"));
+						formatter.format(from).toString() + ") causa ferie.", "/ModificaComposizioneSquadreServlet",generateId()));
 				break;
 			}
 			from = Date.valueOf(from.toLocalDate().plusDays(1L));
@@ -132,7 +140,7 @@ public class Notifiche {
 		if(!conta(disponibili)) {
 			Date data = new Date(System.currentTimeMillis());
 			listaNotifiche.add(new Notifica(3, "Il personale disponibile il " + 
-					data.toString() + " non ï¿½ sufficiente per creare il turno.", "/GestionePersonaleServlet"));
+					data.toString() + " non ï¿½ sufficiente per creare il turno.", "/GestionePersonaleServlet",generateId()));
 		}
 	}
 

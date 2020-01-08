@@ -7,7 +7,10 @@
 	--litepickerDayIsEndBg: #f68e6b !important
 }
 
+	
+
 body {
+	background-color: #f2f2f2;
 	margin: 0;
 	font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
 	line-height: 1.5

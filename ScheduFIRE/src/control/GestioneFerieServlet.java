@@ -21,6 +21,7 @@ import model.bean.VigileDelFuocoBean;
 import model.dao.FerieDao;
 import model.dao.GiorniMalattiaDao;
 import model.dao.VigileDelFuocoDao;
+import util.Util;
 
 /**
  * Servlet implementation class GestioneFerieServlet
@@ -134,8 +135,8 @@ public class GestioneFerieServlet extends HttpServlet {
 			case "grado": 
 				vigili = VigileDelFuocoDao.ottieni(VigileDelFuocoDao.ORDINA_PER_GRADO);
 				break;
-			case "giorniFerieAnnoCorrente": 
-				vigili = VigileDelFuocoDao.ottieni(VigileDelFuocoDao.ORDINA_PER_GIORNI_FERIE_ANNO_CORRENTE);
+			case "giorniFerie": 
+				vigili = VigileDelFuocoDao.ottieni(VigileDelFuocoDao.ORDINA_PER_FERIE_TOTALI);
 				break;
 			case "giorniFerieAnnoPrecedente": 
 				vigili = VigileDelFuocoDao.ottieni(VigileDelFuocoDao.ORDINA_PER_GIORNI_FERIE_ANNI_PRECEDENTI);
@@ -148,6 +149,8 @@ public class GestioneFerieServlet extends HttpServlet {
 			
 			List<VigileDelFuocoBean> listaVigili = new ArrayList<VigileDelFuocoBean>(vigili);
 			
+			listaVigili = Util.compareVigile(listaVigili);
+			
 			//Passasggio del tipo di ordinamento ottenuto
 			request.setAttribute("ordinamento", ordinamento);
 			
@@ -155,5 +158,6 @@ public class GestioneFerieServlet extends HttpServlet {
 			request.getRequestDispatcher("JSP/GestioneFerieJSP.jsp").forward(request, response);
 		}
 	}
+
 
 }
