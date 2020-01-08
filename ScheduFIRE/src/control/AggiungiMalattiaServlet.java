@@ -79,24 +79,8 @@ public class AggiungiMalattiaServlet extends HttpServlet {
 				dataInizio = Date.valueOf(inizioMalattia);
 				dataFine = Date.valueOf(fineMalattia);
 				
-						ArrayList<Date> malattiaSchedu = new ArrayList<Date>();
-						
-						Date in = (Date) Date.valueOf(inizioMalattia).clone();
-						
-							while(!in.equals(Date.valueOf(fineMalattia))) {
-								if(GiornoLavorativo.isLavorativo(in) == true) {
-									if(ComponenteDellaSquadraDao.isComponente(emailVF, in) == true) {
-										malattiaSchedu.add(in);
-									}
-								}
-								in = Date.valueOf(in.toLocalDate().plusDays(1L));
-							}
-						
-						if(malattiaSchedu.isEmpty() == false) {
-							Date inizioS = malattiaSchedu.get(0);
-							Date fineS = malattiaSchedu.get((malattiaSchedu.size())-1);
-							Notifiche.update(Notifiche.UPDATE_PER_MALATTIA, dataInizio, dataFine, emailVF);
-						}
+				Date in = (Date) Date.valueOf(inizioMalattia).clone();
+				
 				
 				
 				 GiorniMalattiaBean malattia = new GiorniMalattiaBean();

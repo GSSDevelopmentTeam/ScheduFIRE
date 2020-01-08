@@ -16,8 +16,10 @@ import javax.servlet.http.HttpServletResponse;
 import org.json.JSONArray;
 
 import model.bean.FerieBean;
+import model.bean.GiorniMalattiaBean;
 import model.bean.VigileDelFuocoBean;
 import model.dao.FerieDao;
+import model.dao.GiorniMalattiaDao;
 import model.dao.VigileDelFuocoDao;
 import util.Util;
 
@@ -54,20 +56,34 @@ public class GestioneFerieServlet extends HttpServlet {
 		//nel caso di chiamata AJAX che gestisce il datepicker per aggiungere ferie ad un vigile
 		if(request.getParameter("JSON")!=null && request.getParameter("aggiunta")!=null ) {
 			String email=request.getParameter("email");
+			
+			//giorni di malattia già concesse
+			List<GiorniMalattiaBean> giorniMalattia = GiorniMalattiaDao.ottieniMalattie(email);
+			//giorni di ferie già concesse
 			List<FerieBean> ferie=FerieDao.ottieniFerieConcesse(email);
+			
+			
 			JSONArray array = new JSONArray();
+			
+			//inserisco nell'array i giorni di ferie già concesse 
 			for(FerieBean ferieBean:ferie) {
 
 				JSONArray arrayrange = new JSONArray();
 				arrayrange.put(ferieBean.getDataInizio());
 				arrayrange.put(ferieBean.getDataFine().toLocalDate().plusDays(1));
 				array.put(arrayrange);
-
+			}
+			//inserisco nell'array i giorni di malattia già concesse 
+			for(GiorniMalattiaBean giorniMalattiaBean:giorniMalattia) {
+		
+				JSONArray arrayrange = new JSONArray();
+				arrayrange.put(giorniMalattiaBean.getDataInizio());
+				arrayrange.put(giorniMalattiaBean.getDataFine().toLocalDate().plusDays(1));
+				array.put(arrayrange);
 			}
 			response.setContentType("application/json");
 			response.getWriter().append(array.toString());
-		}
-		
+				}		
 		//nel caso di chiamata AJAX che fa visualizzare la lista delle ferie di un vigile per poterne selezionare una da rimuovere
 		else if(request.getParameter("JSON")!=null && request.getParameter("rimozione")!=null ) {
 			String email=request.getParameter("email");
