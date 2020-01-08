@@ -6,6 +6,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import model.dao.VigileDelFuocoDao;
 import util.Util;
@@ -36,6 +37,12 @@ public class EliminaVFServlet extends HttpServlet {
 		//Controllo login
 		Util.isCapoTurno(request);
 		
+		//Ottenimento oggetto sessione dalla richiesta
+		HttpSession session = request.getSession();
+		
+		//Rimozione flag per l'esito dell'operazione
+		session.removeAttribute("risultato");
+		
 		//Ottenimento parametro email dalla richiesta
 		String email = request.getParameter("email");
 		
@@ -45,6 +52,8 @@ public class EliminaVFServlet extends HttpServlet {
 		
 		if( ! VigileDelFuocoDao.setAdoperabile(email + "@vigilfuoco.it", false))
 			throw new GestionePersonaleException("La cancellazione del vigile del fuoco non è andata a buon fine!");
+		
+		session.setAttribute("risultato", "La cancellazione del Vigile del Fuoco è avvenuto con successo!");
 		
 		// Reindirizzamento alla jsp
 		response.sendRedirect("./GestionePersonaleServlet");

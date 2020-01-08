@@ -6,6 +6,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import model.bean.VigileDelFuocoBean;
 import model.dao.VigileDelFuocoDao;
@@ -36,6 +37,12 @@ public class ModificaVFServlet extends HttpServlet {
 		
 		//Controllo login
 		Util.isCapoTurno(request);
+		
+		//Ottenimento oggetto sessione dalla richiesta
+		HttpSession session = request.getSession();
+		
+		//Rimozione flag per l'esito dell'operazione
+		session.removeAttribute("risultato");
 		
 		//Ottenimento parametro email dalla richiesta
 		String emailVecchia = request.getParameter("emailVecchia");
@@ -134,6 +141,8 @@ public class ModificaVFServlet extends HttpServlet {
 				throw new GestionePersonaleException("La modifica del vigile del fuoco non Ã¨ andata a buon fine!");
 		
 		}
+		
+		session.setAttribute("risultato", "La modifica del Vigile del Fuoco è avvenuto con successo!");
 		
 		// Reindirizzamento alla jsp
 		response.sendRedirect("./GestionePersonaleServlet");

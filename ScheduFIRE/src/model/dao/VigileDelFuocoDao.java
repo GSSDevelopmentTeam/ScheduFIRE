@@ -270,6 +270,198 @@ public class VigileDelFuocoDao {
 	}
 	
 	/**
+	 * Si occupa dell'ottenimento di una collezione di VigileDelFuocoBean dal database
+	 * con mansione 'Capo Squadra' con campo 'adoperabile' settato a true.
+	 * @param ordinamento � un intero che determina il tipo di ordinamento della collezione
+	 * @return una collezione di VigileDelFuocoBean con campo 'adoperabile' settato a true 
+	 * e mansione 'Capo Squadra' 
+	 */
+	public static Collection<VigileDelFuocoBean> ottieniCapiSquadra(int ordinamento) {
+		
+		if(ordinamento < 0 || ordinamento > 7)
+			//lancio eccezione
+			;
+		
+		try(Connection con = ConnessioneDB.getConnection()) {
+			
+			// Esecuzione query
+			PreparedStatement ps = con.prepareStatement("select *, (giorniferieannocorrente + giorniferieannoprecedente) as ferie from Vigile"
+														+ " where mansione = 'Capo Squadra' and adoperabile = true " + ORDINAMENTI[ordinamento] + ";");
+			ResultSet rs = ps.executeQuery();
+			
+			//Instanziazione del set dei Vigili del Fuoco
+			ArrayList<VigileDelFuocoBean> vigili = new ArrayList<VigileDelFuocoBean>();
+			
+			//Iterazione sui risultati
+			while(rs.next()) {
+				
+				// Ottenimento dati dall'interrogazione
+				String nome = rs.getString("nome");
+				String cognome = rs.getString("cognome");
+				String email = rs.getString("email");
+				String turno = rs.getString("turno");
+				String username = rs.getString("username");
+				String mansione = rs.getString("mansione");
+				int giorniFerieAnnoCorrente = rs.getInt("giorniferieannocorrente");
+				int giorniFerieAnnoPrecedente = rs.getInt("giorniferieannoprecedente");
+				int caricoLavoro = rs.getInt("caricolavoro");
+				boolean adoperabile = rs.getBoolean("adoperabile");
+				String grado = rs.getString("grado");
+				
+				VigileDelFuocoBean vf = new VigileDelFuocoBean();
+				vf.setNome(nome);
+				vf.setCognome(cognome);
+				vf.setEmail(email);
+				vf.setTurno(turno);
+				vf.setUsername(username);
+				vf.setMansione(mansione);
+				vf.setGiorniFerieAnnoCorrente(giorniFerieAnnoCorrente);
+				vf.setGiorniFerieAnnoPrecedente(giorniFerieAnnoPrecedente);
+				vf.setCaricoLavoro(caricoLavoro);
+				vf.setAdoperabile(adoperabile);
+				vf.setGrado(grado);
+				
+				vigili.add(vf);
+				
+			}
+			
+			return vigili;
+			
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+		}
+	
+	}
+	
+	/**
+	 * Si occupa dell'ottenimento di una collezione di VigileDelFuocoBean dal database
+	 * con mansione 'Autista' con campo 'adoperabile' settato a true.
+	 * @param ordinamento � un intero che determina il tipo di ordinamento della collezione
+	 * @return una collezione di VigileDelFuocoBean con campo 'adoperabile' settato a true 
+	 * e mansione 'Autista' 
+	 */
+	public static Collection<VigileDelFuocoBean> ottieniAutisti(int ordinamento) {
+		
+		if(ordinamento < 0 || ordinamento > 7)
+			//lancio eccezione
+			;
+		
+		try(Connection con = ConnessioneDB.getConnection()) {
+			
+			// Esecuzione query
+			PreparedStatement ps = con.prepareStatement("select *, (giorniferieannocorrente + giorniferieannoprecedente) as ferie from Vigile"
+														+ " where mansione = 'Autista' and adoperabile = true " + ORDINAMENTI[ordinamento] + ";");
+			ResultSet rs = ps.executeQuery();
+			
+			//Instanziazione del set dei Vigili del Fuoco
+			ArrayList<VigileDelFuocoBean> vigili = new ArrayList<VigileDelFuocoBean>();
+			
+			//Iterazione sui risultati
+			while(rs.next()) {
+				
+				// Ottenimento dati dall'interrogazione
+				String nome = rs.getString("nome");
+				String cognome = rs.getString("cognome");
+				String email = rs.getString("email");
+				String turno = rs.getString("turno");
+				String username = rs.getString("username");
+				String mansione = rs.getString("mansione");
+				int giorniFerieAnnoCorrente = rs.getInt("giorniferieannocorrente");
+				int giorniFerieAnnoPrecedente = rs.getInt("giorniferieannoprecedente");
+				int caricoLavoro = rs.getInt("caricolavoro");
+				boolean adoperabile = rs.getBoolean("adoperabile");
+				String grado = rs.getString("grado");
+				
+				VigileDelFuocoBean vf = new VigileDelFuocoBean();
+				vf.setNome(nome);
+				vf.setCognome(cognome);
+				vf.setEmail(email);
+				vf.setTurno(turno);
+				vf.setUsername(username);
+				vf.setMansione(mansione);
+				vf.setGiorniFerieAnnoCorrente(giorniFerieAnnoCorrente);
+				vf.setGiorniFerieAnnoPrecedente(giorniFerieAnnoPrecedente);
+				vf.setCaricoLavoro(caricoLavoro);
+				vf.setAdoperabile(adoperabile);
+				vf.setGrado(grado);
+				
+				vigili.add(vf);
+				
+			}
+			
+			return vigili;
+			
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+		}
+	
+	}
+	
+	/**
+	 * Si occupa dell'ottenimento di una collezione di VigileDelFuocoBean dal database
+	 * con mansione 'Vigile' con campo 'adoperabile' settato a true.
+	 * @param ordinamento � un intero che determina il tipo di ordinamento della collezione
+	 * @return una collezione di VigileDelFuocoBean con campo 'adoperabile' settato a true 
+	 * e mansione 'Vigile' 
+	 */
+	public static Collection<VigileDelFuocoBean> ottieniVigili(int ordinamento) {
+		
+		if(ordinamento < 0 || ordinamento > 7)
+			//lancio eccezione
+			;
+		
+		try(Connection con = ConnessioneDB.getConnection()) {
+			
+			// Esecuzione query
+			PreparedStatement ps = con.prepareStatement("select *, (giorniferieannocorrente + giorniferieannoprecedente) as ferie from Vigile"
+														+ " where mansione = 'Vigile' and adoperabile = true " + ORDINAMENTI[ordinamento] + ";");
+			ResultSet rs = ps.executeQuery();
+			
+			//Instanziazione del set dei Vigili del Fuoco
+			ArrayList<VigileDelFuocoBean> vigili = new ArrayList<VigileDelFuocoBean>();
+			
+			//Iterazione sui risultati
+			while(rs.next()) {
+				
+				// Ottenimento dati dall'interrogazione
+				String nome = rs.getString("nome");
+				String cognome = rs.getString("cognome");
+				String email = rs.getString("email");
+				String turno = rs.getString("turno");
+				String username = rs.getString("username");
+				String mansione = rs.getString("mansione");
+				int giorniFerieAnnoCorrente = rs.getInt("giorniferieannocorrente");
+				int giorniFerieAnnoPrecedente = rs.getInt("giorniferieannoprecedente");
+				int caricoLavoro = rs.getInt("caricolavoro");
+				boolean adoperabile = rs.getBoolean("adoperabile");
+				String grado = rs.getString("grado");
+				
+				VigileDelFuocoBean vf = new VigileDelFuocoBean();
+				vf.setNome(nome);
+				vf.setCognome(cognome);
+				vf.setEmail(email);
+				vf.setTurno(turno);
+				vf.setUsername(username);
+				vf.setMansione(mansione);
+				vf.setGiorniFerieAnnoCorrente(giorniFerieAnnoCorrente);
+				vf.setGiorniFerieAnnoPrecedente(giorniFerieAnnoPrecedente);
+				vf.setCaricoLavoro(caricoLavoro);
+				vf.setAdoperabile(adoperabile);
+				vf.setGrado(grado);
+				
+				vigili.add(vf);
+				
+			}
+			
+			return vigili;
+			
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+		}
+	
+	}
+	
+	/**
 	 * Si occupa dell'ottenimento del valore minimo di Carico di lavoro
 	 * tra i Vigili del Fuoco presenti nel database
 	 * @return il minimo Carico di Lavoro
