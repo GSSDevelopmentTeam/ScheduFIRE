@@ -44,7 +44,11 @@
 <body>
 	<!-- Barra Navigazione -->
 	<jsp:include page="HeaderJSP.jsp" />
-<a href="#inizio"><button class=" back-up btn btn-outline-secondary"> ^ </button></a>
+	
+<a href="#inizio"><button class=" back-up"><img src="IMG/arrow/up-arrow-p.png" 
+					onmouseover="this.src='IMG/arrow/up-arrow-d.png'"
+					onmouseout="this.src='IMG/arrow/up-arrow-p.png'" /></button></a>
+					
 	<!-- START: Container per calendario e schedulazione -->
 	<div class="containerAll" id="inizio">
 

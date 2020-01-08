@@ -30,7 +30,7 @@
 						<td class="text-center"><%=vigile.getMansione() %></td>
 						<td class="text-center"><strong><%=vigile.getNome() %></strong></td>
 						<td class="text-center"><strong><%=vigile.getCognome() %></strong></td>
-						<td class="text-center"> <input type="radio" value="<%=vigile.getEmail() %>" name="VFNew"></td>
+						<td class="text-center"> <input type="radio" onClick='attivapulsante()' value="<%=vigile.getEmail() %>" name="VFNew"></td>
 					</tr>
 					<% } }
 					%>					

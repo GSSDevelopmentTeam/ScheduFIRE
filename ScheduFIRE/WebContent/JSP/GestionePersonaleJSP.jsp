@@ -43,6 +43,23 @@ session.removeAttribute("risultato");
 <link type="text/css" rel="stylesheet"
 	href="./CSS/GestionePersonaleCSS.css">
 
+
+<style>
+			
+.table td, .table th {
+    padding: 1.5px!important;
+    vertical-align: top;
+    border-top: 1px solid #dee2e6;
+}
+.back-up{
+	border:none;
+	background:none;	
+    position: fixed;
+    bottom: 5%;
+    right: 5%;
+}
+</style>
+
 <body>
 	<jsp:include page="HeaderJSP.jsp" />
 
@@ -278,6 +295,10 @@ session.removeAttribute("risultato");
 	<section>
 
 		<br>
+
+<a href="#titolo" class=" back-up"><img src="IMG/arrow/up-arrow-p.png" style="margin-left: 5px;"
+					onmouseover="this.src='IMG/arrow/up-arrow-d.png'"
+					onmouseout="this.src='IMG/arrow/up-arrow-p.png'" /></a>
 
 		<h2 id="titolo">Gestione Personale</h2>
 

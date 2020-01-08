@@ -20,9 +20,17 @@ h2 {
 }
 
 .table td, .table th {
-	padding: 1.5px !important;
-	vertical-align: top;
-	border-top: 1px solid #dee2e6;
+    padding: 1.5px!important;
+    vertical-align: top;
+    border-top: 1px solid #dee2e6;
+}
+
+.back-up{
+	border:none;
+	background:none;	
+    position: fixed;
+    bottom: 5%;
+    right: 5%;
 }
 
 </style>
@@ -56,8 +64,10 @@ h2 {
 
 					<div class="modal-footer">
 						<button type="button" class="btn btn-outline-danger"
-							data-dismiss="modal">Annulla</button>
-						<button class="btn btn-outline-secondary">Aggiungi</button>
+							
+						data-dismiss="modal">Annulla</button>
+						<button class="btn btn-outline-secondary" id="agg" disabled="true">Aggiungi</button>
+
 					</div>
 				</form>
 			</div>
@@ -65,10 +75,14 @@ h2 {
 	</div>
 
 	<!-- ELENCO SQUADRE  -->
-	<%
-		HashMap<VigileDelFuocoBean, String> squadra = (HashMap<VigileDelFuocoBean, String>) session
-				.getAttribute("squadra");
-	%>
+<%
+	HashMap<VigileDelFuocoBean, String> squadra = (HashMap<VigileDelFuocoBean, String>) session.getAttribute("squadra"); %>
+     
+     <a href="#inizio" class=" back-up"><img src="IMG/arrow/up-arrow-p.png" style="margin-left: 5px;"
+					onmouseover="this.src='IMG/arrow/up-arrow-d.png'"
+					onmouseout="this.src='IMG/arrow/up-arrow-p.png'" /></a>
+     
+
 
 	<!-- SQUADRA DIURNA -->
 	<div class="d-flex justify-content-center">
@@ -288,27 +302,33 @@ h2 {
 		src="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.js"></script>
 
 	<script>
-		function apriFormVF(input, rule, sq, dt) {
-			//Chiamata ajax alla servlet PersonaleDisponibileAJAX
-			$.ajax({
-				type : "POST",//Chiamata POST
-				url : "PersonaleDisponibileAJAX",//url della servlet che devo chiamare
-				data : {
-					"JSON" : true,
-					"aggiunta" : true,
-					"email" : input,
-					"mansione" : rule,
-					"tiposquadra" : sq,
-					"dataModifica" : dt
-				},
-				success : function(response) {//Operazione da eseguire una volta terminata la chiamata alla servlet.
-					$("#appendElenco").remove();
-					$("<div id='appendElenco'></div>").appendTo("#elenco");
-					$(response).appendTo("#appendElenco");
-				}
-			});
 
-		}
+	function apriFormVF(input,rule,sq,dt) {
+		//Chiamata ajax alla servlet PersonaleDisponibileAJAX
+		$.ajax({
+			type : "POST",//Chiamata POST
+			url :"PersonaleDisponibileAJAX",//url della servlet che devo chiamare
+			data : {
+				"JSON" : true,
+				"aggiunta":true,
+				"email" : input,
+				"mansione" : rule,
+				"tiposquadra" : sq,
+				"dataModifica" : dt
+			},			
+			success : function(response) {//Operazione da eseguire una volta terminata la chiamata alla servlet.
+				$("#appendElenco").remove();
+				$("<div id='appendElenco'></div>").appendTo("#elenco");
+				$(response).appendTo("#appendElenco");					
+			}
+		});
+
+	}
+
+	function attivapulsante(){
+		$("#agg").Button.disabled=false
+	}
+
 	</script>
 
 
