@@ -12,6 +12,12 @@
     vertical-align: top;
     border-top: 1px solid #dee2e6;
 }
+.container__days{
+min-width: 270px;
+}
+.month-item-weekdays-row{
+min-width: 265px;
+}
 </style>
 </head>
 <body>
@@ -367,10 +373,11 @@
 	<script src="https://buttons.github.io/buttons.js"></script>
 	<script
 		src="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.js"></script>
-	<script src="JS/ferieJS.js"></script>
 
 
 	<script>
+	
+
 	var picker = new Litepicker(
 			{
 				element : document.getElementById('dataInizio'),
@@ -387,6 +394,7 @@
 				onError : function(error) {
 					alertInsuccesso("Nel periodo selezionato risultano già dei giorni di ferie.");
 				},
+				
 				onSelect : function() {
 					if ($("#dataInizio").val() != "") {
 
@@ -464,6 +472,7 @@
 						}
 					}
 				}
+				
 
 			});
 	
@@ -488,7 +497,9 @@
 					},
 					onSelect : function() {
 						$('#bottoneRimuoviFerie').prop("disabled", false);
-							},
+							}
+							
+							
 					
 						
 
@@ -566,6 +577,7 @@
 				async : false,
 				success : function(response) {
 					picker.setLockDays(response);
+
 					$("#emailAggiuntaFerie").val(input)
 					console.log("settati giorni di ferie: " + response);
 					var cognome = $(".table td:contains('" + input + "')")
@@ -578,18 +590,19 @@
 									+ cognome.text());
 					$(".contenutiModal").css('background-color', '#e6e6e6');
 					
-					
-					/*
-					$( "a.day-item" ).hover(
+					/*$( "a.day-item" ).hover(
 							  function() {
 								  var giorno=$(this).text();
 								  var mese=$(this).parent().parent().children("div .month-item-header").children("div").text().trim();
 							    console.log("hover "+giorno+ " , "+mese);
+				                $("a.day-item :contains('"+giorno+"')").css({"color": "yellow", "font-size": "200%"});
+
 							  }, function() {
 								    console.log("non hover");
 							  }
 							);
 					*/
+					
 					
 				},
 				error : function(jqXHR, textStatus, errorThrown) {
