@@ -80,13 +80,12 @@ min-width: 265px;
 
 					<option value="giorniFerie">Ferie</option>
 					<%
-						} else if( ordinamento.equals("ferie") ) {		
+						} else if( ordinamento.equals("giorniFerie") ) {		
 						%>
 					<option value="nome" >Nome</option>
 					<option value="cognome">Cognome</option>
 					<option value="mansione">Mansione</option>
 					<option value="grado">Grado</option>
-
 					<option value="giorniFerie" selected>Ferie</option>
 					<%
 						} 		
@@ -141,7 +140,7 @@ min-width: 265px;
 		aria-labelledby="exampleModalCenterTitle" aria-hidden="true"
 		style="display: none">
 		<div class="modal-dialog modal-dialog-centered" role="document">
-			<div class="modal-content contenutiModal" style="min-width: 700px; min-height: 700px;">
+			<div class="modal-content contenutiModal" style="min-width: 610px; min-height: 670px;">
 				<div class="modal-header">
 					<h5 class="modal-title" id="titoloAggiuntaFerie">Aggiunta
 						ferie</h5>
@@ -150,12 +149,14 @@ min-width: 265px;
 						<span aria-hidden="true">&times;</span>
 					</button>
 				</div>
+				<p>Per selezionare un solo giorno, cliccare due volte sulla data desiderata.</p>
 				<div class="modal-body">
 					<input type="hidden" name="email" id="emailAggiuntaFerie">
 					<div class=" row justify-content-center">
 						<input id="dataInizio" placeholder="Giorno iniziale" readonly
 							size="34" style="margin-bottom: 1%;" /> 
-							<input id="dataFine" placeholder="Giorno finale"
+						
+						<input id="dataFine" placeholder="Giorno finale"
 							readonly size="34" style="margin-bottom: 2%;"/>
 					</div>
 					<div class="text-center" id="messaggioFerie1"></div>
