@@ -157,7 +157,7 @@ public class GeneraSquadreServlet extends HttpServlet {
 				}
 
 
-				//SendMail.sendMail(data);
+				SendMail.sendMail(data, squadraDiurno, squadraNotturno);
 
 				response.sendRedirect("HomeCTServlet");
 				return;
