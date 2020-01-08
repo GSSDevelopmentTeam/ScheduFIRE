@@ -117,7 +117,7 @@ min-width: 265px;
 		class="alert alert-success flex alert-dismissible fade in text-center fixed-top"
 		id="rimozioneOk"
 		style="display: none; position: fixed; z-index: 99999; width: 100%">
-		<button type="button" class="close" onclick="nascondi()" aria-label="close">&times;</button>
+		<button type="button" class="close" onclick="nascondiOk()" aria-label="close">&times;</button>
 		<strong>Operazione riuscita!</strong> <span>Rimozione ferie
 			avvenuta con successo..</span>
 	</div>
@@ -130,7 +130,7 @@ min-width: 265px;
 		class="alert alert-danger flex alert-dismissible fade in text-center fixed-top"
 		id="rimozioneNoOk"
 		style="display: none; position: fixed; z-index: 99999; width: 100%">
-		<button type="button" class="close" onclick="nascondi()" aria-label="close">&times;</button>
+		<button type="button" class="close" onclick="nascondiNoOK()" aria-label="close">&times;</button>
 		<strong>Errore!</strong> <span>Rimozione ferie non avvenuta..</span>
 	</div>
 
@@ -535,8 +535,12 @@ min-width: 265px;
 			});
 		}
 		
-		function nascondi(){
+		function nascondiOk(){
 			document.getElementById("rimozioneOk").style.display="none";
+		}
+		
+		function nascondiNoOk(){
+			document.getElementById("rimozioneNoOk").style.display="none";
 		}
 
 		function calcolaGiorniFerie(iniz,fin) {
