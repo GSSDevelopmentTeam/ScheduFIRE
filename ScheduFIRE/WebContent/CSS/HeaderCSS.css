@@ -157,14 +157,6 @@ span .del:hover{
 	background-color:#dddddd;
 }
 
-.dd .db:hover {
-	background-color: rgba(255, 255, 255, 0.4);	
-}
-
-.dd .dn:hover {
-	background-color: rgba(255, 255, 255, 0.4);
-}
-
 .dd:hover .ddc {
 	display: block;
 }

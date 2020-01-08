@@ -293,6 +293,8 @@ public class GeneraSquadreServlet extends HttpServlet {
 		sessione.setAttribute("squadraDiurno", squadraDiurno);
 		sessione.setAttribute("squadraNotturno", squadraNotturno);
 		request.setAttribute("nonSalvata",true);
+		request.setAttribute("dataDiurno", data);
+		request.setAttribute("dataNotturno", giornoSuccessivo);
 		request.getRequestDispatcher("JSP/GestioneSquadreJSP.jsp").forward(request, response);
 
 

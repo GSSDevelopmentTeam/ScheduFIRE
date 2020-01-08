@@ -29,6 +29,12 @@
     bottom: 5%;
     right: 5%;
 }
+.container__days{
+min-width: 270px;
+}
+.month-item-weekdays-row{
+min-width: 265px;
+}
 	</style>
 	<body>
 	<a href="#inizio" class=" back-up"><img src="IMG/arrow/up-arrow-p.png" style="margin-left: 5px;"
@@ -151,8 +157,9 @@
 </div>
 	
 	<!-- Barra Navigazione -->
+	<div id="inizio"></div>
 	<jsp:include page="HeaderJSP.jsp" />
-	<h2 class="d-flex  justify-content-center" style="margin-top:3% ;color:#B60000!Important" id="inizio">Gestione Malattie</h2>
+	<h2 class="d-flex  justify-content-center" style="margin-top:3% ;color:#B60000!Important" >Gestione Malattie</h2>
 
 	
 	<!-- form per l'ordinamento della lista dei VF-->
@@ -172,7 +179,6 @@
 					%>
 					<option value="nome" selected>Nome</option>
 					<option value="cognome">Cognome</option>
-					<option value="mansione">mansione</option>
 					<option value="grado">grado</option>
 					
 					<%
@@ -180,21 +186,12 @@
 						%>
 					<option value="nome">Nome</option>
 					<option value="cognome" selected>Cognome</option>
-					<option value="mansione">mansione</option>
 					<option value="grado">grado</option>
 					<%
-						} else if( ordinamento.equals("mansione") ) {		
+						}  else if( ordinamento.equals("grado") ) {		
 						%>
 					<option value="nome">Nome</option>
 					<option value="cognome">Cognome</option>
-					<option value="mansione" selected>mansione</option>
-					<option value="grado">grado</option>
-					<%
-						} else if( ordinamento.equals("grado") ) {		
-						%>
-					<option value="nome">Nome</option>
-					<option value="cognome">Cognome</option>
-					<option value="mansione">mansione</option>
 					<option value="grado" selected>grado</option>
 					<%}
 					}%>
@@ -207,6 +204,10 @@
 	
 	<!-- body aggiungi malattia -->
 	<div class="table-responsive" >
+	
+	<h4 class="d-flex justify-content-center" id="inizio"
+		style="margin-top: 0%; color: #B60000 !Important ">Capi Squadra</h4>
+	
 		<table class="table  table-hover" id="listaVigili">
 			<thead class="thead-dark">
 				<tr>
@@ -221,18 +222,24 @@
 			</thead>
 				
 				<tbody>
-				 <%	ArrayList<VigileDelFuocoBean> listaVigili;
-						listaVigili= (ArrayList<VigileDelFuocoBean>) request.getAttribute("listaVigili");
+				 <%
+					ArrayList<VigileDelFuocoBean> listaVigili;
+					listaVigili = (ArrayList<VigileDelFuocoBean>) request.getAttribute("listaVigili");
+
+					for (int i = 0; i < listaVigili.size(); i++) {
+						VigileDelFuocoBean vigile = listaVigili.get(i);
 						
-						for(int i=0; i<listaVigili.size(); i++){
-							VigileDelFuocoBean vigile = listaVigili.get(i);
-					%>
+						if(vigile.getMansione().toUpperCase().equals("CAPO SQUADRA")){
+				%>
+
 					
 					<tr>
-						<td class="text-center"><img src="Grado/<%=vigile.getMansione().equals("Capo Squadra") && vigile.getGrado().equals("Esperto")?"EspertoCapoSquadra":vigile.getGrado() %>.png" width=20% 
+						<td class="text-center"><img
+						src="Grado/<%=vigile.getGrado()%>.png" width=25%
 						onerror="this.parentElement.innerHTML='Non disponibile';"></td>
 						<td class="text-center"><%=vigile.getMansione()%></td>
 						<td class="text-center"><strong><%=vigile.getNome() %></strong></td>
+
 			            <td class="text-center"><strong><%=vigile.getCognome()%></strong></td>
 						<td class="text-center"><%=vigile.getEmail() %></td>
 
@@ -246,7 +253,120 @@
 							Malattia</button></td>
 					</tr>
 		
-<% } %> 				
+				<%
+						}
+					}
+				%>				
+				
+				</tbody>
+			
+			</table>
+			
+			<h4 class="d-flex justify-content-center" id="inizio"
+		style="margin-top: 1%; color: #B60000 !Important ">Autisti</h4>
+
+	
+		<table class="table  table-hover" id="listaVigili">
+			<thead class="thead-dark">
+				<tr>
+					<th class="text-center"width = 14.28%>Grado</th>
+					<th class="text-center"width = 14.28%>Mansione</th>
+					<th class="text-center"width = 14.28%>Nome</th>
+					<th class="text-center"width = 14.28%>Cognome</th>
+					<th class="text-center"width = 14.28%>Email</th>
+					<th class="text-center"width = 14.28%>Inserisci Malattia</th>
+					<th class="text-center"width = 14.28%>Rimuovi Malattia</th>
+				</tr>
+			</thead>
+				
+				<tbody>
+				 <%
+					for (int i = 0; i < listaVigili.size(); i++) {
+						VigileDelFuocoBean vigile = listaVigili.get(i);
+						
+						if(vigile.getMansione().toUpperCase().equals("AUTISTA")){
+				%>
+
+					
+					<tr>
+						<td class="text-center"><img
+						src="Grado/<%=vigile.getGrado()%>.png" width=25%
+						onerror="this.parentElement.innerHTML='Non disponibile';"></td>
+						<td class="text-center"><%=vigile.getMansione()%></td>
+						<td class="text-center"><strong><%=vigile.getNome() %></strong></td>
+
+			            <td class="text-center"><strong><%=vigile.getCognome()%></strong></td>
+						<td class="text-center"><%=vigile.getEmail() %></td>
+
+						<td class="text-center"><button class="pass btn btn-outline-secondary" 
+						data-toggle="modal" data-target="#aggiungiMalattia"
+						onClick='apriFormAggiunta("<%=vigile.getEmail()%>")'>Aggiungi Malattia</button></td>
+						<td class="text-center"><button type="button"
+							class="btn btn-outline-danger" data-toggle="modal"
+							data-target="#rimuoviMalattia"
+							onClick='apriFormRimozione("<%=vigile.getEmail()%>")'>Rimuovi
+							Malattia</button></td>
+					</tr>
+		
+				<%
+						}
+					}
+				%>						
+				
+				</tbody>
+			
+			</table>
+			
+			<h4 class="d-flex justify-content-center" id="inizio"
+		style="margin-top: 1%; color: #B60000 !Important ">Vigili</h4>
+
+	
+		<table class="table  table-hover" id="listaVigili">
+			<thead class="thead-dark">
+				<tr>
+					<th class="text-center"width = 14.28%>Grado</th>
+					<th class="text-center"width = 14.28%>Mansione</th>
+					<th class="text-center"width = 14.28%>Nome</th>
+					<th class="text-center"width = 14.28%>Cognome</th>
+					<th class="text-center"width = 14.28%>Email</th>
+					<th class="text-center"width = 14.28%>Inserisci Malattia</th>
+					<th class="text-center"width = 14.28%>Rimuovi Malattia</th>
+				</tr>
+			</thead>
+				
+				<tbody>
+				 <%
+					for (int i = 0; i < listaVigili.size(); i++) {
+						VigileDelFuocoBean vigile = listaVigili.get(i);
+						
+						if(vigile.getMansione().toUpperCase().equals("VIGILE")){
+				%>
+
+					
+					<tr>
+						<td class="text-center"><img
+						src="Grado/<%=vigile.getGrado()%>.png" width=25%
+						onerror="this.parentElement.innerHTML='Non disponibile';"></td>
+						<td class="text-center"><%=vigile.getMansione()%></td>
+						<td class="text-center"><strong><%=vigile.getNome() %></strong></td>
+
+			            <td class="text-center"><strong><%=vigile.getCognome()%></strong></td>
+						<td class="text-center"><%=vigile.getEmail() %></td>
+
+						<td class="text-center"><button class="pass btn btn-outline-secondary" 
+						data-toggle="modal" data-target="#aggiungiMalattia"
+						onClick='apriFormAggiunta("<%=vigile.getEmail()%>")'>Aggiungi Malattia</button></td>
+						<td class="text-center"><button type="button"
+							class="btn btn-outline-danger" data-toggle="modal"
+							data-target="#rimuoviMalattia"
+							onClick='apriFormRimozione("<%=vigile.getEmail()%>")'>Rimuovi
+							Malattia</button></td>
+					</tr>
+		
+				<%
+						}
+					}
+				%>						
 				
 				</tbody>
 			
@@ -391,8 +511,7 @@ style="display: none;position:fixed;z-index: 99999; width:100%">
         				var nome = $(cognome).prev('td');
     
         			$("#titoloAggiuntaMalattia").text(
-        						"Aggiunta malattia per " + nome.text() + " "+ cognome.text());
-        			//$('#formAggiunta').show();	
+        						"Aggiunta malattia per " + nome.text() + " "+ cognome.text());	
 					$(".contenutiModal").css('background-color', '#e6e6e6');
 					}
 					
@@ -401,6 +520,7 @@ style="display: none;position:fixed;z-index: 99999; width:100%">
 			
 			function apriFormRimozione(input) {
 				console.log("parte funzione apriformRimozione di " + input);
+				document.getElementById("emailAggiuntaMalattia").innerHTML = input;
 				picker2.setOptions({
 					startDate : null,
 					endDate : null
@@ -441,8 +561,8 @@ style="display: none;position:fixed;z-index: 99999; width:100%">
 							maxDate : dataFinale
 						});
 						
-						
 						var mail = document.getElementById("emailRimozioneMalattia");
+        				mail.innerHTML = input;
 						$(".contenutiModal").css('background-color', '#e6e6e6');
         				        				
         				var cognome = $(".table td:contains('" + input + "')").prev('td');
@@ -495,6 +615,7 @@ style="display: none;position:fixed;z-index: 99999; width:100%">
 				var dataIniziale = $("#rimozioneDataIniziale").val();
 				var dataFinale = $("#rimozioneDataFinale").val();
 				var emailVF = document.getElementById("emailRimozioneMalattia").innerHTML;
+				console.log("email = " + emailVF);
 				$.ajax({
 					type : "POST",
 					url : "RimozioneMalattiaServlet",
