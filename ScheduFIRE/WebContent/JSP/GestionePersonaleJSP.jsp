@@ -32,6 +32,7 @@ if( !"".equals(risultato) )
 
 session.removeAttribute("risultato");
 */
+
 %>
 
 <!DOCTYPE html>
@@ -42,6 +43,23 @@ session.removeAttribute("risultato");
 
 <link type="text/css" rel="stylesheet"
 	href="./CSS/GestionePersonaleCSS.css">
+
+
+<style>
+			
+.table td, .table th {
+    padding: 1.5px!important;
+    vertical-align: top;
+    border-top: 1px solid #dee2e6;
+}
+.back-up{
+	border:none;
+	background:none;	
+    position: fixed;
+    bottom: 5%;
+    right: 5%;
+}
+</style>
 
 <body>
 	<jsp:include page="HeaderJSP.jsp" />
@@ -186,21 +204,6 @@ session.removeAttribute("risultato");
 			
 		}
 		
-		function alertInsuccesso(input) {
-			$("#rimozioneNoOk span").text(input);
-			$("#rimozioneNoOk").fadeTo(4000, 500).slideUp(500, function() {
-				$("#success-alert").slideUp(500);
-			});
-
-		}
-
-		function alertSuccesso(input) {
-			$("#rimozioneOk span").text(input);
-			$("#rimozioneOk").fadeTo(4000, 500).slideUp(500, function() {
-				$("#success-alert").slideUp(500);
-			});
-		}
-		
 		//Validazione form
 		
 		/*
@@ -276,8 +279,12 @@ session.removeAttribute("risultato");
 	</script>
 
 	<section>
-
+	
 		<br>
+
+<a href="#titolo" class=" back-up"><img src="IMG/arrow/up-arrow-p.png" style="margin-left: 5px;"
+					onmouseover="this.src='IMG/arrow/up-arrow-d.png'"
+					onmouseout="this.src='IMG/arrow/up-arrow-p.png'" /></a>
 
 		<h2 id="titolo">Gestione Personale</h2>
 
@@ -706,11 +713,11 @@ session.removeAttribute("risultato");
 								<label> Giorni di ferie dell'anno
 									corrente: <input id = <%= "modificaVF" + id + "GiorniFerieAnnoCorrente" %> type="number"
 									name="giorniFerieAnnoCorrenteNuovi"
-									value=<%= vf.getGiorniFerieAnnoCorrente() %> min="0" required>
+									value=<%= vf.getGiorniFerieAnnoCorrente() %> min="0" max = "22" required>
 								</label> <br> <br> <label> Giorni di ferie degli anni
 									precedenti: <input  id = <%= "modificaVF" + id + "GiorniFerieAnnoPrecedente" %> type="number"
 									name="giorniFerieAnnoPrecedenteNuovi"
-									value= <%= vf.getGiorniFerieAnnoPrecedente() %> min="0" required>
+									value= <%= vf.getGiorniFerieAnnoPrecedente() %> min="0" max = "999" required>
 								</label> <br> <br> <input type="hidden" name="emailVecchia"
 									value= <%= vf.getEmail().substring( 0 , vf.getEmail().indexOf("@") ) %> > 
 									
@@ -1111,11 +1118,11 @@ session.removeAttribute("risultato");
 								<label> Giorni di ferie dell'anno
 									corrente: <input id = <%= "modificaVF" + id + "GiorniFerieAnnoCorrente" %> type="number"
 									name="giorniFerieAnnoCorrenteNuovi"
-									value=<%= vf.getGiorniFerieAnnoCorrente() %> min="0" required>
+									value=<%= vf.getGiorniFerieAnnoCorrente() %> min="0" max = "22" required>
 								</label> <br> <br> <label> Giorni di ferie degli anni
 									precedenti: <input  id = <%= "modificaVF" + id + "GiorniFerieAnnoPrecedente" %> type="number"
 									name="giorniFerieAnnoPrecedenteNuovi"
-									value= <%= vf.getGiorniFerieAnnoPrecedente() %> min="0" required>
+									value= <%= vf.getGiorniFerieAnnoPrecedente() %> min="0" max = "999" required>
 								</label> <br> <br> <input type="hidden" name="emailVecchia"
 									value= <%= vf.getEmail().substring( 0 , vf.getEmail().indexOf("@") ) %> > 
 									
@@ -1516,11 +1523,11 @@ session.removeAttribute("risultato");
 								<label> Giorni di ferie dell'anno
 									corrente: <input id = <%= "modificaVF" + id + "GiorniFerieAnnoCorrente" %> type="number"
 									name="giorniFerieAnnoCorrenteNuovi"
-									value=<%= vf.getGiorniFerieAnnoCorrente() %> min="0" required>
+									value=<%= vf.getGiorniFerieAnnoCorrente() %> min="0" max = "22" required>
 								</label> <br> <br> <label> Giorni di ferie degli anni
 									precedenti: <input  id = <%= "modificaVF" + id + "GiorniFerieAnnoPrecedente" %> type="number"
 									name="giorniFerieAnnoPrecedenteNuovi"
-									value= <%= vf.getGiorniFerieAnnoPrecedente() %> min="0" required>
+									value= <%= vf.getGiorniFerieAnnoPrecedente() %> min="0" max = "999" required>
 								</label> <br> <br> <input type="hidden" name="emailVecchia"
 									value= <%= vf.getEmail().substring( 0 , vf.getEmail().indexOf("@") ) %> > 
 									
@@ -1619,10 +1626,10 @@ session.removeAttribute("risultato");
 			
 			<label> Giorni di ferie dell'anno
 				corrente: <input type="number" name="giorniFerieAnnoCorrente"
-				min="0" value="0" required>
+				min="0" max = "22" value="0" required>
 			</label> <br> <br> <label> Giorni di ferie degli anni
 				precedenti: <input type="number" name="giorniFerieAnnoPrecedente"
-				min="0" value="0" required>
+				min="0" max = "999" value="0" required>
 			</label> <br> <br>
 			
 				<input id="buttonFormAggiungiVF" type="submit"

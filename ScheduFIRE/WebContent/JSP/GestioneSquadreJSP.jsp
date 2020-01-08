@@ -58,7 +58,7 @@ h2 {
 					<div class="modal-footer">
 						<button type="button" class="btn btn-outline-danger"
 							data-dismiss="modal">Annulla</button>
-						<button class="btn btn-outline-success">Aggiungi</button>
+						<button class="btn btn-outline-success" id="aggiungi" disabled=true>Aggiungi</button>
 					</div>
 				</form>
 			</div>
@@ -82,15 +82,18 @@ h2 {
 		}
 	%>
 
-<a href="#inizio"><button class=" back-up"><img src="IMG/arrow/up-arrow-p.png" style="margin-left: 5px; width: 45px; height: 45px;"
+<a href="#inizio" class=" back-up"><img src="IMG/arrow/up-arrow-p.png" style="margin-left: 5px;"
 					onmouseover="this.src='IMG/arrow/up-arrow-d.png'"
-					onmouseout="this.src='IMG/arrow/up-arrow-p.png'" /></button></a>
+					onmouseout="this.src='IMG/arrow/up-arrow-p.png'" /></a>
 
+		<div class="d-flex justify-content-center">
+		<h2 id="inizio">Gestione Squadre</h2>
+	</div>
 	<br>
-	<div class="d-flex justify-content-center" id="inizio">
+	<div class="d-flex justify-content-center">
 		<form action="GeneraSquadreServlet?salva=true" method=post>
-			<button type="button" class="btn btn-outline-success btn-lg" value="salva"
-				name="salva" onclick="salvaSquadra()" style="margin: 3px;">Conferma
+			<button type="submit" class="btn btn-outline-success btn-lg" value="salva"
+				name="salva" style="margin: 3px;">Conferma
 				Squadre</button>
 		</form>
 		<a href="#Giorno"><button type="button"
@@ -139,8 +142,8 @@ h2 {
 						src="Grado/<%=membro.getGrado()%>.png" style="height: 25%"
 						onerror="this.parentElement.innerHTML='Non disponibile';"></td>
 					<td class="text-center"><%=membro.getMansione()%></td>
-					<td class="text-center"><%=membro.getNome()%></td>
-					<td class="text-center"><%=membro.getCognome()%></td>
+					<td class="text-center"><strong><%=membro.getNome()%></strong></td>
+					<td class="text-center"><strong><%=membro.getCognome()%></strong></td>
 					<td class="text-center"><button type="button"
 							class="btn btn-outline-secondary" data-toggle="modal"
 							data-target="#aggiungiVF" id="aggiungiVF"
@@ -187,8 +190,8 @@ h2 {
 						src="Grado/<%=membro.getGrado()%>.png" style="height: 25%"
 						onerror="this.parentElement.innerHTML='Non disponibile';"></td>
 					<td class="text-center"><%=membro.getMansione()%></td>
-					<td class="text-center"><%=membro.getNome()%></td>
-					<td class="text-center"><%=membro.getCognome()%></td>
+					<td class="text-center"><strong><%=membro.getNome()%></strong></td>
+					<td class="text-center"><strong><%=membro.getCognome()%></strong></td>
 					<td class="text-center"><button type="button"
 							class="btn btn-outline-secondary" data-toggle="modal"
 							data-target="#aggiungiVF" id="aggiungiVF"
@@ -235,8 +238,8 @@ h2 {
 						src="Grado/<%=membro.getGrado()%>.png" style="height: 25%"
 						onerror="this.parentElement.innerHTML='Non disponibile';"></td>
 					<td class="text-center"><%=membro.getMansione()%></td>
-					<td class="text-center"><%=membro.getNome()%></td>
-					<td class="text-center"><%=membro.getCognome()%></td>
+					<td class="text-center"><strong><%=membro.getNome()%></strong></td>
+					<td class="text-center"><strong><%=membro.getCognome()%></strong></td>
 					<td class="text-center"><button type="button"
 							class="btn btn-outline-secondary" data-toggle="modal"
 							data-target="#aggiungiVF" id="aggiungiVF"
@@ -283,8 +286,8 @@ h2 {
 						src="Grado/<%=membro.getGrado()%>.png" style="height: 25%"
 						onerror="this.parentElement.innerHTML='Non disponibile';"></td>
 					<td class="text-center"><%=membro.getMansione()%></td>
-					<td class="text-center"><%=membro.getNome()%></td>
-					<td class="text-center"><%=membro.getCognome()%></td>
+					<td class="text-center"><strong><%=membro.getNome()%></strong></td>
+					<td class="text-center"><strong><%=membro.getCognome()%></strong></td>
 					<td class="text-center"><button type="button"
 							class="btn btn-outline-secondary" data-toggle="modal"
 							data-target="#aggiungiVF" id="aggiungiVF"
@@ -349,8 +352,8 @@ h2 {
 						src="Grado/<%=membro.getGrado()%>.png" style="height: 25%"
 						onerror="this.parentElement.innerHTML='Non disponibile';"></td>
 					<td class="text-center"><%=membro.getMansione()%></td>
-					<td class="text-center"><%=membro.getNome()%></td>
-					<td class="text-center"><%=membro.getCognome()%></td>
+					<td class="text-center"><strong><%=membro.getNome()%></strong></td>
+					<td class="text-center"><strong><%=membro.getCognome()%></strong></td>
 					<td class="text-center"><button type="button"
 							class="btn btn-outline-secondary" data-toggle="modal"
 							data-target="#aggiungiVF" id="aggiungiVF"
@@ -397,8 +400,8 @@ h2 {
 						src="Grado/<%=membro.getGrado()%>.png" style="height: 25%"
 						onerror="this.parentElement.innerHTML='Non disponibile';"></td>
 					<td class="text-center"><%=membro.getMansione()%></td>
-					<td class="text-center"><%=membro.getNome()%></td>
-					<td class="text-center"><%=membro.getCognome()%></td>
+					<td class="text-center"><strong><%=membro.getNome()%></strong></td>
+					<td class="text-center"><strong><%=membro.getCognome()%></strong></td>
 					<td class="text-center"><button type="button"
 							class="btn btn-outline-secondary" data-toggle="modal"
 							data-target="#aggiungiVF" id="aggiungiVF"
@@ -445,8 +448,8 @@ h2 {
 						src="Grado/<%=mb.getGrado()%>.png" style="height: 25%"
 						onerror="this.parentElement.innerHTML='Non disponibile';"></td>
 					<td class="text-center"><%=mb.getMansione()%></td>
-					<td class="text-center"><%=mb.getNome()%></td>
-					<td class="text-center"><%=mb.getCognome()%></td>
+					<td class="text-center"><strong><%=mb.getNome()%></strong></td>
+					<td class="text-center"><strong><%=mb.getCognome()%></strong></td>
 					<td class="text-center"><button type="button"
 							class="btn btn-outline-secondary" data-toggle="modal"
 							data-target="#aggiungiVF" id="aggiungiVF"
@@ -493,8 +496,8 @@ h2 {
 						src="Grado/<%=membro.getGrado()%>.png" style="height: 25%"
 						onerror="this.parentElement.innerHTML='Non disponibile';"></td>
 					<td class="text-center"><%=membro.getMansione()%></td>
-					<td class="text-center"><%=membro.getNome()%></td>
-					<td class="text-center"><%=membro.getCognome()%></td>
+					<td class="text-center"><strong><%=membro.getNome()%></strong></td>
+					<td class="text-center"><strong><%=membro.getCognome()%></strong></td>
 					<td class="text-center"><button type="button"
 							class="btn btn-outline-secondary" data-toggle="modal"
 							data-target="#aggiungiVF" id="aggiungiVF"
@@ -559,17 +562,6 @@ h2 {
 				}
 			});
 		}
-		function salvaSquadra() {
-			$.ajax({
-				type : "POST",
-				url : "GeneraSquadreServlet",
-				data : {
-					"salva" : true
-				},
-				async : false,
-				dataType : "json"
-			});
-		}
 		
 		function caricoPersonale() {
 			//Chiamata ajax alla servlet PersonaleDisponibileAJAX
@@ -580,6 +572,10 @@ h2 {
 						$(response).appendTo("#personale");
 				}
 			});
+		}
+		
+		function attivapulsante(){
+			$("#aggiuni").Button.disabled=false
 		}
 	</script>
 
