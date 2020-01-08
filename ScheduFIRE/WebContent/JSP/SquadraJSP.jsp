@@ -26,15 +26,11 @@ h2 {
 }
 
 .back-up{
-	border-radius: 50px;
-    font-size: 30px;
-    width: 60px;
+	border:none;
+	background:none;	
     position: fixed;
     bottom: 5%;
     right: 5%;
-    background-color:#FFFFFF;
-	box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0
-		rgba(0, 0, 0, 0.19);
 }
 
 </style>
@@ -66,7 +62,7 @@ h2 {
 						<button type="button" class="btn btn-outline-danger"
 							
 						data-dismiss="modal">Annulla</button>
-						<button class="btn btn-outline-secondary">Aggiungi</button>
+						<button class="btn btn-outline-secondary" id="agg" disabled="true">Aggiungi</button>
 					</div>
 				</form>
 			</div>
@@ -77,10 +73,14 @@ h2 {
 <%
 	HashMap<VigileDelFuocoBean, String> squadra = (HashMap<VigileDelFuocoBean, String>) session.getAttribute("squadra"); %>
      
-     <a href="#inizio"><button class=" back-up btn btn-outline-secondary"> ^ </button></a>
+     <a href="#inizio" class=" back-up"><img src="IMG/arrow/up-arrow-p.png" style="margin-left: 5px;"
+					onmouseover="this.src='IMG/arrow/up-arrow-d.png'"
+					onmouseout="this.src='IMG/arrow/up-arrow-p.png'" /></a>
      
      <!-- SQUADRA DIURNA -->
-
+<div class="d-flex justify-content-center">
+		<h2 id="inizio">Modifica Squadra</h2>
+	</div>
        <div class="d-flex justify-content-center">
 		<h2 style="font-weight:bold; font-size:36px;">Squadra del <%=data %></h2>
 
@@ -301,6 +301,9 @@ h2 {
 
 	}
 
+	function attivapulsante(){
+		$("#agg").Button.disabled=false
+	}
 	</script>
 
 

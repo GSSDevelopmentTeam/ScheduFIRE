@@ -32,15 +32,11 @@ if(ordinamentoObj.getClass().getSimpleName().equals("String"))
     border-top: 1px solid #dee2e6;
 }
 .back-up{
-	border-radius: 50px;
-    font-size: 30px;
-    width: 60px;
+	border:none;
+	background:none;	
     position: fixed;
     bottom: 5%;
     right: 5%;
-    background-color:#FFFFFF;
-	box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0
-		rgba(0, 0, 0, 0.19);
 }
 </style>
 <body>
@@ -214,7 +210,9 @@ if(ordinamentoObj.getClass().getSimpleName().equals("String"))
 	<section>
 
 		<br>
-<a href="#titolo"><button class=" back-up btn btn-outline-secondary"> ^ </button></a>
+<a href="#titolo" class=" back-up"><img src="IMG/arrow/up-arrow-p.png" style="margin-left: 5px;"
+					onmouseover="this.src='IMG/arrow/up-arrow-d.png'"
+					onmouseout="this.src='IMG/arrow/up-arrow-p.png'" /></a>
 		<h2 id="titolo">Gestione Personale</h2>
 
 		<form id="ordinamento" action="./GestionePersonaleServlet">

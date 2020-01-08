@@ -137,7 +137,7 @@ span .del:hover{
 
 .ddc {
 	display: none;
-	position: fixed;
+	position: absolute;
 	right: 8%;
 	top: 14%;
 	z-index: 999;
