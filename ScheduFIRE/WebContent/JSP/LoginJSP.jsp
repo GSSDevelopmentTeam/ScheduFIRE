@@ -62,9 +62,10 @@
 					value="Accedi">
 			</form>
 			<br>
-			<button
+			<!--  <button
 				onclick="document.getElementById('id01').style.display='block'"
 				class="pass">Hai dimenticato la tua password?</button>
+				-->
 
 		</div>
 	</div>
