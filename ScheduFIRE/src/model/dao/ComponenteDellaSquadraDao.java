@@ -19,6 +19,21 @@ import model.bean.VigileDelFuocoBean;
  *
  */
 public class ComponenteDellaSquadraDao {
+	
+	public static String getSquadra(String mailVF, Date data) {
+		try(Connection con = ConnessioneDB.getConnection()) {
+			PreparedStatement ps = con.prepareStatement("SELECT tipologia FROM componentedellasquadra"
+					+ " WHERE emailVF = ? AND giornoLavorativo = ?;");
+			ps.setString(1, mailVF);
+			ps.setDate(2, data);
+			ResultSet rs = ps.executeQuery();
+			
+			rs.next();
+			return rs.getString("tipologia");
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+		}
+	}
 	/**
 	 * @param data , la data del giorno di cui si vuole avere la lista dei vigili presenti nelle varie squadre
 	 * @return una lista di ComponenteDellaSquadraBean presenti nelle varie squadre al giorno passato come parametro, 

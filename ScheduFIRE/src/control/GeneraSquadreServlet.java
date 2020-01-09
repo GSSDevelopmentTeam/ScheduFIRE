@@ -162,9 +162,13 @@ public class GeneraSquadreServlet extends HttpServlet {
 					}
 					VigileDelFuocoDao.caricoLavorativo(squadraNotturno);
 				}
-				sessione.removeAttribute("squadraDiurno");
-				sessione.removeAttribute("squadraNotturno");
-				SendMail.sendMail(data, squadraDiurno, squadraNotturno);
+
+
+				//SendMail.sendMail(data, squadraDiurno, squadraNotturno);
+
+				//sessione.removeAttribute("squadraDiurno");
+				//sessione.removeAttribute("squadraNotturno");
+
 
 				response.sendRedirect("HomeCTServlet");
 				return;
