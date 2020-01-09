@@ -79,6 +79,9 @@ public class AggiungiMalattiaServlet extends HttpServlet {
 				dataInizio = Date.valueOf(inizioMalattia);
 				dataFine = Date.valueOf(fineMalattia);
 				
+				//Aggiornamento Notifiche
+				//Notifiche.update(Notifiche.UPDATE_PER_MALATTIA, dataInizio, dataFine, VigileDelFuocoDao.ottieni(emailVF));
+				
 				 GiorniMalattiaBean malattia = new GiorniMalattiaBean();
 				    
 					malattia.setId(0);
@@ -88,21 +91,11 @@ public class AggiungiMalattiaServlet extends HttpServlet {
 					malattia.setEmailVF(emailVF);
 					JSONArray array = new JSONArray();
 					
+					Date in = (Date) malattia.getDataInizio().clone();
+					Date out = (Date) malattia.getDataFine().clone();
 					
-					
-					//notifica il CT se il Vigile è gia schedulato al momento dell'aggiunta della malattia
-					int numeroGiorniLavorativi = 0;
-					
-					while(inizioMalattia.compareTo(fineMalattia)<=0) {
-						if (GiornoLavorativo.isLavorativo(Date.valueOf(inizioMalattia)))
-							numeroGiorniLavorativi++;
-						inizioMalattia=((LocalDate) inizioMalattia).plusDays(1);
-					}
-					
-					for(int i = 0;i<numeroGiorniLavorativi; i++) {
-						if(ComponenteDellaSquadraDao.isComponente(emailVF, dataInizio)) 
-						Notifiche.update(Notifiche.UPDATE_SQUADRE_PER_MALATTIA, dataInizio, dataFine, emailVF);
-						}
+					Notifiche.update(Notifiche.UPDATE_SQUADRE_PER_MALATTIA, in, out, emailVF);
+						
 					
 				   if(GiorniMalattiaDao.addMalattia(malattia) == true) 
 					  array.put(true);
