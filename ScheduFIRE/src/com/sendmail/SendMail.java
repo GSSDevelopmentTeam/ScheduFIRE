@@ -1,7 +1,11 @@
 package com.sendmail;
 
 import java.sql.Date;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
 import java.util.Properties;
 
 import javax.mail.Message;
@@ -12,6 +16,7 @@ import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
+import model.bean.VigileDelFuocoBean;
 import model.dao.EmailDao;
 
 /**
@@ -24,16 +29,18 @@ public class SendMail {
 	/**
 	 * Il metodo si occupa del mandare le mail ai vigili del fuoco. 
 	 * @param data
+	 * @param squadraNotturno 
+	 * @param squadraDiurno 
 	 */
-	public static void sendMail(Date data) {
+	public static void sendMail(Date data, HashMap<VigileDelFuocoBean, String> squadraDiurno, HashMap<VigileDelFuocoBean, String> squadraNotturno) {
 		//Lista dei destinatari
-		
+
 		ArrayList<String>  email = new ArrayList<String>();
 		/*
 		 * EmailDao allEmail = new EmailDao();
 		 * email=allEmail.getEmail();*/
-		
-		
+
+
 		email.add("c.cipolletta2@studenti.unisa.it");
 		email.add("f.perillo11@stduenti.unisa.it");
 		email.add("e.sottile@studenti.unisa.it");
@@ -42,7 +49,7 @@ public class SendMail {
 		email.add("a.giuliano21@studenti.unisa.it");
 		email.add("n.labanca3@studenti.unisa.it");
 		email.add("b.bruno4@studenti.unisa.it");
-		
+
 
 		//L'id del mittente
 		String from = "schedufire@gmail.com";
@@ -88,10 +95,12 @@ public class SendMail {
 
 
 			// Set Subject: header field
-			message.setSubject("OGGETTO");
+			message.setSubject("(noreply) Squadre per il turno del " + 
+					data.toLocalDate().format(DateTimeFormatter.ofPattern("dd/MM/YYYY")) + " - " + 
+					data.toLocalDate().plusDays(1L).format(DateTimeFormatter.ofPattern("dd/MM/YYYY")));
 
 			// Now set the actual message
-			message.setText("MESSAGGIO");
+			message.setText(formattaMessaggio(squadraDiurno, squadraNotturno));
 
 			System.out.println("sending...");
 			// Send message
@@ -100,5 +109,28 @@ public class SendMail {
 		} catch (MessagingException mex) {
 			mex.printStackTrace();
 		}
+	}
+
+	private static String formattaMessaggio(HashMap<VigileDelFuocoBean, String> squadraDiurno,
+			HashMap<VigileDelFuocoBean, String> squadraNotturno) {
+		String toReturn = "Si informa per presa visione il personale del turno B "
+				+ "che le squadre per il turno in oggetto sono le seguenti:\n\tSQUADRA DIURNA:\n";
+		Iterator i = squadraDiurno.entrySet().iterator();
+		while(i.hasNext()) {
+			Map.Entry<VigileDelFuocoBean, String> coppia = (Map.Entry<VigileDelFuocoBean, String>) i.next();
+			toReturn += "" + coppia.getKey().getCognome() + " " + coppia.getKey().getNome() + "\t" + coppia.getValue() + "\n";
+		}
+		
+		toReturn += "\n\n\tSQUADRA NOTTURNA:\n";
+		
+		i = squadraNotturno.entrySet().iterator();
+		while(i.hasNext()) {
+			Map.Entry<VigileDelFuocoBean, String> coppia = (Map.Entry<VigileDelFuocoBean, String>) i.next();
+			toReturn += "" + coppia.getKey().getCognome() + " " + coppia.getKey().getNome() + "\t" + coppia.getValue() + "\n";
+		}
+		
+		toReturn += "\n\nSi ringrazia per l'attenzione e la presa visione.";
+		
+		return toReturn;
 	}
 }

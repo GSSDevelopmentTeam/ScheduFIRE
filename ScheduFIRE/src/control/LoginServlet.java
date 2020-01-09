@@ -97,7 +97,6 @@ public class LoginServlet extends HttpServlet {
 					else {
 						request.setAttribute("passwordErrata", true);
 						request.getRequestDispatcher("/JSP/LoginJSP.jsp").forward(request, response);
-
 					}
 
 				}

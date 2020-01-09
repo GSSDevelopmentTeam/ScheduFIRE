@@ -149,8 +149,6 @@ public class GestioneFerieServlet extends HttpServlet {
 			
 			List<VigileDelFuocoBean> listaVigili = new ArrayList<VigileDelFuocoBean>(vigili);
 			
-			listaVigili = Util.compareVigile(listaVigili);
-			
 			//Passasggio del tipo di ordinamento ottenuto
 			request.setAttribute("ordinamento", ordinamento);
 			
