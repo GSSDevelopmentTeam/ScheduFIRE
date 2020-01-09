@@ -60,7 +60,6 @@
 					<option value="nome" selected>Nome</option>
 					<option value="cognome">Cognome</option>
 					<option value="disponibilita">Disponibilità</option>
-					<option value="grado">Grado</option>
 
 
 					<%
@@ -69,15 +68,6 @@
 					<option value="nome">Nome</option>
 					<option value="cognome" selected>Cognome</option>
 					<option value="disponibilita">Disponibilità</option>
-					<option value="grado">Grado</option>
-
-					<%
-						}else if (ordinamento.equals("grado")) {
-					%>
-					<option value="nome">Nome</option>
-					<option value="cognome">Cognome</option>
-					<option value="disponibilita">Disponibilità</option>
-					<option value="grado" selected>Grado</option>
 
 					<%
 						}else if (ordinamento.equals("disponibilita")) {
@@ -85,7 +75,6 @@
 					<option value="nome">Nome</option>
 					<option value="cognome">Cognome</option>
 					<option value="disponibilita" selected>Disponibilità</option>
-					<option value="grado">Grado</option>
 
 
 					<%
@@ -96,7 +85,6 @@
 					<option value="nome">Nome</option>
 					<option value="cognome" selected>Cognome</option>
 					<option value="disponibilita">Disponibilità</option>
-					<option value="grado">Grado</option>
 
 					<%
 						}
@@ -137,8 +125,8 @@
 									placeholder="Scegli il giorno" readonly size="34"
 									style="margin-bottom: 1%;" />
 							</div>
-							<div class="text-center" id="messaggioFerie1"></div>
-							<div class="text-center" id="messaggioFerie2"></div>
+							<div class="text-center" id="messaggioTurno"> </div>
+							
 
 
 						</div>
@@ -217,9 +205,7 @@
 
 					<tr
 						class="<%=!disponibilita.equals("Disponibile")?"table-warning":"" %>">
-						<td class="text-center"><img
-							src="Grado/<%=vigile.getGrado()%>.png" width=30%
-							onerror="this.parentElement.innerHTML='Non disponibile';"></td>
+						<td class="text-center"><img src="Grado/<%=vigile.getMansione().equals("Capo Squadra") && vigile.getGrado().equals("Esperto")?"EspertoCapoSquadra":vigile.getGrado() %>.png" width=25% onerror="this.parentElement.innerHTML='Non disponibile';"></td>
 						<td class="text-center"><strong><%=vigile.getNome()%></strong></td>
 						<td class="text-center"><strong><%=vigile.getCognome()%></strong></td>
 						<td class="text-center"><%=vigile.getEmail()%></td>
@@ -275,7 +261,7 @@
 					<tr
 						class="<%=!disponibilita.equals("Disponibile")?"table-warning":"" %>">
 						<td class="text-center"><img
-							src="Grado/<%=vigile.getGrado()%>.png" width=30%
+							src="Grado/<%=vigile.getGrado()%>.png" width=25%
 							onerror="this.parentElement.innerHTML='Non disponibile';"></td>
 						<td class="text-center"><strong><%=vigile.getNome()%></strong></td>
 						<td class="text-center"><strong><%=vigile.getCognome()%></strong></td>
@@ -334,7 +320,7 @@
 					<tr
 						class="<%=!disponibilita.equals("Disponibile")?"table-warning":"" %>">
 						<td class="text-center"><img
-							src="Grado/<%=vigile.getGrado()%>.png" width=30%
+							src="Grado/<%=vigile.getGrado()%>.png" width=25%
 							onerror="this.parentElement.innerHTML='Non disponibile';"></td>
 						<td class="text-center"><strong><%=vigile.getNome()%></strong></td>
 						<td class="text-center"><strong><%=vigile.getCognome()%></strong></td>
@@ -429,9 +415,7 @@
 					%>
 					<tr
 						class="<%=!disponibilita.equals("Disponibile")?"table-warning":"" %>">
-						<td class="text-center"><img
-							src="Grado/<%=vigile.getGrado()%>.png" width=30%
-							onerror="this.parentElement.innerHTML='Non disponibile';"></td>
+						<td class="text-center"><img src="Grado/<%=vigile.getMansione().equals("Capo Squadra") && vigile.getGrado().equals("Esperto")?"EspertoCapoSquadra":vigile.getGrado() %>.png" width=25% onerror="this.parentElement.innerHTML='Non disponibile';"></td>
 						<td class="text-center"><strong><%=vigile.getNome()%></strong></td>
 						<td class="text-center"><strong><%=vigile.getCognome()%></strong></td>
 						<td class="text-center"><%=vigile.getEmail()%></td>
@@ -487,7 +471,7 @@
 					<tr
 						class="<%=!disponibilita.equals("Disponibile")?"table-warning":"" %>">
 						<td class="text-center"><img
-							src="Grado/<%=vigile.getGrado()%>.png" width=30%
+							src="Grado/<%=vigile.getGrado()%>.png" width=25%
 							onerror="this.parentElement.innerHTML='Non disponibile';"></td>
 						<td class="text-center"><strong><%=vigile.getNome()%></strong></td>
 						<td class="text-center"><strong><%=vigile.getCognome()%></strong></td>
@@ -544,7 +528,7 @@
 					<tr
 						class="<%=!disponibilita.equals("Disponibile")?"table-warning":"" %>">
 						<td class="text-center"><img
-							src="Grado/<%=vigile.getGrado()%>.png" width=30%
+							src="Grado/<%=vigile.getGrado()%>.png" width=25%
 							onerror="this.parentElement.innerHTML='Non disponibile';"></td>
 						<td class="text-center"><strong><%=vigile.getNome()%></strong></td>
 						<td class="text-center"><strong><%=vigile.getCognome()%></strong></td>
@@ -582,10 +566,11 @@
 
 	</section>
 	<script src="JS/datePicker.js"></script>
+	
 
 	<script>
-	$(".contenutiModal").css('background-color', '#e6e6e6');
-
+	
+	
 			var picker = new Litepicker({
 				element : document.getElementById('litepicker'),
 				inlineMode : true,
