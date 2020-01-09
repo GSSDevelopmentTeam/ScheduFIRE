@@ -1117,6 +1117,7 @@ public class VigileDelFuocoDao {
 			Iterator i = squadra.entrySet().iterator();
 			while (i.hasNext()) {
 				Map.Entry<VigileDelFuocoBean, String> pair = (Map.Entry<VigileDelFuocoBean, String>) i.next();
+				System.out.print(pair.getKey().getEmail());
 				int toAdd = (	pair.getValue().equals("Prima Partenza") || 
 								pair.getValue().equals("Sala Operativa")) ? 3 :
 								(pair.getValue().equals("Auto Scala")) ? 2 : 1;

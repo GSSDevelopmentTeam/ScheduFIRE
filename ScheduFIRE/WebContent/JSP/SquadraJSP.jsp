@@ -41,7 +41,7 @@ h2 {
 	<%
 		Date data = (Date) request.getAttribute("data");
 	%>
-	<div id="inizio"></div>
+	<div id="sali"></div>
 	<!-- Barra Navigazione -->
 	<jsp:include page="HeaderJSP.jsp" />
 
@@ -79,7 +79,7 @@ h2 {
 <%
 	HashMap<VigileDelFuocoBean, String> squadra = (HashMap<VigileDelFuocoBean, String>) session.getAttribute("squadra"); %>
      
-     <a href="#inizio" class=" back-up"><img src="IMG/arrow/up-arrow-p.png" style="margin-left: 5px;"
+     <a href="#sali" class=" back-up"><img src="IMG/arrow/up-arrow-p.png" style="margin-left: 5px;"
 					onmouseover="this.src='IMG/arrow/up-arrow-d.png'"
 					onmouseout="this.src='IMG/arrow/up-arrow-p.png'" /></a>
      
@@ -128,10 +128,7 @@ h2 {
 				%>
 
 				<tr>
-					<td class="text-center"><img
-						src="Grado/<%=membro.getGrado()%>.png"
-						style="height: 25%" width=30%
-						onerror="this.parentElement.innerHTML='Non disponibile';"></td>
+					<td class="text-center"><img src="Grado/<%=membro.getMansione().equals("Capo Squadra") && membro.getGrado().equals("Esperto")?"EspertoCapoSquadra":membro.getGrado() %>.png" title="<%=membro.getGrado() %>" onerror="this.parentElement.innerHTML='Non disponibile';"></td>
 					<td class="text-center"><%=membro.getNome()%></td>
 					<td class="text-center"><%=membro.getCognome()%></td>
 					<td class="text-center"><%=membro.getMansione()%></td>
@@ -177,9 +174,7 @@ h2 {
 				%>
 
 				<tr>
-					<td class="text-center"><img
-						src="Grado/<%=membro.getGrado()%>.png" style="height: 25%"
-						onerror="this.parentElement.innerHTML='Non disponibile';"></td>
+					<td class="text-center"><img src="Grado/<%=membro.getMansione().equals("Capo Squadra") && membro.getGrado().equals("Esperto")?"EspertoCapoSquadra":membro.getGrado() %>.png" title="<%=membro.getGrado() %>" onerror="this.parentElement.innerHTML='Non disponibile';"></td>
 					<td class="text-center"><%=membro.getNome()%></td>
 					<td class="text-center"><%=membro.getCognome()%></td>
 					<td class="text-center"><%=membro.getMansione()%></td>
@@ -225,9 +220,7 @@ h2 {
 				%>
 
 				<tr>
-					<td class="text-center"><img
-						src="Grado/<%=membro.getGrado()%>.png" style="height: 25%"
-						onerror="this.parentElement.innerHTML='Non disponibile';"></td>
+					<td class="text-center"><img src="Grado/<%=membro.getMansione().equals("Capo Squadra") && membro.getGrado().equals("Esperto")?"EspertoCapoSquadra":membro.getGrado() %>.png" title="<%=membro.getGrado() %>" onerror="this.parentElement.innerHTML='Non disponibile';"></td>
 					<td class="text-center"><%=membro.getNome()%></td>
 					<td class="text-center"><%=membro.getCognome()%></td>
 					<td class="text-center"><%=membro.getMansione()%></td>
@@ -273,9 +266,7 @@ h2 {
 				%>
 
 				<tr>
-					<td class="text-center"><img
-						src="Grado/<%=membro.getGrado()%>.png" style="height: 25%"
-						onerror="this.parentElement.innerHTML='Non disponibile';"></td>
+					<td class="text-center"><img src="Grado/<%=membro.getMansione().equals("Capo Squadra") && membro.getGrado().equals("Esperto")?"EspertoCapoSquadra":membro.getGrado() %>.png" title="<%=membro.getGrado() %>"onerror="this.parentElement.innerHTML='Non disponibile';"></td>
 					<td class="text-center"><%=membro.getNome()%></td>
 					<td class="text-center"><%=membro.getCognome()%></td>
 					<td class="text-center"><%=membro.getMansione()%></td>

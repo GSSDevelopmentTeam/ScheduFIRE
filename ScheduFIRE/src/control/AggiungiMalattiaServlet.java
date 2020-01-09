@@ -18,6 +18,7 @@ import org.json.JSONArray;
 
 import model.bean.CapoTurnoBean;
 import model.bean.GiorniMalattiaBean;
+import model.bean.VigileDelFuocoBean;
 import model.dao.ComponenteDellaSquadraDao;
 import model.dao.GiorniMalattiaDao;
 import model.dao.VigileDelFuocoDao;
@@ -81,9 +82,6 @@ public class AggiungiMalattiaServlet extends HttpServlet {
 				dataInizio = Date.valueOf(inizioMalattia);
 				dataFine = Date.valueOf(fineMalattia);
 				
-				//Aggiornamento Notifiche
-				//Notifiche.update(Notifiche.UPDATE_PER_MALATTIA, dataInizio, dataFine, VigileDelFuocoDao.ottieni(emailVF));
-				
 				 GiorniMalattiaBean malattia = new GiorniMalattiaBean();
 				    
 					malattia.setId(0);
@@ -92,23 +90,123 @@ public class AggiungiMalattiaServlet extends HttpServlet {
 					malattia.setEmailCT(emailCT);
 					malattia.setEmailVF(emailVF);
 					JSONArray array = new JSONArray();
-					
-					Date in = (Date) malattia.getDataInizio().clone();
-					Date out = (Date) malattia.getDataFine().clone();
-					
-					Notifiche.update(Notifiche.UPDATE_SQUADRE_PER_MALATTIA, in, out, emailVF);
-						
+			
+					//Notifiche.update(Notifiche.UPDATE_SQUADRE_PER_MALATTIA, in, out, emailVF);
 					
 				   if(GiorniMalattiaDao.addMalattia(malattia) == true) 
 					  array.put(true);
 				   else {
 					   array.put(false);
 				   }
+				   
+				 //controllo se in caserma sono prsente il numero sufficiente di vigili per costruire un turno
+				 
+				   /*VigileDelFuocoBean vigile = VigileDelFuocoDao.ottieni(malattia.getEmailVF());
+					 if(isPresentiNumeroMinimo(malattia.getDataInizio(), malattia.getDataFine(), vigile.getMansione())) {
+						throw new ScheduFIREException("Personale minore di 13 unit√†. Impossibile inserire giorni di malattia");
+					 }*/
+				   
+				  //sostituisce il vigile se gi‡ schedulato
+				 /* Date iniz = malattia.getDataInizio();
+				  Date fin = malattia.getDataFine();
+				   while(!iniz.equals(fin.toLocalDate().plusDays(1))) {
+						if(GiornoLavorativo.isLavorativo(iniz)) {
+							if(ComponenteDellaSquadraDao.isComponente(malattia.getEmailVF(), iniz)) {
+								Util.sostituisciVigile(iniz, malattia.getEmailVF());
+							}
+						}
+						LocalDate next = iniz.toLocalDate().plusDays(1L);
+						iniz = Date.valueOf(next);
+					}*/
+				   
+				   
+				   boolean componente = false;
+				   Date in = (Date) malattia.getDataInizio().clone();
+				   Date outM = (Date) malattia.getDataFine().clone();
+				   LocalDate out = outM.toLocalDate().plusDays(1);
+				   
+					while(!in.equals(Date.valueOf((out)))) {
+						if(ComponenteDellaSquadraDao.isComponente(emailVF, in)) { 
+							componente = true;
+							break;
+						}
+						else{
+							in = Date.valueOf(in.toLocalDate().plusDays(1));
+						}
+					}
+					
+					 if(componente)
+							Notifiche.update(Notifiche.UPDATE_SQUADRE_PER_MALATTIA, malattia.getDataInizio(), malattia.getDataFine(), emailVF);
+					   
+				   
+				   
 				response.setContentType("application/json");
 				
 				response.getWriter().append(array.toString());
 			}
 	    }	
+	
+	
+	//Metodo che verifica se nel periodo di ferie richiesto sono preseti almeno il numero minimo di VF
+		private boolean isPresentiNumeroMinimo(Date dataIniziale, Date dataFinale, String mansioneVF) {
+
+			boolean sufficienti = true;
+			ArrayList<VigileDelFuocoBean> presenti = new ArrayList<VigileDelFuocoBean>();
+
+			LocalDate inizio = dataIniziale.toLocalDate();
+			LocalDate fine = dataFinale.toLocalDate();
+
+
+			//per tutto il periodo considerato
+			while(inizio.compareTo(fine) <= 0) {
+				
+				//se e' un giorno lavorativo
+				if(GiornoLavorativo.isLavorativo(Date.valueOf(inizio))) {
+					int capiSquadra = 0; 
+					int autisti = 0;
+					int vigili = 0;
+
+					presenti = VigileDelFuocoDao.getDisponibili(Date.valueOf(inizio));
+
+					//conto quanti capi squadra, autisti e vigili sono disponibili quel giorno
+					for(int i=0; i<presenti.size(); i++) {
+						String mansione = presenti.get(i).getMansione();
+						if(mansione.equals("Capo Squadra"))
+							capiSquadra += 1;
+						else
+							if(mansione.equals("Autista"))
+								autisti += 1;
+							else
+								if(mansione.equals("Vigile"))
+									vigili += 1;
+					}
+
+					//sottraggo il vigile che vuole andare in ferie
+					if(mansioneVF.equals("Capo Squadra"))
+						capiSquadra -= 1;
+					else
+						if(mansioneVF.equals("Autista"))
+							autisti -= 1;
+						else vigili -= 1;
+
+					sufficienti = Util.abbastanzaPerTurno(capiSquadra, autisti, vigili);
+
+					if(!sufficienti) {
+						sufficienti=false;
+						return sufficienti;
+					}
+
+				}
+				inizio=inizio.plusDays(1);
+
+			}
+			return sufficienti;
+		}
+
+	
+
 	}
+
+
 
 
