@@ -67,6 +67,7 @@ public class AjaxCalendario extends HttpServlet{
 		JSONArray array = new JSONArray();
 		array.put(isModificabile(data));
 		array.put(isGenerabile(data));
+
 		for (ComponenteDellaSquadraBean componente:componenti){
 			for(VigileDelFuocoBean vigile : vigili) {
 				if (vigile.getEmail().equals(componente.getEmailVF())){

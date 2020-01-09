@@ -49,7 +49,7 @@ h2 {
 					<h5 class="modal-title" id="titoloAggiuntaFerie">Personale
 						Disponibile</h5>
 				</div>
-				<form action="ModificaComposizioneSquadreServlet" method="POST">
+				<form action="GeneraSquadreServlet" method="POST">
 					<!-- Nel form verranno passate l'email del VF da sostituire con nome "email" e quella del VF da inserire con nome "VFNew" -->
 					<div class="modal-body" id="elenco">
 						<div id="appendiElenco"></div>
@@ -58,7 +58,7 @@ h2 {
 					<div class="modal-footer">
 						<button type="button" class="btn btn-outline-danger"
 							data-dismiss="modal">Annulla</button>
-						<button class="btn btn-outline-success" id="aggiungi" disabled=true>Aggiungi</button>
+						<button class="btn btn-outline-success" id="agg" disabled>Aggiungi</button>
 					</div>
 				</form>
 			</div>
@@ -86,9 +86,9 @@ h2 {
 					onmouseover="this.src='IMG/arrow/up-arrow-d.png'"
 					onmouseout="this.src='IMG/arrow/up-arrow-p.png'" /></a>
 
-		<div class="d-flex justify-content-center">
-		<h2 id="inizio">Gestione Squadre</h2>
-	</div>
+
+		<h2 class="d-flex justify-content-center" id="inizio" style="margin-top: 3%">Gestione Squadre</h2>
+
 	<br>
 	<div class="d-flex justify-content-center">
 		<form action="GeneraSquadreServlet?salva=true" method=post>
@@ -575,7 +575,7 @@ h2 {
 		}
 		
 		function attivapulsante(){
-			$("#aggiuni").Button.disabled=false
+			$("#agg").prop("disabled",false);
 		}
 	</script>
 
