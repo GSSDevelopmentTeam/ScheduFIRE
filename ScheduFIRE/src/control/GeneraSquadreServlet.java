@@ -88,6 +88,9 @@ public class GeneraSquadreServlet extends HttpServlet {
 					throw new ScheduFIREException("errore nelle query");
 				}
 
+				sessione.removeAttribute("squadraDiurno");
+				sessione.removeAttribute("squadraNotturno");
+
 				response.sendRedirect("HomeCTServlet");
 				return;
 			}
