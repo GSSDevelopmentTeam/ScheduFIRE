@@ -14,6 +14,7 @@ import model.bean.FerieBean;
 import model.dao.FerieDao;
 import model.dao.VigileDelFuocoDao;
 import util.GiornoLavorativo;
+import util.Util;
 
 /**
  * Servlet per la rimozione di periodi o giorni di ferie di un Vigile del Fuoco
@@ -35,7 +36,7 @@ public class RimuoviFerieServlet extends HttpServlet {
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
+		Util.isCapoTurno(request);
 		//Istanziazione ed inizializzazione variabili
 		Date dataInizio = null;
 		Date dataFine = null;

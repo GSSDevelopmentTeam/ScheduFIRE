@@ -53,6 +53,7 @@ public class AggiungiMalattiaServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		Util.isCapoTurno(request);
 		if(request.getParameter("JSON")!=null && request.getParameter("inserisci") != null) {
 			
 	    String emailVF = request.getParameter("emailVF");
