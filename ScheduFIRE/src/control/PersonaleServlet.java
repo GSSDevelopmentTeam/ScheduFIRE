@@ -20,6 +20,7 @@ import model.bean.ComponenteDellaSquadraBean;
 import model.bean.VigileDelFuocoBean;
 import model.dao.VigileDelFuocoDao;
 import util.GiornoLavorativo;
+import util.Util;
 
 /**
  * Servlet implementation class PersonaleServlet
@@ -47,7 +48,7 @@ public class PersonaleServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
+		Util.isCapoTurno(request);
 		LocalDateTime ora=LocalDateTime.now();
 		LocalDateTime inizioDiurno=LocalDateTime.of(ora.getYear(), ora.getMonth(), ora.getDayOfMonth(), 8, 00);
 		LocalDateTime fineDiurno=inizioDiurno.plusHours(12);

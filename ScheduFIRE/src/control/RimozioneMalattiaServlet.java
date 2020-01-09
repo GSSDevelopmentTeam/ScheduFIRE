@@ -22,6 +22,7 @@ import model.dao.FerieDao;
 import model.dao.GiorniMalattiaDao;
 import model.dao.VigileDelFuocoDao;
 import util.GiornoLavorativo;
+import util.Util;
 
 /**
  * Servlet implementation class RimozioneMalattiaServlet
@@ -49,7 +50,7 @@ public class RimozioneMalattiaServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
+		Util.isCapoTurno(request);
 				String emailVF;
 				Date dataInizio = null;
 				Date dataFine = null;

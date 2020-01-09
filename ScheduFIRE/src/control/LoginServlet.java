@@ -40,7 +40,7 @@ public class LoginServlet extends HttpServlet {
 			throws ServletException, IOException {
 		HttpSession session = request.getSession();
 
-		//Controllo se l utente è già loggato e lo rimando alla pagina corretta
+		//Controllo se l utente ï¿½ giï¿½ loggato e lo rimando alla pagina corretta
 		if(session.getAttribute("ruolo")!=null) {
 			String ruolo=(String)session.getAttribute("ruolo");
 			if (ruolo.equalsIgnoreCase("capoturno")) {

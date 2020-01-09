@@ -14,6 +14,7 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
+import control.AutenticazioneException;
 import control.NotEnoughMembersException;
 import control.ScheduFIREException;
 import model.bean.ComponenteDellaSquadraBean;
@@ -242,6 +243,7 @@ public class Util {
 		List<VigileDelFuocoBean> disponibili = VigileDelFuocoDao.getDisponibili(data);
 
 		if(!ComponenteDellaSquadraDao.removeComponenti(lista) || 
+
 				!VigileDelFuocoDao.removeCaricoLavorativo(squadra)) {
 			throw new ScheduFIREException("Errore nelle query di sostituzione ferie");
 		}
@@ -274,16 +276,18 @@ public class Util {
 		Collections.sort(disponibili, (VigileDelFuocoBean v1, VigileDelFuocoBean v2) -> 
 		(v1.getCaricoLavoro() - v2.getCaricoLavoro()));
 
-		//Aggiungo il sostituto a lista e squadra se già non ne fa parte e se la sua mansione è la stessa di colui da sostituire
+		//Aggiungo il sostituto a lista e squadra se giï¿½ non ne fa parte e se la sua mansione ï¿½ la stessa di colui da sostituire
 		for(VigileDelFuocoBean sostituto : disponibili) {
 			if(sostituto.getMansione().equals(VigileDelFuocoDao.ottieni(mailVFDaSostituire).getMansione()) &&
 					!lista.contains(new ComponenteDellaSquadraBean(squadraVF, sostituto.getEmail(), data))) {
 				System.out.println("IL SOSTITUTO PIGLIATO NEL QUESTIONAMENTO E IL SIGNOR PASQUALINO DI NOME " + sostituto.getEmail());
 				lista.add(new ComponenteDellaSquadraBean(squadraVF, sostituto.getEmail(), data));
+
 				squadra.put(sostituto, squadraVF);
 				break;
 			}
 		}
+
 
 		//Salvo nel DB i cambiamenti effettuati
 		if(!ComponenteDellaSquadraDao.setComponenti(lista) ||
@@ -316,17 +320,26 @@ public class Util {
 
 	public static void isAutenticato(HttpServletRequest request) throws ScheduFIREException {
 		if(request.getSession().getAttribute("ruolo")==null)
-			throw new ScheduFIREException("ï¿½ richiesta l'autenticazione per poter accedere alle funzionalitï¿½ del sito");
+			throw new ScheduFIREException("&Egrave; richiesta l'autenticazione per poter accedere alle funzionalit&agrave; del sito.");
 
 	}
 
-	public static void isCapoTurno(HttpServletRequest request) throws ScheduFIREException {
-		if(request.getSession().getAttribute("ruolo")==null)
-			throw new ScheduFIREException("ï¿½ richiesta l'autenticazione per poter accedere alle funzionalitï¿½ del sito");
-		else {
+	public static void isCapoTurno(HttpServletRequest request) throws ScheduFIREException, AutenticazioneException {
+		if(request.getSession(false)==null) {
+			request.getSession().invalidate();
+			throw new AutenticazioneException("Richiesta l'autenticazione per poter accedere alle funzionalit&agrave; del sito.");
+
+		}
+		else if(request.getSession().getAttribute("ruolo")==null) {
+			request.getSession().invalidate();
+			throw new AutenticazioneException("Richiesta l'autenticazione per poter accedere alle funzionalit&agrave; del sito.");
+		
+		}else {
 			String ruolo=(String)request.getSession().getAttribute("ruolo");
-			if(!ruolo.equals("capoturno"))
-				throw new ScheduFIREException("Devi essere capoturno per poter accedere a questa funzionalitï¿½");
+			if(!ruolo.equals("capoturno")) {
+				request.getSession().invalidate();
+				throw new AutenticazioneException("Devi essere capoturno per poter accedere a questa funzionalit&agrave;");
+			}
 		}
 	}
 
