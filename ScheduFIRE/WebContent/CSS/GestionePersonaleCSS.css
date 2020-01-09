@@ -40,7 +40,21 @@ input {
 	background-color: #FFFFFF;
 }
 
-#titolo, #buttonFormAggiungiVF, #ordinamento, #buttonAggiungi {
+.modificaVF {
+	width: 60%;
+	margin: 0 auto;
+}
+/*
+.mansione {
+	margin-left: -30%;
+}
+
+.grado {
+	margin-top: -16.6%;
+	margin-right: -25%;
+}
+*/
+#titolo, #buttonFormAggiungiVF, #ordinamento, #buttonAggiungi, input[type="number"] {
 	display: inline-block;
 }
 
