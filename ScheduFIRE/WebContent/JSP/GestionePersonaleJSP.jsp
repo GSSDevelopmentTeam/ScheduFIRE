@@ -59,10 +59,11 @@ session.removeAttribute("risultato");
     bottom: 5%;
     right: 5%;
 }
+h4{color: #B60000;}
 </style>
 
 <body>
-<div id="inizio"></div>
+<div id="sali"></div>
 	<jsp:include page="HeaderJSP.jsp" />
 
 	<script
@@ -283,7 +284,7 @@ session.removeAttribute("risultato");
 	
 		<br>
 
-<a href="#inizio" class=" back-up"><img src="IMG/arrow/up-arrow-p.png" style="margin-left: 5px;"
+<a href="#sali" class=" back-up"><img src="IMG/arrow/up-arrow-p.png" style="margin-left: 5px;"
 					onmouseover="this.src='IMG/arrow/up-arrow-d.png'"
 					onmouseout="this.src='IMG/arrow/up-arrow-p.png'" /></a>
 
@@ -353,7 +354,7 @@ session.removeAttribute("risultato");
 		<br> <br>
 		
 		
-		<h2>Capi Squadra</h2> <br>
+		<h4>Capi Squadra</h4> <br>
 		
 		<% 
 				
@@ -391,7 +392,7 @@ session.removeAttribute("risultato");
 
 						<img src="Grado/<%=vf.getMansione().equals("Capo Squadra") && 
 						vf.getGrado().equals("Esperto")?"EspertoCapoSquadra":vf.getGrado() %>.png" 
-						width=40% onerror="this.parentElement.innerHTML='Non disponibile';"
+						 onerror="this.parentElement.innerHTML='Non disponibile';"
 						title = <%= vf.getGrado() %>>
 						
 						</td>
@@ -760,7 +761,7 @@ session.removeAttribute("risultato");
 		
 		%>
 		
-		<h2>Autisti</h2> <br>
+		<h4>Autisti</h4> <br>
 		
 		<% 
 
@@ -796,7 +797,7 @@ session.removeAttribute("risultato");
 
 						<img src="Grado/<%=vf.getMansione().equals("Capo Squadra") && 
 						vf.getGrado().equals("Esperto")?"EspertoCapoSquadra":vf.getGrado() %>.png" 
-						width=40% onerror="this.parentElement.innerHTML='Non disponibile';"
+						 onerror="this.parentElement.innerHTML='Non disponibile';"
 						title = <%= vf.getGrado() %>>
 						
 						</td>
@@ -1165,7 +1166,7 @@ session.removeAttribute("risultato");
 		
 		%>
 		
-		<h2>Vigili</h2>
+		<h4>Vigili</h4>
 		
 		<% 
 
@@ -1201,7 +1202,7 @@ session.removeAttribute("risultato");
 
 						<img src="Grado/<%=vf.getMansione().equals("Capo Squadra") && 
 						vf.getGrado().equals("Esperto")?"EspertoCapoSquadra":vf.getGrado() %>.png" 
-						width=40% onerror="this.parentElement.innerHTML='Non disponibile';"
+						 onerror="this.parentElement.innerHTML='Non disponibile';"
 						title = <%= vf.getGrado() %>>
 						
 						</td>

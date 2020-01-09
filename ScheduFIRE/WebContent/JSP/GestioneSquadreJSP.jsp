@@ -138,9 +138,7 @@ h2 {
 				%>
 
 				<tr>
-					<td class="text-center"><img
-						src="Grado/<%=membro.getGrado()%>.png" style="height: 25%"
-						onerror="this.parentElement.innerHTML='Non disponibile';"></td>
+					<td class="text-center"><img src="Grado/<%=membro.getMansione().equals("Capo Squadra") && membro.getGrado().equals("Esperto")?"EspertoCapoSquadra":membro.getGrado() %>.png" title="<%=membro.getGrado() %>" onerror="this.parentElement.innerHTML='Non disponibile';"></td>
 					<td class="text-center"><%=membro.getMansione()%></td>
 					<td class="text-center"><strong><%=membro.getNome()%></strong></td>
 					<td class="text-center"><strong><%=membro.getCognome()%></strong></td>
@@ -186,9 +184,7 @@ h2 {
 				%>
 
 				<tr>
-					<td class="text-center"><img
-						src="Grado/<%=membro.getGrado()%>.png" style="height: 25%"
-						onerror="this.parentElement.innerHTML='Non disponibile';"></td>
+					<td class="text-center"><img src="Grado/<%=membro.getMansione().equals("Capo Squadra") && membro.getGrado().equals("Esperto")?"EspertoCapoSquadra":membro.getGrado() %>.png" title="<%=membro.getGrado() %>" onerror="this.parentElement.innerHTML='Non disponibile';"></td>
 					<td class="text-center"><%=membro.getMansione()%></td>
 					<td class="text-center"><strong><%=membro.getNome()%></strong></td>
 					<td class="text-center"><strong><%=membro.getCognome()%></strong></td>
@@ -234,9 +230,7 @@ h2 {
 				%>
 
 				<tr>
-					<td class="text-center"><img
-						src="Grado/<%=membro.getGrado()%>.png" style="height: 25%"
-						onerror="this.parentElement.innerHTML='Non disponibile';"></td>
+					<td class="text-center"><img src="Grado/<%=membro.getMansione().equals("Capo Squadra") && membro.getGrado().equals("Esperto")?"EspertoCapoSquadra":membro.getGrado() %>.png" title="<%=membro.getGrado() %>" onerror="this.parentElement.innerHTML='Non disponibile';"></td>
 					<td class="text-center"><%=membro.getMansione()%></td>
 					<td class="text-center"><strong><%=membro.getNome()%></strong></td>
 					<td class="text-center"><strong><%=membro.getCognome()%></strong></td>
@@ -282,9 +276,7 @@ h2 {
 				%>
 
 				<tr>
-					<td class="text-center"><img
-						src="Grado/<%=membro.getGrado()%>.png" style="height: 25%"
-						onerror="this.parentElement.innerHTML='Non disponibile';"></td>
+					<td class="text-center"><img src="Grado/<%=membro.getMansione().equals("Capo Squadra") && membro.getGrado().equals("Esperto")?"EspertoCapoSquadra":membro.getGrado() %>.png" title="<%=membro.getGrado() %>" onerror="this.parentElement.innerHTML='Non disponibile';"></td>
 					<td class="text-center"><%=membro.getMansione()%></td>
 					<td class="text-center"><strong><%=membro.getNome()%></strong></td>
 					<td class="text-center"><strong><%=membro.getCognome()%></strong></td>
@@ -348,9 +340,7 @@ h2 {
 				%>
 
 				<tr>
-					<td class="text-center"><img
-						src="Grado/<%=membro.getGrado()%>.png" style="height: 25%"
-						onerror="this.parentElement.innerHTML='Non disponibile';"></td>
+					<td class="text-center"><img src="Grado/<%=membro.getMansione().equals("Capo Squadra") && membro.getGrado().equals("Esperto")?"EspertoCapoSquadra":membro.getGrado() %>.png" title="<%=membro.getGrado() %>" onerror="this.parentElement.innerHTML='Non disponibile';"></td>
 					<td class="text-center"><%=membro.getMansione()%></td>
 					<td class="text-center"><strong><%=membro.getNome()%></strong></td>
 					<td class="text-center"><strong><%=membro.getCognome()%></strong></td>
@@ -396,9 +386,7 @@ h2 {
 				%>
 
 				<tr>
-					<td class="text-center"><img
-						src="Grado/<%=membro.getGrado()%>.png" style="height: 25%"
-						onerror="this.parentElement.innerHTML='Non disponibile';"></td>
+					<td class="text-center"><img src="Grado/<%=membro.getMansione().equals("Capo Squadra") && membro.getGrado().equals("Esperto")?"EspertoCapoSquadra":membro.getGrado() %>.png" title="<%=membro.getGrado() %>" onerror="this.parentElement.innerHTML='Non disponibile';"></td>
 					<td class="text-center"><%=membro.getMansione()%></td>
 					<td class="text-center"><strong><%=membro.getNome()%></strong></td>
 					<td class="text-center"><strong><%=membro.getCognome()%></strong></td>
@@ -444,9 +432,7 @@ h2 {
 				%>
 
 				<tr>
-					<td class="text-center"><img
-						src="Grado/<%=mb.getGrado()%>.png" style="height: 25%"
-						onerror="this.parentElement.innerHTML='Non disponibile';"></td>
+					<td class="text-center"><img src="Grado/<%=mb.getMansione().equals("Capo Squadra") && mb.getGrado().equals("Esperto")?"EspertoCapoSquadra":mb.getGrado() %>.png" title="<%=mb.getGrado() %>" onerror="this.parentElement.innerHTML='Non disponibile';"></td>
 					<td class="text-center"><%=mb.getMansione()%></td>
 					<td class="text-center"><strong><%=mb.getNome()%></strong></td>
 					<td class="text-center"><strong><%=mb.getCognome()%></strong></td>
@@ -492,9 +478,7 @@ h2 {
 				%>
 
 				<tr>
-					<td class="text-center"><img
-						src="Grado/<%=membro.getGrado()%>.png" style="height: 25%"
-						onerror="this.parentElement.innerHTML='Non disponibile';"></td>
+					<td class="text-center"><img src="Grado/<%=membro.getMansione().equals("Capo Squadra") && membro.getGrado().equals("Esperto")?"EspertoCapoSquadra":membro.getGrado() %>.png" title="<%=membro.getGrado() %>" onerror="this.parentElement.innerHTML='Non disponibile';"></td>
 					<td class="text-center"><%=membro.getMansione()%></td>
 					<td class="text-center"><strong><%=membro.getNome()%></strong></td>
 					<td class="text-center"><strong><%=membro.getCognome()%></strong></td>

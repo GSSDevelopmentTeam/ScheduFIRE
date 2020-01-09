@@ -37,7 +37,7 @@ min-width: 265px;
 }
 	</style>
 	<body>
-	<a href="#inizio" class=" back-up"><img src="IMG/arrow/up-arrow-p.png" style="margin-left: 5px;"
+	<a href="#sali" class=" back-up"><img src="IMG/arrow/up-arrow-p.png" style="margin-left: 5px;"
 					onmouseover="this.src='IMG/arrow/up-arrow-d.png'"
 					onmouseout="this.src='IMG/arrow/up-arrow-p.png'" /></a>
 	<!-- Modal di aggiunta malattia-->
@@ -157,7 +157,7 @@ min-width: 265px;
 </div>
 	
 	<!-- Barra Navigazione -->
-	<div id="inizio"></div>
+	<div id="sali"></div>
 	<jsp:include page="HeaderJSP.jsp" />
 	<h2 class="d-flex  justify-content-center" style="margin-top:3% ;color:#B60000!Important" >Gestione Malattie</h2>
 
@@ -212,7 +212,6 @@ min-width: 265px;
 			<thead class="thead-dark">
 				<tr>
 					<th class="text-center"width = 14.28%>Grado</th>
-					<th class="text-center"width = 14.28%>Mansione</th>
 					<th class="text-center"width = 14.28%>Nome</th>
 					<th class="text-center"width = 14.28%>Cognome</th>
 					<th class="text-center"width = 14.28%>Email</th>
@@ -234,10 +233,7 @@ min-width: 265px;
 
 					
 					<tr>
-						<td class="text-center"><img
-						src="Grado/<%=vigile.getGrado()%>.png" width=25%
-						onerror="this.parentElement.innerHTML='Non disponibile';"></td>
-						<td class="text-center"><%=vigile.getMansione()%></td>
+						<td class="text-center"><img src="Grado/<%=vigile.getMansione().equals("Capo Squadra") && vigile.getGrado().equals("Esperto")?"EspertoCapoSquadra":vigile.getGrado() %>.png" title="<%=vigile.getGrado() %>" onerror="this.parentElement.innerHTML='Non disponibile';"></td>
 						<td class="text-center"><strong><%=vigile.getNome() %></strong></td>
 
 			            <td class="text-center"><strong><%=vigile.getCognome()%></strong></td>
@@ -270,7 +266,6 @@ min-width: 265px;
 			<thead class="thead-dark">
 				<tr>
 					<th class="text-center"width = 14.28%>Grado</th>
-					<th class="text-center"width = 14.28%>Mansione</th>
 					<th class="text-center"width = 14.28%>Nome</th>
 					<th class="text-center"width = 14.28%>Cognome</th>
 					<th class="text-center"width = 14.28%>Email</th>
@@ -290,9 +285,8 @@ min-width: 265px;
 					
 					<tr>
 						<td class="text-center"><img
-						src="Grado/<%=vigile.getGrado()%>.png" width=25%
+						src="Grado/<%=vigile.getGrado()%>.png" title="<%=vigile.getGrado() %>"
 						onerror="this.parentElement.innerHTML='Non disponibile';"></td>
-						<td class="text-center"><%=vigile.getMansione()%></td>
 						<td class="text-center"><strong><%=vigile.getNome() %></strong></td>
 
 			            <td class="text-center"><strong><%=vigile.getCognome()%></strong></td>
@@ -325,7 +319,6 @@ min-width: 265px;
 			<thead class="thead-dark">
 				<tr>
 					<th class="text-center"width = 14.28%>Grado</th>
-					<th class="text-center"width = 14.28%>Mansione</th>
 					<th class="text-center"width = 14.28%>Nome</th>
 					<th class="text-center"width = 14.28%>Cognome</th>
 					<th class="text-center"width = 14.28%>Email</th>
@@ -345,11 +338,9 @@ min-width: 265px;
 					
 					<tr>
 						<td class="text-center"><img
-						src="Grado/<%=vigile.getGrado()%>.png" width=25%
+						src="Grado/<%=vigile.getGrado()%>.png" title="<%=vigile.getGrado() %>"
 						onerror="this.parentElement.innerHTML='Non disponibile';"></td>
-						<td class="text-center"><%=vigile.getMansione()%></td>
 						<td class="text-center"><strong><%=vigile.getNome() %></strong></td>
-
 			            <td class="text-center"><strong><%=vigile.getCognome()%></strong></td>
 						<td class="text-center"><%=vigile.getEmail() %></td>
 
