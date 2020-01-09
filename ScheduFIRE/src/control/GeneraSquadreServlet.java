@@ -166,6 +166,10 @@ public class GeneraSquadreServlet extends HttpServlet {
 
 				//SendMail.sendMail(data, squadraDiurno, squadraNotturno);
 
+				//sessione.removeAttribute("squadraDiurno");
+				//sessione.removeAttribute("squadraNotturno");
+
+
 				response.sendRedirect("HomeCTServlet");
 				return;
 
@@ -209,8 +213,6 @@ public class GeneraSquadreServlet extends HttpServlet {
 					nonDisponibile=true;
 			}
 			if(nonDisponibile) {
-				sessione.removeAttribute("squadraDiurno");
-				sessione.removeAttribute("squadraNotturno");
 				request.getRequestDispatcher("GeneraSquadreServlet").forward(request, response);
 				return;
 			}

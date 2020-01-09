@@ -1,7 +1,8 @@
+<%@page import="java.time.format.DateTimeFormatter"%>
 <%@page import="java.util.HashMap"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@page import="java.util.*, model.bean.*, model.dao.*"%>
+<%@page import="java.util.*, model.bean.*, model.dao.*, java.sql.Date"%>
 <!DOCTYPE html>
 <html>
 <jsp:include page="StandardJSP.jsp" />
@@ -108,7 +109,7 @@ h2 {
 	<!-- SQUADRA DIURNA -->
 	<div class="d-flex justify-content-center">
 		<h2 id="Giorno" style="font-weight: bold; font-size: 36px;">Squadra
-			Diurna <%=giorno %></h2>
+			Diurna del <%=giorno.toLocalDate().format(DateTimeFormatter.ofPattern("dd MMMM YYYY", new Locale("it", "IT"))) %></h2>
 	</div>
 	<p class="d-flex justify-content-center"></p>
 	<div class="d-flex justify-content-center">
@@ -138,9 +139,7 @@ h2 {
 				%>
 
 				<tr>
-					<td class="text-center"><img
-						src="Grado/<%=membro.getGrado()%>.png" style="height: 25%"
-						onerror="this.parentElement.innerHTML='Non disponibile';"></td>
+					<td class="text-center"><img src="Grado/<%=membro.getMansione().equals("Capo Squadra") && membro.getGrado().equals("Esperto")?"EspertoCapoSquadra":membro.getGrado() %>.png" title="<%=membro.getGrado() %>" onerror="this.parentElement.innerHTML='Non disponibile';"></td>
 					<td class="text-center"><%=membro.getMansione()%></td>
 					<td class="text-center"><strong><%=membro.getNome()%></strong></td>
 					<td class="text-center"><strong><%=membro.getCognome()%></strong></td>
@@ -186,9 +185,7 @@ h2 {
 				%>
 
 				<tr>
-					<td class="text-center"><img
-						src="Grado/<%=membro.getGrado()%>.png" style="height: 25%"
-						onerror="this.parentElement.innerHTML='Non disponibile';"></td>
+					<td class="text-center"><img src="Grado/<%=membro.getMansione().equals("Capo Squadra") && membro.getGrado().equals("Esperto")?"EspertoCapoSquadra":membro.getGrado() %>.png" title="<%=membro.getGrado() %>" onerror="this.parentElement.innerHTML='Non disponibile';"></td>
 					<td class="text-center"><%=membro.getMansione()%></td>
 					<td class="text-center"><strong><%=membro.getNome()%></strong></td>
 					<td class="text-center"><strong><%=membro.getCognome()%></strong></td>
@@ -234,9 +231,7 @@ h2 {
 				%>
 
 				<tr>
-					<td class="text-center"><img
-						src="Grado/<%=membro.getGrado()%>.png" style="height: 25%"
-						onerror="this.parentElement.innerHTML='Non disponibile';"></td>
+					<td class="text-center"><img src="Grado/<%=membro.getMansione().equals("Capo Squadra") && membro.getGrado().equals("Esperto")?"EspertoCapoSquadra":membro.getGrado() %>.png" title="<%=membro.getGrado() %>" onerror="this.parentElement.innerHTML='Non disponibile';"></td>
 					<td class="text-center"><%=membro.getMansione()%></td>
 					<td class="text-center"><strong><%=membro.getNome()%></strong></td>
 					<td class="text-center"><strong><%=membro.getCognome()%></strong></td>
@@ -282,15 +277,13 @@ h2 {
 				%>
 
 				<tr>
-					<td class="text-center"><img
-						src="Grado/<%=membro.getGrado()%>.png" style="height: 25%"
-						onerror="this.parentElement.innerHTML='Non disponibile';"></td>
+					<td class="text-center"><img src="Grado/<%=membro.getMansione().equals("Capo Squadra") && membro.getGrado().equals("Esperto")?"EspertoCapoSquadra":membro.getGrado() %>.png" title="<%=membro.getGrado() %>" onerror="this.parentElement.innerHTML='Non disponibile';"></td>
 					<td class="text-center"><%=membro.getMansione()%></td>
 					<td class="text-center"><strong><%=membro.getNome()%></strong></td>
 					<td class="text-center"><strong><%=membro.getCognome()%></strong></td>
 					<td class="text-center"><button type="button"
 							class="btn btn-outline-secondary" data-toggle="modal"
-							data-target="#aggiungiVF" id="aggiungiVF"
+							data-target="#aggiungiVF" id="aggiungiVF" id="agg"
 							onClick='apriFormVF("<%=membro.getEmail()%>","<%=membro.getMansione()%>","1","<%=giorno%>")'>Sostituisci</button></td>
 					</td>
 				</tr>
@@ -318,7 +311,7 @@ h2 {
 	<!-- SQUADRA NOTTURNA -->
 	<div class="d-flex justify-content-center">
 		<h2 id="Notte" style="font-weight: bold; font-size: 36px;">Squadra
-			Notturna <%=notte %></h2>
+			Notturna del <%=notte.toLocalDate().format(DateTimeFormatter.ofPattern("dd MMMM YYYY", new Locale("it", "IT"))) %></h2>
 	</div>
 	<p class="d-flex justify-content-center"></p>
 	<div class="d-flex justify-content-center">
@@ -348,9 +341,7 @@ h2 {
 				%>
 
 				<tr>
-					<td class="text-center"><img
-						src="Grado/<%=membro.getGrado()%>.png" style="height: 25%"
-						onerror="this.parentElement.innerHTML='Non disponibile';"></td>
+					<td class="text-center"><img src="Grado/<%=membro.getMansione().equals("Capo Squadra") && membro.getGrado().equals("Esperto")?"EspertoCapoSquadra":membro.getGrado() %>.png" title="<%=membro.getGrado() %>" onerror="this.parentElement.innerHTML='Non disponibile';"></td>
 					<td class="text-center"><%=membro.getMansione()%></td>
 					<td class="text-center"><strong><%=membro.getNome()%></strong></td>
 					<td class="text-center"><strong><%=membro.getCognome()%></strong></td>
@@ -396,9 +387,7 @@ h2 {
 				%>
 
 				<tr>
-					<td class="text-center"><img
-						src="Grado/<%=membro.getGrado()%>.png" style="height: 25%"
-						onerror="this.parentElement.innerHTML='Non disponibile';"></td>
+					<td class="text-center"><img src="Grado/<%=membro.getMansione().equals("Capo Squadra") && membro.getGrado().equals("Esperto")?"EspertoCapoSquadra":membro.getGrado() %>.png" title="<%=membro.getGrado() %>" onerror="this.parentElement.innerHTML='Non disponibile';"></td>
 					<td class="text-center"><%=membro.getMansione()%></td>
 					<td class="text-center"><strong><%=membro.getNome()%></strong></td>
 					<td class="text-center"><strong><%=membro.getCognome()%></strong></td>
@@ -444,9 +433,7 @@ h2 {
 				%>
 
 				<tr>
-					<td class="text-center"><img
-						src="Grado/<%=mb.getGrado()%>.png" style="height: 25%"
-						onerror="this.parentElement.innerHTML='Non disponibile';"></td>
+					<td class="text-center"><img src="Grado/<%=mb.getMansione().equals("Capo Squadra") && mb.getGrado().equals("Esperto")?"EspertoCapoSquadra":mb.getGrado() %>.png" title="<%=mb.getGrado() %>" onerror="this.parentElement.innerHTML='Non disponibile';"></td>
 					<td class="text-center"><%=mb.getMansione()%></td>
 					<td class="text-center"><strong><%=mb.getNome()%></strong></td>
 					<td class="text-center"><strong><%=mb.getCognome()%></strong></td>
@@ -492,15 +479,13 @@ h2 {
 				%>
 
 				<tr>
-					<td class="text-center"><img
-						src="Grado/<%=membro.getGrado()%>.png" style="height: 25%"
-						onerror="this.parentElement.innerHTML='Non disponibile';"></td>
+					<td class="text-center"><img src="Grado/<%=membro.getMansione().equals("Capo Squadra") && membro.getGrado().equals("Esperto")?"EspertoCapoSquadra":membro.getGrado() %>.png" title="<%=membro.getGrado() %>" onerror="this.parentElement.innerHTML='Non disponibile';"></td>
 					<td class="text-center"><%=membro.getMansione()%></td>
 					<td class="text-center"><strong><%=membro.getNome()%></strong></td>
 					<td class="text-center"><strong><%=membro.getCognome()%></strong></td>
 					<td class="text-center"><button type="button"
 							class="btn btn-outline-secondary" data-toggle="modal"
-							data-target="#aggiungiVF" id="aggiungiVF"
+							data-target="#aggiungiVF" id="aggiungiVF" 
 							onClick='apriFormVF("<%=membro.getEmail()%>","<%=membro.getMansione()%>","2","<%=notte%>")'>Sostituisci</button></td>
 					</td>
 				</tr>
@@ -556,6 +541,7 @@ h2 {
 					"dataModifica" : dt
 				},
 				success : function(response) {//Operazione da eseguire una volta terminata la chiamata alla servlet.
+					$("#agg").prop("disabled",true);
 					$("#appendElenco").remove();
 					$("<div id='appendElenco'></div>").appendTo("#elenco");
 					$(response).appendTo("#appendElenco");
@@ -575,10 +561,10 @@ h2 {
 		}
 		
 		function attivapulsante(){
-
 			$("#agg").prop("disabled",false);
-
 		}
+		
+
 	</script>
 
 
