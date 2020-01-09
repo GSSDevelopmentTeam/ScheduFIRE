@@ -32,7 +32,7 @@
 </head>
 <body>
 
-
+<div id="inizio"></div>
 	<!-- Barra Navigazione -->
 	<jsp:include page="HeaderJSP.jsp" />
 	
@@ -60,9 +60,7 @@
 					%>
 					<option value="nome" selected>Nome</option>
 					<option value="cognome">Cognome</option>
-					<option value="mansione">Mansione</option>
 					<option value="grado">Grado</option>
-
 					<option value="giorniFerie">Ferie</option>
 					
 					
@@ -71,25 +69,14 @@
 						%>
 					<option value="nome" >Nome</option>
 					<option value="cognome" selected>Cognome</option>
-					<option value="mansione">Mansione</option>
 					<option value="grado">Grado</option>
-
 					<option value="giorniFerie">Ferie</option>
-					<%
-						} else if( ordinamento.equals("mansione") ) {		
-						%>
-					<option value="nome">Nome</option>
-					<option value="cognome">Cognome</option>
-					<option value="mansione"selected>Mansione</option>
-					<option value="grado">Grado</option>
-
-					<option value="giorniFerie">Ferie</option>
+					
 					<%
 						} else if( ordinamento.equals("grado") ) {		
 						%>
 					<option value="nome" >Nome</option>
 					<option value="cognome">Cognome</option>
-					<option value="mansione">Mansione</option>
 					<option value="grado" selected>Grado</option>
 
 					<option value="giorniFerie">Ferie</option>
@@ -98,7 +85,6 @@
 						%>
 					<option value="nome" >Nome</option>
 					<option value="cognome">Cognome</option>
-					<option value="mansione">Mansione</option>
 					<option value="grado">Grado</option>
 					<option value="giorniFerie" selected>Ferie</option>
 					<%
@@ -110,7 +96,6 @@
 					
 					<option value="nome" >Nome</option>
 					<option value="cognome"selected>Cognome</option>
-					<option value="mansione">Mansione</option>
 					<option value="grado">Grado</option>
 
 					<option value="giorniFerie">Ferie</option>
@@ -328,14 +313,13 @@
 
 	<div class="table-responsive">
 	
-		<h4 class="d-flex justify-content-center" id="inizio"
+		<h4 class="d-flex justify-content-center" 
 		style="margin-top: 0%; color: #B60000 !Important ">Capi Squadra</h4>
 		
 		<table class="table  table-hover listaVigili" style="table-layout: fixed">
 			<thead class="thead-dark">
 				<tr>
 					<th class=" text-center">Grado</th>
-					<th class="text-center">Mansione</th>
 					<th class="text-center">Nome</th>
 					<th class="text-center">Cognome</th>
 					<th class="text-center">Email</th>
@@ -361,7 +345,6 @@
 					<td class="text-center"><img
 						src="Grado/<%=vigile.getGrado()%>.png" width=30%
 						onerror="this.parentElement.innerHTML='Non disponibile';"></td>
-					<td class="text-center"><%=vigile.getMansione()%></td>
 					<td class="text-center"><strong><%=vigile.getNome()%></strong></td>
 					<td class="text-center"><strong><%=vigile.getCognome()%></strong></td>
 					<td class="text-center"><%=vigile.getEmail()%></td>
@@ -394,7 +377,6 @@
 			<thead class="thead-dark">
 				<tr>
 					<th class=" text-center">Grado</th>
-					<th class="text-center">Mansione</th>
 					<th class="text-center">Nome</th>
 					<th class="text-center">Cognome</th>
 					<th class="text-center">Email</th>
@@ -417,7 +399,6 @@
 					<td class="text-center"><img
 						src="Grado/<%=vigile.getGrado()%>.png" width=30%
 						onerror="this.parentElement.innerHTML='Non disponibile';"></td>
-					<td class="text-center"><%=vigile.getMansione()%></td>
 					<td class="text-center"><strong><%=vigile.getNome()%></strong></td>
 					<td class="text-center"><strong><%=vigile.getCognome()%></strong></td>
 					<td class="text-center"><%=vigile.getEmail()%></td>
@@ -450,7 +431,6 @@
 			<thead class="thead-dark">
 				<tr>
 					<th class=" text-center">Grado</th>
-					<th class="text-center">Mansione</th>
 					<th class="text-center">Nome</th>
 					<th class="text-center">Cognome</th>
 					<th class="text-center">Email</th>
@@ -473,7 +453,6 @@
 					<td class="text-center"><img
 						src="Grado/<%=vigile.getGrado()%>.png" width=30%
 						onerror="this.parentElement.innerHTML='Non disponibile';"></td>
-					<td class="text-center"><%=vigile.getMansione()%></td>
 					<td class="text-center"><strong><%=vigile.getNome()%></strong></td>
 					<td class="text-center"><strong><%=vigile.getCognome()%></strong></td>
 					<td class="text-center"><%=vigile.getEmail()%></td>
