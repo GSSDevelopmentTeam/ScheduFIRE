@@ -179,7 +179,6 @@ min-width: 265px;
 					%>
 					<option value="nome" selected>Nome</option>
 					<option value="cognome">Cognome</option>
-					<option value="mansione">mansione</option>
 					<option value="grado">grado</option>
 					
 					<%
@@ -187,21 +186,12 @@ min-width: 265px;
 						%>
 					<option value="nome">Nome</option>
 					<option value="cognome" selected>Cognome</option>
-					<option value="mansione">mansione</option>
 					<option value="grado">grado</option>
 					<%
-						} else if( ordinamento.equals("mansione") ) {		
+						}  else if( ordinamento.equals("grado") ) {		
 						%>
 					<option value="nome">Nome</option>
 					<option value="cognome">Cognome</option>
-					<option value="mansione" selected>mansione</option>
-					<option value="grado">grado</option>
-					<%
-						} else if( ordinamento.equals("grado") ) {		
-						%>
-					<option value="nome">Nome</option>
-					<option value="cognome">Cognome</option>
-					<option value="mansione">mansione</option>
 					<option value="grado" selected>grado</option>
 					<%}
 					}%>
@@ -214,6 +204,10 @@ min-width: 265px;
 	
 	<!-- body aggiungi malattia -->
 	<div class="table-responsive" >
+	
+	<h4 class="d-flex justify-content-center" id="inizio"
+		style="margin-top: 0%; color: #B60000 !Important ">Capi Squadra</h4>
+	
 		<table class="table  table-hover" id="listaVigili">
 			<thead class="thead-dark">
 				<tr>
@@ -228,12 +222,16 @@ min-width: 265px;
 			</thead>
 				
 				<tbody>
-				 <%	ArrayList<VigileDelFuocoBean> listaVigili;
-						listaVigili= (ArrayList<VigileDelFuocoBean>) request.getAttribute("listaVigili");
+				 <%
+					ArrayList<VigileDelFuocoBean> listaVigili;
+					listaVigili = (ArrayList<VigileDelFuocoBean>) request.getAttribute("listaVigili");
+
+					for (int i = 0; i < listaVigili.size(); i++) {
+						VigileDelFuocoBean vigile = listaVigili.get(i);
 						
-						for(int i=0; i<listaVigili.size(); i++){
-							VigileDelFuocoBean vigile = listaVigili.get(i);
-					%>
+						if(vigile.getMansione().toUpperCase().equals("CAPO SQUADRA")){
+				%>
+
 					
 					<tr>
 						<td class="text-center"><img
@@ -255,7 +253,120 @@ min-width: 265px;
 							Malattia</button></td>
 					</tr>
 		
-<% } %> 				
+				<%
+						}
+					}
+				%>				
+				
+				</tbody>
+			
+			</table>
+			
+			<h4 class="d-flex justify-content-center" id="inizio"
+		style="margin-top: 1%; color: #B60000 !Important ">Autisti</h4>
+
+	
+		<table class="table  table-hover" id="listaVigili">
+			<thead class="thead-dark">
+				<tr>
+					<th class="text-center"width = 14.28%>Grado</th>
+					<th class="text-center"width = 14.28%>Mansione</th>
+					<th class="text-center"width = 14.28%>Nome</th>
+					<th class="text-center"width = 14.28%>Cognome</th>
+					<th class="text-center"width = 14.28%>Email</th>
+					<th class="text-center"width = 14.28%>Inserisci Malattia</th>
+					<th class="text-center"width = 14.28%>Rimuovi Malattia</th>
+				</tr>
+			</thead>
+				
+				<tbody>
+				 <%
+					for (int i = 0; i < listaVigili.size(); i++) {
+						VigileDelFuocoBean vigile = listaVigili.get(i);
+						
+						if(vigile.getMansione().toUpperCase().equals("AUTISTA")){
+				%>
+
+					
+					<tr>
+						<td class="text-center"><img
+						src="Grado/<%=vigile.getGrado()%>.png" width=25%
+						onerror="this.parentElement.innerHTML='Non disponibile';"></td>
+						<td class="text-center"><%=vigile.getMansione()%></td>
+						<td class="text-center"><strong><%=vigile.getNome() %></strong></td>
+
+			            <td class="text-center"><strong><%=vigile.getCognome()%></strong></td>
+						<td class="text-center"><%=vigile.getEmail() %></td>
+
+						<td class="text-center"><button class="pass btn btn-outline-secondary" 
+						data-toggle="modal" data-target="#aggiungiMalattia"
+						onClick='apriFormAggiunta("<%=vigile.getEmail()%>")'>Aggiungi Malattia</button></td>
+						<td class="text-center"><button type="button"
+							class="btn btn-outline-danger" data-toggle="modal"
+							data-target="#rimuoviMalattia"
+							onClick='apriFormRimozione("<%=vigile.getEmail()%>")'>Rimuovi
+							Malattia</button></td>
+					</tr>
+		
+				<%
+						}
+					}
+				%>						
+				
+				</tbody>
+			
+			</table>
+			
+			<h4 class="d-flex justify-content-center" id="inizio"
+		style="margin-top: 1%; color: #B60000 !Important ">Vigili</h4>
+
+	
+		<table class="table  table-hover" id="listaVigili">
+			<thead class="thead-dark">
+				<tr>
+					<th class="text-center"width = 14.28%>Grado</th>
+					<th class="text-center"width = 14.28%>Mansione</th>
+					<th class="text-center"width = 14.28%>Nome</th>
+					<th class="text-center"width = 14.28%>Cognome</th>
+					<th class="text-center"width = 14.28%>Email</th>
+					<th class="text-center"width = 14.28%>Inserisci Malattia</th>
+					<th class="text-center"width = 14.28%>Rimuovi Malattia</th>
+				</tr>
+			</thead>
+				
+				<tbody>
+				 <%
+					for (int i = 0; i < listaVigili.size(); i++) {
+						VigileDelFuocoBean vigile = listaVigili.get(i);
+						
+						if(vigile.getMansione().toUpperCase().equals("VIGILE")){
+				%>
+
+					
+					<tr>
+						<td class="text-center"><img
+						src="Grado/<%=vigile.getGrado()%>.png" width=25%
+						onerror="this.parentElement.innerHTML='Non disponibile';"></td>
+						<td class="text-center"><%=vigile.getMansione()%></td>
+						<td class="text-center"><strong><%=vigile.getNome() %></strong></td>
+
+			            <td class="text-center"><strong><%=vigile.getCognome()%></strong></td>
+						<td class="text-center"><%=vigile.getEmail() %></td>
+
+						<td class="text-center"><button class="pass btn btn-outline-secondary" 
+						data-toggle="modal" data-target="#aggiungiMalattia"
+						onClick='apriFormAggiunta("<%=vigile.getEmail()%>")'>Aggiungi Malattia</button></td>
+						<td class="text-center"><button type="button"
+							class="btn btn-outline-danger" data-toggle="modal"
+							data-target="#rimuoviMalattia"
+							onClick='apriFormRimozione("<%=vigile.getEmail()%>")'>Rimuovi
+							Malattia</button></td>
+					</tr>
+		
+				<%
+						}
+					}
+				%>						
 				
 				</tbody>
 			

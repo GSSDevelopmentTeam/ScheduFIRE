@@ -57,15 +57,15 @@ public class GestioneFerieServlet extends HttpServlet {
 		if(request.getParameter("JSON")!=null && request.getParameter("aggiunta")!=null ) {
 			String email=request.getParameter("email");
 			
-			//giorni di malattia già concesse
+			//giorni di malattia giï¿½ concesse
 			List<GiorniMalattiaBean> giorniMalattia = GiorniMalattiaDao.ottieniMalattie(email);
-			//giorni di ferie già concesse
+			//giorni di ferie giï¿½ concesse
 			List<FerieBean> ferie=FerieDao.ottieniFerieConcesse(email);
 			
 			
 			JSONArray array = new JSONArray();
 			
-			//inserisco nell'array i giorni di ferie già concesse 
+			//inserisco nell'array i giorni di ferie giï¿½ concesse 
 			for(FerieBean ferieBean:ferie) {
 
 				JSONArray arrayrange = new JSONArray();
@@ -73,7 +73,7 @@ public class GestioneFerieServlet extends HttpServlet {
 				arrayrange.put(ferieBean.getDataFine().toLocalDate().plusDays(1));
 				array.put(arrayrange);
 			}
-			//inserisco nell'array i giorni di malattia già concesse 
+			//inserisco nell'array i giorni di malattia giï¿½ concesse 
 			for(GiorniMalattiaBean giorniMalattiaBean:giorniMalattia) {
 		
 				JSONArray arrayrange = new JSONArray();

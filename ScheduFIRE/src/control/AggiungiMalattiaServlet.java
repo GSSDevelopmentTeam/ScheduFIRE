@@ -88,8 +88,21 @@ public class AggiungiMalattiaServlet extends HttpServlet {
 					malattia.setEmailVF(emailVF);
 					JSONArray array = new JSONArray();
 					
-					if(ComponenteDellaSquadraDao.isComponente(emailVF, dataInizio)) 
+					
+					
+					//notifica il CT se il Vigile è gia schedulato al momento dell'aggiunta della malattia
+					int numeroGiorniLavorativi = 0;
+					
+					while(inizioMalattia.compareTo(fineMalattia)<=0) {
+						if (GiornoLavorativo.isLavorativo(Date.valueOf(inizioMalattia)))
+							numeroGiorniLavorativi++;
+						inizioMalattia=((LocalDate) inizioMalattia).plusDays(1);
+					}
+					
+					for(int i = 0;i<numeroGiorniLavorativi; i++) {
+						if(ComponenteDellaSquadraDao.isComponente(emailVF, dataInizio)) 
 						Notifiche.update(Notifiche.UPDATE_SQUADRE_PER_MALATTIA, dataInizio, dataFine, emailVF);
+						}
 					
 				   if(GiorniMalattiaDao.addMalattia(malattia) == true) 
 					  array.put(true);
