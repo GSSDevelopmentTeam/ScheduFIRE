@@ -75,12 +75,15 @@ public class AggiungiFerieServlet extends HttpServlet {
 		
 		//Aggiornamento notifiche
 		Notifiche.update(Notifiche.UPDATE_PER_FERIE, dataInizio, dataFine, emailVF);
+		
+		int numeroGiorniPeriodo = 0;
 
 		//Conteggio del numero di giorni lavorativi presenti nel periodo di ferie  
 		while(inizio.compareTo(fine)<=0) {
 			if (GiornoLavorativo.isLavorativo(Date.valueOf(inizio)))
 				numeroGiorniFerie++;
 			inizio=inizio.plusDays(1);
+			numeroGiorniPeriodo++;
 		}
 		
 		/**
@@ -114,11 +117,14 @@ public class AggiungiFerieServlet extends HttpServlet {
 				 */
 				int i=0;
 				boolean componente = false;
+				//Date sostituzione = null;
 				
-				while(i<numeroGiorniFerie) {
+				
+				while(i < numeroGiorniPeriodo) {
 					if(ComponenteDellaSquadraDao.isComponente(emailVF, dataInizio)) { 
 						componente = true;
-						i++;
+						//sostituzione = (Date) dataInizio.clone();
+						break;
 					}
 					else{
 						dataInizio = Date.valueOf(dataInizio.toLocalDate().plusDays(1));
@@ -128,6 +134,10 @@ public class AggiungiFerieServlet extends HttpServlet {
 				
 				if(componente)
 					Notifiche.update(Notifiche.UPDATE_SQUADRE_PER_FERIE, dataInizio, dataFine, emailVF);
+				
+				//Util.sostituisciVigile(sostituzione, emailVF);
+				
+				
 				
 				//Ottenimento numero totale giorni di ferie a disposizione del VF
 				int feriePrecedenti = VigileDelFuocoDao.ottieniNumeroFeriePrecedenti(emailVF);
