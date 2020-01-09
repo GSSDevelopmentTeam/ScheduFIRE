@@ -238,7 +238,8 @@ min-width: 265px;
 					<tr>
 						<td class="text-center"><img
 						src="Grado/<%=vigile.getGrado()%>.png" width=25%
-						onerror="this.parentElement.innerHTML='Non disponibile';"></td>
+						onerror="this.parentElement.innerHTML='Non disponibile';"
+						title=<%=vigile.getGrado()%>></td>
 						<td class="text-center"><%=vigile.getMansione()%></td>
 						<td class="text-center"><strong><%=vigile.getNome() %></strong></td>
 
@@ -293,7 +294,8 @@ min-width: 265px;
 					<tr>
 						<td class="text-center"><img
 						src="Grado/<%=vigile.getGrado()%>.png" width=25%
-						onerror="this.parentElement.innerHTML='Non disponibile';"></td>
+						onerror="this.parentElement.innerHTML='Non disponibile';"
+						title=<%=vigile.getGrado()%>></td>
 						<td class="text-center"><%=vigile.getMansione()%></td>
 						<td class="text-center"><strong><%=vigile.getNome() %></strong></td>
 
@@ -348,7 +350,8 @@ min-width: 265px;
 					<tr>
 						<td class="text-center"><img
 						src="Grado/<%=vigile.getGrado()%>.png" width=25%
-						onerror="this.parentElement.innerHTML='Non disponibile';"></td>
+						onerror="this.parentElement.innerHTML='Non disponibile';"
+						title=<%=vigile.getGrado()%>></td>
 						<td class="text-center"><%=vigile.getMansione()%></td>
 						<td class="text-center"><strong><%=vigile.getNome() %></strong></td>
 
