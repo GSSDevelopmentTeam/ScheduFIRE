@@ -35,7 +35,7 @@ h2 {
 </head>
 
 <body>
-
+<div id="inizio"></div>
 	<!-- Barra Navigazione -->
 	<jsp:include page="HeaderJSP.jsp" />
 
@@ -58,7 +58,9 @@ h2 {
 					<div class="modal-footer">
 						<button type="button" class="btn btn-outline-danger"
 							data-dismiss="modal">Annulla</button>
+
 						<button class="btn btn-outline-success" id="agg" disabled>Aggiungi</button>
+
 					</div>
 				</form>
 			</div>
@@ -86,9 +88,7 @@ h2 {
 					onmouseover="this.src='IMG/arrow/up-arrow-d.png'"
 					onmouseout="this.src='IMG/arrow/up-arrow-p.png'" /></a>
 
-
 		<h2 class="d-flex justify-content-center" id="inizio" style="margin-top: 3%">Gestione Squadre</h2>
-
 	<br>
 	<div class="d-flex justify-content-center">
 		<form action="GeneraSquadreServlet?salva=true" method=post>
@@ -575,7 +575,9 @@ h2 {
 		}
 		
 		function attivapulsante(){
+
 			$("#agg").prop("disabled",false);
+
 		}
 	</script>
 
