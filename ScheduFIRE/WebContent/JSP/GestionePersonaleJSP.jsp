@@ -51,10 +51,11 @@ session.removeAttribute("risultato");
     bottom: 5%;
     right: 5%;
 }
+h4{color: #B60000;}
 </style>
 
 <body>
-<div id="inizio"></div>
+<div id="sali"></div>
 	<jsp:include page="HeaderJSP.jsp" />
 
 	<script
@@ -295,7 +296,7 @@ session.removeAttribute("risultato");
 	
 		<br>
 
-<a href="#inizio" class=" back-up"><img src="IMG/arrow/up-arrow-p.png" style="margin-left: 5px;"
+<a href="#sali" class=" back-up"><img src="IMG/arrow/up-arrow-p.png" style="margin-left: 5px;"
 					onmouseover="this.src='IMG/arrow/up-arrow-d.png'"
 					onmouseout="this.src='IMG/arrow/up-arrow-p.png'" /></a>
 					
@@ -382,6 +383,7 @@ session.removeAttribute("risultato");
 			onclick="mostraFormAggiuta()">Aggiungi Vigile del Fuoco</button>
 
 		<br> <br>
+
 	
 		<h4 class="d-flex justify-content-center" id="inizio"
 			style="margin-top: 1%; color: #B60000 !Important">Capi Squadra</h4>
@@ -424,9 +426,7 @@ session.removeAttribute("risultato");
 
 						<img src="Grado/<%=vf.getMansione().equals("Capo Squadra") && 
 						vf.getGrado().equals("Esperto")?"EspertoCapoSquadra":vf.getGrado() %>.png" 
-						width=50px; onerror="this.parentElement.innerHTML='Non disponibile';"
-						title = <%= vf.getGrado() %>>
-						
+						 onerror="this.parentElement.innerHTML='Non disponibile';" title = <%= vf.getGrado() %>>						
 						</td>
 			
 						<td class="text-center" style = "font-weight: bold;"><%= vf.getNome() %></td>
@@ -797,8 +797,10 @@ session.removeAttribute("risultato");
 		
 		%>
 
+
 		<h4 class="d-flex justify-content-center" id="inizio"
 			style="margin-top: 1%; color: #B60000 !Important">Autisti</h4>
+
 		
 		<% 
 
@@ -835,7 +837,7 @@ session.removeAttribute("risultato");
 
 						<img src="Grado/<%=vf.getMansione().equals("Capo Squadra") && 
 						vf.getGrado().equals("Esperto")?"EspertoCapoSquadra":vf.getGrado() %>.png" 
-						width=40% onerror="this.parentElement.innerHTML='Non disponibile';"
+						 onerror="this.parentElement.innerHTML='Non disponibile';"
 						title = <%= vf.getGrado() %>>
 						
 						</td>
@@ -1208,8 +1210,10 @@ session.removeAttribute("risultato");
 		
 		%>
 
+
 		<h4 class="d-flex justify-content-center" id="inizio"
 			style="margin-top: 1%; color: #B60000 !Important">Vigili</h4>
+
 		
 		<% 
 
@@ -1246,7 +1250,7 @@ session.removeAttribute("risultato");
 
 						<img src="Grado/<%=vf.getMansione().equals("Capo Squadra") && 
 						vf.getGrado().equals("Esperto")?"EspertoCapoSquadra":vf.getGrado() %>.png" 
-						width=40% onerror="this.parentElement.innerHTML='Non disponibile';"
+						 onerror="this.parentElement.innerHTML='Non disponibile';"
 						title = <%= vf.getGrado() %>>
 						
 						</td>

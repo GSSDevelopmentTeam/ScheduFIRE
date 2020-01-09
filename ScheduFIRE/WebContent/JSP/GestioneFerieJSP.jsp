@@ -33,14 +33,15 @@
 </head>
 <body>
 
-	<div id="inizio"></div>
+
+<div id="sali"></div>
 	<!-- Barra Navigazione -->
 	<jsp:include page="HeaderJSP.jsp" />
+	
+	<a href="#sali" class=" back-up"><img src="IMG/arrow/up-arrow-p.png" 
+					onmouseover="this.src='IMG/arrow/up-arrow-d.png'"
+					onmouseout="this.src='IMG/arrow/up-arrow-p.png'" /></a>
 
-	<a href="#inizio" class=" back-up"><img
-		src="IMG/arrow/up-arrow-p.png"
-		onmouseover="this.src='IMG/arrow/up-arrow-d.png'"
-		onmouseout="this.src='IMG/arrow/up-arrow-p.png'" /></a>
 	<h2 class="d-flex justify-content-center" id="inizio"
 		style="margin-top: 3%; color: #B60000 !Important">Gestione Ferie</h2>
 
@@ -327,15 +328,14 @@
 		<h4 class="d-flex justify-content-center"
 			style="margin-top: 0%; color: #B60000 !Important">Capi Squadra</h4>
 
-		<table class="table  table-hover listaVigili"
-			style="table-layout: fixed">
+		<table class="table  table-hover listaVigili" style="table-layout: fixed">
+
 			<thead class="thead-dark">
 				<tr>
 					<th class=" text-center">Grado</th>
 					<th class="text-center">Nome</th>
 					<th class="text-center">Cognome</th>
 					<th class="text-center">Email</th>
-
 					<th class="text-center">Ferie</th>
 					<th class="text-center">Inserisci ferie</th>
 					<th class="text-center">Rimuovi ferie</th>
@@ -353,10 +353,8 @@
 						if(vigile.getMansione().toUpperCase().equals("CAPO SQUADRA")){
 				%>
 				<tr>
-					<td class="text-center"><img
-						src="Grado/<%=vigile.getMansione().equals("Capo Squadra") && vigile.getGrado().equals("Esperto")?"EspertoCapoSquadra":vigile.getGrado() %>.png"
-						width=25%
-						onerror="this.parentElement.innerHTML='Non disponibile';"></td>
+
+					<td class="text-center"><img src="Grado/<%=vigile.getMansione().equals("Capo Squadra") && vigile.getGrado().equals("Esperto")?"EspertoCapoSquadra":vigile.getGrado() %>.png" title="<%=vigile.getGrado() %>" onerror="this.parentElement.innerHTML='Non disponibile';"></td>
 					<td class="text-center"><strong><%=vigile.getNome()%></strong></td>
 					<td class="text-center"><strong><%=vigile.getCognome()%></strong></td>
 					<td class="text-center"><%=vigile.getEmail()%></td>
@@ -393,7 +391,6 @@
 					<th class="text-center">Nome</th>
 					<th class="text-center">Cognome</th>
 					<th class="text-center">Email</th>
-
 					<th class="text-center">Ferie</th>
 					<th class="text-center">Inserisci ferie</th>
 					<th class="text-center">Rimuovi ferie</th>
@@ -409,8 +406,7 @@
 				%>
 
 				<tr>
-					<td class="text-center"><img
-						src="Grado/<%=vigile.getGrado()%>.png" width=25%
+					<td class="text-center"><img src="Grado/<%=vigile.getGrado()%>.png" title="<%=vigile.getGrado() %>"
 						onerror="this.parentElement.innerHTML='Non disponibile';"></td>
 					<td class="text-center"><strong><%=vigile.getNome()%></strong></td>
 					<td class="text-center"><strong><%=vigile.getCognome()%></strong></td>
@@ -448,7 +444,6 @@
 					<th class="text-center">Nome</th>
 					<th class="text-center">Cognome</th>
 					<th class="text-center">Email</th>
-
 					<th class="text-center">Ferie</th>
 					<th class="text-center">Inserisci ferie</th>
 					<th class="text-center">Rimuovi ferie</th>
@@ -464,9 +459,8 @@
 				%>
 
 				<tr>
-					<td class="text-center"><img
-						src="Grado/<%=vigile.getGrado()%>.png" width=25%
-						onerror="this.parentElement.innerHTML='Non disponibile';"></td>
+					<td class="text-center"><img src="Grado/<%=vigile.getGrado()%>.png" title="<%=vigile.getGrado() %>" 
+          onerror="this.parentElement.innerHTML='Non disponibile';"></td>
 					<td class="text-center"><strong><%=vigile.getNome()%></strong></td>
 					<td class="text-center"><strong><%=vigile.getCognome()%></strong></td>
 					<td class="text-center"><%=vigile.getEmail()%></td>

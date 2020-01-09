@@ -23,6 +23,7 @@ import model.bean.VigileDelFuocoBean;
 import model.dao.ComponenteDellaSquadraDao;
 import model.dao.VigileDelFuocoDao;
 import util.GiornoLavorativo;
+import util.Util;
 
 /**
  * Servlet implementation class PersonaleDisponibileAJAX
@@ -50,7 +51,7 @@ public class PersonaleDisponibileAJAX extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
+		Util.isCapoTurno(request);
 		//Prendo l'email del VF da sostituire, il ruolo e il tipo di squadra
 		String email=request.getParameter("email");
 		String ruolo= request.getParameter("mansione");
@@ -63,19 +64,18 @@ public class PersonaleDisponibileAJAX extends HttpServlet {
 		Date data = null;
 		if(tp==1) {
 		squadra = (HashMap<VigileDelFuocoBean, String>) session.getAttribute("squadraDiurno");	
-		data = (Date) request.getAttribute("dataDiurno");
+		data = Date.valueOf(request.getParameter("dataDiurno"));
 		} else {
 			if(tp==2) {
 				squadra = (HashMap<VigileDelFuocoBean, String>) session.getAttribute("squadraNotturno");
-				data = (Date) request.getAttribute("dataNotturno");
+				data = Date.valueOf( request.getParameter("dataNotturno"));
 			}else {
 				squadra = (HashMap<VigileDelFuocoBean, String>) session.getAttribute("squadra");
-				data = (Date) request.getAttribute("dataModifica");
+				data = Date.valueOf( request.getParameter("dataModifica"));
 			}
 		}
 		
 		System.out.println("Data "+data);
-		
 		ArrayList<VigileDelFuocoBean> vigili=VigileDelFuocoDao.getDisponibili(data);
 
 		//Confronto se nell'ArrayList dei vigili ci sono quelli gi� inseriti nelle squadre 
