@@ -340,10 +340,9 @@
 						
 						if(vigile.getMansione().toUpperCase().equals("CAPO SQUADRA")){
 				%>
-
 				<tr>
 					<td class="text-center"><img
-						src="Grado/<%=vigile.getGrado()%>.png" width=30%
+						src="Grado/<%=vigile.getMansione().equals("Capo Squadra") && vigile.getGrado().equals("Esperto")?"EspertoCapoSquadra":vigile.getGrado() %>.png" width=25%
 						onerror="this.parentElement.innerHTML='Non disponibile';"></td>
 					<td class="text-center"><strong><%=vigile.getNome()%></strong></td>
 					<td class="text-center"><strong><%=vigile.getCognome()%></strong></td>
@@ -397,7 +396,7 @@
 
 				<tr>
 					<td class="text-center"><img
-						src="Grado/<%=vigile.getGrado()%>.png" width=30%
+						src="Grado/<%=vigile.getGrado()%>.png" width=25%
 						onerror="this.parentElement.innerHTML='Non disponibile';"></td>
 					<td class="text-center"><strong><%=vigile.getNome()%></strong></td>
 					<td class="text-center"><strong><%=vigile.getCognome()%></strong></td>
@@ -451,7 +450,7 @@
 
 				<tr>
 					<td class="text-center"><img
-						src="Grado/<%=vigile.getGrado()%>.png" width=30%
+						src="Grado/<%=vigile.getGrado()%>.png" width=25%
 						onerror="this.parentElement.innerHTML='Non disponibile';"></td>
 					<td class="text-center"><strong><%=vigile.getNome()%></strong></td>
 					<td class="text-center"><strong><%=vigile.getCognome()%></strong></td>
