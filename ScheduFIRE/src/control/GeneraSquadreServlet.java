@@ -162,8 +162,8 @@ public class GeneraSquadreServlet extends HttpServlet {
 					}
 					VigileDelFuocoDao.caricoLavorativo(squadraNotturno);
 				}
-
-
+				sessione.removeAttribute("squadraDiurno");
+				sessione.removeAttribute("squadraNotturno");
 				SendMail.sendMail(data, squadraDiurno, squadraNotturno);
 
 				response.sendRedirect("HomeCTServlet");
@@ -209,8 +209,6 @@ public class GeneraSquadreServlet extends HttpServlet {
 					nonDisponibile=true;
 			}
 			if(nonDisponibile) {
-				sessione.removeAttribute("squadraDiurno");
-				sessione.removeAttribute("squadraNotturno");
 				request.getRequestDispatcher("GeneraSquadreServlet").forward(request, response);
 				return;
 			}
