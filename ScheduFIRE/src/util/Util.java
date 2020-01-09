@@ -1,5 +1,6 @@
 package util;
 
+import java.awt.event.ComponentEvent;
 import java.sql.Date;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -233,60 +234,55 @@ public class Util {
 	public static void sostituisciVigile(Date data, String mailVFDaSostituire) throws ScheduFIREException {
 		//Prendo componenti e mappa delle squadre per la data in questione e li rimuovo 
 		//dal DB prima di modificarli
-		System.out.println(mailVFDaSostituire + " " + data);
-		VigileDelFuocoBean vfDaSostituire = VigileDelFuocoDao.ottieni(mailVFDaSostituire);
 		String squadraVF = ComponenteDellaSquadraDao.getSquadra(mailVFDaSostituire, data);
 		List<ComponenteDellaSquadraBean> lista = ComponenteDellaSquadraDao.getComponenti(data);
-		ComponenteDellaSquadraBean controllo;
-		
-		for(int i=0; i<lista.size();i++) {
-			if(lista.get(i).getEmailVF().equals(mailVFDaSostituire))
-				controllo = lista.remove(i);
-		}
 		HashMap<VigileDelFuocoBean, String> squadra = ottieniSquadra(data);
 		
-		if(!ComponenteDellaSquadraDao.removeComponenti(lista) ||
+		if(!ComponenteDellaSquadraDao.removeComponenti(lista) || 
 				!VigileDelFuocoDao.removeCaricoLavorativo(squadra)) {
 			throw new ScheduFIREException("Errore nelle query di sostituzione ferie");
 		}
 		
-		//Prendo il Vigile con il carico di lavoro minore alla data disponibile
+		//Prendo la lista dei disponibili del giorno
 		List<VigileDelFuocoBean> disponibili = VigileDelFuocoDao.getDisponibili(data);
 		
-		for(int i=0; i<disponibili.size();i++) {
-			if(disponibili.get(i).getEmail().equals(mailVFDaSostituire))
-				disponibili.remove(i);
+		//Rimuovo da lista, disponibili e squadra il VF da sostituire
+		for(ComponenteDellaSquadraBean rimuovere : lista) {
+			if(rimuovere.getEmailVF().equals(mailVFDaSostituire)) {
+				lista.remove(rimuovere);
+				break;
+			}
 		}
 		
-		System.out.println("La lista dei componenti Ã¨ vuota? " + lista.isEmpty());
-		Collections.sort(disponibili, (VigileDelFuocoBean v1, VigileDelFuocoBean v2) ->
-			(v1.getCaricoLavoro() - v2.getCaricoLavoro()));
-		VigileDelFuocoBean sostituto = null;
-		for(VigileDelFuocoBean disponibile : disponibili) {
-			if(vfDaSostituire.getMansione().equals(disponibile.getMansione()) && 
-					!vfDaSostituire.equals(disponibile) && 
-					!lista.contains()) {
-				sostituto = disponibile;
-				System.out.println(sostituto);
-				lista.add(new ComponenteDellaSquadraBean(
-						squadraVF, sostituto.getEmail(), data));
+		for(VigileDelFuocoBean rimuovere : disponibili) {
+			if(rimuovere.getEmail().equals(mailVFDaSostituire)) {
+				disponibili.remove(rimuovere);
+				break;
+			}
+		}
+		
+		Iterator i = squadra.entrySet().iterator();
+		while(i.hasNext()) {
+			Map.Entry<VigileDelFuocoBean, String> coppia = (Map.Entry<VigileDelFuocoBean, String>) i.next();
+			if(coppia.getKey().getEmail().equals(mailVFDaSostituire)) {
+				i.remove();
+				break;
+			}
+		}
+		
+		//Ordino i disponibili per carico lavorativo
+		Collections.sort(disponibili, (VigileDelFuocoBean v1, VigileDelFuocoBean v2) -> 
+		(v1.getCaricoLavoro() - v2.getCaricoLavoro()));
+		
+		//Aggiungo il sostituto a lista e squadra se già non ne fa parte e se la sua mansione è la stessa di colui da sostituire
+		for(VigileDelFuocoBean sostituto : disponibili) {
+			if(!ComponenteDellaSquadraDao.isComponente(sostituto.getEmail(), data) &&
+					sostituto.getMansione().equals(VigileDelFuocoDao.ottieni(mailVFDaSostituire).getMansione())) {
+				lista.add(new ComponenteDellaSquadraBean(squadraVF, sostituto.getEmail(), data));
 				squadra.put(sostituto, squadraVF);
 				break;
 			}
 		}
-		System.out.println("lista dei cazzimbocchi size: " + lista.size());
-		//Cerco il componente da sostituire
-//		for(int i = 0; i < lista.size(); i++) {
-//			ComponenteDellaSquadraBean membro = lista.get(i);
-//			if(membro.getEmailVF().equals(mailVFDaSostituire)) {
-//				//Swappo da sostituire e sistituto in lista e mappa
-//				lista.set(i, new ComponenteDellaSquadraBean(membro.getTipologiaSquadra(), 
-//						sostituto.getEmail(), membro.getGiornoLavorativo()));
-//				String mansione = squadra.remove(VigileDelFuocoDao.ottieni(mailVFDaSostituire));
-//				squadra.put(sostituto, mansione);
-//				break;
-//			}
-//		}
 		
 		//Salvo nel DB i cambiamenti effettuati
 		if(!ComponenteDellaSquadraDao.setComponenti(lista) ||
