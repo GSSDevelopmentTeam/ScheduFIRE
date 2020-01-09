@@ -100,7 +100,7 @@ function rimuoviNotifica(input) {
 	});
 }
 
-document.ready(()=>{
+$(document).ready(()=>{
 	$("#men").on('mouseover',function(event){
 		showInfo(event,this);
 	})
