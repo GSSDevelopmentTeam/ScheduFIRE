@@ -62,6 +62,10 @@ public class GeneraSquadreServlet extends HttpServlet {
 
 		data = GiornoLavorativo.nextLavorativo(data);
 		Date giornoSuccessivo=Date.valueOf(data.toLocalDate().plusDays(1));
+		request.setAttribute("dataDiurno", data);
+		request.setAttribute("dataNotturno", giornoSuccessivo);
+		
+		Util.aggiornaDB(data, giornoSuccessivo);
 
 
 		//Se si vuole salvare la squadra sul db
@@ -85,6 +89,9 @@ public class GeneraSquadreServlet extends HttpServlet {
 						!VigileDelFuocoDao.caricoLavorativo(squadra)) {
 					throw new ScheduFIREException("errore nelle query");
 				}
+
+				sessione.removeAttribute("squadraDiurno");
+				sessione.removeAttribute("squadraNotturno");
 
 				response.sendRedirect("HomeCTServlet");
 				return;
@@ -157,7 +164,7 @@ public class GeneraSquadreServlet extends HttpServlet {
 				}
 
 
-				//SendMail.sendMail(data);
+				SendMail.sendMail(data, squadraDiurno, squadraNotturno);
 
 				response.sendRedirect("HomeCTServlet");
 				return;
@@ -293,47 +300,8 @@ public class GeneraSquadreServlet extends HttpServlet {
 		sessione.setAttribute("squadraDiurno", squadraDiurno);
 		sessione.setAttribute("squadraNotturno", squadraNotturno);
 		request.setAttribute("nonSalvata",true);
-		request.setAttribute("dataDiurno", data);
-		request.setAttribute("dataNotturno", giornoSuccessivo);
 		request.getRequestDispatcher("JSP/GestioneSquadreJSP.jsp").forward(request, response);
 
-
-
-
-
-
-
-
-
-
-
-
-
-		/*
-		if(sessione.getAttribute("squadra") != null) {
-			@SuppressWarnings("unchecked")
-			HashMap<VigileDelFuocoBean, String> squadra = (HashMap<VigileDelFuocoBean, String>) 
-			sessione.getAttribute("squadra");
-			List<ComponenteDellaSquadraBean> lista = vigileToComponente(squadra, data);				
-
-			if((!ListaSquadreDao.aggiungiSquadre(data, (String) sessione.getAttribute("email"))) ||
-					(!SquadraDao.aggiungiSquadra(data)) ||
-					(!ComponenteDellaSquadraDao.setComponenti(lista)) ||
-					(!VigileDelFuocoDao.caricoLavorativo(squadra))){
-				throw new ScheduFIREException("Errore nelle Query SQL");
-			}	
-			SendMail.sendMail(data);
-		}
-		else {
-			try {
-				List<ComponenteDellaSquadraBean> lista = Util.generaSquadra(data);
-				request.setAttribute("squadra", lista);
-				request.getRequestDispatcher("/VisualizzaComposizioneSquadreServlet").forward(request, response);				
-			} catch (NotEnoughMembersException e) {
-				//
-			} 
-		}
-		 */
 	}
 
 
