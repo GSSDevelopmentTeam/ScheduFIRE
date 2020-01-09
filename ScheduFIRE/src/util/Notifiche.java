@@ -27,7 +27,7 @@ public class Notifiche {
 		listaNotifiche = new ArrayList<>();
 		listaNotifiche.add(new Notifica(3, "Test di una notifica grave", "HomeCTServlet", generateId()));
 		listaNotifiche.add(new Notifica(2, "Test di una notifica media, con stato d'errore medio e colore medio", "HomeCTServlet", generateId()));
-		listaNotifiche.add(new Notifica(1, "Test di una notifica normale, che per quanto sia normale essa � solo una notifica normale, dunque � normale che sia normale", "HomeCTServlet", generateId()));
+		listaNotifiche.add(new Notifica(1, "Test di una notifica normale, che per quanto sia normale essa ï¿½ solo una notifica normale, dunque ï¿½ normale che sia normale", "HomeCTServlet", generateId()));
 
 		update(UPDATE_PER_AVVIO);
 	}
@@ -134,7 +134,7 @@ public class Notifiche {
 		List<String> dateAssenza = new ArrayList<String>();
 		
 		String notifica = vigile.getCognome() + " " + vigile.getNome() + 
-				" " + "non sarà presente nella squadra a cui è stato assegnato\n";
+				" " + "non sarÃ  presente nella squadra a cui Ã¨ stato assegnato\n";
 		
 		while(!inizio.equals(Date.valueOf(fineP.plusDays(1L)))) {
 			if(GiornoLavorativo.isLavorativo(inizio)) {
@@ -166,7 +166,9 @@ public class Notifiche {
 		ArrayList<String> giorniMalattiaSchedulato = new ArrayList<String>();
 		
 			String notificaMalattia = "Il vigile "+vigile.getCognome()+" "+vigile.getNome()
-			+ " non sar� presenti in un turno a lui assegnato causa malattia";
+
+			+ " non sar� presente in un turno a lui assegnato causa malattia";
+
 			
 			LocalDate inMalattia = inizioMalattia.toLocalDate();
 			LocalDate outMalattia = fineMalattia.toLocalDate();
@@ -181,6 +183,7 @@ public class Notifiche {
 				inizioMalattia = Date.valueOf(next);
 			}
 			
+			
 			if(giorniMalattiaSchedulato.size() == 1)
 				notificaMalattia += " per il giorno " + giorniMalattiaSchedulato.get(0) + " causa Malattia.";
 			else
@@ -189,7 +192,6 @@ public class Notifiche {
 			
 			listaNotifiche.add(new Notifica(2, notificaMalattia, "/ModificaComposizioneSquadreServlet",generateId()));
 		}
-	
 	
 	
 	public void rimuovi(Notifica toRemove) {
@@ -206,7 +208,7 @@ public class Notifiche {
 		if(!conta(disponibili)) {
 			Date data = new Date(System.currentTimeMillis());
 			listaNotifiche.add(new Notifica(3, "Il personale disponibile il " + 
-					data.toString() + " non � sufficiente per creare il turno.", "/GestionePersonaleServlet",generateId()));
+					data.toString() + " non ï¿½ sufficiente per creare il turno.", "/GestionePersonaleServlet",generateId()));
 		}
 	}
 
@@ -259,11 +261,11 @@ public class Notifiche {
 	public static final int UPDATE_PER_MALATTIA = 3;
 	
 	/**
-	 * Utilizzare quando vengono concesse ferie ad un vigile già schedulato
+	 * Utilizzare quando vengono concesse ferie ad un vigile giÃ  schedulato
 	 */
 	public static final int UPDATE_SQUADRE_PER_FERIE = 4;
 	/**
-	 * Utilizzare quando vengono concesse malattie ad un vigile già schedulato
+	 * Utilizzare quando vengono concesse malattie ad un vigile giÃ  schedulato
 	 */
 	public static final int UPDATE_SQUADRE_PER_MALATTIA = 5;
 }
