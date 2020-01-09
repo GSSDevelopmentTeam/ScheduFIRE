@@ -100,7 +100,7 @@ function rimuoviNotifica(input) {
 	});
 }
 
-document.ready(()=>{
+$(document).ready(()=>{
 	$("#men").on('mouseover',function(event){
 		showInfo(event,this);
 	})
@@ -110,7 +110,7 @@ function showInfo(event,button){
 		var offset = $("#men").offset();
 		var topOffset = $("#men").offset().top-$(window).scrollTop();
 		$("#tabledown").css({
-			top:(topOffset +35)+"px";
+			top:(topOffset +35)+"px"
 			//left:(offset.left +100)+"px";
 		})
 	}
