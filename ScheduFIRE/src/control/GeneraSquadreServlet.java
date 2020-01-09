@@ -62,6 +62,8 @@ public class GeneraSquadreServlet extends HttpServlet {
 
 		data = GiornoLavorativo.nextLavorativo(data);
 		Date giornoSuccessivo=Date.valueOf(data.toLocalDate().plusDays(1));
+		
+		Util.aggiornaDB(data, giornoSuccessivo);
 
 
 		//Se si vuole salvare la squadra sul db
@@ -157,7 +159,7 @@ public class GeneraSquadreServlet extends HttpServlet {
 				}
 
 
-				//SendMail.sendMail(data);
+				SendMail.sendMail(data, squadraDiurno, squadraNotturno);
 
 				response.sendRedirect("HomeCTServlet");
 				return;
