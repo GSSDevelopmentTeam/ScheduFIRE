@@ -13,7 +13,15 @@
     <location>/JSP/ErrorJSP.jsp</location>
   </error-page>
   <error-page>
-    <exception-type>control.ScheduFIREException</exception-type>
+	<exception-type>control.ScheduFIREException</exception-type>
+	<location>/JSP/ScheduFIREError.jsp</location>
+  </error-page> 
+  <error-page> 
+    <exception-type>control.GestionePersonaleException</exception-type>
+    <location>/JSP/ScheduFIREError.jsp</location>
+  </error-page>
+  <error-page> 
+    <exception-type>control.ParametroInvalidoException</exception-type>
     <location>/JSP/ScheduFIREError.jsp</location>
   </error-page>
 </web-app>

@@ -4,7 +4,7 @@ body{
 	background-color: #f2f2f2;
 }
 
-h2, section, div, h4, form {
+h2, section, div, h4, form, select {
 	text-align:center;
 }
 
@@ -44,22 +44,9 @@ input {
 	width: 60%;
 	margin: 0 auto;
 }
-/*
-.mansione {
-	margin-left: -30%;
-}
 
-.grado {
-	margin-top: -16.6%;
-	margin-right: -25%;
-}
-*/
-#titolo, #buttonFormAggiungiVF, #ordinamento, #buttonAggiungi, input[type="number"] {
+#buttonFormAggiungiVF, #ordinamento, #buttonAggiungi, input[type="number"] {
 	display: inline-block;
-}
-
-#titolo {
-	margin-left: -5%;
 }
 
 #ordinamento {
@@ -67,7 +54,7 @@ input {
 }
 
 #buttonAggiungi {
-	margin-left: 5%;
+	margin-right: 5%;
 }
 
 .button, .buttonModifica {
