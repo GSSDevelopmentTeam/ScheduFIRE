@@ -290,7 +290,7 @@ h2 {
 					<td class="text-center"><strong><%=membro.getCognome()%></strong></td>
 					<td class="text-center"><button type="button"
 							class="btn btn-outline-secondary" data-toggle="modal"
-							data-target="#aggiungiVF" id="aggiungiVF"
+							data-target="#aggiungiVF" id="aggiungiVF" id="agg"
 							onClick='apriFormVF("<%=membro.getEmail()%>","<%=membro.getMansione()%>","1","<%=giorno%>")'>Sostituisci</button></td>
 					</td>
 				</tr>
@@ -500,7 +500,7 @@ h2 {
 					<td class="text-center"><strong><%=membro.getCognome()%></strong></td>
 					<td class="text-center"><button type="button"
 							class="btn btn-outline-secondary" data-toggle="modal"
-							data-target="#aggiungiVF" id="aggiungiVF"
+							data-target="#aggiungiVF" id="aggiungiVF" 
 							onClick='apriFormVF("<%=membro.getEmail()%>","<%=membro.getMansione()%>","2","<%=notte%>")'>Sostituisci</button></td>
 					</td>
 				</tr>
@@ -556,6 +556,7 @@ h2 {
 					"dataModifica" : dt
 				},
 				success : function(response) {//Operazione da eseguire una volta terminata la chiamata alla servlet.
+					$("#agg").prop("disabled",true);
 					$("#appendElenco").remove();
 					$("<div id='appendElenco'></div>").appendTo("#elenco");
 					$(response).appendTo("#appendElenco");
@@ -575,10 +576,10 @@ h2 {
 		}
 		
 		function attivapulsante(){
-
 			$("#agg").prop("disabled",false);
-
 		}
+		
+
 	</script>
 
 

@@ -317,6 +317,7 @@ h2 {
 				"dataModifica" : dt
 			},			
 			success : function(response) {//Operazione da eseguire una volta terminata la chiamata alla servlet.
+				$("#agg").prop("disabled",true);
 				$("#appendElenco").remove();
 				$("<div id='appendElenco'></div>").appendTo("#elenco");
 				$(response).appendTo("#appendElenco");					
@@ -328,7 +329,7 @@ h2 {
 	function attivapulsante(){
 		$("#agg").prop("disabled",false);
 	}
-
+	
 	</script>
 
 
