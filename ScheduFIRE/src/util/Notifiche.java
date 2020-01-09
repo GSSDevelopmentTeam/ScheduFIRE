@@ -168,6 +168,7 @@ public class Notifiche {
 		+ dateAssenza.get(dateAssenza.size()-1));
 		}
 		listaNotifiche.add(new Notifica(2, notifica, "/ModificaComposizioneSquadreServlet",generateId()));
+		Notifiche.update(UPDATE_PER_AVVIO);
 	}
 	
 	
