@@ -54,6 +54,7 @@ min-width: 265px;
 					</button>
 				</div>
 				<div class="modal-body">
+				<p>Per selezionare un solo giorno, cliccare due volte sulla data desiderata.</p>
 					<p hidden="hidden" name="email" id="emailAggiuntaMalattia"></p>
 					<div class=" row justify-content-center">
 						<input id="dataInizio" placeholder="Giorno iniziale" size="34" /> 
@@ -93,6 +94,7 @@ min-width: 265px;
 					</button>
 				</div>
 				<div class="modal-body">
+				<p>Per selezionare un solo giorno, cliccare due volte sulla data desiderata.</p>
 					<p hidden="hidden" name="email" id="emailRimozioneMalattia"></p>
 					<div class=" row justify-content-center">
 						<input id="rimozioneDataIniziale" placeholder="Giorno iniziale"

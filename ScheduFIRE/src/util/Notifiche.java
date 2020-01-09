@@ -166,7 +166,9 @@ public class Notifiche {
 		ArrayList<String> giorniMalattiaSchedulato = new ArrayList<String>();
 		
 			String notificaMalattia = "Il vigile "+vigile.getCognome()+" "+vigile.getNome()
-			+ " non sarà presenti in un turno a lui assegnato causa malattia";
+
+			+ " non sar� presente in un turno a lui assegnato causa malattia";
+
 			
 			LocalDate inMalattia = inizioMalattia.toLocalDate();
 			LocalDate outMalattia = fineMalattia.toLocalDate();
@@ -180,6 +182,7 @@ public class Notifiche {
 				LocalDate next = inizioMalattia.toLocalDate().plusDays(1L);
 				inizioMalattia = Date.valueOf(next);
 			}
+			
 			
 			if(giorniMalattiaSchedulato.size() == 1)
 				notificaMalattia += " per il giorno " + giorniMalattiaSchedulato.get(0) + " causa Malattia.";
