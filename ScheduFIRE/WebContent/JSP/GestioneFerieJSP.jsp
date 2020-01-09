@@ -129,7 +129,7 @@
 		class="alert alert-danger flex alert-dismissible fade in text-center fixed-top"
 		id="rimozioneNoOk"
 		style="display: none; position: fixed; z-index: 99999; width: 100%">
-		<button type="button" class="close" onclick="nascondiNoOK()" aria-label="close">&times;</button>
+		<button type="button" class="close" onclick="nascondiNoOk()" aria-label="close">&times;</button>
 		<strong>Errore!</strong> <span>Rimozione ferie non avvenuta..</span>
 	</div>
 
