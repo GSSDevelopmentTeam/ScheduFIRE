@@ -1,3 +1,4 @@
+<%@page import="java.time.format.DateTimeFormatter"%>
 <%@page import="java.util.HashMap"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
@@ -74,8 +75,12 @@ h2 {
 	<div class="d-flex justify-content-center">
 		<h2 style="font-weight: bold; font-size: 36px;">
 			Squadra del
+<<<<<<< Updated upstream
 			<%=data%></h2>
 	</div>
+=======
+			<%=data.toLocalDate().format(DateTimeFormatter.ofPattern("dd MMMM YYYY", new Locale("it", "IT")))%></h2>
+>>>>>>> Stashed changes
 
 	<div class="d-flex justify-content-center" id="inizio">
 		<form action="GeneraSquadreServlet?salva=true&calendario=true&data=<%=data.toString()%>" method=post>
