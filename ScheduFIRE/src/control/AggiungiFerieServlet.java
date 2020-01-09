@@ -41,7 +41,7 @@ public class AggiungiFerieServlet extends HttpServlet {
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
+		Util.isCapoTurno(request);
 		//Istanziazione ed inizializzazione variabili
 		Date dataInizio = null;
 		Date dataFine = null;

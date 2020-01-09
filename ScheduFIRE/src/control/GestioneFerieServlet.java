@@ -52,7 +52,7 @@ public class GestioneFerieServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
+		Util.isCapoTurno(request);
 		//nel caso di chiamata AJAX che gestisce il datepicker per aggiungere ferie ad un vigile
 		if(request.getParameter("JSON")!=null && request.getParameter("aggiunta")!=null ) {
 			String email=request.getParameter("email");
