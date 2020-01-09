@@ -59,21 +59,22 @@ public class PeriodiDiMalattiaServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		Util.isCapoTurno(request);
 		//ottiene i giorni di malattia per un determinato VF
 		if(request.getParameter("JSON")!=null && request.getParameter("visMalattia")!=null ) {
 			String emailVF = request.getParameter("emailVF");
 			
 			if( emailVF == null )
 				throw new ScheduFIREException();
-					//giorni di malattia già concesse
+					//giorni di malattia giï¿½ concesse
 					List<GiorniMalattiaBean> giorniMalattia = GiorniMalattiaDao.ottieniMalattie(emailVF);
-					//giorni di ferie già concesse
+					//giorni di ferie giï¿½ concesse
 					List<FerieBean> ferie=FerieDao.ottieniFerieConcesse(emailVF);
 					
 					
 					JSONArray array = new JSONArray();
 					
-					//inserisco nell'array i giorni di ferie già concesse 
+					//inserisco nell'array i giorni di ferie giï¿½ concesse 
 					for(FerieBean ferieBean:ferie) {
 
 						JSONArray arrayrange = new JSONArray();
@@ -81,7 +82,7 @@ public class PeriodiDiMalattiaServlet extends HttpServlet {
 						arrayrange.put(ferieBean.getDataFine().toLocalDate().plusDays(1));
 						array.put(arrayrange);
 					}
-					//inserisco nell'array i giorni di malattia già concesse 
+					//inserisco nell'array i giorni di malattia giï¿½ concesse 
 					for(GiorniMalattiaBean giorniMalattiaBean:giorniMalattia) {
 				
 						JSONArray arrayrange = new JSONArray();
@@ -125,7 +126,7 @@ public class PeriodiDiMalattiaServlet extends HttpServlet {
 			//Ottenimento parametro
 			String ordinamento = request.getParameter("ordinamento");
 			
-			//Se il parametro non è settato, l'ordinamento sarà quello di default
+			//Se il parametro non ï¿½ settato, l'ordinamento sarï¿½ quello di default
 			if(ordinamento == null)
 				ordinamento = "cognome";
 			
