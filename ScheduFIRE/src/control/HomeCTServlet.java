@@ -38,7 +38,6 @@ public class HomeCTServlet extends HttpServlet {
 			Util.isCapoTurno(request);
 		
 		
-		System.out.println("Arrivo fin qui");
 
 		response.setContentType("text/html");
 		request.getRequestDispatcher("JSP/HomeCT_JSP.jsp").forward(request, response);
