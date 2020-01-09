@@ -19,12 +19,13 @@
 .month-item-weekdays-row {
 	min-width: 265px;
 }
-.back-up{
-	border:none;
-	background:none;	
-    position: fixed;
-    bottom: 5%;
-    right: 5%;
+
+.back-up {
+	border: none;
+	background: none;
+	position: fixed;
+	bottom: 5%;
+	right: 5%;
 }
 </style>
 <body>
@@ -43,9 +44,9 @@
 
 		<!-- form per l'ordinamento della lista dei VF-->
 		<%
-			String ordinamento = (String)request.getAttribute("ordinamento");
+			String ordinamento = (String) request.getAttribute("ordinamento");
 		%>
-		<form action="./PersonaleDisponibile">
+		<form action="./PersonaleDisponibile" method="POST">
 			<input type="hidden" name=data
 				value="<%=request.getAttribute("data") != null ? (String) request.getAttribute("data") : ""%>">
 			<div align="center">
@@ -70,7 +71,7 @@
 					<option value="disponibilita">Disponibilità</option>
 
 					<%
-						}else if (ordinamento.equals("disponibilita")) {
+						} else if (ordinamento.equals("disponibilita")) {
 					%>
 					<option value="nome">Nome</option>
 					<option value="cognome">Cognome</option>
@@ -79,7 +80,7 @@
 
 					<%
 						}
-					} else {
+						} else {
 					%>
 
 					<option value="nome">Nome</option>
@@ -93,40 +94,42 @@
 
 				</select>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
 				<button type="button" class="btn btn-outline-secondary"
-			data-toggle="modal" data-target="#modalCalendario"
-			onclick="resetGiorno()">Scegli un altro giorno</button>
+					data-toggle="modal" data-target="#modalCalendario"
+					onclick="resetGiorno()">Scegli un altro giorno</button>
 			</div>
 		</form>
-		
 
 
-		
+
+
 		<!--  MODAL SCELTA GIORNO -->
 		<!-- ----------------------- -->
 
-<br>
-		<div class="modal fade" id="modalCalendario" tabindex="-1" role="dialog"
-			aria-labelledby="exampleModalCenterTitle" aria-hidden="true"
-			style="display: none">
-			<div class="modal-dialog modal-dialog-centered" role="document">
-				<div class="modal-content contenutiModal"
-					style="min-width: 500px; min-height: 550px;">
-					<div class="modal-header">
-						<h5 class="modal-title" id="titoloRimuoviFerie">Scelta giorno</h5>
-						<button type="button" class="close" data-dismiss="modal"
-							aria-label="Close">
-							<span aria-hidden="true">&times; </span>
-						</button>
-					</div>
-					<form action="./PersonaleDisponibile">
+		<br>
+		<form action="./PersonaleDisponibile">
+
+			<div class="modal fade" id="modalCalendario" tabindex="-1"
+				role="dialog" aria-labelledby="exampleModalCenterTitle"
+				aria-hidden="true" style="display: none">
+				<div class="modal-dialog modal-dialog-centered" role="document">
+					<div class="modal-content contenutiModal"
+						style="min-width: 500px; min-height: 550px;">
+						<div class="modal-header">
+							<h5 class="modal-title" id="titoloRimuoviFerie">Scelta
+								giorno</h5>
+							<button type="button" class="close" data-dismiss="modal"
+								aria-label="Close">
+								<span aria-hidden="true">&times; </span>
+							</button>
+						</div>
 						<div class="modal-body">
 							<div class=" row justify-content-center">
 								<input id="litepicker" name="data"
 									placeholder="Scegli il giorno" readonly size="34"
 									style="margin-bottom: 1%;" />
 							</div>
-							<div class="text-center" id="messaggioTurno"> </div>
-							
+							<div class="text-center" id="messaggioTurno"></div>
+
 
 
 						</div>
@@ -139,10 +142,10 @@
 								id="bottoneConferma" disabled>Conferma</button>
 
 						</div>
-					</form>
+					</div>
 				</div>
 			</div>
-		</div>
+		</form>
 
 
 
@@ -153,7 +156,9 @@
 
 
 
-		<% if(!ordinamento.equals("disponibilita")) {%>
+		<%
+			if (!ordinamento.equals("disponibilita")) {
+		%>
 
 		<div class="table-responsive">
 
@@ -179,33 +184,41 @@
 				<tbody>
 					<%
 						ArrayList<VigileDelFuocoBean> vigiliCompleti;
-						vigiliCompleti = (ArrayList<VigileDelFuocoBean>) request.getAttribute("vigiliCompleti");
-						ArrayList<VigileDelFuocoBean> vigiliDisponibili = (ArrayList<VigileDelFuocoBean>) request.getAttribute("vigiliDisponibili");
-						ArrayList<VigileDelFuocoBean> vigiliFerie = (ArrayList<VigileDelFuocoBean>) request.getAttribute("vigiliFerie");
-						ArrayList<VigileDelFuocoBean> vigiliMalattia = (ArrayList<VigileDelFuocoBean>) request.getAttribute("vigiliMalattia");
-						ArrayList<ComponenteDellaSquadraBean> componenti = (ArrayList<ComponenteDellaSquadraBean>) request.getAttribute("componenti");
-						
-						
-						for (VigileDelFuocoBean vigile:vigiliCompleti) {
+							vigiliCompleti = (ArrayList<VigileDelFuocoBean>) request.getAttribute("vigiliCompleti");
+							ArrayList<VigileDelFuocoBean> vigiliDisponibili = (ArrayList<VigileDelFuocoBean>) request
+									.getAttribute("vigiliDisponibili");
+							ArrayList<VigileDelFuocoBean> vigiliFerie = (ArrayList<VigileDelFuocoBean>) request
+									.getAttribute("vigiliFerie");
+							ArrayList<VigileDelFuocoBean> vigiliMalattia = (ArrayList<VigileDelFuocoBean>) request
+									.getAttribute("vigiliMalattia");
+							ArrayList<ComponenteDellaSquadraBean> componenti = (ArrayList<ComponenteDellaSquadraBean>) request
+									.getAttribute("componenti");
 
-							if (vigile.getMansione().toUpperCase().equals("CAPO SQUADRA")) {
-								String disponibilita="NaN";
-								if(vigiliDisponibili.contains(vigile))
-									disponibilita="Disponibile";
-								else if(vigiliFerie.contains(vigile))
-									disponibilita="In ferie";
-								else if(vigiliMalattia.contains(vigile))
-									disponibilita="In malattia";
-								String squadra="";
-								for(ComponenteDellaSquadraBean componente:componenti){
-									if(componente.getEmailVF().equals(vigile.getEmail()))
-										squadra=componente.getTipologiaSquadra();
-								}
+							for (VigileDelFuocoBean vigile : vigiliCompleti) {
+
+								if (vigile.getMansione().toUpperCase().equals("CAPO SQUADRA")) {
+									String disponibilita = "NaN";
+									if (vigiliDisponibili.contains(vigile))
+										disponibilita = "Disponibile";
+									else if (vigiliFerie.contains(vigile))
+										disponibilita = "In ferie";
+									else if (vigiliMalattia.contains(vigile))
+										disponibilita = "In malattia";
+									String squadra = "";
+									for (ComponenteDellaSquadraBean componente : componenti) {
+										if (componente.getEmailVF().equals(vigile.getEmail()))
+											squadra = componente.getTipologiaSquadra();
+									}
 					%>
 
 					<tr
-						class="<%=!disponibilita.equals("Disponibile")?"table-warning":"" %>">
-						<td class="text-center"><img src="Grado/<%=vigile.getMansione().equals("Capo Squadra") && vigile.getGrado().equals("Esperto")?"EspertoCapoSquadra":vigile.getGrado() %>.png" width=25% onerror="this.parentElement.innerHTML='Non disponibile';"></td>
+						class="<%=!disponibilita.equals("Disponibile") ? "table-warning" : ""%>">
+						<td class="text-center"><img title=<%=vigile.getGrado()%>
+							src="Grado/<%=vigile.getMansione().equals("Capo Squadra") && vigile.getGrado().equals("Esperto")
+								? "EspertoCapoSquadra"
+								: vigile.getGrado()%>.png"
+							width=25%
+							onerror="this.parentElement.innerHTML='Non disponibile';"></td>
 						<td class="text-center"><strong><%=vigile.getNome()%></strong></td>
 						<td class="text-center"><strong><%=vigile.getCognome()%></strong></td>
 						<td class="text-center"><%=vigile.getEmail()%></td>
@@ -216,7 +229,7 @@
 
 					<%
 						}
-						}
+							}
 					%>
 
 				</tbody>
@@ -241,26 +254,26 @@
 
 				<tbody>
 					<%
-						for (VigileDelFuocoBean vigile:vigiliCompleti) {
+						for (VigileDelFuocoBean vigile : vigiliCompleti) {
 
-							if (vigile.getMansione().toUpperCase().equals("AUTISTA")) {
-								String disponibilita="NaN";
-								if(vigiliDisponibili.contains(vigile))
-									disponibilita="Disponibile";
-								else if(vigiliFerie.contains(vigile))
-									disponibilita="In ferie";
-								else if(vigiliMalattia.contains(vigile))
-									disponibilita="In malattia";
-								String squadra="";
-								for(ComponenteDellaSquadraBean componente:componenti){
-									if(componente.getEmailVF().equals(vigile.getEmail()))
-										squadra=componente.getTipologiaSquadra();
-								}
+								if (vigile.getMansione().toUpperCase().equals("AUTISTA")) {
+									String disponibilita = "NaN";
+									if (vigiliDisponibili.contains(vigile))
+										disponibilita = "Disponibile";
+									else if (vigiliFerie.contains(vigile))
+										disponibilita = "In ferie";
+									else if (vigiliMalattia.contains(vigile))
+										disponibilita = "In malattia";
+									String squadra = "";
+									for (ComponenteDellaSquadraBean componente : componenti) {
+										if (componente.getEmailVF().equals(vigile.getEmail()))
+											squadra = componente.getTipologiaSquadra();
+									}
 					%>
 
 					<tr
-						class="<%=!disponibilita.equals("Disponibile")?"table-warning":"" %>">
-						<td class="text-center"><img
+						class="<%=!disponibilita.equals("Disponibile") ? "table-warning" : ""%>">
+						<td class="text-center"><img title=<%=vigile.getGrado()%>
 							src="Grado/<%=vigile.getGrado()%>.png" width=25%
 							onerror="this.parentElement.innerHTML='Non disponibile';"></td>
 						<td class="text-center"><strong><%=vigile.getNome()%></strong></td>
@@ -273,7 +286,7 @@
 
 					<%
 						}
-						}
+							}
 					%>
 
 				</tbody>
@@ -300,25 +313,25 @@
 
 				<tbody>
 					<%
-						for (VigileDelFuocoBean vigile:vigiliCompleti) {
+						for (VigileDelFuocoBean vigile : vigiliCompleti) {
 
-							if (vigile.getMansione().toUpperCase().equals("VIGILE")) {
-								String disponibilita="NaN";
-								if(vigiliDisponibili.contains(vigile))
-									disponibilita="Disponibile";
-								else if(vigiliFerie.contains(vigile))
-									disponibilita="In ferie";
-								else if(vigiliMalattia.contains(vigile))
-									disponibilita="In malattia";
-								String squadra="";
-								for(ComponenteDellaSquadraBean componente:componenti){
-									if(componente.getEmailVF().equals(vigile.getEmail()))
-										squadra=componente.getTipologiaSquadra();
-								}
+								if (vigile.getMansione().toUpperCase().equals("VIGILE")) {
+									String disponibilita = "NaN";
+									if (vigiliDisponibili.contains(vigile))
+										disponibilita = "Disponibile";
+									else if (vigiliFerie.contains(vigile))
+										disponibilita = "In ferie";
+									else if (vigiliMalattia.contains(vigile))
+										disponibilita = "In malattia";
+									String squadra = "";
+									for (ComponenteDellaSquadraBean componente : componenti) {
+										if (componente.getEmailVF().equals(vigile.getEmail()))
+											squadra = componente.getTipologiaSquadra();
+									}
 					%>
 
 					<tr
-						class="<%=!disponibilita.equals("Disponibile")?"table-warning":"" %>">
+						class="<%=!disponibilita.equals("Disponibile") ? "table-warning" : ""%>">
 						<td class="text-center"><img
 							src="Grado/<%=vigile.getGrado()%>.png" width=25%
 							onerror="this.parentElement.innerHTML='Non disponibile';"></td>
@@ -332,45 +345,47 @@
 
 					<%
 						}
-						}
+							}
 					%>
 
 				</tbody>
 
 			</table>
 		</div>
-		<% 
-		} else if(ordinamento.equals("disponibilita")){
-			ArrayList<VigileDelFuocoBean> vigiliPerDisponibilita=new ArrayList<>();
-			ArrayList<VigileDelFuocoBean> vigiliCompleti= (ArrayList<VigileDelFuocoBean>) request.getAttribute("vigiliCompleti");
-			ArrayList<VigileDelFuocoBean> vigiliDisponibili = (ArrayList<VigileDelFuocoBean>) request.getAttribute("vigiliDisponibili");
-			ArrayList<VigileDelFuocoBean> vigiliFerie = (ArrayList<VigileDelFuocoBean>) request.getAttribute("vigiliFerie");
-			ArrayList<VigileDelFuocoBean> vigiliMalattia = (ArrayList<VigileDelFuocoBean>) request.getAttribute("vigiliMalattia");
-			ArrayList<ComponenteDellaSquadraBean> componenti = (ArrayList<ComponenteDellaSquadraBean>) request.getAttribute("componenti");
-			
-			
-			for(ComponenteDellaSquadraBean componente:componenti){
-				for(VigileDelFuocoBean vigile:vigiliCompleti){
-					if(componente.getEmailVF().equals(vigile.getEmail())){
-						vigiliPerDisponibilita.add(vigile);
-						break;
-					}
-					
-				}
-			}
-			
-			for(VigileDelFuocoBean vigile:vigiliDisponibili){
-				if(!vigiliPerDisponibilita.contains(vigile))
-					vigiliPerDisponibilita.add(vigile);
-			}
-			for(VigileDelFuocoBean vigile:vigiliFerie){
-				vigiliPerDisponibilita.add(vigile);
-			}
-			for(VigileDelFuocoBean vigile:vigiliMalattia){
-				vigiliPerDisponibilita.add(vigile);
-			}
-			
+		<%
+			} else if (ordinamento.equals("disponibilita")) {
+				ArrayList<VigileDelFuocoBean> vigiliPerDisponibilita = new ArrayList<>();
+				ArrayList<VigileDelFuocoBean> vigiliCompleti = (ArrayList<VigileDelFuocoBean>) request
+						.getAttribute("vigiliCompleti");
+				ArrayList<VigileDelFuocoBean> vigiliDisponibili = (ArrayList<VigileDelFuocoBean>) request
+						.getAttribute("vigiliDisponibili");
+				ArrayList<VigileDelFuocoBean> vigiliFerie = (ArrayList<VigileDelFuocoBean>) request
+						.getAttribute("vigiliFerie");
+				ArrayList<VigileDelFuocoBean> vigiliMalattia = (ArrayList<VigileDelFuocoBean>) request
+						.getAttribute("vigiliMalattia");
+				ArrayList<ComponenteDellaSquadraBean> componenti = (ArrayList<ComponenteDellaSquadraBean>) request
+						.getAttribute("componenti");
 
+				for (ComponenteDellaSquadraBean componente : componenti) {
+					for (VigileDelFuocoBean vigile : vigiliCompleti) {
+						if (componente.getEmailVF().equals(vigile.getEmail())) {
+							vigiliPerDisponibilita.add(vigile);
+							break;
+						}
+
+					}
+				}
+
+				for (VigileDelFuocoBean vigile : vigiliDisponibili) {
+					if (!vigiliPerDisponibilita.contains(vigile))
+						vigiliPerDisponibilita.add(vigile);
+				}
+				for (VigileDelFuocoBean vigile : vigiliFerie) {
+					vigiliPerDisponibilita.add(vigile);
+				}
+				for (VigileDelFuocoBean vigile : vigiliMalattia) {
+					vigiliPerDisponibilita.add(vigile);
+				}
 		%>
 
 
@@ -395,27 +410,30 @@
 
 				<tbody>
 					<%
-						
-						
-						for(VigileDelFuocoBean vigile:vigiliPerDisponibilita){
-							if (vigile.getMansione().toUpperCase().equals("CAPO SQUADRA")) {
-								String disponibilita="NaN";
-								if(vigiliDisponibili.contains(vigile))
-									disponibilita="Disponibile";
-								else if(vigiliFerie.contains(vigile))
-									disponibilita="In ferie";
-								else if(vigiliMalattia.contains(vigile))
-									disponibilita="In malattia";
-								String squadra="";
-								vigiliCompleti.remove(vigile);
-								for(ComponenteDellaSquadraBean componente:componenti){
-									if(componente.getEmailVF().equals(vigile.getEmail()))
-										squadra=componente.getTipologiaSquadra();
-								}
+						for (VigileDelFuocoBean vigile : vigiliPerDisponibilita) {
+								if (vigile.getMansione().toUpperCase().equals("CAPO SQUADRA")) {
+									String disponibilita = "NaN";
+									if (vigiliDisponibili.contains(vigile))
+										disponibilita = "Disponibile";
+									else if (vigiliFerie.contains(vigile))
+										disponibilita = "In ferie";
+									else if (vigiliMalattia.contains(vigile))
+										disponibilita = "In malattia";
+									String squadra = "";
+									vigiliCompleti.remove(vigile);
+									for (ComponenteDellaSquadraBean componente : componenti) {
+										if (componente.getEmailVF().equals(vigile.getEmail()))
+											squadra = componente.getTipologiaSquadra();
+									}
 					%>
 					<tr
-						class="<%=!disponibilita.equals("Disponibile")?"table-warning":"" %>">
-						<td class="text-center"><img src="Grado/<%=vigile.getMansione().equals("Capo Squadra") && vigile.getGrado().equals("Esperto")?"EspertoCapoSquadra":vigile.getGrado() %>.png" width=25% onerror="this.parentElement.innerHTML='Non disponibile';"></td>
+						class="<%=!disponibilita.equals("Disponibile") ? "table-warning" : ""%>">
+						<td class="text-center"><img
+							src="Grado/<%=vigile.getMansione().equals("Capo Squadra") && vigile.getGrado().equals("Esperto")
+								? "EspertoCapoSquadra"
+								: vigile.getGrado()%>.png"
+							width=25%
+							onerror="this.parentElement.innerHTML='Non disponibile';"></td>
 						<td class="text-center"><strong><%=vigile.getNome()%></strong></td>
 						<td class="text-center"><strong><%=vigile.getCognome()%></strong></td>
 						<td class="text-center"><%=vigile.getEmail()%></td>
@@ -424,9 +442,10 @@
 
 					</tr>
 
-					<%}
-							
+					<%
 						}
+
+							}
 					%>
 
 				</tbody>
@@ -451,25 +470,25 @@
 
 				<tbody>
 					<%
-						for (VigileDelFuocoBean vigile:vigiliPerDisponibilita) {
+						for (VigileDelFuocoBean vigile : vigiliPerDisponibilita) {
 
-							if (vigile.getMansione().toUpperCase().equals("AUTISTA")) {
-								String disponibilita="NaN";
-								if(vigiliDisponibili.contains(vigile))
-									disponibilita="Disponibile";
-								else if(vigiliFerie.contains(vigile))
-									disponibilita="In ferie";
-								else if(vigiliMalattia.contains(vigile))
-									disponibilita="In malattia";
-								String squadra="";
-								for(ComponenteDellaSquadraBean componente:componenti){
-									if(componente.getEmailVF().equals(vigile.getEmail()))
-										squadra=componente.getTipologiaSquadra();
-								}
+								if (vigile.getMansione().toUpperCase().equals("AUTISTA")) {
+									String disponibilita = "NaN";
+									if (vigiliDisponibili.contains(vigile))
+										disponibilita = "Disponibile";
+									else if (vigiliFerie.contains(vigile))
+										disponibilita = "In ferie";
+									else if (vigiliMalattia.contains(vigile))
+										disponibilita = "In malattia";
+									String squadra = "";
+									for (ComponenteDellaSquadraBean componente : componenti) {
+										if (componente.getEmailVF().equals(vigile.getEmail()))
+											squadra = componente.getTipologiaSquadra();
+									}
 					%>
 
 					<tr
-						class="<%=!disponibilita.equals("Disponibile")?"table-warning":"" %>">
+						class="<%=!disponibilita.equals("Disponibile") ? "table-warning" : ""%>">
 						<td class="text-center"><img
 							src="Grado/<%=vigile.getGrado()%>.png" width=25%
 							onerror="this.parentElement.innerHTML='Non disponibile';"></td>
@@ -483,7 +502,7 @@
 
 					<%
 						}
-						}
+							}
 					%>
 
 				</tbody>
@@ -508,25 +527,25 @@
 
 				<tbody>
 					<%
-						for (VigileDelFuocoBean vigile:vigiliPerDisponibilita) {
+						for (VigileDelFuocoBean vigile : vigiliPerDisponibilita) {
 
-							if (vigile.getMansione().toUpperCase().equals("VIGILE")) {
-								String disponibilita="NaN";
-								if(vigiliDisponibili.contains(vigile))
-									disponibilita="Disponibile";
-								else if(vigiliFerie.contains(vigile))
-									disponibilita="In ferie";
-								else if(vigiliMalattia.contains(vigile))
-									disponibilita="In malattia";
-								String squadra="";
-								for(ComponenteDellaSquadraBean componente:componenti){
-									if(componente.getEmailVF().equals(vigile.getEmail()))
-										squadra=componente.getTipologiaSquadra();
-								}
+								if (vigile.getMansione().toUpperCase().equals("VIGILE")) {
+									String disponibilita = "NaN";
+									if (vigiliDisponibili.contains(vigile))
+										disponibilita = "Disponibile";
+									else if (vigiliFerie.contains(vigile))
+										disponibilita = "In ferie";
+									else if (vigiliMalattia.contains(vigile))
+										disponibilita = "In malattia";
+									String squadra = "";
+									for (ComponenteDellaSquadraBean componente : componenti) {
+										if (componente.getEmailVF().equals(vigile.getEmail()))
+											squadra = componente.getTipologiaSquadra();
+									}
 					%>
 
 					<tr
-						class="<%=!disponibilita.equals("Disponibile")?"table-warning":"" %>">
+						class="<%=!disponibilita.equals("Disponibile") ? "table-warning" : ""%>">
 						<td class="text-center"><img
 							src="Grado/<%=vigile.getGrado()%>.png" width=25%
 							onerror="this.parentElement.innerHTML='Non disponibile';"></td>
@@ -540,7 +559,7 @@
 
 					<%
 						}
-						}
+							}
 					%>
 
 				</tbody>
@@ -555,7 +574,8 @@
 
 
 		<%
-			} %>
+			}
+		%>
 
 
 
@@ -565,10 +585,14 @@
 
 
 	</section>
-	<script src="JS/datePicker.js"></script>
+
 	
 
+
 	<script>
+	
+	$(".contenutiModal").css('background-color', '#e6e6e6');
+
 	
 	
 			var picker = new Litepicker({

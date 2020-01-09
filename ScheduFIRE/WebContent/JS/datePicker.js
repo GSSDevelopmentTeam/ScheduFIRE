@@ -336,6 +336,8 @@
                 this.onInit()
             }
             onInit() {
+            	
+
                 document.addEventListener("click", t => this.onClick(t), !0), this.picker = document.createElement("div"), this.picker.className = s.litepicker, this.picker.style.display = "none", this.picker.addEventListener("keydown", t => this.onKeyDown(t), !0), this.picker.addEventListener("mouseenter", t => this.onMouseEnter(t), !0), this.picker.addEventListener("mouseleave", t => this.onMouseLeave(t), !1), this.options.element instanceof HTMLElement && this.options.element.addEventListener("change", t => this.onInput(t), !0), this.options.elementEnd instanceof HTMLElement && this.options.elementEnd.addEventListener("change", t => this.onInput(t), !0), this.render(), this.options.parentEl ? this.options.parentEl instanceof HTMLElement ? this.options.parentEl.appendChild(this.picker) : document.querySelector(this.options.parentEl).appendChild(this.picker) : this.options.inlineMode ? this.options.element instanceof HTMLInputElement ? this.options.element.parentNode.appendChild(this.picker) : this.options.element.appendChild(this.picker) : document.body.appendChild(this.picker), this.options.mobileFriendly && (this.backdrop = document.createElement("div"), this.backdrop.className = s.litepickerBackdrop, this.backdrop.addEventListener("click", this.hide()), this.options.element && this.options.element.parentNode && this.options.element.parentNode.appendChild(this.backdrop), window.addEventListener("orientationchange", () => {
                     if (this.options.mobileFriendly && this.isShowning()) {
                         switch (screen.orientation.angle) {
@@ -353,6 +355,8 @@
                 })), this.options.inlineMode && this.show(), this.updateInput()
             }
             parseInput() {
+            	
+
                 if (this.options.elementEnd) {
                     if (this.options.element instanceof HTMLInputElement && this.options.element.value.length && this.options.elementEnd instanceof HTMLInputElement && this.options.elementEnd.value.length) return [new n.DateTime(this.options.element.value), new n.DateTime(this.options.elementEnd.value)]
                 } else if (this.options.singleMode) {
@@ -364,6 +368,8 @@
                 return []
             }
             updateInput() {
+            	
+
                 if (this.options.element instanceof HTMLInputElement)
                     if (this.options.singleMode && this.options.startDate) this.options.element.value = this.options.startDate.format(this.options.format, this.options.lang);
                     else if (!this.options.singleMode && this.options.startDate && this.options.endDate) {
@@ -373,21 +379,33 @@
                 }
             }
             isSamePicker(t) {
+            	
+
                 return t.closest(`.${s.litepicker}`) === this.picker
             }
             shouldShown(t) {
+            	
+
                 return t === this.options.element || this.options.elementEnd && t === this.options.elementEnd
             }
             shouldResetDatePicked() {
+            	
+
                 return this.options.singleMode || 2 === this.datePicked.length
             }
             shouldSwapDatePicked() {
+            	
+
                 return 2 === this.datePicked.length && this.datePicked[0].getTime() > this.datePicked[1].getTime()
             }
             shouldCheckLockDays() {
+            	
+
                 return this.options.disallowLockDaysInRange && this.options.lockDays.length && 2 === this.datePicked.length
             }
             onClick(t) {
+            	
+
                 const e = t.target;
                 if (e && this.picker)
                     if (this.shouldShown(e)) this.show(e);
@@ -453,13 +471,30 @@
                 this.picker.querySelector(`.${s.containerTooltip}`).style.visibility = "hidden"
             }
             shouldAllowMouseEnter(t) {
+
+
                 return !this.options.singleMode && t.classList.contains(s.dayItem) && !t.classList.contains(s.isLocked) && !t.classList.contains(s.isBooked)
             }
             shouldAllowRepick() {
+
+
                 return this.options.elementEnd && this.options.allowRepick && this.options.startDate && this.options.endDate
             }
             onMouseEnter(t) {
+            	
+
                 const e = t.target;
+
+            	//Chiamata alla funzione di datePickerMod.js per verifica turno
+            	
+                rimuoviTurno();
+				if (typeof e.dataset.time !== 'undefined'){
+					var data = new n.DateTime(e.dataset.time); 
+					calcolaTurno(data);
+				}
+				
+            	//fine chiamata
+            	
                 if (this.shouldAllowMouseEnter(e)) {
                     if (this.shouldAllowRepick() && (this.triggerElement === this.options.element ? this.datePicked[0] = this.options.endDate.clone() : this.datePicked[0] = this.options.startDate.clone()), 1 !== this.datePicked.length) return;
                     const t = this.picker.querySelector(`.${s.dayItem}[data-time="${this.datePicked[0].getTime()}"]`);
@@ -486,10 +521,20 @@
                 }
             }
             onMouseLeave(t) {
+            	
+
+            	//Chiamata alla funzione di datePickerMod.js per rimozione turno
+            	
+            	rimuoviTurno();
+				
+            	//
+            	
                 t.target;
                 this.options.allowRepick && (this.datePicked.length = 0, this.render())
             }
             onKeyDown(t) {
+            	
+
                 const e = t.target;
                 switch (t.code) {
                     case "ArrowUp":
@@ -514,6 +559,8 @@
                 }
             }
             onInput(t) {
+            	
+
                 let [e, i] = this.parseInput();
                 if (e instanceof Date && !isNaN(e.getTime()) && i instanceof Date && !isNaN(i.getTime())) {
                     if (e.getTime() > i.getTime()) {
@@ -524,6 +571,8 @@
                 }
             }
             isShowning() {
+
+            	
                 return this.picker && "none" !== this.picker.style.display
             }
         }
@@ -597,6 +646,8 @@
                 }, this.calendars = [], this.datePicked = []
             }
             render() {
+            	 
+
                 const t = document.createElement("div");
                 t.className = n.containerMonths, n[`columns${this.options.numberOfColumns}`] && (t.classList.remove(n.columns2, n.columns3, n.columns4), t.classList.add(n[`columns${this.options.numberOfColumns}`])), this.options.splitView && t.classList.add(n.splitView), this.options.showWeekNumbers && t.classList.add(n.showWeekNumbers);
                 const e = this.calendars[0].clone(),
@@ -607,9 +658,11 @@
                     let i = e.clone();
                     this.options.splitView ? i = this.calendars[s].clone() : i.setMonth(n), t.appendChild(this.renderMonth(i)), s += 1
                 }
-                this.picker.innerHTML = "", this.picker.appendChild(t), this.options.autoApply && !this.options.footerHTML || this.picker.appendChild(this.renderFooter()), this.options.showTooltip && this.picker.appendChild(this.renderTooltip())
+                this.picker.innerHTML = "", this.picker.appendChild(t), this.options.autoApply && !this.options.footerHTML || this.picker.appendChild(this.renderFooter()), this.options.showTooltip && this.picker.appendChild(this.renderTooltip());
             }
             renderMonth(t) {
+            	 
+
                 const e = t.clone();
                 e.setDate(1);
                 const i = 32 - new Date(e.getFullYear(), e.getMonth(), 32).getDate(),
@@ -636,6 +689,8 @@
                 return s.appendChild(a), s.appendChild(r), s.appendChild(l), s
             }
             renderDay(t) {
+            	 
+
                 const e = document.createElement("a");
                 if (e.href = "#", e.className = n.dayItem, e.innerHTML = String(t.getDate()), e.dataset.time = String(t.getTime()), t.toDateString() === (new Date).toDateString() && e.classList.add(n.isToday), this.datePicked.length ? (this.datePicked[0].toDateString() === t.toDateString() && (e.classList.add(n.isStartDate), this.options.singleMode && e.classList.add(n.isEndDate)), 2 === this.datePicked.length && this.datePicked[1].toDateString() === t.toDateString() && e.classList.add(n.isEndDate), 2 === this.datePicked.length && t.isBetween(this.datePicked[0], this.datePicked[1]) && e.classList.add(n.isInRange)) : this.options.startDate && (this.options.startDate.toDateString() === t.toDateString() && (e.classList.add(n.isStartDate), this.options.singleMode && e.classList.add(n.isEndDate)), this.options.endDate && this.options.endDate.toDateString() === t.toDateString() && e.classList.add(n.isEndDate), this.options.startDate && this.options.endDate && t.isBetween(this.options.startDate, this.options.endDate) && e.classList.add(n.isInRange)), this.options.minDate && t.isBefore(new o.DateTime(this.options.minDate)) && e.classList.add(n.isLocked), this.options.maxDate && t.isAfter(new o.DateTime(this.options.maxDate)) && e.classList.add(n.isLocked), this.options.minDays && 1 === this.datePicked.length) {
                     const i = this.datePicked[0].clone().subtract(this.options.minDays, "day"),
@@ -658,6 +713,8 @@
                 return !this.options.disableWeekends || 6 !== t.getDay() && 0 !== t.getDay() || e.classList.add(n.isLocked), e
             }
             renderFooter() {
+ 
+
                 const t = document.createElement("div");
                 if (t.className = n.containerFooter, this.options.footerHTML ? t.innerHTML = this.options.footerHTML : t.innerHTML = `\n      <span class="${n.previewDateRange}"></span>\n      <button type="button" class="${n.buttonCancel}">${this.options.buttonText.cancel}</button>\n      <button type="button" class="${n.buttonApply}">${this.options.buttonText.apply}</button>\n      `, this.options.singleMode) {
                     if (1 === this.datePicked.length) {
@@ -686,6 +743,8 @@
                 })
             }
             calcSkipDays(t) {
+            	
+
                 let e = t.getDay() - this.options.firstDay;
                 return e < 0 && (e += 7), e
             }
