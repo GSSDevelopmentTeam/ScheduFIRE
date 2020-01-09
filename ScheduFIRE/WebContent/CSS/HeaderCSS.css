@@ -137,7 +137,7 @@ span .del:hover{
 
 .ddc {
 	display: none;
-	position: fixed;
+	position: absolute;
 	right: 8%;
 	top: 14%;
 	z-index: 999;
@@ -155,14 +155,6 @@ span .del:hover{
 }
 .ddc .cmd:hover{
 	background-color:#dddddd;
-}
-
-.dd .db:hover {
-	background-color: rgba(255, 255, 255, 0.4);	
-}
-
-.dd .dn:hover {
-	background-color: rgba(255, 255, 255, 0.4);
 }
 
 .dd:hover .ddc {

@@ -21,9 +21,17 @@ h2 {
 }
 
 .table td, .table th {
-	padding: 1.5px !important;
-	vertical-align: top;
-	border-top: 1px solid #dee2e6;
+    padding: 1.5px!important;
+    vertical-align: top;
+    border-top: 1px solid #dee2e6;
+}
+
+.back-up{
+	border:none;
+	background:none;	
+    position: fixed;
+    bottom: 5%;
+    right: 5%;
 }
 
 </style>
@@ -33,7 +41,7 @@ h2 {
 	<%
 		Date data = (Date) request.getAttribute("data");
 	%>
-
+	<div id="inizio"></div>
 	<!-- Barra Navigazione -->
 	<jsp:include page="HeaderJSP.jsp" />
 
@@ -57,8 +65,10 @@ h2 {
 
 					<div class="modal-footer">
 						<button type="button" class="btn btn-outline-danger"
-							data-dismiss="modal">Annulla</button>
-						<button class="btn btn-outline-secondary">Aggiungi</button>
+							
+						data-dismiss="modal">Annulla</button>
+						<button class="btn btn-outline-success" id="agg" disabled>Aggiungi</button>
+
 					</div>
 				</form>
 			</div>
@@ -66,23 +76,23 @@ h2 {
 	</div>
 
 	<!-- ELENCO SQUADRE  -->
-	<%
-		HashMap<VigileDelFuocoBean, String> squadra = (HashMap<VigileDelFuocoBean, String>) session
-				.getAttribute("squadra");
-	%>
+<%
+	HashMap<VigileDelFuocoBean, String> squadra = (HashMap<VigileDelFuocoBean, String>) session.getAttribute("squadra"); %>
+     
+     <a href="#inizio" class=" back-up"><img src="IMG/arrow/up-arrow-p.png" style="margin-left: 5px;"
+					onmouseover="this.src='IMG/arrow/up-arrow-d.png'"
+					onmouseout="this.src='IMG/arrow/up-arrow-p.png'" /></a>
+     
+<h2 class="d-flex justify-content-center" style="margin-top: 3%">Modifica Squadre</h2>
 
 	<!-- SQUADRA DIURNA -->
-	<div class="d-flex justify-content-center">
-		<h2 style="font-weight: bold; font-size: 36px;">
+		<h2 class="d-flex justify-content-center" style="font-weight: bold; font-size: 36px;">
 			Squadra del
-<<<<<<< Updated upstream
-			<%=data%></h2>
-	</div>
-=======
 			<%=data.toLocalDate().format(DateTimeFormatter.ofPattern("dd MMMM YYYY", new Locale("it", "IT")))%></h2>
->>>>>>> Stashed changes
+	</div>
 
-	<div class="d-flex justify-content-center" id="inizio">
+
+	<div class="d-flex justify-content-center">
 		<form action="GeneraSquadreServlet?salva=true&calendario=true&data=<%=data.toString()%>" method=post>
 			<button type="submit" class="btn btn-outline-success btn-lg"
 				value="salva" name="salva" style="margin: 3px;">Conferma
@@ -119,7 +129,8 @@ h2 {
 
 				<tr>
 					<td class="text-center"><img
-						src="Grado/<%=membro.getGrado()%>.png" style="height: 25%"
+						src="Grado/<%=membro.getGrado()%>.png"
+						style="height: 25%" width=30%
 						onerror="this.parentElement.innerHTML='Non disponibile';"></td>
 					<td class="text-center"><%=membro.getNome()%></td>
 					<td class="text-center"><%=membro.getCognome()%></td>
@@ -293,27 +304,33 @@ h2 {
 		src="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.js"></script>
 
 	<script>
-		function apriFormVF(input, rule, sq, dt) {
-			//Chiamata ajax alla servlet PersonaleDisponibileAJAX
-			$.ajax({
-				type : "POST",//Chiamata POST
-				url : "PersonaleDisponibileAJAX",//url della servlet che devo chiamare
-				data : {
-					"JSON" : true,
-					"aggiunta" : true,
-					"email" : input,
-					"mansione" : rule,
-					"tiposquadra" : sq,
-					"dataModifica" : dt
-				},
-				success : function(response) {//Operazione da eseguire una volta terminata la chiamata alla servlet.
-					$("#appendElenco").remove();
-					$("<div id='appendElenco'></div>").appendTo("#elenco");
-					$(response).appendTo("#appendElenco");
-				}
-			});
 
-		}
+	function apriFormVF(input,rule,sq,dt) {
+		//Chiamata ajax alla servlet PersonaleDisponibileAJAX
+		$.ajax({
+			type : "POST",//Chiamata POST
+			url :"PersonaleDisponibileAJAX",//url della servlet che devo chiamare
+			data : {
+				"JSON" : true,
+				"aggiunta":true,
+				"email" : input,
+				"mansione" : rule,
+				"tiposquadra" : sq,
+				"dataModifica" : dt
+			},			
+			success : function(response) {//Operazione da eseguire una volta terminata la chiamata alla servlet.
+				$("#appendElenco").remove();
+				$("<div id='appendElenco'></div>").appendTo("#elenco");
+				$(response).appendTo("#appendElenco");					
+			}
+		});
+
+	}
+
+	function attivapulsante(){
+		$("#agg").prop("disabled",false);
+	}
+
 	</script>
 
 

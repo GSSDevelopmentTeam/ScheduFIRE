@@ -14,32 +14,31 @@
 }
 
 .back-up{
-	border-radius: 50px;
-    font-size: 30px;
-    width: 60px;
+	border:none;
+	background:none;	
     position: fixed;
     bottom: 5%;
     right: 5%;
-    background-color:#FFFFFF;
-	box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0
-		rgba(0, 0, 0, 0.19);
+}
 
 .container__days{
-min-width: 270px;
+	min-width: 270px;
 }
 .month-item-weekdays-row{
-min-width: 265px;
-
+	min-width: 265px;
 }
+
 </style>
 </head>
 <body>
 
-
+<div id="inizio"></div>
 	<!-- Barra Navigazione -->
 	<jsp:include page="HeaderJSP.jsp" />
 	
-	<a href="#inizio"><button class=" back-up btn btn-outline-secondary"> ^ </button></a>
+	<a href="#inizio" class=" back-up"><img src="IMG/arrow/up-arrow-p.png" 
+					onmouseover="this.src='IMG/arrow/up-arrow-d.png'"
+					onmouseout="this.src='IMG/arrow/up-arrow-p.png'" /></a>
 	<h2 class="d-flex justify-content-center" id="inizio"
 		style="margin-top: 3%; color: #B60000 !Important ">Gestione Ferie</h2>
 
@@ -61,9 +60,7 @@ min-width: 265px;
 					%>
 					<option value="nome" selected>Nome</option>
 					<option value="cognome">Cognome</option>
-					<option value="mansione">Mansione</option>
 					<option value="grado">Grado</option>
-
 					<option value="giorniFerie">Ferie</option>
 					
 					
@@ -72,25 +69,14 @@ min-width: 265px;
 						%>
 					<option value="nome" >Nome</option>
 					<option value="cognome" selected>Cognome</option>
-					<option value="mansione">Mansione</option>
 					<option value="grado">Grado</option>
-
 					<option value="giorniFerie">Ferie</option>
-					<%
-						} else if( ordinamento.equals("mansione") ) {		
-						%>
-					<option value="nome">Nome</option>
-					<option value="cognome">Cognome</option>
-					<option value="mansione"selected>Mansione</option>
-					<option value="grado">Grado</option>
-
-					<option value="giorniFerie">Ferie</option>
+					
 					<%
 						} else if( ordinamento.equals("grado") ) {		
 						%>
 					<option value="nome" >Nome</option>
 					<option value="cognome">Cognome</option>
-					<option value="mansione">Mansione</option>
 					<option value="grado" selected>Grado</option>
 
 					<option value="giorniFerie">Ferie</option>
@@ -99,7 +85,6 @@ min-width: 265px;
 						%>
 					<option value="nome" >Nome</option>
 					<option value="cognome">Cognome</option>
-					<option value="mansione">Mansione</option>
 					<option value="grado">Grado</option>
 					<option value="giorniFerie" selected>Ferie</option>
 					<%
@@ -111,7 +96,6 @@ min-width: 265px;
 					
 					<option value="nome" >Nome</option>
 					<option value="cognome"selected>Cognome</option>
-					<option value="mansione">Mansione</option>
 					<option value="grado">Grado</option>
 
 					<option value="giorniFerie">Ferie</option>
@@ -145,7 +129,7 @@ min-width: 265px;
 		class="alert alert-danger flex alert-dismissible fade in text-center fixed-top"
 		id="rimozioneNoOk"
 		style="display: none; position: fixed; z-index: 99999; width: 100%">
-		<button type="button" class="close" onclick="nascondiNoOK()" aria-label="close">&times;</button>
+		<button type="button" class="close" onclick="nascondiNoOk()" aria-label="close">&times;</button>
 		<strong>Errore!</strong> <span>Rimozione ferie non avvenuta..</span>
 	</div>
 
@@ -328,11 +312,14 @@ min-width: 265px;
 
 
 	<div class="table-responsive">
-		<table class="table  table-hover" id="listaVigili" style="table-layout: fixed">
+	
+		<h4 class="d-flex justify-content-center" 
+		style="margin-top: 0%; color: #B60000 !Important ">Capi Squadra</h4>
+		
+		<table class="table  table-hover listaVigili" style="table-layout: fixed">
 			<thead class="thead-dark">
 				<tr>
 					<th class=" text-center">Grado</th>
-					<th class="text-center">Mansione</th>
 					<th class="text-center">Nome</th>
 					<th class="text-center">Cognome</th>
 					<th class="text-center">Email</th>
@@ -350,13 +337,13 @@ min-width: 265px;
 
 					for (int i = 0; i < listaVigili.size(); i++) {
 						VigileDelFuocoBean vigile = listaVigili.get(i);
+						
+						if(vigile.getMansione().toUpperCase().equals("CAPO SQUADRA")){
 				%>
-
 				<tr>
 					<td class="text-center"><img
-						src="Grado/<%=vigile.getGrado()%>.png" width=30%
+						src="Grado/<%=vigile.getMansione().equals("Capo Squadra") && vigile.getGrado().equals("Esperto")?"EspertoCapoSquadra":vigile.getGrado() %>.png" width=25%
 						onerror="this.parentElement.innerHTML='Non disponibile';"></td>
-					<td class="text-center"><%=vigile.getMansione()%></td>
 					<td class="text-center"><strong><%=vigile.getNome()%></strong></td>
 					<td class="text-center"><strong><%=vigile.getCognome()%></strong></td>
 					<td class="text-center"><%=vigile.getEmail()%></td>
@@ -374,6 +361,115 @@ min-width: 265px;
 				</tr>
 
 				<%
+						}
+					}
+				%>
+
+			</tbody>
+
+		</table>
+		
+		<h4 class="d-flex justify-content-center" id="inizio"
+		style="margin-top: 1%; color: #B60000 !Important ">Autisti</h4>
+		
+		<table class="table  table-hover listaVigili" style="table-layout: fixed">
+			<thead class="thead-dark">
+				<tr>
+					<th class=" text-center">Grado</th>
+					<th class="text-center">Nome</th>
+					<th class="text-center">Cognome</th>
+					<th class="text-center">Email</th>
+
+					<th class="text-center">Ferie</th>
+					<th class="text-center">Inserisci ferie</th>
+					<th class="text-center">Rimuovi ferie</th>
+				</tr>
+			</thead>
+
+			<tbody>
+				<%
+					for (int i = 0; i < listaVigili.size(); i++) {
+						VigileDelFuocoBean vigile = listaVigili.get(i);
+						
+						if(vigile.getMansione().toUpperCase().equals("AUTISTA")){
+				%>
+
+				<tr>
+					<td class="text-center"><img
+						src="Grado/<%=vigile.getGrado()%>.png" width=25%
+						onerror="this.parentElement.innerHTML='Non disponibile';"></td>
+					<td class="text-center"><strong><%=vigile.getNome()%></strong></td>
+					<td class="text-center"><strong><%=vigile.getCognome()%></strong></td>
+					<td class="text-center"><%=vigile.getEmail()%></td>
+					<td class="text-center" id="ferie"><%=vigile.getGiorniFerieAnnoCorrente() + vigile.getGiorniFerieAnnoPrecedente()%></td>
+					<td class="text-center"><button type="button"
+							class="btn btn-outline-secondary" data-toggle="modal"
+							data-target="#aggiungiFerie"
+							onClick='apriFormAggiunta("<%=vigile.getEmail()%>")'>Aggiungi
+							Ferie</button></td>
+					<td class="text-center"><button type="button"
+							class="btn btn-outline-danger" data-toggle="modal"
+							data-target="#rimuoviFerie"
+							onClick='apriFormRimozione("<%=vigile.getEmail()%>")'>Rimuovi
+							Ferie</button></td>
+				</tr>
+
+				<%
+						}
+					}
+				%>
+
+			</tbody>
+
+		</table>
+		
+		<h4 class="d-flex justify-content-center" id="inizio"
+		style="margin-top: 1%; color: #B60000 !Important ">Vigili</h4>
+		
+		<table class="table  table-hover listaVigili" style="table-layout: fixed">
+			<thead class="thead-dark">
+				<tr>
+					<th class=" text-center">Grado</th>
+					<th class="text-center">Nome</th>
+					<th class="text-center">Cognome</th>
+					<th class="text-center">Email</th>
+
+					<th class="text-center">Ferie</th>
+					<th class="text-center">Inserisci ferie</th>
+					<th class="text-center">Rimuovi ferie</th>
+				</tr>
+			</thead>
+
+			<tbody>
+				<%
+					for (int i = 0; i < listaVigili.size(); i++) {
+						VigileDelFuocoBean vigile = listaVigili.get(i);
+						
+						if(vigile.getMansione().toUpperCase().equals("VIGILE")){
+				%>
+
+				<tr>
+					<td class="text-center"><img
+						src="Grado/<%=vigile.getGrado()%>.png" width=25%
+						onerror="this.parentElement.innerHTML='Non disponibile';"></td>
+					<td class="text-center"><strong><%=vigile.getNome()%></strong></td>
+					<td class="text-center"><strong><%=vigile.getCognome()%></strong></td>
+					<td class="text-center"><%=vigile.getEmail()%></td>
+					<td class="text-center" id="ferie"><%=vigile.getGiorniFerieAnnoCorrente() + vigile.getGiorniFerieAnnoPrecedente()%></td>
+					<td class="text-center"><button type="button"
+							class="btn btn-outline-secondary" data-toggle="modal"
+							data-target="#aggiungiFerie"
+							onClick='apriFormAggiunta("<%=vigile.getEmail()%>")'>Aggiungi
+							Ferie</button></td>
+					<td class="text-center"><button type="button"
+							class="btn btn-outline-danger" data-toggle="modal"
+							data-target="#rimuoviFerie"
+							onClick='apriFormRimozione("<%=vigile.getEmail()%>")'>Rimuovi
+							Ferie</button></td>
+				</tr>
+
+				<%
+						}
 					}
 				%>
 
@@ -421,7 +517,7 @@ min-width: 265px;
 
 						var email = $("#emailAggiuntaFerie").val();
 						var ferie = $(
-								"#listaVigili td:contains('" + email + "')")
+								".listaVigili td:contains('" + email + "')")
 								.next('td');
 						var totaleFerie = parseInt(ferie.text());
 						if (differenza == 0) {
@@ -652,7 +748,7 @@ min-width: 265px;
 			var inputDataFinale = $("#rimozioneDataFinale");
 			$(inputDataIniziale).val("");
 			$(inputDataFinale).val("");
-			var cognome = $("#listaVigili td:contains('" + input + "')").prev(
+			var cognome = $(".listaVigili td:contains('" + input + "')").prev(
 					'td');
 			var nome = $(cognome).prev('td');
 			console.log("cognome: " + cognome.text() + " nome: " + nome.text());
@@ -758,7 +854,7 @@ min-width: 265px;
 						success : function(response) {
 							var booleanRisposta = response[0];
 							if (booleanRisposta) {
-								var ferie = $("#listaVigili td:contains('" +email+ "')").next('td');
+								var ferie = $(".listaVigili td:contains('" +email+ "')").next('td');
 					            ferie.text(response[2] + response[1]);
 								alertSuccesso("Rimozione ferie avvenuta con successo.");
 							} else {
@@ -799,12 +895,12 @@ min-width: 265px;
 						success : function(response) {
 							var booleanRisposta = response[0];
 							if (booleanRisposta) {
-								var riga = $("#listaVigili td:contains('"
+								var riga = $(".listaVigili td:contains('"
 										+ email + "')");
 								console.log("inserite ferie " + dataIniziale
 										+ " " + dataFinale + " di " + email);
 								alertSuccesso("Inserimento ferie avvenuto con successo.");
-								var ferie = $("#listaVigili td:contains('" +email+ "')").next('td');
+								var ferie = $(".listaVigili td:contains('" +email+ "')").next('td');
 					            ferie.text(response[2] + response[1]);
 							} else {
 								console.log("problema inserimento ferie "

@@ -79,9 +79,8 @@ public class AggiungiMalattiaServlet extends HttpServlet {
 				dataInizio = Date.valueOf(inizioMalattia);
 				dataFine = Date.valueOf(fineMalattia);
 				
-				Date in = (Date) Date.valueOf(inizioMalattia).clone();
-				
-				
+				//Aggiornamento Notifiche
+				//Notifiche.update(Notifiche.UPDATE_PER_MALATTIA, dataInizio, dataFine, VigileDelFuocoDao.ottieni(emailVF));
 				
 				 GiorniMalattiaBean malattia = new GiorniMalattiaBean();
 				    
@@ -91,6 +90,12 @@ public class AggiungiMalattiaServlet extends HttpServlet {
 					malattia.setEmailCT(emailCT);
 					malattia.setEmailVF(emailVF);
 					JSONArray array = new JSONArray();
+					
+					Date in = (Date) malattia.getDataInizio().clone();
+					Date out = (Date) malattia.getDataFine().clone();
+					
+					Notifiche.update(Notifiche.UPDATE_SQUADRE_PER_MALATTIA, in, out, emailVF);
+						
 					
 				   if(GiorniMalattiaDao.addMalattia(malattia) == true) 
 					  array.put(true);
