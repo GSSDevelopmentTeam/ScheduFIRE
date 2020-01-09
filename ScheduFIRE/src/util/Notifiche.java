@@ -152,7 +152,7 @@ public class Notifiche {
 			notifica += " per il periodo dal " + dateAssenza.get(0) + " al " +
 						dateAssenza.get(dateAssenza.size() - 1) + " causa ferie.";
 		
-		listaNotifiche.add(new Notifica(2, notifica, "ModificaComposizioneSquadreServlet?tipologia=3&data=" + inizio ,generateId()));
+		listaNotifiche.add(new Notifica(2, notifica, "ModificaComposizioneSquadreServlet?tipologia=3&data=" + temp ,generateId()));
 	}
 	
 	private static void updateSquadrePerMalattia(Date inizio, Date fine, String email) {
