@@ -40,7 +40,7 @@ h2 {
 	<%
 		Date data = (Date) request.getAttribute("data");
 	%>
-
+	<div id="inizio"></div>
 	<!-- Barra Navigazione -->
 	<jsp:include page="HeaderJSP.jsp" />
 
@@ -66,7 +66,7 @@ h2 {
 						<button type="button" class="btn btn-outline-danger"
 							
 						data-dismiss="modal">Annulla</button>
-						<button class="btn btn-outline-secondary" id="agg" disabled="true">Aggiungi</button>
+						<button class="btn btn-outline-success" id="agg" disabled>Aggiungi</button>
 
 					</div>
 				</form>
@@ -82,16 +82,15 @@ h2 {
 					onmouseover="this.src='IMG/arrow/up-arrow-d.png'"
 					onmouseout="this.src='IMG/arrow/up-arrow-p.png'" /></a>
      
-
+<h2 class="d-flex justify-content-center" style="margin-top: 3%">Modifica Squadre</h2>
 
 	<!-- SQUADRA DIURNA -->
-	<div class="d-flex justify-content-center">
-		<h2 style="font-weight: bold; font-size: 36px;">
+		<h2 class="d-flex justify-content-center" style="font-weight: bold; font-size: 36px;">
 			Squadra del
 			<%=data%></h2>
-	</div>
 
-	<div class="d-flex justify-content-center" id="inizio">
+
+	<div class="d-flex justify-content-center">
 		<form action="GeneraSquadreServlet?salva=true&calendario=true&data=<%=data.toString()%>" method=post>
 			<button type="submit" class="btn btn-outline-success btn-lg"
 				value="salva" name="salva" style="margin: 3px;">Conferma
@@ -128,7 +127,8 @@ h2 {
 
 				<tr>
 					<td class="text-center"><img
-						src="Grado/<%=membro.getGrado()%>.png" style="height: 25%"
+						src="Grado/<%=membro.getGrado()%>.png"
+						style="height: 25%" width=30%
 						onerror="this.parentElement.innerHTML='Non disponibile';"></td>
 					<td class="text-center"><%=membro.getNome()%></td>
 					<td class="text-center"><%=membro.getCognome()%></td>
@@ -326,7 +326,7 @@ h2 {
 	}
 
 	function attivapulsante(){
-		$("#agg").Button.disabled=false
+		$("#agg").prop("disabled",false);
 	}
 
 	</script>

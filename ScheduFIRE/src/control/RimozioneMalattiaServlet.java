@@ -84,11 +84,6 @@ public class RimozioneMalattiaServlet extends HttpServlet {
 						malattia = GiorniMalattiaDao.malattiaInRange(dataInizio, dataFine, emailVF);
 
 						System.out.println("MALATTIA");
-						
-						if(malattia.size() > 0) {System.out.println("non è vuoto");}
-						if(malattia.size() == 0) {System.out.println("cazzo è vuoto");}
-						
-
 						for(GiorniMalattiaBean M : malattia) {
 							System.out.println(M.getDataInizio() + " " + M.getDataFine());
 							
@@ -123,10 +118,10 @@ public class RimozioneMalattiaServlet extends HttpServlet {
 						
 						//Malattie da non rimuovere
 						if(iniziale != null) {
-							GiorniMalattiaDao.addMalattia(iniziale);
+							GiorniMalattiaDao.addMalattia(iniziale.getDataInizio(), Date.valueOf(dataInizio.toLocalDate().plusDays(-1)), iniziale.getEmailCT(), iniziale.getEmailVF());
 						}
 						if(finale != null) {
-							GiorniMalattiaDao.addMalattia(finale);
+							GiorniMalattiaDao.addMalattia(Date.valueOf(dataFine.toLocalDate().plusDays(1)), finale.getDataFine(), finale.getEmailCT(), finale.getEmailVF());
 						}
 					
 						//Rimozione giorni malattia selezionati
