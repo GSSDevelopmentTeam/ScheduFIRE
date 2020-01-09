@@ -5,107 +5,110 @@
 <html>
 <head>
 <jsp:include page="StandardJSP.jsp" />
-<link type="text/css" rel="stylesheet" href="./CSS/GestionePersonaleCSS.css">
-<style>	
+<link type="text/css" rel="stylesheet"
+	href="./CSS/GestionePersonaleCSS.css">
+<style>
 .table td, .table th {
-    padding: 1.5px!important;
-    vertical-align: top;
-    border-top: 1px solid #dee2e6;
+	padding: 1.5px !important;
+	vertical-align: top;
+	border-top: 1px solid #dee2e6;
 }
 
-.back-up{
-	border:none;
-	background:none;	
-    position: fixed;
-    bottom: 5%;
-    right: 5%;
+.back-up {
+	border: none;
+	background: none;
+	position: fixed;
+	bottom: 5%;
+	right: 5%;
 }
 
-.container__days{
+.container__days {
 	min-width: 270px;
 }
-.month-item-weekdays-row{
+
+.month-item-weekdays-row {
 	min-width: 265px;
 }
-
 </style>
 </head>
 <body>
 
-<div id="inizio"></div>
+
+<div id="sali"></div>
 	<!-- Barra Navigazione -->
 	<jsp:include page="HeaderJSP.jsp" />
 	
-	<a href="#inizio" class=" back-up"><img src="IMG/arrow/up-arrow-p.png" 
+	<a href="#sali" class=" back-up"><img src="IMG/arrow/up-arrow-p.png" 
 					onmouseover="this.src='IMG/arrow/up-arrow-d.png'"
 					onmouseout="this.src='IMG/arrow/up-arrow-p.png'" /></a>
+
 	<h2 class="d-flex justify-content-center" id="inizio"
-		style="margin-top: 3%; color: #B60000 !Important ">Gestione Ferie</h2>
+		style="margin-top: 3%; color: #B60000 !Important">Gestione Ferie</h2>
 
 
-<!-- form per l'ordinamento della lista dei VF-->
-		<%
+	<!-- form per l'ordinamento della lista dei VF-->
+	<%
 		Object ordinamentoObj = request.getAttribute("ordinamento");
 		String ordinamento = (String) ordinamentoObj;
 		%>
 	<form action="./GestioneFerieServlet">
-			<div align="center">
-				<label>Ordinamento lista: &nbsp&nbsp&nbsp</label>
-				<select class="custom-select" name="ordinamento" 
-				onchange="this.form.submit()"  style="width: 15%">
+		<div align="center">
+			<label>Ordinamento lista: &nbsp&nbsp&nbsp</label> <select
+				class="custom-select" name="ordinamento"
+				onchange="this.form.submit()" style="width: 15%">
 
-					<%
+				<%
 					if( ordinamento != null ) {
 						if( ordinamento.equals("nome") ) {
 					%>
-					<option value="nome" selected>Nome</option>
-					<option value="cognome">Cognome</option>
-					<option value="grado">Grado</option>
-					<option value="giorniFerie">Ferie</option>
-					
-					
-					<%
+				<option value="nome" selected>Nome</option>
+				<option value="cognome">Cognome</option>
+				<option value="grado">Grado</option>
+				<option value="giorniFerie">Ferie</option>
+
+
+				<%
 						} else if( ordinamento.equals("cognome") ) {		
 						%>
-					<option value="nome" >Nome</option>
-					<option value="cognome" selected>Cognome</option>
-					<option value="grado">Grado</option>
-					<option value="giorniFerie">Ferie</option>
-					
-					<%
+				<option value="nome">Nome</option>
+				<option value="cognome" selected>Cognome</option>
+				<option value="grado">Grado</option>
+				<option value="giorniFerie">Ferie</option>
+
+				<%
 						} else if( ordinamento.equals("grado") ) {		
 						%>
-					<option value="nome" >Nome</option>
-					<option value="cognome">Cognome</option>
-					<option value="grado" selected>Grado</option>
+				<option value="nome">Nome</option>
+				<option value="cognome">Cognome</option>
+				<option value="grado" selected>Grado</option>
 
-					<option value="giorniFerie">Ferie</option>
-					<%
+				<option value="giorniFerie">Ferie</option>
+				<%
 						} else if( ordinamento.equals("giorniFerie") ) {		
 						%>
-					<option value="nome" >Nome</option>
-					<option value="cognome">Cognome</option>
-					<option value="grado">Grado</option>
-					<option value="giorniFerie" selected>Ferie</option>
-					<%
+				<option value="nome">Nome</option>
+				<option value="cognome">Cognome</option>
+				<option value="grado">Grado</option>
+				<option value="giorniFerie" selected>Ferie</option>
+				<%
 						} 		
 						%>
 
-					<%}
+				<%}
 					else {%>
-					
-					<option value="nome" >Nome</option>
-					<option value="cognome"selected>Cognome</option>
-					<option value="grado">Grado</option>
 
-					<option value="giorniFerie">Ferie</option>
-					<%} %>
-					
+				<option value="nome">Nome</option>
+				<option value="cognome" selected>Cognome</option>
+				<option value="grado">Grado</option>
 
-				</select>
-			</div>
-		</form>
-		<br>
+				<option value="giorniFerie">Ferie</option>
+				<%} %>
+
+
+			</select>
+		</div>
+	</form>
+	<br>
 
 
 
@@ -116,7 +119,8 @@
 		class="alert alert-success flex alert-dismissible fade in text-center fixed-top"
 		id="rimozioneOk"
 		style="display: none; position: fixed; z-index: 99999; width: 100%">
-		<button type="button" class="close" onclick="nascondiOk()" aria-label="close">&times;</button>
+		<button type="button" class="close" onclick="nascondiOk()"
+			aria-label="close">&times;</button>
 		<strong>Operazione riuscita!</strong> <span>Rimozione ferie
 			avvenuta con successo..</span>
 	</div>
@@ -129,7 +133,8 @@
 		class="alert alert-danger flex alert-dismissible fade in text-center fixed-top"
 		id="rimozioneNoOk"
 		style="display: none; position: fixed; z-index: 99999; width: 100%">
-		<button type="button" class="close" onclick="nascondiNoOK()" aria-label="close">&times;</button>
+
+		<button type="button" class="close" onclick="nascondiNoOk()" aria-label="close">&times;</button>
 		<strong>Errore!</strong> <span>Rimozione ferie non avvenuta..</span>
 	</div>
 
@@ -141,7 +146,8 @@
 		aria-labelledby="exampleModalCenterTitle" aria-hidden="true"
 		style="display: none">
 		<div class="modal-dialog modal-dialog-centered" role="document">
-			<div class="modal-content contenutiModal" style="min-width: 550px; min-height: 670px;">
+			<div class="modal-content contenutiModal"
+				style="min-width: 550px; min-height: 670px;">
 				<div class="modal-header">
 					<h5 class="modal-title" id="titoloAggiuntaFerie">Aggiunta
 						ferie</h5>
@@ -150,16 +156,18 @@
 						<span aria-hidden="true">&times;</span>
 					</button>
 				</div>
-				<p>Per selezionare un solo giorno, cliccare due volte sulla data desiderata.</p>
+				<p>Per selezionare un solo giorno, cliccare due volte sulla data
+					desiderata.</p>
 				<div class="modal-body">
 					<input type="hidden" name="email" id="emailAggiuntaFerie">
 					<div class=" row justify-content-center">
 						<input id="dataInizio" placeholder="Giorno iniziale" readonly
-							size="34" style="margin-bottom: 1%;" /> 
-						
-						<input id="dataFine" placeholder="Giorno finale"
-							readonly size="34" style="margin-bottom: 2%;"/>
+							size="34" style="margin-bottom: 1%;" /> <input id="dataFine"
+							placeholder="Giorno finale" readonly size="34"
+							style="margin-bottom: 2%;" />
 					</div>
+					<div class="text-center" id="messaggioTurno"></div>
+
 					<div class="text-center" id="messaggioFerie1"></div>
 					<div class="text-center" id="messaggioFerie2"></div>
 
@@ -190,7 +198,8 @@
 		aria-labelledby="exampleModalCenterTitle" aria-hidden="true"
 		style="display: none">
 		<div class="modal-dialog modal-dialog-centered" role="document">
-			<div class="modal-content contenutiModal" style="min-width: 550px; min-height: 670px;">
+			<div class="modal-content contenutiModal"
+				style="min-width: 550px; min-height: 670px;">
 				<div class="modal-header">
 					<h5 class="modal-title" id="titoloRimuoviFerie">Rimuovi ferie</h5>
 					<button type="button" class="close" data-dismiss="modal"
@@ -198,21 +207,24 @@
 						<span aria-hidden="true">&times; </span>
 					</button>
 				</div>
-				<p>Per selezionare un solo giorno, cliccare due volte sulla data desiderata.</p>
+				<p>Per selezionare un solo giorno, cliccare due volte sulla data
+					desiderata.</p>
 				<div class="modal-body">
 					<input type="hidden" name="email" id="emailRimozioneFerie">
 					<div class=" row justify-content-center">
 						<input id="rimozioneDataIniziale" placeholder="Giorno iniziale"
-							readonly size="34" style="margin-bottom: 1%;"/> 
-						<input id="rimozioneDataFinale"
-							placeholder="Giorno finale" readonly size="34" style="margin-bottom: 2%" />
+							readonly size="34" style="margin-bottom: 1%;" /> <input
+							id="rimozioneDataFinale" placeholder="Giorno finale" readonly
+							size="34" style="margin-bottom: 2%" />
 					</div>
+					<div class="text-center" id="messaggioTurno"></div>
+
 					<div class="text-center" id="messaggioFerie1"></div>
 					<div class="text-center" id="messaggioFerie2"></div>
 
 
 				</div>
-								<div class="modal-footer">
+				<div class="modal-footer">
 					<button type="button" class="btn btn-outline-danger"
 						data-dismiss="modal">Annulla</button>
 
@@ -312,18 +324,18 @@
 
 
 	<div class="table-responsive">
-	
-		<h4 class="d-flex justify-content-center" 
-		style="margin-top: 0%; color: #B60000 !Important ">Capi Squadra</h4>
-		
+
+		<h4 class="d-flex justify-content-center"
+			style="margin-top: 0%; color: #B60000 !Important">Capi Squadra</h4>
+
 		<table class="table  table-hover listaVigili" style="table-layout: fixed">
+
 			<thead class="thead-dark">
 				<tr>
 					<th class=" text-center">Grado</th>
 					<th class="text-center">Nome</th>
 					<th class="text-center">Cognome</th>
 					<th class="text-center">Email</th>
-
 					<th class="text-center">Ferie</th>
 					<th class="text-center">Inserisci ferie</th>
 					<th class="text-center">Rimuovi ferie</th>
@@ -340,11 +352,9 @@
 						
 						if(vigile.getMansione().toUpperCase().equals("CAPO SQUADRA")){
 				%>
-
 				<tr>
-					<td class="text-center"><img
-						src="Grado/<%=vigile.getGrado()%>.png" width=30%
-						onerror="this.parentElement.innerHTML='Non disponibile';"></td>
+
+					<td class="text-center"><img src="Grado/<%=vigile.getMansione().equals("Capo Squadra") && vigile.getGrado().equals("Esperto")?"EspertoCapoSquadra":vigile.getGrado() %>.png" title="<%=vigile.getGrado() %>" onerror="this.parentElement.innerHTML='Non disponibile';"></td>
 					<td class="text-center"><strong><%=vigile.getNome()%></strong></td>
 					<td class="text-center"><strong><%=vigile.getCognome()%></strong></td>
 					<td class="text-center"><%=vigile.getEmail()%></td>
@@ -369,18 +379,18 @@
 			</tbody>
 
 		</table>
-		
+
 		<h4 class="d-flex justify-content-center" id="inizio"
-		style="margin-top: 1%; color: #B60000 !Important ">Autisti</h4>
-		
-		<table class="table  table-hover listaVigili" style="table-layout: fixed">
+			style="margin-top: 1%; color: #B60000 !Important">Autisti</h4>
+
+		<table class="table  table-hover listaVigili"
+			style="table-layout: fixed">
 			<thead class="thead-dark">
 				<tr>
 					<th class=" text-center">Grado</th>
 					<th class="text-center">Nome</th>
 					<th class="text-center">Cognome</th>
 					<th class="text-center">Email</th>
-
 					<th class="text-center">Ferie</th>
 					<th class="text-center">Inserisci ferie</th>
 					<th class="text-center">Rimuovi ferie</th>
@@ -396,8 +406,7 @@
 				%>
 
 				<tr>
-					<td class="text-center"><img
-						src="Grado/<%=vigile.getGrado()%>.png" width=30%
+					<td class="text-center"><img src="Grado/<%=vigile.getGrado()%>.png" title="<%=vigile.getGrado() %>"
 						onerror="this.parentElement.innerHTML='Non disponibile';"></td>
 					<td class="text-center"><strong><%=vigile.getNome()%></strong></td>
 					<td class="text-center"><strong><%=vigile.getCognome()%></strong></td>
@@ -423,18 +432,18 @@
 			</tbody>
 
 		</table>
-		
+
 		<h4 class="d-flex justify-content-center" id="inizio"
-		style="margin-top: 1%; color: #B60000 !Important ">Vigili</h4>
-		
-		<table class="table  table-hover listaVigili" style="table-layout: fixed">
+			style="margin-top: 1%; color: #B60000 !Important">Vigili</h4>
+
+		<table class="table  table-hover listaVigili"
+			style="table-layout: fixed">
 			<thead class="thead-dark">
 				<tr>
 					<th class=" text-center">Grado</th>
 					<th class="text-center">Nome</th>
 					<th class="text-center">Cognome</th>
 					<th class="text-center">Email</th>
-
 					<th class="text-center">Ferie</th>
 					<th class="text-center">Inserisci ferie</th>
 					<th class="text-center">Rimuovi ferie</th>
@@ -450,9 +459,8 @@
 				%>
 
 				<tr>
-					<td class="text-center"><img
-						src="Grado/<%=vigile.getGrado()%>.png" width=30%
-						onerror="this.parentElement.innerHTML='Non disponibile';"></td>
+					<td class="text-center"><img src="Grado/<%=vigile.getGrado()%>.png" title="<%=vigile.getGrado() %>" 
+          onerror="this.parentElement.innerHTML='Non disponibile';"></td>
 					<td class="text-center"><strong><%=vigile.getNome()%></strong></td>
 					<td class="text-center"><strong><%=vigile.getCognome()%></strong></td>
 					<td class="text-center"><%=vigile.getEmail()%></td>
@@ -489,6 +497,9 @@
 	<script src="https://buttons.github.io/buttons.js"></script>
 	<script
 		src="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.js"></script>
+	<script src="JS/datePickerMod.js"></script>
+
+
 
 
 	<script>

@@ -143,9 +143,6 @@ public class PersonaleDisponibileServlet extends HttpServlet{
 		case "disponibilita": 
 			ordinamento=(VigileDelFuocoDao.ORDINA_PER_MANSIONE);
 			break;
-		case "grado": 
-			ordinamento=(VigileDelFuocoDao.ORDINA_PER_COGNOME);
-			break;
 		default:
 			ordinamento=(VigileDelFuocoDao.ORDINA_PER_MANSIONE);
 			ordinamentoStr = "disponibilita";

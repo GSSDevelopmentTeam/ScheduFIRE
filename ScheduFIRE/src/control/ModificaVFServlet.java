@@ -41,9 +41,6 @@ public class ModificaVFServlet extends HttpServlet {
 		//Ottenimento oggetto sessione dalla richiesta
 		HttpSession session = request.getSession();
 		
-		//Rimozione flag per l'esito dell'operazione
-		session.removeAttribute("risultato");
-		
 		//Ottenimento parametro email dalla richiesta
 		String emailVecchia = request.getParameter("emailVecchia");
 
