@@ -40,9 +40,6 @@ public class EliminaVFServlet extends HttpServlet {
 		//Ottenimento oggetto sessione dalla richiesta
 		HttpSession session = request.getSession();
 		
-		//Rimozione flag per l'esito dell'operazione
-		session.removeAttribute("risultato");
-		
 		//Ottenimento parametro email dalla richiesta
 		String email = request.getParameter("email");
 		

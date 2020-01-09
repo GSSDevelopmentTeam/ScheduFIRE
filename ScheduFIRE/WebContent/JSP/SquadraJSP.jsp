@@ -1,3 +1,4 @@
+<%@page import="java.time.format.DateTimeFormatter"%>
 <%@page import="java.util.HashMap"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
@@ -40,7 +41,7 @@ h2 {
 	<%
 		Date data = (Date) request.getAttribute("data");
 	%>
-	<div id="inizio"></div>
+	<div id="sali"></div>
 	<!-- Barra Navigazione -->
 	<jsp:include page="HeaderJSP.jsp" />
 
@@ -78,7 +79,7 @@ h2 {
 <%
 	HashMap<VigileDelFuocoBean, String> squadra = (HashMap<VigileDelFuocoBean, String>) session.getAttribute("squadra"); %>
      
-     <a href="#inizio" class=" back-up"><img src="IMG/arrow/up-arrow-p.png" style="margin-left: 5px;"
+     <a href="#sali" class=" back-up"><img src="IMG/arrow/up-arrow-p.png" style="margin-left: 5px;"
 					onmouseover="this.src='IMG/arrow/up-arrow-d.png'"
 					onmouseout="this.src='IMG/arrow/up-arrow-p.png'" /></a>
      
@@ -87,7 +88,8 @@ h2 {
 	<!-- SQUADRA DIURNA -->
 		<h2 class="d-flex justify-content-center" style="font-weight: bold; font-size: 36px;">
 			Squadra del
-			<%=data%></h2>
+			<%=data.toLocalDate().format(DateTimeFormatter.ofPattern("dd MMMM YYYY", new Locale("it", "IT")))%></h2>
+	</div>
 
 
 	<div class="d-flex justify-content-center">
@@ -126,10 +128,7 @@ h2 {
 				%>
 
 				<tr>
-					<td class="text-center"><img
-						src="Grado/<%=membro.getGrado()%>.png"
-						style="height: 25%" width=30%
-						onerror="this.parentElement.innerHTML='Non disponibile';"></td>
+					<td class="text-center"><img src="Grado/<%=membro.getMansione().equals("Capo Squadra") && membro.getGrado().equals("Esperto")?"EspertoCapoSquadra":membro.getGrado() %>.png" title="<%=membro.getGrado() %>" onerror="this.parentElement.innerHTML='Non disponibile';"></td>
 					<td class="text-center"><%=membro.getNome()%></td>
 					<td class="text-center"><%=membro.getCognome()%></td>
 					<td class="text-center"><%=membro.getMansione()%></td>
@@ -175,9 +174,7 @@ h2 {
 				%>
 
 				<tr>
-					<td class="text-center"><img
-						src="Grado/<%=membro.getGrado()%>.png" style="height: 25%"
-						onerror="this.parentElement.innerHTML='Non disponibile';"></td>
+					<td class="text-center"><img src="Grado/<%=membro.getMansione().equals("Capo Squadra") && membro.getGrado().equals("Esperto")?"EspertoCapoSquadra":membro.getGrado() %>.png" title="<%=membro.getGrado() %>" onerror="this.parentElement.innerHTML='Non disponibile';"></td>
 					<td class="text-center"><%=membro.getNome()%></td>
 					<td class="text-center"><%=membro.getCognome()%></td>
 					<td class="text-center"><%=membro.getMansione()%></td>
@@ -223,9 +220,7 @@ h2 {
 				%>
 
 				<tr>
-					<td class="text-center"><img
-						src="Grado/<%=membro.getGrado()%>.png" style="height: 25%"
-						onerror="this.parentElement.innerHTML='Non disponibile';"></td>
+					<td class="text-center"><img src="Grado/<%=membro.getMansione().equals("Capo Squadra") && membro.getGrado().equals("Esperto")?"EspertoCapoSquadra":membro.getGrado() %>.png" title="<%=membro.getGrado() %>" onerror="this.parentElement.innerHTML='Non disponibile';"></td>
 					<td class="text-center"><%=membro.getNome()%></td>
 					<td class="text-center"><%=membro.getCognome()%></td>
 					<td class="text-center"><%=membro.getMansione()%></td>
@@ -271,9 +266,7 @@ h2 {
 				%>
 
 				<tr>
-					<td class="text-center"><img
-						src="Grado/<%=membro.getGrado()%>.png" style="height: 25%"
-						onerror="this.parentElement.innerHTML='Non disponibile';"></td>
+					<td class="text-center"><img src="Grado/<%=membro.getMansione().equals("Capo Squadra") && membro.getGrado().equals("Esperto")?"EspertoCapoSquadra":membro.getGrado() %>.png" title="<%=membro.getGrado() %>"onerror="this.parentElement.innerHTML='Non disponibile';"></td>
 					<td class="text-center"><%=membro.getNome()%></td>
 					<td class="text-center"><%=membro.getCognome()%></td>
 					<td class="text-center"><%=membro.getMansione()%></td>
@@ -317,6 +310,7 @@ h2 {
 				"dataModifica" : dt
 			},			
 			success : function(response) {//Operazione da eseguire una volta terminata la chiamata alla servlet.
+				$("#agg").prop("disabled",true);
 				$("#appendElenco").remove();
 				$("<div id='appendElenco'></div>").appendTo("#elenco");
 				$(response).appendTo("#appendElenco");					
@@ -328,7 +322,7 @@ h2 {
 	function attivapulsante(){
 		$("#agg").prop("disabled",false);
 	}
-
+	
 	</script>
 
 

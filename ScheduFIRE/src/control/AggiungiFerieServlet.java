@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.sql.Date;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -11,6 +12,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+
+import org.apache.tomcat.jni.Time;
 import org.json.JSONArray;
 import model.bean.CapoTurnoBean;
 import model.bean.VigileDelFuocoBean;
@@ -111,6 +114,7 @@ public class AggiungiFerieServlet extends HttpServlet {
 				if(!isPresentiNumeroMinimo(dataInizio, dataFine,mansioneVF)) 
 					throw new ScheduFIREException("Personale minore di 13 unità. Impossibile inserire ferie");
 				
+
 				/**
 				 * Controllo il vigile è già stato schedulato. In questo caso, si concedono
 				 * le ferie e si aggiorna il CT mediante una notifica che lo avvisa 
@@ -119,27 +123,35 @@ public class AggiungiFerieServlet extends HttpServlet {
 				int i=0;
 				boolean componente = false;
 				//Date sostituzione = null;
+				List<Date> dateSostituzione = new ArrayList<Date>();
 				
 				//LocalDate.of(dataInizio.getYear(), dataInizio.getMonth(), dataInizio.getDay())
 				Date dataInizioClone=(Date) dataInizio.clone();
-				while(i < numeroGiorniPeriodo) {
+				while(i <= numeroGiorniPeriodo) {
 					if(ComponenteDellaSquadraDao.isComponente(emailVF, dataInizioClone)) { 
 						componente = true;
 						//sostituzione = (Date) dataInizio.clone();
-						break;
+						dateSostituzione.add(dataInizioClone);
+						dataInizioClone = Date.valueOf(dataInizioClone.toLocalDate().plusDays(1L));
+						i++;
 					}
 					else{
-						dataInizioClone = Date.valueOf(dataInizioClone.toLocalDate().plusDays(1));
+						dataInizioClone = Date.valueOf(dataInizioClone.toLocalDate().plusDays(1L));
 						i++;
 					}
 				}
-
-				if(componente)
+				
+				
+				if(componente) {
 					Notifiche.update(Notifiche.UPDATE_SQUADRE_PER_FERIE, dataInizio, dataFine, emailVF);
+					System.out.print(dateSostituzione.size());
+					System.out.println();
+					for(int j=0; j< dateSostituzione.size(); j++) {
+						System.out.println("inizio ciclo... " + emailVF + " " + dateSostituzione.get(j));
+						Util.sostituisciVigile(dateSostituzione.get(j), emailVF);
+					}
+				}
 				
-				//Util.sostituisciVigile(sostituzione, emailVF);
-				
-
 				
 				//Ottenimento numero totale giorni di ferie a disposizione del VF
 				int feriePrecedenti = VigileDelFuocoDao.ottieniNumeroFeriePrecedenti(emailVF);
@@ -164,6 +176,7 @@ public class AggiungiFerieServlet extends HttpServlet {
 						//Concessione Ferie. Salvataggio del periodo nel DataBase 
 
 						aggiunta = FerieDao.aggiungiPeriodoFerie(emailCT, emailVF, dataInizio, dataFine);
+						
 				}
 		}
 		
