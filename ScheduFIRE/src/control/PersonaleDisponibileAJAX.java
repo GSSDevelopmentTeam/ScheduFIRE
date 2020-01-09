@@ -63,19 +63,18 @@ public class PersonaleDisponibileAJAX extends HttpServlet {
 		Date data = null;
 		if(tp==1) {
 		squadra = (HashMap<VigileDelFuocoBean, String>) session.getAttribute("squadraDiurno");	
-		data = (Date) request.getAttribute("dataDiurno");
+		data = Date.valueOf(request.getParameter("dataDiurno"));
 		} else {
 			if(tp==2) {
 				squadra = (HashMap<VigileDelFuocoBean, String>) session.getAttribute("squadraNotturno");
-				data = (Date) request.getAttribute("dataNotturno");
+				data = Date.valueOf( request.getParameter("dataNotturno"));
 			}else {
 				squadra = (HashMap<VigileDelFuocoBean, String>) session.getAttribute("squadra");
-				data = (Date) request.getAttribute("dataModifica");
+				data = Date.valueOf( request.getParameter("dataModifica"));
 			}
 		}
 		
 		System.out.println("Data "+data);
-		
 		ArrayList<VigileDelFuocoBean> vigili=VigileDelFuocoDao.getDisponibili(data);
 
 		//Confronto se nell'ArrayList dei vigili ci sono quelli gi� inseriti nelle squadre 
