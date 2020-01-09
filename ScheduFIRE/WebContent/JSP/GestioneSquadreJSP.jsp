@@ -88,6 +88,8 @@ h2 {
 <a href="#inizio" class=" back-up"><img src="IMG/arrow/up-arrow-p.png" style="margin-left: 5px;"
 					onmouseover="this.src='IMG/arrow/up-arrow-d.png'"
 					onmouseout="this.src='IMG/arrow/up-arrow-p.png'" /></a>
+<input type="hidden" id="day" value="<%=giorno%>">
+<input type="hidden" id="night" value="<%=notte%>">
 
 		<h2 class="d-flex justify-content-center" id="inizio" style="margin-top: 3%">Gestione Squadre</h2>
 	<br>
@@ -525,8 +527,27 @@ h2 {
 
 	<script>
 	$(document).ready(function(){
-		caricoPersonale();});
+		var day = $("#day").val();
+		var night =  $("#night").val();
+		console.log("giorno "+day+" notte "+night);
+		caricoPersonale(day,night);});
 	
+	function caricoPersonale(giorno, notte) {
+		//Chiamata ajax alla servlet PersonaleDisponibileAJAX
+		$.ajax({
+			type : "POST",//Chiamata POST
+			url : "/ScheduFIRE/PersonaleServlet",//url della servlet che devo chiamare
+			data : {
+				"JSON" : true,
+				"aggiunta" : true,
+				"dataDiurno" : giorno,
+				"dataNotturno" : notte
+			},
+			success : function(response) {//Operazione da eseguire una volta terminata la chiamata alla servlet.
+					$(response).appendTo("#personale");
+			}
+		});
+	}
 		function apriFormVF(input, rule, sq, dt) {
 			//Chiamata ajax alla servlet PersonaleDisponibileAJAX
 			$.ajax({
@@ -549,16 +570,7 @@ h2 {
 			});
 		}
 		
-		function caricoPersonale() {
-			//Chiamata ajax alla servlet PersonaleDisponibileAJAX
-			$.ajax({
-				type : "POST",//Chiamata POST
-				url : "/ScheduFIRE/PersonaleServlet",//url della servlet che devo chiamare
-				success : function(response) {//Operazione da eseguire una volta terminata la chiamata alla servlet.
-						$(response).appendTo("#personale");
-				}
-			});
-		}
+		
 		
 		function attivapulsante(){
 			$("#agg").prop("disabled",false);
