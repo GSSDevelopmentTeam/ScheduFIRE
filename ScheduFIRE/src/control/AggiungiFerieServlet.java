@@ -85,6 +85,7 @@ public class AggiungiFerieServlet extends HttpServlet {
 			inizio=inizio.plusDays(1);
 			numeroGiorniPeriodo++;
 		}
+
 		
 		/**
 		 * Controlli necessari prima di concedere le ferie:
@@ -119,25 +120,26 @@ public class AggiungiFerieServlet extends HttpServlet {
 				boolean componente = false;
 				//Date sostituzione = null;
 				
-				
+				//LocalDate.of(dataInizio.getYear(), dataInizio.getMonth(), dataInizio.getDay())
+				Date dataInizioClone=(Date) dataInizio.clone();
 				while(i < numeroGiorniPeriodo) {
-					if(ComponenteDellaSquadraDao.isComponente(emailVF, dataInizio)) { 
+					if(ComponenteDellaSquadraDao.isComponente(emailVF, dataInizioClone)) { 
 						componente = true;
 						//sostituzione = (Date) dataInizio.clone();
 						break;
 					}
 					else{
-						dataInizio = Date.valueOf(dataInizio.toLocalDate().plusDays(1));
+						dataInizioClone = Date.valueOf(dataInizioClone.toLocalDate().plusDays(1));
 						i++;
 					}
 				}
-				
+
 				if(componente)
 					Notifiche.update(Notifiche.UPDATE_SQUADRE_PER_FERIE, dataInizio, dataFine, emailVF);
 				
 				//Util.sostituisciVigile(sostituzione, emailVF);
 				
-				
+
 				
 				//Ottenimento numero totale giorni di ferie a disposizione del VF
 				int feriePrecedenti = VigileDelFuocoDao.ottieniNumeroFeriePrecedenti(emailVF);
@@ -160,6 +162,7 @@ public class AggiungiFerieServlet extends HttpServlet {
 						VigileDelFuocoDao.aggiornaFerieCorrenti(emailVF, ferieCorrenti-numeroGiorniFerie);
 					}
 						//Concessione Ferie. Salvataggio del periodo nel DataBase 
+
 						aggiunta = FerieDao.aggiungiPeriodoFerie(emailCT, emailVF, dataInizio, dataFine);
 				}
 		}
