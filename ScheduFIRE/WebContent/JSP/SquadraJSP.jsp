@@ -1,3 +1,4 @@
+<%@page import="java.time.format.DateTimeFormatter"%>
 <%@page import="java.util.HashMap"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
@@ -87,7 +88,8 @@ h2 {
 	<!-- SQUADRA DIURNA -->
 		<h2 class="d-flex justify-content-center" style="font-weight: bold; font-size: 36px;">
 			Squadra del
-			<%=data%></h2>
+			<%=data.toLocalDate().format(DateTimeFormatter.ofPattern("dd MMMM YYYY", new Locale("it", "IT")))%></h2>
+	</div>
 
 
 	<div class="d-flex justify-content-center">
@@ -308,6 +310,7 @@ h2 {
 				"dataModifica" : dt
 			},			
 			success : function(response) {//Operazione da eseguire una volta terminata la chiamata alla servlet.
+				$("#agg").prop("disabled",true);
 				$("#appendElenco").remove();
 				$("<div id='appendElenco'></div>").appendTo("#elenco");
 				$(response).appendTo("#appendElenco");					
@@ -319,7 +322,7 @@ h2 {
 	function attivapulsante(){
 		$("#agg").prop("disabled",false);
 	}
-
+	
 	</script>
 
 

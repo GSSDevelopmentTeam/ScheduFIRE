@@ -231,6 +231,8 @@ public class Util {
 	}
 	
 	public static void sostituisciVigile(Date data, String mailVFDaSostituire) throws ScheduFIREException {
+		//Prendo componenti e mappa delle squadre per la data in questione e li rimuovo 
+		//dal DB prima di modificarli
 		List<ComponenteDellaSquadraBean> lista = ComponenteDellaSquadraDao.getComponenti(data);
 		HashMap<VigileDelFuocoBean, String> squadra = ottieniSquadra(data);
 		
@@ -239,21 +241,32 @@ public class Util {
 			throw new ScheduFIREException("Errore nelle query di sostituzione ferie");
 		}
 		
+		//Prendo il Vigile con il carico di lavoro minore alla data disponibile
 		List<VigileDelFuocoBean> disponibili = VigileDelFuocoDao.getDisponibili(data);
 		Collections.sort(disponibili, (VigileDelFuocoBean v1, VigileDelFuocoBean v2) ->
 			(v1.getCaricoLavoro() - v2.getCaricoLavoro()));
-		VigileDelFuocoBean sostituto = disponibili.get(0);
+		VigileDelFuocoBean sostituto = null;
+		VigileDelFuocoBean vfDaSostituire = VigileDelFuocoDao.ottieni(mailVFDaSostituire);
+		for(VigileDelFuocoBean disponibile : disponibili) {
+			if(vfDaSostituire.getMansione().equals(disponibile.getMansione())) {
+				sostituto = disponibile;
+			}
+		}
+		
+		//Cerco il componente da sostituire
 		for(int i = 0; i < lista.size(); i++) {
 			ComponenteDellaSquadraBean membro = lista.get(i);
 			if(membro.getEmailVF().equals(mailVFDaSostituire)) {
+				//Swappo da sostituire e sistituto in lista e mappa
 				lista.set(i, new ComponenteDellaSquadraBean(membro.getTipologiaSquadra(), 
 						sostituto.getEmail(), membro.getGiornoLavorativo()));
-				String mansione = squadra.remove(membro);
+				String mansione = squadra.remove(VigileDelFuocoDao.ottieni(mailVFDaSostituire));
 				squadra.put(sostituto, mansione);
 				break;
 			}
 		}
 		
+		//Salvo nel DB i cambiamenti effettuati
 		if(!ComponenteDellaSquadraDao.setComponenti(lista) ||
 				!VigileDelFuocoDao.caricoLavorativo(squadra)) {
 			throw new ScheduFIREException("Errore nelle query di sostituzione ferie");

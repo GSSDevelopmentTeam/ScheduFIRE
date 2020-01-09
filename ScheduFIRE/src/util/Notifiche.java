@@ -77,17 +77,26 @@ public class Notifiche {
 
 
 	private static  void updateMalattia(Date temp, Date to, VigileDelFuocoBean vigile) {
+		List<List<VigileDelFuocoBean>> disponibili = new ArrayList<>();
 		Date from = (Date) temp.clone();
-		SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
 		while(!from.equals(to)) {
-			if(ComponenteDellaSquadraDao.isComponente(vigile.getEmail(), from)) {
-				listaNotifiche.add(new Notifica(3, "" + vigile.getCognome() + " " + vigile.getNome() + 
-						" non potr� partecipare ad un turno a lui assegnato causa malattia.<br/>(giorno dal\r\n" + 
-
-											formatter.format(from).toString() + " al "+ formatter.format(to).toString()+")", "/ModificaSquadreServlet",generateId()));
-				break;
+			if(GiornoLavorativo.isLavorativo(from)) {
+				disponibili.add(VigileDelFuocoDao.getDisponibili(to));
 			}
 			from = Date.valueOf(from.toLocalDate().plusDays(1L));
+		}
+
+		for(List<VigileDelFuocoBean> disponibiliAlGiorno : disponibili) {
+			if(!conta(disponibiliAlGiorno)) {
+				listaNotifiche.add(new Notifica(2, "La malattia concesse a " + vigile.getCognome() + " " +
+						vigile.getNome() + " non rendono possibile la creazione di un turno", "/PeriodiDiMalattiaServlet",generateId()));
+				break;
+			}
+		}
+
+		if(controllaRestanti(vigile)) {
+			listaNotifiche.add(new Notifica(1, "" + vigile.getCognome() + " " +
+					vigile.getNome() + " ha terminato le ferie a lui disponibili", "",generateId()));
 		}
 	}
 	
@@ -146,29 +155,41 @@ public class Notifiche {
 		listaNotifiche.add(new Notifica(2, notifica, "/ModificaComposizioneSquadreServlet",generateId()));
 	}
 	
-	private static void updateSquadrePerMalattia(Date temp, Date to, String email) {
-		Date from = (Date) temp.clone();
+	private static void updateSquadrePerMalattia(Date inizio, Date fine, String email) {
+		Date inizioMalattia = (Date) inizio.clone();
+		Date fineMalattia = (Date) fine.clone();
+		int schedu = 0;
+		
 		VigileDelFuocoBean vigile = VigileDelFuocoDao.ottieni(email);
 		SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
-		List<String> dateAssenza = new ArrayList<String>();
 		
-		while(!from.equals(to)) {
-			if(ComponenteDellaSquadraDao.isComponente(vigile.getEmail(), from)) {
-				dateAssenza.add(formatter.format(from).toString());
+		ArrayList<String> giorniMalattiaSchedulato = new ArrayList<String>();
+		
+			String notificaMalattia = "Il vigile "+vigile.getCognome()+" "+vigile.getNome()
+			+ " non sar� presenti in un turno a lui assegnato causa malattia";
+			
+			LocalDate inMalattia = inizioMalattia.toLocalDate();
+			LocalDate outMalattia = fineMalattia.toLocalDate();
+			
+			while(!inizioMalattia.equals(Date.valueOf((outMalattia.plusDays(1L))))) {
+				if(GiornoLavorativo.isLavorativo(inizioMalattia)) {
+					if(ComponenteDellaSquadraDao.isComponente(vigile.getEmail(), inizioMalattia)) {
+					giorniMalattiaSchedulato.add(formatter.format(inizioMalattia));
+					}
+				}
+				LocalDate next = inizioMalattia.toLocalDate().plusDays(1L);
+				inizioMalattia = Date.valueOf(next);
 			}
-			from = Date.valueOf(from.toLocalDate().plusDays(1L));
+			
+			if(giorniMalattiaSchedulato.size() == 1)
+				notificaMalattia += " per il giorno " + giorniMalattiaSchedulato.get(0) + " causa Malattia.";
+			else
+				notificaMalattia += " per il periodo dal " + giorniMalattiaSchedulato.get(0) + " al " +
+						giorniMalattiaSchedulato.get(giorniMalattiaSchedulato.size() - 1) + " causa malattia.";
+			
+			listaNotifiche.add(new Notifica(2, notificaMalattia, "/ModificaComposizioneSquadreServlet",generateId()));
 		}
-		String notifica = vigile.getCognome() + " " + vigile.getNome() + 
-				" " + "non sarà presente nella squadra a cui è stato assegnato\n";
-		if(dateAssenza.size() == 1) {
-			notifica.concat(" per il giorno " + dateAssenza.get(0) + " causa ferie.");
-		}
-		else {
-			notifica.concat(" per il periodo dal " + dateAssenza.get(0) + " al " 
-		+ dateAssenza.get(dateAssenza.size()-1));
-		}
-		listaNotifiche.add(new Notifica(2, notifica, "/ModificaComposizioneSquadreServlet",generateId()));
-	}
+	
 	
 	
 	public void rimuovi(Notifica toRemove) {

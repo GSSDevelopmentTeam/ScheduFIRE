@@ -52,7 +52,7 @@ public class ModificaComposizioneSquadreServlet extends HttpServlet {
 
 
 		try {
-			Map<VigileDelFuocoBean, String> squadra = new HashMap<>();
+			HashMap<VigileDelFuocoBean, String> squadra = new HashMap<>();
 			Date data = Date.valueOf(request.getParameter("data"));
 			if(request.getParameter("email")!= null) {
 				squadra = (HashMap<VigileDelFuocoBean, String>) sessione.getAttribute("squadra");
@@ -85,7 +85,7 @@ public class ModificaComposizioneSquadreServlet extends HttpServlet {
 			String oldVF =request.getParameter("email");
 			String newVF =request.getParameter("VFNew");
 			int tipo = Integer.parseInt(request.getParameter("tiposquadra"));
-			Map<VigileDelFuocoBean, String> squadra = new HashMap<>();
+			HashMap<VigileDelFuocoBean, String> squadra = new HashMap<>();
 			switch(tipo) {
 			case 1: 
 				squadra = (HashMap<VigileDelFuocoBean, String>) sessione.getAttribute("squadraDiurno");
@@ -113,10 +113,16 @@ public class ModificaComposizioneSquadreServlet extends HttpServlet {
 				}
 			}
 			switch(tipo) {
-			case 1: case 2:
+			case 1: 
+				sessione.setAttribute("squadraDiurno", squadra);
+				request.getRequestDispatcher("JSP/GestioneSquadreJSP.jsp").forward(request, response);
+				break;			
+			case 2:
+				sessione.setAttribute("squadraNotturno", squadra);
 				request.getRequestDispatcher("JSP/GestioneSquadreJSP.jsp").forward(request, response);
 				break;
 			case 3:
+				sessione.setAttribute("squadra", squadra);
 				request.setAttribute("data", Date.valueOf(request.getParameter("data")));
 				request.getRequestDispatcher("JSP/SquadraJSP.jsp").forward(request, response);
 				break;

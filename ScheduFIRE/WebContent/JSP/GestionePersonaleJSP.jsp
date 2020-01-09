@@ -15,23 +15,15 @@ Object attributoVigili = request.getAttribute("vigili");
 if(attributoVigili instanceof Collection) 
 	  vigili = (Collection<VigileDelFuocoBean>) attributoVigili;
 
-Object ordinamentoObj = request.getAttribute("ordinamento");
+Object ordinamentoObj = session.getAttribute("ordinamento");
 String ordinamento = null;
 if(ordinamentoObj.getClass().getSimpleName().equals("String"))
 	ordinamento = (String) ordinamentoObj;
 
-/*
-Object risultatoObj = request.getAttribute("risultato");
-String risultato = "";
-if(ordinamentoObj.getClass().getSimpleName().equals("String"))
-	risultato = (String) risultatoObj;
 
-String styleVisibile = "none";
-if( !"".equals(risultato) )
-	styleVisibile = "block";
+Object risultato = session.getAttribute("risultato");
 
 session.removeAttribute("risultato");
-*/
 
 %>
 
@@ -126,8 +118,6 @@ h4{color: #B60000;}
 					
 					button.innerHTML = "Annulla";
 					
-					
-					
 					gradoCapoSquadra = document.getElementById("modificaVF" + id + "GradoCapoSquadra");
 					gradi = document.getElementById("modificaVF" + id + "Gradi");
 					
@@ -148,6 +138,31 @@ h4{color: #B60000;}
 				
 			});
 			
+		}
+		
+		function alertInsuccesso(input) {
+			$("#operazioneNoOk span").text(input);
+			$("#operazioneNoOk span").show();
+			$("#operazioneNoOk").fadeTo(4000, 500).slideUp(5000000, function() {
+				$("#success-alert").slideUp(5000000);
+			});
+
+		}
+
+		function alertSuccesso(input) {
+			$("#operazioneOk span").text(input);
+			$("#operazioneOk").show();
+			$("#operazioneOk").fadeTo(4000, 500).slideUp(5000000, function() {
+				$("#success-alert").slideUp(5000000);
+			});
+		}
+		
+		function nascondiOk(){
+			document.getElementById("operazioneOk").style.display="none";
+		}
+		
+		function nascondiNoOk(){
+			document.getElementById("operazioneNoOk").style.display="none";
 		}
 		
 		function mostraFormAggiuta() {
@@ -287,6 +302,31 @@ h4{color: #B60000;}
 <a href="#sali" class=" back-up"><img src="IMG/arrow/up-arrow-p.png" style="margin-left: 5px;"
 					onmouseover="this.src='IMG/arrow/up-arrow-d.png'"
 					onmouseout="this.src='IMG/arrow/up-arrow-p.png'" /></a>
+					
+		<!--------- Alert Ok----------------->
+
+		<div
+			class="alert alert-success flex alert-dismissible fade in text-center fixed-top"
+			id="operazioneOk"
+			style="display: none; position: fixed; z-index: 99999; width: 100%">
+			<button type="button" class="close" onclick="nascondiOk()" aria-label="close">&times;</button>
+			<strong>Operazione riuscita!</strong> <span>Rimozione ferie
+				avvenuta con successo..</span>
+		</div>
+	
+		<!-- ----------------------- -->
+	
+		<!--------- Alert NON Ok ----------------->
+	
+		<div
+			class="alert alert-danger flex alert-dismissible fade in text-center fixed-top"
+			id="operazioneNoOk"
+			style="display: none; position: fixed; z-index: 99999; width: 100%">
+			<button type="button" class="close" onclick="nascondiNoOK()" aria-label="close">&times;</button>
+			<strong>Errore!</strong> <span>Rimozione ferie non avvenuta..</span>
+		</div>
+	
+		<!-- ----------------------- -->
 
 		<h2 id="titolo">Gestione Personale</h2>
 
@@ -318,20 +358,13 @@ h4{color: #B60000;}
 					<option value="caricoLavoro" selected>Carico di lavoro</option>
 					<option value="ferie">Ferie</option>
 					<%
-						} else if( ordinamento.equals("giorniFerieAnnoCorrente") ) {		
+						} else if( ordinamento.equals("ferie") ) {		
 						%>
 					<option value="nome">Nome</option>
 					<option value="cognome">Cognome</option>
 					<option value="caricoLavoro">Carico di lavoro</option>
-					<option value="ferie">Ferie</option>
-					<%
-						} else if( ordinamento.equals("giorniFerieAnnoPrecedente") ) {		
-						%>
-					<option value="nome">Nome</option>
-					<option value="cognome">Cognome</option>
-					<option value="caricoLavoro">Carico di lavoro</option>
-					<option value="ferie">Ferie</option>
-					<%
+					<option value="ferie" selected>Ferie</option>
+					<% 	
 						} else {		
 						%>
 					<option value="nome">Nome</option>
@@ -364,13 +397,15 @@ h4{color: #B60000;}
 		%>
 		
 		<div class="table-responsive">
-			<table class="table  table-hover" id="listaVigili">
+			<table class="table  table-hover" id="listaVigili" style = "table-layout: fixed; width: 100%;">
 				<thead class="thead-dark">
 					<tr>
 						<th class="text-center" style = "width: 10%">Grado</th>
 						<th class="text-center">Nome</th>
 						<th class="text-center">Cognome</th>
+						
 						<th class="text-center">Email</th>
+						<th>
 						<th class="text-center">Carico lavorativo</th>
 						<th class="text-center">Ferie<th>
 						<th class="text-center">Modifica</th>
@@ -392,24 +427,24 @@ h4{color: #B60000;}
 
 						<img src="Grado/<%=vf.getMansione().equals("Capo Squadra") && 
 						vf.getGrado().equals("Esperto")?"EspertoCapoSquadra":vf.getGrado() %>.png" 
-						 onerror="this.parentElement.innerHTML='Non disponibile';"
-						title = <%= vf.getGrado() %>>
-						
+						 onerror="this.parentElement.innerHTML='Non disponibile';" title = <%= vf.getGrado() %>>						
 						</td>
 			
-						<td class="text-center"><%= vf.getNome() %></td>
+						<td class="text-center" style = "font-weight: bold;"><%= vf.getNome() %></td>
 
-						<td class="text-center"><%= vf.getCognome() %></td>
+						<td class="text-center" style = "font-weight: bold;"><%= vf.getCognome() %></td>
 
-						<td class="text-center"><%= vf.getEmail() %></td>
-
+						<td class="text-center" ><%= vf.getEmail() %></td>
+						
+						<td>
+						
 						<td class="text-center"><%= vf.getCaricoLavoro() %></td>
 
 						<td class="text-center"><%= vf.getGiorniFerieAnnoCorrente() + 
 													vf.getGiorniFerieAnnoPrecedente() %></td>
+							
+						<td>	
 													
-						<td>
-
 						<td>
 
 							<button id=<%= id %> type="button" class="btn btn-outline-secondary"
@@ -418,7 +453,7 @@ h4{color: #B60000;}
 							</button>
 
 						</td>
-
+						
 						<td>
 						
 							<div id = <%= "divPopupFormEliminazioneVF" + id %> class="divPopupFormEliminazioneVF">
@@ -482,7 +517,7 @@ h4{color: #B60000;}
 
 					<tr id=<%= "modifica" + id %> class="modifica">
 
-						<td colspan="10">
+						<td class = "riga" colspan="10">
 
 							<form id=<%= "modificaVF" + id %> action="./ModificaVFServlet"
 								class="modificaVF" onsubmit="return validazioneForm(this.id)">
@@ -716,7 +751,9 @@ h4{color: #B60000;}
 									corrente: <input id = <%= "modificaVF" + id + "GiorniFerieAnnoCorrente" %> type="number"
 									name="giorniFerieAnnoCorrenteNuovi"
 									value=<%= vf.getGiorniFerieAnnoCorrente() %> min="0" max = "22" required>
-								</label> <br> <br> <label> Giorni di ferie degli anni
+								</label> 
+								&nbsp;
+								<label> Giorni di ferie degli anni
 									precedenti: <input  id = <%= "modificaVF" + id + "GiorniFerieAnnoPrecedente" %> type="number"
 									name="giorniFerieAnnoPrecedenteNuovi"
 									value= <%= vf.getGiorniFerieAnnoPrecedente() %> min="0" max = "999" required>
@@ -769,13 +806,14 @@ h4{color: #B60000;}
 				
 		%>
 		<div class="table-responsive">
-			<table class="table  table-hover" id="listaVigili">
+			<table class="table  table-hover" id="listaVigili" style = "table-layout: fixed; width: 100%;">
 				<thead class="thead-dark">
 					<tr>
 						<th class="text-center" style = "width: 10%">Grado</th>
 						<th class="text-center">Nome</th>
 						<th class="text-center">Cognome</th>
 						<th class="text-center">Email</th>
+						<th>
 						<th class="text-center">Carico lavorativo</th>
 						<th class="text-center">Ferie<th>
 						<th class="text-center">Modifica</th>
@@ -802,11 +840,13 @@ h4{color: #B60000;}
 						
 						</td>
 				
-						<td class="text-center"><%= vf.getNome() %></td>
+						<td class="text-center" style = "font-weight: bold;"><%= vf.getNome() %></td>
 
-						<td class="text-center"><%= vf.getCognome() %></td>
+						<td class="text-center" style = "font-weight: bold;"><%= vf.getCognome() %></td>
 
 						<td class="text-center"><%= vf.getEmail() %></td>
+						
+						<td>
 
 						<td class="text-center"><%= vf.getCaricoLavoro() %></td>
 
@@ -1121,7 +1161,9 @@ h4{color: #B60000;}
 									corrente: <input id = <%= "modificaVF" + id + "GiorniFerieAnnoCorrente" %> type="number"
 									name="giorniFerieAnnoCorrenteNuovi"
 									value=<%= vf.getGiorniFerieAnnoCorrente() %> min="0" max = "22" required>
-								</label> <br> <br> <label> Giorni di ferie degli anni
+								</label>
+								&nbsp;
+								<label> Giorni di ferie degli anni
 									precedenti: <input  id = <%= "modificaVF" + id + "GiorniFerieAnnoPrecedente" %> type="number"
 									name="giorniFerieAnnoPrecedenteNuovi"
 									value= <%= vf.getGiorniFerieAnnoPrecedente() %> min="0" max = "999" required>
@@ -1174,13 +1216,14 @@ h4{color: #B60000;}
 				
 		%>
 		<div class="table-responsive">
-			<table class="table  table-hover" id="listaVigili">
+			<table class="table  table-hover" id="listaVigili" style = "table-layout: fixed; width: 100%;">
 				<thead class="thead-dark">
 					<tr>
 						<th class="text-center" style = "width: 10%">Grado</th>
 						<th class="text-center">Nome</th>
 						<th class="text-center">Cognome</th>
 						<th class="text-center">Email</th>
+						<th>
 						<th class="text-center">Carico lavorativo</th>
 						<th class="text-center">Ferie<th>
 						<th class="text-center">Modifica</th>
@@ -1207,11 +1250,13 @@ h4{color: #B60000;}
 						
 						</td>
 						
-						<td class="text-center"><%= vf.getNome() %></td>
+						<td class="text-center" style = "font-weight: bold;"><%= vf.getNome() %></td>
 
-						<td class="text-center"><%= vf.getCognome() %></td>
+						<td class="text-center" style = "font-weight: bold;"><%= vf.getCognome() %></td>
 
 						<td class="text-center"><%= vf.getEmail() %></td>
+						
+						<td>
 
 						<td class="text-center"><%= vf.getCaricoLavoro() %></td>
 
@@ -1526,7 +1571,11 @@ h4{color: #B60000;}
 									corrente: <input id = <%= "modificaVF" + id + "GiorniFerieAnnoCorrente" %> type="number"
 									name="giorniFerieAnnoCorrenteNuovi"
 									value=<%= vf.getGiorniFerieAnnoCorrente() %> min="0" max = "22" required>
-								</label> <br> <br> <label> Giorni di ferie degli anni
+								</label>
+								
+								&nbsp;
+								
+								<label> Giorni di ferie degli anni
 									precedenti: <input  id = <%= "modificaVF" + id + "GiorniFerieAnnoPrecedente" %> type="number"
 									name="giorniFerieAnnoPrecedenteNuovi"
 									value= <%= vf.getGiorniFerieAnnoPrecedente() %> min="0" max = "999" required>
@@ -1591,18 +1640,18 @@ h4{color: #B60000;}
 				id="aggiungiVFEmail" type="text" name="email" required>@vigilfuoco.it
 			</label> <br> <br>
 			
-			<div class = "mansione">
+			<div class = "mansioneAggiungi">
 			
 				Mansione: <br>
 				
-			 	<input id = "aggiungiVFMansione1" type = "radio" name = "mansione"
+			 	<input id = "aggiungiVFMansione1" type = "radio" name = "mansione" 
 			 	 value = "Capo Squadra" onclick = "sceltaMansione(this)"> Capo Squadra <br>
 				<input id = "aggiungiVFMansione2" type = "radio" name = "mansione"
 				 value = "Autista" onclick = "sceltaMansione(this)"> Autista <br>
 				<input id = "aggiungiVFMansione3" type = "radio" name = "mansione"
 				 value = "Vigile" onclick = "sceltaMansione(this)"> Vigile <br>
 	
-			</div> <br> 
+			</div> <br>
 			
 				
 			 
@@ -1629,7 +1678,9 @@ h4{color: #B60000;}
 			<label> Giorni di ferie dell'anno
 				corrente: <input type="number" name="giorniFerieAnnoCorrente"
 				min="0" max = "22" value="0" required>
-			</label> <br> <br> <label> Giorni di ferie degli anni
+			</label> 
+			&ensp;
+			<label> Giorni di ferie degli anni
 				precedenti: <input type="number" name="giorniFerieAnnoPrecedente"
 				min="0" max = "999" value="0" required>
 			</label> <br> <br>

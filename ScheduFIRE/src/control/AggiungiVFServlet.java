@@ -47,10 +47,7 @@ public class AggiungiVFServlet extends HttpServlet {
 		
 		//Ottenimento oggetto sessione dalla richiesta
 		HttpSession session = request.getSession();
-		
-		//Rimozione flag per l'esito dell'operazione
-		session.removeAttribute("risultato");
-		
+	
 		//Ottengo i dati del Capo Turno dalla sessione
 		CapoTurnoBean ct = (CapoTurnoBean) session.getAttribute("capoturno");
 		
