@@ -19,7 +19,6 @@ insert into Vigile values("fabrizio.pepe@vigilfuoco.it","Fabrizio","Pepe","B","V
 insert into Vigile values("roberto.santoro@vigilfuoco.it","Roberto","Santoro","B","Vigile",20,0,0,true,"Qualificato","turnoB");
 insert into Vigile values("maurizio.marsano@vigilfuoco.it","Maurizio","Marsano","B","Vigile",20,0,0,true,"Qualificato","turnoB");
 insert into Vigile values("domenico.giordano@vigilfuoco.it","Domenico","Giordano","B","Vigile",5,2,0,true,"Esperto","turnoB");
-insert into Vigile values("ettore.anzano@vigilfuoco.it","Ettore","Anzano","B","Vigile",20,0,0,true,"Coordinatore","turnoB");
 insert into Vigile values("marzia.mancuso@vigilfuoco.it","Marzia","Mancuso","B","Vigile",20,0,0,true,"Qualificato","turnoB");
 insert into Vigile values("roberto.noschese@vigilfuoco.it","Roberto","Noschese","B","Vigile",20,0,0,true,"Esperto","turnoB");
 insert into Vigile values("gerardo.citarella@vigilfuoco.it","Gerardo","Citarella","B","Vigile",20,0,0,true,"Coordinatore","turnoB");
@@ -89,7 +88,6 @@ insert into componentedellasquadra values ("fabrizio.pepe@vigilfuoco.it","Prima 
 insert into componentedellasquadra values ("roberto.santoro@vigilfuoco.it","Prima Partenza","2020-01-02");
 insert into componentedellasquadra values ("maurizio.marsano@vigilfuoco.it","Auto Scala","2020-01-02");
 insert into componentedellasquadra values ("domenico.giordano@vigilfuoco.it","Auto Scala","2020-01-02");
-insert into componentedellasquadra values ("ettore.anzano@vigilfuoco.it","Auto Botte","2020-01-02");
 insert into componentedellasquadra values ("marzia.mancuso@vigilfuoco.it","Auto Botte","2020-01-02");
 
 

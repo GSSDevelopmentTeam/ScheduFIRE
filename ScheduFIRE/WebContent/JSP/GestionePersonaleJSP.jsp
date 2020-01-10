@@ -63,18 +63,18 @@ h4{color: #B60000;}
 
 	<script type="text/javascript">
 	
-		var nome;
-		var cognome;
-		var email;
-		var mansione1Check;
-		var mansione2Check;
-		var mansione3Check;
-		var grado0Check;
-		var grado1Check;
-		var grado2Check;
-		var grado3Check;
-		var ferieAnnoCorrenti;
-		var ferieAnniPrecedenti;
+		var nome = [];
+		var cognome = [];
+		var email = [];
+		var mansione1Check = [];
+		var mansione2Check = [];
+		var mansione3Check = [];
+		var grado0Check = [];
+		var grado1Check = [];
+		var grado2Check = [];
+		var grado3Check = [];
+		var ferieAnnoCorrenti = [];
+		var ferieAnniPrecedenti = [];
 		
 		function mostraFormModifica(id) {
 
@@ -86,18 +86,18 @@ h4{color: #B60000;}
 					
 					button.innerHTML = "Modifica";
 					
-					document.getElementById("modificaVF" + id + "Nome").value = nome;
-					document.getElementById("modificaVF" + id + "Cognome").value = cognome;
-					document.getElementById("modificaVF" + id + "Email").value = email;
-					document.getElementById("modificaVF" + id + "Mansione1").checked = mansione1Check;
-					document.getElementById("modificaVF" + id + "Mansione2").checked = mansione2Check;
-					document.getElementById("modificaVF" + id + "Mansione3").checked = mansione3Check;
-					document.getElementById("modificaVF" + id + "Grado0").checked = grado0Check;
-					document.getElementById("modificaVF" + id + "Grado1").checked = grado1Check;
-					document.getElementById("modificaVF" + id + "Grado2").checked = grado2Check;
-					document.getElementById("modificaVF" + id + "Grado3").checked = grado3Check;
-					document.getElementById("modificaVF" + id + "GiorniFerieAnnoCorrente").value = ferieAnnoCorrenti;
-					document.getElementById("modificaVF" + id + "GiorniFerieAnnoPrecedente").value = ferieAnniPrecedenti;
+					document.getElementById("modificaVF" + id + "Nome").value = nome[id];
+					document.getElementById("modificaVF" + id + "Cognome").value = cognome[id];
+					document.getElementById("modificaVF" + id + "Email").value = email[id];
+					document.getElementById("modificaVF" + id + "Mansione1").checked = mansione1Check[id];
+					document.getElementById("modificaVF" + id + "Mansione2").checked = mansione2Check[id];
+					document.getElementById("modificaVF" + id + "Mansione3").checked = mansione3Check[id];
+					document.getElementById("modificaVF" + id + "Grado0").checked = grado0Check[id];
+					document.getElementById("modificaVF" + id + "Grado1").checked = grado1Check[id];
+					document.getElementById("modificaVF" + id + "Grado2").checked = grado2Check[id];
+					document.getElementById("modificaVF" + id + "Grado3").checked = grado3Check[id];
+					document.getElementById("modificaVF" + id + "GiorniFerieAnnoCorrente").value = ferieAnnoCorrenti[id];
+					document.getElementById("modificaVF" + id + "GiorniFerieAnnoPrecedente").value = ferieAnniPrecedenti[id];
 
 					if(mansione1Check) {
 
@@ -115,24 +115,24 @@ h4{color: #B60000;}
 					
 				} 
 				else {
-					
+
 					button.innerHTML = "Annulla";
 					
 					gradoCapoSquadra = document.getElementById("modificaVF" + id + "GradoCapoSquadra");
 					gradi = document.getElementById("modificaVF" + id + "Gradi");
 					
-					nome = document.getElementById("modificaVF" + id + "Nome").value;
-					cognome = document.getElementById("modificaVF" + id + "Cognome").value;
-					email = document.getElementById("modificaVF" + id + "Email").value;
-					mansione1Check = document.getElementById("modificaVF" + id + "Mansione1").checked;
-					mansione2Check = document.getElementById("modificaVF" + id + "Mansione2").checked;
-					mansione3Check = document.getElementById("modificaVF" + id + "Mansione3").checked;
-					grado0Check = document.getElementById("modificaVF" + id + "Grado0").checked;
-					grado1Check = document.getElementById("modificaVF" + id + "Grado1").checked;
-					grado2Check = document.getElementById("modificaVF" + id + "Grado2").checked;
-					grado3Check = document.getElementById("modificaVF" + id + "Grado3").checked;
-					ferieAnnoCorrenti = document.getElementById("modificaVF" + id + "GiorniFerieAnnoCorrente").value;
-					ferieAnniPrecedenti = document.getElementById("modificaVF" + id + "GiorniFerieAnnoPrecedente").value;
+					nome[id] = document.getElementById("modificaVF" + id + "Nome").value;
+					cognome[id] = document.getElementById("modificaVF" + id + "Cognome").value;
+					email[id] = document.getElementById("modificaVF" + id + "Email").value;
+					mansione1Check[id] = document.getElementById("modificaVF" + id + "Mansione1").checked;
+					mansione2Check[id] = document.getElementById("modificaVF" + id + "Mansione2").checked;
+					mansione3Check[id] = document.getElementById("modificaVF" + id + "Mansione3").checked;
+					grado0Check[id] = document.getElementById("modificaVF" + id + "Grado0").checked;
+					grado1Check[id] = document.getElementById("modificaVF" + id + "Grado1").checked;
+					grado2Check[id] = document.getElementById("modificaVF" + id + "Grado2").checked;
+					grado3Check[id] = document.getElementById("modificaVF" + id + "Grado3").checked;
+					ferieAnnoCorrenti[id] = document.getElementById("modificaVF" + id + "GiorniFerieAnnoCorrente").value;
+					ferieAnniPrecedenti[id] = document.getElementById("modificaVF" + id + "GiorniFerieAnnoPrecedente").value;
 				
 				}
 				
@@ -249,40 +249,37 @@ h4{color: #B60000;}
 			var grado2 = document.getElementById(id + "Grado2");
 			var grado3 = document.getElementById(id + "Grado3");
 			
-			if( (nome.value === "") || (nome.value === "undefined") || 
-					!nome.value.test("^[A-Z]{1}[a-z]{0,19}+$") ) {
+			if( !nome.value.test("^[A-Z]{1}[a-z]{0,19}+$") ) {
 				
 				nome.focus();
 				alert("Nome errato!");
 				return false;
 				
 			}
-			else if( (cognome.value === "") || (cognome.value === "undefined") ||
-					!cognome.value.test("^[A-Z]{1}[a-z]{0,19}+$") ) {
+			else if( !cognome.value.test("^[A-Z]{1}[a-z]{0,19}+$") ) {
 
 				cognome.focus();
 				alert("Cognome errato!");
 				return false;
 				
 			}
-			else if( (email.value === "") || (email.value === "undefined") || 
-					!email.value.test("[A-Za-z]+([1-9][0-9]*)?\.[A-Za-z]+") ) {
+			else if( !email.value.test("[A-Za-z]+([1-9][0-9]*)?\.[A-Za-z]+") ) {
 
 				email.focus();
 				alert("Email errata!");
 				return false;
 				
 			}
-			else if( mansione1.value.checked !== "true" || mansione2.value.checked !== "true" 
-					|| mansione3.value.checked !== "true") {
+			else if( !mansione1.value.checked  || !mansione2.value.checked  
+					|| !mansione3.value.checked ) {
 
 				alert("Mansione errata!");
 				return false;
 				
 			}
-			else if( ( mansione2.value.checked === "true" ||  mansione3.value.checked === "true" ) &&
-					( grado1.value.checked !== "true" || grado2.value.checked !== "true" ||
-						grado3.value.checked !== "true") ) {
+			else if( ( mansione2.value.checked ||  mansione3.value.checked ) &&
+					( !grado1.value.checked || !grado2.value.checked ||
+						!grado3.value.checked ) ) {
 
 				alert("Grado errato!");
 				return false;
@@ -328,6 +325,7 @@ h4{color: #B60000;}
 	
 		<!-- ----------------------- -->
 
+		<br>
 		<h2 id="titolo">Gestione Personale</h2>
 
 		<form id="ordinamento" action="./GestionePersonaleServlet">
@@ -385,9 +383,10 @@ h4{color: #B60000;}
 			onclick="mostraFormAggiuta()">Aggiungi Vigile del Fuoco</button>
 
 		<br> <br>
-		
-		
-		<h4>Capi Squadra</h4> <br>
+
+	
+		<h4 class="d-flex justify-content-center" id="inizio"
+			style="margin-top: 1%; color: #B60000 !Important">Capi Squadra</h4>
 		
 		<% 
 				
@@ -523,10 +522,10 @@ h4{color: #B60000;}
 								class="modificaVF" onsubmit="return validazioneForm(this.id)">
 								<br> <label> Nome: <input
 									id=<%= "modificaVF" + id + "Nome" %> type="text"
-									name="nomeNuovo" value=<%= vf.getNome() %> required>
+									name="nomeNuovo" value="<%= vf.getNome() %>" required>
 								</label> &ensp; <label> Cognome: <input
 									id=<%= "modificaVF" + id + "Cognome" %> type="text"
-									name="cognomeNuovo" value=<%= vf.getCognome() %> required>
+									name="cognomeNuovo" value="<%= vf.getCognome() %>" required>
 								</label> <br> <br> <label> Email: <input
 									id=<%= "modificaVF" + id + "Email" %> type="text" 
 									name="emailNuova" value= <%= vf.getEmail().substring( 0 , vf.getEmail().indexOf("@") ) %>
@@ -797,8 +796,11 @@ h4{color: #B60000;}
 		}
 		
 		%>
-		
-		<h4>Autisti</h4> <br>
+
+
+		<h4 class="d-flex justify-content-center" id="inizio"
+			style="margin-top: 1%; color: #B60000 !Important">Autisti</h4>
+
 		
 		<% 
 
@@ -933,10 +935,10 @@ h4{color: #B60000;}
 								class="modificaVF" onsubmit="return validazioneForm(this.id)">
 								<br> <label> Nome: <input
 									id=<%= "modificaVF" + id + "Nome" %> type="text"
-									name="nomeNuovo" value=<%= vf.getNome() %> required>
+									name="nomeNuovo" value="<%= vf.getNome() %>" required>
 								</label> &ensp; <label> Cognome: <input
 									id=<%= "modificaVF" + id + "Cognome" %> type="text"
-									name="cognomeNuovo" value=<%= vf.getCognome() %> required>
+									name="cognomeNuovo" value="<%= vf.getCognome() %>" required>
 								</label> <br> <br> <label> Email: <input
 									id=<%= "modificaVF" + id + "Email" %> type="text" 
 									name="emailNuova" value= <%= vf.getEmail().substring( 0 , vf.getEmail().indexOf("@") ) %>
@@ -1207,8 +1209,11 @@ h4{color: #B60000;}
 		}
 		
 		%>
-		
-		<h4>Vigili</h4>
+
+
+		<h4 class="d-flex justify-content-center" id="inizio"
+			style="margin-top: 1%; color: #B60000 !Important">Vigili</h4>
+
 		
 		<% 
 
@@ -1343,10 +1348,10 @@ h4{color: #B60000;}
 								class="modificaVF" onsubmit="return validazioneForm(this.id)">
 								<br> <label> Nome: <input
 									id=<%= "modificaVF" + id + "Nome" %> type="text"
-									name="nomeNuovo" value=<%= vf.getNome() %> required>
+									name="nomeNuovo" value="<%= vf.getNome() %>" required>
 								</label> &ensp; <label> Cognome: <input
 									id=<%= "modificaVF" + id + "Cognome" %> type="text"
-									name="cognomeNuovo" value=<%= vf.getCognome() %> required>
+									name="cognomeNuovo" value="<%= vf.getCognome() %>" required>
 								</label> <br> <br> <label> Email: <input
 									id=<%= "modificaVF" + id + "Email" %> type="text" 
 									name="emailNuova" value= <%= vf.getEmail().substring( 0 , vf.getEmail().indexOf("@") ) %>
