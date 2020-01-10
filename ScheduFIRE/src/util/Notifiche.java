@@ -190,6 +190,7 @@ public class Notifiche {
 						giorniMalattiaSchedulato.get(giorniMalattiaSchedulato.size() - 1) + " causa malattia. E' stato" + 
 						" automaticamente sostituito.";
 			//"GeneraSquadreServlet""ModificaComposizioneSquadreServlet?tipologia=3&data="+inizio
+
 			listaNotifiche.add(new Notifica(3, notificaMalattia, "ModificaComposizioneSquadreServlet?tipologia=3&data="+inizio,generateId()));
 		}
 	
