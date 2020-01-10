@@ -64,10 +64,9 @@ h2 {
 					</div>
 
 					<div class="modal-footer">
+					<button class="btn btn-outline-success" id="agg" disabled>Aggiungi</button>
 						<button type="button" class="btn btn-outline-danger"
-							
-						data-dismiss="modal">Annulla</button>
-						<button class="btn btn-outline-success" id="agg" disabled>Aggiungi</button>
+							data-dismiss="modal">Annulla</button>
 
 					</div>
 				</form>
