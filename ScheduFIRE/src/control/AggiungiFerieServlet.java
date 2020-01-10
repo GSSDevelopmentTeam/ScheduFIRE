@@ -12,8 +12,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-
-import org.apache.tomcat.jni.Time;
 import org.json.JSONArray;
 import model.bean.CapoTurnoBean;
 import model.bean.VigileDelFuocoBean;
@@ -180,6 +178,8 @@ public class AggiungiFerieServlet extends HttpServlet {
 				}
 		}
 		
+		Notifiche.update(Notifiche.UPDATE_PER_AVVIO);
+		
 		if(componente) {
 			sessione.removeAttribute("squadraDiurno");
 			sessione.removeAttribute("squadraNotturno");
@@ -194,6 +194,7 @@ public class AggiungiFerieServlet extends HttpServlet {
 			array.put(true);
 			array.put(feriePDb);
 			array.put(ferieCDb);
+			array.put(componente);
 		}
 		else
 			array.put(false);

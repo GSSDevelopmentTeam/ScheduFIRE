@@ -25,10 +25,6 @@ public class Notifiche {
 	public Notifiche() {
 		id = 0;
 		listaNotifiche = new ArrayList<>();
-		listaNotifiche.add(new Notifica(3, "Test di una notifica grave", "HomeCTServlet", generateId()));
-		listaNotifiche.add(new Notifica(2, "Test di una notifica media, con stato d'errore medio e colore medio", "HomeCTServlet", generateId()));
-		listaNotifiche.add(new Notifica(1, "Test di una notifica normale, che per quanto sia normale essa ï¿½ solo una notifica normale, dunque ï¿½ normale che sia normale", "HomeCTServlet", generateId()));
-
 		update(UPDATE_PER_AVVIO);
 	}
 
@@ -154,7 +150,7 @@ public class Notifiche {
 						dateAssenza.get(dateAssenza.size() - 1) + " causa ferie. E' stato" + 
 								" automaticamente sostituito.";
 		
-		listaNotifiche.add(new Notifica(2, notifica, "ModificaComposizioneSquadreServlet?tipologia=3&data=" + temp ,generateId()));
+		listaNotifiche.add(new Notifica(3, notifica, "ModificaComposizioneSquadreServlet?tipologia=3&data=" + temp ,generateId()));
 	}
 	
 	private static void updateSquadrePerMalattia(Date inizio, Date fine, String email) {
