@@ -40,6 +40,58 @@ h2 {
 	<!-- Barra Navigazione -->
 	<jsp:include page="HeaderJSP.jsp" />
 
+	
+
+		<!-- Modal di avviso operazione effettuata correttamente-->
+		
+		 <!-- Modal -->
+  <div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Modal Options</h4>
+        </div>
+        <div class="modal-body">
+          <p>Modal content..</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+
+
+		
+		
+		
+		
+ <div class="modal" id="modalAvviso" tabindex="-1" role="dialog"
+		aria-labelledby="exampleModalCenterTitle" aria-hidden="false" >
+  <div class="modal-dialog modal-sm modal-dialog-centered" role="document">
+    <div class="modal-content" style="border :4px solid #5be94b;">
+
+      <div class="modal-body" style="align:center;">
+        <img src="IMG/fire.png" class="rounded mx-auto d-block">
+        <h4 class="modal-title text-center">Operazione effettuata con successo</h4>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline-success" data-dismiss="modal">OK</button>
+      </div>
+    </div>
+  </div>
+</div>
+	
+
+
+
+
+
+
 	<!-- MODAL MODIFICA VF -->
 	<div class="modal fade" id="aggiungiVF" tabindex="-1" role="dialog"
 		aria-labelledby="exampleModalCenterTitle" aria-hidden="true"
@@ -515,8 +567,6 @@ h2 {
 	</div>
 
 
-	<script
-		src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 	<script src="JS/datePicker.js"></script>
 	<script type="text/javascript"
 		src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.min.js"></script>
@@ -529,7 +579,15 @@ h2 {
 		var day = $("#day").val();
 		var night =  $("#night").val();
 		console.log("giorno "+day+" notte "+night);
-		caricoPersonale(day,night);});
+		caricoPersonale(day,night);
+		
+	
+		$("#modalAvviso").modal("show");
+	
+	
+	
+	
+	});
 	
 	function caricoPersonale(giorno, notte) {
 		//Chiamata ajax alla servlet PersonaleDisponibileAJAX
