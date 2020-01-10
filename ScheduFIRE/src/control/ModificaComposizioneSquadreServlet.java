@@ -86,16 +86,23 @@ public class ModificaComposizioneSquadreServlet extends HttpServlet {
 			String oldVF =request.getParameter("email");
 			String newVF =request.getParameter("VFNew");
 			int tipo = Integer.parseInt(request.getParameter("tiposquadra"));
+			Date data = null;
+			Date other = null;
 			HashMap<VigileDelFuocoBean, String> squadra = new HashMap<>();
 			switch(tipo) {
 			case 1: 
 				squadra = (HashMap<VigileDelFuocoBean, String>) sessione.getAttribute("squadraDiurno");
+				data =  Date.valueOf(request.getParameter("dataModifica"));
+				other =  Date.valueOf(request.getParameter("altroturno"));
 				break;
 			case 2:
 				squadra = (HashMap<VigileDelFuocoBean, String>) sessione.getAttribute("squadraNotturno");
+				data =  Date.valueOf(request.getParameter("dataModifica"));
+				other =  Date.valueOf(request.getParameter("altroturno"));
 				break;
 			case 3:
 				squadra = (HashMap<VigileDelFuocoBean, String>) sessione.getAttribute("squadra");
+				data =  Date.valueOf(request.getParameter("dataModifica"));
 				break;
 			default:
 				throw new ScheduFIREException("C'e stato un errore. Riprova pi� tardi.");
@@ -116,10 +123,14 @@ public class ModificaComposizioneSquadreServlet extends HttpServlet {
 			switch(tipo) {
 			case 1: 
 				sessione.setAttribute("squadraDiurno", squadra);
+				request.setAttribute("dataDiurno", data);
+				request.setAttribute("dataNotturno", other);
 				request.getRequestDispatcher("JSP/GestioneSquadreJSP.jsp").forward(request, response);
 				break;			
 			case 2:
 				sessione.setAttribute("squadraNotturno", squadra);
+				request.setAttribute("dataNotturno", data);
+				request.setAttribute("data", other);
 				request.getRequestDispatcher("JSP/GestioneSquadreJSP.jsp").forward(request, response);
 				break;
 			case 3:
