@@ -175,13 +175,13 @@
 				</div>
 
 				<div class="modal-footer">
-					<button type="button" class="btn btn-outline-danger"
-						data-dismiss="modal">Annulla</button>
-
-
+				
 					<button type="button" class="btn btn-outline-success"
 						id="bottoneAggiungiFerie" onclick="aggiungiFerie()"
 						data-dismiss="modal" disabled>Aggiungi ferie</button>
+						
+					<button type="button" class="btn btn-outline-danger"
+						data-dismiss="modal">Annulla</button>
 
 				</div>
 			</div>
@@ -225,13 +225,13 @@
 
 				</div>
 				<div class="modal-footer">
-					<button type="button" class="btn btn-outline-danger"
-						data-dismiss="modal">Annulla</button>
-
-
+				
 					<button type="button" class="btn btn-outline-success"
 						id="bottoneRimuoviFerie" onclick="rimuoviFerie()"
 						data-dismiss="modal" disabled>Rimuovi ferie</button>
+				
+					<button type="button" class="btn btn-outline-danger"
+						data-dismiss="modal">Annulla</button>
 
 				</div>
 			</div>

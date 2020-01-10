@@ -136,12 +136,12 @@
 
 						</div>
 						<div class="modal-footer">
-							<button type="button" class="btn btn-outline-danger"
-								data-dismiss="modal">Annulla</button>
-
-
+						
 							<button type="submit" class="btn btn-outline-success"
 								id="bottoneConferma" disabled>Conferma</button>
+								
+							<button type="button" class="btn btn-outline-danger"
+								data-dismiss="modal">Annulla</button>
 
 						</div>
 					</div>
