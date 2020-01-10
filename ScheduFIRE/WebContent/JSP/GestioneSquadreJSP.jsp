@@ -98,12 +98,8 @@ h2 {
 				name="salva" style="margin: 3px;">Conferma
 				Squadre</button>
 		</form>
-		<a href="#Giorno"><button type="button"
-				class="btn btn-outline-secondary btn-lg" style="margin: 3px;">Squadra
-				Diurna</button></a> <a href="#Notte"><button type="button"
-				class="btn btn-outline-secondary btn-lg" style="margin: 3px;">Squadra
-				Notturna</button></a><a href="#Disp"><button type="button"
-				class="btn btn-outline-secondary btn-lg" style="margin: 3px;">Personale Disponibile</button></a>
+		 <a href="#Notte" class="btn btn-outline-secondary btn-lg" style="margin: 3px;">Squadra Notturna</a>
+		<a href="#Disp"	class="btn btn-outline-secondary btn-lg" style="margin: 3px;">Personale Disponibiles</a>
 	</div>
 	<br>
 
@@ -300,12 +296,8 @@ h2 {
 	<br>
 	<div class="d-flex justify-content-center">
 		<form action="GeneraSquadreServlet?salva=true" method=post>
-		<a href="#Giorno"><button type="button"
-				class="btn btn-outline-secondary btn-lg" style="margin: 3px;">Squadra
-				Diurna</button></a> <a href="#Notte"><button type="button"
-				class="btn btn-outline-secondary btn-lg" style="margin: 3px;">Squadra
-				Notturna</button></a><a href="#Disp"><button type="button"
-				class="btn btn-outline-secondary btn-lg" style="margin: 3px;">Personale Disponibile</button></a>
+		<a href="#Giorno" class="btn btn-outline-secondary btn-lg" style="margin: 3px;">Squadra	Diurna</a>
+		<a href="#Disp" class="btn btn-outline-secondary btn-lg" style="margin: 3px;">Personale Disponibile</a>
 	</div>
 	<br>
 	
@@ -500,12 +492,8 @@ h2 {
 	</div>
 	<div class="d-flex justify-content-center">
 		<form action="GeneraSquadreServlet?salva=true" method=post>
-		<a href="#Giorno"><button type="button"
-				class="btn btn-outline-secondary btn-lg" style="margin: 3px;">Squadra
-				Diurna</button></a> <a href="#Notte"><button type="button"
-				class="btn btn-outline-secondary btn-lg" style="margin: 3px;">Squadra
-				Notturna</button></a><a href="#Disp"><button type="button"
-				class="btn btn-outline-secondary btn-lg" style="margin: 3px;">Personale Disponibile</button></a>
+		<a href="#Giorno" class="btn btn-outline-secondary btn-lg" style="margin: 3px;">Squadra Diurna</a> 
+		<a href="#Notte" class="btn btn-outline-secondary btn-lg" style="margin: 3px;">Squadra Notturna</a>
 	</div>
 	<br>
 	<div class="d-flex justify-content-center" id="Disp">

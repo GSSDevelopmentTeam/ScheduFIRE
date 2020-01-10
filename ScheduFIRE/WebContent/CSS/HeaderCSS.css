@@ -2,7 +2,9 @@
 * {
   box-sizing: border-box;
 }
-
+button{
+	outline: none!important;
+}
 .topnav {
   	background-color: #b60000;
     padding: 5px;
@@ -38,9 +40,8 @@
   font-size: 17px;
 }
 
-.topnav .round:hover {
-  background-color: #e1e1e1;
-  color: white;
+.topnav button.round:hover {
+  background-color: #dddddd;
 }
 
 
