@@ -1,4 +1,4 @@
-package testing.whiteBox;
+package test;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
