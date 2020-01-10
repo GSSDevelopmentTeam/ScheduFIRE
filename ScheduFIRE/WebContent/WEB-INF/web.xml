@@ -18,11 +18,11 @@
   </error-page>
   <error-page>
     <exception-type>control.GestionePersonaleException</exception-type>
-    <location>/JSP/ScheduFIREError.jsp</location>
+    <location>/JSP/GestionePersonaleError.jsp</location>
   </error-page>
   <error-page>
     <exception-type>control.ParametroInvalidoException</exception-type>
-    <location>/JSP/ScheduFIREError.jsp</location>
+    <location>/JSP/GestionePersonaleError.jsp</location>
   </error-page>
   <error-page>
     <exception-type>control.AutenticazioneException</exception-type>
