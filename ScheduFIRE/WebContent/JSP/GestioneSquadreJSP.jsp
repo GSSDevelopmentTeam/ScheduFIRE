@@ -50,15 +50,14 @@ h2 {
 					<h5 class="modal-title" id="titoloAggiuntaFerie">Personale
 						Disponibile</h5>
 				</div>
-				<form action="GeneraSquadreServlet" method="POST">
+				<form action="ModificaComposizioneSquadreServlet" method="POST">
 					<!-- Nel form verranno passate l'email del VF da sostituire con nome "email" e quella del VF da inserire con nome "VFNew" -->
 					<div class="modal-body" id="elenco">
 						<div id="appendiElenco"></div>
 					</div>
 
-						<button class="btn btn-outline-success" id="agg" disabled>Aggiungi</button>
-					
 					<div class="modal-footer">
+					<button class="btn btn-outline-success" id="agg" disabled>Aggiungi</button>
 						<button type="button" class="btn btn-outline-danger"
 							data-dismiss="modal">Annulla</button>
 
@@ -148,7 +147,7 @@ h2 {
 					<td class="text-center"><button type="button"
 							class="btn btn-outline-secondary" data-toggle="modal"
 							data-target="#aggiungiVF" id="aggiungiVF"
-							onClick='apriFormVF("<%=membro.getEmail()%>","<%=membro.getMansione()%>","1","<%=giorno%>")'>Sostituisci</button></td>
+							onClick='apriFormVF("<%=membro.getEmail()%>","<%=membro.getMansione()%>","1","<%=giorno%>","<%=notte%>")'>Sostituisci</button></td>
 					</td>
 				</tr>
 				<%
@@ -194,7 +193,7 @@ h2 {
 					<td class="text-center"><button type="button"
 							class="btn btn-outline-secondary" data-toggle="modal"
 							data-target="#aggiungiVF" id="aggiungiVF"
-							onClick='apriFormVF("<%=membro.getEmail()%>","<%=membro.getMansione()%>","1","<%=giorno%>")'>Sostituisci</button></td>
+							onClick='apriFormVF("<%=membro.getEmail()%>","<%=membro.getMansione()%>","1","<%=giorno%>","<%=notte%>")'>Sostituisci</button></td>
 					</td>
 				</tr>
 				<%
@@ -240,7 +239,7 @@ h2 {
 					<td class="text-center"><button type="button"
 							class="btn btn-outline-secondary" data-toggle="modal"
 							data-target="#aggiungiVF" id="aggiungiVF"
-							onClick='apriFormVF("<%=membro.getEmail()%>","<%=membro.getMansione()%>","1","<%=giorno%>")'>Sostituisci</button></td>
+							onClick='apriFormVF("<%=membro.getEmail()%>","<%=membro.getMansione()%>","1","<%=giorno%>","<%=notte%>")'>Sostituisci</button></td>
 					</td>
 				</tr>
 				<%
@@ -286,7 +285,7 @@ h2 {
 					<td class="text-center"><button type="button"
 							class="btn btn-outline-secondary" data-toggle="modal"
 							data-target="#aggiungiVF" id="aggiungiVF" id="agg"
-							onClick='apriFormVF("<%=membro.getEmail()%>","<%=membro.getMansione()%>","1","<%=giorno%>")'>Sostituisci</button></td>
+							onClick='apriFormVF("<%=membro.getEmail()%>","<%=membro.getMansione()%>","1","<%=giorno%>","<%=notte%>")'>Sostituisci</button></td>
 					</td>
 				</tr>
 				<%
@@ -350,7 +349,7 @@ h2 {
 					<td class="text-center"><button type="button"
 							class="btn btn-outline-secondary" data-toggle="modal"
 							data-target="#aggiungiVF" id="aggiungiVF"
-							onClick='apriFormVF("<%=membro.getEmail()%>","<%=membro.getMansione()%>","2","<%=notte%>")'>Sostituisci</button></td>
+							onClick='apriFormVF("<%=membro.getEmail()%>","<%=membro.getMansione()%>","2","<%=notte%>","<%=giorno%>")'>Sostituisci</button></td>
 					</td>
 				</tr>
 				<%
@@ -396,7 +395,7 @@ h2 {
 					<td class="text-center"><button type="button"
 							class="btn btn-outline-secondary" data-toggle="modal"
 							data-target="#aggiungiVF" id="aggiungiVF"
-							onClick='apriFormVF("<%=membro.getEmail()%>","<%=membro.getMansione()%>","2","<%=notte%>")'>Sostituisci</button></td>
+							onClick='apriFormVF("<%=membro.getEmail()%>","<%=membro.getMansione()%>","2","<%=notte%>","<%=giorno%>")'>Sostituisci</button></td>
 					</td>
 				</tr>
 				<%
@@ -442,7 +441,7 @@ h2 {
 					<td class="text-center"><button type="button"
 							class="btn btn-outline-secondary" data-toggle="modal"
 							data-target="#aggiungiVF" id="aggiungiVF"
-							onClick='apriFormVF("<%=mb.getEmail()%>","<%=mb.getMansione()%>","2","<%=notte%>")'>Sostituisci</button></td>
+							onClick='apriFormVF("<%=mb.getEmail()%>","<%=mb.getMansione()%>","2","<%=notte%>","<%=giorno%>")'>Sostituisci</button></td>
 					</td>
 				</tr>
 				<%
@@ -488,7 +487,7 @@ h2 {
 					<td class="text-center"><button type="button"
 							class="btn btn-outline-secondary" data-toggle="modal"
 							data-target="#aggiungiVF" id="aggiungiVF" 
-							onClick='apriFormVF("<%=membro.getEmail()%>","<%=membro.getMansione()%>","2","<%=notte%>")'>Sostituisci</button></td>
+							onClick='apriFormVF("<%=membro.getEmail()%>","<%=membro.getMansione()%>","2","<%=notte%>","<%=giorno%>")'>Sostituisci</button></td>
 					</td>
 				</tr>
 				<%
@@ -548,7 +547,7 @@ h2 {
 			}
 		});
 	}
-		function apriFormVF(input, rule, sq, dt) {
+		function apriFormVF(input, rule, sq, dt,ot) {
 			//Chiamata ajax alla servlet PersonaleDisponibileAJAX
 			$.ajax({
 				type : "POST",//Chiamata POST
@@ -559,7 +558,8 @@ h2 {
 					"email" : input,
 					"mansione" : rule,
 					"tiposquadra" : sq,
-					"dataModifica" : dt
+					"dataModifica" : dt,
+					"altroturno" : ot
 				},
 				success : function(response) {//Operazione da eseguire una volta terminata la chiamata alla servlet.
 					$("#agg").prop("disabled",true);
