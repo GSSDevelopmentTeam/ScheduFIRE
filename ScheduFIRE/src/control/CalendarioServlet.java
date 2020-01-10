@@ -17,6 +17,7 @@ import model.bean.VigileDelFuocoBean;
 import model.dao.ComponenteDellaSquadraDao;
 import model.dao.VigileDelFuocoDao;
 import util.GiornoLavorativo;
+import util.Util;
 
 /**
  * Servlet implementation class CalendarioServlet
@@ -32,7 +33,7 @@ public class CalendarioServlet extends HttpServlet {
 	}
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
+		Util.isAutenticato(request);
 		Date date = new Date(System.currentTimeMillis());
 		String dataCorrente = date.toString();
 		

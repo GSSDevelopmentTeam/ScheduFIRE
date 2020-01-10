@@ -23,6 +23,7 @@ import model.bean.VigileDelFuocoBean;
 import model.dao.ComponenteDellaSquadraDao;
 import model.dao.VigileDelFuocoDao;
 import util.GiornoLavorativo;
+import util.Util;
 
 /**
  * Servlet implementation class PersonaleDisponibileAJAX
@@ -50,7 +51,7 @@ public class PersonaleDisponibileAJAX extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
+		Util.isCapoTurno(request);
 		//Prendo l'email del VF da sostituire, il ruolo e il tipo di squadra
 		String email=request.getParameter("email");
 		String ruolo= request.getParameter("mansione");
