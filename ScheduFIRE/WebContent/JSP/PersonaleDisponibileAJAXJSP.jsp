@@ -39,8 +39,10 @@
 		
 <% String email = (String) request.getParameter("email"); 
 	String tipo = (String) request.getParameter("tiposquadra");
-	Date data = (Date) request.getAttribute("dataModifica");%>
+	Date data = (Date) request.getAttribute("dataModifica");
+	Date other = (Date) request.getAttribute("altroturno");%>
 	<input type="hidden" name="email" value="<%=email%>">
 	<input type="hidden"  name="tiposquadra" value="<%=tipo%>">
 	<input type="hidden"  name="dataModifica" value="<%=data%>">
+	<input type="hidden"  name="altroturno" value="<%=other%>">
 </div>
