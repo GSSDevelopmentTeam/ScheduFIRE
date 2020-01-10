@@ -78,6 +78,7 @@ public class LoginServlet extends HttpServlet {
 					if (passwordBase256format.equals(utente.getPassword())) {
 						session.setAttribute("ruolo", utente.getRuolo());
 						if (utente.getRuolo().equalsIgnoreCase("capoturno")) {
+		
 							CapoTurnoBean capoturno=CapoTurnoDao.ottieni(username);
 							session.setMaxInactiveInterval(2700); //45 min
 							session.setAttribute("capoturno", capoturno);

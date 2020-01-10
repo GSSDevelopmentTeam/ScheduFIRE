@@ -160,6 +160,9 @@ public class AggiungiMalattiaServlet extends HttpServlet {
 					else
 						array.put(false);
 				   
+				//parametro che indica se ricaricare la pagina ricaricare la pagina 	
+				array.put(componente);
+				
 				response.setContentType("application/json");
 				
 				response.getWriter().append(array.toString());
