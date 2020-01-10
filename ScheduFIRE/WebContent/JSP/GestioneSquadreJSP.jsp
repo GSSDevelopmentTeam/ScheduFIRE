@@ -56,11 +56,11 @@ h2 {
 						<div id="appendiElenco"></div>
 					</div>
 
+						<button class="btn btn-outline-success" id="agg" disabled>Aggiungi</button>
+					
 					<div class="modal-footer">
 						<button type="button" class="btn btn-outline-danger"
 							data-dismiss="modal">Annulla</button>
-
-						<button class="btn btn-outline-success" id="agg" disabled>Aggiungi</button>
 
 					</div>
 				</form>
