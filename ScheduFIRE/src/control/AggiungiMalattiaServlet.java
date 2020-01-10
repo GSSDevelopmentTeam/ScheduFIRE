@@ -6,6 +6,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -62,7 +63,7 @@ public class AggiungiMalattiaServlet extends HttpServlet {
 		Date dataInizio = null;
 	    Date dataFine = null;
 		int giorniMalattia=0;
-		
+		VigileDelFuocoBean vigile = VigileDelFuocoDao.ottieni(emailVF);
 		
 		HttpSession sessione = request.getSession();
 		CapoTurnoBean capoTurno = (CapoTurnoBean) sessione.getAttribute("capoturno");
@@ -78,21 +79,86 @@ public class AggiungiMalattiaServlet extends HttpServlet {
 				//ottiene un'istanza di LocalDate dalle stringhe relative a giorno, mese ed anno
 				LocalDate inizioMalattia = LocalDate.of(annoInizio, meseInizio, giornoInizio);
 				LocalDate fineMalattia = LocalDate.of(annoFine, meseFine, giornoFine);
-
 				dataInizio = Date.valueOf(inizioMalattia);
 				dataFine = Date.valueOf(fineMalattia);
 				
 				//Aggiornamento notifiche
 				Notifiche.update(Notifiche.UPDATE_PER_MALATTIA, dataInizio, dataFine, emailVF);
 				
+				int giorniPeriodo = 0;
+				
+				//Conteggio del numero di giorni lavorativi presenti nel periodo di ferie  
+				while(inizioMalattia.compareTo(fineMalattia)<=0) {
+					if (GiornoLavorativo.isLavorativo(Date.valueOf(inizioMalattia)))
+						giorniMalattia++;
+					inizioMalattia=inizioMalattia.plusDays(1);
+					giorniPeriodo++;
+				}
+				
+				//controllo se sono presenti il numero minimo di vigile nella caserma
+				if(!isPresentiNumeroMinimo(dataInizio, dataFine,vigile.getMansione())) 
+					throw new ScheduFIREException("Personale insufficiente! Impossibile inserire malattia.");
+				
+				
+				/**
+				 * Controllo il vigile è già stato schedulato. In questo caso, si concede
+				 * la malattia e si aggiorna il CT mediante una notifica che lo avvisa 
+				 * di dover sostituire dalla squadra il vigile a cui � stata concessa la malattia
+				 */
+				int i=0;
+				boolean componente = false;
+				List<Date> dateSostituzione = new ArrayList<Date>();
+				Date dataInizioClone=(Date) dataInizio.clone();
+				
+				while(i < giorniPeriodo) {
+					if(ComponenteDellaSquadraDao.isComponente(emailVF, dataInizioClone)) { 
+						componente = true;
+						
+						dateSostituzione.add(dataInizioClone);
+						dataInizioClone = Date.valueOf(dataInizioClone.toLocalDate().plusDays(1L));
+						i++;
+					}
+					else{
+						dataInizioClone = Date.valueOf(dataInizioClone.toLocalDate().plusDays(1L));
+						i++;
+					}
+				}
+				
+				if(componente) {
+					Notifiche.update(Notifiche.UPDATE_SQUADRE_PER_MALATTIA, dataInizio, dataFine, emailVF);
+					System.out.print(dateSostituzione.size());
+					System.out.println();
+					for(int j=0; j< dateSostituzione.size(); j++) {
+						System.out.println("inizio ciclo... " + emailVF + " " + dateSostituzione.get(j));
+						Util.sostituisciVigile(dateSostituzione.get(j), emailVF);
+					}
+					
+					System.out.println("Uscito");
+				}
+				
+
+				
 				 GiorniMalattiaBean malattia = new GiorniMalattiaBean();
 				    
-					malattia.setId(0);
+					//malattia.setId(0);
 					malattia.setDataInizio(dataInizio);
 					malattia.setDataFine(dataFine);
 					malattia.setEmailCT(emailCT);
 					malattia.setEmailVF(emailVF);
+					
+					boolean x =GiorniMalattiaDao.addMalattia(malattia);
+					
+					if(componente) {
+						sessione.removeAttribute("squadraDiurno");
+						sessione.removeAttribute("squadraNotturno");
+					}
+					
+					
 					JSONArray array = new JSONArray();
+					
+					if(x) {array.put(true);}
+					else
+						array.put(false);
 				   
 				response.setContentType("application/json");
 				
