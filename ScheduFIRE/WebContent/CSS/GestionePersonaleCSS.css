@@ -46,7 +46,15 @@ input {
 	width: 60%;
 }
 
-.mansioneAggiungi {
+.mansioneAggiungi{
+	text-align: left;
+	margin: auto;
+	width: -moz-fit-content;
+	overflow: visible;
+	height: auto;
+}
+
+.mansione{
 	text-align: left;
 	margin: auto;
 	width: -moz-fit-content;
