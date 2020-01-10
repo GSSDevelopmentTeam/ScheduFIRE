@@ -1159,7 +1159,7 @@ public class VigileDelFuocoDao {
 				ps.setString(2, pair.getKey().getEmail());
 				ps.executeUpdate();
 				con.commit();
-				i.remove();
+//				i.remove();
 			}
 			
 			return true;
