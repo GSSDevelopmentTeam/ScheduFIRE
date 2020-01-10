@@ -150,7 +150,7 @@ public class Notifiche {
 						dateAssenza.get(dateAssenza.size() - 1) + " causa ferie. E' stato" + 
 								" automaticamente sostituito.";
 		String giornoString=dateAssenza.get(0).substring(0,2);
-		listaNotifiche.add(new Notifica(3, notifica, "\"CalendarioServlet?giorno="+giornoString ,generateId()));
+		listaNotifiche.add(new Notifica(3, notifica, "CalendarioServlet?giorno="+giornoString ,generateId()));
 	}
 	
 	private static void updateSquadrePerMalattia(Date inizio, Date fine, String email) {
