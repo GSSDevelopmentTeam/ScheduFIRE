@@ -590,13 +590,20 @@ style="display: none;position:fixed;z-index: 99999; width:100%">
 					 var Risposta=response[0];
 					 if(Risposta){
 						 alertSuccesso();
-						 
+						 if(response[1]){
+				            	window.location.replace("PeriodiDiMalattiaServlet");
+				            }
 					 }
 					 else{
 						 apriFormAggiunta();
 						 alertInsuccesso();
 					 }
 				 },
+				 error : function(jqXHR, textStatus, errorThrown) {
+
+						$(document.body).html(jqXHR.responseText);
+
+					},
 			});	
 		}
 			
