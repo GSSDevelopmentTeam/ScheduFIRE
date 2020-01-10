@@ -167,9 +167,9 @@ public class Notifiche {
 		
 		ArrayList<String> giorniMalattiaSchedulato = new ArrayList<String>();
 		
-			String notificaMalattia = "Il vigile "+vigile.getCognome()+" "+vigile.getNome()
+			String notificaMalattia = "Il vigile "+vigile.getCognome()+" "+vigile.getNome()+
 
-			+ " non sar� presente in un turno a lui assegnato causa malattia";
+			" " + "non sara' presente nella squadra a cui e' stato assegnato\n";
 
 			
 			LocalDate inMalattia = inizioMalattia.toLocalDate();
@@ -187,12 +187,14 @@ public class Notifiche {
 			
 			
 			if(giorniMalattiaSchedulato.size() == 1)
-				notificaMalattia += " per il giorno " + giorniMalattiaSchedulato.get(0) + " causa Malattia.";
+				notificaMalattia += " per il giorno " + giorniMalattiaSchedulato.get(0) + " causa malattia. E' stato" + 
+						" automaticamente sostituito.";
 			else
 				notificaMalattia += " per il periodo dal " + giorniMalattiaSchedulato.get(0) + " al " +
-						giorniMalattiaSchedulato.get(giorniMalattiaSchedulato.size() - 1) + " causa malattia.";
-			
-			listaNotifiche.add(new Notifica(2, notificaMalattia, "/ModificaComposizioneSquadreServlet",generateId()));
+						giorniMalattiaSchedulato.get(giorniMalattiaSchedulato.size() - 1) + " causa malattia. E' stato" + 
+						" automaticamente sostituito.";
+			//"GeneraSquadreServlet""ModificaComposizioneSquadreServlet?tipologia=3&data="+inizio
+			listaNotifiche.add(new Notifica(3, notificaMalattia, "GeneraSquadreServlet",generateId()));
 		}
 	
 	
