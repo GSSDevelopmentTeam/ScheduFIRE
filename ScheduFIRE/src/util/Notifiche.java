@@ -134,7 +134,7 @@ public class Notifiche {
 		List<String> dateAssenza = new ArrayList<String>();
 		
 		String notifica = vigile.getCognome() + " " + vigile.getNome() + 
-				" " + "non sarÃ  presente nella squadra a cui Ã¨ stato assegnato\n";
+				" " + "non sara' presente nella squadra a cui e' stato assegnato\n";
 		
 		while(!inizio.equals(Date.valueOf(fineP.plusDays(1L)))) {
 			if(GiornoLavorativo.isLavorativo(inizio)) {
@@ -147,10 +147,12 @@ public class Notifiche {
 		}
 		
 		if(dateAssenza.size() == 1)
-			notifica += " per il giorno " + dateAssenza.get(0) + " causa ferie.";
+			notifica += " per il giorno " + dateAssenza.get(0) + " causa ferie. E' stato" + 
+						" automaticamente sostituito.";
 		else
 			notifica += " per il periodo dal " + dateAssenza.get(0) + " al " +
-						dateAssenza.get(dateAssenza.size() - 1) + " causa ferie.";
+						dateAssenza.get(dateAssenza.size() - 1) + " causa ferie. E' stato" + 
+								" automaticamente sostituito.";
 		
 		listaNotifiche.add(new Notifica(2, notifica, "ModificaComposizioneSquadreServlet?tipologia=3&data=" + temp ,generateId()));
 	}
