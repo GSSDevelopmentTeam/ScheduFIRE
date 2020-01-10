@@ -39,6 +39,8 @@ public class PersonaleDisponibileServlet extends HttpServlet{
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		Util.isCapoTurno(request);
+		
 		Date giorno = null;
 		
 		
