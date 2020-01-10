@@ -363,7 +363,7 @@ public class Util {
 
 
 	/**
-	 * Verifica se sono la una delle due date passate è il primo giorno lavorativo dell'anno, se lo è cancella dal database
+	 * Verifica se una delle due date passate è il primo giorno lavorativo dell'anno, se lo è cancella dal database
 	 * il calendario dell'anno precedente e aggiorna le ferie ai vigili 
 	 * @param diurnoDate il giorno lavorativo diurno
 	 * @param notturnoDate il giorno lavorativo notturno
