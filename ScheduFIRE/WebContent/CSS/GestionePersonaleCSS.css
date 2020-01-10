@@ -6,7 +6,7 @@ body {
 
 h2, section, div, h4, form, select {
 	text-align:center;
-
+}
 
 h2 {
 	color: #b60000;
@@ -46,10 +46,20 @@ input {
 	width: 60%;
 }
 
-.mansioneAggiungi {
+.mansioneAggiungi{
 	text-align: left;
 	margin: auto;
 	width: -moz-fit-content;
+	width: -webkit-fit-content;
+	overflow: visible;
+	height: auto;
+}
+
+.mansione{
+	text-align: left;
+	margin: auto;
+	width: -moz-fit-content;
+	width: -webkit-fit-content;
 	overflow: visible;
 	height: auto;
 }
@@ -58,6 +68,7 @@ input {
 	text-align: left;
 	margin: auto;
 	width: -moz-fit-content;
+	width: -webkit-fit-content;
 	overflow: visible;
 	height: auto;
 }
