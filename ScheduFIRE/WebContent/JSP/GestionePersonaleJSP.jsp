@@ -115,7 +115,7 @@ h4{color: #B60000;}
 					
 				} 
 				else {
-					
+
 					button.innerHTML = "Annulla";
 					
 					gradoCapoSquadra = document.getElementById("modificaVF" + id + "GradoCapoSquadra");
