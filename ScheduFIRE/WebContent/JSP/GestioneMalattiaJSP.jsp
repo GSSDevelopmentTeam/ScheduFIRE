@@ -133,8 +133,8 @@ min-width: 265px;
         <p class="text-center">Vuoi rimuovere il periodo di malattia?<br> La procedura non può essere annullata.</p>
       </div>
       <div class="modal-footer">
+      	<button type="button" class="btn btn-outline-success" data-dismiss="modal"onClick = "rimuoviMalattia()">Rimuovi</button>
         <button type="button" class="btn btn-outline-danger" data-dismiss="modal">Annulla</button>
-        <button type="button" class="btn btn-outline-success" data-dismiss="modal"onClick = "rimuoviMalattia()">Rimuovi</button>
       </div>
     </div>
   </div>
@@ -152,7 +152,9 @@ min-width: 265px;
         <h4 class="modal-title text-center">Operazione effettuata con successo</h4>
       </div>
       <div class="modal-footer">
+
         <button type="button" class="btn btn-outline-success" data-dismiss="modal">OK</button>
+
       </div>
     </div>
   </div>
