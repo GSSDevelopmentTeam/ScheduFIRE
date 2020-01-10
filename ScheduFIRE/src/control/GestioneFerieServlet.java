@@ -21,6 +21,7 @@ import model.bean.VigileDelFuocoBean;
 import model.dao.FerieDao;
 import model.dao.GiorniMalattiaDao;
 import model.dao.VigileDelFuocoDao;
+import util.GiornoLavorativo;
 import util.Util;
 
 /**
@@ -64,6 +65,24 @@ public class GestioneFerieServlet extends HttpServlet {
 			
 			
 			JSONArray array = new JSONArray();
+
+			
+			LocalDate dataOra=LocalDate.now();
+			//array che contiene le date da rimuovere
+			int annoInizio=dataOra.getYear();
+			int annoFine=dataOra.getYear()+10;
+			while(annoInizio<annoFine ) {
+				Date data=Date.valueOf(dataOra);
+				if(!GiornoLavorativo.isLavorativo(data)) {
+					array.put(data);
+				}
+				dataOra=dataOra.plusDays(1);
+				annoInizio=dataOra.getYear();
+				
+			}
+			
+			
+			
 			
 			//inserisco nell'array i giorni di ferie gi� concesse 
 			for(FerieBean ferieBean:ferie) {
@@ -151,7 +170,6 @@ public class GestioneFerieServlet extends HttpServlet {
 			
 			//Passasggio del tipo di ordinamento ottenuto
 			request.setAttribute("ordinamento", ordinamento);
-			
 			request.setAttribute("listaVigili", listaVigili);
 			request.getRequestDispatcher("JSP/GestioneFerieJSP.jsp").forward(request, response);
 		}
