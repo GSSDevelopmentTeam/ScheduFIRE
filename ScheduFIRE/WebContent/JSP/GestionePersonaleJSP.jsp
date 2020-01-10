@@ -337,7 +337,11 @@ h4{color: #B60000;}
 
 		<br> <br>
 
-	
+	<div id="capo"></div>
+	<div class="d-flex justify-content-center">	 
+		<a href="#auto" class="btn btn-outline-secondary" style="margin: 3px;">Autisti</a>
+		<a href="#vigile" class="btn btn-outline-secondary" style="margin: 3px;">Vigili</a>
+	</div>
 		<h4 class="d-flex justify-content-center" id="inizio"
 			style="margin-top: 1%; color: #B60000 !Important">Capi Squadra</h4>
 		
@@ -751,7 +755,11 @@ h4{color: #B60000;}
 		
 		%>
 
-
+		<div id="auto"></div>
+		<div class="d-flex justify-content-center">		
+		<a href="#capo"	class="btn btn-outline-secondary" style="margin: 3px;">Capi Squadra</a> 
+		<a href="#vigile" class="btn btn-outline-secondary" style="margin: 3px;">Vigili</a>
+	</div>
 		<h4 class="d-flex justify-content-center" id="inizio"
 			style="margin-top: 1%; color: #B60000 !Important">Autisti</h4>
 
@@ -1165,7 +1173,11 @@ h4{color: #B60000;}
 		
 		%>
 
-
+		<div id="vigile"></div>
+		<div class="d-flex justify-content-center">		
+		<a href="#capo"	class="btn btn-outline-secondary" style="margin: 3px;">Capi Squadra</a> 
+		<a href="#auto" class="btn btn-outline-secondary" style="margin: 3px;">Autisti</a>
+	</div>
 		<h4 class="d-flex justify-content-center" id="inizio"
 			style="margin-top: 1%; color: #B60000 !Important">Vigili</h4>
 

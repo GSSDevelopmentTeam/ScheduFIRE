@@ -14,7 +14,7 @@
   <form action="HomeCTServlet" method="POST">
   <a><button class="round"><img src="IMG/logoScheduFIRE.png" class="logo">
   </button></a></form><%} else {
-	  %>   <a><button class="round"><img src="IMG/logoScheduFIRE.png" class="logo"></button></a>
+	  %>   <a><div class="round"><img src="IMG/logoScheduFIRE.png" class="logo"></div></a>
  <%} if(ruolo!= null){
 	  %>	
  	<div class="rf">

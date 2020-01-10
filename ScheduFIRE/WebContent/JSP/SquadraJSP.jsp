@@ -128,8 +128,8 @@ h2 {
 
 				<tr>
 					<td class="text-center"><img src="Grado/<%=membro.getMansione().equals("Capo Squadra") && membro.getGrado().equals("Esperto")?"EspertoCapoSquadra":membro.getGrado() %>.png" title="<%=membro.getGrado() %>" onerror="this.parentElement.innerHTML='Non disponibile';"></td>
-					<td class="text-center"><%=membro.getNome()%></td>
-					<td class="text-center"><%=membro.getCognome()%></td>
+					<td class="text-center"><strong><%=membro.getNome()%></strong></td>
+					<td class="text-center"><strong><%=membro.getCognome()%></strong></td>
 					<td class="text-center"><%=membro.getMansione()%></td>
 					<td class="text-center"><button type="button"
 							class="btn btn-outline-secondary" data-toggle="modal"
@@ -174,8 +174,8 @@ h2 {
 
 				<tr>
 					<td class="text-center"><img src="Grado/<%=membro.getMansione().equals("Capo Squadra") && membro.getGrado().equals("Esperto")?"EspertoCapoSquadra":membro.getGrado() %>.png" title="<%=membro.getGrado() %>" onerror="this.parentElement.innerHTML='Non disponibile';"></td>
-					<td class="text-center"><%=membro.getNome()%></td>
-					<td class="text-center"><%=membro.getCognome()%></td>
+					<td class="text-center"><strong><%=membro.getNome()%></strong></td>
+					<td class="text-center"><strong><%=membro.getCognome()%></strong></td>
 					<td class="text-center"><%=membro.getMansione()%></td>
 					<td class="text-center"><button type="button"
 							class="btn btn-outline-secondary" data-toggle="modal"
@@ -220,8 +220,8 @@ h2 {
 
 				<tr>
 					<td class="text-center"><img src="Grado/<%=membro.getMansione().equals("Capo Squadra") && membro.getGrado().equals("Esperto")?"EspertoCapoSquadra":membro.getGrado() %>.png" title="<%=membro.getGrado() %>" onerror="this.parentElement.innerHTML='Non disponibile';"></td>
-					<td class="text-center"><%=membro.getNome()%></td>
-					<td class="text-center"><%=membro.getCognome()%></td>
+					<td class="text-center"><strong><%=membro.getNome()%></strong></td>
+					<td class="text-center"><strong><%=membro.getCognome()%></strong></td>
 					<td class="text-center"><%=membro.getMansione()%></td>
 					<td class="text-center"><button type="button"
 							class="btn btn-outline-secondary" data-toggle="modal"
@@ -266,8 +266,8 @@ h2 {
 
 				<tr>
 					<td class="text-center"><img src="Grado/<%=membro.getMansione().equals("Capo Squadra") && membro.getGrado().equals("Esperto")?"EspertoCapoSquadra":membro.getGrado() %>.png" title="<%=membro.getGrado() %>"onerror="this.parentElement.innerHTML='Non disponibile';"></td>
-					<td class="text-center"><%=membro.getNome()%></td>
-					<td class="text-center"><%=membro.getCognome()%></td>
+					<td class="text-center"><strong><%=membro.getNome()%></strong></td>
+					<td class="text-center"><strong><%=membro.getCognome()%></strong></td>
 					<td class="text-center"><%=membro.getMansione()%></td>
 					<td class="text-center"><button type="button"
 							class="btn btn-outline-secondary" data-toggle="modal"
