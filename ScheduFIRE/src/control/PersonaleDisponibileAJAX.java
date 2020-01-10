@@ -61,17 +61,14 @@ public class PersonaleDisponibileAJAX extends HttpServlet {
 		
 		HttpSession session = request.getSession();
 		HashMap<VigileDelFuocoBean, String> squadra=null;
-		Date data = null;
+		Date data = Date.valueOf( request.getParameter("dataModifica"));
 		if(tp==1) {
-		squadra = (HashMap<VigileDelFuocoBean, String>) session.getAttribute("squadraDiurno");	
-		data = Date.valueOf(request.getParameter("dataDiurno"));
+		squadra = (HashMap<VigileDelFuocoBean, String>) session.getAttribute("squadraDiurno");
 		} else {
 			if(tp==2) {
 				squadra = (HashMap<VigileDelFuocoBean, String>) session.getAttribute("squadraNotturno");
-				data = Date.valueOf( request.getParameter("dataNotturno"));
 			}else {
 				squadra = (HashMap<VigileDelFuocoBean, String>) session.getAttribute("squadra");
-				data = Date.valueOf( request.getParameter("dataModifica"));
 			}
 		}
 		
