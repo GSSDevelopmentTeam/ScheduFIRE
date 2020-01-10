@@ -34,7 +34,7 @@
 				<div class="d-flex justify-content-center" >
 					<div class="input-container">
 						<i class="fa fa-user icon"></i> <input class="input-field"
-							type="text" id="user1" placeholder="Username" name="Username">
+							type="text" id="user1" placeholder="Username" name="Username" required>
 				</div>
 				</div>
 				<br>
@@ -42,7 +42,7 @@
 					<div class="input-container">
 						<i class="fa fa-key icon"></i> <input class="input-field"
 							type="password" placeholder="Password" name="Password"
-							id="myInput">
+							id="myInput" required>
 				</div>
 				</div>
 				 <input type="checkbox" onclick="show()" class="center">Mostra

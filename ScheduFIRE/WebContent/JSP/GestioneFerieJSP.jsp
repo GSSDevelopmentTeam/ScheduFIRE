@@ -911,9 +911,12 @@
 										+ email + "')");
 								console.log("inserite ferie " + dataIniziale
 										+ " " + dataFinale + " di " + email);
-								alertSuccesso("Inserimento ferie avvenuto con successo.");
 								var ferie = $(".listaVigili td:contains('" +email+ "')").next('td');
 					            ferie.text(response[2] + response[1]);
+					            if(response[3]){
+					            	window.location.replace("GestioneFerieServlet");
+					            }
+					            alertSuccesso("Inserimento ferie avvenuto con successo.");
 							} else {
 								console.log("problema inserimento ferie "
 										+ dataIniziale + " " + dataFinale

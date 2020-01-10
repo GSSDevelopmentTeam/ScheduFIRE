@@ -69,8 +69,8 @@ min-width: 265px;
 
 				<div class="modal-footer">
 	  			<button type="button" class="btn btn-outline-success" id="botAggiungiMalattia" 
-	  			data-toggle ="modal"  data-target ="#menuConferma" 
-	  			data-dismiss="modal" disabled>Conferma</button>
+	  			data-toggle ="modal"  data-target ="#menuAvviso" 
+	  			data-dismiss="modal" onClick = "inserisciMalattia()" disabled>Conferma</button>
 					<button type="button" class="btn btn-outline-danger" data-dismiss="modal">Annulla</button>
 
 				</div>
@@ -112,7 +112,7 @@ min-width: 265px;
 				
 					<button type="button" class="btn btn-outline-success"
 					id="bottoneRimuoviMalattia" data-toggle ="modal"data-target ="#menuConfermaRimozione" 
-	  				data-dismiss="modal" disabled>Rimuovi</button>
+	  				data-dismiss="modal" onClick = "rimuoviMalattia()" disabled>Rimuovi</button>
 	  				
 					<button type="button" class="btn btn-outline-danger"
 						data-dismiss="modal">Annulla</button>
@@ -143,18 +143,18 @@ min-width: 265px;
 	
 
 		<!-- Modal di avviso aggiunta malattia-->
- <div class="modal fade " id="menuConferma" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+ <div class="modal fade " id="menuAvviso" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
   <div class="modal-dialog modal-sm modal-dialog-centered" role="document">
-    <div class="modal-content">
+    <div class="modal-content" style="border :4px solid #5be94b;">
 
-      <div class="modal-body">
+      <div class="modal-body" style="align:center;">
         <img src="IMG/fire.png" class="rounded mx-auto d-block">
-        <h4 class="modal-title text-center">Sei sicuro?</h4>
-        <p class="text-center">Vuoi inserire il periodo di malattia?
+        <h4 class="modal-title text-center">Operazione effettuata con successo</h4>
       </div>
       <div class="modal-footer">
-      	<button type="button" class="btn btn-outline-success" data-dismiss="modal"onClick = "inserisciMalattia()">Inserisci</button>
-        <button type="button" class="btn btn-outline-danger" data-dismiss="modal">Annulla</button>
+
+        <button type="button" class="btn btn-outline-success" data-dismiss="modal">OK</button>
+
       </div>
     </div>
   </div>
@@ -590,13 +590,20 @@ style="display: none;position:fixed;z-index: 99999; width:100%">
 					 var Risposta=response[0];
 					 if(Risposta){
 						 alertSuccesso();
-						 
+						 if(response[1]){
+				            	window.location.replace("PeriodiDiMalattiaServlet");
+				            }
 					 }
 					 else{
 						 apriFormAggiunta();
 						 alertInsuccesso();
 					 }
 				 },
+				 error : function(jqXHR, textStatus, errorThrown) {
+
+						$(document.body).html(jqXHR.responseText);
+
+					},
 			});	
 		}
 			
