@@ -82,6 +82,9 @@ public class AggiungiMalattiaServlet extends HttpServlet {
 				dataInizio = Date.valueOf(inizioMalattia);
 				dataFine = Date.valueOf(fineMalattia);
 				
+				//Aggiornamento notifiche
+				Notifiche.update(Notifiche.UPDATE_PER_MALATTIA, dataInizio, dataFine, emailVF);
+				
 				 GiorniMalattiaBean malattia = new GiorniMalattiaBean();
 				    
 					malattia.setId(0);
@@ -90,55 +93,6 @@ public class AggiungiMalattiaServlet extends HttpServlet {
 					malattia.setEmailCT(emailCT);
 					malattia.setEmailVF(emailVF);
 					JSONArray array = new JSONArray();
-			
-					//Notifiche.update(Notifiche.UPDATE_SQUADRE_PER_MALATTIA, in, out, emailVF);
-					
-				   if(GiorniMalattiaDao.addMalattia(malattia) == true) 
-					  array.put(true);
-				   else {
-					   array.put(false);
-				   }
-				   
-				 //controllo se in caserma sono prsente il numero sufficiente di vigili per costruire un turno
-				 
-				   /*VigileDelFuocoBean vigile = VigileDelFuocoDao.ottieni(malattia.getEmailVF());
-					 if(isPresentiNumeroMinimo(malattia.getDataInizio(), malattia.getDataFine(), vigile.getMansione())) {
-						throw new ScheduFIREException("Personale minore di 13 unit√†. Impossibile inserire giorni di malattia");
-					 }*/
-				   
-				  //sostituisce il vigile se gi‡ schedulato
-				 /* Date iniz = malattia.getDataInizio();
-				  Date fin = malattia.getDataFine();
-				   while(!iniz.equals(fin.toLocalDate().plusDays(1))) {
-						if(GiornoLavorativo.isLavorativo(iniz)) {
-							if(ComponenteDellaSquadraDao.isComponente(malattia.getEmailVF(), iniz)) {
-								Util.sostituisciVigile(iniz, malattia.getEmailVF());
-							}
-						}
-						LocalDate next = iniz.toLocalDate().plusDays(1L);
-						iniz = Date.valueOf(next);
-					}*/
-				   
-				   
-				   boolean componente = false;
-				   Date in = (Date) malattia.getDataInizio().clone();
-				   Date outM = (Date) malattia.getDataFine().clone();
-				   LocalDate out = outM.toLocalDate().plusDays(1);
-				   
-					while(!in.equals(Date.valueOf((out)))) {
-						if(ComponenteDellaSquadraDao.isComponente(emailVF, in)) { 
-							componente = true;
-							break;
-						}
-						else{
-							in = Date.valueOf(in.toLocalDate().plusDays(1));
-						}
-					}
-					
-					 if(componente)
-							Notifiche.update(Notifiche.UPDATE_SQUADRE_PER_MALATTIA, malattia.getDataInizio(), malattia.getDataFine(), emailVF);
-					   
-				   
 				   
 				response.setContentType("application/json");
 				
