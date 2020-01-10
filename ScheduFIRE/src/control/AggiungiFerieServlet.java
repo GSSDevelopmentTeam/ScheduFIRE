@@ -178,6 +178,8 @@ public class AggiungiFerieServlet extends HttpServlet {
 				}
 		}
 		
+		Notifiche.update(Notifiche.UPDATE_PER_AVVIO);
+		
 		if(componente) {
 			sessione.removeAttribute("squadraDiurno");
 			sessione.removeAttribute("squadraNotturno");
@@ -192,6 +194,7 @@ public class AggiungiFerieServlet extends HttpServlet {
 			array.put(true);
 			array.put(feriePDb);
 			array.put(ferieCDb);
+			array.put(componente);
 		}
 		else
 			array.put(false);

@@ -150,7 +150,7 @@ public class Notifiche {
 						dateAssenza.get(dateAssenza.size() - 1) + " causa ferie. E' stato" + 
 								" automaticamente sostituito.";
 		
-		listaNotifiche.add(new Notifica(2, notifica, "ModificaComposizioneSquadreServlet?tipologia=3&data=" + temp ,generateId()));
+		listaNotifiche.add(new Notifica(3, notifica, "ModificaComposizioneSquadreServlet?tipologia=3&data=" + temp ,generateId()));
 	}
 	
 	private static void updateSquadrePerMalattia(Date inizio, Date fine, String email) {
