@@ -142,6 +142,9 @@ public class PersonaleDisponibileServlet extends HttpServlet{
 		case "cognome": 
 			ordinamento=(VigileDelFuocoDao.ORDINA_PER_COGNOME);
 			break;
+		case "grado": 
+			ordinamento=(VigileDelFuocoDao.ORDINA_PER_GRADO);
+			break;
 		case "disponibilita": 
 			ordinamento=(VigileDelFuocoDao.ORDINA_PER_MANSIONE);
 			break;
@@ -170,7 +173,7 @@ public class PersonaleDisponibileServlet extends HttpServlet{
 		request.setAttribute("data", dataparse);
 		
 		String giornoLavoro=""+giorno.toLocalDate().getDayOfMonth()+" "+Mese(giorno.toLocalDate().getMonthValue())+" "+giorno.toLocalDate().getYear();
-		request.setAttribute("titolo", "Il personale del giorno "+giornoLavoro+" è il seguente");
+		request.setAttribute("titolo", "Il personale del giorno "+giornoLavoro+" &egrave il seguente");
 
 		System.out.println("Ordinamento= "+ordinamentoStr);
 		request.setAttribute("ordinamento", ordinamentoStr);

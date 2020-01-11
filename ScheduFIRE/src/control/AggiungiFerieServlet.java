@@ -12,8 +12,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-
-import org.apache.tomcat.jni.Time;
 import org.json.JSONArray;
 import model.bean.CapoTurnoBean;
 import model.bean.VigileDelFuocoBean;
@@ -53,6 +51,7 @@ public class AggiungiFerieServlet extends HttpServlet {
 		String emailVF;
 		boolean aggiunta = false;
 		int numeroGiorniFerie=0;
+		boolean componente = false;
 
 		//Ottenimento oggetto capoturnoBean dalla sessione in modo da ricavare l'email
 		HttpSession sessione = request.getSession();
@@ -112,7 +111,7 @@ public class AggiungiFerieServlet extends HttpServlet {
 				 * ALtrimenti si lancia un'eccezione
 				 */
 				if(!isPresentiNumeroMinimo(dataInizio, dataFine,mansioneVF)) 
-					throw new ScheduFIREException("Personale minore di 13 unità. Impossibile inserire ferie");
+					throw new ScheduFIREException("Personale insufficiente! Impossibile inserire ferie.");
 				
 
 				/**
@@ -121,13 +120,10 @@ public class AggiungiFerieServlet extends HttpServlet {
 				 * di dover sostituire dalla squadra il vigile a cui sono state concesse le ferie
 				 */
 				int i=0;
-				boolean componente = false;
-				//Date sostituzione = null;
 				List<Date> dateSostituzione = new ArrayList<Date>();
-				
-				//LocalDate.of(dataInizio.getYear(), dataInizio.getMonth(), dataInizio.getDay())
 				Date dataInizioClone=(Date) dataInizio.clone();
-				while(i <= numeroGiorniPeriodo) {
+				
+				while(i < numeroGiorniPeriodo) {
 					if(ComponenteDellaSquadraDao.isComponente(emailVF, dataInizioClone)) { 
 						componente = true;
 						//sostituzione = (Date) dataInizio.clone();
@@ -150,6 +146,8 @@ public class AggiungiFerieServlet extends HttpServlet {
 						System.out.println("inizio ciclo... " + emailVF + " " + dateSostituzione.get(j));
 						Util.sostituisciVigile(dateSostituzione.get(j), emailVF);
 					}
+					
+					System.out.println("Uscito");
 				}
 				
 				
@@ -180,6 +178,13 @@ public class AggiungiFerieServlet extends HttpServlet {
 				}
 		}
 		
+		Notifiche.update(Notifiche.UPDATE_PER_AVVIO);
+		
+		if(componente) {
+			sessione.removeAttribute("squadraDiurno");
+			sessione.removeAttribute("squadraNotturno");
+		}
+		
 		response.setContentType("application/json");
 		JSONArray array = new JSONArray();
 
@@ -189,6 +194,7 @@ public class AggiungiFerieServlet extends HttpServlet {
 			array.put(true);
 			array.put(feriePDb);
 			array.put(ferieCDb);
+			array.put(componente);
 		}
 		else
 			array.put(false);

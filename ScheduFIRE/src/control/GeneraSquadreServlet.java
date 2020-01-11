@@ -92,8 +92,10 @@ public class GeneraSquadreServlet extends HttpServlet {
 
 				sessione.removeAttribute("squadraDiurno");
 				sessione.removeAttribute("squadraNotturno");
-
-				response.sendRedirect("HomeCTServlet");
+				String path=request.getHeader("referer");
+				if(!path.contains("squadraSalvata")) 
+					path+="&squadraSalvata";
+				response.sendRedirect(path);
 				return;
 			}
 			else {
@@ -169,8 +171,8 @@ public class GeneraSquadreServlet extends HttpServlet {
 				//sessione.removeAttribute("squadraDiurno");
 				//sessione.removeAttribute("squadraNotturno");
 
-
-				response.sendRedirect("HomeCTServlet");
+				
+				response.sendRedirect("GeneraSquadreServlet?squadraSalvata");
 				return;
 
 
@@ -213,6 +215,8 @@ public class GeneraSquadreServlet extends HttpServlet {
 					nonDisponibile=true;
 			}
 			if(nonDisponibile) {
+				request.getSession().removeAttribute("squadraDiurno");
+				request.getSession().removeAttribute("squadraNotturno");
 				request.getRequestDispatcher("GeneraSquadreServlet").forward(request, response);
 				return;
 			}

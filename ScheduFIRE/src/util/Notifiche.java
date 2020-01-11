@@ -25,10 +25,6 @@ public class Notifiche {
 	public Notifiche() {
 		id = 0;
 		listaNotifiche = new ArrayList<>();
-		listaNotifiche.add(new Notifica(3, "Test di una notifica grave", "HomeCTServlet", generateId()));
-		listaNotifiche.add(new Notifica(2, "Test di una notifica media, con stato d'errore medio e colore medio", "HomeCTServlet", generateId()));
-		listaNotifiche.add(new Notifica(1, "Test di una notifica normale, che per quanto sia normale essa ï¿½ solo una notifica normale, dunque ï¿½ normale che sia normale", "HomeCTServlet", generateId()));
-
 		update(UPDATE_PER_AVVIO);
 	}
 
@@ -153,8 +149,8 @@ public class Notifiche {
 			notifica += " per il periodo dal " + dateAssenza.get(0) + " al " +
 						dateAssenza.get(dateAssenza.size() - 1) + " causa ferie. E' stato" + 
 								" automaticamente sostituito.";
-		
-		listaNotifiche.add(new Notifica(2, notifica, "ModificaComposizioneSquadreServlet?tipologia=3&data=" + temp ,generateId()));
+		String giornoString=dateAssenza.get(0).substring(0,2);
+		listaNotifiche.add(new Notifica(3, notifica, "CalendarioServlet?giorno="+giornoString ,generateId()));
 	}
 	
 	private static void updateSquadrePerMalattia(Date inizio, Date fine, String email) {
@@ -167,9 +163,9 @@ public class Notifiche {
 		
 		ArrayList<String> giorniMalattiaSchedulato = new ArrayList<String>();
 		
-			String notificaMalattia = "Il vigile "+vigile.getCognome()+" "+vigile.getNome()
+			String notificaMalattia = "Il vigile "+vigile.getCognome()+" "+vigile.getNome()+
 
-			+ " non sar� presente in un turno a lui assegnato causa malattia";
+			" " + "non sara' presente nella squadra a cui e' stato assegnato\n";
 
 			
 			LocalDate inMalattia = inizioMalattia.toLocalDate();
@@ -187,12 +183,15 @@ public class Notifiche {
 			
 			
 			if(giorniMalattiaSchedulato.size() == 1)
-				notificaMalattia += " per il giorno " + giorniMalattiaSchedulato.get(0) + " causa Malattia.";
+				notificaMalattia += " per il giorno " + giorniMalattiaSchedulato.get(0) + " causa malattia. E' stato" + 
+						" automaticamente sostituito.";
 			else
 				notificaMalattia += " per il periodo dal " + giorniMalattiaSchedulato.get(0) + " al " +
-						giorniMalattiaSchedulato.get(giorniMalattiaSchedulato.size() - 1) + " causa malattia.";
-			
-			listaNotifiche.add(new Notifica(2, notificaMalattia, "/ModificaComposizioneSquadreServlet",generateId()));
+						giorniMalattiaSchedulato.get(giorniMalattiaSchedulato.size() - 1) + " causa malattia. E' stato" + 
+						" automaticamente sostituito.";
+			//"GeneraSquadreServlet""ModificaComposizioneSquadreServlet?tipologia=3&data="+inizio
+			String giornoString=giorniMalattiaSchedulato.get(0).substring(0,2);
+			listaNotifiche.add(new Notifica(3, notificaMalattia, "CalendarioServlet?giorno="+giornoString,generateId()));
 		}
 	
 	

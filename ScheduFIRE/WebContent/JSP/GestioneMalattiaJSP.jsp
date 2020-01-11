@@ -69,8 +69,8 @@ min-width: 265px;
 
 				<div class="modal-footer">
 	  			<button type="button" class="btn btn-outline-success" id="botAggiungiMalattia" 
-	  			data-toggle ="modal"  data-target ="#menuConferma" 
-	  			data-dismiss="modal" disabled>Conferma</button>
+	  			data-toggle ="modal"  data-target ="#modalAvviso" 
+	  			data-dismiss="modal" onClick = "inserisciMalattia()" disabled>Conferma</button>
 					<button type="button" class="btn btn-outline-danger" data-dismiss="modal">Annulla</button>
 
 				</div>
@@ -111,8 +111,8 @@ min-width: 265px;
 				<div class="modal-footer">
 				
 					<button type="button" class="btn btn-outline-success"
-					id="bottoneRimuoviMalattia" data-toggle ="modal"data-target ="#menuConfermaRimozione" 
-	  				data-dismiss="modal" disabled>Rimuovi</button>
+					id="bottoneRimuoviMalattia" data-toggle ="modal" data-target ="#modalAvviso" 
+	  				data-dismiss="modal" onClick ="rimuoviMalattia()" disabled>Rimuovi</button>
 	  				
 					<button type="button" class="btn btn-outline-danger"
 						data-dismiss="modal">Annulla</button>
@@ -120,41 +120,24 @@ min-width: 265px;
 				</div>
 			</div>
 		</div>
-	</div>
-	
-	<!-- Modal di avviso rimozionemalattia-->
- <div class="modal fade " id="menuConfermaRimozione" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-  <div class="modal-dialog modal-sm modal-dialog-centered" role="document">
-    <div class="modal-content">
 
-      <div class="modal-body">
-        <img src="IMG/fire.png" class="rounded mx-auto d-block">
-        <h4 class="modal-title text-center">Sei sicuro?</h4>
-        <p class="text-center">Vuoi rimuovere il periodo di malattia?<br> La procedura non può essere annullata.</p>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-outline-danger" data-dismiss="modal">Annulla</button>
-        <button type="button" class="btn btn-outline-success" data-dismiss="modal"onClick = "rimuoviMalattia()">Rimuovi</button>
-      </div>
-    </div>
-  </div>
-</div>
-	
-	
+	</div>	
+
 
 		<!-- Modal di avviso aggiunta malattia-->
- <div class="modal fade " id="menuConferma" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+ <div class="modal fade" id="modalAvviso" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
   <div class="modal-dialog modal-sm modal-dialog-centered" role="document">
-    <div class="modal-content">
-
-      <div class="modal-body">
+    <div class="modal-content" style="border :3px solid #5be94b;">
+		<p hidden="hidden" name="ricarica" id="ifRicarica"></p>
+      <div class="modal-body" style="align:center;">
         <img src="IMG/fire.png" class="rounded mx-auto d-block">
-        <h4 class="modal-title text-center">Sei sicuro?</h4>
-        <p class="text-center">Vuoi inserire il periodo di malattia?
+        <h4 class="modal-title text-center">Operazione effettuata con successo</h4>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-outline-danger" data-dismiss="modal">Annulla</button>
-        <button type="button" class="btn btn-outline-success" data-dismiss="modal"onClick = "inserisciMalattia()">Inserisci</button>
+
+        <button type="button" class="btn btn-outline-success" 
+        data-dismiss="modal" onClick="ricaricaPagina()">OK</button>
+
       </div>
     </div>
   </div>
@@ -209,6 +192,11 @@ min-width: 265px;
 	<!-- body aggiungi malattia -->
 	<div class="table-responsive" >
 	
+	<div id="capo"></div>	
+	<div class="d-flex justify-content-center">		 
+		<a href="#auto" class="btn btn-outline-secondary" style="margin: 3px;">Autisti</a>
+		<a href="#vigile" class="btn btn-outline-secondary" style="margin: 3px;">Vigili</a>
+	</div>
 	<h4 class="d-flex justify-content-center" id="inizio"
 		style="margin-top: 0%; color: #B60000 !Important ">Capi Squadra</h4>
 	
@@ -260,6 +248,12 @@ min-width: 265px;
 			
 			</table>
 			
+			
+				<div id="auto"></div>
+				<div class="d-flex justify-content-center">		
+		<a href="#capo"	class="btn btn-outline-secondary" style="margin: 3px;">Capi Squadra</a> 
+		<a href="#vigile" class="btn btn-outline-secondary" style="margin: 3px;">Vigili</a>
+	</div>
 			<h4 class="d-flex justify-content-center" id="inizio"
 		style="margin-top: 1%; color: #B60000 !Important ">Autisti</h4>
 
@@ -310,6 +304,11 @@ min-width: 265px;
 			
 			</table>
 			
+			<div id="vigile"></div>
+			<div class="d-flex justify-content-center">		
+		<a href="#capo"	class="btn btn-outline-secondary" style="margin: 3px;">Capi Squadra</a> 
+		<a href="#auto" class="btn btn-outline-secondary" style="margin: 3px;">Autisti</a>
+	</div>
 			<h4 class="d-flex justify-content-center" id="inizio"
 		style="margin-top: 1%; color: #B60000 !Important ">Vigili</h4>
 
@@ -399,7 +398,8 @@ style="display: none;position:fixed;z-index: 99999; width:100%">
 						disallowLockDaysInRange : true,
 						showTooltip:false,
 						onError : function(error) {
-							alertInsuccesso("Nel periodo selezionato risultano già dei giorni di malattia");
+							$("#messaggioMalattia1").text("Nel periodo selezionato risultano già dei giorni di malattia.");
+							$("#messaggioMalattia1").attr("style","color:red");
 						},
 						onSelect : function() {
 						
@@ -589,14 +589,19 @@ style="display: none;position:fixed;z-index: 99999; width:100%">
 				 success : function(response) {
 					 var Risposta=response[0];
 					 if(Risposta){
-						 alertSuccesso();
-						 
+						 if(response[1]){
+							 document.getElementById("ifRicarica").innerHTML= true;
+				            }
 					 }
 					 else{
 						 apriFormAggiunta();
-						 alertInsuccesso();
 					 }
 				 },
+				 error : function(jqXHR, textStatus, errorThrown) {
+
+						$(document.body).html(jqXHR.responseText);
+
+					},
 			});	
 		}
 			
@@ -618,14 +623,14 @@ style="display: none;position:fixed;z-index: 99999; width:100%">
 					success : function(response) {
 						var booleanRisposta = response[0];
 						if (booleanRisposta == true) {
-							alertSuccesso("Rimozione malattia avvenuta con successo.");
+		
 						} else {
 							
 							console.log("problema rimozione ferie "
 									+ dataIniziale + " " + dataFinale
 									+ " di " + email);
 							apriFormRimozione(email);
-							alertInsuccesso("Rimozione malattia non avvenuta a causa di un errore imprevisto.");
+							//alertInsuccesso("Rimozione malattia non avvenuta a causa di un errore imprevisto.");
 						}
 					},
 					
@@ -637,6 +642,13 @@ style="display: none;position:fixed;z-index: 99999; width:100%">
 				});
 	}
 
+			</script>
+			<script>
+			function ricaricaPagina(){
+				
+				window.location.replace("PeriodiDiMalattiaServlet?coglione");
+				
+			}
 			</script>
 			<script>
 			

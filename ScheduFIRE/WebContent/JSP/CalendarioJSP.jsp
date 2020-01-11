@@ -235,7 +235,15 @@
 
 	<!-- START: script per la funzione dayClicked() -->
 	<script>
-	<%if (GiornoLavorativo.isLavorativo(data)) {%>
+	<%if (request.getParameter("giorno")!=null){
+	%>
+	$( document ).ready(function() {
+	    dayClicked(<%=request.getParameter("giorno")%>);
+	    imgMoonSun();
+	});
+		
+	<%
+	}else if (GiornoLavorativo.isLavorativo(data)) {%>
 		$( document ).ready(function() {
 		    dayClicked(<%=giorno%>);
 		    imgMoonSun();

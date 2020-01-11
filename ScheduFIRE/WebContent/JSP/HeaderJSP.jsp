@@ -14,7 +14,7 @@
   <form action="HomeCTServlet" method="POST">
   <a><button class="round"><img src="IMG/logoScheduFIRE.png" class="logo">
   </button></a></form><%} else {
-	  %>   <a><button class="round"><img src="IMG/logoScheduFIRE.png" class="logo"></button></a>
+	  %>   <a><div class="round"><img src="IMG/logoScheduFIRE.png" class="logo"></div></a>
  <%} if(ruolo!= null){
 	  %>	
  	<div class="rf">
@@ -35,7 +35,7 @@
   	<span class="bdgdel"><button type="submit" class="nn" id="rimuoviNotifica" onClick='rimuoviNotifica("<%=note.get(i).getId()%>")'><img src="IMG/delete.png" class="del"></button></span>
   
   <form action="<%=note.get(i).getPath() %>" method="POST">
-  	<button class="ntf <% if(note.get(i).getSeverita()==1){%>gr<%}else{ if(note.get(i).getSeverita()==2){%>yl<%}else{%>rd<%}}%>"><%=note.get(i).getTesto() %><%=note.get(i).getId() %></button>
+  	<button class="ntf <% if(note.get(i).getSeverita()==1){%>gr<%}else{ if(note.get(i).getSeverita()==2){%>yl<%}else{%>rd<%}}%>"><%=note.get(i).getTesto() %></button>
   </form>
   </div> 
   <%} %> 

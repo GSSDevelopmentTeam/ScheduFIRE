@@ -318,36 +318,52 @@ public class Util {
 	}
 
 
-	public static void isAutenticato(HttpServletRequest request) throws ScheduFIREException {
-		if(request.getSession().getAttribute("ruolo")==null)
-			throw new ScheduFIREException("&Egrave; richiesta l'autenticazione per poter accedere alle funzionalit&agrave; del sito.");
-
-	}
-
-	public static void isCapoTurno(HttpServletRequest request) throws ScheduFIREException, AutenticazioneException {
+	public static void isAutenticato(HttpServletRequest request) throws AutenticazioneException {
 		if(request.getSession(false)==null) {
 			request.getSession().invalidate();
 			throw new AutenticazioneException("Richiesta l'autenticazione per poter accedere alle funzionalit&agrave; del sito.");
 
 		}
-		else if(request.getSession().getAttribute("ruolo")==null) {
+		if(request.getSession().getAttribute("ruolo")==null)
+			throw new AutenticazioneException("&Egrave; richiesta l'autenticazione per poter accedere alle funzionalit&agrave; del sito.");
+		
+		if(request.getSession().getAttribute("notifiche")==null) {
 			request.getSession().invalidate();
 			throw new AutenticazioneException("Richiesta l'autenticazione per poter accedere alle funzionalit&agrave; del sito.");
 		
-		}else {
-			String ruolo=(String)request.getSession().getAttribute("ruolo");
-			if(!ruolo.equals("capoturno")) {
-				request.getSession().invalidate();
-				throw new AutenticazioneException("Devi essere capoturno per poter accedere a questa funzionalit&agrave;");
-			}
 		}
+
+	}
+
+	public static void isCapoTurno(HttpServletRequest request) throws AutenticazioneException {
+		if(request.getSession(false)==null) {
+			request.getSession().invalidate();
+			throw new AutenticazioneException("Richiesta l'autenticazione per poter accedere alle funzionalit&agrave; del sito.");
+
+		}
+		if(request.getSession().getAttribute("ruolo")==null) {
+			request.getSession().invalidate();
+			throw new AutenticazioneException("Richiesta l'autenticazione per poter accedere alle funzionalit&agrave; del sito.");
+
+		}
+		String ruolo=(String)request.getSession().getAttribute("ruolo");
+		if(!ruolo.equals("capoturno")) {
+			request.getSession().invalidate();
+			throw new AutenticazioneException("Devi essere capoturno per poter accedere a questa funzionalit&agrave;");
+		}
+		if(request.getSession().getAttribute("notifiche")==null) {
+			request.getSession().invalidate();
+			throw new AutenticazioneException("Richiesta l'autenticazione per poter accedere alle funzionalit&agrave; del sito.");
+		
+		}
+
 	}
 
 
 
 
 	/**
-	 * Verifica se sono la una delle due date passate è il primo giorno lavorativo dell'anno, se lo è cancella dal database
+	 * Verifica se una delle due date passate è il primo giorno lavorativo dell'anno, se lo è cancella dal database
 	 * il calendario dell'anno precedente e aggiorna le ferie ai vigili 
 	 * @param diurnoDate il giorno lavorativo diurno
 	 * @param notturnoDate il giorno lavorativo notturno
