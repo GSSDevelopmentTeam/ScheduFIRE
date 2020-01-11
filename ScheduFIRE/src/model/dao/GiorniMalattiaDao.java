@@ -22,12 +22,6 @@ import model.bean.GiorniMalattiaBean;
 
 public class GiorniMalattiaDao {
 
-	public GiorniMalattiaDao() {
-		// TODO Auto-generated constructor stub
-	}
-
-	
-	
 	/**
      * Metodo per creare una connessione sul DB MySQL
      * @param malattia , è un oggetto di tipo GiorniMalattiaBean

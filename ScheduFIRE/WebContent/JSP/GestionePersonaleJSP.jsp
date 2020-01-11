@@ -62,6 +62,9 @@ h4{color: #B60000;}
 		src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 
 	<script type="text/javascript">
+	$(document).ready(function(){
+		$("#TitleHead").text("Gestione Personale");
+	});
 	
 		var nome = [];
 		var cognome = [];
@@ -279,7 +282,7 @@ h4{color: #B60000;}
 					onmouseout="this.src='IMG/arrow/up-arrow-p.png'" /></a>
 	
 		<br>
-		<h2 id="titolo">Gestione Personale</h2>
+		<h2 id="titolo"></h2>
 
 		<form id="ordinamento" action="./GestionePersonaleServlet">
 			<div id="divOrdinamento">

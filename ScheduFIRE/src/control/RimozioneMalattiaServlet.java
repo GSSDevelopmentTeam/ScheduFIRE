@@ -56,6 +56,9 @@ public class RimozioneMalattiaServlet extends HttpServlet {
 				Date dataFine = null;
 				boolean rimozione = false;
 				
+				boolean aggiunta1 = false;
+				boolean aggiunta2 = false;
+				
 				
 				//Ottenimento parametri
 				emailVF = request.getParameter("emailVF");
@@ -119,10 +122,14 @@ public class RimozioneMalattiaServlet extends HttpServlet {
 						
 						//Malattie da non rimuovere
 						if(iniziale != null) {
-							GiorniMalattiaDao.addMalattia(iniziale.getDataInizio(), Date.valueOf(dataInizio.toLocalDate().plusDays(-1)), iniziale.getEmailCT(), iniziale.getEmailVF());
+							aggiunta1 = GiorniMalattiaDao.addMalattia(iniziale.getDataInizio(), Date.valueOf(dataInizio.toLocalDate().plusDays(-1)), iniziale.getEmailCT(), iniziale.getEmailVF());
 						}
 						if(finale != null) {
-							GiorniMalattiaDao.addMalattia(Date.valueOf(dataFine.toLocalDate().plusDays(1)), finale.getDataFine(), finale.getEmailCT(), finale.getEmailVF());
+							aggiunta2 = GiorniMalattiaDao.addMalattia(Date.valueOf(dataFine.toLocalDate().plusDays(1)), finale.getDataFine(), finale.getEmailCT(), finale.getEmailVF());
+						}
+						
+						if(aggiunta1 != true || aggiunta2 != true) {
+							throw new ScheduFIREException("Impossibile rimuovere un perodo di malattia a causa di un problema imprevisto");
 						}
 					
 						//Rimozione giorni malattia selezionati
