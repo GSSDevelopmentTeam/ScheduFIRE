@@ -122,10 +122,20 @@ public class RimozioneMalattiaServlet extends HttpServlet {
 						
 						//Malattie da non rimuovere
 						if(iniziale != null) {
-							aggiunta1 = GiorniMalattiaDao.addMalattia(iniziale.getDataInizio(), Date.valueOf(dataInizio.toLocalDate().plusDays(-1)), iniziale.getEmailCT(), iniziale.getEmailVF());
+							GiorniMalattiaBean inizialeBean = new GiorniMalattiaBean();
+							inizialeBean.setDataInizio(iniziale.getDataInizio());
+							inizialeBean.setDataFine(Date.valueOf(dataInizio.toLocalDate().plusDays(-1)));
+							inizialeBean.setEmailCT(iniziale.getEmailCT());
+							inizialeBean.setEmailVF(iniziale.getEmailVF());
+							aggiunta1 = GiorniMalattiaDao.addMalattia(inizialeBean);
 						}
 						if(finale != null) {
-							aggiunta2 = GiorniMalattiaDao.addMalattia(Date.valueOf(dataFine.toLocalDate().plusDays(1)), finale.getDataFine(), finale.getEmailCT(), finale.getEmailVF());
+							GiorniMalattiaBean finaleBean = new GiorniMalattiaBean();
+							finaleBean.setDataInizio(Date.valueOf(dataFine.toLocalDate().plusDays(1)));
+							finaleBean.setDataFine(finale.getDataFine());
+							finaleBean.setEmailCT(finale.getEmailCT());
+							finaleBean.setEmailVF(finale.getEmailVF());
+							aggiunta2 = GiorniMalattiaDao.addMalattia(finaleBean);
 						}
 						
 						if(aggiunta1 != true || aggiunta2 != true) {
