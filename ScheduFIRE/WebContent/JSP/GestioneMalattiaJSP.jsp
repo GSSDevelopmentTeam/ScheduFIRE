@@ -44,7 +44,7 @@ min-width: 265px;
 	<div class="modal fade" id="aggiungiMalattia" tabindex="-1" role="dialog"
 		aria-labelledby="exampleModalCenterTitle" aria-hidden="true" style="display: none">
 		<div class="modal-dialog modal-dialog-centered" role="document">
-			<div class="modal-content contenutiModal" >
+			<div class="modal-content contenutiModal" style="min-height: 700px;" >
 				<div class="modal-header">
 					<h5 class="modal-title" id="titoloAggiuntaMalattia"
 						>Aggiunta malattia</h5>
