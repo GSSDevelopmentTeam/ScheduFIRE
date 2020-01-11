@@ -29,12 +29,13 @@
 }
 </style>
 <body>
-<div id="sali"></div>
+	<div id="sali"></div>
 	<!-- Barra Navigazione -->
 	<jsp:include page="HeaderJSP.jsp" />
-<a href="#sali" class=" back-up"><img src="IMG/arrow/up-arrow-p.png" style="margin-left: 5px;"
-					onmouseover="this.src='IMG/arrow/up-arrow-d.png'"
-					onmouseout="this.src='IMG/arrow/up-arrow-p.png'" /></a>
+	<a href="#sali" class=" back-up"><img
+		src="IMG/arrow/up-arrow-p.png" style="margin-left: 5px;"
+		onmouseover="this.src='IMG/arrow/up-arrow-d.png'"
+		onmouseout="this.src='IMG/arrow/up-arrow-p.png'" /></a>
 
 	<section>
 
@@ -63,6 +64,7 @@
 					<option value="nome" selected>Nome</option>
 					<option value="cognome">Cognome</option>
 					<option value="disponibilita">Disponibilità</option>
+					<option value="grado">Grado</option>
 
 
 					<%
@@ -71,6 +73,8 @@
 					<option value="nome">Nome</option>
 					<option value="cognome" selected>Cognome</option>
 					<option value="disponibilita">Disponibilità</option>
+					<option value="grado">Grado</option>
+
 
 					<%
 						} else if (ordinamento.equals("disponibilita")) {
@@ -78,6 +82,18 @@
 					<option value="nome">Nome</option>
 					<option value="cognome">Cognome</option>
 					<option value="disponibilita" selected>Disponibilità</option>
+					<option value="grado">Grado</option>
+
+
+
+					<%
+						} else if (ordinamento.equals("grado")) {
+							%>
+					<option value="nome">Nome</option>
+					<option value="cognome">Cognome</option>
+					<option value="disponibilita">Disponibilità</option>
+					<option value="grado" selected>Grado</option>
+
 
 
 					<%
@@ -88,6 +104,8 @@
 					<option value="nome">Nome</option>
 					<option value="cognome" selected>Cognome</option>
 					<option value="disponibilita">Disponibilità</option>
+					<option value="grado">Grado</option>
+
 
 					<%
 						}
@@ -136,12 +154,12 @@
 
 						</div>
 						<div class="modal-footer">
-							<button type="button" class="btn btn-outline-danger"
-								data-dismiss="modal">Annulla</button>
-
-
+						
 							<button type="submit" class="btn btn-outline-success"
 								id="bottoneConferma" disabled>Conferma</button>
+								
+							<button type="button" class="btn btn-outline-danger"
+								data-dismiss="modal">Annulla</button>
 
 						</div>
 					</div>
@@ -163,6 +181,12 @@
 		%>
 
 		<div class="table-responsive">
+		
+		<div id="capo"></div>
+		<div class="d-flex justify-content-center">		
+		<a href="#auto" class="btn btn-outline-secondary" style="margin: 3px;">Autisti</a>
+		<a href="#vigile" class="btn btn-outline-secondary" style="margin: 3px;">Vigili</a>
+	</div>
 
 
 			<h4 class="d-flex justify-content-center" id="inizio"
@@ -213,8 +237,14 @@
 									}
 					%>
 
-					<tr class="<%=!disponibilita.equals("Disponibile")?"table-warning":"" %>">
-						<td class="text-center"><img src="Grado/<%=vigile.getMansione().equals("Capo Squadra") && vigile.getGrado().equals("Esperto")?"EspertoCapoSquadra":vigile.getGrado() %>.png" title="<%=vigile.getGrado()%>" onerror="this.parentElement.innerHTML='Non disponibile';"></td>
+					<tr
+						class="<%=!disponibilita.equals("Disponibile") ? "table-warning" : ""%>">
+						<td class="text-center"><img
+							src="Grado/<%=vigile.getMansione().equals("Capo Squadra") && vigile.getGrado().equals("Esperto")
+								? "EspertoCapoSquadra"
+								: vigile.getGrado()%>.png"
+							title="<%=vigile.getGrado()%>"
+							onerror="this.parentElement.innerHTML='Non disponibile';"></td>
 						<td class="text-center"><strong><%=vigile.getNome()%></strong></td>
 						<td class="text-center"><strong><%=vigile.getCognome()%></strong></td>
 						<td class="text-center"><%=vigile.getEmail()%></td>
@@ -231,7 +261,13 @@
 				</tbody>
 
 			</table>
-
+			
+			<div id="auto"></div>
+			<div class="d-flex justify-content-center">		
+		<a href="#capo"	class="btn btn-outline-secondary" style="margin: 3px;">Capi Squadra</a>
+		<a href="#vigile" class="btn btn-outline-secondary" style="margin: 3px;">Vigili</a>
+	</div>
+	
 			<h4 class="d-flex justify-content-center" id="inizio"
 				style="margin-top: 1%; color: #B60000 !Important">Autisti</h4>
 
@@ -267,10 +303,12 @@
 									}
 					%>
 
-					<tr class="<%=!disponibilita.equals("Disponibile")?"table-warning":"" %>">
+					<tr
+						class="<%=!disponibilita.equals("Disponibile") ? "table-warning" : ""%>">
 						<td class="text-center"><img
-							src="Grado/<%=vigile.getGrado()%>.png" title="<%=vigile.getGrado() %>" 
-            onerror="this.parentElement.innerHTML='Non disponibile';"></td>
+							src="Grado/<%=vigile.getGrado()%>.png"
+							title="<%=vigile.getGrado()%>"
+							onerror="this.parentElement.innerHTML='Non disponibile';"></td>
 						<td class="text-center"><strong><%=vigile.getNome()%></strong></td>
 						<td class="text-center"><strong><%=vigile.getCognome()%></strong></td>
 						<td class="text-center"><%=vigile.getEmail()%></td>
@@ -288,6 +326,11 @@
 
 			</table>
 
+			<div id="vigile"></div>
+			<div class="d-flex justify-content-center">		
+		<a href="#capo"	class="btn btn-outline-secondary" style="margin: 3px;">Capi Squadra</a> 
+		<a href="#auto" class="btn btn-outline-secondary" style="margin: 3px;">Autisti</a>
+	</div>
 			<h4 class="d-flex justify-content-center" id="inizio"
 				style="margin-top: 1%; color: #B60000 !Important">Vigili</h4>
 
@@ -327,7 +370,9 @@
 
 					<tr
 						class="<%=!disponibilita.equals("Disponibile") ? "table-warning" : ""%>">
-						<td class="text-center"><img src="Grado/<%=vigile.getGrado()%>.png" title="<%=vigile.getGrado() %>"
+						<td class="text-center"><img
+							src="Grado/<%=vigile.getGrado()%>.png"
+							title="<%=vigile.getGrado()%>"
 							onerror="this.parentElement.innerHTML='Non disponibile';"></td>
 						<td class="text-center"><strong><%=vigile.getNome()%></strong></td>
 						<td class="text-center"><strong><%=vigile.getCognome()%></strong></td>
@@ -385,7 +430,12 @@
 
 
 		<div class="table-responsive">
-
+		
+		<div id="capo"></div>
+			<div class="d-flex justify-content-center">
+		<a href="#auto" class="btn btn-outline-secondary" style="margin: 3px;">Autisti</a>
+		<a href="#vigile" class="btn btn-outline-secondary" style="margin: 3px;">Vigili</a>
+	</div>
 			<h4 class="d-flex justify-content-center" id="inizio"
 				style="margin-top: 0%; color: #B60000 !Important">Capi Squadra</h4>
 
@@ -420,8 +470,14 @@
 											squadra = componente.getTipologiaSquadra();
 									}
 					%>
-					<tr class="<%=!disponibilita.equals("Disponibile")?"table-warning":"" %>">
-						<td class="text-center"><img src="Grado/<%=vigile.getMansione().equals("Capo Squadra") && vigile.getGrado().equals("Esperto")?"EspertoCapoSquadra":vigile.getGrado() %>.png" title="<%=vigile.getGrado()%>" onerror="this.parentElement.innerHTML='Non disponibile';"></td>
+					<tr
+						class="<%=!disponibilita.equals("Disponibile") ? "table-warning" : ""%>">
+						<td class="text-center"><img
+							src="Grado/<%=vigile.getMansione().equals("Capo Squadra") && vigile.getGrado().equals("Esperto")
+								? "EspertoCapoSquadra"
+								: vigile.getGrado()%>.png"
+							title="<%=vigile.getGrado()%>"
+							onerror="this.parentElement.innerHTML='Non disponibile';"></td>
 						<td class="text-center"><strong><%=vigile.getNome()%></strong></td>
 						<td class="text-center"><strong><%=vigile.getCognome()%></strong></td>
 						<td class="text-center"><%=vigile.getEmail()%></td>
@@ -439,7 +495,12 @@
 				</tbody>
 
 			</table>
-
+			
+			<div id="auto"></div>
+			<div class="d-flex justify-content-center">		
+		<a href="#capo"	class="btn btn-outline-secondary" style="margin: 3px;">Capi Squadra</a> 
+		<a href="#vigile" class="btn btn-outline-secondary" style="margin: 3px;">Vigili</a>
+	</div>
 			<h4 class="d-flex justify-content-center" id="inizio"
 				style="margin-top: 1%; color: #B60000 !Important">Autisti</h4>
 
@@ -477,7 +538,9 @@
 
 					<tr
 						class="<%=!disponibilita.equals("Disponibile") ? "table-warning" : ""%>">
-						<td class="text-center"><img src="Grado/<%=vigile.getGrado()%>.png" title="<%=vigile.getGrado() %>"
+						<td class="text-center"><img
+							src="Grado/<%=vigile.getGrado()%>.png"
+							title="<%=vigile.getGrado()%>"
 							onerror="this.parentElement.innerHTML='Non disponibile';"></td>
 						<td class="text-center"><strong><%=vigile.getNome()%></strong></td>
 						<td class="text-center"><strong><%=vigile.getCognome()%></strong></td>
@@ -496,6 +559,11 @@
 
 			</table>
 
+			<div id="vigile"></div>
+			<div class="d-flex justify-content-center">		
+		<a href="#capo"	class="btn btn-outline-secondary" style="margin: 3px;">Capi Squadra</a> 
+		<a href="#auto" class="btn btn-outline-secondary" style="margin: 3px;">Autisti</a>
+	</div>
 			<h4 class="d-flex justify-content-center" id="inizio"
 				style="margin-top: 1%; color: #B60000 !Important">Vigili</h4>
 
@@ -533,7 +601,9 @@
 
 					<tr
 						class="<%=!disponibilita.equals("Disponibile") ? "table-warning" : ""%>">
-						<td class="text-center"><img src="Grado/<%=vigile.getGrado()%>.png" title="<%=vigile.getGrado()%>"
+						<td class="text-center"><img
+							src="Grado/<%=vigile.getGrado()%>.png"
+							title="<%=vigile.getGrado()%>"
 							onerror="this.parentElement.innerHTML='Non disponibile';"></td>
 						<td class="text-center"><strong><%=vigile.getNome()%></strong></td>
 						<td class="text-center"><strong><%=vigile.getCognome()%></strong></td>
@@ -572,7 +642,7 @@
 
 	</section>
 
-	
+
 
 
 	<script>

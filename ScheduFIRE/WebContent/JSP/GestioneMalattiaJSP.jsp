@@ -120,7 +120,9 @@ min-width: 265px;
 				</div>
 			</div>
 		</div>
+
 	</div>	
+
 
 		<!-- Modal di avviso aggiunta malattia-->
  <div class="modal fade" id="modalAvviso" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
@@ -131,8 +133,10 @@ min-width: 265px;
         <h4 class="modal-title text-center">Operazione effettuata con successo</h4>
       </div>
       <div class="modal-footer">
+
         <button type="button" class="btn btn-outline-success" 
         data-dismiss="modal" onClick="ricaricaPagina()">OK</button>
+
       </div>
     </div>
   </div>
@@ -187,6 +191,11 @@ min-width: 265px;
 	<!-- body aggiungi malattia -->
 	<div class="table-responsive" >
 	
+	<div id="capo"></div>	
+	<div class="d-flex justify-content-center">		 
+		<a href="#auto" class="btn btn-outline-secondary" style="margin: 3px;">Autisti</a>
+		<a href="#vigile" class="btn btn-outline-secondary" style="margin: 3px;">Vigili</a>
+	</div>
 	<h4 class="d-flex justify-content-center" id="inizio"
 		style="margin-top: 0%; color: #B60000 !Important ">Capi Squadra</h4>
 	
@@ -238,6 +247,12 @@ min-width: 265px;
 			
 			</table>
 			
+			
+				<div id="auto"></div>
+				<div class="d-flex justify-content-center">		
+		<a href="#capo"	class="btn btn-outline-secondary" style="margin: 3px;">Capi Squadra</a> 
+		<a href="#vigile" class="btn btn-outline-secondary" style="margin: 3px;">Vigili</a>
+	</div>
 			<h4 class="d-flex justify-content-center" id="inizio"
 		style="margin-top: 1%; color: #B60000 !Important ">Autisti</h4>
 
@@ -288,6 +303,11 @@ min-width: 265px;
 			
 			</table>
 			
+			<div id="vigile"></div>
+			<div class="d-flex justify-content-center">		
+		<a href="#capo"	class="btn btn-outline-secondary" style="margin: 3px;">Capi Squadra</a> 
+		<a href="#auto" class="btn btn-outline-secondary" style="margin: 3px;">Autisti</a>
+	</div>
 			<h4 class="d-flex justify-content-center" id="inizio"
 		style="margin-top: 1%; color: #B60000 !Important ">Vigili</h4>
 

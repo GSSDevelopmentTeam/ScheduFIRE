@@ -213,6 +213,8 @@ public class GeneraSquadreServlet extends HttpServlet {
 					nonDisponibile=true;
 			}
 			if(nonDisponibile) {
+				request.getSession().removeAttribute("squadraDiurno");
+				request.getSession().removeAttribute("squadraNotturno");
 				request.getRequestDispatcher("GeneraSquadreServlet").forward(request, response);
 				return;
 			}

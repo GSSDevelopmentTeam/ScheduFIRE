@@ -319,8 +319,19 @@ public class Util {
 
 
 	public static void isAutenticato(HttpServletRequest request) throws AutenticazioneException {
+		if(request.getSession(false)==null) {
+			request.getSession().invalidate();
+			throw new AutenticazioneException("Richiesta l'autenticazione per poter accedere alle funzionalit&agrave; del sito.");
+
+		}
 		if(request.getSession().getAttribute("ruolo")==null)
 			throw new AutenticazioneException("&Egrave; richiesta l'autenticazione per poter accedere alle funzionalit&agrave; del sito.");
+		
+		if(request.getSession().getAttribute("notifiche")==null) {
+			request.getSession().invalidate();
+			throw new AutenticazioneException("Richiesta l'autenticazione per poter accedere alle funzionalit&agrave; del sito.");
+		
+		}
 
 	}
 
@@ -342,7 +353,7 @@ public class Util {
 		}
 		if(request.getSession().getAttribute("notifiche")==null) {
 			request.getSession().invalidate();
-			throw new AutenticazioneException("\"Richiesta l'autenticazione per poter accedere alle funzionalit&agrave; del sito.");
+			throw new AutenticazioneException("Richiesta l'autenticazione per poter accedere alle funzionalit&agrave; del sito.");
 		
 		}
 
@@ -352,7 +363,7 @@ public class Util {
 
 
 	/**
-	 * Verifica se sono la una delle due date passate è il primo giorno lavorativo dell'anno, se lo è cancella dal database
+	 * Verifica se una delle due date passate è il primo giorno lavorativo dell'anno, se lo è cancella dal database
 	 * il calendario dell'anno precedente e aggiorna le ferie ai vigili 
 	 * @param diurnoDate il giorno lavorativo diurno
 	 * @param notturnoDate il giorno lavorativo notturno

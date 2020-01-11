@@ -4,7 +4,7 @@
 <script src="https:maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
 
 <div class="topnav" id="myTopnav">
-<a><button class="round"><img src="IMG/logoScheduFIRE.png" class="logo"></button></a>
+<a><div class="round"><img src="IMG/logoScheduFIRE.png" class="logo"></div></a>
  
  	
 </div>
