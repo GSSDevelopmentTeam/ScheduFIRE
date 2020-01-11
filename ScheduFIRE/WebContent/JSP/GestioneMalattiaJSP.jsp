@@ -128,7 +128,6 @@ min-width: 265px;
  <div class="modal fade" id="modalAvviso" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
   <div class="modal-dialog modal-sm modal-dialog-centered" role="document">
     <div class="modal-content" style="border :3px solid #5be94b;">
-		<p hidden="hidden" name="ricarica" id="ifRicarica"></p>
       <div class="modal-body" style="align:center;">
         <img src="IMG/fire.png" class="rounded mx-auto d-block">
         <h4 class="modal-title text-center">Operazione effettuata con successo</h4>
@@ -429,10 +428,16 @@ style="display: none;position:fixed;z-index: 99999; width:100%">
 						disallowLockDaysInRange : false,
 						showTooltip : false,
 						onError : function(error) {
-							
+							$("#messaggioMalattia1").text("Nel periodo selezionato alcuni giorni non sono di malattia.");
+							$("#messaggioMalattia1").attr("style","color:red");
 						},
 						onSelect : function() {
 							$('#bottoneRimuoviMalattia').prop("disabled", false);
+							var differenza = calcolaGiorniMalattia($("#dataInizio").val(),$("#dataFine").val());
+							
+							$("#messaggioMalattia1").text("Periodo selezionato correttamente.");
+							$("#messaggioMalattia1").attr("style","color:green");
+							$('#botAggiungiMalattia').prop("disabled",false);
 								},
 					});
 			
@@ -592,9 +597,6 @@ style="display: none;position:fixed;z-index: 99999; width:100%">
 				 success : function(response) {
 					 var Risposta=response[0];
 					 if(Risposta){
-						 if(response[1]){
-							 document.getElementById("ifRicarica").innerHTML= true;
-				            }
 					 }
 					 else{
 						 apriFormAggiunta();
@@ -625,7 +627,7 @@ style="display: none;position:fixed;z-index: 99999; width:100%">
 					async : true,
 					success : function(response) {
 						var booleanRisposta = response[0];
-						if (booleanRisposta == true) {
+						if (booleanRisposta == 'true') {
 		
 						} else {
 							
@@ -648,9 +650,7 @@ style="display: none;position:fixed;z-index: 99999; width:100%">
 			</script>
 			<script>
 			function ricaricaPagina(){
-				
 				window.location.replace("PeriodiDiMalattiaServlet?coglione");
-				
 			}
 			</script>
 			<script>
