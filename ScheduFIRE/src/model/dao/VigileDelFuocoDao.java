@@ -204,7 +204,7 @@ public class VigileDelFuocoDao {
 			throw new RuntimeException(e);
 		}
 	
-	}
+	} 
 	
 	/**
 	 * Si occupa dell'ottenimento di una collezione di VigileDelFuocoBean dal database

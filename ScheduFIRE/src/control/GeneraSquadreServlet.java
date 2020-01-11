@@ -9,18 +9,13 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
-
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-
-import org.json.JSONObject;
-
 import com.sendmail.SendMail;
-
 import model.bean.CapoTurnoBean;
 import model.bean.ComponenteDellaSquadraBean;
 import model.bean.VigileDelFuocoBean;
@@ -50,7 +45,7 @@ public class GeneraSquadreServlet extends HttpServlet {
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException,NotEnoughMembersException {
+	public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException,NotEnoughMembersException {
 		Util.isCapoTurno(request);
 		HttpSession sessione = request.getSession();
 		Date data=new Date(System.currentTimeMillis());
@@ -92,8 +87,10 @@ public class GeneraSquadreServlet extends HttpServlet {
 
 				sessione.removeAttribute("squadraDiurno");
 				sessione.removeAttribute("squadraNotturno");
-
-				response.sendRedirect("HomeCTServlet");
+				String path=request.getHeader("referer");
+				if(!path.contains("squadraSalvata")) 
+					path+="&squadraSalvata";
+				response.sendRedirect(path);
 				return;
 			}
 			else {
@@ -169,8 +166,8 @@ public class GeneraSquadreServlet extends HttpServlet {
 				//sessione.removeAttribute("squadraDiurno");
 				//sessione.removeAttribute("squadraNotturno");
 
-
-				response.sendRedirect("HomeCTServlet");
+				
+				response.sendRedirect("GeneraSquadreServlet?squadraSalvata");
 				return;
 
 
@@ -213,6 +210,8 @@ public class GeneraSquadreServlet extends HttpServlet {
 					nonDisponibile=true;
 			}
 			if(nonDisponibile) {
+				request.getSession().removeAttribute("squadraDiurno");
+				request.getSession().removeAttribute("squadraNotturno");
 				request.getRequestDispatcher("GeneraSquadreServlet").forward(request, response);
 				return;
 			}
@@ -299,12 +298,16 @@ public class GeneraSquadreServlet extends HttpServlet {
 		for(ComponenteDellaSquadraBean componente:listaNotturno) {
 			squadraNotturno.put(VigileDelFuocoDao.ottieni(componente.getEmailVF()), componente.getTipologiaSquadra());
 		}
+		
+		SendMail.sendMail(data, squadraDiurno, squadraNotturno);
+		
 		sessione.setAttribute("squadraDiurno", squadraDiurno);
 		sessione.setAttribute("squadraNotturno", squadraNotturno);
 		request.setAttribute("nonSalvata",true);
 		request.getRequestDispatcher("JSP/GestioneSquadreJSP.jsp").forward(request, response);
 
 	}
+	
 
 
 	//Trasforma l hashmap nei componenti della squadra
@@ -323,7 +326,7 @@ public class GeneraSquadreServlet extends HttpServlet {
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		doGet(request, response);
 	}
