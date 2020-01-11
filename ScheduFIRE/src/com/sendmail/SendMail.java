@@ -127,6 +127,7 @@ public class SendMail {
 		 * email=allEmail.getEmail();*/
 
 
+		/*
 		email.add("c.cipolletta2@studenti.unisa.it");
 		email.add("f.perillo11@studenti.unisa.it");
 		email.add("e.sottile@studenti.unisa.it");
@@ -135,7 +136,7 @@ public class SendMail {
 		email.add("a.giuliano21@studenti.unisa.it");
 		email.add("n.labanca3@studenti.unisa.it");
 		email.add("b.bruno4@studenti.unisa.it");
-
+		*/
 
 		//L'id del mittente
 		String from = "schedufire@gmail.com";
