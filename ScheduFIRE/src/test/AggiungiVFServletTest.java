@@ -18,6 +18,7 @@ import org.springframework.test.context.event.annotation.BeforeTestClass;
 import control.AggiungiVFServlet;
 import control.AutenticazioneException;
 import control.GeneraSquadreServlet;
+import control.ScheduFIREException;
 import model.bean.CapoTurnoBean;
 import model.bean.VigileDelFuocoBean;
 import model.dao.VigileDelFuocoDao;
@@ -58,11 +59,12 @@ class AggiungiVFServletTest {
 		request.getSession().setAttribute("capoturno", ct);
 		request.getSession().setAttribute("notifiche", "notifiche");
 		request.getSession().setAttribute("email", "capoturno");
-		servlet.doPost(request, response);
+	
 	}
 	
 	/**
 	 * Questo metodo testa il passaggio dei parametri alla Servlet
+	 * e i vari casi di aggiunta VF
 	 */
 	@Test
 	void passaggioParametrifailnome() throws ServletException, IOException {
@@ -78,7 +80,6 @@ class AggiungiVFServletTest {
 		request.addParameter("grado", "Qualificato");
 		request.addParameter("giorniFerieAnnoCorrente", "10");
 		request.addParameter("giorniFerieAnnoPrecedente", "5");
-		servlet.doPost(request, response);
 	}
 	@Test
 	void passaggioParametrifailcognome() throws ServletException, IOException {
@@ -94,7 +95,6 @@ class AggiungiVFServletTest {
 		request.addParameter("grado", "Qualificato");
 		request.addParameter("giorniFerieAnnoCorrente", "10");
 		request.addParameter("giorniFerieAnnoPrecedente", "5");
-		servlet.doPost(request, response);
 	}
 	@Test
 	void passaggioParametrifailmansione() throws ServletException, IOException {
@@ -110,7 +110,6 @@ class AggiungiVFServletTest {
 		request.addParameter("grado", "Qualificato");
 		request.addParameter("giorniFerieAnnoCorrente", "10");
 		request.addParameter("giorniFerieAnnoPrecedente", "5");
-		servlet.doPost(request, response);
 	}
 	@Test
 	void passaggioParametrifailgiorni() throws ServletException, IOException {
@@ -126,7 +125,6 @@ class AggiungiVFServletTest {
 		request.addParameter("grado", "Esperto");
 		request.addParameter("giorniFerieAnnoCorrente", "10");
 		request.addParameter("giorniFerieAnnoPrecedente", "5");
-		servlet.doPost(request, response);
 	}
 	
 	@Test
@@ -143,7 +141,6 @@ class AggiungiVFServletTest {
 		request.addParameter("grado", "Qualificato");
 		request.addParameter("giorniFerieAnnoCorrente", "10");
 		request.addParameter("giorniFerieAnnoPrecedente", "5");
-		servlet.doPost(request, response);
 	}	
 	@Test
 	void passaggioParametrifailcapo() throws ServletException, IOException {
@@ -159,7 +156,6 @@ class AggiungiVFServletTest {
 		request.addParameter("grado", " ");
 		request.addParameter("giorniFerieAnnoCorrente", "10");
 		request.addParameter("giorniFerieAnnoPrecedente", "5");
-		servlet.doPost(request, response);
 	}
 	@Test
 	void passaggioParametrifailcaposquadra() throws ServletException, IOException {
@@ -175,7 +171,6 @@ class AggiungiVFServletTest {
 		request.addParameter("grado", "Esperto");
 		request.addParameter("giorniFerieAnnoCorrente", "10");
 		request.addParameter("giorniFerieAnnoPrecedente", "5");
-		servlet.doPost(request, response);
 	}
 	
 	@Test
@@ -192,7 +187,6 @@ class AggiungiVFServletTest {
 		request.addParameter("grado", "Semplice");
 		request.addParameter("giorniFerieAnnoCorrente", "10");
 		request.addParameter("giorniFerieAnnoPrecedente", "5");
-		servlet.doPost(request, response);
 	}
 	
 	@Test
@@ -209,8 +203,7 @@ class AggiungiVFServletTest {
 		request.addParameter("mansione", "Autista");
 		request.addParameter("grado", "Esperto");
 		request.addParameter("giorniFerieAnnoCorrente", "10");
-		request.addParameter("giorniFerieAnnoPrecedente", "5");
-		servlet.doPost(request, response);
+		request.addParameter("giorniFerieAnnoPrecedente", "5");;
 	}
 	
 	@Test
@@ -221,14 +214,14 @@ class AggiungiVFServletTest {
 		request.getSession().setAttribute("capoturno", ct);
 		request.getSession().setAttribute("notifiche", "notifiche");
 		request.getSession().setAttribute("email", "capoturno");
-		request.addParameter("nome","Domenico");
-		request.addParameter("cognome", "Ariano");
-		request.addParameter("email", "giordano2.ariano");
+		request.addParameter("nome","Vincenzo");
+		request.addParameter("cognome", "Acanfora");
+		request.addParameter("email", "acanfora.vincenzo");
 		request.addParameter("mansione", "Capo Squadra");
 		request.addParameter("grado", "Esperto");
 		request.addParameter("giorniFerieAnnoCorrente", "10");
 		request.addParameter("giorniFerieAnnoPrecedente", "5");
-		servlet.doGet(request, response);
+		servlet.doPost(request, response);
 	}
 	
 	
