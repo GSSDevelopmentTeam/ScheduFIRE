@@ -21,12 +21,7 @@ public class CapoTurnoDao {
 	 * @return Un tipo CapoTurnoBean identificato da chiaveUsername, null altrimenti
 	 */
 	public static CapoTurnoBean ottieni(String chiaveUsername) {
-		
-		//controlli
-		if(chiaveUsername == null)
-			//lancio eccezione
-			;
-	
+
 		try(Connection con = ConnessioneDB.getConnection()) {
 				
 			// Esecuzione query
