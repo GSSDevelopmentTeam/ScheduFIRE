@@ -28,8 +28,6 @@ class GeneraSquadreServletTest {
 	VigileDelFuocoBean vigile;
 	CapoTurnoBean capoturno;
 
-	
-	
 	@BeforeEach
 	void setUp() {
 		servlet = new GeneraSquadreServlet();
