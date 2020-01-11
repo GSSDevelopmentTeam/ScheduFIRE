@@ -119,7 +119,6 @@ h2 {
 <input type="hidden" id="day" value="<%=giorno%>">
 <input type="hidden" id="night" value="<%=notte%>">
 
-		<h2 class="d-flex justify-content-center" id="inizio" style="margin-top: 3%">Gestione Squadre</h2>
 	<br>
 	<div class="d-flex justify-content-center">
 		<form action="GeneraSquadreServlet?salva=true" method=post>
@@ -541,6 +540,7 @@ h2 {
 
 	<script>
 	$(document).ready(function(){
+		$("#TitleHead").text("Gestione Squadre");
 		var day = $("#day").val();
 		var night =  $("#night").val();
 		console.log("giorno "+day+" notte "+night);
@@ -563,7 +563,7 @@ h2 {
 				"dataNotturno" : notte
 			},
 			success : function(response) {//Operazione da eseguire una volta terminata la chiamata alla servlet.
-				//	$(response).appendTo("#personale");
+					$(response).appendTo("#personale");
 
 			}
 		});

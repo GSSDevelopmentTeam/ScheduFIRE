@@ -43,7 +43,7 @@
 					onmouseout="this.src='IMG/arrow/up-arrow-p.png'" /></a>
 
 	<h2 class="d-flex justify-content-center" id="inizio"
-		style="margin-top: 3%; color: #B60000 !Important">Gestione Ferie</h2>
+		style="margin-top: 3%; color: #B60000 !Important"></h2>
 
 
 	<!-- form per l'ordinamento della lista dei VF-->
@@ -147,7 +147,7 @@
 		style="display: none">
 		<div class="modal-dialog modal-dialog-centered" role="document">
 			<div class="modal-content contenutiModal"
-				style="min-width: 550px; min-height: 670px;">
+				style="min-height: 670px;">
 				<div class="modal-header">
 					<h5 class="modal-title" id="titoloAggiuntaFerie">Aggiunta
 						ferie</h5>
@@ -517,7 +517,9 @@
 
 
 	<script>
-	
+	$(document).ready(function(){
+		$("#TitleHead").text("Gestione Ferie");
+	});
 
 	var picker = new Litepicker(
 			{
@@ -530,7 +532,7 @@
 				numberOfColumns : 1,
 				inlineMode : true,
 				minDate : new Date(),
-				disallowLockDaysInRange : true,
+				disallowLockDaysInRange : false,
 				showTooltip : false,
 				onError : function(error) {
 					alertInsuccesso("Nel periodo selezionato risultano già dei giorni di ferie.");
@@ -591,9 +593,6 @@
 						} else {
 							$("#messaggioFerie1").text(
 									"Periodo selezionato correttamente.");
-							$("#messaggioFerie2").text(
-									"Hai selezionato " + differenza
-											+ " giorni di ferie.");
 							$("#messaggioFerie1").attr("style",
 									"color:green");
 							$("#messaggioFerie2").attr("style",

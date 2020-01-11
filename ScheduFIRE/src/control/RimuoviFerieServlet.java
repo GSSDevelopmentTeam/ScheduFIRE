@@ -31,11 +31,11 @@ public class RimuoviFerieServlet extends HttpServlet {
         super();
     }
 
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		doPost(request, response);
 	}
 
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		Util.isCapoTurno(request);
 		//Istanziazione ed inizializzazione variabili
 		Date dataInizio = null;
@@ -46,7 +46,7 @@ public class RimuoviFerieServlet extends HttpServlet {
 		//Ottenimento parametri
 		emailVF = request.getParameter("email");
 		String dataIniz = request.getParameter("dataIniziale");
-		String dataFin = request.getParameter("dataFinale");
+		String dataFin = request.getParameter("dataFinale"); 
 		
 		int annoIniz = Integer.parseInt(dataIniz.substring(6, 10));
 		int meseIniz = Integer.parseInt(dataIniz.substring(3, 5));
@@ -65,7 +65,7 @@ public class RimuoviFerieServlet extends HttpServlet {
 		
 		FerieBean iniziale = null;
 		FerieBean finale = null;
-		
+		 
 		//Controllo del periodo di Ferie mediante metodo della classe FerieDao
 		List<FerieBean> ferie = FerieDao.ferieInRange(dataInizio, dataFine, emailVF);
 		
@@ -74,7 +74,7 @@ public class RimuoviFerieServlet extends HttpServlet {
 		for(FerieBean f : ferie) {
 			System.out.println(f.getDataInizio() + " " + f.getDataFine());
 		}
-		
+	
 		//Istanziazione FerieBean iniziale
 		if(ferie.size() > 0 && !ferie.get(0).getDataInizio().toLocalDate().equals(dataInizio.toLocalDate())) {
 			FerieBean f = ferie.get(0);

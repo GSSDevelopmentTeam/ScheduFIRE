@@ -22,15 +22,9 @@ import model.bean.GiorniMalattiaBean;
 
 public class GiorniMalattiaDao {
 
-	public GiorniMalattiaDao() {
-		// TODO Auto-generated constructor stub
-	}
-
-	
-	
 	/**
      * Metodo per creare una connessione sul DB MySQL
-     * @param malattia , è un oggetto di tipo GiorniMalattiaBean
+     * @param malattia , ï¿½ un oggetto di tipo GiorniMalattiaBean
      *  @return true se l'operazione va a buon fine, false altrimenti.
      */
 	 public static boolean addMalattia(GiorniMalattiaBean malattia) {
@@ -71,44 +65,6 @@ public class GiorniMalattiaDao {
 			return aggiunta;
 		}
 	 
-	 
-	 
-		 public static boolean addMalattia(Date dataInizio, Date dataFine, String emailCT, String emailVF) {
-			 GiorniMalattiaBean malattia = new GiorniMalattiaBean(0, dataInizio, dataFine, emailCT, emailVF);
-			 boolean aggiunta = false;
-			 PreparedStatement ps = null;
-			 ResultSet res = null;
-			 
-			 String query = "INSERT INTO schedufire.malattia (dataInizio, dataFine, emailCT, emailVF) "
-	                 +"values(?, ?, ?, ?);";
-		
-			 try {
-					Connection con = null;
-			 
-			 try{
-				con = ConnessioneDB.getConnection();
-				// Esecuzione query
-					ps = con.prepareStatement(query);
-					
-					ps.setDate(1, malattia.getDataInizio());
-					ps.setDate(2, malattia.getDataFine());
-					ps.setString(3, malattia.getEmailCT());
-					ps.setString(4, malattia.getEmailVF());
-				    res = ps.getResultSet();
-				    
-				    if(ps.executeUpdate() > 0) 
-				    	aggiunta = true;
-				    con.commit();
-			 }finally {
-						ConnessioneDB.releaseConnection(con);
-					}
-				}catch(SQLException e) {
-					e.printStackTrace();
-				}
-				
-				return aggiunta;
-			}
-	  
 	 public static List<GiorniMalattiaBean> ottieniMalattie(String email) {
 			
 			String emailVF;
@@ -210,7 +166,7 @@ public class GiorniMalattiaDao {
 			boolean rimozione = false;
 			PreparedStatement ps;
 			
-			String rimozioneMalattiaSQL = "DELETE FROM schedufire.malattia WHERE (emailVF = ? AND dataInizio = ? AND dataFine = ?);";
+			String rimozioneMalattiaSQL = "DELETE FROM Malattia WHERE (emailVF = ? AND dataInizio = ? AND dataFine = ?);";
 			
 			try{
 				Connection con=null;

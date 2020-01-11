@@ -15,11 +15,12 @@
   <a><button class="round"><img src="IMG/logoScheduFIRE.png" class="logo">
   </button></a></form><%} else {
 	  %>   <a><div class="round"><img src="IMG/logoScheduFIRE.png" class="logo"></div></a>
- <%} if(ruolo!= null){
-	  %>	
- 	<div class="rf">
- 		
- 		<% if(ruolo.equalsIgnoreCase("capoturno")){ 
+ <%}%>
+ 
+ <div class=" titleH" id="TitleHead"></div>
+ <div class="rf">
+ <%if(ruolo!= null){  
+	 if(ruolo.equalsIgnoreCase("capoturno")){ 
  		
 	Notifiche nt = (Notifiche) session.getAttribute("notifiche");
 	List<Notifica> note = nt.getListaNotifiche();

@@ -31,30 +31,6 @@ import model.dao.*;
  */
 public class Util {
 
-	/**
-	 * Il metodo codifica la stringa passata come parametro in Base64.
-	 * @param pwd la stringa da codificare
-	 * @return la stringa codificata
-	 * @see Base64.Encoder
-	 */
-	public static String codificaPwd(String pwd){
-
-		String pwdCodificata = Base64.getEncoder().encodeToString(pwd.getBytes());
-		return pwdCodificata;
-	} 
-
-	/**
-	 * Il metodo decodifica una stringa codificata in Base64.
-	 * @param pwd_Cod la stringa da decodificare
-	 * @return la stringa decidificata
-	 * @see Base64.Decoder
-	 */
-	public static String decodificaPwd(String pwd_Cod){
-
-		byte[] ByteDecodificati = Base64.getDecoder().decode(pwd_Cod);
-		String pwdDecodificata = new String(ByteDecodificati);
-		return pwdDecodificata;
-	} 
 
 	public static List<ComponenteDellaSquadraBean> generaSquadra(Date data) throws NotEnoughMembersException {
 		//Prendiamo i vigili disponibili
@@ -327,11 +303,7 @@ public class Util {
 		if(request.getSession().getAttribute("ruolo")==null)
 			throw new AutenticazioneException("&Egrave; richiesta l'autenticazione per poter accedere alle funzionalit&agrave; del sito.");
 		
-		if(request.getSession().getAttribute("notifiche")==null) {
-			request.getSession().invalidate();
-			throw new AutenticazioneException("Richiesta l'autenticazione per poter accedere alle funzionalit&agrave; del sito.");
-		
-		}
+
 
 	}
 

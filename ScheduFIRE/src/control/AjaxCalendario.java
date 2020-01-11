@@ -36,7 +36,8 @@ public class AjaxCalendario extends HttpServlet{
 	
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		Util.isCapoTurno(request);
+		Util.isAutenticato(request);
+		
 		
 		String giornostr = request.getParameter("giorno").trim();
 		String mesestr = request.getParameter("mese").trim();
@@ -122,7 +123,7 @@ public class AjaxCalendario extends HttpServlet{
  
             //Se � ieri, quindi il giorno cliccato precede di 1 giorno oggi e sono meno delle 7 59, 
             // quindi ancora durante il turno notturno, posso modificarlo
-            if(giornoCliccatoLD.compareTo(ora.toLocalDate())==-1 && ora.getHour()<=7 && ora.getMinute()<=59) {
+            if(giornoCliccatoLD.compareTo(ora.toLocalDate().plusDays(-1))==0 && ora.getHour()<=7 && ora.getMinute()<=59) {
  
                 isModificabile=true;
             }
