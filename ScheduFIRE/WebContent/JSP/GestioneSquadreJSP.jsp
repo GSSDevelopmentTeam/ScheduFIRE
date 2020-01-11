@@ -563,7 +563,7 @@ h2 {
 				"dataNotturno" : notte
 			},
 			success : function(response) {//Operazione da eseguire una volta terminata la chiamata alla servlet.
-				//	$(response).appendTo("#personale");
+					$(response).appendTo("#personale");
 
 			}
 		});
