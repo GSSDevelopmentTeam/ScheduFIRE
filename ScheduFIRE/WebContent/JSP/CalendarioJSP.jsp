@@ -45,7 +45,7 @@
 	<!-- Barra Navigazione -->
 	<jsp:include page="HeaderJSP.jsp" />
 	<h2 class="modal-title" id="titolo">
-	Calendario</h2>
+	</h2>
 					
 	<!-- START: Container per calendario e schedulazione -->
 	<div class="containerAll" id="inizio">
