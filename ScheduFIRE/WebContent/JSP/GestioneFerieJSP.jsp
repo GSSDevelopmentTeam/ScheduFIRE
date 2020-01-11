@@ -43,7 +43,7 @@
 					onmouseout="this.src='IMG/arrow/up-arrow-p.png'" /></a>
 
 	<h2 class="d-flex justify-content-center" id="inizio"
-		style="margin-top: 3%; color: #B60000 !Important">Gestione Ferie</h2>
+		style="margin-top: 3%; color: #B60000 !Important"></h2>
 
 
 	<!-- form per l'ordinamento della lista dei VF-->
@@ -147,7 +147,7 @@
 		style="display: none">
 		<div class="modal-dialog modal-dialog-centered" role="document">
 			<div class="modal-content contenutiModal"
-				style="min-width: 550px; min-height: 670px;">
+				style="min-height: 670px;">
 				<div class="modal-header">
 					<h5 class="modal-title" id="titoloAggiuntaFerie">Aggiunta
 						ferie</h5>
@@ -175,13 +175,13 @@
 				</div>
 
 				<div class="modal-footer">
-					<button type="button" class="btn btn-outline-danger"
-						data-dismiss="modal">Annulla</button>
-
-
+				
 					<button type="button" class="btn btn-outline-success"
 						id="bottoneAggiungiFerie" onclick="aggiungiFerie()"
 						data-dismiss="modal" disabled>Aggiungi ferie</button>
+						
+					<button type="button" class="btn btn-outline-danger"
+						data-dismiss="modal">Annulla</button>
 
 				</div>
 			</div>
@@ -225,13 +225,13 @@
 
 				</div>
 				<div class="modal-footer">
-					<button type="button" class="btn btn-outline-danger"
-						data-dismiss="modal">Annulla</button>
-
-
+				
 					<button type="button" class="btn btn-outline-success"
 						id="bottoneRimuoviFerie" onclick="rimuoviFerie()"
 						data-dismiss="modal" disabled>Rimuovi ferie</button>
+				
+					<button type="button" class="btn btn-outline-danger"
+						data-dismiss="modal">Annulla</button>
 
 				</div>
 			</div>
@@ -324,7 +324,11 @@
 
 
 	<div class="table-responsive">
-
+		<div id="capo"></div>
+		<div class="d-flex justify-content-center">		 
+		<a href="#auto" class="btn btn-outline-secondary" style="margin: 3px;">Autisti</a>
+		<a href="#vigile" class="btn btn-outline-secondary" style="margin: 3px;">Vigili</a>
+	</div>
 		<h4 class="d-flex justify-content-center"
 			style="margin-top: 0%; color: #B60000 !Important">Capi Squadra</h4>
 
@@ -379,7 +383,11 @@
 			</tbody>
 
 		</table>
-
+		<div id="auto"></div>
+		<div class="d-flex justify-content-center">		
+		<a href="#capo"	class="btn btn-outline-secondary" style="margin: 3px;">Capi Squadra</a> 
+		<a href="#vigile" class="btn btn-outline-secondary" style="margin: 3px;">Vigili</a>
+	</div>
 		<h4 class="d-flex justify-content-center" id="inizio"
 			style="margin-top: 1%; color: #B60000 !Important">Autisti</h4>
 
@@ -432,7 +440,13 @@
 			</tbody>
 
 		</table>
-
+		
+		<div id="vigile"></div>
+		<div class="d-flex justify-content-center">		
+		<a href="#capo"	class="btn btn-outline-secondary" style="margin: 3px;">Capi Squadra</a> 
+		<a href="#auto" class="btn btn-outline-secondary" style="margin: 3px;">Autisti</a>
+	</div>
+		
 		<h4 class="d-flex justify-content-center" id="inizio"
 			style="margin-top: 1%; color: #B60000 !Important">Vigili</h4>
 
@@ -503,7 +517,9 @@
 
 
 	<script>
-	
+	$(document).ready(function(){
+		$("#TitleHead").text("Gestione Ferie");
+	});
 
 	var picker = new Litepicker(
 			{
@@ -516,7 +532,7 @@
 				numberOfColumns : 1,
 				inlineMode : true,
 				minDate : new Date(),
-				disallowLockDaysInRange : true,
+				disallowLockDaysInRange : false,
 				showTooltip : false,
 				onError : function(error) {
 					alertInsuccesso("Nel periodo selezionato risultano già dei giorni di ferie.");
@@ -577,9 +593,6 @@
 						} else {
 							$("#messaggioFerie1").text(
 									"Periodo selezionato correttamente.");
-							$("#messaggioFerie2").text(
-									"Hai selezionato " + differenza
-											+ " giorni di ferie.");
 							$("#messaggioFerie1").attr("style",
 									"color:green");
 							$("#messaggioFerie2").attr("style",
@@ -911,12 +924,12 @@
 										+ email + "')");
 								console.log("inserite ferie " + dataIniziale
 										+ " " + dataFinale + " di " + email);
-								alertSuccesso("Inserimento ferie avvenuto con successo.");
 								var ferie = $(".listaVigili td:contains('" +email+ "')").next('td');
 					            ferie.text(response[2] + response[1]);
 					            if(response[3]){
 					            	window.location.replace("GestioneFerieServlet");
 					            }
+					            alertSuccesso("Inserimento ferie avvenuto con successo.");
 							} else {
 								console.log("problema inserimento ferie "
 										+ dataIniziale + " " + dataFinale

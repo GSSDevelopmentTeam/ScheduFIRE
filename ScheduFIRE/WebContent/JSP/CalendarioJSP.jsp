@@ -44,6 +44,8 @@
 <body>
 	<!-- Barra Navigazione -->
 	<jsp:include page="HeaderJSP.jsp" />
+	<h2 class="modal-title" id="titolo">
+	Calendario</h2>
 					
 	<!-- START: Container per calendario e schedulazione -->
 	<div class="containerAll" id="inizio">
@@ -233,14 +235,24 @@
 
 	<!-- START: script per la funzione dayClicked() -->
 	<script>
-	<%if (GiornoLavorativo.isLavorativo(data)) {%>
+	<%if (request.getParameter("giorno")!=null){
+	%>
+	$( document ).ready(function() {
+	    dayClicked(<%=request.getParameter("giorno")%>);
+	    imgMoonSun();
+	});
+		
+	<%
+	}else if (GiornoLavorativo.isLavorativo(data)) {%>
 		$( document ).ready(function() {
 		    dayClicked(<%=giorno%>);
 		    imgMoonSun();
 		});
 	<%}%>
 	
-		
+	$(document).ready(function(){
+		$("#TitleHead").text("Calendario");
+	});
 		
 		function dayClicked(input) {
 			

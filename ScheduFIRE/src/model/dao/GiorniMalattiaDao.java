@@ -21,8 +21,7 @@ import model.bean.GiorniMalattiaBean;
  * */
 
 public class GiorniMalattiaDao {
-	
-	
+
 	/**
      * Metodo per creare una connessione sul DB MySQL
      * @param malattia , � un oggetto di tipo GiorniMalattiaBean

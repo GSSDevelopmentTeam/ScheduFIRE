@@ -2,7 +2,9 @@
 * {
   box-sizing: border-box;
 }
-
+button{
+	outline: none!important;
+}
 .topnav {
   	background-color: #b60000;
     padding: 5px;
@@ -10,7 +12,14 @@
     height: 60px;
     
  }
-
+.titleH{
+	float:left;
+	color:white;
+	font-size: 45px;
+	margin-left:26%;
+	margin-bottom: 5px;
+	font-family: josefin sans, lato, raleway, montserrat, sans-serif!important;
+}
 .logo{
 	width: 140%;
 	height: 125%;
@@ -38,9 +47,8 @@
   font-size: 17px;
 }
 
-.topnav .round:hover {
-  background-color: #e1e1e1;
-  color: white;
+.topnav button.round:hover {
+  background-color: #dddddd;
 }
 
 

@@ -157,9 +157,14 @@ public class AggiungiMalattiaServlet extends HttpServlet {
 					JSONArray array = new JSONArray();
 					
 					if(x) {array.put(true);}
-					else
-						array.put(false);
-				   
+					else {
+						//array.put(false);
+						throw new ScheduFIREException("Impossibile inserire la malattia. Abbiamo riscuntrato un problema imprevisto");
+					}
+					
+				//parametro che indica se ricaricare la pagina ricaricare la pagina 	
+				array.put(componente);
+				
 				response.setContentType("application/json");
 				
 				response.getWriter().append(array.toString());

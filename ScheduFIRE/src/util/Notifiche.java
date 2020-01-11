@@ -149,8 +149,8 @@ public class Notifiche {
 			notifica += " per il periodo dal " + dateAssenza.get(0) + " al " +
 						dateAssenza.get(dateAssenza.size() - 1) + " causa ferie. E' stato" + 
 								" automaticamente sostituito.";
-		
-		listaNotifiche.add(new Notifica(3, notifica, "ModificaComposizioneSquadreServlet?tipologia=3&data=" + temp ,generateId()));
+		String giornoString=dateAssenza.get(0).substring(0,2);
+		listaNotifiche.add(new Notifica(3, notifica, "CalendarioServlet?giorno="+giornoString ,generateId()));
 	}
 	
 	private static void updateSquadrePerMalattia(Date inizio, Date fine, String email) {
@@ -190,7 +190,8 @@ public class Notifiche {
 						giorniMalattiaSchedulato.get(giorniMalattiaSchedulato.size() - 1) + " causa malattia. E' stato" + 
 						" automaticamente sostituito.";
 			//"GeneraSquadreServlet""ModificaComposizioneSquadreServlet?tipologia=3&data="+inizio
-			listaNotifiche.add(new Notifica(3, notificaMalattia, "GeneraSquadreServlet",generateId()));
+			String giornoString=giorniMalattiaSchedulato.get(0).substring(0,2);
+			listaNotifiche.add(new Notifica(3, notificaMalattia, "CalendarioServlet?giorno="+giornoString,generateId()));
 		}
 	
 	
