@@ -51,7 +51,7 @@ public class AggiungiVFServlet extends HttpServlet {
 		//Ottengo i dati del Capo Turno dalla sessione
 		CapoTurnoBean ct = (CapoTurnoBean) session.getAttribute("capoturno");
 		
-		//Ottenimento parametro email dalla richiesta
+		//Ottenimento parametro email dalla richiesta 
 		String email = request.getParameter("email");;
 		
 		//Controllo email
