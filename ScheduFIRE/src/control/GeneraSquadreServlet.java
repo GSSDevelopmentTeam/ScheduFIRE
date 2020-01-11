@@ -9,18 +9,13 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
-
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-
-import org.json.JSONObject;
-
 import com.sendmail.SendMail;
-
 import model.bean.CapoTurnoBean;
 import model.bean.ComponenteDellaSquadraBean;
 import model.bean.VigileDelFuocoBean;
@@ -50,7 +45,7 @@ public class GeneraSquadreServlet extends HttpServlet {
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException,NotEnoughMembersException {
+	public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException,NotEnoughMembersException {
 		Util.isCapoTurno(request);
 		HttpSession sessione = request.getSession();
 		Date data=new Date(System.currentTimeMillis());
@@ -331,7 +326,7 @@ public class GeneraSquadreServlet extends HttpServlet {
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		doGet(request, response);
 	}
