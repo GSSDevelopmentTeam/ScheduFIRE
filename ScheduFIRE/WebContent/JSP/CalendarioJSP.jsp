@@ -240,7 +240,9 @@
 		});
 	<%}%>
 	
-		
+	$(document).ready(function(){
+		$("#TitleHead").text("Calendario");
+	});
 		
 		function dayClicked(input) {
 			

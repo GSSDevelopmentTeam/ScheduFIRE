@@ -82,7 +82,6 @@ h2 {
 					onmouseover="this.src='IMG/arrow/up-arrow-d.png'"
 					onmouseout="this.src='IMG/arrow/up-arrow-p.png'" /></a>
      
-<h2 class="d-flex justify-content-center" style="margin-top: 3%">Modifica Squadre</h2>
 
 	<!-- SQUADRA DIURNA -->
 		<h2 class="d-flex justify-content-center" style="font-weight: bold; font-size: 36px;">
@@ -295,6 +294,10 @@ h2 {
 
 	<script>
 
+	$(document).ready(function(){
+		$("#TitleHead").text("Modifica Squadra");
+	});
+	
 	function apriFormVF(input,rule,sq,dt) {
 		//Chiamata ajax alla servlet PersonaleDisponibileAJAX
 		$.ajax({
