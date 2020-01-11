@@ -44,6 +44,8 @@
 <body>
 	<!-- Barra Navigazione -->
 	<jsp:include page="HeaderJSP.jsp" />
+	<h2 class="modal-title" id="titolo">
+	Calendario</h2>
 					
 	<!-- START: Container per calendario e schedulazione -->
 	<div class="containerAll" id="inizio">
@@ -248,7 +250,9 @@
 		});
 	<%}%>
 	
-		
+	$(document).ready(function(){
+		$("#TitleHead").text("Calendario");
+	});
 		
 		function dayClicked(input) {
 			

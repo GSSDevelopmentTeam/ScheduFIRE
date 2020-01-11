@@ -44,49 +44,26 @@ h2 {
 
 		<!-- Modal di avviso operazione effettuata correttamente-->
 		
-		 <!-- Modal -->
-  <div class="modal fade" id="myModal" role="dialog">
-    <div class="modal-dialog">
-    
-      <!-- Modal content-->
-      <div class="modal-content">
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <h4 class="modal-title">Modal Options</h4>
-        </div>
-        <div class="modal-body">
-          <p>Modal content..</p>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-        </div>
-      </div>
-      
-    </div>
-  </div>
-
-
+<button type="button" data-toggle="modal" id="buttonModalAvviso" data-target="#modalAvviso" style="display:none"
+							>Bottone per modal di Avviso riuscita operazione</button>
 		
-		
-		
-		
- <div class="modal" id="modalAvviso" tabindex="-1" role="dialog"
-		aria-labelledby="exampleModalCenterTitle" aria-hidden="false" >
+ <div class="modal fade" id="modalAvviso" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
   <div class="modal-dialog modal-sm modal-dialog-centered" role="document">
-    <div class="modal-content" style="border :4px solid #5be94b;">
-
+    <div class="modal-content" style="border :3px solid #5be94b;">
+		<p hidden="hidden" name="ricarica" id="ifRicarica"></p>
       <div class="modal-body" style="align:center;">
         <img src="IMG/fire.png" class="rounded mx-auto d-block">
-        <h4 class="modal-title text-center">Operazione effettuata con successo</h4>
+        <h4 class="modal-title text-center" id="titoloModalAvviso">Operazione effettuata con successo</h4>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-outline-success" data-dismiss="modal">OK</button>
+
+        <button type="button" class="btn btn-outline-success" 
+        data-dismiss="modal">OK</button>
+
       </div>
     </div>
   </div>
 </div>
-	
-
 
 
 
@@ -142,7 +119,6 @@ h2 {
 <input type="hidden" id="day" value="<%=giorno%>">
 <input type="hidden" id="night" value="<%=notte%>">
 
-		<h2 class="d-flex justify-content-center" id="inizio" style="margin-top: 3%">Gestione Squadre</h2>
 	<br>
 	<div class="d-flex justify-content-center">
 		<form action="GeneraSquadreServlet?salva=true" method=post>
@@ -564,17 +540,15 @@ h2 {
 
 	<script>
 	$(document).ready(function(){
+		$("#TitleHead").text("Gestione Squadre");
 		var day = $("#day").val();
 		var night =  $("#night").val();
 		console.log("giorno "+day+" notte "+night);
 		caricoPersonale(day,night);
-		
-	
-		$("#modalAvviso").modal("show");
-	
-	
-	
-	
+		<% if (request.getParameter("squadraSalvata")!=null){%>
+		$('#buttonModalAvviso').trigger('click');
+		$("#titoloModalAvviso").text("Squadra salvata con successo");
+		<%}%>
 	});
 	
 	function caricoPersonale(giorno, notte) {
@@ -590,6 +564,7 @@ h2 {
 			},
 			success : function(response) {//Operazione da eseguire una volta terminata la chiamata alla servlet.
 					$(response).appendTo("#personale");
+
 			}
 		});
 	}

@@ -45,6 +45,31 @@ h2 {
 	<!-- Barra Navigazione -->
 	<jsp:include page="HeaderJSP.jsp" />
 
+<!-- Modal di avviso operazione effettuata correttamente-->
+		
+<button type="button" data-toggle="modal" id="buttonModalAvviso" data-target="#modalAvviso" style="display:none"
+							>Bottone per modal di Avviso riuscita operazione</button>
+		
+ <div class="modal fade" id="modalAvviso" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-sm modal-dialog-centered" role="document">
+    <div class="modal-content" style="border :3px solid #5be94b;">
+		<p hidden="hidden" name="ricarica" id="ifRicarica"></p>
+      <div class="modal-body" style="align:center;">
+        <img src="IMG/fire.png" class="rounded mx-auto d-block">
+        <h4 class="modal-title text-center" id="titoloModalAvviso">Operazione effettuata con successo</h4>
+      </div>
+      <div class="modal-footer">
+
+        <button type="button" class="btn btn-outline-success" 
+        data-dismiss="modal">OK</button>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
 	<!-- MODAL MODIFICA VF -->
 	<div class="modal fade" id="aggiungiVF" tabindex="-1" role="dialog"
 		aria-labelledby="exampleModalCenterTitle" aria-hidden="true"
@@ -82,7 +107,6 @@ h2 {
 					onmouseover="this.src='IMG/arrow/up-arrow-d.png'"
 					onmouseout="this.src='IMG/arrow/up-arrow-p.png'" /></a>
      
-<h2 class="d-flex justify-content-center" style="margin-top: 3%">Modifica Squadre</h2>
 
 	<!-- SQUADRA DIURNA -->
 		<h2 class="d-flex justify-content-center" style="font-weight: bold; font-size: 36px;">
@@ -295,6 +319,10 @@ h2 {
 
 	<script>
 
+	$(document).ready(function(){
+		$("#TitleHead").text("Modifica Squadra");
+	});
+	
 	function apriFormVF(input,rule,sq,dt) {
 		//Chiamata ajax alla servlet PersonaleDisponibileAJAX
 		$.ajax({
@@ -322,6 +350,12 @@ h2 {
 		$("#agg").prop("disabled",false);
 	}
 	
+	$(document).ready(function(){
+		<% if (request.getParameter("squadraSalvata")!=null){%>
+		$('#buttonModalAvviso').trigger('click');
+		$("#titoloModalAvviso").text("Squadra salvata con successo");
+		<%}%>
+	});
 	</script>
 
 
