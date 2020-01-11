@@ -51,18 +51,19 @@ public class AggiungiVFServlet extends HttpServlet {
 		//Ottengo i dati del Capo Turno dalla sessione
 		CapoTurnoBean ct = (CapoTurnoBean) session.getAttribute("capoturno");
 		
-		//Ottenimento parametro email dalla richiesta 
+		//Ottenimento parametro email dalla richiesta  
 		String email = request.getParameter("email");;
+		System.out.println("l'email passata è : "+email);
 		
 		//Controllo email
-		if( ! Validazione.email(email) )
-			throw new ParametroInvalidoException("Il parametro 'email' è errato!");
+		/*if( ! Validazione.email(email) )
+			throw new ParametroInvalidoException("Il parametro 'email' è errato!");*/
 
 		// Ottenimento parametri del VF dalla richiesta
-		String nome = request.getParameter("nome");;
-		String cognome = request.getParameter("cognome");;
+		String nome = request.getParameter("nome");
+		String cognome = request.getParameter("cognome");
 		String turno = ct.getTurno();
-		String mansione = request.getParameter("mansione");;
+		String mansione = request.getParameter("mansione");
 		String username = "turno" + ct.getTurno();
 		String grado = request.getParameter("grado");
 		String giorniFerieAnnoCorrenteStringa = request.getParameter("giorniFerieAnnoCorrente");
@@ -91,14 +92,8 @@ public class AggiungiVFServlet extends HttpServlet {
 		if( ! Validazione.mansione(mansione) )
 			throw new ParametroInvalidoException("Il parametro 'mansione' è errato!");
 		
-		if( ! Validazione.giorniFerieAnnoCorrente(giorniFerieAnnoCorrente) )
-			throw new ParametroInvalidoException("Il parametro 'Giorni Ferie Anno Corrente' è errato!");
-		
-		if( ! Validazione.giorniFerieAnniPrecedenti(giorniFerieAnnoPrecedente) )
-			throw new ParametroInvalidoException("Il parametro 'Giorni Ferie Anno Precedente' è errato!");
-		
 		//Se il grado non è settato e la mansione è Capo Squadra, il grado sarà 'Semplice'
-		if( mansione.equals("Capo Squadra") && grado == null )
+		if( mansione.equals("Capo Squadra") && (grado == null || grado.equals(" ")) )
 			grado = "Semplice";
 		
 		if( ! Validazione.grado(grado) )
