@@ -81,7 +81,7 @@ class RimuoviferieServletTest{
 	}
 	
 	@Test
-	void test_giorniGi‡Concessi()throws ServletException, IOException {
+	void test_giorniGiaConcessi()throws ServletException, IOException {
 		String dataInizio = "02-03-2020";
 		String dataFine = "06-03-2020";
 		
