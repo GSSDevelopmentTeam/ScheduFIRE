@@ -19,7 +19,12 @@ import javax.mail.internet.MimeMessage;
 import model.bean.VigileDelFuocoBean;
 
 
-
+/**
+ * Classe che si occupa di mandare le email a tutti i vigili del fuoco
+ * dopo aver generato il turno
+ * @author Francesca Pia Perillo
+ *
+ */
 public class SendMail {
 	
 	private static final
@@ -75,10 +80,12 @@ public class SendMail {
 			+ "margin-bottom:7px"
 			+ "\"";
 	
+
 	private static String td_pari(String valore) {
 		return "<td "+CSS_td_PARI+">"+valore+"</td>";
 	}
 	
+
 	private static String td_dispari(String valore) {
 		return "<td "+CSS_td_DISPARI+">"+valore+"</td>";
 	}
@@ -112,6 +119,7 @@ public class SendMail {
 	private static String sottotitolo (String sottotitolo) {
 		return"<p "+CSS_sottotitolo+">"+sottotitolo+"</p>";
 	}
+	
 	/**
 	 * Il metodo si occupa del mandare le mail ai vigili del fuoco. 
 	 * @param data
