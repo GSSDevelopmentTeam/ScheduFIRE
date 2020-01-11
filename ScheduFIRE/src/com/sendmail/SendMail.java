@@ -220,16 +220,16 @@ public class SendMail {
 
 			for(count=1;count<cognomiDiurno.size();count++) {
 			if(count%2==0)
-				diurnoLista.add(tr_pari(nomiDiurno.get(count%3),cognomiDiurno.get(count%3),squadreDiurno.get(count%4)));
+				diurnoLista.add(tr_pari(cognomiDiurno.get(count%3),nomiDiurno.get(count%3),squadreDiurno.get(count%4)));
 			else
-				diurnoLista.add(tr_dispari(nomiDiurno.get(count%3),cognomiDiurno.get(count%3),squadreDiurno.get(count%4)));
+				diurnoLista.add(tr_dispari(cognomiDiurno.get(count%3),nomiDiurno.get(count%3),squadreDiurno.get(count%4)));
 			}
 
 			for(count=1;count<cognomiNotturno.size();count++) {
 				if(count%2==0)
-					notturnoLista.add(tr_pari(nomiNotturno.get(count%3),cognomiNotturno.get(count%3),squadreNotturno.get(count%4)));
+					notturnoLista.add(tr_pari(cognomiNotturno.get(count%3),nomiNotturno.get(count%3),squadreNotturno.get(count%4)));
 				else
-					notturnoLista.add(tr_dispari(nomiNotturno.get(count%3),cognomiNotturno.get(count%3),squadreNotturno.get(count%4)));
+					notturnoLista.add(tr_dispari(cognomiNotturno.get(count%3),nomiNotturno.get(count%3),squadreNotturno.get(count%4)));
 				}
 
 			//giorno di oggi
