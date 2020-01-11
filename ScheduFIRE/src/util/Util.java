@@ -327,11 +327,7 @@ public class Util {
 		if(request.getSession().getAttribute("ruolo")==null)
 			throw new AutenticazioneException("&Egrave; richiesta l'autenticazione per poter accedere alle funzionalit&agrave; del sito.");
 		
-		if(request.getSession().getAttribute("notifiche")==null) {
-			request.getSession().invalidate();
-			throw new AutenticazioneException("Richiesta l'autenticazione per poter accedere alle funzionalit&agrave; del sito.");
-		
-		}
+
 
 	}
 

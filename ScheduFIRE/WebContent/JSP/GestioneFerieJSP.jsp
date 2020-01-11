@@ -147,7 +147,7 @@
 		style="display: none">
 		<div class="modal-dialog modal-dialog-centered" role="document">
 			<div class="modal-content contenutiModal"
-				style="min-width: 550px; min-height: 670px;">
+				style="min-height: 670px;">
 				<div class="modal-header">
 					<h5 class="modal-title" id="titoloAggiuntaFerie">Aggiunta
 						ferie</h5>
@@ -532,7 +532,7 @@
 				numberOfColumns : 1,
 				inlineMode : true,
 				minDate : new Date(),
-				disallowLockDaysInRange : true,
+				disallowLockDaysInRange : false,
 				showTooltip : false,
 				onError : function(error) {
 					alertInsuccesso("Nel periodo selezionato risultano già dei giorni di ferie.");
@@ -593,9 +593,6 @@
 						} else {
 							$("#messaggioFerie1").text(
 									"Periodo selezionato correttamente.");
-							$("#messaggioFerie2").text(
-									"Hai selezionato " + differenza
-											+ " giorni di ferie.");
 							$("#messaggioFerie1").attr("style",
 									"color:green");
 							$("#messaggioFerie2").attr("style",

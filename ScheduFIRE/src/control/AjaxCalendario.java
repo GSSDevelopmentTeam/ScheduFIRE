@@ -36,7 +36,8 @@ public class AjaxCalendario extends HttpServlet{
 	
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		Util.isCapoTurno(request);
+		Util.isAutenticato(request);
+		
 		
 		String giornostr = request.getParameter("giorno").trim();
 		String mesestr = request.getParameter("mese").trim();
