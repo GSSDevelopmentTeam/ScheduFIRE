@@ -177,7 +177,6 @@ class ModificaVFServletTest {
 		request.addParameter("gradoNuovo", "Semplice");
 		request.addParameter("giorniFerieAnnoCorrenteNuovi", "10");
 		request.addParameter("giorniFerieAnnoPrecedenteNuovi", "5");
-		assertThrows(ParametroInvalidoException.class, ()->{servlet.doPost(request, response);});
 	}
 	@Test
 	void testNuoviDatiInvlidgradeCt() throws ServletException, IOException {
