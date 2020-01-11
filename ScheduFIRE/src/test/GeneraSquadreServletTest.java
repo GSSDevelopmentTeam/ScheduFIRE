@@ -26,7 +26,7 @@ class GeneraSquadreServletTest {
 	static ArgumentCaptor<String> captor;
 	HashMap<VigileDelFuocoBean, String> squadraDiurno;
 	VigileDelFuocoBean vigile;
-
+ 
 	@BeforeEach
 	void setUp() {
 		servlet = new GeneraSquadreServlet();
