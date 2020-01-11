@@ -8,6 +8,16 @@ body{
   box-sizing: border-box;
 }
 
+h2 {
+	color: #B60000;
+}
+
+#titolo{
+	position: absolute;
+	margin-left:40%;
+	
+}
+
 .back-up{
 	border:none;
 	background:none;	

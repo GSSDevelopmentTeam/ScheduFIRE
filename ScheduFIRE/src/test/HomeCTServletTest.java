@@ -1,4 +1,4 @@
-package control;
+package test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -17,6 +17,8 @@ import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+
+import control.HomeCTServlet;
 
 class HomeCTServletTest {
 	

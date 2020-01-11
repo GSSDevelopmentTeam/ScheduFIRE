@@ -81,91 +81,69 @@ h4{color: #B60000;}
 		
 		function mostraFormModifica(id) {
 
-			$("#modifica" + id).toggle("slow", function() {
-				
-				var button = document.getElementById(id);
-
-				if( button.innerHTML === "Annulla" ) {
-					
-					button.innerHTML = "Modifica";
-					
-					document.getElementById("modificaVF" + id + "Nome").value = nome[id];
-					document.getElementById("modificaVF" + id + "Cognome").value = cognome[id];
-					document.getElementById("modificaVF" + id + "Email").value = email[id];
-					document.getElementById("modificaVF" + id + "Mansione1").checked = mansione1Check[id];
-					document.getElementById("modificaVF" + id + "Mansione2").checked = mansione2Check[id];
-					document.getElementById("modificaVF" + id + "Mansione3").checked = mansione3Check[id];
-					document.getElementById("modificaVF" + id + "Grado0").checked = grado0Check[id];
-					document.getElementById("modificaVF" + id + "Grado1").checked = grado1Check[id];
-					document.getElementById("modificaVF" + id + "Grado2").checked = grado2Check[id];
-					document.getElementById("modificaVF" + id + "Grado3").checked = grado3Check[id];
-					document.getElementById("modificaVF" + id + "GiorniFerieAnnoCorrente").value = ferieAnnoCorrenti[id];
-					document.getElementById("modificaVF" + id + "GiorniFerieAnnoPrecedente").value = ferieAnniPrecedenti[id];
-
-					if(mansione1Check) {
-
-						$("#modificaVF" + id + "Gradi").hide("slow");
-						
-						$("#modificaVF" + id + "GradoCapoSquadra").show("slow");
-						
-					} else {
-						
-						$("#modificaVF" + id + "GradoCapoSquadra").hide("slow");
-						
-						$("#modificaVF" + id + "Gradi").show("slow");
-						
-					}
-					
-				} 
-				else {
-
-					button.innerHTML = "Annulla";
-					
-					gradoCapoSquadra = document.getElementById("modificaVF" + id + "GradoCapoSquadra");
-					gradi = document.getElementById("modificaVF" + id + "Gradi");
-					
-					nome[id] = document.getElementById("modificaVF" + id + "Nome").value;
-					cognome[id] = document.getElementById("modificaVF" + id + "Cognome").value;
-					email[id] = document.getElementById("modificaVF" + id + "Email").value;
-					mansione1Check[id] = document.getElementById("modificaVF" + id + "Mansione1").checked;
-					mansione2Check[id] = document.getElementById("modificaVF" + id + "Mansione2").checked;
-					mansione3Check[id] = document.getElementById("modificaVF" + id + "Mansione3").checked;
-					grado0Check[id] = document.getElementById("modificaVF" + id + "Grado0").checked;
-					grado1Check[id] = document.getElementById("modificaVF" + id + "Grado1").checked;
-					grado2Check[id] = document.getElementById("modificaVF" + id + "Grado2").checked;
-					grado3Check[id] = document.getElementById("modificaVF" + id + "Grado3").checked;
-					ferieAnnoCorrenti[id] = document.getElementById("modificaVF" + id + "GiorniFerieAnnoCorrente").value;
-					ferieAnniPrecedenti[id] = document.getElementById("modificaVF" + id + "GiorniFerieAnnoPrecedente").value;
-				
-				}
-				
-			});
+			$("#modifica" + id).show("slow", salvaStato(id) );
 			
 		}
 		
-		function alertInsuccesso(input) {
-			$("#operazioneNoOk span").text(input);
-			$("#operazioneNoOk span").show();
-			$("#operazioneNoOk").fadeTo(4000, 500).slideUp(5000000, function() {
-				$("#success-alert").slideUp(5000000);
-			});
-
-		}
-
-		function alertSuccesso(input) {
-			$("#operazioneOk span").text(input);
-			$("#operazioneOk").show();
-			$("#operazioneOk").fadeTo(4000, 500).slideUp(5000000, function() {
-				$("#success-alert").slideUp(5000000);
-			});
+		function salvaStato(id) {
+			
+			/*
+			gradoCapoSquadra = document.getElementById("modificaVF" + id + "GradoCapoSquadra");
+			gradi = document.getElementById("modificaVF" + id + "Gradi");
+			*/
+			
+			nome[id] = document.getElementById("modificaVF" + id + "Nome").value;
+			cognome[id] = document.getElementById("modificaVF" + id + "Cognome").value;
+			email[id] = document.getElementById("modificaVF" + id + "Email").value;
+			mansione1Check[id] = document.getElementById("modificaVF" + id + "Mansione1").checked;
+			mansione2Check[id] = document.getElementById("modificaVF" + id + "Mansione2").checked;
+			mansione3Check[id] = document.getElementById("modificaVF" + id + "Mansione3").checked;
+			grado0Check[id] = document.getElementById("modificaVF" + id + "Grado0").checked;
+			grado1Check[id] = document.getElementById("modificaVF" + id + "Grado1").checked;
+			grado2Check[id] = document.getElementById("modificaVF" + id + "Grado2").checked;
+			grado3Check[id] = document.getElementById("modificaVF" + id + "Grado3").checked;
+			ferieAnnoCorrenti[id] = document.getElementById("modificaVF" + id + "GiorniFerieAnnoCorrente").value;
+			ferieAnniPrecedenti[id] = document.getElementById("modificaVF" + id + "GiorniFerieAnnoPrecedente").value;
+			
 		}
 		
-		function nascondiOk(){
-			document.getElementById("operazioneOk").style.display="none";
+		function nascondiFormModifica(id) {
+			
+			$("#modific" + id).hide("slow", immettiStato(id) );
+			
 		}
 		
-		function nascondiNoOk(){
-			document.getElementById("operazioneNoOk").style.display="none";
+		function immettiStato(id) {
+			
+			var newId = id.split("a");
+			
+			document.getElementById("modificaVF" + newId[1] + "Nome").value = nome[newId[1]];
+			document.getElementById("modificaVF" + newId[1] + "Cognome").value = cognome[newId[1]];
+			document.getElementById("modificaVF" + newId[1] + "Email").value = email[newId[1]];
+			document.getElementById("modificaVF" + newId[1] + "Mansione1").checked = mansione1Check[newId[1]];
+			document.getElementById("modificaVF" + newId[1] + "Mansione2").checked = mansione2Check[newId[1]];
+			document.getElementById("modificaVF" + newId[1] + "Mansione3").checked = mansione3Check[newId[1]];
+			document.getElementById("modificaVF" + newId[1] + "Grado0").checked = grado0Check[newId[1]];
+			document.getElementById("modificaVF" + newId[1] + "Grado1").checked = grado1Check[newId[1]];
+			document.getElementById("modificaVF" + newId[1] + "Grado2").checked = grado2Check[newId[1]];
+			document.getElementById("modificaVF" + newId[1] + "Grado3").checked = grado3Check[newId[1]];
+			document.getElementById("modificaVF" + newId[1] + "GiorniFerieAnnoCorrente").value = ferieAnnoCorrenti[newId[1]];
+			document.getElementById("modificaVF" + newId[1] + "GiorniFerieAnnoPrecedente").value = ferieAnniPrecedenti[newId[1]];
+
+			if(mansione1Check) {
+
+				$("#modificaVF" + newId[1] + "Gradi").hide("slow");
+				
+				$("#modificaVF" + newId[1] + "GradoCapoSquadra").show("slow");
+				
+			} else {
+				
+				$("#modificaVF" + newId[1] + "GradoCapoSquadra").hide("slow");
+				
+				$("#modificaVF" + newId[1] + "Gradi").show("slow");
+				
+			}
+			
 		}
 		
 		function mostraFormAggiuta() {
@@ -302,32 +280,7 @@ h4{color: #B60000;}
 <a href="#sali" class=" back-up"><img src="IMG/arrow/up-arrow-p.png" style="margin-left: 5px;"
 					onmouseover="this.src='IMG/arrow/up-arrow-d.png'"
 					onmouseout="this.src='IMG/arrow/up-arrow-p.png'" /></a>
-					
-		<!--------- Alert Ok----------------->
-
-		<div
-			class="alert alert-success flex alert-dismissible fade in text-center fixed-top"
-			id="operazioneOk"
-			style="display: none; position: fixed; z-index: 99999; width: 100%">
-			<button type="button" class="close" onclick="nascondiOk()" aria-label="close">&times;</button>
-			<strong>Operazione riuscita!</strong> <span>Rimozione ferie
-				avvenuta con successo..</span>
-		</div>
 	
-		<!-- ----------------------- -->
-	
-		<!--------- Alert NON Ok ----------------->
-	
-		<div
-			class="alert alert-danger flex alert-dismissible fade in text-center fixed-top"
-			id="operazioneNoOk"
-			style="display: none; position: fixed; z-index: 99999; width: 100%">
-			<button type="button" class="close" onclick="nascondiNoOK()" aria-label="close">&times;</button>
-			<strong>Errore!</strong> <span>Rimozione ferie non avvenuta..</span>
-		</div>
-	
-		<!-- ----------------------- -->
-
 		<br>
 		<h2 id="titolo"></h2>
 
@@ -415,7 +368,7 @@ h4{color: #B60000;}
 						<th class="text-center">Carico lavorativo</th>
 						<th class="text-center">Ferie<th>
 						<th class="text-center">Modifica</th>
-						<th class="text-center">Cancella</th>
+						<th class="text-center">Elimina</th>
 					</tr>
 				</thead>
 
@@ -514,7 +467,7 @@ h4{color: #B60000;}
 							</div>
 							
 							<button id = <%= id * (-1) %> class = "btn btn-outline-danger" onclick = "mostraFormCancellazione(this.id)">
-								Cancella
+								Elimina
 							</button>
 
 						</td>
@@ -766,11 +719,12 @@ h4{color: #B60000;}
 								</label> <br> <br> <input type="hidden" name="emailVecchia"
 									value= <%= vf.getEmail().substring( 0 , vf.getEmail().indexOf("@") ) %> > 
 									
-									<Button type="submit" class="btn btn-outline-success"
-									data-toggle="modal" class="button" value="Conferma" onsubmit="validazioneForm()">
-										Conferma
-									</Button>
-									
+									<input type="submit" class="btn btn-outline-success"
+									data-toggle="modal" class="button" value="Conferma">
+									&nbsp;
+									<input id = <%= "a" + id %> type = "button" class="btn btn-outline-danger" 
+									onclick = "nascondiFormModifica(this.id)" data-toggle="modal" class="button" value="Annulla">
+								
 								<br> <br>
 
 							</form>
@@ -830,7 +784,7 @@ h4{color: #B60000;}
 						<th class="text-center">Carico lavorativo</th>
 						<th class="text-center">Ferie<th>
 						<th class="text-center">Modifica</th>
-						<th class="text-center">Cancella</th>
+						<th class="text-center">Elimina</th>
 					</tr>
 				</thead>
 
@@ -931,7 +885,7 @@ h4{color: #B60000;}
 							</div>
 							
 							<button id = <%= id * (-1) %> class = "btn btn-outline-danger" onclick = "mostraFormCancellazione(this.id)">
-								Cancella
+								Elimina
 							</button>
 
 						</td>
@@ -1183,10 +1137,11 @@ h4{color: #B60000;}
 								</label> <br> <br> <input type="hidden" name="emailVecchia"
 									value= <%= vf.getEmail().substring( 0 , vf.getEmail().indexOf("@") ) %> > 
 									
-									<Button type="submit" class="btn btn-outline-success"
-									data-toggle="modal" class="button" value="Conferma" onsubmit="validazioneForm()">
-										Conferma
-									</Button>
+									<input type="submit" class="btn btn-outline-success"
+									data-toggle="modal" class="button" value="Conferma">
+									&nbsp;
+									<input id = <%= "a" + id %> type = "button" class="btn btn-outline-danger" 
+									onclick = "nascondiFormModifica(this.id)" data-toggle="modal" class="button" value="Annulla">
 									
 								<br> <br>
 
@@ -1247,7 +1202,7 @@ h4{color: #B60000;}
 						<th class="text-center">Carico lavorativo</th>
 						<th class="text-center">Ferie<th>
 						<th class="text-center">Modifica</th>
-						<th class="text-center">Cancella</th>
+						<th class="text-center">Elimina</th>
 					</tr>
 				</thead>
 
@@ -1291,7 +1246,7 @@ h4{color: #B60000;}
 							data-toggle="modal" onclick="mostraFormModifica(this.id)">
 								<%= "Modifica" %>
 							</button>
-
+						
 						</td>
 
 						<td>
@@ -1348,7 +1303,7 @@ h4{color: #B60000;}
 							</div>
 							
 							<button id = <%= id * (-1) %> class = "btn btn-outline-danger" onclick = "mostraFormCancellazione(this.id)">
-								Cancella
+								Elimina
 							</button>
 
 						</td>
@@ -1602,10 +1557,11 @@ h4{color: #B60000;}
 								</label> <br> <br> <input type="hidden" name="emailVecchia"
 									value= <%= vf.getEmail().substring( 0 , vf.getEmail().indexOf("@") ) %> > 
 									
-									<Button type="submit" class="btn btn-outline-success"
-									data-toggle="modal" class="button" value="Conferma" onsubmit="validazioneForm()">
-										Conferma
-									</Button>
+									<input type="submit" class="btn btn-outline-success"
+									data-toggle="modal" class="button" value="Conferma">
+									&nbsp;
+									<input id = <%= "a" + id %> type = "button" class="btn btn-outline-danger" 
+									onclick = "nascondiFormModifica(this.id)" data-toggle="modal" class="button" value="Annulla">
 									
 								<br> <br>
 
@@ -1656,7 +1612,7 @@ h4{color: #B60000;}
 			&ensp;
 			</label> <label> Cognome: <input id="aggiungiVFCognome" type="text"
 				name="cognome" required>
-			</label> <br> <br> <label> Email: <input
+			</label> <br> <br> <label class = "email"> Email: <input
 				id="aggiungiVFEmail" type="text" name="email" required>@vigilfuoco.it
 			</label> <br> <br>
 			

@@ -1,12 +1,12 @@
 package com.sendmail;
 
 import java.sql.Date;
-import java.time.format.DateTimeFormatter;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Map;
 import java.util.Properties;
+import java.util.Iterator;
 
 import javax.mail.Message;
 import javax.mail.MessagingException;
@@ -17,15 +17,101 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
 import model.bean.VigileDelFuocoBean;
-import model.dao.EmailDao;
 
-/**
- * Classe per mandare le mail ai vigili del fuoco quando viene generato un turno.
- * @author Ciro Cipolletta
- * @see javax.mail
- */
+
+
 public class SendMail {
+	
+	private static final
+	String CSS_td_PARI = 
+			"style =\""
+			+ " border: 1px solid #454d55;"
+			+ " background-color: #b1b5ba;"
+			+ " font-size: 15px;"
+			+ "\"";
+	
+	private static final
+	String CSS_td_DISPARI = 
+	"style =\""
+	+ " border: 1px solid #454d55;"
+	+ " font-size: 15px;"
+	+ "\"";
+	
+	private static final
+	String CSS_table =
+			"style = \""
+			+ "  border-collapse: collapse;"
+			+ "	 border: 1px solid #454d55;"
+			+ "	 font-size: 15px;"
+			+ "  width: 100%;"
+			+ "	 height:20px;"
+			+ "	 text-align: center;"
+			+ "  margin-top: 20px;"
+			+ "\"";
+	
+	private static final
+	String CSS_th = 
+			"style = \""
+			+ "border:1px solid white;" + 
+			"  height: 50px;" + 
+			"  background-color: #454d55;" + 
+			"  color:white;" + 
+			"  font-size: 18px;"
+			+ "\"";
+	
+	private static final
+	String CSS_titolo=
+			"style =\""
+			+ "text-align: center;"
+			+ "font-size:30px;"
+			+ "margin-bottom:10px"
+			+ "\"";
+	
+	private static final
+	String CSS_sottotitolo=
+			"style =\""
+			+ "text-align: center;"
+			+ "font-size:25px;"
+			+ "margin-bottom:7px"
+			+ "\"";
+	
+	private static String td_pari(String valore) {
+		return "<td "+CSS_td_PARI+">"+valore+"</td>";
+	}
+	
+	private static String td_dispari(String valore) {
+		return "<td "+CSS_td_DISPARI+">"+valore+"</td>";
+	}
+	
+	private static String tr_pari(String nome,String cognome,String squadra) {
+		return "<tr>"+td_pari(nome)+td_pari(cognome)+td_pari(squadra)+"</tr>";
+	}
+	
+	private static String tr_dispari(String nome,String cognome,String squadra) {
+		return "<tr>"+td_dispari(nome)+td_dispari(cognome)+td_dispari(squadra)+"</tr>";
+	}
+	private static String tabella(ArrayList<String> tdList) {
+		String tabella="<table "+CSS_table+">" + 
+				"    <tr>" + 
+				"      <th "+CSS_th+">Cognome</th>" + 
+				"      <th "+CSS_th+">Nome</th>" + 
+				"      <th "+CSS_th+">Squadra</th>" + 
+				"    </tr>";
+		
+		for(String td:tdList) {
+			tabella+=td;
+		}
+		tabella+="</table>";
+		return tabella;
+	}
+	
+	private static String titolo(String titolo) {
+		return"<h3 "+CSS_titolo+">"+titolo+"</h3>";
+	}
 
+	private static String sottotitolo (String sottotitolo) {
+		return"<p "+CSS_sottotitolo+">"+sottotitolo+"</p>";
+	}
 	/**
 	 * Il metodo si occupa del mandare le mail ai vigili del fuoco. 
 	 * @param data
@@ -42,7 +128,7 @@ public class SendMail {
 
 
 		email.add("c.cipolletta2@studenti.unisa.it");
-		email.add("f.perillo11@stduenti.unisa.it");
+		email.add("f.perillo11@studenti.unisa.it");
 		email.add("e.sottile@studenti.unisa.it");
 		email.add("g.annunziata49@studenti.unisa.it");
 		email.add("e.bombardelli@studenti.unisa.it");
@@ -66,14 +152,17 @@ public class SendMail {
 		proprieta.put("mail.smtp.ssl.enable", "true");
 		proprieta.put("mail.smtp.auth", "true");
 
-		// Prende la sessione in oggetto // e passa l'username e password
+
+		// Get the Session object.// and pass username and password
 		Session session = Session.getInstance(proprieta, new javax.mail.Authenticator() {
+
 			protected PasswordAuthentication getPasswordAuthentication() {
 				return new PasswordAuthentication("schedufire@gmail.com", "schedufire20");
 			}
+
 		});
 
-		//Utilizzato per il debug di problemi SMTP
+		// Used to debug SMTP issues
 		session.setDebug(true);
 
 		try {
@@ -84,8 +173,6 @@ public class SendMail {
 			message.setFrom(new InternetAddress(from));
 
 			// Set To: header field of the header.
-
-
 			InternetAddress [] address = new InternetAddress[email.size()];
 			for(int i = 0 ; i<email.size(); i++) {
 				address[i]= new InternetAddress(email.get(i));
@@ -95,42 +182,102 @@ public class SendMail {
 
 
 			// Set Subject: header field
-			message.setSubject("(noreply) Squadre per il turno del " + 
-					data.toLocalDate().format(DateTimeFormatter.ofPattern("dd/MM/YYYY")) + " - " + 
-					data.toLocalDate().plusDays(1L).format(DateTimeFormatter.ofPattern("dd/MM/YYYY")));
+			message.setSubject("Nuova generazione turni");
+
 
 			// Now set the actual message
-			message.setText(formattaMessaggio(squadraDiurno, squadraNotturno));
+			ArrayList<String> nomiDiurno=new ArrayList<String>();
+			ArrayList<String> cognomiDiurno=new ArrayList<String>();
+			ArrayList<String> squadreDiurno=new ArrayList<String>();
+			
+			ArrayList<String> nomiNotturno=new ArrayList<String>();
+			ArrayList<String> cognomiNotturno=new ArrayList<String>();
+			ArrayList<String> squadreNotturno=new ArrayList<String>();
+			
+			ArrayList<String> diurnoLista=new ArrayList<String>();
+			ArrayList<String> notturnoLista=new ArrayList<String>();
+
+			//scorrimento sugli HashMap passati come parametro alla funziona 
+			//squadra diurna
+			Iterator i = squadraDiurno.entrySet().iterator();
+			while(i.hasNext()) {
+				Map.Entry<VigileDelFuocoBean, String> coppia = (Map.Entry<VigileDelFuocoBean, String>) i.next();
+				nomiDiurno.add(coppia.getKey().getCognome());
+				cognomiDiurno.add(coppia.getKey().getNome());
+				squadreDiurno.add(coppia.getValue());
+			}
+			
+			//squadra notturna 
+			i = squadraNotturno.entrySet().iterator();
+			while(i.hasNext()) {
+				Map.Entry<VigileDelFuocoBean, String> coppia = (Map.Entry<VigileDelFuocoBean, String>) i.next();
+				nomiNotturno.add(coppia.getKey().getCognome());
+				cognomiNotturno.add(coppia.getKey().getNome());
+				squadreNotturno.add(coppia.getValue());
+			}
+			
+			int count; 
+
+			for(count=1;count<cognomiDiurno.size();count++) {
+			if(count%2==0)
+				diurnoLista.add(tr_pari(cognomiDiurno.get(count%3),nomiDiurno.get(count%3),squadreDiurno.get(count%4)));
+			else
+				diurnoLista.add(tr_dispari(cognomiDiurno.get(count%3),nomiDiurno.get(count%3),squadreDiurno.get(count%4)));
+			}
+
+			for(count=1;count<cognomiNotturno.size();count++) {
+				if(count%2==0)
+					notturnoLista.add(tr_pari(cognomiNotturno.get(count%3),nomiNotturno.get(count%3),squadreNotturno.get(count%4)));
+				else
+					notturnoLista.add(tr_dispari(cognomiNotturno.get(count%3),nomiNotturno.get(count%3),squadreNotturno.get(count%4)));
+				}
+
+			//giorno di oggi
+			String dataStringa = data.toString();
+			String anno = dataStringa.substring(0,4);
+			String mese = dataStringa.substring(5,7);
+			String giorno = dataStringa.substring(8);
+			//giorno successivo 
+			Date dataSucc = Date.valueOf(data.toLocalDate().plusDays(1));
+			String dataStringa2 = dataSucc.toString();
+			String anno2 = dataStringa2.substring(0,4);
+			String mese2 = dataStringa2.substring(5,7);
+			String giorno2 = dataStringa2.substring(8);
+			
+			
+			String titolo = titolo("Generazione della squadra per il turno del");
+				titolo+=titolo(giorno+"/"+mese+"/"+anno+"-"+giorno2+"/"+mese2+"/"+anno2);
+			String tabellaDiurno= sottotitolo("Squadra diurna:");
+			tabellaDiurno+=tabella(diurnoLista);
+			
+			
+ 			String tabellaNotturno= sottotitolo("Squadra notturna:");
+			tabellaNotturno+=tabella(notturnoLista);
+
+
+			String htmlFinale = titolo+tabellaDiurno+tabellaNotturno;
+			
+			message.setText(htmlFinale, "utf-8", "html");
 
 			System.out.println("sending...");
 			// Send message
 			Transport.send(message);
 			System.out.println("Sent message successfully....");
+			
 		} catch (MessagingException mex) {
 			mex.printStackTrace();
 		}
+		
+		
+	
+
 	}
 
-	private static String formattaMessaggio(HashMap<VigileDelFuocoBean, String> squadraDiurno,
-			HashMap<VigileDelFuocoBean, String> squadraNotturno) {
-		String toReturn = "Si informa per presa visione il personale del turno B "
-				+ "che le squadre per il turno in oggetto sono le seguenti:\n\tSQUADRA DIURNA:\n";
-		Iterator i = squadraDiurno.entrySet().iterator();
-		while(i.hasNext()) {
-			Map.Entry<VigileDelFuocoBean, String> coppia = (Map.Entry<VigileDelFuocoBean, String>) i.next();
-			toReturn += "" + coppia.getKey().getCognome() + " " + coppia.getKey().getNome() + "\t" + coppia.getValue() + "\n";
-		}
-		
-		toReturn += "\n\n\tSQUADRA NOTTURNA:\n";
-		
-		i = squadraNotturno.entrySet().iterator();
-		while(i.hasNext()) {
-			Map.Entry<VigileDelFuocoBean, String> coppia = (Map.Entry<VigileDelFuocoBean, String>) i.next();
-			toReturn += "" + coppia.getKey().getCognome() + " " + coppia.getKey().getNome() + "\t" + coppia.getValue() + "\n";
-		}
-		
-		toReturn += "\n\nSi ringrazia per l'attenzione e la presa visione.";
-		
-		return toReturn;
-	}
+
+	
+
+	
 }
+
+
+

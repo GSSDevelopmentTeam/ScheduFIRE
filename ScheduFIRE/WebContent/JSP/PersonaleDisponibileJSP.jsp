@@ -29,12 +29,13 @@
 }
 </style>
 <body>
-<div id="sali"></div>
+	<div id="sali"></div>
 	<!-- Barra Navigazione -->
 	<jsp:include page="HeaderJSP.jsp" />
-<a href="#sali" class=" back-up"><img src="IMG/arrow/up-arrow-p.png" style="margin-left: 5px;"
-					onmouseover="this.src='IMG/arrow/up-arrow-d.png'"
-					onmouseout="this.src='IMG/arrow/up-arrow-p.png'" /></a>
+	<a href="#sali" class=" back-up"><img
+		src="IMG/arrow/up-arrow-p.png" style="margin-left: 5px;"
+		onmouseover="this.src='IMG/arrow/up-arrow-d.png'"
+		onmouseout="this.src='IMG/arrow/up-arrow-p.png'" /></a>
 
 	<section>
 
@@ -62,6 +63,7 @@
 					<option value="nome" selected>Nome</option>
 					<option value="cognome">Cognome</option>
 					<option value="disponibilita">Disponibilità</option>
+					<option value="grado">Grado</option>
 
 
 					<%
@@ -70,6 +72,8 @@
 					<option value="nome">Nome</option>
 					<option value="cognome" selected>Cognome</option>
 					<option value="disponibilita">Disponibilità</option>
+					<option value="grado">Grado</option>
+
 
 					<%
 						} else if (ordinamento.equals("disponibilita")) {
@@ -77,6 +81,18 @@
 					<option value="nome">Nome</option>
 					<option value="cognome">Cognome</option>
 					<option value="disponibilita" selected>Disponibilità</option>
+					<option value="grado">Grado</option>
+
+
+
+					<%
+						} else if (ordinamento.equals("grado")) {
+							%>
+					<option value="nome">Nome</option>
+					<option value="cognome">Cognome</option>
+					<option value="disponibilita">Disponibilità</option>
+					<option value="grado" selected>Grado</option>
+
 
 
 					<%
@@ -87,6 +103,8 @@
 					<option value="nome">Nome</option>
 					<option value="cognome" selected>Cognome</option>
 					<option value="disponibilita">Disponibilità</option>
+					<option value="grado">Grado</option>
+
 
 					<%
 						}
@@ -135,12 +153,12 @@
 
 						</div>
 						<div class="modal-footer">
-							<button type="button" class="btn btn-outline-danger"
-								data-dismiss="modal">Annulla</button>
-
-
+						
 							<button type="submit" class="btn btn-outline-success"
 								id="bottoneConferma" disabled>Conferma</button>
+								
+							<button type="button" class="btn btn-outline-danger"
+								data-dismiss="modal">Annulla</button>
 
 						</div>
 					</div>
@@ -218,8 +236,14 @@
 									}
 					%>
 
-					<tr class="<%=!disponibilita.equals("Disponibile")?"table-warning":"" %>">
-						<td class="text-center"><img src="Grado/<%=vigile.getMansione().equals("Capo Squadra") && vigile.getGrado().equals("Esperto")?"EspertoCapoSquadra":vigile.getGrado() %>.png" title="<%=vigile.getGrado()%>" onerror="this.parentElement.innerHTML='Non disponibile';"></td>
+					<tr
+						class="<%=!disponibilita.equals("Disponibile") ? "table-warning" : ""%>">
+						<td class="text-center"><img
+							src="Grado/<%=vigile.getMansione().equals("Capo Squadra") && vigile.getGrado().equals("Esperto")
+								? "EspertoCapoSquadra"
+								: vigile.getGrado()%>.png"
+							title="<%=vigile.getGrado()%>"
+							onerror="this.parentElement.innerHTML='Non disponibile';"></td>
 						<td class="text-center"><strong><%=vigile.getNome()%></strong></td>
 						<td class="text-center"><strong><%=vigile.getCognome()%></strong></td>
 						<td class="text-center"><%=vigile.getEmail()%></td>
@@ -278,10 +302,12 @@
 									}
 					%>
 
-					<tr class="<%=!disponibilita.equals("Disponibile")?"table-warning":"" %>">
+					<tr
+						class="<%=!disponibilita.equals("Disponibile") ? "table-warning" : ""%>">
 						<td class="text-center"><img
-							src="Grado/<%=vigile.getGrado()%>.png" title="<%=vigile.getGrado() %>" 
-            onerror="this.parentElement.innerHTML='Non disponibile';"></td>
+							src="Grado/<%=vigile.getGrado()%>.png"
+							title="<%=vigile.getGrado()%>"
+							onerror="this.parentElement.innerHTML='Non disponibile';"></td>
 						<td class="text-center"><strong><%=vigile.getNome()%></strong></td>
 						<td class="text-center"><strong><%=vigile.getCognome()%></strong></td>
 						<td class="text-center"><%=vigile.getEmail()%></td>
@@ -343,7 +369,9 @@
 
 					<tr
 						class="<%=!disponibilita.equals("Disponibile") ? "table-warning" : ""%>">
-						<td class="text-center"><img src="Grado/<%=vigile.getGrado()%>.png" title="<%=vigile.getGrado() %>"
+						<td class="text-center"><img
+							src="Grado/<%=vigile.getGrado()%>.png"
+							title="<%=vigile.getGrado()%>"
 							onerror="this.parentElement.innerHTML='Non disponibile';"></td>
 						<td class="text-center"><strong><%=vigile.getNome()%></strong></td>
 						<td class="text-center"><strong><%=vigile.getCognome()%></strong></td>
@@ -441,8 +469,14 @@
 											squadra = componente.getTipologiaSquadra();
 									}
 					%>
-					<tr class="<%=!disponibilita.equals("Disponibile")?"table-warning":"" %>">
-						<td class="text-center"><img src="Grado/<%=vigile.getMansione().equals("Capo Squadra") && vigile.getGrado().equals("Esperto")?"EspertoCapoSquadra":vigile.getGrado() %>.png" title="<%=vigile.getGrado()%>" onerror="this.parentElement.innerHTML='Non disponibile';"></td>
+					<tr
+						class="<%=!disponibilita.equals("Disponibile") ? "table-warning" : ""%>">
+						<td class="text-center"><img
+							src="Grado/<%=vigile.getMansione().equals("Capo Squadra") && vigile.getGrado().equals("Esperto")
+								? "EspertoCapoSquadra"
+								: vigile.getGrado()%>.png"
+							title="<%=vigile.getGrado()%>"
+							onerror="this.parentElement.innerHTML='Non disponibile';"></td>
 						<td class="text-center"><strong><%=vigile.getNome()%></strong></td>
 						<td class="text-center"><strong><%=vigile.getCognome()%></strong></td>
 						<td class="text-center"><%=vigile.getEmail()%></td>
@@ -503,7 +537,9 @@
 
 					<tr
 						class="<%=!disponibilita.equals("Disponibile") ? "table-warning" : ""%>">
-						<td class="text-center"><img src="Grado/<%=vigile.getGrado()%>.png" title="<%=vigile.getGrado() %>"
+						<td class="text-center"><img
+							src="Grado/<%=vigile.getGrado()%>.png"
+							title="<%=vigile.getGrado()%>"
 							onerror="this.parentElement.innerHTML='Non disponibile';"></td>
 						<td class="text-center"><strong><%=vigile.getNome()%></strong></td>
 						<td class="text-center"><strong><%=vigile.getCognome()%></strong></td>
@@ -564,7 +600,9 @@
 
 					<tr
 						class="<%=!disponibilita.equals("Disponibile") ? "table-warning" : ""%>">
-						<td class="text-center"><img src="Grado/<%=vigile.getGrado()%>.png" title="<%=vigile.getGrado()%>"
+						<td class="text-center"><img
+							src="Grado/<%=vigile.getGrado()%>.png"
+							title="<%=vigile.getGrado()%>"
 							onerror="this.parentElement.innerHTML='Non disponibile';"></td>
 						<td class="text-center"><strong><%=vigile.getNome()%></strong></td>
 						<td class="text-center"><strong><%=vigile.getCognome()%></strong></td>
@@ -603,7 +641,7 @@
 
 	</section>
 
-	
+
 
 
 	<script>
