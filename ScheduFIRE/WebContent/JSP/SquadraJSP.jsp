@@ -105,18 +105,7 @@ h2 {
 	<!-- ELENCO SQUADRE  -->
 	<%
 	HashMap<VigileDelFuocoBean, String> squadra = (HashMap<VigileDelFuocoBean, String>) session.getAttribute("squadra"); %>
-<<<<<<< Updated upstream
-     
-     <a href="#sali" class=" back-up"><img src="IMG/arrow/up-arrow-p.png" style="margin-left: 5px;"
-					onmouseover="this.src='IMG/arrow/up-arrow-d.png'"
-					onmouseout="this.src='IMG/arrow/up-arrow-p.png'" /></a>
-     
 
-	<!-- SQUADRA DIURNA -->
-		<h2 class="d-flex justify-content-center" style="font-weight: bold; font-size: 36px;">
-			Squadra del
-			<%=data.toLocalDate().format(DateTimeFormatter.ofPattern("dd MMMM YYYY", new Locale("it", "IT")))%></h2>
-=======
 
 	<a href="#sali" class=" back-up"><img
 		src="IMG/arrow/up-arrow-p.png" style="margin-left: 5px;"
@@ -131,7 +120,7 @@ h2 {
 		style="color: #B60000 !Important; margin-top: 3%; font-weight: bold; font-size: 36px;">
 		Squadra del
 		<%=data.toLocalDate().format(DateTimeFormatter.ofPattern("dd MMMM YYYY", new Locale("it", "IT")))%></h4>
->>>>>>> Stashed changes
+
 	</div>
 
 
@@ -353,10 +342,6 @@ h2 {
 
 	<script>
 
-	$(document).ready(function(){
-		$("#TitleHead").text("Modifica Squadra");
-	});
-	
 	function apriFormVF(input,rule,sq,dt) {
 		//Chiamata ajax alla servlet PersonaleDisponibileAJAX
 		$.ajax({

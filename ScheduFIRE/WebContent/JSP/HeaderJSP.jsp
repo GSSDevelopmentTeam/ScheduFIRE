@@ -19,7 +19,6 @@
 	  %>   <a><div class="round"><img src="IMG/logoScheduFIRE.png" class="logo"></div></a>
  <%}%>
  
- <div class=" titleH" id="TitleHead"></div>
  <div class="rf">
  <%if(ruolo!= null){  
 =======

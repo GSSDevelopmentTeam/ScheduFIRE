@@ -159,14 +159,10 @@
 	<!-- Barra Navigazione -->
 	<div id="sali"></div>
 	<jsp:include page="HeaderJSP.jsp" />
-<<<<<<< Updated upstream
-	<h2 class="d-flex  justify-content-center" style="margin-top:3% ;color:#B60000!Important" ></h2>
-=======
+
 	<h2 class="d-flex justify-content-center"
 		style="color: #B60000 !Important; margin-top: 3%; font-size: 45px;">Gestione
 		Malattia</h2>
-
->>>>>>> Stashed changes
 
 	<!-- form per l'ordinamento della lista dei VF-->
 	<%
@@ -411,13 +407,6 @@
 
 	<!--------- inserimento non avvenuto ----------------->
 
-<<<<<<< Updated upstream
-		
-			<script>
-			$(document).ready(function(){
-				$("#TitleHead").text("Gestione Malattia");
-			});
-=======
 	<div
 		class="alert alert-danger flex alert-dismissible fade in text-center fixed-top"
 		id="inserimentoNoOk"
@@ -425,12 +414,10 @@
 		<strong>Errore!</strong> <span>Aggiunta malattia non avvenuta..</span>
 	</div>
 
-	<!-- ----------------------- -->
+
 
 
 	<script>
-			
->>>>>>> Stashed changes
 		
 			
 			var picker = new Litepicker(

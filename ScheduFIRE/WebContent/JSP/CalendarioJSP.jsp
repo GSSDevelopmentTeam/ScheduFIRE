@@ -44,19 +44,11 @@
 <body>
 	<!-- Barra Navigazione -->
 	<jsp:include page="HeaderJSP.jsp" />
-<<<<<<< Updated upstream
-	<h2 class="modal-title" id="titolo">
-	</h2>
-					
-=======
-	<h2 class="modal-title"
-		style="color: #B60000 !Important; font-size: 45px;" id="titolo">
-		Calendario</h2>
-	<br>
-	<br>
-	<br>
 
->>>>>>> Stashed changes
+	<h2 class="modal-title" style="color: #B60000 !Important; font-size:45px;"id="titolo">
+	Calendario</h2>
+	<br><br><br>
+  
 	<!-- START: Container per calendario e schedulazione -->
 	<div class="containerAll" id="inizio">
 
@@ -259,10 +251,7 @@
 		});
 	<%}%>
 	
-	$(document).ready(function(){
-		$("#TitleHead").text("Calendario");
-	});
-		
+
 		function dayClicked(input) {
 			
 		var v = document.getElementById('visilibity');

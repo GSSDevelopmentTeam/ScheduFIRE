@@ -117,14 +117,7 @@ h2 {
 		}
 	%>
 
-<<<<<<< Updated upstream
-<a href="#inizio" class=" back-up"><img src="IMG/arrow/up-arrow-p.png" style="margin-left: 5px;"
-					onmouseover="this.src='IMG/arrow/up-arrow-d.png'"
-					onmouseout="this.src='IMG/arrow/up-arrow-p.png'" /></a>
-<input type="hidden" id="day" value="<%=giorno%>">
-<input type="hidden" id="night" value="<%=notte%>">
 
-=======
 	<a href="#inizio" class=" back-up"><img
 		src="IMG/arrow/up-arrow-p.png" style="margin-left: 5px;"
 		onmouseover="this.src='IMG/arrow/up-arrow-d.png'"
@@ -134,7 +127,7 @@ h2 {
 	<h2 class="d-flex justify-content-center"
 		style="color: #B60000 !Important; margin-top: 3%; font-size: 45px;">Gestione
 		Squadre</h2>
->>>>>>> Stashed changes
+
 	<br>
 	<div class="d-flex justify-content-center">
 		<form action="GeneraSquadreServlet?salva=true" method=post>
@@ -142,15 +135,10 @@ h2 {
 				value="salva" name="salva" style="margin: 3px;">Conferma
 				Squadre</button>
 		</form>
-<<<<<<< Updated upstream
+
 		 <a href="#Notte" class="btn btn-outline-secondary btn-lg" style="margin: 3px;">Squadra Notturna</a>
 		<a href="#Disp"	class="btn btn-outline-secondary btn-lg" style="margin: 3px;">Personale Disponibiles</a>
-=======
-		<a href="#Notte" class="btn btn-outline-secondary btn-lg"
-			style="margin: 3px;">Squadra Notturna</a> <a href="#Disp"
-			class="btn btn-outline-secondary btn-lg" style="margin: 3px;">Personale
-			Disponibile</a>
->>>>>>> Stashed changes
+
 	</div>
 	<br>
 
@@ -592,7 +580,7 @@ h2 {
 
 	<script>
 	$(document).ready(function(){
-		$("#TitleHead").text("Gestione Squadre");
+		
 		var day = $("#day").val();
 		var night =  $("#night").val();
 		console.log("giorno "+day+" notte "+night);

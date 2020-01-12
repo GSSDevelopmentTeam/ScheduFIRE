@@ -40,12 +40,9 @@
 	<section>
 
 		<h2 class="d-flex justify-content-center"
-<<<<<<< Updated upstream
-			style="color: #B60000 !Important; margin-top: 3%;"></h2>
-=======
 			style="color: #B60000 !Important; margin-top: 3%; font-size: 45px;">Personale
 			Disponibile</h2>
->>>>>>> Stashed changes
+
 		<h5 class="d-flex justify-content-center"><%=request.getAttribute("titolo") == null ? "" : request.getAttribute("titolo")%></h5>
 
 
@@ -170,6 +167,7 @@
 				</div>
 			</div>
 		</form>
+
 
 
 
@@ -656,9 +654,7 @@
 
 
 	<script>
-	$(document).ready(function(){
-		$("#TitleHead").text("Personale Disponibile");
-	});
+	
 	
 	$(".contenutiModal").css('background-color', '#e6e6e6');
 

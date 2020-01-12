@@ -38,10 +38,7 @@
 	<!-- Barra Navigazione -->
 	<jsp:include page="HeaderJSP.jsp" />
 
-<<<<<<< Updated upstream
-	<h2 class="d-flex justify-content-center" id="inizio"
-		style="margin-top: 3%; color: #B60000 !Important"></h2>
-=======
+
 	<a href="#sali" class=" back-up"><img
 		src="IMG/arrow/up-arrow-p.png"
 		onmouseover="this.src='IMG/arrow/up-arrow-d.png'"
@@ -50,7 +47,6 @@
 	<h2 class="d-flex justify-content-center"
 		style="color: #B60000 !Important; margin-top: 3%; font-size: 45px;">Gestione
 		Ferie</h2>
->>>>>>> Stashed changes
 
 
 	<!-- form per l'ordinamento della lista dei VF-->
@@ -534,9 +530,7 @@
 
 
 	<script>
-	$(document).ready(function(){
-		$("#TitleHead").text("Gestione Ferie");
-	});
+	
 
 	var picker = new Litepicker(
 			{

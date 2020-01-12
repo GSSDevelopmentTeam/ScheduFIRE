@@ -65,9 +65,7 @@ h4 {
 		src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 
 	<script type="text/javascript">
-	$(document).ready(function(){
-		$("#TitleHead").text("Gestione Personale");
-	});
+	
 	
 		var nome = [];
 		var cognome = [];
@@ -317,13 +315,10 @@ h4 {
 		</div>
 
 		<br>
-<<<<<<< Updated upstream
-		<h2 id="titolo"></h2>
-=======
+
 		<h2 id="titolo" class="d-flex justify-content-center"
 			style="color: #B60000 !Important; margin-buttom: 3%; font-size: 45px;">Gestione
 			Personale</h2>
->>>>>>> Stashed changes
 
 		<form id="ordinamento" action="./GestionePersonaleServlet">
 			<div id="divOrdinamento">

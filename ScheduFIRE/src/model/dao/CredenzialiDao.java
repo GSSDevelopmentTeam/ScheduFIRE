@@ -12,7 +12,10 @@ import model.bean.CredenzialiBean;
 
 public class CredenzialiDao {
 
- public static CredenzialiBean login(String username) {
+ public CredenzialiDao() {}
+
+
+ public CredenzialiBean login(String username) {
   CredenzialiBean credenziali = null;
   try {
    
@@ -44,7 +47,6 @@ public class CredenzialiDao {
 
   return credenziali;
 
-
  }
-
 }
+
