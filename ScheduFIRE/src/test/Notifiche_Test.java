@@ -2,16 +2,13 @@ package test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
-
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
-import org.springframework.test.util.ReflectionTestUtils;
-
 import model.bean.VigileDelFuocoBean;
 import util.Notifica;
 import util.Notifiche;
@@ -39,35 +36,38 @@ class Notifiche_Test {
 	@Test
 	@Order(2)
 	void test0_1() {
-		Notifiche.update(not.UPDATE_PER_AVVIO);
-		Notifiche.update(not.UPDATE_PER_MALATTIA);
+		assertDoesNotThrow(() -> {
+			Notifiche.update(not.UPDATE_PER_AVVIO);
+			Notifiche.update(not.UPDATE_PER_MALATTIA);
+		});
 	}
 	
 	@Test
 	@Order(3)
 	void test0_2() {
-		Notifiche.update(not.UPDATE_PER_FERIE, from, to, mail);
-		Notifiche.update(not.UPDATE_PER_MALATTIA, from, to, mail);
-		Notifiche.update(not.UPDATE_SQUADRE_PER_FERIE, from, to, mail);
-		Notifiche.update(not.UPDATE_SQUADRE_PER_MALATTIA, from, to, mail);
-		Notifiche.update(6,from,to,mail);
+		assertDoesNotThrow(() -> {
+			Notifiche.update(not.UPDATE_PER_FERIE, from, to, mail);
+			Notifiche.update(not.UPDATE_PER_MALATTIA, from, to, mail);
+			Notifiche.update(not.UPDATE_SQUADRE_PER_FERIE, from, to, mail);
+			Notifiche.update(not.UPDATE_SQUADRE_PER_MALATTIA, from, to, mail);
+			Notifiche.update(6,from,to,mail);
+		});
 	}
 	
 	@Test
 	@Order(4)
 	void test0_3() {
-		not.getListaNotifiche();
+		assertDoesNotThrow(() -> {
+			not.getListaNotifiche();
+		});	
 	}
 	
-	@Test
-	@Order(5)
-	void test0_4() {
-		
-	}
 	
 	@Test
 	void test () {
-		not.rimuovi(listaNotifiche.get(1));
+		assertDoesNotThrow(() -> {
+			not.rimuovi(listaNotifiche.get(1));
+		});
 	}
 	
 
