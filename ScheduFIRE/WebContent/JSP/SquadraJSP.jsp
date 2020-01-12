@@ -107,11 +107,13 @@ h2 {
 					onmouseover="this.src='IMG/arrow/up-arrow-d.png'"
 					onmouseout="this.src='IMG/arrow/up-arrow-p.png'" /></a>
      
-
+<h2 class="d-flex justify-content-center" 
+			style="color: #B60000 !Important; margin-top: 3%; font-size:45px;">Modifica Squadra</h2>
 	<!-- SQUADRA DIURNA -->
-		<h2 class="d-flex justify-content-center" style="font-weight: bold; font-size: 36px;">
+		<h4 class="d-flex justify-content-center" 
+			style="color: #B60000 !Important; margin-top: 3%; font-weight: bold; font-size: 36px;">
 			Squadra del
-			<%=data.toLocalDate().format(DateTimeFormatter.ofPattern("dd MMMM YYYY", new Locale("it", "IT")))%></h2>
+			<%=data.toLocalDate().format(DateTimeFormatter.ofPattern("dd MMMM YYYY", new Locale("it", "IT")))%></h4>
 	</div>
 
 
@@ -319,10 +321,6 @@ h2 {
 
 	<script>
 
-	$(document).ready(function(){
-		$("#TitleHead").text("Modifica Squadra");
-	});
-	
 	function apriFormVF(input,rule,sq,dt) {
 		//Chiamata ajax alla servlet PersonaleDisponibileAJAX
 		$.ajax({

@@ -118,7 +118,9 @@ public class ComponenteDellaSquadraDao {
 
 
 
+
 	private static int aggiungiAlDb(ComponenteDellaSquadraBean comp, Connection con) throws SQLException {
+
 		PreparedStatement ps = con.prepareStatement("insert into ComponenteDellaSquadra(emailVF, tipologia, giornoLavorativo) "
 				+ "values (?, ?, ?);");
 		ps.setString(1, comp.getEmailVF());
@@ -133,7 +135,7 @@ public class ComponenteDellaSquadraDao {
 	 * Controlla se un vigile del fuoco lavora in un dato giorno lavorativo
 	 * @param emailVF email del vigile del fuoco 
 	 * @param giornoLavorativo giorno da testare
-	 * @return true se è vero, false alrimenti
+	 * @return true se ï¿½ vero, false alrimenti
 	 */
 	public static boolean isComponente(String emailVF, Date giornoLavorativo) {
 
@@ -217,7 +219,7 @@ public class ComponenteDellaSquadraDao {
 
 	/**
 	 * Per ordinare l'array di componenti della squadra in base alla tipologia della squadra di appartenenza
-	 * con priorietà a sala operativa, poi prima partenza, poi auto scala e infine auto botte.
+	 * con priorietï¿½ a sala operativa, poi prima partenza, poi auto scala e infine auto botte.
 	 * In caso di tipologia uguale, ordina in base al cognome che ricava dalla mail
 	 * essendo la mail composta sempre da nome<numero>.cognome
 	 * @see Comparator 

@@ -17,6 +17,8 @@ import control.EliminaVFServlet;
 import control.ModificaVFServlet;
 import control.ParametroInvalidoException;
 import model.bean.CapoTurnoBean;
+import model.bean.VigileDelFuocoBean;
+import model.dao.VigileDelFuocoDao;
 
 class EliminaVFServletTest {
 
@@ -42,6 +44,7 @@ class EliminaVFServletTest {
 	/**
 	 * Questo metodo serve per verificare se nella servlet viene eseguita l'autenticazione 
 	 * in caso di fallimento viene lanciata un eccezzione.
+	 * @throws ParametroInvalidoException
 	 */
 	@Test
 	void autenticazione() throws ServletException, IOException {
@@ -55,6 +58,8 @@ class EliminaVFServletTest {
 	
 	/**
 	 * Questo metodo viene passata l'email del VF che si intende rimuovere
+	 * il test fallisce poichè la mail non viene inviata
+	 * @throws ParametroInvalidoException
 	 */
 	@Test
 	void testemailfail() throws ServletException, IOException {
@@ -63,7 +68,14 @@ class EliminaVFServletTest {
 		request.getSession().setAttribute("capoturno", ct);
 		request.getSession().setAttribute("notifiche", "notifiche");
 		request.getSession().setAttribute("email", "capoturno");
+		assertThrows(ParametroInvalidoException.class, ()->{servlet.doPost(request, response);});
 	}
+	
+	/**
+	 * Questo metodo viene passata l'email del VF che si intende rimuovere
+	 * il test fallisce poichè la mail non viene inviata nel modo corretto
+	 * @throws ParametroInvalidoException
+	 */
 	@Test
 	void testmailfail() throws ServletException, IOException {
 		request.setSession(session);
@@ -74,6 +86,12 @@ class EliminaVFServletTest {
 		request.addParameter("emai", "dematteo.antonio");
 		assertThrows(ParametroInvalidoException.class, ()->{servlet.doPost(request, response);});
 	}
+
+	/**
+	 * Questo metodo viene passata l'email del VF che si intende rimuovere
+	 * il test va a buon fine 
+	 * @throws ParametroInvalidoException
+	 */
 	@Test
 	void testemail() throws ServletException, IOException {
 		request.setSession(session);
@@ -83,5 +101,6 @@ class EliminaVFServletTest {
 		request.getSession().setAttribute("email", "capoturno");
 		request.addParameter("email", "dematteo.antonio");
 		servlet.doPost(request, response);
+		assertEquals("./GestionePersonaleServlet",response.getRedirectedUrl());
 	}
 }

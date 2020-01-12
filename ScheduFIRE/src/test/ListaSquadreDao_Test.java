@@ -17,7 +17,7 @@ import model.dao.ListaSquadreDao;
  *
  */
 
-class ListaSquadreDAO_Test {
+class ListaSquadreDao_Test {
 	ComponenteDellaSquadraBean componenteSquadra;
 	Date data =Date.valueOf("2020-01-02");
 	Date data2 = Date.valueOf("2020-01-03");

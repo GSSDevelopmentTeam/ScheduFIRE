@@ -67,6 +67,7 @@ public class Notifiche {
 			updateSquadrePerMalattia(from, to, mail);
 		}
 
+
 		Collections.sort(listaNotifiche, (Notifica n1, Notifica n2) ->(n2.getSeverita() - n1.getSeverita()));
 	}
 
@@ -243,6 +244,24 @@ public class Notifiche {
 	
 	public List<Notifica> getListaNotifiche() {
 		return listaNotifiche;
+	}
+	
+	public void addNotifica(Notifica notifica) {
+		listaNotifiche.add(notifica);
+	}
+	
+	@Override
+	public boolean equals(Object obj) {
+		if(obj == null) {
+			return false;
+		}
+		if(getClass() != obj.getClass()) {
+			return false;
+		}
+		else {
+			Notifiche otherNotifiche = (Notifiche) obj;
+			return listaNotifiche.equals(otherNotifiche.getListaNotifiche());
+		}
 	}
 
 	/**
