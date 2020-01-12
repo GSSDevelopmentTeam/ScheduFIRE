@@ -2,8 +2,6 @@ package test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-import java.sql.SQLException;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -32,16 +30,5 @@ class CapoTurnoDaoTest {
 		assertEquals(ct,this.ct);
 		
 	}
-	
-	@Test
-	void testOttieniNull() {
-		
-		CapoTurnoDao.ottieni(null);
-		assertThrows(NullPointerException.class, () -> {
-			CapoTurnoDao.ottieni(this.ct.getEmail());
-		} );
-	
-	}
-
 
 }
