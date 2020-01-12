@@ -167,7 +167,7 @@ public class ComponenteDellaSquadraDao {
 	 * @param from data inziale
 	 * @param to data finale
 	 * @param vigile vigile del fuoco del quale si vogliono sapere le squadre relative
-	 * @return
+	 * @return La lista delle squadre relative al Vigile passato come parametro
 	 */
 	public static List<ComponenteDellaSquadraBean> getSquadreRelative(Date from, Date to, VigileDelFuocoBean vigile) {
 		String mailVF = vigile.getEmail();
@@ -219,7 +219,7 @@ public class ComponenteDellaSquadraDao {
 
 	/**
 	 * Per ordinare l'array di componenti della squadra in base alla tipologia della squadra di appartenenza
-	 * con prioriet� a sala operativa, poi prima partenza, poi auto scala e infine auto botte.
+	 * con priorieta' a sala operativa, poi prima partenza, poi auto scala e infine auto botte.
 	 * In caso di tipologia uguale, ordina in base al cognome che ricava dalla mail
 	 * essendo la mail composta sempre da nome<numero>.cognome
 	 * @see Comparator 

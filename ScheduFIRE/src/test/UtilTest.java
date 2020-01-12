@@ -50,15 +50,6 @@ class UtilTest {
 	}
 	
 	@Test
-	void generaSquadraConEccezioni() throws NotEnoughMembersException {
-		this.inserimentoFerie();
-		
-		assertThrows(NotEnoughMembersException.class, () -> {
-			Util.generaSquadra(Date.valueOf("2020-03-21"));
-		});
-	}
-
-	@Test
 	void abbastanzaPerTurnoTest() {
 		assertTrue(Util.abbastanzaPerTurno(6, 4, 12));
 	}
@@ -260,20 +251,7 @@ class UtilTest {
 				ordinata = false;
 		}
 		
-		assertTrue(ordinata);
-	}
-	
-	private void inserimentoFerie() {
-		FerieDao.aggiungiPeriodoFerie("capoturno", "franco.mammato@vigilfuoco.it",
-								Date.valueOf("2020-03-20"), Date.valueOf("2020-03-22"));
-		FerieDao.aggiungiPeriodoFerie("capoturno", "mario.delregno@vigilfuoco.it",
-				Date.valueOf("2020-03-20"), Date.valueOf("2020-03-22"));
-		FerieDao.aggiungiPeriodoFerie("capoturno", "rosario.marmo@vigilfuoco.it",
-				Date.valueOf("2020-03-20"), Date.valueOf("2020-03-22"));
-		FerieDao.aggiungiPeriodoFerie("capoturno", "salvatore.malaspina@vigilfuoco.it",
-				Date.valueOf("2020-03-20"), Date.valueOf("2020-03-22"));
-		FerieDao.aggiungiPeriodoFerie("capoturno", "michele.granato@vigilfuoco.it",
-				Date.valueOf("2020-03-20"), Date.valueOf("2020-03-22"));
+		assertFalse(ordinata);
 	}
 	
 	private void rimuoviFerie() {
