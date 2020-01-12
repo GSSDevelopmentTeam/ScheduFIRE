@@ -146,34 +146,6 @@ public class ComponenteDellaSquadraDao {
 		return schedulato;
 	}
 
-	public static List<ComponenteDellaSquadraBean> getSquadreRelative(Date from, Date to, VigileDelFuocoBean vigile) {
-		String mailVF = vigile.getEmail();
-		String sql = "SELECT * "
-				+ "FROM componentedellasquadra "
-				+ "WHERE emailVF = ? "
-				+ "AND (giornoLavorativo BETWEEN ? AND ?);";
-		try(Connection con = ConnessioneDB.getConnection()) {
-			List<ComponenteDellaSquadraBean> toReturn = new ArrayList<>();
-
-			PreparedStatement ps = con.prepareStatement(sql);
-			ps.setString(1, mailVF);
-			ps.setDate(2, from);
-			ps.setDate(3, to);
-			ResultSet rs = ps.executeQuery();
-
-			while(rs.next()) {
-				String tipologiaSquadra = rs.getString("tipologia");
-				String emailVF = rs.getString("emailVF");
-				Date data = rs.getDate("giornoLavorativo");
-				toReturn.add(new ComponenteDellaSquadraBean(tipologiaSquadra, emailVF, data));
-			}
-			return toReturn;
-		} catch (SQLException e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	
 	
 	/**
 	 * Serve a cancellare tutti i componentiDellaSquadra precedenti a questa data
@@ -193,15 +165,6 @@ public class ComponenteDellaSquadraDao {
 			throw new RuntimeException(e);
 		}
 	}
-
-
-
-
-
-
-
-
-
 
 	/*
 	 * Per ordinare l'array di componenti della squadra in base alla tipologia della squadra di appartenenza
