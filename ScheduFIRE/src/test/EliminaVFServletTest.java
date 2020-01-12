@@ -101,5 +101,6 @@ class EliminaVFServletTest {
 		request.getSession().setAttribute("email", "capoturno");
 		request.addParameter("email", "dematteo.antonio");
 		servlet.doPost(request, response);
+		assertEquals("./GestionePersonaleServlet",response.getRedirectedUrl());
 	}
 }
