@@ -34,16 +34,19 @@
 <body>
 
 
-<div id="sali"></div>
+	<div id="sali"></div>
 	<!-- Barra Navigazione -->
 	<jsp:include page="HeaderJSP.jsp" />
-	
-	<a href="#sali" class=" back-up"><img src="IMG/arrow/up-arrow-p.png" 
-					onmouseover="this.src='IMG/arrow/up-arrow-d.png'"
-					onmouseout="this.src='IMG/arrow/up-arrow-p.png'" /></a>
 
-	<h2 class="d-flex justify-content-center" 
-			style="color: #B60000 !Important; margin-top: 3%; font-size:45px;">Gestione Ferie</h2>
+
+	<a href="#sali" class=" back-up"><img
+		src="IMG/arrow/up-arrow-p.png"
+		onmouseover="this.src='IMG/arrow/up-arrow-d.png'"
+		onmouseout="this.src='IMG/arrow/up-arrow-p.png'" /></a>
+
+	<h2 class="d-flex justify-content-center"
+		style="color: #B60000 !Important; margin-top: 3%; font-size: 45px;">Gestione
+		Ferie</h2>
 
 
 	<!-- form per l'ordinamento della lista dei VF-->
@@ -126,6 +129,7 @@
         <button type="button" class="btn btn-outline-success" 
         data-dismiss="modal" onClick="ricaricaPagina()">OK</button>
 
+
       </div>
     </div>
   </div>
@@ -137,8 +141,7 @@
 		aria-labelledby="exampleModalCenterTitle" aria-hidden="true"
 		style="display: none">
 		<div class="modal-dialog modal-dialog-centered" role="document">
-			<div class="modal-content contenutiModal"
-				style="min-height: 670px;">
+			<div class="modal-content contenutiModal" style="min-height: 670px;">
 				<div class="modal-header">
 					<h5 class="modal-title" id="titoloAggiuntaFerie">Aggiunta
 						ferie</h5>
@@ -166,12 +169,12 @@
 				</div>
 
 				<div class="modal-footer">
-				
+
 					<button type="button" class="btn btn-outline-success"
 						id="bottoneAggiungiFerie" onclick="aggiungiFerie()" 
 						data-toggle ="modal" data-target ="#modalAvviso" 
 						data-dismiss="modal" disabled>Aggiungi ferie</button>
-						
+
 					<button type="button" class="btn btn-outline-danger"
 						data-dismiss="modal">Annulla</button>
 
@@ -190,8 +193,7 @@
 		aria-labelledby="exampleModalCenterTitle" aria-hidden="true"
 		style="display: none">
 		<div class="modal-dialog modal-dialog-centered" role="document">
-			<div class="modal-content contenutiModal"
-				style="min-height: 670px;">
+			<div class="modal-content contenutiModal" style="min-height: 670px;">
 				<div class="modal-header">
 					<h5 class="modal-title" id="titoloRimuoviFerie">Rimuovi ferie</h5>
 					<button type="button" class="close" data-dismiss="modal"
@@ -217,11 +219,11 @@
 
 				</div>
 				<div class="modal-footer">
-				
+
 					<button type="button" class="btn btn-outline-success"
 						id="bottoneRimuoviFerie" onclick="rimuoviFerie()" data-target ="#modalAvviso" 
 						data-dismiss="modal" disabled>Rimuovi ferie</button>
-				
+
 					<button type="button" class="btn btn-outline-danger"
 						data-dismiss="modal">Annulla</button>
 
@@ -317,14 +319,16 @@
 
 	<div class="table-responsive">
 		<div id="capo"></div>
-		<div class="d-flex justify-content-center">		 
-		<a href="#auto" class="btn btn-outline-secondary" style="margin: 3px;">Autisti</a>
-		<a href="#vigile" class="btn btn-outline-secondary" style="margin: 3px;">Vigili</a>
-	</div>
+		<div class="d-flex justify-content-center">
+			<a href="#auto" class="btn btn-outline-secondary"
+				style="margin: 3px;">Autisti</a> <a href="#vigile"
+				class="btn btn-outline-secondary" style="margin: 3px;">Vigili</a>
+		</div>
 		<h4 class="d-flex justify-content-center"
 			style="margin-top: 0%; color: #B60000 !Important">Capi Squadra</h4>
 
-		<table class="table  table-hover listaVigili" style="table-layout: fixed">
+		<table class="table  table-hover listaVigili"
+			style="table-layout: fixed">
 
 			<thead class="thead-dark">
 				<tr>
@@ -350,7 +354,10 @@
 				%>
 				<tr>
 
-					<td class="text-center"><img src="Grado/<%=vigile.getMansione().equals("Capo Squadra") && vigile.getGrado().equals("Esperto")?"EspertoCapoSquadra":vigile.getGrado() %>.png" title="<%=vigile.getGrado() %>" onerror="this.parentElement.innerHTML='Non disponibile';"></td>
+					<td class="text-center"><img
+						src="Grado/<%=vigile.getMansione().equals("Capo Squadra") && vigile.getGrado().equals("Esperto")?"EspertoCapoSquadra":vigile.getGrado() %>.png"
+						title="<%=vigile.getGrado() %>"
+						onerror="this.parentElement.innerHTML='Non disponibile';"></td>
 					<td class="text-center"><strong><%=vigile.getNome()%></strong></td>
 					<td class="text-center"><strong><%=vigile.getCognome()%></strong></td>
 					<td class="text-center"><%=vigile.getEmail()%></td>
@@ -376,10 +383,11 @@
 
 		</table>
 		<div id="auto"></div>
-		<div class="d-flex justify-content-center">		
-		<a href="#capo"	class="btn btn-outline-secondary" style="margin: 3px;">Capi Squadra</a> 
-		<a href="#vigile" class="btn btn-outline-secondary" style="margin: 3px;">Vigili</a>
-	</div>
+		<div class="d-flex justify-content-center">
+			<a href="#capo" class="btn btn-outline-secondary"
+				style="margin: 3px;">Capi Squadra</a> <a href="#vigile"
+				class="btn btn-outline-secondary" style="margin: 3px;">Vigili</a>
+		</div>
 		<h4 class="d-flex justify-content-center" id="inizio"
 			style="margin-top: 1%; color: #B60000 !Important">Autisti</h4>
 
@@ -406,7 +414,9 @@
 				%>
 
 				<tr>
-					<td class="text-center"><img src="Grado/<%=vigile.getGrado()%>.png" title="<%=vigile.getGrado() %>"
+					<td class="text-center"><img
+						src="Grado/<%=vigile.getGrado()%>.png"
+						title="<%=vigile.getGrado() %>"
 						onerror="this.parentElement.innerHTML='Non disponibile';"></td>
 					<td class="text-center"><strong><%=vigile.getNome()%></strong></td>
 					<td class="text-center"><strong><%=vigile.getCognome()%></strong></td>
@@ -432,13 +442,14 @@
 			</tbody>
 
 		</table>
-		
+
 		<div id="vigile"></div>
-		<div class="d-flex justify-content-center">		
-		<a href="#capo"	class="btn btn-outline-secondary" style="margin: 3px;">Capi Squadra</a> 
-		<a href="#auto" class="btn btn-outline-secondary" style="margin: 3px;">Autisti</a>
-	</div>
-		
+		<div class="d-flex justify-content-center">
+			<a href="#capo" class="btn btn-outline-secondary"
+				style="margin: 3px;">Capi Squadra</a> <a href="#auto"
+				class="btn btn-outline-secondary" style="margin: 3px;">Autisti</a>
+		</div>
+
 		<h4 class="d-flex justify-content-center" id="inizio"
 			style="margin-top: 1%; color: #B60000 !Important">Vigili</h4>
 
@@ -465,8 +476,10 @@
 				%>
 
 				<tr>
-					<td class="text-center"><img src="Grado/<%=vigile.getGrado()%>.png" title="<%=vigile.getGrado() %>" 
-          onerror="this.parentElement.innerHTML='Non disponibile';"></td>
+					<td class="text-center"><img
+						src="Grado/<%=vigile.getGrado()%>.png"
+						title="<%=vigile.getGrado() %>"
+						onerror="this.parentElement.innerHTML='Non disponibile';"></td>
 					<td class="text-center"><strong><%=vigile.getNome()%></strong></td>
 					<td class="text-center"><strong><%=vigile.getCognome()%></strong></td>
 					<td class="text-center"><%=vigile.getEmail()%></td>

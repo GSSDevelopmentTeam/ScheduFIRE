@@ -760,9 +760,11 @@ public class VigileDelFuocoDao {
 	
 	
 	/**
+	 * Restituisce una lista di vigili disponibili nella data richiesta
+	 * @param ordinamento come si vuole avere ordinata la lista
 	 * @param data , la data del giorno di cui si vuole avere la lista dei vigili disponibili
 	 * @return una lista di VigileDelFuocoBean che hanno attributo adoperabile=true 
-	 * 			e non sono in ferie o malattia nella data passata come parametro
+	 * e non sono in ferie o malattia nella data passata come parametro
 	 */
 	public static ArrayList<VigileDelFuocoBean> getDisponibili(Date data,int ordinamento){
 		try(Connection con = ConnessioneDB.getConnection()) {
@@ -825,9 +827,10 @@ public class VigileDelFuocoDao {
 	
 	
 	/**
-	 * @param data , la data del giorno di cui si vuole avere la lista dei vigili disponibili
-	 * @return una lista di VigileDelFuocoBean che hanno attributo adoperabile=true 
-	 * 			e non sono in ferie o malattia nella data passata come parametro
+	 * Metodo per sapere se un vigile è disponibile
+	 * @param email la mail del Vigile del quale si vuole conoscere la disponibilità
+	 * @param data la data del giorno di cui si vuole conoscere la disponibilità
+	 * @return true se il vigile è disponibile, false altrimenti-
 	 */
 	public static boolean isDisponibile(String email, Date data){
 		try(Connection con = ConnessioneDB.getConnection()) {

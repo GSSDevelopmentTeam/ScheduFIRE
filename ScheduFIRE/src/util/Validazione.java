@@ -26,8 +26,8 @@ public class Validazione {
 	
 	/**
 	 * Si occupa di controllare se il formato del parametro passato è corretto.
-	 * @param nome è una stringa che indica l username.
-	 * @return true se il formato è rispettato, false altrimenti.
+	 * @param username E' una stringa che indica l username.
+	 * @return true se il formato e' rispettato, false altrimenti.
 	 */
 	public static boolean username(String username) {
 		return (username != null) && (USERNAME.matcher(username).matches());
@@ -35,8 +35,8 @@ public class Validazione {
 	
 	/**
 	 * Si occupa di controllare se il formato del parametro passato è corretto.
-	 * @param nome è una stringa che indica la password.
-	 * @return true se il formato è rispettato, false altrimenti.
+	 * @param password E' una stringa che indica la password.
+	 * @return true se il formato e' rispettato, false altrimenti.
 	 */
 	public static boolean password(String password) {
 		return (password != null) && (PASSWORD.matcher(password).matches());
@@ -92,9 +92,9 @@ public class Validazione {
 	
 	/**
 	 * Si occupa di controllare se il formato del parametro passato è corretto.
-	 * @param ferieAnnoCorrente è un intero che rappresenta il numero 
+	 * @param giorniFerieAnnoCorrente e' un intero che rappresenta il numero 
 	 * di ferie relative all'anno corrente.
-	 * @return @return true se il formato è rispettato, false altrimenti.
+	 * @return true se il formato e' rispettato, false altrimenti.
 	 */
 	public static boolean giorniFerieAnnoCorrente(int giorniFerieAnnoCorrente) {
 		return (giorniFerieAnnoCorrente >= 0 && giorniFerieAnnoCorrente <= 22);
@@ -102,9 +102,9 @@ public class Validazione {
 	
 	/**
 	 * Si occupa di controllare se il formato del parametro passato è corretto.
-	 * @param ferieAnniPrecedenti è un intero che rappresenta il numero 
+	 * @param giorniFerieAnniPrecedenti E' un intero che rappresenta il numero 
 	 * di ferie relative agli anni precedenti.
-	 * @return @return true se il formato è rispettato, false altrimenti.
+	 * @return true se il formato e' rispettato, false altrimenti.
 	 */
 	public static boolean giorniFerieAnniPrecedenti(int giorniFerieAnniPrecedenti) {
 		return (giorniFerieAnniPrecedenti >= 0 && giorniFerieAnniPrecedenti < 1000);
