@@ -76,8 +76,8 @@ class PeriodiDiMalattiaServletTest {
 		request.getSession().setAttribute("JSON", null);
 		request.getSession().setAttribute("visMalattia", null);
 		request.setParameter("ordinamento", "nome");
-		
-		servlet.doPost(request, response);
+  
+		servlet.doGet(request, response);
 		
 		assertEquals("/JSP/GestioneMalattiaJSP.jsp", response.getForwardedUrl());
 	}

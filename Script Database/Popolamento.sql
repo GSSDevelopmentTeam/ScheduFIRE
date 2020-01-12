@@ -23,6 +23,7 @@ insert into Vigile values("marzia.mancuso@vigilfuoco.it","Marzia","Mancuso","B",
 insert into Vigile values("roberto.noschese@vigilfuoco.it","Roberto","Noschese","B","Vigile",20,0,0,true,"Esperto","turnoB");
 insert into Vigile values("gerardo.citarella@vigilfuoco.it","Gerardo","Citarella","B","Vigile",20,0,0,true,"Coordinatore","turnoB");
 insert into Vigile values("modesto.spedaliere@vigilfuoco.it","Modesto","Spedaliere","B","Vigile",20,0,0,true,"Esperto","turnoB");
+insert into Vigile values("mario.buonomo@vigilfuoco.it","Mario","Buonomo","B","Autista",20,0,0,true,"Esperto","turnoB");
 
 insert into Capoturno values("capoturno","capoturno","capoturno","B","capoturno");
 
