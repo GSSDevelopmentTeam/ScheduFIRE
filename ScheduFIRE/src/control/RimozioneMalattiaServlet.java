@@ -35,7 +35,7 @@ public class RimozioneMalattiaServlet extends HttpServlet {
      * @see HttpServlet#HttpServlet()
      */
     public RimozioneMalattiaServlet() {
-        super();
+        super(); 
         // TODO Auto-generated constructor stub
     }
 
@@ -45,7 +45,7 @@ public class RimozioneMalattiaServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		doPost(request, response);
 	}
-
+ 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
@@ -56,8 +56,6 @@ public class RimozioneMalattiaServlet extends HttpServlet {
 				Date dataFine = null;
 				boolean rimozione = false;
 				
-				boolean aggiunta1 = false;
-				boolean aggiunta2 = false;
 				
 				
 				//Ottenimento parametri
@@ -122,15 +120,23 @@ public class RimozioneMalattiaServlet extends HttpServlet {
 						
 						//Malattie da non rimuovere
 						if(iniziale != null) {
-							aggiunta1 = GiorniMalattiaDao.addMalattia(iniziale.getDataInizio(), Date.valueOf(dataInizio.toLocalDate().plusDays(-1)), iniziale.getEmailCT(), iniziale.getEmailVF());
+							GiorniMalattiaBean inizialeBean = new GiorniMalattiaBean();
+							inizialeBean.setDataInizio(iniziale.getDataInizio());
+							inizialeBean.setDataFine(Date.valueOf(dataInizio.toLocalDate().plusDays(-1)));
+							inizialeBean.setEmailCT(iniziale.getEmailCT());
+							inizialeBean.setEmailVF(iniziale.getEmailVF());
+							GiorniMalattiaDao.addMalattia(inizialeBean);
 						}
 						if(finale != null) {
-							aggiunta2 = GiorniMalattiaDao.addMalattia(Date.valueOf(dataFine.toLocalDate().plusDays(1)), finale.getDataFine(), finale.getEmailCT(), finale.getEmailVF());
+							GiorniMalattiaBean finaleBean = new GiorniMalattiaBean();
+							finaleBean.setDataInizio(Date.valueOf(dataFine.toLocalDate().plusDays(1)));
+							finaleBean.setDataFine(finale.getDataFine());
+							finaleBean.setEmailCT(finale.getEmailCT());
+							finaleBean.setEmailVF(finale.getEmailVF());
+							GiorniMalattiaDao.addMalattia(finaleBean);
 						}
 						
-						if(aggiunta1 != true || aggiunta2 != true) {
-							throw new ScheduFIREException("Impossibile rimuovere un perodo di malattia a causa di un problema imprevisto");
-						}
+						
 					
 						//Rimozione giorni malattia selezionati
 						for(GiorniMalattiaBean m : malattia) {

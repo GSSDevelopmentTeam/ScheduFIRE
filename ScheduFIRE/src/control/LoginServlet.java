@@ -26,7 +26,7 @@ public class LoginServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	public LoginServlet() {
-		super();
+		super(); 
 	}
 
 	public void doGet(HttpServletRequest request, HttpServletResponse response)
