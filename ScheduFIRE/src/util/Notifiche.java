@@ -66,6 +66,8 @@ public class Notifiche {
 		else if(cause == 5) {
 			updateSquadrePerMalattia(from, to, mail);
 		}
+		System.out.println("notifiche "+listaNotifiche);
+		
 
 		Collections.sort(listaNotifiche, (Notifica n1, Notifica n2) ->(n2.getSeverita() - n1.getSeverita()));
 	}
