@@ -16,7 +16,7 @@ public class ConnessioneDB  {
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
 		} catch (ClassNotFoundException e) {
-			System.out.println("DB driver not found: " + e.getMessage());
+			e.printStackTrace();
 		} 
 	}
 	
@@ -28,7 +28,7 @@ public class ConnessioneDB  {
 		String username = "root";
 		String password = "schedufire20";
 
-		newConnection = DriverManager.getConnection("jdbc:mysql://"+ ip+":"+ port+ "/"+ db + "?useSSL=false&serverTimezone=" + TimeZone.getDefault().getID(), username, password);
+		newConnection = DriverManager.getConnection("jdbc:mysql://"+ ip+":"+ port+ "/"+ db + "?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=" + TimeZone.getDefault().getID(), username, password);
 		newConnection.setAutoCommit(false);
 		return newConnection;
 	}

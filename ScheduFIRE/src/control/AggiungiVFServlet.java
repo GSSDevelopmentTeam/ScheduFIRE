@@ -53,7 +53,6 @@ public class AggiungiVFServlet extends HttpServlet {
 		
 		//Ottenimento parametro email dalla richiesta  
 		String email = request.getParameter("email");;
-		System.out.println("l'email passata è : "+email);
 		
 		//Controllo email
 		/*if( ! Validazione.email(email) )
