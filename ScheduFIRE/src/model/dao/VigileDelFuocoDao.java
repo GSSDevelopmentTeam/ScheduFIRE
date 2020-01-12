@@ -100,8 +100,7 @@ public class VigileDelFuocoDao {
 		
 		//controlli
 		if(chiaveEmail == null)
-			//lancio eccezione
-			;
+			throw new NullPointerException();
 		
 		try(Connection con = ConnessioneDB.getConnection()) {
 			

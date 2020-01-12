@@ -33,11 +33,7 @@ class GiorniMalattiaDaoTest {
 
 	@Test
 	void testAddMalattia_Bean_SenzaEccezioni() {
-		boolean risultatoAtteso = true;
-		
-		boolean risultato = GiorniMalattiaDao.addMalattia(malattiaTestOttieni);
-		
-		assertEquals(risultato, risultatoAtteso);
+		assertTrue(GiorniMalattiaDao.addMalattia(malattiaTestOttieni));
 	}
 	
 	@Test

@@ -312,8 +312,9 @@ class VigileDelFuocoDao_Test {
 	 */
 	@Test
 	void testSetAdoperabileFail() {
+		assertThrows(NullPointerException.class, ()-> {
 		VigileDelFuocoDao.setAdoperabile(null, true);
-		assertThrows(NullPointerException.class,()->VigileDelFuocoDao.setAdoperabile(null, true));
+		});
 	}
 	@Test
 	void testSetAdoperabile() {
@@ -349,9 +350,6 @@ class VigileDelFuocoDao_Test {
 	 */
 	@Test
 	void testGetDisponibiliFail() {
-		
-		VigileDelFuocoDao.getDisponibili(null);
-		
 		assertThrows(NullPointerException.class,()->VigileDelFuocoDao.getDisponibili(null));
 	}
 	@Test

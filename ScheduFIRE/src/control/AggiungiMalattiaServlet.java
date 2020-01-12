@@ -83,7 +83,7 @@ public class AggiungiMalattiaServlet extends HttpServlet {
 			dataFine = Date.valueOf(fineMalattia);
 
 			//Aggiornamento notifiche
-//			Notifiche.update(Notifiche.UPDATE_PER_MALATTIA, dataInizio, dataFine, emailVF);
+			//			Notifiche.update(Notifiche.UPDATE_PER_MALATTIA, dataInizio, dataFine, emailVF);
 
 			int giorniPeriodo = 0;
 
@@ -151,7 +151,9 @@ public class AggiungiMalattiaServlet extends HttpServlet {
 
 			JSONArray array = new JSONArray();
 
-			if(x) {array.put(true);}
+			if(x) {
+				array.put(true);
+			}
 			else {
 				//array.put(false);
 				throw new ScheduFIREException("Impossibile inserire la malattia. Abbiamo riscuntrato un problema imprevisto");
