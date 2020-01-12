@@ -116,33 +116,24 @@
 
 
 
-	<!--------- Alert Ok----------------->
+	<!-- Modal di avviso ferie-->
+ <div class="modal fade" id="modalAvviso" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-sm modal-dialog-centered" role="document">
+    <div class="modal-content" style="border :3px solid #5be94b;">
+      <div class="modal-body" style="align:center;">
+        <img src="IMG/fire.png" class="rounded mx-auto d-block">
+        <h4 class="modal-title text-center">Operazione effettuata con successo</h4>
+      </div>
+      <div class="modal-footer">
 
-	<div
-		class="alert alert-success flex alert-dismissible fade in text-center fixed-top"
-		id="rimozioneOk"
-		style="display: none; position: fixed; z-index: 99999; width: 100%">
-		<button type="button" class="close" onclick="nascondiOk()"
-			aria-label="close">&times;</button>
-		<strong>Operazione riuscita!</strong> <span>Rimozione ferie
-			avvenuta con successo..</span>
-	</div>
+        <button type="button" class="btn btn-outline-success" 
+        data-dismiss="modal" onClick="ricaricaPagina()">OK</button>
 
-	<!-- ----------------------- -->
 
-	<!--------- Alert NON Ok ----------------->
-
-	<div
-		class="alert alert-danger flex alert-dismissible fade in text-center fixed-top"
-		id="rimozioneNoOk"
-		style="display: none; position: fixed; z-index: 99999; width: 100%">
-
-		<button type="button" class="close" onclick="nascondiNoOk()"
-			aria-label="close">&times;</button>
-		<strong>Errore!</strong> <span>Rimozione ferie non avvenuta..</span>
-	</div>
-
-	<!-- ----------------------- -->
+      </div>
+    </div>
+  </div>
+</div>
 
 
 	<!-- Modal di aggiunta ferie-->
@@ -180,7 +171,8 @@
 				<div class="modal-footer">
 
 					<button type="button" class="btn btn-outline-success"
-						id="bottoneAggiungiFerie" onclick="aggiungiFerie()"
+						id="bottoneAggiungiFerie" onclick="aggiungiFerie()" 
+						data-toggle ="modal" data-target ="#modalAvviso" 
 						data-dismiss="modal" disabled>Aggiungi ferie</button>
 
 					<button type="button" class="btn btn-outline-danger"
@@ -229,7 +221,7 @@
 				<div class="modal-footer">
 
 					<button type="button" class="btn btn-outline-success"
-						id="bottoneRimuoviFerie" onclick="rimuoviFerie()"
+						id="bottoneRimuoviFerie" onclick="rimuoviFerie()" data-target ="#modalAvviso" 
 						data-dismiss="modal" disabled>Rimuovi ferie</button>
 
 					<button type="button" class="btn btn-outline-danger"
@@ -604,6 +596,7 @@
 						} else {
 							$("#messaggioFerie1").text(
 									"Periodo selezionato correttamente.");
+							$("#messaggioFerie2").text("");
 							$("#messaggioFerie1").attr("style",
 									"color:green");
 							$("#messaggioFerie2").attr("style",
@@ -938,7 +931,7 @@
 								var ferie = $(".listaVigili td:contains('" +email+ "')").next('td');
 					            ferie.text(response[2] + response[1]);
 					            if(response[3]){
-					            	window.location.replace("GestioneFerieServlet");
+					            	//window.location.replace("GestioneFerieServlet");
 					            }
 					            alertSuccesso("Inserimento ferie avvenuto con successo.");
 							} else {
@@ -955,6 +948,11 @@
 
 						},
 					});
+		}
+	</script>
+	<script>
+		function ricaricaPagina(){
+			window.location.replace("GestioneFerieServlet");
 		}
 	</script>
 </body>

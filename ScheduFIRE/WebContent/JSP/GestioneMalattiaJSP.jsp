@@ -38,12 +38,14 @@
 .month-item-weekdays-row {
 	min-width: 265px;
 }
-</style>
-<body>
-	<a href="#sali" class=" back-up"><img
-		src="IMG/arrow/up-arrow-p.png" style="margin-left: 5px;"
-		onmouseover="this.src='IMG/arrow/up-arrow-d.png'"
-		onmouseout="this.src='IMG/arrow/up-arrow-p.png'" /></a>
+
+	</style>
+	<body>
+	<a href="#sali" class=" back-up"><img src="IMG/arrow/up-arrow-p.png" style="margin-left: 5px;"
+					onmouseover="this.src='IMG/arrow/up-arrow-d.png'"
+					onmouseout="this.src='IMG/arrow/up-arrow-p.png'" /></a>
+					
+					
 	<!-- Modal di aggiunta malattia-->
 	<div class="modal fade" id="aggiungiMalattia" tabindex="-1"
 		role="dialog" aria-labelledby="exampleModalCenterTitle"
@@ -147,6 +149,7 @@
 						successo</h4>
 				</div>
 				<div class="modal-footer">
+
 
 					<button type="button" class="btn btn-outline-success"
 						data-dismiss="modal" onClick="ricaricaPagina()">OK</button>
@@ -684,7 +687,7 @@
 			</script>
 	<script>
 			function ricaricaPagina(){
-				window.location.replace("PeriodiDiMalattiaServlet?coglione");
+				window.location.replace("PeriodiDiMalattiaServlet");
 			}
 			</script>
 	<script>
