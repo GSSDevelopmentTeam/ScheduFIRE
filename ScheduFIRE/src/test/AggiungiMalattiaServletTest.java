@@ -17,6 +17,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.mock.web.*;
 
 import control.AggiungiMalattiaServlet;
+import control.ScheduFIREException;
 import model.bean.CapoTurnoBean;
 import model.bean.VigileDelFuocoBean;
 import model.dao.GiorniMalattiaDao;
@@ -38,7 +39,6 @@ class AggiungiMalattiaServletTest {
 		response = new MockHttpServletResponse();
 		session = new MockHttpSession();
 		
-		VigileDelFuocoDao.salva(new VigileDelFuocoBean("Mario", "Buonomo", "mario.buonomo@vigilfuoco.it", "B", "Autista", "turnoB", "qualificato", 0, 0));
 	}
 
 	@BeforeEach 
@@ -61,7 +61,6 @@ class AggiungiMalattiaServletTest {
 	@AfterAll 
 	static void remove() {
 		GiorniMalattiaDao.rimuoviPeriodoDiMalattia("mario.buonomo@vigilfuoco.it", Date.valueOf("2020-05-15"), Date.valueOf("2020-05-30"));
-		VigileDelFuocoDao.removeVigileDelFuoco("mario.buonomo@vigilfuoco.it");
 	}
 	
 	@Test
@@ -83,8 +82,16 @@ class AggiungiMalattiaServletTest {
 	}
 	
 	@Test 
-	void malattiaGiaAggiunta() {
+	void malattiaGiaAggiunta() throws ServletException, IOException {
+		request.setParameter("JSON", "aaa");
+		request.setParameter("inserisci", "true");
+		request.setParameter("emailVF", "mario.buonomo@vigilfuoco.it");
+		request.setParameter("dataInizio", "15-05-2020");
+		request.setParameter("dataFine", "30-05-2020");
 		
+		assertThrows(ScheduFIREException.class, () -> {
+			servlet.doGet(request, response);
+		});
 	}
 
 }

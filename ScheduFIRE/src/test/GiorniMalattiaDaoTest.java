@@ -28,7 +28,7 @@ class GiorniMalattiaDaoTest {
 		malattiaTestOttieni.setDataInizio(Date.valueOf("2020-03-15"));
 		malattiaTestOttieni.setDataFine(Date.valueOf("2020-03-20"));
 		malattiaTestOttieni.setEmailCT("capoturno");
-		malattiaTestOttieni.setEmailVF("ettore.anzano@vigilfuoco.it");
+		malattiaTestOttieni.setEmailVF("mario.buonomo@vigilfuoco.it");
 	}
 
 	@Test

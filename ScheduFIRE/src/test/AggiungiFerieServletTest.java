@@ -47,6 +47,7 @@ import model.bean.CapoTurnoBean;
 import model.bean.VigileDelFuocoBean;
 import model.dao.CapoTurnoDao;
 import model.dao.FerieDao;
+import util.Notifiche;
 
 
 class AggiungiFerieServletTest extends TestCase{
@@ -91,7 +92,7 @@ class AggiungiFerieServletTest extends TestCase{
 	
 		request.setSession(session);
 		request.getSession().setAttribute("ruolo", "capoturno");
-		request.getSession().setAttribute("notifiche", "notifiche");
+		request.getSession().setAttribute("notifiche", new Notifiche());
 		request.setParameter("email", "luca.raimondi@vigilfuoco.it");
 		request.setParameter("dataIniziale", "06-03-2020");
 		request.setParameter("dataFinale", "20-03-2020");
@@ -109,10 +110,12 @@ class AggiungiFerieServletTest extends TestCase{
 		request.getSession().setAttribute("notifiche", "notifiche");
 		request.setParameter("email", "luca.raimondi@vigilfuoco.it");
 		request.setParameter("dataIniziale", "08-03-2020");
-		request.setParameter("dataFinale", "06-03-2020");
+		request.setParameter("dataFinale", "08-03-2020");
 		session.setAttribute("capoturno", capoturno);
 
-		assertThrows(ScheduFIREException.class, ()->{servlet.doPost(request, response);});
+		assertThrows(ScheduFIREException.class, ()->{
+			servlet.doPost(request, response);
+			});
 	}
 	
 	@Test
@@ -120,7 +123,7 @@ class AggiungiFerieServletTest extends TestCase{
 	
 		request.setSession(session);
 		request.getSession().setAttribute("ruolo", "capoturno");
-		request.getSession().setAttribute("notifiche", "notifiche");
+		request.getSession().setAttribute("notifiche", new Notifiche());
 		request.setParameter("email", "alberto.barbarulo@vigilfuoco.it");
 		request.setParameter("dataIniziale", "06-03-2020");
 		request.setParameter("dataFinale", "08-03-2020");
