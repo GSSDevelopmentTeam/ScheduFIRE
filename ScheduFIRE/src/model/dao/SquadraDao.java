@@ -56,7 +56,7 @@ public class SquadraDao {
 	 * Serve a cancellare tutti i componentiDellaSquadra precedenti a questa data
 	 * @param data la data di partenza
 	 */
-	public static void rimuoviTutti(Date data) {
+	public static boolean rimuoviTutti(Date data) {
 		String sql = "DELETE FROM Squadra WHERE giornoLavorativo < ? ;";
 		
 		try(Connection con = ConnessioneDB.getConnection()) {
@@ -64,7 +64,7 @@ public class SquadraDao {
 			ps.setDate(1, data);
 			ps.executeUpdate();
 			con.commit();
-			return;
+			return true;
 		}
 		catch (SQLException e) {
 			throw new RuntimeException(e);
