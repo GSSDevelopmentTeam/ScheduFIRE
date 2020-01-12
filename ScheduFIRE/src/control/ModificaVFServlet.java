@@ -49,16 +49,16 @@ public class ModificaVFServlet extends HttpServlet {
 
 		//Controllo email
 		if( ! Validazione.email(emailVecchia) )
-			throw new ParametroInvalidoException("Il parametro 'email' è errato!");
+			throw new ParametroInvalidoException("Il parametro 'email' Ã¨ errato!");
 		
 		emailVecchia += "@vigilfuoco.it";
 		
 		//Ottenimento Vigile del Fuoco dal database
 		VigileDelFuocoBean vf = VigileDelFuocoDao.ottieni(emailVecchia);
 		
-		//Controllo se è nullo
+		//Controllo se Ã¨ nullo
 		if( vf == null ) 
-			throw new GestionePersonaleException("Il vigile del fuoco non è presente nel sistema!");
+			throw new GestionePersonaleException("Il vigile del fuoco non Ã¨ presente nel sistema!");
 		
 		// Ottenimento parametri del VF dalla richiesta
 		String nomeNuovo = request.getParameter("nomeNuovo");;
@@ -68,15 +68,14 @@ public class ModificaVFServlet extends HttpServlet {
 		String giorniFerieAnnoCorrenteNuoviStringa = request.getParameter("giorniFerieAnnoCorrenteNuovi");;
 		String giorniFerieAnnoPrecedenteNuoviStringa = request.getParameter("giorniFerieAnnoPrecedenteNuovi");
 		String emailNuova = request.getParameter("emailNuova");
-		System.out.println("PARAMETRI PRESI:"+nomeNuovo+cognomeNuovo+mansioneNuova+gradoNuovo+giorniFerieAnnoCorrenteNuoviStringa+giorniFerieAnnoPrecedenteNuoviStringa);
 		
 		if(giorniFerieAnnoCorrenteNuoviStringa == null ||
 			"".equals(giorniFerieAnnoCorrenteNuoviStringa))
-			throw new ScheduFIREException("Il parametro 'Giorni Ferie Anno Corrente' è nullo!");
+			throw new ScheduFIREException("Il parametro 'Giorni Ferie Anno Corrente' Ã¨ nullo!");
 		
 		if(giorniFerieAnnoPrecedenteNuoviStringa == null ||
 			"".equals(giorniFerieAnnoPrecedenteNuoviStringa))
-			throw new ScheduFIREException("Il parametro 'Giorni Ferie Anno Precedente' è nullo!");
+			throw new ScheduFIREException("Il parametro 'Giorni Ferie Anno Precedente' Ã¨ nullo!");
 		
 		//Conversione parametri da Stringa ad interi
 		Integer giorniFerieAnnoCorrenteNuovi = Integer.parseInt(giorniFerieAnnoCorrenteNuoviStringa);
@@ -85,38 +84,38 @@ public class ModificaVFServlet extends HttpServlet {
 		//Controlli
 
 		if( ! Validazione.nome(nomeNuovo) )
-			throw new ParametroInvalidoException("Il parametro 'nome' è errato!");
+			throw new ParametroInvalidoException("Il parametro 'nome' Ã¨ errato!");
 		
 		if( ! Validazione.cognome(cognomeNuovo) )
-			throw new ParametroInvalidoException("Il parametro 'cognome' è errato!");
+			throw new ParametroInvalidoException("Il parametro 'cognome' Ã¨ errato!");
 		
 		if( ! Validazione.mansione(mansioneNuova) )
-			throw new ParametroInvalidoException("Il parametro 'mansione' è errato!");
+			throw new ParametroInvalidoException("Il parametro 'mansione' Ã¨ errato!");
 		
 		if( ! Validazione.giorniFerieAnnoCorrente(giorniFerieAnnoCorrenteNuovi) )
-			throw new ParametroInvalidoException("Il parametro 'Giorni Ferie Anno Corrente' è errato!");
+			throw new ParametroInvalidoException("Il parametro 'Giorni Ferie Anno Corrente' Ã¨ errato!");
 	
 		if( ! Validazione.giorniFerieAnniPrecedenti(giorniFerieAnnoPrecedenteNuovi) )
-			throw new ParametroInvalidoException("Il parametro 'Giorni Ferie Anno Precedente' è errato!");
+			throw new ParametroInvalidoException("Il parametro 'Giorni Ferie Anno Precedente' Ã¨ errato!");
 		
-		//Se il grado non � settato e la mansione � Capo Squadra, il grado sar� 'Semplice'
+		//Se il grado non è settato e la mansione è Capo Squadra, il grado sarà 'Semplice'
 		if( mansioneNuova.equals("Capo Squadra") && gradoNuovo == null )
 			gradoNuovo = "Semplice";
 		
 		if( ! Validazione.grado(gradoNuovo) )
-			throw new ParametroInvalidoException("Il parametro 'grado' è errato!");
+			throw new ParametroInvalidoException("Il parametro 'grado' Ã¨ errato!");
 		
 		if( ! Validazione.email(emailNuova) )
-			throw new ParametroInvalidoException("Il parametro 'email' è errato!");
+			throw new ParametroInvalidoException("Il parametro 'email' Ã¨ errato!");
 		
 		//Controllo mansione
 		if( mansioneNuova.equals("Capo Squadra") && ( gradoNuovo.equals("Qualificato") 
 				|| gradoNuovo.equals("Coordinatore") ) ) 
-			throw new ParametroInvalidoException("Un Capo Squadra pu� essere solamente Esperto o Semplice!");
+			throw new ParametroInvalidoException("Un Capo Squadra può essere solamente Esperto o Semplice!");
 		
 		if( (mansioneNuova.equals("Autista") || mansioneNuova.equals("Vigile") )  
 				&&  gradoNuovo.equals("Semplice") ) 
-			throw new ParametroInvalidoException("Il parametro 'grado' � errato!");
+			throw new ParametroInvalidoException("Il parametro 'grado' è errato!");
 		
 		emailNuova += "@vigilfuoco.it";
 	
@@ -131,19 +130,19 @@ public class ModificaVFServlet extends HttpServlet {
 		VigileDelFuocoBean vfDb =  VigileDelFuocoDao.ottieni(emailNuova);
 		if( ! vf.equals(vfDb) ) {
 		
-			//Controllo email già in uso
+			//Controllo email giÃ  in uso
 			if( (vfDb != null) && ( ! emailVecchia.equals(emailNuova) ) )
-				throw new GestionePersonaleException("L'email inserita è già in uso!");
+				throw new GestionePersonaleException("L'email inserita Ã¨ giÃ  in uso!");
 			
 			vf.setEmail(emailNuova);
 			
 			// Controllo modifica Vigile del Fuoco nel database
 			if( ! VigileDelFuocoDao.modifica(emailVecchia, vf)) 
-				throw new GestionePersonaleException("La modifica del vigile del fuoco non è andata a buon fine!");
+				throw new GestionePersonaleException("La modifica del vigile del fuoco non Ã¨ andata a buon fine!");
 		
 		}
 		
-		session.setAttribute("risultato", "La modifica del Vigile del Fuoco � avvenuto con successo!");
+		session.setAttribute("risultato", "La modifica del Vigile del Fuoco è avvenuto con successo!");
 		
 		// Reindirizzamento alla jsp
 		response.sendRedirect("./GestionePersonaleServlet");

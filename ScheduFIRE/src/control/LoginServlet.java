@@ -19,7 +19,8 @@ import util.Notifiche;
 import util.PasswordSha256;
 
 /**
- * Servlet implementation class LoginServlet
+ * Classe che si occupa dell'accesso dell'utente 
+ * @author Ciro Cipolletta
  */
 @WebServlet("/Login")
 public class LoginServlet extends HttpServlet {

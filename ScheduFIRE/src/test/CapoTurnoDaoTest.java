@@ -37,8 +37,10 @@ class CapoTurnoDaoTest {
 	void testOttieniNull() {
 		
 		CapoTurnoDao.ottieni(null);
-		assertThrows(SQLException.class, () -> CapoTurnoDao.ottieni( this.ct.getEmail() ) );
-		
+		assertThrows(NullPointerException.class, () -> {
+			CapoTurnoDao.ottieni(this.ct.getEmail());
+		} );
+	
 	}
 
 
