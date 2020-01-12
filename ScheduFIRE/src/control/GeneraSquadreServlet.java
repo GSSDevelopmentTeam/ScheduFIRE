@@ -101,6 +101,7 @@ public class GeneraSquadreServlet extends HttpServlet {
 				HashMap<VigileDelFuocoBean, String> squadraDiurno=(HashMap<VigileDelFuocoBean, String>)sessione.getAttribute("squadraDiurno");
 				@SuppressWarnings("unchecked")
 				HashMap<VigileDelFuocoBean, String> squadraNotturno=(HashMap<VigileDelFuocoBean, String>)sessione.getAttribute("squadraNotturno");
+
 				List<ComponenteDellaSquadraBean> listaDiurno = vigileToComponente(squadraDiurno, data);	
 				List<ComponenteDellaSquadraBean> listaNotturno = vigileToComponente(squadraNotturno, giornoSuccessivo);			
 				CapoTurnoBean capoturno=(CapoTurnoBean)sessione.getAttribute("capoturno");
@@ -169,10 +170,6 @@ public class GeneraSquadreServlet extends HttpServlet {
 		}
 
 
-
-
-
-
 		//Se le squadre sono già state generate e sono in sessione
 		if(sessione.getAttribute("squadraDiurno") != null) {
 			HashMap<VigileDelFuocoBean, String> squadraDiurno=(HashMap<VigileDelFuocoBean, String>)sessione.getAttribute("squadraDiurno");
@@ -192,6 +189,7 @@ public class GeneraSquadreServlet extends HttpServlet {
 			while (it.hasNext()) {
 				Map.Entry coppia = (Map.Entry) it.next();
 				VigileDelFuocoBean membro = (VigileDelFuocoBean) coppia.getKey();
+
 				if(!VigileDelFuocoDao.isDisponibile(membro.getEmail(), giornoSuccessivo))
 					nonDisponibile=true;
 			}
@@ -263,7 +261,7 @@ public class GeneraSquadreServlet extends HttpServlet {
 			}
 		}
 
-		
+
 		HashMap<VigileDelFuocoBean, String> squadraDiurno=new HashMap<>();
 		for(ComponenteDellaSquadraBean componente:listaDiurno) {
 			squadraDiurno.put(VigileDelFuocoDao.ottieni(componente.getEmailVF()), componente.getTipologiaSquadra());

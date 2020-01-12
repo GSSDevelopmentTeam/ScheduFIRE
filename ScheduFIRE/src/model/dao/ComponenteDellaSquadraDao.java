@@ -85,13 +85,11 @@ public class ComponenteDellaSquadraDao {
 
 
 	private static int rimuoviDalDb(ComponenteDellaSquadraBean comp, Connection con) throws SQLException {
-		System.out.println("Componente della squadra: "+comp.getEmailVF()+" , "+comp.getTipologiaSquadra()+" , "+comp.getGiornoLavorativo());
 		PreparedStatement ps = con.prepareStatement("DELETE FROM ComponenteDellaSquadra WHERE emailVF = ? AND tipologia = ? AND giornoLavorativo = ? ;");
 		ps.setString(1, comp.getEmailVF());
 		ps.setString(2, comp.getTipologiaSquadra());
 		ps.setDate(3, comp.getGiornoLavorativo());
 		int righe=ps.executeUpdate();
-		System.out.println("righe modificate: "+righe);
 		return righe;
 
 	}
@@ -103,7 +101,6 @@ public class ComponenteDellaSquadraDao {
 				count += aggiungiAlDb(comp, con);
 				con.commit();
 			}
-			System.out.println("Conto set componente "+count);
 			return (count == componenti.size());
 		} catch (SQLException e) {
 			throw new RuntimeException(e);
@@ -112,8 +109,9 @@ public class ComponenteDellaSquadraDao {
 
 
 
-	public static int aggiungiAlDb(ComponenteDellaSquadraBean comp, Connection con) throws SQLException {
-		System.out.println("Componente della squadra: "+comp.getEmailVF()+" , "+comp.getTipologiaSquadra()+" , "+comp.getGiornoLavorativo());
+
+	private static int aggiungiAlDb(ComponenteDellaSquadraBean comp, Connection con) throws SQLException {
+
 		PreparedStatement ps = con.prepareStatement("insert into ComponenteDellaSquadra(emailVF, tipologia, giornoLavorativo) "
 				+ "values (?, ?, ?);");
 		ps.setString(1, comp.getEmailVF());
