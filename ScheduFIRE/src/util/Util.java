@@ -1,10 +1,8 @@
 package util;
 
-import java.awt.event.ComponentEvent;
 import java.sql.Date;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Base64;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
@@ -287,7 +285,7 @@ public class Util {
 
 		if(modifica==true) {
 			setFerie();
-			Date inizioAnnoNuovo=Date.valueOf(LocalDate.of(annoNuovo, 1, 1));
+			Date inizioAnnoNuovo=Date.valueOf(LocalDate.of(annoNuovo-1, 1, 1));
 			ComponenteDellaSquadraDao.rimuoviTutti(inizioAnnoNuovo);
 			SquadraDao.rimuoviTutti(inizioAnnoNuovo);
 			ListaSquadreDao.rimuoviTutte(inizioAnnoNuovo);

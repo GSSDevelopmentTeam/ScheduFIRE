@@ -1108,10 +1108,11 @@ public class VigileDelFuocoDao {
 			Iterator i = squadra.entrySet().iterator();
 			while (i.hasNext()) {
 				Map.Entry<VigileDelFuocoBean, String> pair = (Map.Entry<VigileDelFuocoBean, String>) i.next();
-				System.out.print(pair.getKey().getEmail());
+
 				int toAdd = (	pair.getValue().equals("Prima Partenza") || 
 								pair.getValue().equals("Sala Operativa")) ? 3 :
 								(pair.getValue().equals("Auto Scala")) ? 2 : 1;
+
 				ps = con.prepareStatement(incrementaCaricoLavorativo);
 				VigileDelFuocoBean vigile=VigileDelFuocoDao.ottieni(pair.getKey().getEmail());
 				ps.setInt(1, vigile.getCaricoLavoro() + toAdd);
@@ -1167,4 +1168,35 @@ public class VigileDelFuocoDao {
 		}
 	}
 
+
+
+/**
+ * Si occupa della rimozione di un Vigile del Fuoco dal database data la sua chiave.
+ * @param chiaveEmail una stringa contenente la mail del Vigile
+ * @return true se la cancellazione e' andata a buon fine 
+ */
+public static boolean deleteVF(String chiaveEmail) {
+	
+		
+	try(Connection con = ConnessioneDB.getConnection()) {
+		//Eseguo la rimozione del VF
+		PreparedStatement p = con.prepareStatement("Delete from Vigile where email = ?;");
+		p.setString(1, chiaveEmail);
+		p.execute();
+		con.commit();
+		
+		// Esecuzione query per controllare che l'eliminazione sia andata a buon fine
+		PreparedStatement ps = con.prepareStatement("select * from Vigile where email = ?;");
+		ps.setString(1, chiaveEmail);
+		ResultSet rs = ps.executeQuery();
+		
+
+		if(rs.next()) return false;
+		else return true;
+			
+	} catch (SQLException e) {
+		throw new RuntimeException(e);
+	}
+	
+}
 }

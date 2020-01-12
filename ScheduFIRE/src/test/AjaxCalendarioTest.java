@@ -65,9 +65,9 @@ class AjaxCalendarioTest {
 		
 		request.setSession(session);
 		request.getSession().setAttribute("ruolo", "capoturno");
-		request.addParameter("giorno", "1");
+		request.addParameter("giorno", "2");
 		request.addParameter("mese", "1");
-		request.addParameter("anno", "20");
+		request.addParameter("anno", "2020");
 		
 		servlet.doGet(request, response);
 		

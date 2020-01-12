@@ -145,7 +145,8 @@ min-width: 265px;
 	<!-- Barra Navigazione -->
 	<div id="sali"></div>
 	<jsp:include page="HeaderJSP.jsp" />
-	<h2 class="d-flex  justify-content-center" style="margin-top:3% ;color:#B60000!Important" ></h2>
+	<h2 class="d-flex justify-content-center" 
+			style="color: #B60000 !Important; margin-top: 3%; font-size:45px;" >Gestione Malattia</h2>
 
 	
 	<!-- form per l'ordinamento della lista dei VF-->
@@ -381,9 +382,7 @@ style="display: none;position:fixed;z-index: 99999; width:100%">
 
 		
 			<script>
-			$(document).ready(function(){
-				$("#TitleHead").text("Gestione Malattia");
-			});
+			
 		
 			
 			var picker = new Litepicker(

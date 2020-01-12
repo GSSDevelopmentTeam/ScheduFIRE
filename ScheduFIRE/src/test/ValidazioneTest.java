@@ -8,6 +8,47 @@ import util.Validazione;
 
 class ValidazioneTest {
 	Validazione val=new Validazione();
+	
+	@Test
+	void usernameNull() {
+		boolean risposta=Validazione.username(null);
+		assertFalse(risposta);
+	}
+	
+	@Test
+	void usernamePatternErrato() {
+		boolean risposta=Validazione.username("turno B");
+		assertFalse(risposta);
+	}
+	
+	@Test
+	void usernameCorretto() {
+		boolean risposta=Validazione.username("turnoB");
+		assertTrue(risposta);
+	}
+	
+	@Test
+	void passwordNull() {
+		boolean risposta=Validazione.password(null);
+		assertFalse(risposta);
+	}
+	
+	@Test
+	void passwordPatternErrato() {
+		boolean risposta=Validazione.password("turno B");
+		assertFalse(risposta);
+	}
+	
+	@Test
+	void passwordCorretto() {
+		boolean risposta=Validazione.password("turnoB");
+		assertTrue(risposta);
+	}
+	
+	
+	
+	
+	
 	@Test
 	void parametroNomeNull() {
 		boolean risposta=Validazione.nome(null);
