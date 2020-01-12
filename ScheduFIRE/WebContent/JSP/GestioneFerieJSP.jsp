@@ -219,7 +219,8 @@
 				<div class="modal-footer">
 				
 					<button type="button" class="btn btn-outline-success"
-						id="bottoneRimuoviFerie" onclick="rimuoviFerie()" data-target ="#modalAvviso" 
+						id="bottoneRimuoviFerie" onclick="rimuoviFerie()" 
+						data-toggle ="modal" data-target ="#modalAvviso" 
 						data-dismiss="modal" disabled>Rimuovi ferie</button>
 				
 					<button type="button" class="btn btn-outline-danger"

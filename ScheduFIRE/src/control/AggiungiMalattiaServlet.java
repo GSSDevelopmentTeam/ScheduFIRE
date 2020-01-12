@@ -28,8 +28,8 @@ import util.Notifiche;
 import util.Util;
 
 /**
- * Servlet implementation class AggiungiMalattiaServlet
- * 
+ * Servlet per la concessione e salvataggio delle malattie di un Vigile del Fuoco
+ * @author Biagio Bruno
  */
 @WebServlet("/AggiungiMalattiaServlet")
 public class AggiungiMalattiaServlet extends HttpServlet {
