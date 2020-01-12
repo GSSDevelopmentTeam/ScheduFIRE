@@ -73,6 +73,8 @@ class GeneraSquadreServletTest {
 		servlet = new GeneraSquadreServlet();
 		data=Date.valueOf("2010-06-02");
 		dataNonInDB=Date.valueOf("2010-06-06");
+		//Abilito il testing
+		ReflectionTestUtils.setField(servlet, "testing", "testing");
 
 		
 		giornoSuccessivo=Date.valueOf("2010-06-03");

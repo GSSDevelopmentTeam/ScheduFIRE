@@ -2,7 +2,6 @@ package control;
 
 import java.io.IOException;
 import java.sql.Date;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -33,8 +32,8 @@ import util.Util;
 @WebServlet(description = "Servlet per la generazione delle squadre", urlPatterns = { "/GeneraSquadreServlet" })
 public class GeneraSquadreServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	Date data;
-
+	private Date data;
+	private String testing;
 	/**
 	 * @see HttpServlet#HttpServlet()
 	 */
@@ -50,7 +49,7 @@ public class GeneraSquadreServlet extends HttpServlet {
 		Util.isCapoTurno(request);
 		HttpSession sessione = request.getSession();
 
-		if(data==null)
+		if(testing==null)
 			data=new Date(System.currentTimeMillis());
 
 		//Se è diurno, nextLavorativo restiuisce il giorno successivo, non il turno successivo
@@ -65,7 +64,7 @@ public class GeneraSquadreServlet extends HttpServlet {
 		
 		Util.aggiornaDB(data, giornoSuccessivo);
 
-
+		
 		//Se si vuole salvare la squadra sul db
 		if(request.getParameter("salva")!= null) {
 			//Se si vuole salvare da Calendario
