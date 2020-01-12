@@ -136,75 +136,6 @@ public class Util {
 		return toReturn;
 	}
 
-
-
-
-
-	private static List<ComponenteDellaSquadraBean> assegnaMansioniOld(List<VigileDelFuocoBean> caposquadra,
-			List<VigileDelFuocoBean> autista, List<VigileDelFuocoBean> vigile, Date data) {
-		List<ComponenteDellaSquadraBean> toReturn = new ArrayList<>();
-		SquadraBean salaOp = new SquadraBean("Sala Operativa", 3, data);
-		SquadraBean primaP = new SquadraBean("Prima Partenza", 3, data);
-		SquadraBean autoSc = new SquadraBean("Auto Scala", 2, data);
-		SquadraBean autoBo = new SquadraBean("Auto Botte", 1, data);
-		int contaSala = 0;
-		int contaPrim = 0;
-		int contaAutS = 0;
-		for(VigileDelFuocoBean vf : vigile) {
-			if(contaSala <= 2) {
-				toReturn.add(new ComponenteDellaSquadraBean(salaOp.getTipologia(), vf.getEmail(), data));
-				contaSala++;
-			}
-			else if(contaPrim <= 3) {
-				toReturn.add(new ComponenteDellaSquadraBean(primaP.getTipologia(), vf.getEmail(), data));
-				contaPrim++;
-			}
-			else if(contaAutS <= 1) {
-				toReturn.add(new ComponenteDellaSquadraBean(autoSc.getTipologia(), vf.getEmail(), data));
-				contaAutS++;
-			}
-			else {
-				toReturn.add(new ComponenteDellaSquadraBean(autoBo.getTipologia(), vf.getEmail(), data));
-			}
-		}
-
-		for(VigileDelFuocoBean cs : caposquadra) {
-			if(contaSala <= 3) {
-				toReturn.add(new ComponenteDellaSquadraBean(salaOp.getTipologia(), cs.getEmail(), data));
-				contaSala++;
-			}
-			else if(contaPrim <= 4) {
-				toReturn.add(new ComponenteDellaSquadraBean(primaP.getTipologia(), cs.getEmail(), data));
-				contaPrim++;
-			}
-			else if(contaAutS <= 2) {
-				toReturn.add(new ComponenteDellaSquadraBean(autoSc.getTipologia(), cs.getEmail(), data));
-				contaAutS++;
-			}
-			else {
-				toReturn.add(new ComponenteDellaSquadraBean(autoBo.getTipologia(), cs.getEmail(), data));
-				break;
-			}
-		}
-
-		int i = 0;
-		for(VigileDelFuocoBean au : autista) {
-			if(i == 0) {
-				toReturn.add(new ComponenteDellaSquadraBean(primaP.getTipologia(), au.getEmail(), data));
-				i++;
-			}
-			else if(i == 1) {
-				toReturn.add(new ComponenteDellaSquadraBean(autoSc.getTipologia(), au.getEmail(), data));
-				i++;
-			}
-			else {
-				toReturn.add(new ComponenteDellaSquadraBean(autoBo.getTipologia(), au.getEmail(), data));
-			}
-		}
-
-		return toReturn;
-	}
-
 	public static void sostituisciVigile(Date data, String mailVFDaSostituire) throws ScheduFIREException {
 		//Prendo componenti e mappa delle squadre per la data in questione e li rimuovo 
 		//dal DB prima di modificarli
@@ -299,8 +230,6 @@ public class Util {
 		if(request.getSession().getAttribute("ruolo")==null)
 			throw new AutenticazioneException("&Egrave; richiesta l'autenticazione per poter accedere alle funzionalit&agrave; del sito.");
 		
-
-
 	}
 
 	public static void isCapoTurno(HttpServletRequest request) throws AutenticazioneException {
