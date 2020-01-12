@@ -24,9 +24,8 @@ class SquadraDao_Test {
 	@BeforeEach
 	void setUp() throws Exception {
 		squadraTest = new SquadraBean();
-		squadraTest.setTipologia("Sala Operativa");
 		squadraTest.setData(data);
-		squadraTest.setCaricLavoro(3);
+	
 		
 	}
 	
