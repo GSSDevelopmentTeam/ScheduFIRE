@@ -10,6 +10,9 @@ import java.util.regex.Pattern;
 public class Validazione {
 	
 	//Costanti
+	private static final Pattern USERNAME=Pattern.compile("^[A-Za-z0-9]{3,20}+$");
+	
+	private static final Pattern PASSWORD=Pattern.compile("^[A-Za-z0-9]{6,16}+$");
 	
 	private static final Pattern PATTERN_NOME_COGNOME = Pattern.compile("^[A-Z]{1}[A-Z a-z]{0,19}+$");
 	
@@ -20,6 +23,24 @@ public class Validazione {
 	private static final String[] GRADI = {"Qualificato", "Esperto", "Coordinatore", "Semplice"};
 	
 	private static final String[] TURNI = {"B"};
+	
+	/**
+	 * Si occupa di controllare se il formato del parametro passato è corretto.
+	 * @param nome è una stringa che indica l username.
+	 * @return true se il formato è rispettato, false altrimenti.
+	 */
+	public static boolean username(String username) {
+		return (username != null) && (USERNAME.matcher(username).matches());
+	}
+	
+	/**
+	 * Si occupa di controllare se il formato del parametro passato è corretto.
+	 * @param nome è una stringa che indica la password.
+	 * @return true se il formato è rispettato, false altrimenti.
+	 */
+	public static boolean password(String password) {
+		return (password != null) && (PASSWORD.matcher(password).matches());
+	}
 	
 	/**
 	 * Si occupa di controllare se il formato del parametro passato è corretto.
