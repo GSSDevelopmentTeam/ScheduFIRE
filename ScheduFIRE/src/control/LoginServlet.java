@@ -17,6 +17,7 @@ import model.dao.CapoTurnoDao;
 import model.dao.UserDao;
 import util.Notifiche;
 import util.PasswordSha256;
+import util.Validazione;
 
 /**
  * Classe che si occupa dell'accesso dell'utente 
@@ -57,6 +58,25 @@ public class LoginServlet extends HttpServlet {
 
 			String username = request.getParameter("Username");
 			String password = request.getParameter("Password");
+			
+			if(username!=null) {
+				if(username.length()<3)
+					throw new ScheduFIREException("Il campo \"Username\" deve essere formato da almeno 3 caratteri");
+				else if(username.length()>20)
+					throw new ScheduFIREException("Il campo \"Username\" deve essere formato da massimo 20 caratteri");
+				else if(!Validazione.username(username))
+					throw new ScheduFIREException("Il campo \"Username\" accetta solo caratteri alfanumerici");
+			}
+			if(password!=null) {
+				if(password.length()<6)
+					throw new ScheduFIREException("Il campo \"Password\" deve essere formato da almeno 6 caratteri");
+				else if(password.length()>16)
+					throw new ScheduFIREException("Il campo \"Password\" deve essere formato da massimo 16 caratteri");
+				else if(!Validazione.password(password))
+					throw new ScheduFIREException("Il campo \"Password\" accetta solo caratteri alfanumerici");
+			}
+			
+			
 			if (username == null || username.equals(""))
 				request.getRequestDispatcher("/JSP/LoginJSP.jsp").forward(request, response);
 			else {
