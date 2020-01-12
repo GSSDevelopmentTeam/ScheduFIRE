@@ -43,6 +43,9 @@ import org.mockito.MockitoAnnotations;
 
 
 import junit.framework.TestCase;
+import model.bean.GiorniMalattiaBean;
+import model.dao.FerieDao;
+import model.dao.GiorniMalattiaDao;
 import util.Notifiche;
 
 class GestioneFerieServletTest {
@@ -59,10 +62,33 @@ class GestioneFerieServletTest {
 		request=new MockHttpServletRequest();
 		response=new MockHttpServletResponse();
 		session=new MockHttpSession();
+		
+		
 	}
+	
+	@BeforeAll
+	static void setUpBean() throws Exception {
+		malattia = new GiorniMalattiaBean();
+		malattia.setDataInizio(Date.valueOf("2020-03-15"));
+		malattia.setDataFine(Date.valueOf("2020-03-20"));
+		malattia.setEmailCT("capoturno");
+		malattia.setEmailVF("luca.raimondi@vigilfuoco.it");
+		
+		malattia2 = new GiorniMalattiaBean();
+		malattia2.setDataInizio(Date.valueOf("2020-03-15"));
+		malattia2.setDataFine(Date.valueOf("2020-03-20"));
+		malattia2.setEmailCT("capoturno");
+		malattia2.setEmailVF("luca.raimondi@vigilfuoco.it");
+	}
+	
 	@Test
-	public void test_autenticazioneFallia1() throws ServletException, IOException, ParseException{
-		assertThrows(AutenticazioneException.class, ()->{servlet.doPost(request, response);});
+	void autenticazioneRuoloErrato() throws ServletException, IOException {
+		request.setSession(session);
+		request.getSession().setAttribute("ruolo", "vigile");
+		
+		assertThrows(AutenticazioneException.class, () -> {
+			servlet.doPost(request, response);
+		});
 	}
 	
 	@Test
@@ -100,6 +126,68 @@ class GestioneFerieServletTest {
 		
 		servlet.doPost(request, response);
 		assertEquals("JSP/GestioneFerieJSP.jsp",response.getForwardedUrl());
+	}
+	
+	@Test
+	void aggiuntaJSONnull() throws ServletException, IOException {
+		request.setSession(session);
+		request.getSession().setAttribute("ruolo", "capoturno");
+		request.getSession().setAttribute("notifiche", "notifiche");
+		request.getSession().setAttribute("notifiche", "notifiche");
+		request.getSession().setAttribute("JSON", null);
+		request.getSession().setAttribute("aggiunta", null);
+		request.setParameter("ordinamento", "grado");
+		
+		servlet.doGet(request, response);
+		
+		assertEquals("JSP/GestioneFerieJSP.jsp", response.getForwardedUrl());
+	}
+	
+	@Test
+	void aggiuntaNullJSONtrue() throws ServletException, IOException {
+		request.setSession(session);
+		request.getSession().setAttribute("ruolo", "capoturno");
+		request.getSession().setAttribute("notifiche", "notifiche");
+		request.getSession().setAttribute("notifiche", "notifiche");
+		request.setParameter("JSON", "true");
+		request.getSession().setAttribute("aggiunta", null);
+		request.setParameter("ordinamento", "grado");
+		
+		servlet.doGet(request, response);
+		
+		assertEquals("JSP/GestioneFerieJSP.jsp", response.getForwardedUrl());
+	}
+	
+	@Test
+	void aggiuntaTrueJSONnull() throws ServletException, IOException {
+		request.setSession(session);
+		request.getSession().setAttribute("ruolo", "capoturno");
+		request.getSession().setAttribute("notifiche", "notifiche");
+		request.getSession().setAttribute("notifiche", "notifiche");
+		request.getSession().setAttribute("JSON", null);
+		request.getSession().setAttribute("aggiunta", "true");
+		request.setParameter("ordinamento", "grado");
+		
+		servlet.doGet(request, response);
+		
+		assertEquals("JSP/GestioneFerieJSP.jsp", response.getForwardedUrl());
+	}
+	
+	@Test
+	void aggiuntaTrueJSONtrue() throws ServletException, IOException {
+		this.inserimentoFerie();
+		
+		request.setSession(session);
+		request.getSession().setAttribute("ruolo", "capoturno");
+		request.getSession().setAttribute("notifiche", "notifiche");
+		request.getSession().setAttribute("notifiche", "notifiche");
+		request.setParameter("JSON", "true");
+		request.setParameter("aggiunta", "true");
+		request.setParameter("email", "luca.raimondi@vigilfuoco.it");
+		
+		servlet.doGet(request, response);
+		
+		assertEquals("JSP/GestioneFerieJSP.jsp", response.getForwardedUrl());
 	}
 	
 	@Test
@@ -170,6 +258,105 @@ class GestioneFerieServletTest {
 		servlet.doPost(request, response);
 		assertEquals("JSP/GestioneFerieJSP.jsp",response.getForwardedUrl());
 	}
+	
+	@Test
+	void giorniMalattieNotNull() throws ServletException, IOException {
+		this.inserimentoMalattie(malattia);
+		this.inserimentoMalattie(malattia2);
+		
+		request.setSession(session);
+		request.getSession().setAttribute("ruolo", "capoturno");
+		request.getSession().setAttribute("notifiche", "notifiche");
+		request.getSession().setAttribute("notifiche", "notifiche");
+		request.setParameter("JSON", "true");
+		request.setParameter("aggiunta", "true");
+		request.setParameter("email", "luca.raimondi@vigilfuoco.it");
+		
+		servlet.doGet(request, response);
+		
+		assertEquals("application/json", response.getContentType());
+	}
+	
+	@Test
+	void rimozioneJSONnull() throws ServletException, IOException {
+		request.setSession(session);
+		request.getSession().setAttribute("ruolo", "capoturno");
+		request.getSession().setAttribute("notifiche", "notifiche");
+		request.getSession().setAttribute("notifiche", "notifiche");
+		request.getSession().setAttribute("JSON", null);
+		request.getSession().setAttribute("rimozione", null);
+		request.setParameter("ordinamento", "cognome");
+		
+		servlet.doPost(request, response);
+		
+		assertEquals("JSP/GestioneFerieJSP.jsp", response.getForwardedUrl());
+	}
+	
+	@Test
+	void rimozioneNotNullJSONnull() throws ServletException, IOException {
+		request.setSession(session);
+		request.getSession().setAttribute("ruolo", "capoturno");
+		request.getSession().setAttribute("notifiche", "notifiche");
+		request.getSession().setAttribute("notifiche", "notifiche");
+		request.getSession().setAttribute("JSON", null);
+		request.setParameter("rimozione", "true");
+		request.setParameter("ordinamento", "cognome");
+		
+		servlet.doPost(request, response);
+		
+		assertEquals("JSP/GestioneFerieJSP.jsp", response.getForwardedUrl());
+	}
+	
+	@Test
+	void rimozioneNull() throws ServletException, IOException {
+		request.setSession(session);
+		request.getSession().setAttribute("ruolo", "capoturno");
+		request.getSession().setAttribute("notifiche", "notifiche");
+		request.getSession().setAttribute("notifiche", "notifiche");
+		request.getSession().setAttribute("JSON", "true");
+		request.getSession().setAttribute("rimozione", null);
+		request.setParameter("ordinamento", "cognome");
+		
+		servlet.doPost(request, response);
+		
+		assertEquals("JSP/GestioneFerieJSP.jsp", response.getForwardedUrl());
+	}
+	
+	@Test
+	void dataFinaleNull() throws ServletException, IOException {
+		this.inserimentoFerie();
+		
+		request.setSession(session);
+		request.getSession().setAttribute("ruolo", "capoturno");
+		request.getSession().setAttribute("notifiche", "notifiche");
+		request.getSession().setAttribute("notifiche", "notifiche");
+		request.setParameter("JSON", "true");
+		request.setParameter("rimozione", "true");
+		request.setParameter("email", "luca.raimondi@vigilfuoco.it");
+		
+		servlet.doPost(request, response);
+		
+		assertEquals("application/json", response.getContentType());
+	}
+	
+	@AfterEach
+	void tearDown() throws Exception {
+		FerieDao.rimuoviPeriodoFerie("luca.raimondi@vigilfuoco.it", 
+				Date.valueOf("2020-03-23"), Date.valueOf("2020-03-25"));
+		
+		GiorniMalattiaDao.rimuoviPeriodoDiMalattia("luca.raimondi@vigilfuoco.it", 
+									malattia.getDataInizio(), malattia.getDataFine());
+	}
+	
+	private void inserimentoMalattie(GiorniMalattiaBean giorniMalattia) {
+		GiorniMalattiaDao.addMalattia(giorniMalattia);
+	}
+	
+	private void inserimentoFerie() {
+		FerieDao.aggiungiPeriodoFerie("capoturno", "luca.raimondi@vigilfuoco.it",
+								Date.valueOf("2020-03-23"), Date.valueOf("2020-03-25"));
+	}
 
-
+	private static GiorniMalattiaBean malattia;
+	private static GiorniMalattiaBean malattia2;
 }
