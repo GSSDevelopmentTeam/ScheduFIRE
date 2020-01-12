@@ -84,12 +84,6 @@ public class RimozioneMalattiaServlet extends HttpServlet {
 						List<GiorniMalattiaBean> malattia = new ArrayList<GiorniMalattiaBean>();
 						
 						malattia = GiorniMalattiaDao.malattiaInRange(dataInizio, dataFine, emailVF);
-
-						System.out.println("MALATTIA");
-						for(GiorniMalattiaBean M : malattia) {
-							System.out.println(M.getDataInizio() + " " + M.getDataFine());
-							
-						}
 					
 						
 						//Istanziazione GiorniMalattiaBean iniziale
@@ -101,8 +95,6 @@ public class RimozioneMalattiaServlet extends HttpServlet {
 							iniziale.setEmailCT(m.getEmailCT());
 							iniziale.setDataInizio(m.getDataInizio());
 							iniziale.setDataFine(dataInizio);
-							System.out.println("ferie iniziale: "+iniziale.getDataInizio()+" "+iniziale.getDataFine());
-
 						}
 						
 						//Istanziazione GiorniMalattiaBean finale
@@ -114,8 +106,6 @@ public class RimozioneMalattiaServlet extends HttpServlet {
 							finale.setEmailCT(m.getEmailCT());
 							finale.setDataInizio(dataFine);
 							finale.setDataFine(m.getDataFine());
-							System.out.println("ferie finale: "+finale.getDataInizio()+" "+finale.getDataFine());
-
 						}
 						
 						//Malattie da non rimuovere

@@ -103,7 +103,7 @@ public class AggiungiMalattiaServlet extends HttpServlet {
 			/**
 			 * Controllo il vigile è già stato schedulato. In questo caso, si concede
 			 * la malattia e si aggiorna il CT mediante una notifica che lo avvisa 
-			 * di dover sostituire dalla squadra il vigile a cui � stata concessa la malattia
+			 * di dover sostituire dalla squadra il vigile a cui � stata concessa la malattia
 			 */
 			int i=0;
 			boolean componente = false;

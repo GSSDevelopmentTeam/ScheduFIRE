@@ -11,7 +11,11 @@ import org.junit.jupiter.api.Test;
 
 import model.bean.ComponenteDellaSquadraBean;
 import model.dao.ListaSquadreDao;
-
+/**
+ * Testing per le classi di ListaSquadreDao21.
+ * @author Ciro Cipolletta
+ *
+ */
 
 class ListaSquadreDAO_Test {
 	ComponenteDellaSquadraBean componenteSquadra;

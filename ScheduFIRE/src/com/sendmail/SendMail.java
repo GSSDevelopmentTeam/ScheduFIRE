@@ -185,7 +185,6 @@ public class SendMail {
 			InternetAddress [] address = new InternetAddress[email.size()];
 			for(int i = 0 ; i<email.size(); i++) {
 				address[i]= new InternetAddress(email.get(i));
-				System.out.println(address[i]);
 			}
 			message.setRecipients(Message.RecipientType.TO, address);
 
@@ -268,10 +267,8 @@ public class SendMail {
 			
 			message.setText(htmlFinale, "utf-8", "html");
 
-			System.out.println("sending...");
 			// Send message
 			Transport.send(message);
-			System.out.println("Sent message successfully....");
 			
 		} catch (MessagingException mex) {
 			mex.printStackTrace();
