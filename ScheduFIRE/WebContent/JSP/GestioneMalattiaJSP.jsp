@@ -3,117 +3,130 @@
 <%@page import="java.util.ArrayList, model.bean.*, model.dao.*"%>
 <!DOCTYPE html>
 <html>
-	<jsp:include page="StandardJSP.jsp" />	
-	<link type="text/css" rel="stylesheet" href="./CSS/GestionePersonaleCSS.css">
-	
-	<script
-		src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-	<script src="JS/datePicker.js"></script>
-	<script type="text/javascript"
-		src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.min.js"></script>
-	<script src="https://buttons.github.io/buttons.js"></script>
-	<script
-		src="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.js"></script>
-	<script src="JS/ferieJS.js"></script>
-	<style>
-			
+<jsp:include page="StandardJSP.jsp" />
+<link type="text/css" rel="stylesheet"
+	href="./CSS/GestionePersonaleCSS.css">
+
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="JS/datePicker.js"></script>
+<script type="text/javascript"
+	src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.min.js"></script>
+<script src="https://buttons.github.io/buttons.js"></script>
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.js"></script>
+<script src="JS/ferieJS.js"></script>
+<style>
 .table td, .table th {
-    padding: 1.5px!important;
-    vertical-align: top;
-    border-top: 1px solid #dee2e6;
+	padding: 1.5px !important;
+	vertical-align: top;
+	border-top: 1px solid #dee2e6;
 }
-.back-up{
-	border:none;
-	background:none;	
-    position: fixed;
-    bottom: 5%;
-    right: 5%;
+
+.back-up {
+	border: none;
+	background: none;
+	position: fixed;
+	bottom: 5%;
+	right: 5%;
 }
-.container__days{
-min-width: 270px;
+
+.container__days {
+	min-width: 270px;
 }
-.month-item-weekdays-row{
-min-width: 265px;
+
+.month-item-weekdays-row {
+	min-width: 265px;
 }
+
 	</style>
 	<body>
 	<a href="#sali" class=" back-up"><img src="IMG/arrow/up-arrow-p.png" style="margin-left: 5px;"
 					onmouseover="this.src='IMG/arrow/up-arrow-d.png'"
 					onmouseout="this.src='IMG/arrow/up-arrow-p.png'" /></a>
+					
+					
 	<!-- Modal di aggiunta malattia-->
-	<div class="modal fade" id="aggiungiMalattia" tabindex="-1" role="dialog"
-		aria-labelledby="exampleModalCenterTitle" aria-hidden="true" style="display: none">
+	<div class="modal fade" id="aggiungiMalattia" tabindex="-1"
+		role="dialog" aria-labelledby="exampleModalCenterTitle"
+		aria-hidden="true" style="display: none">
 		<div class="modal-dialog modal-dialog-centered" role="document">
-			<div class="modal-content contenutiModal" style="min-height: 700px;" >
+			<div class="modal-content contenutiModal" style="min-height: 700px;">
 				<div class="modal-header">
-					<h5 class="modal-title" id="titoloAggiuntaMalattia"
-						>Aggiunta malattia</h5>
+					<h5 class="modal-title" id="titoloAggiuntaMalattia">Aggiunta
+						malattia</h5>
 					<button type="button" class="close" data-dismiss="modal"
 						aria-label="Close">
 						<span aria-hidden="true">&times;</span>
 					</button>
 				</div>
 				<div class="modal-body">
-				<p>Per selezionare un solo giorno, cliccare due volte sulla data desiderata.</p>
+					<p>Per selezionare un solo giorno, cliccare due volte sulla
+						data desiderata.</p>
 					<p hidden="hidden" name="email" id="emailAggiuntaMalattia"></p>
 					<div class=" row justify-content-center">
-						<input id="dataInizio" placeholder="Giorno iniziale" size="34" /> 
+						<input id="dataInizio" placeholder="Giorno iniziale" size="34" />
 						<input id="dataFine" placeholder="Giorno finale" size="34" />
 					</div>
-				<div class="text-center" id="messaggioTurno"></div>
-					
-				<div class="text-center" id="messaggioMalattia1"></div>
-				<div class="text-center" id="messaggioMalattia2"></div>
-				
+					<div class="text-center" id="messaggioTurno"></div>
+
+					<div class="text-center" id="messaggioMalattia1"></div>
+					<div class="text-center" id="messaggioMalattia2"></div>
+
 				</div>
 
 				<div class="modal-footer">
-	  			<button type="button" class="btn btn-outline-success" id="botAggiungiMalattia" 
-	  			data-toggle ="modal"  data-target ="#modalAvviso" 
-	  			data-dismiss="modal" onClick = "inserisciMalattia()" disabled>Conferma</button>
-					<button type="button" class="btn btn-outline-danger" data-dismiss="modal">Annulla</button>
+					<button type="button" class="btn btn-outline-success"
+						id="botAggiungiMalattia" data-toggle="modal"
+						data-target="#modalAvviso" data-dismiss="modal"
+						onClick="inserisciMalattia()" disabled>Conferma</button>
+					<button type="button" class="btn btn-outline-danger"
+						data-dismiss="modal">Annulla</button>
 
 				</div>
 			</div>
 		</div>
 	</div>
-	
-	
 
-<!-- Modal rimozione malattia -->
-<div class="modal fade" id="rimuoviMalattia" tabindex="-1" role="dialog"
-		aria-labelledby="exampleModalCenterTitle" aria-hidden="true"
-		style="display: none">
+
+
+	<!-- Modal rimozione malattia -->
+	<div class="modal fade" id="rimuoviMalattia" tabindex="-1"
+		role="dialog" aria-labelledby="exampleModalCenterTitle"
+		aria-hidden="true" style="display: none">
 		<div class="modal-dialog modal-dialog-centered" role="document">
 			<div class="modal-content contenutiModal">
 				<div class="modal-header">
-					<h5 class="modal-title" id="titoloRimozioneMalattia">Rimuovi Malattia</h5>
+					<h5 class="modal-title" id="titoloRimozioneMalattia">Rimuovi
+						Malattia</h5>
 					<button type="button" class="close" data-dismiss="modal"
 						aria-label="Close">
 						<span aria-hidden="true">&times; </span>
 					</button>
 				</div>
 				<div class="modal-body">
-				<p>Per selezionare un solo giorno, cliccare due volte sulla data desiderata.</p>
+					<p>Per selezionare un solo giorno, cliccare due volte sulla
+						data desiderata.</p>
 					<p hidden="hidden" name="email" id="emailRimozioneMalattia"></p>
 					<div class=" row justify-content-center">
 						<input id="rimozioneDataIniziale" placeholder="Giorno iniziale"
 							readonly size="34" /> <input id="rimozioneDataFinale"
 							placeholder="Giorno finale" readonly size="34" />
 					</div>
-									<div class="text-center" id="messaggioTurno"></div>
-				
-				<div class="text-center" id="messaggioMalattia1"></div>
-				<div class="text-center" id="messaggioMalattia2"></div>
+					<div class="text-center" id="messaggioTurno"></div>
+
+					<div class="text-center" id="messaggioMalattia1"></div>
+					<div class="text-center" id="messaggioMalattia2"></div>
 
 
 				</div>
 				<div class="modal-footer">
-				
+
 					<button type="button" class="btn btn-outline-success"
-					id="bottoneRimuoviMalattia" data-toggle ="modal" data-target ="#modalAvviso" 
-	  				data-dismiss="modal" onClick ="rimuoviMalattia()" disabled>Rimuovi</button>
-	  				
+						id="bottoneRimuoviMalattia" data-toggle="modal"
+						data-target="#modalAvviso" data-dismiss="modal"
+						onClick="rimuoviMalattia()" disabled>Rimuovi</button>
+
 					<button type="button" class="btn btn-outline-danger"
 						data-dismiss="modal">Annulla</button>
 
@@ -121,99 +134,104 @@ min-width: 265px;
 			</div>
 		</div>
 
-	</div>	
+	</div>
 
 
-		<!-- Modal di avviso aggiunta malattia-->
- <div class="modal fade" id="modalAvviso" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-  <div class="modal-dialog modal-sm modal-dialog-centered" role="document">
-    <div class="modal-content" style="border :3px solid #5be94b;">
-      <div class="modal-body" style="align:center;">
-        <img src="IMG/fire.png" class="rounded mx-auto d-block">
-        <h4 class="modal-title text-center">Operazione effettuata con successo</h4>
-      </div>
-      <div class="modal-footer">
+	<!-- Modal di avviso aggiunta malattia-->
+	<div class="modal fade" id="modalAvviso" tabindex="-1" role="dialog"
+		aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+		<div class="modal-dialog modal-sm modal-dialog-centered"
+			role="document">
+			<div class="modal-content" style="border: 3px solid #5be94b;">
+				<div class="modal-body" style="align: center;">
+					<img src="IMG/fire.png" class="rounded mx-auto d-block">
+					<h4 class="modal-title text-center">Operazione effettuata con
+						successo</h4>
+				</div>
+				<div class="modal-footer">
 
-        <button type="button" class="btn btn-outline-success" 
-        data-dismiss="modal" onClick="ricaricaPagina()">OK</button>
 
-      </div>
-    </div>
-  </div>
-</div>
-	
+					<button type="button" class="btn btn-outline-success"
+						data-dismiss="modal" onClick="ricaricaPagina()">OK</button>
+
+				</div>
+			</div>
+		</div>
+	</div>
+
 	<!-- Barra Navigazione -->
 	<div id="sali"></div>
 	<jsp:include page="HeaderJSP.jsp" />
-	<h2 class="d-flex justify-content-center" 
-			style="color: #B60000 !Important; margin-top: 3%; font-size:45px;" >Gestione Malattia</h2>
 
-	
+	<h2 class="d-flex justify-content-center"
+		style="color: #B60000 !Important; margin-top: 3%; font-size: 45px;">Gestione
+		Malattia</h2>
+
 	<!-- form per l'ordinamento della lista dei VF-->
-		<%
+	<%
 		Object ordinamentoObj = request.getAttribute("ordinamento");
 		String ordinamento = (String) ordinamentoObj;
 		%>
 	<form action="./PeriodiDiMalattiaServlet">
-			<div align="center">
-				<label>Lista ordinata per</label>
-				<select class="custom-select" name="ordinamento" 
-				onchange="this.form.submit()"  style="width: 15%">
+		<div align="center">
+			<label>Lista ordinata per</label> <select class="custom-select"
+				name="ordinamento" onchange="this.form.submit()" style="width: 15%">
 
-					<%
+				<%
 					if( ordinamento != null ) {
 						if( ordinamento.equals("nome") ) {
 					%>
-					<option value="nome" selected>Nome</option>
-					<option value="cognome">Cognome</option>
-					<option value="grado">grado</option>
-					
-					<%
+				<option value="nome" selected>Nome</option>
+				<option value="cognome">Cognome</option>
+				<option value="grado">grado</option>
+
+				<%
 						} else if( ordinamento.equals("cognome") ) {		
 						%>
-					<option value="nome">Nome</option>
-					<option value="cognome" selected>Cognome</option>
-					<option value="grado">grado</option>
-					<%
+				<option value="nome">Nome</option>
+				<option value="cognome" selected>Cognome</option>
+				<option value="grado">grado</option>
+				<%
 						}  else if( ordinamento.equals("grado") ) {		
 						%>
-					<option value="nome">Nome</option>
-					<option value="cognome">Cognome</option>
-					<option value="grado" selected>grado</option>
-					<%}
+				<option value="nome">Nome</option>
+				<option value="cognome">Cognome</option>
+				<option value="grado" selected>grado</option>
+				<%}
 					}%>
 
-				</select>
-			</div>
-			<br>
-		</form>
-	
-	
+			</select>
+		</div>
+		<br>
+	</form>
+
+
 	<!-- body aggiungi malattia -->
-	<div class="table-responsive" >
-	
-	<div id="capo"></div>	
-	<div class="d-flex justify-content-center">		 
-		<a href="#auto" class="btn btn-outline-secondary" style="margin: 3px;">Autisti</a>
-		<a href="#vigile" class="btn btn-outline-secondary" style="margin: 3px;">Vigili</a>
-	</div>
-	<h4 class="d-flex justify-content-center" id="inizio"
-		style="margin-top: 0%; color: #B60000 !Important ">Capi Squadra</h4>
-	
+	<div class="table-responsive">
+
+		<div id="capo"></div>
+		<div class="d-flex justify-content-center">
+			<a href="#auto" class="btn btn-outline-secondary"
+				style="margin: 3px;">Autisti</a> <a href="#vigile"
+				class="btn btn-outline-secondary" style="margin: 3px;">Vigili</a>
+		</div>
+		<h4 class="d-flex justify-content-center" id="inizio"
+			style="margin-top: 0%; color: #B60000 !Important">Capi Squadra</h4>
+
 		<table class="table  table-hover" id="listaVigili">
 			<thead class="thead-dark">
 				<tr>
-					<th class="text-center"width = 14.28%>Grado</th>
-					<th class="text-center"width = 14.28%>Nome</th>
-					<th class="text-center"width = 14.28%>Cognome</th>
-					<th class="text-center"width = 14.28%>Email</th>
-					<th class="text-center"width = 14.28%>Inserisci Malattia</th>
-					<th class="text-center"width = 14.28%>Rimuovi Malattia</th>
+					<th class="text-center" width=14.28%>Grado</th>
+					<th class="text-center" width=14.28%>Nome</th>
+					<th class="text-center" width=14.28%>Cognome</th>
+					<th class="text-center" width=14.28%>Email</th>
+					<th class="text-center" width=14.28%>Inserisci Malattia</th>
+					<th class="text-center" width=14.28%>Rimuovi Malattia</th>
 				</tr>
 			</thead>
-				
-				<tbody>
-				 <%
+
+			<tbody>
+				<%
 					ArrayList<VigileDelFuocoBean> listaVigili;
 					listaVigili = (ArrayList<VigileDelFuocoBean>) request.getAttribute("listaVigili");
 
@@ -223,166 +241,186 @@ min-width: 265px;
 						if(vigile.getMansione().toUpperCase().equals("CAPO SQUADRA")){
 				%>
 
-					
-					<tr>
-						<td class="text-center"><img src="Grado/<%=vigile.getMansione().equals("Capo Squadra") && vigile.getGrado().equals("Esperto")?"EspertoCapoSquadra":vigile.getGrado() %>.png" title="<%=vigile.getGrado() %>" onerror="this.parentElement.innerHTML='Non disponibile';"></td>
-						<td class="text-center"><strong><%=vigile.getNome() %></strong></td>
-			            <td class="text-center"><strong><%=vigile.getCognome()%></strong></td>
-						<td class="text-center"><%=vigile.getEmail() %></td>
-						<td class="text-center"><button class="pass btn btn-outline-secondary" 
-						data-toggle="modal" data-target="#aggiungiMalattia"
-						onClick='apriFormAggiunta("<%=vigile.getEmail()%>")'>Aggiungi Malattia</button></td>
-						<td class="text-center"><button type="button"
+
+				<tr>
+					<td class="text-center"><img
+						src="Grado/<%=vigile.getMansione().equals("Capo Squadra") && vigile.getGrado().equals("Esperto")?"EspertoCapoSquadra":vigile.getGrado() %>.png"
+						title="<%=vigile.getGrado() %>"
+						onerror="this.parentElement.innerHTML='Non disponibile';"></td>
+					<td class="text-center"><strong><%=vigile.getNome() %></strong></td>
+					<td class="text-center"><strong><%=vigile.getCognome()%></strong></td>
+					<td class="text-center"><%=vigile.getEmail() %></td>
+					<td class="text-center"><button
+							class="pass btn btn-outline-secondary" data-toggle="modal"
+							data-target="#aggiungiMalattia"
+							onClick='apriFormAggiunta("<%=vigile.getEmail()%>")'>Aggiungi
+							Malattia</button></td>
+					<td class="text-center"><button type="button"
 							class="btn btn-outline-danger" data-toggle="modal"
 							data-target="#rimuoviMalattia"
 							onClick='apriFormRimozione("<%=vigile.getEmail()%>")'>Rimuovi
 							Malattia</button></td>
-					</tr>
-		
+				</tr>
+
 				<%
 						}
 					}
-				%>				
-				
-				</tbody>
-			
-			</table>
-			
-			
-				<div id="auto"></div>
-				<div class="d-flex justify-content-center">		
-		<a href="#capo"	class="btn btn-outline-secondary" style="margin: 3px;">Capi Squadra</a> 
-		<a href="#vigile" class="btn btn-outline-secondary" style="margin: 3px;">Vigili</a>
-	</div>
-			<h4 class="d-flex justify-content-center" id="inizio"
-		style="margin-top: 1%; color: #B60000 !Important ">Autisti</h4>
+				%>
 
-	
+			</tbody>
+
+		</table>
+
+
+		<div id="auto"></div>
+		<div class="d-flex justify-content-center">
+			<a href="#capo" class="btn btn-outline-secondary"
+				style="margin: 3px;">Capi Squadra</a> <a href="#vigile"
+				class="btn btn-outline-secondary" style="margin: 3px;">Vigili</a>
+		</div>
+		<h4 class="d-flex justify-content-center" id="inizio"
+			style="margin-top: 1%; color: #B60000 !Important">Autisti</h4>
+
+
 		<table class="table  table-hover" id="listaVigili">
 			<thead class="thead-dark">
 				<tr>
-					<th class="text-center"width = 14.28%>Grado</th>
-					<th class="text-center"width = 14.28%>Nome</th>
-					<th class="text-center"width = 14.28%>Cognome</th>
-					<th class="text-center"width = 14.28%>Email</th>
-					<th class="text-center"width = 14.28%>Inserisci Malattia</th>
-					<th class="text-center"width = 14.28%>Rimuovi Malattia</th>
+					<th class="text-center" width=14.28%>Grado</th>
+					<th class="text-center" width=14.28%>Nome</th>
+					<th class="text-center" width=14.28%>Cognome</th>
+					<th class="text-center" width=14.28%>Email</th>
+					<th class="text-center" width=14.28%>Inserisci Malattia</th>
+					<th class="text-center" width=14.28%>Rimuovi Malattia</th>
 				</tr>
 			</thead>
-				
-				<tbody>
-				 <%
+
+			<tbody>
+				<%
 					for (int i = 0; i < listaVigili.size(); i++) {
 						VigileDelFuocoBean vigile = listaVigili.get(i);
 						
 						if(vigile.getMansione().toUpperCase().equals("AUTISTA")){
 				%>
 
-					
-					<tr>
-						<td class="text-center"><img src="Grado/<%=vigile.getGrado()%>.png" title="<%=vigile.getGrado() %>"
+
+				<tr>
+					<td class="text-center"><img
+						src="Grado/<%=vigile.getGrado()%>.png"
+						title="<%=vigile.getGrado() %>"
 						onerror="this.parentElement.innerHTML='Non disponibile';"></td>
-            <td class="text-center"><strong><%=vigile.getNome() %></strong></td>
-			      <td class="text-center"><strong><%=vigile.getCognome()%></strong></td>
-						<td class="text-center"><%=vigile.getEmail() %></td>
-						<td class="text-center"><button class="pass btn btn-outline-secondary" 
-						data-toggle="modal" data-target="#aggiungiMalattia"
-						onClick='apriFormAggiunta("<%=vigile.getEmail()%>")'>Aggiungi Malattia</button></td>
-						<td class="text-center"><button type="button"
+					<td class="text-center"><strong><%=vigile.getNome() %></strong></td>
+					<td class="text-center"><strong><%=vigile.getCognome()%></strong></td>
+					<td class="text-center"><%=vigile.getEmail() %></td>
+					<td class="text-center"><button
+							class="pass btn btn-outline-secondary" data-toggle="modal"
+							data-target="#aggiungiMalattia"
+							onClick='apriFormAggiunta("<%=vigile.getEmail()%>")'>Aggiungi
+							Malattia</button></td>
+					<td class="text-center"><button type="button"
 							class="btn btn-outline-danger" data-toggle="modal"
 							data-target="#rimuoviMalattia"
 							onClick='apriFormRimozione("<%=vigile.getEmail()%>")'>Rimuovi
 							Malattia</button></td>
-					</tr>
-		
+				</tr>
+
 				<%
 						}
 					}
-				%>						
-				
-				</tbody>
-			
-			</table>
-			
-			<div id="vigile"></div>
-			<div class="d-flex justify-content-center">		
-		<a href="#capo"	class="btn btn-outline-secondary" style="margin: 3px;">Capi Squadra</a> 
-		<a href="#auto" class="btn btn-outline-secondary" style="margin: 3px;">Autisti</a>
-	</div>
-			<h4 class="d-flex justify-content-center" id="inizio"
-		style="margin-top: 1%; color: #B60000 !Important ">Vigili</h4>
+				%>
 
-	
+			</tbody>
+
+		</table>
+
+		<div id="vigile"></div>
+		<div class="d-flex justify-content-center">
+			<a href="#capo" class="btn btn-outline-secondary"
+				style="margin: 3px;">Capi Squadra</a> <a href="#auto"
+				class="btn btn-outline-secondary" style="margin: 3px;">Autisti</a>
+		</div>
+		<h4 class="d-flex justify-content-center" id="inizio"
+			style="margin-top: 1%; color: #B60000 !Important">Vigili</h4>
+
+
 		<table class="table  table-hover" id="listaVigili">
 			<thead class="thead-dark">
 				<tr>
-					<th class="text-center"width = 14.28%>Grado</th>
-					<th class="text-center"width = 14.28%>Nome</th>
-					<th class="text-center"width = 14.28%>Cognome</th>
-					<th class="text-center"width = 14.28%>Email</th>
-					<th class="text-center"width = 14.28%>Inserisci Malattia</th>
-					<th class="text-center"width = 14.28%>Rimuovi Malattia</th>
+					<th class="text-center" width=14.28%>Grado</th>
+					<th class="text-center" width=14.28%>Nome</th>
+					<th class="text-center" width=14.28%>Cognome</th>
+					<th class="text-center" width=14.28%>Email</th>
+					<th class="text-center" width=14.28%>Inserisci Malattia</th>
+					<th class="text-center" width=14.28%>Rimuovi Malattia</th>
 				</tr>
 			</thead>
-				
-				<tbody>
-				 <%
+
+			<tbody>
+				<%
 					for (int i = 0; i < listaVigili.size(); i++) {
 						VigileDelFuocoBean vigile = listaVigili.get(i);
 						
 						if(vigile.getMansione().toUpperCase().equals("VIGILE")){
 				%>
 
-					
-					<tr>
-						<td class="text-center"><img src="Grado/<%=vigile.getGrado()%>.png" title="<%=vigile.getGrado() %>"
-						onerror="this.parentElement.innerHTML='Non disponibile';"></td>
-						<td class="text-center"><strong><%=vigile.getNome() %></strong></td>
-			            <td class="text-center"><strong><%=vigile.getCognome()%></strong></td>
-						<td class="text-center"><%=vigile.getEmail() %></td>
 
-						<td class="text-center"><button class="pass btn btn-outline-secondary" 
-						data-toggle="modal" data-target="#aggiungiMalattia"
-						onClick='apriFormAggiunta("<%=vigile.getEmail()%>")'>Aggiungi Malattia</button></td>
-						<td class="text-center"><button type="button"
+				<tr>
+					<td class="text-center"><img
+						src="Grado/<%=vigile.getGrado()%>.png"
+						title="<%=vigile.getGrado() %>"
+						onerror="this.parentElement.innerHTML='Non disponibile';"></td>
+					<td class="text-center"><strong><%=vigile.getNome() %></strong></td>
+					<td class="text-center"><strong><%=vigile.getCognome()%></strong></td>
+					<td class="text-center"><%=vigile.getEmail() %></td>
+
+					<td class="text-center"><button
+							class="pass btn btn-outline-secondary" data-toggle="modal"
+							data-target="#aggiungiMalattia"
+							onClick='apriFormAggiunta("<%=vigile.getEmail()%>")'>Aggiungi
+							Malattia</button></td>
+					<td class="text-center"><button type="button"
 							class="btn btn-outline-danger" data-toggle="modal"
 							data-target="#rimuoviMalattia"
 							onClick='apriFormRimozione("<%=vigile.getEmail()%>")'>Rimuovi
 							Malattia</button></td>
-					</tr>
-		
+				</tr>
+
 				<%
 						}
 					}
-				%>						
-				
-				</tbody>
-			
-			</table>
-		</div>
+				%>
+
+			</tbody>
+
+		</table>
+	</div>
 
 
 
-<!--avvenuto inserimento-->
+	<!--avvenuto inserimento-->
 
-<div class="alert alert-success flex alert-dismissible fade in text-center fixed-top" id="inserimentoOk" 
-style="display: none;position:fixed;z-index: 99999; width:100%">
-  <strong>Operazione riuscita!</strong> <span>Malattia aggiunta correttamente..</span>
-</div>
+	<div
+		class="alert alert-success flex alert-dismissible fade in text-center fixed-top"
+		id="inserimentoOk"
+		style="display: none; position: fixed; z-index: 99999; width: 100%">
+		<strong>Operazione riuscita!</strong> <span>Malattia aggiunta
+			correttamente..</span>
+	</div>
 
-<!-- ----------------------- -->
+	<!-- ----------------------- -->
 
-<!--------- inserimento non avvenuto ----------------->
+	<!--------- inserimento non avvenuto ----------------->
 
-<div class="alert alert-danger flex alert-dismissible fade in text-center fixed-top" id="inserimentoNoOk" style="display: none;position:fixed;z-index: 99999; width:100%">
-  <strong>Errore!</strong> <span>Aggiunta malattia non avvenuta..</span>
-</div>
+	<div
+		class="alert alert-danger flex alert-dismissible fade in text-center fixed-top"
+		id="inserimentoNoOk"
+		style="display: none; position: fixed; z-index: 99999; width: 100%">
+		<strong>Errore!</strong> <span>Aggiunta malattia non avvenuta..</span>
+	</div>
 
-<!-- ----------------------- -->
 
-		
-			<script>
-			
+
+
+	<script>
 		
 			
 			var picker = new Litepicker(
@@ -572,8 +610,8 @@ style="display: none;position:fixed;z-index: 99999; width:100%">
 				});
 			}
 			</script>
-			
-			<script>
+
+	<script>
 			function inserisciMalattia(){
 				 var emailVF = document.getElementById("emailAggiuntaMalattia").innerHTML;
 				 var dataIn = $('#dataInizio').val();
@@ -647,12 +685,12 @@ style="display: none;position:fixed;z-index: 99999; width:100%">
 	}
 
 			</script>
-			<script>
+	<script>
 			function ricaricaPagina(){
-				window.location.replace("PeriodiDiMalattiaServlet?coglione");
+				window.location.replace("PeriodiDiMalattiaServlet");
 			}
 			</script>
-			<script>
+	<script>
 			
 			function alertInsuccesso(input){
 				$("#inserimentoNoOk span").text(input);
@@ -669,5 +707,5 @@ style="display: none;position:fixed;z-index: 99999; width:100%">
 			}
 			</script>
 
-	</body>
+</body>
 </html>

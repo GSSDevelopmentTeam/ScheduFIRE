@@ -126,7 +126,7 @@ public class GiorniMalattiaDao {
 	 * al Vigile del Fuoco passato come parametro nell'arco di tempo selezionato
 	 * @param dataInizio Prima data del range (inclusivo)
 	 * @param dataFine Ultima data del range (inclusivo)
-	 * @param email il Vigile del Fuoco del quale si vogliono sapere i Giorni Malattia collegati
+	 * @param emailVF il Vigile del Fuoco del quale si vogliono sapere i Giorni Malattia collegati
 	 * @return La lista di giorni malattia legati al vigile
 	 */
 	public static List<GiorniMalattiaBean> malattiaInRange(Date dataInizio, Date dataFine, String emailVF) {

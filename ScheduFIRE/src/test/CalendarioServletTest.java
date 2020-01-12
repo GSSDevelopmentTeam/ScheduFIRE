@@ -70,10 +70,34 @@ class CalendarioServletTest {
 	
 	
 	@Test
-	void annoNonNullo() throws ServletException, IOException {
+	void annoNonNulloBisestileFebbraio() throws ServletException, IOException {
 		request.setSession(session);
 		request.setAttribute("ruolo", "capoturno");
 		request.setParameter("anno","2020");
+		request.setParameter("mese", "2");
+		servlet.doGet(request, response);
+		assertEquals("JSP/CalendarioJSP.jsp",
+				response.getForwardedUrl());
+	}
+	
+	@Test
+	void annoNonBisestileFebbraio() throws ServletException, IOException {
+		request.setSession(session);
+		request.setAttribute("ruolo", "capoturno");
+		request.setParameter("anno","2019");
+		request.setParameter("mese", "2");
+		servlet.doGet(request, response);
+		assertEquals("JSP/CalendarioJSP.jsp",
+				response.getForwardedUrl());
+	}
+	
+	
+	
+	@Test
+	void annoNonBisestile() throws ServletException, IOException {
+		request.setSession(session);
+		request.setAttribute("ruolo", "capoturno");
+		request.setParameter("anno","2019");
 		servlet.doGet(request, response);
 		assertEquals("JSP/CalendarioJSP.jsp",
 				response.getForwardedUrl());
@@ -81,7 +105,17 @@ class CalendarioServletTest {
 	
 	
 	@Test
-	void meseNonNullo() throws ServletException,IOException{
+	void meseNonNulloFebbraio() throws ServletException,IOException{
+		request.setSession(session);
+		request.setAttribute("ruolo", "capoturno");
+		request.setParameter("mese","2");
+		servlet.doGet(request, response);
+		assertEquals("JSP/CalendarioJSP.jsp",
+				response.getForwardedUrl());
+	}
+	
+	@Test
+	void meseNonNulloGennaio() throws ServletException,IOException{
 		request.setSession(session);
 		request.setAttribute("ruolo", "capoturno");
 		request.setParameter("mese","1");
@@ -89,6 +123,109 @@ class CalendarioServletTest {
 		assertEquals("JSP/CalendarioJSP.jsp",
 				response.getForwardedUrl());
 	}
+	
+	@Test
+	void meseNonNulloMarzo() throws ServletException,IOException{
+		request.setSession(session);
+		request.setAttribute("ruolo", "capoturno");
+		request.setParameter("mese","3");
+		servlet.doGet(request, response);
+		assertEquals("JSP/CalendarioJSP.jsp",
+				response.getForwardedUrl());
+	}
+	
+	@Test
+	void meseNonNulloAprile() throws ServletException,IOException{
+		request.setSession(session);
+		request.setAttribute("ruolo", "capoturno");
+		request.setParameter("mese","4");
+		servlet.doGet(request, response);
+		assertEquals("JSP/CalendarioJSP.jsp",
+				response.getForwardedUrl());
+	}
+	
+	@Test
+	void meseNonNulloMaggio() throws ServletException,IOException{
+		request.setSession(session);
+		request.setAttribute("ruolo", "capoturno");
+		request.setParameter("mese","5");
+		servlet.doGet(request, response);
+		assertEquals("JSP/CalendarioJSP.jsp",
+				response.getForwardedUrl());
+	}
+	
+	@Test
+	void meseNonNulloGiugno() throws ServletException,IOException{
+		request.setSession(session);
+		request.setAttribute("ruolo", "capoturno");
+		request.setParameter("mese","6");
+		servlet.doGet(request, response);
+		assertEquals("JSP/CalendarioJSP.jsp",
+				response.getForwardedUrl());
+	}
+	
+	@Test
+	void meseNonNulloLuglio() throws ServletException,IOException{
+		request.setSession(session);
+		request.setAttribute("ruolo", "capoturno");
+		request.setParameter("mese","7");
+		servlet.doGet(request, response);
+		assertEquals("JSP/CalendarioJSP.jsp",
+				response.getForwardedUrl());
+	}
+	
+	@Test
+	void meseNonNulloAgosto() throws ServletException,IOException{
+		request.setSession(session);
+		request.setAttribute("ruolo", "capoturno");
+		request.setParameter("mese","8");
+		servlet.doGet(request, response);
+		assertEquals("JSP/CalendarioJSP.jsp",
+				response.getForwardedUrl());
+	}
+	
+	@Test
+	void meseNonNulloSettembre() throws ServletException,IOException{
+		request.setSession(session);
+		request.setAttribute("ruolo", "capoturno");
+		request.setParameter("mese","9");
+		servlet.doGet(request, response);
+		assertEquals("JSP/CalendarioJSP.jsp",
+				response.getForwardedUrl());
+	}
+	
+	@Test
+	void meseNonNulloOttobre() throws ServletException,IOException{
+		request.setSession(session);
+		request.setAttribute("ruolo", "capoturno");
+		request.setParameter("mese","10");
+		servlet.doGet(request, response);
+		assertEquals("JSP/CalendarioJSP.jsp",
+				response.getForwardedUrl());
+	}
+	
+	@Test
+	void meseNonNulloNovembre() throws ServletException,IOException{
+		request.setSession(session);
+		request.setAttribute("ruolo", "capoturno");
+		request.setParameter("mese","11");
+		servlet.doGet(request, response);
+		assertEquals("JSP/CalendarioJSP.jsp",
+				response.getForwardedUrl());
+	}
+	
+	@Test
+	void meseNonNulloDicembre() throws ServletException,IOException{
+		request.setSession(session);
+		request.setAttribute("ruolo", "capoturno");
+		request.setParameter("mese","12");
+		servlet.doGet(request, response);
+		assertEquals("JSP/CalendarioJSP.jsp",
+				response.getForwardedUrl());
+	}
+	
+	
+	
 	
 	@Test
 	void isBisestile() throws ServletException,IOException {

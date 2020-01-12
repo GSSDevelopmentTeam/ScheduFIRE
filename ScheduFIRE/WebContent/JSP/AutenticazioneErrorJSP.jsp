@@ -6,9 +6,8 @@
 <link rel="icon" href="IMG/logoSF.png">
 <link type="text/css" rel="stylesheet" href="CSS/ErrorCSS.css">
 <style>
-body{
-text-align: center;
-
+body {
+	text-align: center;
 }
 </style>
 <body>
@@ -16,16 +15,18 @@ text-align: center;
 	<!-- Barra Navigazione -->
 	<jsp:include page="StandardJSP.jsp" />
 	<jsp:include page="HeaderJSPError.jsp" />
-	<h1 class="d-flex justify-content-center" style="margin-top:5%; font-size: 60px;" >
-		<img src="IMG/fire.png" width="100" height="100" class="fr" >Errore<img src="IMG/fire.png"
-			class="fr">
+	<h1 class="d-flex justify-content-center"
+		style="margin-top: 5%; font-size: 60px;">
+		<img src="IMG/fire.png" width="100" height="100" class="fr">Errore<img
+			src="IMG/fire.png" class="fr">
 	</h1>
-	
-			<p style="text-align: center; font-size: 30px; class="text-center"> <%= exception.getMessage() %> </p>
-	<p class="d-flex justify-content-center" style="text-align: center; font-size: 30px; ">
-	
-		Verrai reindirizzato alla pagina di Login.
+
+	<p style="text-align: center; font-size: 30px;"text-center">
+		<%= exception.getMessage() %>
 	</p>
+	<p class="d-flex justify-content-center"
+		style="text-align: center; font-size: 30px;">Verrai reindirizzato
+		alla pagina di Login.</p>
 	<script>
 	
 		$(document).ready(function() {
