@@ -52,7 +52,7 @@ public class VigileDelFuocoDao {
 	/**
 	 * Si occupa del salvataggio dei dati di un Vigile del Fuoco nel database.
 	 * @param vf Il vigile da memorizzare del database
-	 * @return true se l'operazione va a buon fine, false altrimenti
+	 * @return TRUE se l'operazione va a buon fine, FALSE altrimenti
 	 */
 	public static boolean salva(VigileDelFuocoBean vf) {
 		
@@ -208,7 +208,7 @@ public class VigileDelFuocoDao {
 	/**
 	 * Si occupa dell'ottenimento di una collezione di VigileDelFuocoBean dal database
 	 * con campo 'adoperabile' settato a true.
-	 * @param ordinamento � un intero che determina il tipo di ordinamento della collezione
+	 * @param ordinamento e' un intero che determina il tipo di ordinamento della collezione
 	 * @return una collezione di VigileDelFuocoBean con campo 'adoperabile' settato a true 
 	 */
 	public static Collection<VigileDelFuocoBean> ottieni(int ordinamento) {
@@ -272,9 +272,9 @@ public class VigileDelFuocoDao {
 	/**
 	 * Si occupa dell'ottenimento di una collezione di VigileDelFuocoBean dal database
 	 * con campo 'adoperabile' settato a true e che risultano in malattia alla data passata per parametro.
-	 * @param ordinamento è un intero che determina il tipo di ordinamento della collezione
-	 * @param data è il giorno per cui viene effettuato il controllo
-	 * @return una collezione di VigileDelFuocoBean con campo 'adoperabile' settato a true 
+	 * @param ordinamento e' un intero che determina il tipo di ordinamento della collezione
+	 * @param data e' il giorno per cui viene effettuato il controllo
+	 * @return una collezione di VigileDelFuocoBean con campo 'adoperabile' settato a TRUE 
 	 */
 	public static Collection<VigileDelFuocoBean> ottieniInFerie(int ordinamento,Date data) {
 		
@@ -340,7 +340,7 @@ public class VigileDelFuocoDao {
 	/**
 	 * Si occupa dell'ottenimento di una collezione di VigileDelFuocoBean dal database
 	 * con campo 'adoperabile' settato a true e che risultano in malattia alla data passata per parametro.
-	 * @param ordinamento è un intero che determina il tipo di ordinamento della collezione
+	 * @param ordinamento e' un intero che determina il tipo di ordinamento della collezione
 	 * @param data è il giorno per cui viene effettuato il controllo
 	 * @return una collezione di VigileDelFuocoBean con campo 'adoperabile' settato a true 
 	 */
@@ -404,7 +404,7 @@ public class VigileDelFuocoDao {
 	/**
 	 * Si occupa dell'ottenimento di una collezione di VigileDelFuocoBean dal database
 	 * con mansione 'Capo Squadra' con campo 'adoperabile' settato a true.
-	 * @param ordinamento � un intero che determina il tipo di ordinamento della collezione
+	 * @param ordinamento e' un intero che determina il tipo di ordinamento della collezione
 	 * @return una collezione di VigileDelFuocoBean con campo 'adoperabile' settato a true 
 	 * e mansione 'Capo Squadra' 
 	 */
@@ -468,7 +468,7 @@ public class VigileDelFuocoDao {
 	/**
 	 * Si occupa dell'ottenimento di una collezione di VigileDelFuocoBean dal database
 	 * con mansione 'Autista' con campo 'adoperabile' settato a true.
-	 * @param ordinamento � un intero che determina il tipo di ordinamento della collezione
+	 * @param ordinamento e' un intero che determina il tipo di ordinamento della collezione
 	 * @return una collezione di VigileDelFuocoBean con campo 'adoperabile' settato a true 
 	 * e mansione 'Autista' 
 	 */
@@ -532,7 +532,7 @@ public class VigileDelFuocoDao {
 	/**
 	 * Si occupa dell'ottenimento di una collezione di VigileDelFuocoBean dal database
 	 * con mansione 'Vigile' con campo 'adoperabile' settato a true.
-	 * @param ordinamento � un intero che determina il tipo di ordinamento della collezione
+	 * @param ordinamento e' un intero che determina il tipo di ordinamento della collezione
 	 * @return una collezione di VigileDelFuocoBean con campo 'adoperabile' settato a true 
 	 * e mansione 'Vigile' 
 	 */
@@ -621,8 +621,8 @@ public class VigileDelFuocoDao {
 	/**
 	 * Si occupa del settaggio del campo 'adoperabile' di un Vigile del Fuoco
 	 * nel database, identificato dalla sua chiave.
-	 * @param chiaveEmail � una stringa che identifica un VigileDelFuocoBean nel database
-	 * @param adoperabile � un booleano che indica l'adoperabilit� di un VigileDelFuocoBean
+	 * @param chiaveEmail e' una stringa che identifica un VigileDelFuocoBean nel database
+	 * @param adoperabile e' un booleano che indica l'adoperabilit� di un VigileDelFuocoBean
 	 * @return true se l'operazione va a buon fine, false altrimenti
 	 */
 	public static boolean setAdoperabile(String chiaveEmail, boolean adoperabile) {
@@ -651,9 +651,9 @@ public class VigileDelFuocoDao {
 	
 	/**
 	 * Si occupa della modifica dei dati di un Vigile del Fuoco nel database.
-	 * @param chiaveEmail � una stringa che identifica un VigileDelFuocoBean nel database
-	 * @param nuovoVF ,  � un oggetto di tipo VigileDelFuocoBean
-	 * @return true se l'operazione va a buon fine, false altrimenti
+	 * @param chiaveEmail e' una stringa che identifica un VigileDelFuocoBean nel database
+	 * @param nuovoVF un oggetto di tipo VigileDelFuocoBean
+	 * @return TRUE se l'operazione va a buon fine, FALSE altrimenti
 	 */
 	public static boolean modifica(String chiaveEmail, VigileDelFuocoBean nuovoVF) {
 		
@@ -694,7 +694,7 @@ public class VigileDelFuocoDao {
 	
 	
 	/**
-	 * @param data , la data del giorno di cui si vuole avere la lista dei vigili disponibili
+	 * @param data la data del giorno di cui si vuole avere la lista dei vigili disponibili
 	 * @return una lista di VigileDelFuocoBean che hanno attributo adoperabile=true 
 	 * 			e non sono in ferie o malattia nella data passata come parametro
 	 */
@@ -760,7 +760,7 @@ public class VigileDelFuocoDao {
 	
 	
 	/**
-	 * @param data , la data del giorno di cui si vuole avere la lista dei vigili disponibili
+	 * @param data la data del giorno di cui si vuole avere la lista dei vigili disponibili
 	 * @return una lista di VigileDelFuocoBean che hanno attributo adoperabile=true 
 	 * 			e non sono in ferie o malattia nella data passata come parametro
 	 */
@@ -825,7 +825,7 @@ public class VigileDelFuocoDao {
 	
 	
 	/**
-	 * @param data , la data del giorno di cui si vuole avere la lista dei vigili disponibili
+	 * @param data la data del giorno di cui si vuole avere la lista dei vigili disponibili
 	 * @return una lista di VigileDelFuocoBean che hanno attributo adoperabile=true 
 	 * 			e non sono in ferie o malattia nella data passata come parametro
 	 */
@@ -971,8 +971,8 @@ public class VigileDelFuocoDao {
 
 	/**
 	 * Si occupa del prelevamento del numero di ferie accumulate negli anni precedenti dal VF, dal dataBase.
-	 * @param emailVF (String): L'email del VF del quale si ha bisogno del numero di ferie degli anni precedenti
-	 * @return feriePrecedenti (int): numero di ferie a disposizione degli anni precedenti
+	 * @param emailVF l'email del VF del quale si ha bisogno del numero di ferie degli anni precedenti
+	 * @return numero di ferie a disposizione degli anni precedenti
 	 */
 	public static int ottieniNumeroFeriePrecedenti(String emailVF) {
 		PreparedStatement ps;
@@ -1004,8 +1004,8 @@ public class VigileDelFuocoDao {
 
 	/**
 	 * Si occupa del prelevamento del numero di ferie dell'anno corrente a disposizione del VF, dal dataBase.
-	 * @param emailVF (String): L'email del VF del quale si ha bisogno del numero di ferie degli anni precedenti
-	 * @return ferieCorrenti (int): numero di ferie a disposizione relative all'anno corrente
+	 * @param emailVF l'email del VF del quale si ha bisogno del numero di ferie degli anni precedenti
+	 * @return numero di ferie a disposizione relative all'anno corrente
 	 */
 	public static int ottieniNumeroFerieCorrenti(String emailVF) {
 		PreparedStatement ps;
@@ -1037,8 +1037,8 @@ public class VigileDelFuocoDao {
 	
 	/**
 	 * Si occupa dell'aggiornamento nel dataBase, del numero di ferie accumulate negli anni precedenti dal VF
-	 * @param emailVF (String): L'email del VF per il quale bisogna aggiornare il numero di ferie degli anni precedenti
-	 * @param numeroFerie (int): Il nuovo numero di ferie relative all'anno precedente, da inserire nel dataBase
+	 * @param emailVFl'email del VF per il quale bisogna aggiornare il numero di ferie degli anni precedenti
+	 * @param il nuovo numero di ferie relative all'anno precedente, da inserire nel dataBase
 	 */
 	public static void aggiornaFeriePrecedenti(String emailVF, int numeroFerie) {
 		PreparedStatement ps;
@@ -1066,8 +1066,8 @@ public class VigileDelFuocoDao {
 
 	/**
 	 * Si occupa dell'aggiornamento nel dataBase, del numero di ferie relativo all'anno corrente, a disposizione del VF
-	 * @param emailVF (String): L'email del VF per il quale bisogna aggiornare il numero di ferie relativo all'anno corrente
-	 * @param numeroFerie (int): Il nuovo numero di ferie relativo all'anno corrente, da inserire nel dataBase
+	 * @param emailVF l'email del VF per il quale bisogna aggiornare il numero di ferie relativo all'anno corrente
+	 * @param numeroFerie il nuovo numero di ferie relativo all'anno corrente, da inserire nel dataBase
 	 */
 	public static void aggiornaFerieCorrenti(String emailVF, int numeroFerie) {
 		PreparedStatement ps;
@@ -1097,7 +1097,7 @@ public class VigileDelFuocoDao {
 	 * Il metodo incrementa per ogni vigile del fuoco (nella mappa 'Key') il suo carico lavorativo
 	 * a seconda della squadra assegnata (nella mappa 'Value'). 
 	 * @param squadra Una mappa di Vigili del Fuoco e delle relative squadre 
-	 * @return true se l'operazione va a buon fine, false altrimenti.
+	 * @return TRUE se l'operazione va a buon fine, FALSE altrimenti.
 	 */
 	public static boolean caricoLavorativo(HashMap<VigileDelFuocoBean, String> squadra) {
 		try (Connection con = ConnessioneDB.getConnection()) {
@@ -1131,7 +1131,7 @@ public class VigileDelFuocoDao {
 	 * Il metodo decrementa per ogni vigile del fuoco (nella mappa 'Key') il suo carico lavorativo
 	 * a seconda della squadra assegnata (nella mappa 'Value'). 
 	 * @param squadra Una mappa di Vigili del Fuoco e delle relative squadre 
-	 * @return true se l'operazione va a buon fine, false altrimenti.
+	 * @return TRUE se l'operazione va a buon fine, FALSE altrimenti.
 	 */
 	public static boolean removeCaricoLavorativo(HashMap<VigileDelFuocoBean, String> squadra) {
 		try (Connection con = ConnessioneDB.getConnection()) {
@@ -1173,7 +1173,7 @@ public class VigileDelFuocoDao {
 /**
  * Si occupa della rimozione di un Vigile del Fuoco dal database data la sua chiave.
  * @param chiaveEmail una stringa contenente la mail del Vigile
- * @return true se la cancellazione e' andata a buon fine 
+ * @return TRUE se la cancellazione e' andata a buon fine 
  */
 public static boolean deleteVF(String chiaveEmail) {
 	

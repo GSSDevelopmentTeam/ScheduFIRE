@@ -9,6 +9,11 @@ import model.ConnessioneDB;
 
 public class SquadraDao {
 
+	/**
+	 * Aggiunge al DB le 4 squadre alla data passata come parametro
+	 * @param data la data in cui aggiungere le squadre
+	 * @return TRUE se l'aggiunta va a buon fine, FALSE altrimenti
+	 */
 	public static boolean aggiungiSquadra(Date data) {
 		int count = 0;
 		try(Connection con = ConnessioneDB.getConnection()) {
@@ -25,9 +30,9 @@ public class SquadraDao {
 
 	private static int aggiungiAutoBo(Connection con, Date data) throws SQLException {
 		PreparedStatement ps = con.prepareStatement("INSERT INTO squadra (tipologia, "
-			+ "giornoLavorativo, caricoLavoro) VALUES (\"Auto Botte\", ?, 1);");
-	ps.setDate(1 , data);
-	return (ps.executeUpdate());
+				+ "giornoLavorativo, caricoLavoro) VALUES (\"Auto Botte\", ?, 1);");
+		ps.setDate(1 , data);
+		return (ps.executeUpdate());
 	}
 
 	private static int aggiungiAutoSc(Connection con, Date data) throws SQLException {
@@ -50,15 +55,15 @@ public class SquadraDao {
 		ps.setDate(1 , data);
 		return (ps.executeUpdate());
 	}
-	
-	
+
+
 	/**
 	 * Serve a cancellare tutti i componentiDellaSquadra precedenti a questa data
 	 * @param data la data di partenza
 	 */
 	public static boolean rimuoviTutti(Date data) {
 		String sql = "DELETE FROM Squadra WHERE giornoLavorativo < ? ;";
-		
+
 		try(Connection con = ConnessioneDB.getConnection()) {
 			PreparedStatement ps = con.prepareStatement(sql);
 			ps.setDate(1, data);
