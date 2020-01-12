@@ -1167,5 +1167,15 @@ public class VigileDelFuocoDao {
 			throw new RuntimeException(e);
 		}
 	}
+	
+	public static boolean removeVigileDelFuoco(String string) {
+		try (Connection con = ConnessioneDB.getConnection()){
+			PreparedStatement ps = con.prepareStatement("DELETE FROM vigile WHERE email = ?;");
+			ps.setString(1, string);
+			return (ps.executeUpdate() == 1);
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+		}
+	}
 
 }
