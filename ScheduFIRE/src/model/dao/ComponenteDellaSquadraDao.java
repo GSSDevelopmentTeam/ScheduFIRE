@@ -109,7 +109,9 @@ public class ComponenteDellaSquadraDao {
 
 
 
+
 	private static int aggiungiAlDb(ComponenteDellaSquadraBean comp, Connection con) throws SQLException {
+
 		PreparedStatement ps = con.prepareStatement("insert into ComponenteDellaSquadra(emailVF, tipologia, giornoLavorativo) "
 				+ "values (?, ?, ?);");
 		ps.setString(1, comp.getEmailVF());
