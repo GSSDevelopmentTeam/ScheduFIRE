@@ -1,5 +1,7 @@
 package test;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
 import java.io.IOException;
 
 import javax.servlet.ServletException;
@@ -11,6 +13,7 @@ import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.mock.web.MockHttpSession;
 
 import control.LoginServlet;
+import control.ScheduFIREException;
 
 class LoginServletTest {
 
@@ -26,7 +29,6 @@ class LoginServletTest {
 		request = new MockHttpServletRequest();
 		response = new MockHttpServletResponse();
 		session = new MockHttpSession();
-
 		
 	}
 	
@@ -58,8 +60,10 @@ class LoginServletTest {
 		
 		request.addParameter("Username", "");
 		request.addParameter("Password", "");
-		
-		servlet.doGet(request, response);
+	
+		assertThrows(ScheduFIREException.class, () -> {
+			servlet.doGet(request, response);
+			});
 		
 	}
 	
@@ -86,6 +90,81 @@ class LoginServletTest {
 		request.addParameter("Password", "capoturno");
 		
 		servlet.doGet(request, response);
+		
+	}
+	
+	@Test
+	void test6() throws ServletException, IOException {
+		
+		request.setSession(session);
+		request.getSession().setAttribute("ruolo", null);
+		
+		request.addParameter("Username", "capoturnocapoturnocapoturnocapoturno");
+		request.addParameter("Password", "capoturno");
+		
+		assertThrows(ScheduFIREException.class, () -> {
+			servlet.doGet(request, response);
+			});
+		
+	}
+	
+	@Test
+	void test7() throws ServletException, IOException {
+		
+		request.setSession(session);
+		request.getSession().setAttribute("ruolo", null);
+		
+		request.addParameter("Username", "capoturno");
+		request.addParameter("Password", "");
+		
+		assertThrows(ScheduFIREException.class, () -> {
+			servlet.doGet(request, response);
+			});
+		
+	}
+	
+	@Test
+	void test8() throws ServletException, IOException {
+		
+		request.setSession(session);
+		request.getSession().setAttribute("ruolo", null);
+		
+		request.addParameter("Username", "capoturno");
+		request.addParameter("Password", "capoturnocapoturnocapoturno");
+		
+		assertThrows(ScheduFIREException.class, () -> {
+			servlet.doGet(request, response);
+			});
+		
+	}
+	
+	@Test
+	void test9() throws ServletException, IOException {
+		
+		request.setSession(session);
+		request.getSession().setAttribute("ruolo", null);
+		
+		request.addParameter("Username", "capo turno");
+		request.addParameter("Password", "capoturno");
+		
+		assertThrows(ScheduFIREException.class, () -> {
+			servlet.doGet(request, response);
+			});
+		
+	}
+	
+	@Test
+	void test10() throws ServletException, IOException {
+		
+		request.setSession(session);
+		request.getSession().setAttribute("ruolo", null);
+		
+		request.addParameter("Username", "capoturno");
+		request.addParameter("Password", "capo turno");
+		
+		assertThrows(ScheduFIREException.class, () -> {
+			servlet.doGet(request, response);
+			});
 		
 	}
 
