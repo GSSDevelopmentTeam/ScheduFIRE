@@ -14,7 +14,7 @@ import javax.servlet.http.HttpSession;
 import model.bean.CapoTurnoBean;
 import model.bean.CredenzialiBean;
 import model.dao.CapoTurnoDao;
-import model.dao.UserDao;
+import model.dao.CredenzialiDao;
 import util.Notifiche;
 import util.PasswordSha256;
 import util.Validazione;
@@ -86,7 +86,7 @@ public class LoginServlet extends HttpServlet {
 					passwordBase256format = PasswordSha256.getEncodedpassword(password);
 				
 				
-				UserDao credenziali = new UserDao();
+				CredenzialiDao credenziali = new CredenzialiDao();
 				CredenzialiBean utente = credenziali.login(username);
 
 				if (utente == null) {
