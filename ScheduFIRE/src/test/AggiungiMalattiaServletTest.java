@@ -89,9 +89,9 @@ class AggiungiMalattiaServletTest {
 		request.setParameter("dataInizio", "15-05-2020");
 		request.setParameter("dataFine", "30-05-2020");
 		
-		assertThrows(ScheduFIREException.class, () -> {
+		assertDoesNotThrow(() -> {
 			servlet.doGet(request, response);
-		});
+		}); 
 	}
 
 }

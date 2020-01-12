@@ -5,7 +5,7 @@ body {
 }
 
 h2, section, div, h4, form, select {
-	text-align:center;
+	text-align: center;
 }
 
 h2 {
@@ -46,7 +46,7 @@ input {
 	width: 60%;
 }
 
-.mansioneAggiungi{
+.mansioneAggiungi {
 	text-align: left;
 	margin: auto;
 	width: -moz-fit-content;
@@ -55,7 +55,7 @@ input {
 	height: auto;
 }
 
-.mansione{
+.mansione {
 	text-align: left;
 	margin: auto;
 	width: -moz-fit-content;
@@ -73,8 +73,8 @@ input {
 	height: auto;
 }
 
-#buttonFormAggiungiVF, #ordinamento, #buttonAggiungi, input[type="number"] {
-
+#buttonFormAggiungiVF, #ordinamento, #buttonAggiungi, input[type="number"]
+	{
 	display: inline-block;
 }
 

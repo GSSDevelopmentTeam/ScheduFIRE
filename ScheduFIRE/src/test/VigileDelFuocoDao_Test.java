@@ -51,7 +51,7 @@ class VigileDelFuocoDao_Test {
 						
 		vf.setNome("Fabrizio");
 		vf.setCognome("Romano");
-		vf.setEmail("f.romano");
+		vf.setEmail("fabrizio.romano");
 		vf.setTurno("B");
 		vf.setMansione("Autista");
 		vf.setAdoperabile(true);
@@ -277,7 +277,7 @@ class VigileDelFuocoDao_Test {
 	 */
 	@Test
 	void testgetCaricoLavoroMinimo() {
-		int atteso = 0;
+		int atteso = 112;
 		int risultato = VigileDelFuocoDao.getCaricoLavoroMinimo();
 		
 		assertEquals(atteso, risultato);

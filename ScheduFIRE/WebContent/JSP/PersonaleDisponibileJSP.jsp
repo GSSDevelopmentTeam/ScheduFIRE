@@ -40,7 +40,12 @@
 	<section>
 
 		<h2 class="d-flex justify-content-center"
+<<<<<<< Updated upstream
 			style="color: #B60000 !Important; margin-top: 3%;"></h2>
+=======
+			style="color: #B60000 !Important; margin-top: 3%; font-size: 45px;">Personale
+			Disponibile</h2>
+>>>>>>> Stashed changes
 		<h5 class="d-flex justify-content-center"><%=request.getAttribute("titolo") == null ? "" : request.getAttribute("titolo")%></h5>
 
 
@@ -153,10 +158,10 @@
 
 						</div>
 						<div class="modal-footer">
-						
+
 							<button type="submit" class="btn btn-outline-success"
 								id="bottoneConferma" disabled>Conferma</button>
-								
+
 							<button type="button" class="btn btn-outline-danger"
 								data-dismiss="modal">Annulla</button>
 
@@ -180,12 +185,13 @@
 		%>
 
 		<div class="table-responsive">
-		
-		<div id="capo"></div>
-		<div class="d-flex justify-content-center">		
-		<a href="#auto" class="btn btn-outline-secondary" style="margin: 3px;">Autisti</a>
-		<a href="#vigile" class="btn btn-outline-secondary" style="margin: 3px;">Vigili</a>
-	</div>
+
+			<div id="capo"></div>
+			<div class="d-flex justify-content-center">
+				<a href="#auto" class="btn btn-outline-secondary"
+					style="margin: 3px;">Autisti</a> <a href="#vigile"
+					class="btn btn-outline-secondary" style="margin: 3px;">Vigili</a>
+			</div>
 
 
 			<h4 class="d-flex justify-content-center" id="inizio"
@@ -260,13 +266,14 @@
 				</tbody>
 
 			</table>
-			
+
 			<div id="auto"></div>
-			<div class="d-flex justify-content-center">		
-		<a href="#capo"	class="btn btn-outline-secondary" style="margin: 3px;">Capi Squadra</a>
-		<a href="#vigile" class="btn btn-outline-secondary" style="margin: 3px;">Vigili</a>
-	</div>
-	
+			<div class="d-flex justify-content-center">
+				<a href="#capo" class="btn btn-outline-secondary"
+					style="margin: 3px;">Capi Squadra</a> <a href="#vigile"
+					class="btn btn-outline-secondary" style="margin: 3px;">Vigili</a>
+			</div>
+
 			<h4 class="d-flex justify-content-center" id="inizio"
 				style="margin-top: 1%; color: #B60000 !Important">Autisti</h4>
 
@@ -326,10 +333,11 @@
 			</table>
 
 			<div id="vigile"></div>
-			<div class="d-flex justify-content-center">		
-		<a href="#capo"	class="btn btn-outline-secondary" style="margin: 3px;">Capi Squadra</a> 
-		<a href="#auto" class="btn btn-outline-secondary" style="margin: 3px;">Autisti</a>
-	</div>
+			<div class="d-flex justify-content-center">
+				<a href="#capo" class="btn btn-outline-secondary"
+					style="margin: 3px;">Capi Squadra</a> <a href="#auto"
+					class="btn btn-outline-secondary" style="margin: 3px;">Autisti</a>
+			</div>
 			<h4 class="d-flex justify-content-center" id="inizio"
 				style="margin-top: 1%; color: #B60000 !Important">Vigili</h4>
 
@@ -429,12 +437,13 @@
 
 
 		<div class="table-responsive">
-		
-		<div id="capo"></div>
+
+			<div id="capo"></div>
 			<div class="d-flex justify-content-center">
-		<a href="#auto" class="btn btn-outline-secondary" style="margin: 3px;">Autisti</a>
-		<a href="#vigile" class="btn btn-outline-secondary" style="margin: 3px;">Vigili</a>
-	</div>
+				<a href="#auto" class="btn btn-outline-secondary"
+					style="margin: 3px;">Autisti</a> <a href="#vigile"
+					class="btn btn-outline-secondary" style="margin: 3px;">Vigili</a>
+			</div>
 			<h4 class="d-flex justify-content-center" id="inizio"
 				style="margin-top: 0%; color: #B60000 !Important">Capi Squadra</h4>
 
@@ -494,12 +503,13 @@
 				</tbody>
 
 			</table>
-			
+
 			<div id="auto"></div>
-			<div class="d-flex justify-content-center">		
-		<a href="#capo"	class="btn btn-outline-secondary" style="margin: 3px;">Capi Squadra</a> 
-		<a href="#vigile" class="btn btn-outline-secondary" style="margin: 3px;">Vigili</a>
-	</div>
+			<div class="d-flex justify-content-center">
+				<a href="#capo" class="btn btn-outline-secondary"
+					style="margin: 3px;">Capi Squadra</a> <a href="#vigile"
+					class="btn btn-outline-secondary" style="margin: 3px;">Vigili</a>
+			</div>
 			<h4 class="d-flex justify-content-center" id="inizio"
 				style="margin-top: 1%; color: #B60000 !Important">Autisti</h4>
 
@@ -559,10 +569,11 @@
 			</table>
 
 			<div id="vigile"></div>
-			<div class="d-flex justify-content-center">		
-		<a href="#capo"	class="btn btn-outline-secondary" style="margin: 3px;">Capi Squadra</a> 
-		<a href="#auto" class="btn btn-outline-secondary" style="margin: 3px;">Autisti</a>
-	</div>
+			<div class="d-flex justify-content-center">
+				<a href="#capo" class="btn btn-outline-secondary"
+					style="margin: 3px;">Capi Squadra</a> <a href="#auto"
+					class="btn btn-outline-secondary" style="margin: 3px;">Autisti</a>
+			</div>
 			<h4 class="d-flex justify-content-center" id="inizio"
 				style="margin-top: 1%; color: #B60000 !Important">Vigili</h4>
 

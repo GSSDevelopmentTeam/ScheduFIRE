@@ -148,8 +148,49 @@ public class ComponenteDellaSquadraDao {
 
 	
 	/**
+<<<<<<< Updated upstream
 	 * Serve a cancellare tutti i componentiDellaSquadra precedenti a questa data
 	 * @param data la data di partenza
+=======
+	 * Restituisce le square delle quali fa parte un determinato vigile del fuoco 
+	 * @param from data inziale
+	 * @param to data finale
+	 * @param vigile vigile del fuoco del quale si vogliono sapere le squadre relative
+	 * @return La lista delle squadre relative al Vigile passato come parametro
+	 */
+	public static List<ComponenteDellaSquadraBean> getSquadreRelative(Date from, Date to, VigileDelFuocoBean vigile) {
+		String mailVF = vigile.getEmail();
+		String sql = "SELECT * "
+				+ "FROM componentedellasquadra "
+				+ "WHERE emailVF = ? "
+				+ "AND (giornoLavorativo BETWEEN ? AND ?);";
+		try(Connection con = ConnessioneDB.getConnection()) {
+			List<ComponenteDellaSquadraBean> toReturn = new ArrayList<>();
+
+			PreparedStatement ps = con.prepareStatement(sql);
+			ps.setString(1, mailVF);
+			ps.setDate(2, from);
+			ps.setDate(3, to);
+			ResultSet rs = ps.executeQuery();
+
+			while(rs.next()) {
+				String tipologiaSquadra = rs.getString("tipologia");
+				String emailVF = rs.getString("emailVF");
+				Date data = rs.getDate("giornoLavorativo");
+				toReturn.add(new ComponenteDellaSquadraBean(tipologiaSquadra, emailVF, data));
+			}
+			return toReturn;
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	
+	
+	/**
+	 * Cancella tutti i componentiDellaSquadra precedenti a questa data
+	 * @param data  data iniziale
+>>>>>>> Stashed changes
 	 */
 	public static void rimuoviTutti(Date data) {
 		String sql = "DELETE FROM ComponenteDellaSquadra WHERE giornoLavorativo < ? ;";

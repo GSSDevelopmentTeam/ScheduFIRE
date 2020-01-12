@@ -44,9 +44,19 @@
 <body>
 	<!-- Barra Navigazione -->
 	<jsp:include page="HeaderJSP.jsp" />
+<<<<<<< Updated upstream
 	<h2 class="modal-title" id="titolo">
 	</h2>
 					
+=======
+	<h2 class="modal-title"
+		style="color: #B60000 !Important; font-size: 45px;" id="titolo">
+		Calendario</h2>
+	<br>
+	<br>
+	<br>
+
+>>>>>>> Stashed changes
 	<!-- START: Container per calendario e schedulazione -->
 	<div class="containerAll" id="inizio">
 
@@ -166,7 +176,7 @@
 		<div class="container-schedul" id="visilibity">
 			<a class="info" id="informazione"></a>
 
-			<div >
+			<div>
 
 
 				<form action="GeneraSquadreServlet" method="POST">
@@ -177,8 +187,7 @@
 
 				<form id="modData" action="" method="POST">
 					<button type="submit" id="bottoneModificaSquadra" class="edit">
-						Modifica Squadre
-					</button>
+						Modifica Squadre</button>
 				</form>
 
 			</div>

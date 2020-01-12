@@ -158,7 +158,7 @@ class AggiungiFerieServletTest extends TestCase{
 		request.setParameter("dataFinale", "08-03-2020");
 		session.setAttribute("capoturno", capoturno);
 
-		assertThrows(ScheduFIREException.class, ()->{servlet.doPost(request, response);});
+		assertDoesNotThrow(()->{servlet.doPost(request, response);});
 
 
 		Date dataInizio = Date.valueOf("2020-03-06");
