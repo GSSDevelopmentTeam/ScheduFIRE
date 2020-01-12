@@ -1121,7 +1121,6 @@ public class VigileDelFuocoDao {
 				int toAdd = (	pair.getValue().equals("Prima Partenza") || 
 								pair.getValue().equals("Sala Operativa")) ? 3 :
 								(pair.getValue().equals("Auto Scala")) ? 2 : 1;
-				System.out.println("toAdd vale: "+toAdd+" per il vigile "+pair.getKey().getEmail());
 				ps = con.prepareStatement(incrementaCaricoLavorativo);
 				VigileDelFuocoBean vigile=VigileDelFuocoDao.ottieni(pair.getKey().getEmail());
 				ps.setInt(1, vigile.getCaricoLavoro() + toAdd);
@@ -1129,7 +1128,6 @@ public class VigileDelFuocoDao {
 				count += ps.executeUpdate();
 				con.commit();
 			}
-			System.out.println("conto carico lavorativo "+count);
 			return (count == squadra.size());
 		} catch (SQLException e) {
 			throw new RuntimeException(e);

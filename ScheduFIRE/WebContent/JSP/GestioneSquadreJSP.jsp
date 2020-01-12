@@ -109,7 +109,6 @@ h2 {
 		while (in.hasNext()) {
 			Map.Entry coppia = (Map.Entry) in.next();
 			VigileDelFuocoBean membro = (VigileDelFuocoBean) coppia.getKey();
-			System.out.println(membro.getNome());
 		}
 	%>
 
