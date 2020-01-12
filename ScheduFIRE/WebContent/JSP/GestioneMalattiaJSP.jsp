@@ -40,6 +40,8 @@ min-width: 265px;
 	<a href="#sali" class=" back-up"><img src="IMG/arrow/up-arrow-p.png" style="margin-left: 5px;"
 					onmouseover="this.src='IMG/arrow/up-arrow-d.png'"
 					onmouseout="this.src='IMG/arrow/up-arrow-p.png'" /></a>
+					
+					
 	<!-- Modal di aggiunta malattia-->
 	<div class="modal fade" id="aggiungiMalattia" tabindex="-1" role="dialog"
 		aria-labelledby="exampleModalCenterTitle" aria-hidden="true" style="display: none">
@@ -124,7 +126,7 @@ min-width: 265px;
 	</div>	
 
 
-		<!-- Modal di avviso aggiunta malattia-->
+		<!-- Modal di avviso malattia-->
  <div class="modal fade" id="modalAvviso" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
   <div class="modal-dialog modal-sm modal-dialog-centered" role="document">
     <div class="modal-content" style="border :3px solid #5be94b;">
@@ -650,7 +652,7 @@ style="display: none;position:fixed;z-index: 99999; width:100%">
 			</script>
 			<script>
 			function ricaricaPagina(){
-				window.location.replace("PeriodiDiMalattiaServlet?coglione");
+				window.location.replace("PeriodiDiMalattiaServlet");
 			}
 			</script>
 			<script>
