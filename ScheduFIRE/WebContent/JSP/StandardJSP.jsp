@@ -21,7 +21,7 @@
 <script src="JS/datePicker.js"></script>
 <script src="JS/datePickerMod.js"></script>
 <script type="text/javascript"
-		src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.min.js"></script>
+	src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.min.js"></script>
 </head>
 
 

@@ -1,5 +1,6 @@
 <%@page import="java.util.HashMap"%>
-<%@page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
 <%@page import="java.util.*, model.bean.*, model.dao.*"%>
 <!DOCTYPE html>
 <html>
@@ -38,15 +39,14 @@ h2 {
 						Disponibile</h5>
 				</div>
 				<form action="ModificaComposizioneSquadreServlet" method="POST">
-<!-- Nel form verranno passate l'email del VF da sostituire con nome "email" e quella del VF da inserire con nome "VFNew" -->
+					<!-- Nel form verranno passate l'email del VF da sostituire con nome "email" e quella del VF da inserire con nome "VFNew" -->
 					<div class="modal-body" id="elenco">
 						<div id="appendiElenco"></div>
 					</div>
 
 					<div class="modal-footer">
 						<button type="button" class="btn btn-outline-danger"
-							
-						data-dismiss="modal">Annulla</button>
+							data-dismiss="modal">Annulla</button>
 						<button class="btn btn-outline-secondary">Aggiungi</button>
 					</div>
 				</form>
@@ -56,18 +56,23 @@ h2 {
 
 	<!-- ELENCO SQUADRE  -->
 
-    <div class="d-flex justify-content-center" >
-    <form action="GeneraSquadreServlet" method=post>
-    <button type="button" class="btn btn-success btn-lg" value="Conferma" name="Conferma" style="margin:3px;">Conferma Squadre</button>
-    </form>
-    <a href="#Giorno"><button type="button" class="btn btn-danger btn-lg" style="margin:3px;">Sqaudra Diurna</button></a>
-	<a href="#Notte"><button type="button" class="btn btn-danger btn-lg" style="margin:3px;">Squadra Notturna</button></a>
+	<div class="d-flex justify-content-center">
+		<form action="GeneraSquadreServlet" method=post>
+			<button type="button" class="btn btn-success btn-lg" value="Conferma"
+				name="Conferma" style="margin: 3px;">Conferma Squadre</button>
+		</form>
+		<a href="#Giorno"><button type="button"
+				class="btn btn-danger btn-lg" style="margin: 3px;">Sqaudra
+				Diurna</button></a> <a href="#Notte"><button type="button"
+				class="btn btn-danger btn-lg" style="margin: 3px;">Squadra
+				Notturna</button></a>
 	</div>
-     <br>
-     
+	<br>
 
-  <div class="d-flex justify-content-center">
-		<h2 id="Giorno" style="font-weight:bold; font-size:36px;">Squadra Diurna</h2>
+
+	<div class="d-flex justify-content-center">
+		<h2 id="Giorno" style="font-weight: bold; font-size: 36px;">Squadra
+			Diurna</h2>
 	</div>
 	<div class="d-flex justify-content-center">
 		<img src="../Icon/caserma.png" class="fr">
@@ -87,10 +92,12 @@ h2 {
 			</thead>
 
 			<tbody>
-			
+
 
 				<tr>
-					<td class="text-center"><img src="Grado/Esperto.png" style="height:25%" onerror="this.parentElement.innerHTML='Non disponibile';"></td>
+					<td class="text-center"><img src="Grado/Esperto.png"
+						style="height: 25%"
+						onerror="this.parentElement.innerHTML='Non disponibile';"></td>
 					<td class="text-center">Nome</td>
 					<td class="text-center">Cognome</td>
 					<td class="text-center">Mansione</td>
@@ -100,7 +107,7 @@ h2 {
 							onClick='apriFormVF("Email VF")'>Sostituisci</button></td>
 					</td>
 				</tr>
-				
+
 
 			</tbody>
 		</table>
@@ -124,10 +131,12 @@ h2 {
 			</thead>
 
 			<tbody>
-				
+
 
 				<tr>
-					<td class="text-center"><img src="Grado/Coordinatore.png" style="height:25%" onerror="this.parentElement.innerHTML='Non disponibile';"></td>
+					<td class="text-center"><img src="Grado/Coordinatore.png"
+						style="height: 25%"
+						onerror="this.parentElement.innerHTML='Non disponibile';"></td>
 					<td class="text-center">Nome</td>
 					<td class="text-center">Cognome</td>
 					<td class="text-center">Mansione</td>
@@ -137,7 +146,7 @@ h2 {
 							onClick='apriFormVF("Email VF")'>Sostituisci</button></td>
 					</td>
 				</tr>
-				
+
 
 			</tbody>
 		</table>
@@ -160,10 +169,12 @@ h2 {
 			</thead>
 
 			<tbody>
-				
+
 
 				<tr>
-					<td class="text-center"><img src="Grado/Qualificato.png" style="height:25%" onerror="this.parentElement.innerHTML='Non disponibile';"></td>
+					<td class="text-center"><img src="Grado/Qualificato.png"
+						style="height: 25%"
+						onerror="this.parentElement.innerHTML='Non disponibile';"></td>
 					<td class="text-center">Nome</td>
 					<td class="text-center">Cognome</td>
 					<td class="text-center">Mansione</td>
@@ -173,7 +184,7 @@ h2 {
 							onClick='apriFormVF("Email VF")'>Sostituisci</button></td>
 					</td>
 				</tr>
-			
+
 
 			</tbody>
 		</table>
@@ -198,7 +209,9 @@ h2 {
 			<tbody>
 
 				<tr>
-					<td class="text-center"><img src="Grado/Esperto.png" style="height:25%" onerror="this.parentElement.innerHTML='Non disponibile';"></td>
+					<td class="text-center"><img src="Grado/Esperto.png"
+						style="height: 25%"
+						onerror="this.parentElement.innerHTML='Non disponibile';"></td>
 					<td class="text-center">Nome</td>
 					<td class="text-center">Cognome</td>
 					<td class="text-center">Mansione</td>
@@ -211,11 +224,12 @@ h2 {
 			</tbody>
 		</table>
 	</div>
-	
-    <div class="d-flex justify-content-center">
-		<h2 id="Notte"  style="font-weight:bold; font-size:36px;">Squadra Notturna</h2>
+
+	<div class="d-flex justify-content-center">
+		<h2 id="Notte" style="font-weight: bold; font-size: 36px;">Squadra
+			Notturna</h2>
 	</div>
-  	<div class="d-flex justify-content-center">
+	<div class="d-flex justify-content-center">
 		<img src="../Icon/caserma.png" class="fr">
 		<h2>Sala Operativa</h2>
 	</div>
@@ -233,10 +247,12 @@ h2 {
 			</thead>
 
 			<tbody>
-			
+
 
 				<tr>
-					<td class="text-center"><img src="Grado/Esperto.png" style="height:25%" onerror="this.parentElement.innerHTML='Non disponibile';"></td>
+					<td class="text-center"><img src="Grado/Esperto.png"
+						style="height: 25%"
+						onerror="this.parentElement.innerHTML='Non disponibile';"></td>
 					<td class="text-center">Nome</td>
 					<td class="text-center">Cognome</td>
 					<td class="text-center">Mansione</td>
@@ -246,7 +262,7 @@ h2 {
 							onClick='apriFormVF("Email VF")'>Sostituisci</button></td>
 					</td>
 				</tr>
-				
+
 
 			</tbody>
 		</table>
@@ -270,10 +286,12 @@ h2 {
 			</thead>
 
 			<tbody>
-				
+
 
 				<tr>
-					<td class="text-center"><img src="Grado/Coordinatore.png" style="height:25%" onerror="this.parentElement.innerHTML='Non disponibile';"></td>
+					<td class="text-center"><img src="Grado/Coordinatore.png"
+						style="height: 25%"
+						onerror="this.parentElement.innerHTML='Non disponibile';"></td>
 					<td class="text-center">Nome</td>
 					<td class="text-center">Cognome</td>
 					<td class="text-center">Mansione</td>
@@ -283,7 +301,7 @@ h2 {
 							onClick='apriFormVF("Email VF")'>Sostituisci</button></td>
 					</td>
 				</tr>
-				
+
 
 			</tbody>
 		</table>
@@ -306,10 +324,12 @@ h2 {
 			</thead>
 
 			<tbody>
-				
+
 
 				<tr>
-					<td class="text-center"><img src="Grado/Qualificato.png" style="height:25%" onerror="this.parentElement.innerHTML='Non disponibile';"></td>
+					<td class="text-center"><img src="Grado/Qualificato.png"
+						style="height: 25%"
+						onerror="this.parentElement.innerHTML='Non disponibile';"></td>
 					<td class="text-center">Nome</td>
 					<td class="text-center">Cognome</td>
 					<td class="text-center">Mansione</td>
@@ -319,7 +339,7 @@ h2 {
 							onClick='apriFormVF("Email VF")'>Sostituisci</button></td>
 					</td>
 				</tr>
-			
+
 
 			</tbody>
 		</table>
@@ -344,7 +364,9 @@ h2 {
 			<tbody>
 
 				<tr>
-					<td class="text-center"><img src="Grado/Esperto.png" style="height:25%" onerror="this.parentElement.innerHTML='Non disponibile';"></td>
+					<td class="text-center"><img src="Grado/Esperto.png"
+						style="height: 25%"
+						onerror="this.parentElement.innerHTML='Non disponibile';"></td>
 					<td class="text-center">Nome</td>
 					<td class="text-center">Cognome</td>
 					<td class="text-center">Mansione</td>
@@ -359,11 +381,14 @@ h2 {
 	</div>
 
 
-	<script	src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+	<script
+		src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 	<script src="JS/datePicker.js"></script>
-	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.min.js"></script>
+	<script type="text/javascript"
+		src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.min.js"></script>
 	<script src="https://buttons.github.io/buttons.js"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.js"></script>
+	<script
+		src="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.js"></script>
 
 	<script>
 

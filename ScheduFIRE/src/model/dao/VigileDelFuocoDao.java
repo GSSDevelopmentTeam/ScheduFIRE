@@ -94,7 +94,7 @@ public class VigileDelFuocoDao {
 	/**
 	 * Si occupa dell'ottenimento di un Vigile del Fuoco dal database data la sua chiave.
 	 * @param chiaveEmail una stringa contenente la mail del Vigile
-	 * @return il Vigile identificato da chiaveEmail (pu� essere null)
+	 * @return il Vigile identificato da chiaveEmail (puï¿½ essere null)
 	 */
 	public static VigileDelFuocoBean ottieni(String chiaveEmail) {
 		
@@ -341,7 +341,7 @@ public class VigileDelFuocoDao {
 	 * Si occupa dell'ottenimento di una collezione di VigileDelFuocoBean dal database
 	 * con campo 'adoperabile' settato a true e che risultano in malattia alla data passata per parametro.
 	 * @param ordinamento e' un intero che determina il tipo di ordinamento della collezione
-	 * @param data è il giorno per cui viene effettuato il controllo
+	 * @param data Ã¨ il giorno per cui viene effettuato il controllo
 	 * @return una collezione di VigileDelFuocoBean con campo 'adoperabile' settato a true 
 	 */
 	public static Collection<VigileDelFuocoBean> ottieniInMalattia(int ordinamento,Date data) {
@@ -622,7 +622,7 @@ public class VigileDelFuocoDao {
 	 * Si occupa del settaggio del campo 'adoperabile' di un Vigile del Fuoco
 	 * nel database, identificato dalla sua chiave.
 	 * @param chiaveEmail e' una stringa che identifica un VigileDelFuocoBean nel database
-	 * @param adoperabile e' un booleano che indica l'adoperabilit� di un VigileDelFuocoBean
+	 * @param adoperabile e' un booleano che indica l'adoperabilitï¿½ di un VigileDelFuocoBean
 	 * @return true se l'operazione va a buon fine, false altrimenti
 	 */
 	public static boolean setAdoperabile(String chiaveEmail, boolean adoperabile) {
@@ -760,9 +760,11 @@ public class VigileDelFuocoDao {
 	
 	
 	/**
-	 * @param data la data del giorno di cui si vuole avere la lista dei vigili disponibili
+	 * Restituisce una lista di vigili disponibili nella data richiesta
+	 * @param ordinamento come si vuole avere ordinata la lista
+	 * @param data , la data del giorno di cui si vuole avere la lista dei vigili disponibili
 	 * @return una lista di VigileDelFuocoBean che hanno attributo adoperabile=true 
-	 * 			e non sono in ferie o malattia nella data passata come parametro
+	 * e non sono in ferie o malattia nella data passata come parametro
 	 */
 	public static ArrayList<VigileDelFuocoBean> getDisponibili(Date data,int ordinamento){
 		try(Connection con = ConnessioneDB.getConnection()) {
@@ -825,9 +827,10 @@ public class VigileDelFuocoDao {
 	
 	
 	/**
-	 * @param data la data del giorno di cui si vuole avere la lista dei vigili disponibili
-	 * @return una lista di VigileDelFuocoBean che hanno attributo adoperabile=true 
-	 * 			e non sono in ferie o malattia nella data passata come parametro
+	 * Metodo per sapere se un vigile è disponibile
+	 * @param email la mail del Vigile del quale si vuole conoscere la disponibilità
+	 * @param data la data del giorno di cui si vuole conoscere la disponibilità
+	 * @return true se il vigile è disponibile, false altrimenti-
 	 */
 	public static boolean isDisponibile(String email, Date data){
 		try(Connection con = ConnessioneDB.getConnection()) {
@@ -866,7 +869,7 @@ public class VigileDelFuocoDao {
 	
 	/**
 	 * Questo metodo si occupa di prelevare la lista completa dei VF presenti nel dataBase. 
-	 * @return una lista di VigileDelFuocoBean ordinata in base alla mansione più importante.
+	 * @return una lista di VigileDelFuocoBean ordinata in base alla mansione piÃ¹ importante.
 	 */
 	public static ArrayList<VigileDelFuocoBean> ottieniListaVF() {
 		

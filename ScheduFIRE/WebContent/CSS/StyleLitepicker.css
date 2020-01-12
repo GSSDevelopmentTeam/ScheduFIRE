@@ -1,18 +1,17 @@
-:root {
-	--litepickerMonthButton: #ecafd3 !important;
-	--litepickerMonthButtonHover: #f781c3 !important;
-	--litepickerDayColorHover: #f68e6b !important;
-	--litepickerDayIsInRange: #f9dda5 !important;
-	--litepickerDayIsStartBg: #f68e6b !important;
-	--litepickerDayIsEndBg: #f68e6b !important
+:root { -
+	-litepickerMonthButton: #ecafd3 !important; -
+	-litepickerMonthButtonHover: #f781c3 !important; -
+	-litepickerDayColorHover: #f68e6b !important; -
+	-litepickerDayIsInRange: #f9dda5 !important; -
+	-litepickerDayIsStartBg: #f68e6b !important; -
+	-litepickerDayIsEndBg: #f68e6b !important
 }
-
-	
 
 body {
 	background-color: #f2f2f2;
 	margin: 0;
-	font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+		"Helvetica Neue", Arial, sans-serif;
 	line-height: 1.5
 }
 
@@ -22,8 +21,7 @@ hr {
 	margin-bottom: 2em
 }
 
-code,
-.code {
+code, .code {
 	color: #f44336;
 	background-color: #f1f1f1;
 	padding: 3px;
@@ -115,8 +113,8 @@ button.calendar-icon {
 	font-size: 1.5em
 }
 
-.day-item a{
-	color:blue !important
+.day-item a {
+	color: blue !important
 }
 
 #demo {
@@ -162,7 +160,8 @@ button.calendar-icon {
 	justify-content: space-between
 }
 
-#demo #demo-options #picker-options .picker-option-item>div .user-value-container {
+#demo #demo-options #picker-options .picker-option-item>div .user-value-container
+	{
 	-webkit-box-flex: 1;
 	-ms-flex: 1;
 	flex: 1;
@@ -174,7 +173,8 @@ button.calendar-icon {
 	justify-content: flex-end
 }
 
-#demo #demo-options #picker-options .picker-option-item .user-value-container input[type="number"] {
+#demo #demo-options #picker-options .picker-option-item .user-value-container input[type="number"]
+	{
 	width: 50px;
 	border-radius: 5px;
 	border: 1px solid #ddd;
@@ -268,9 +268,7 @@ input.apple-switch:after {
 	line-height: 1
 }
 
-#options-table,
-#events-table,
-#methods-table {
+#options-table, #events-table, #methods-table {
 	display: -webkit-box;
 	display: -ms-flexbox;
 	display: flex;
@@ -278,54 +276,43 @@ input.apple-switch:after {
 	flex-wrap: wrap
 }
 
-#options-table>div,
-#events-table>div,
-#methods-table>div {
+#options-table>div, #events-table>div, #methods-table>div {
 	padding: 15px;
 	border-bottom: 1px solid #f1f1f1;
 	border-bottom: 1px solid #f1f1f1;
 	border-right: 1px solid #f1f1f1
 }
 
-#options-table>div:last-child,
-#events-table>div:last-child,
-#methods-table>div:last-child {
+#options-table>div:last-child, #events-table>div:last-child,
+	#methods-table>div:last-child {
 	border-right: none
 }
 
-#options-table>div>p:first-child,
-#events-table>div>p:first-child,
-#methods-table>div>p:first-child {
+#options-table>div>p:first-child, #events-table>div>p:first-child,
+	#methods-table>div>p:first-child {
 	margin-top: 0
 }
 
-#options-table>div>p:last-child,
-#events-table>div>p:last-child,
-#methods-table>div>p:last-child {
+#options-table>div>p:last-child, #events-table>div>p:last-child,
+	#methods-table>div>p:last-child {
 	margin-bottom: 0
 }
 
-#options-table table,
-#events-table table,
-#methods-table table {
+#options-table table, #events-table table, #methods-table table {
 	width: 100%;
 	border-collapse: collapse;
 	border-spacing: 0
 }
 
-#options-table table th,
-#options-table table td,
-#events-table table th,
-#events-table table td,
-#methods-table table th,
-#methods-table table td {
+#options-table table th, #options-table table td, #events-table table th,
+	#events-table table td, #methods-table table th, #methods-table table td
+	{
 	border: 1px solid #bdbdbd;
 	padding: 3px 10px
 }
 
-#options-table>div:nth-child(4n+1),
-#options-table>div:nth-child(4n+2),
-#options-table>div:nth-child(4n+3) {
+#options-table>div:nth-child(4n+1), #options-table>div:nth-child(4n+2),
+	#options-table>div:nth-child(4n+3) {
 	width: 15%
 }
 
@@ -334,28 +321,25 @@ input.apple-switch:after {
 	flex-basis: 39%
 }
 
-#events-table>div:nth-child(3n+1),
-#events-table>div:nth-child(3n+2),
-#methods-table>div:nth-child(3n+1),
-#methods-table>div:nth-child(3n+2) {
+#events-table>div:nth-child(3n+1), #events-table>div:nth-child(3n+2),
+	#methods-table>div:nth-child(3n+1), #methods-table>div:nth-child(3n+2)
+	{
 	width: 15%
 }
 
-#events-table>div:nth-child(3n+3),
-#methods-table>div:nth-child(3n+3) {
+#events-table>div:nth-child(3n+3), #methods-table>div:nth-child(3n+3) {
 	-ms-flex-preferred-size: 55%;
 	flex-basis: 55%
 }
 
-@media (max-width: 768px) {
+@media ( max-width : 768px) {
 	.wrapper {
 		margin: 0
 	}
 	.wrapper>.container {
 		border-radius: 0
 	}
-	code,
-	.code {
+	code, .code {
 		word-break: break-all
 	}
 	#demo {
@@ -373,18 +357,16 @@ input.apple-switch:after {
 	#options-description .table-grid-header {
 		display: none
 	}
-	#options-table>div:nth-child(n),
-	#events-table>div:nth-child(n),
-	#methods-table>div:nth-child(n) {
+	#options-table>div:nth-child(n), #events-table>div:nth-child(n),
+		#methods-table>div:nth-child(n) {
 		border-bottom: none;
 		border-right: none;
 		text-align: left;
 		-ms-flex-preferred-size: 100%;
 		flex-basis: 100%
 	}
-	#options-table .header-cell,
-	#events-table .header-cell,
-	#methods-table .header-cell {
+	#options-table .header-cell, #events-table .header-cell, #methods-table .header-cell
+		{
 		display: none
 	}
 	#options-table>div:nth-child(4n) {
@@ -393,12 +375,10 @@ input.apple-switch:after {
 	#options-table>div:nth-child(4n+1) {
 		font-weight: bold
 	}
-	#events-table>div::nth-child(3n),
-	#methods-table>div::nth-child(3n) {
+	#events-table>div::nth-child(3n), #methods-table>div::nth-child(3n) {
 		border-bottom: 1px solid #f1f1f1
 	}
-	#events-table>div:nth-child(3n+1),
-	#methods-table>div:nth-child(3n+1) {
+	#events-table>div:nth-child(3n+1), #methods-table>div:nth-child(3n+1) {
 		font-weight: bold
 	}
 }

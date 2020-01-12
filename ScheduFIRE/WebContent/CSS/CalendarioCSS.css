@@ -1,38 +1,36 @@
 /*contenitore per l'intero calendario*/
-
-body{
+body {
 	background-color: #f2f2f2;
 }
 
 * {
-  box-sizing: border-box;
+	box-sizing: border-box;
 }
 
 h2 {
 	color: #B60000;
 }
 
-#titolo{
+#titolo {
 	position: absolute;
-	margin-left:40%;
-	
+	margin-left: 40%;
 }
 
-.back-up{
-	border:none;
-	background:none;	
-    position: fixed;
-    bottom: 5%;
-    right: 5%;
-    }
+.back-up {
+	border: none;
+	background: none;
+	position: fixed;
+	bottom: 5%;
+	right: 5%;
+}
 
-p#turno{
+p#turno {
 	font-size: 50%;
-	padding:0;
+	padding: 0;
 }
 
 .containerAll {
-	position:relative;
+	position: relative;
 	margin-top: 3px;
 	margin-right: 10px;
 	display: flex;
@@ -42,9 +40,9 @@ p#turno{
 }
 
 .edit {
-	justify-content:center;
-	margin:4%;
-	background-color:transparent;
+	justify-content: center;
+	margin: 4%;
+	background-color: transparent;
 	border: 1px solid #454d55;
 	color: #454d55;
 	padding: 7px;
@@ -54,23 +52,22 @@ p#turno{
 	cursor: pointer;
 }
 
-#bottoneGeneraSquadra{
+#bottoneGeneraSquadra {
 	display: none;
 	line-height: normal;
 	position: fixed;
 	text-transform: uppercase;
-
 }
 
-#bottoneModificaSquadra{
-	display:none;
+#bottoneModificaSquadra {
+	display: none;
 }
 
-.edit:hover{
+.edit:hover {
 	background-color: #454d55;
-	color:white;
+	color: white;
 	text-decoration: none;
-	transition: color .6s ease-in-out,background-color .5s;
+	transition: color .6s ease-in-out, background-color .5s;
 }
 
 /*contenitore per il calendario*/
@@ -87,7 +84,7 @@ p#turno{
 	font-family: Verdana;
 }
 
-.altroAnno{
+.altroAnno {
 	background-color: transparent;
 	color: black;
 	font-size: 40%;
@@ -96,7 +93,7 @@ p#turno{
 }
 
 .container-year {
-	overflow:hidden;
+	overflow: hidden;
 	color: #343a40;
 	font-family: Rod;
 	text-align: center;
@@ -108,89 +105,89 @@ flex:1 -> prende il resto del container*/
 .container-schedul {
 	flex: 1;
 	height: 600px;
-	overflow-y:scroll;
+	overflow-y: scroll;
 	background-color: transparent;
 	font-family: Verdana;
 	margin: 1%;
 	padding-left: 1%;
 }
 
-#schedulazione{
-	display:none;
+#schedulazione {
+	display: none;
 }
 
 /*per la schedulazione delle squadre*/
 .wrapper {
-  align-items:center;
-  grid-template-columns: auto;
-  grid-template-rows: auto;
-  background-color: transparent;
-  color: #343a40;
+	align-items: center;
+	grid-template-columns: auto;
+	grid-template-rows: auto;
+	background-color: transparent;
+	color: #343a40;
 }
 
-.mansione{
+.mansione {
 	box-shadow: 20%;
 	color: white;
 	border: 1px solid #454d55;
 	background-color: #343a40;
 	margin: 10px 0 10px 0;
 	font-size: 90%;
-	font-style:oblique;
+	font-style: oblique;
 	font-weight: bold;
 	overflow: visible;
 	text-align: center;
 }
 
-.vigili{
+.vigili {
 	font-style: italic;
 	color: black;
 	text-align: center;
 }
 
-#giornoCorrente{
+#giornoCorrente {
 	font-weight: bold;
 	color: #b60000;
 }
 
-#giornoLavorativoDiurno{
+#giornoLavorativoDiurno {
 	background-color: #a0d6d6;
-	color:black;
+	color: black;
 }
 
-#giornoLavorativoNotturno{
+#giornoLavorativoNotturno {
 	background-color: #57b7b7;
-	color:black;
+	color: black;
 }
 
-#giornoCorrenteLavorativoDiurno{
+#giornoCorrenteLavorativoDiurno {
 	font-weight: bold;
 	color: #b60000;
 	background-color: #a0d6d6;
 }
 
-#giornoCorrenteLavorativoNotturno{
+#giornoCorrenteLavorativoNotturno {
 	font-weight: bold;
 	color: #b60000;
 	background-color: #57b7b7;
 }
 
-#giornoLavorativoDiurno:hover{
-	color:white;
+#giornoLavorativoDiurno:hover {
+	color: white;
 	font-style: italic;
 }
 
-#giornoLavorativoNotturno:hover{
-	color:white;
+#giornoLavorativoNotturno:hover {
+	color: white;
 	font-style: italic;
 }
 
-#giornoCorrenteLavorativoDiurno:hover{
-	color:white;
+#giornoCorrenteLavorativoDiurno:hover {
+	color: white;
 	font-style: italic;
 }
 
-#giornoCorrenteLavorativoNotturno:hover{
-	color:white;
+#giornoCorrenteLavorativoNotturno:hover {
+	color: white;
 	font-style: italic;
 }
 
@@ -203,14 +200,14 @@ flex:1 -> prende il resto del container*/
 	background-color: #343a40;
 	justify-content: center;
 	font-family: Verdana;
-	cursor:default;
+	cursor: default;
 }
 
 .grid-container {
 	display: grid;
 	grid-template-columns: auto auto auto auto auto auto auto;
 	background-color: transparent;
-	margin:2%;
+	margin: 2%;
 	font-family: Verdana;
 	border: 2px solid black;
 }
@@ -230,7 +227,7 @@ non ha la proprietà :hover*/
 	cursor: default;
 }
 
-.item-empty{
+.item-empty {
 	background-color: transparent;
 	border-bottom: 0.1px solid #808080;
 	border-top: 0.1 px solid #808080;
@@ -241,12 +238,10 @@ non ha la proprietà :hover*/
 	cursor: default;
 }
 
-
 /*menù DROPDOWN dei mesi*/
-.grid-chose-month{
-	display:grid;
+.grid-chose-month {
+	display: grid;
 	justify-content: center;
-	
 }
 
 .dropbtn {
@@ -276,11 +271,11 @@ non ha la proprietà :hover*/
 
 .dropdown-item {
 	font-size: 80%;
-	font-weight:bold;
+	font-weight: bold;
 	color: #4b4b4b;
 	padding: 10px 10px;
 	text-decoration: none;
-	text-align:center;
+	text-align: center;
 	display: block;
 }
 
@@ -297,10 +292,7 @@ non ha la proprietà :hover*/
 	background-color: transparent;
 }
 /*Fine menù dropdown dei mesi*/
-
-.info{
+.info {
 	text-decoration: none;
 	color: black;
 }
-
-

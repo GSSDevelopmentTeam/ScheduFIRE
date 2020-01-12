@@ -58,8 +58,9 @@ public class SquadraDao {
 
 
 	/**
-	 * Serve a cancellare tutti i componentiDellaSquadra precedenti a questa data
-	 * @param data la data di partenza
+	 * Rimuove tutte le squadre precedenti a questa data.
+	 * @param data verranno cancellate tutte le Listesquadre precedenti a questa data.
+	 * @return true se l'azione va a buon fine, false altrimenti.
 	 */
 	public static boolean rimuoviTutti(Date data) {
 		String sql = "DELETE FROM Squadra WHERE giornoLavorativo < ? ;";
