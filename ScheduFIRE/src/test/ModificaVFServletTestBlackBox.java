@@ -247,7 +247,7 @@ class ModificaVFServletTestBlackBox {
 		servlet.doPost(request, response);
 		String risultato = (String) request.getSession().getAttribute("risultato");
 
-		assertEquals("La modifica del Vigile del Fuoco è avvenuto con successo!", risultato);
+		assertEquals("Modifica del Vigile del Fuoco avvenuta con successo!", risultato);
 		
 	}
 

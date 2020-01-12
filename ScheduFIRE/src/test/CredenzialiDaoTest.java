@@ -3,7 +3,6 @@ package test;
 import static org.junit.jupiter.api.Assertions.*;
 
 import java.security.NoSuchAlgorithmException;
-import java.sql.SQLException;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -30,14 +29,6 @@ class CredenzialiDaoTest {
 		
 		CredenzialiBean c = CredenzialiDao.login(this.c.getUsername());
 		assertEquals(c,this.c);
-		
-	}
-	
-	@Test
-	void testLoginNull() {
-		
-		CredenzialiDao.login(null);
-		assertThrows(SQLException.class, () -> CredenzialiDao.login( this.c.getUsername() ) );
 		
 	}
 
