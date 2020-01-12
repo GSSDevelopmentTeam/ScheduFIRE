@@ -172,7 +172,6 @@ public class PersonaleDisponibileServlet extends HttpServlet{
 		String giornoLavoro=""+giorno.toLocalDate().getDayOfMonth()+" "+Mese(giorno.toLocalDate().getMonthValue())+" "+giorno.toLocalDate().getYear();
 		request.setAttribute("titolo", "Il personale del giorno "+giornoLavoro+" &egrave il seguente");
 
-		System.out.println("Ordinamento= "+ordinamentoStr);
 		request.setAttribute("ordinamento", ordinamentoStr);
 		request.setAttribute("vigiliCompleti", vigiliCompleti);
 		request.setAttribute("vigiliDisponibili", vigiliDisponibili);

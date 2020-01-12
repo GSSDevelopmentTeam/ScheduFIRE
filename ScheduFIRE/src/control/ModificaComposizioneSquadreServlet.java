@@ -107,7 +107,7 @@ public class ModificaComposizioneSquadreServlet extends HttpServlet {
 			default:
 				throw new ScheduFIREException("C'e stato un errore. Riprova pi� tardi.");
 			}
-			System.out.println("squadra: "+squadra);
+			
 			Iterator i = squadra.entrySet().iterator();
 
 			while(i.hasNext()) {

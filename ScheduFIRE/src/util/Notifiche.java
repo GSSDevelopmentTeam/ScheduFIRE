@@ -67,8 +67,8 @@ public class Notifiche {
 			updateSquadrePerMalattia(from, to, mail);
 		}
 
-		Collections.sort(listaNotifiche, (Notifica n1, Notifica n2) -> 
-		(n2.getSeverita() - n1.getSeverita()));
+
+		Collections.sort(listaNotifiche, (Notifica n1, Notifica n2) ->(n2.getSeverita() - n1.getSeverita()));
 	}
 
 
