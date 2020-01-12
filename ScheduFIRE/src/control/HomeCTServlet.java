@@ -34,14 +34,10 @@ public class HomeCTServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
-			Util.isCapoTurno(request);
-		
-		
+		Util.isCapoTurno(request);
 
 		response.setContentType("text/html");
 		request.getRequestDispatcher("JSP/HomeCT_JSP.jsp").forward(request, response);
-
 	}
 
 }

@@ -77,7 +77,7 @@ class ModificaVFServletTest {
 		request.getSession().setAttribute("notifiche", "notifiche");
 		request.getSession().setAttribute("email", "capoturno");
 		request.addParameter("emailVecchia", email);
-		assertThrows(ScheduFIREException.class, ()->{servlet.doPost(request, response);});
+		assertThrows(GestionePersonaleException.class, ()->{servlet.doPost(request, response);});
 	}
 	@Test
 	void testemailinesistente() throws ServletException, IOException {
@@ -109,7 +109,7 @@ class ModificaVFServletTest {
 		request.addParameter("grado", "Qualificato");
 		request.addParameter("giorniFerieAnnoCorrente", "");
 		request.addParameter("giorniFerieAnnoPrecedente", "");
-		assertThrows(ScheduFIREException.class, ()->{servlet.doPost(request, response);});
+		assertThrows(GestionePersonaleException.class, ()->{servlet.doPost(request, response);});
 	}
 	@Test
 	void testNuoviDatiFailError() throws ServletException, IOException {
@@ -126,7 +126,7 @@ class ModificaVFServletTest {
 		request.addParameter("grado", "Qualificato");
 		request.addParameter("giorniFerieAnnoCorrente", "");
 		request.addParameter("giorniFerieAnnoPrecedente", "10");
-		assertThrows(ScheduFIREException.class, ()->{servlet.doPost(request, response);});
+		assertThrows(GestionePersonaleException.class, ()->{servlet.doPost(request, response);});
 	}
 	@Test
 	void testNuoviDatiFailgiorni() throws ServletException, IOException {
@@ -143,7 +143,7 @@ class ModificaVFServletTest {
 		request.addParameter("gradoNuovo", "Esperto");
 		request.addParameter("giorniFerieAnnoCorrenteNuovi", "10");
 		request.addParameter("giorniFerieAnnoPrecedenteNuovi", "");
-		assertThrows(ScheduFIREException.class, ()->{servlet.doPost(request, response);});
+		assertThrows(GestionePersonaleException.class, ()->{servlet.doPost(request, response);});
 	}
 	@Test
 	void testNuoviDatiInvlidDati() throws ServletException, IOException {
@@ -160,7 +160,7 @@ class ModificaVFServletTest {
 		request.addParameter("gradoNuovo", "Semplice");
 		request.addParameter("giorniFerieAnnoCorrenteNuovi", "10");
 		request.addParameter("giorniFerieAnnoPrecedenteNuovi", "");
-		assertThrows(ScheduFIREException.class, ()->{servlet.doPost(request, response);});
+		assertThrows(GestionePersonaleException.class, ()->{servlet.doPost(request, response);});
 	}
 	@Test
 	void testNuoviDatiInvlidgrade() throws ServletException, IOException {
@@ -193,7 +193,7 @@ class ModificaVFServletTest {
 		request.addParameter("gradoNuovo", "Qualificato");
 		request.addParameter("giorniFerieAnnoCorrenteNuovi", "10");
 		request.addParameter("giorniFerieAnnoPrecedenteNuovi", "5");
-		assertThrows(ParametroInvalidoException.class, ()->{servlet.doPost(request, response);});
+		assertThrows(GestionePersonaleException.class, ()->{servlet.doPost(request, response);});
 	}
 	@Test
 	void testNuoviDatiInvlidDateInput() throws ServletException, IOException {
@@ -210,7 +210,7 @@ class ModificaVFServletTest {
 		request.addParameter("gradoNuovo", "Coordinatore");
 		request.addParameter("giorniFerieAnnoCorrenteNuovi", "10");
 		request.addParameter("giorniFerieAnnoPrecedenteNuovi", "");
-		assertThrows(ScheduFIREException.class, ()->{servlet.doPost(request, response);});
+		assertThrows(GestionePersonaleException.class, ()->{servlet.doPost(request, response);});
 	}
 	@Test
 	void testNuoviDati() throws ServletException, IOException {
@@ -244,7 +244,9 @@ class ModificaVFServletTest {
 		request.addParameter("gradoNuovo", "Qualificato");
 		request.addParameter("giorniFerieAnnoCorrenteNuovi", "10");
 		request.addParameter("giorniFerieAnnoPrecedenteNuovi", "5");
-		servlet.doPost(request, response);
+		assertThrows(GestionePersonaleException.class, () -> {
+			servlet.doGet(request, response);
+		});
 	}
 
 }

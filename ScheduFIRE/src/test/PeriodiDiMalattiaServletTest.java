@@ -54,10 +54,12 @@ class PeriodiDiMalattiaServletTest {
 	}
 	
 	@Test
-	void parameterNull() {
+	void parameterNull() throws ServletException, IOException {
 		request.setSession(sessione);
 		request.getSession().setAttribute("ruolo", "capoturno");
 		request.getSession().setAttribute("notifiche", "notifiche");
+		
+		servlet.doGet(request, response);
 		
 		assertEquals("/JSP/GestioneMalattiaJSP.jsp", response.getForwardedUrl());
 	}
