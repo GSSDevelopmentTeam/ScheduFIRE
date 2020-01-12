@@ -42,8 +42,8 @@
 					onmouseover="this.src='IMG/arrow/up-arrow-d.png'"
 					onmouseout="this.src='IMG/arrow/up-arrow-p.png'" /></a>
 
-	<h2 class="d-flex justify-content-center" id="inizio"
-		style="margin-top: 3%; color: #B60000 !Important"></h2>
+	<h2 class="d-flex justify-content-center" 
+			style="color: #B60000 !Important; margin-top: 3%; font-size:45px;">Gestione Ferie</h2>
 
 
 	<!-- form per l'ordinamento della lista dei VF-->
@@ -517,9 +517,7 @@
 
 
 	<script>
-	$(document).ready(function(){
-		$("#TitleHead").text("Gestione Ferie");
-	});
+	
 
 	var picker = new Litepicker(
 			{
