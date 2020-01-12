@@ -199,7 +199,7 @@
 		style="display: none">
 		<div class="modal-dialog modal-dialog-centered" role="document">
 			<div class="modal-content contenutiModal"
-				style="min-width: 550px; min-height: 670px;">
+				style="min-height: 670px;">
 				<div class="modal-header">
 					<h5 class="modal-title" id="titoloRimuoviFerie">Rimuovi ferie</h5>
 					<button type="button" class="close" data-dismiss="modal"
