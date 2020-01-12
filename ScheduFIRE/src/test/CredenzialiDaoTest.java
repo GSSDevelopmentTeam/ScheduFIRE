@@ -3,6 +3,7 @@ package test;
 import static org.junit.jupiter.api.Assertions.*;
 
 import java.security.NoSuchAlgorithmException;
+import java.sql.SQLException;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -12,8 +13,6 @@ import model.dao.CredenzialiDao;
 import util.PasswordSha256;
 
 class CredenzialiDaoTest {
-
-	private static final Class SQLException = null;
 
 	CredenzialiBean c = new CredenzialiBean();
 	
@@ -38,7 +37,7 @@ class CredenzialiDaoTest {
 	void testLoginNull() {
 		
 		CredenzialiDao.login(null);
-		assertThrows(SQLException, () -> CredenzialiDao.login( this.c.getUsername() ) );
+		assertThrows(SQLException.class, () -> CredenzialiDao.login( this.c.getUsername() ) );
 		
 	}
 
