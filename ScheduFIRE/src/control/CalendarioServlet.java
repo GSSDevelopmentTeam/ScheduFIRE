@@ -34,6 +34,8 @@ public class CalendarioServlet extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		Util.isAutenticato(request);
+		if(request.getSession().getAttribute("ruolo").equals("capoturno"))
+				Util.isCapoTurno(request);
 		Date date = new Date(System.currentTimeMillis());
 		String dataCorrente = date.toString();
 		

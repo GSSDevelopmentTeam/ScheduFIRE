@@ -20,6 +20,8 @@ import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.mock.web.MockHttpSession;
 
+import com.mysql.cj.jdbc.exceptions.SQLExceptionsMapping;
+
 import control.AutenticazioneException;
 import control.GeneraSquadreServlet;
 import model.ConnessioneDB;
@@ -47,7 +49,7 @@ class VigileDelFuocoDao_Test {
 						
 		vf.setNome("Fabrizio");
 		vf.setCognome("Romano");
-		vf.setEmail("fabrizio.romano");
+		vf.setEmail("fabrizio12.romano");
 		vf.setTurno("B");
 		vf.setMansione("Autista");
 		vf.setAdoperabile(true);
@@ -101,15 +103,6 @@ class VigileDelFuocoDao_Test {
 	 * @precondition vf!=null
 	 */
 	@Test
-	void testSalvaNull() {		
-		boolean atteso = true;
-		VigileDelFuocoBean nullo = null;
-		boolean risultato = VigileDelFuocoDao.salva(null);
-		assertThrows(SQLException, ()->VigileDelFuocoDao.salva(nullo));
-				
-	}
-	
-	@Test
 	void testSalva() {		
 		boolean atteso = true;
 		boolean risultato = VigileDelFuocoDao.salva(vf);
@@ -132,7 +125,7 @@ class VigileDelFuocoDao_Test {
 	void testOttieniStringNull() {
 		
 		VigileDelFuocoBean nuovo = VigileDelFuocoDao.ottieni(null);
-		assertThrows(SQLException,()->VigileDelFuocoDao.ottieni(email));
+		assertThrows(NullPointerException.class,()->VigileDelFuocoDao.ottieni(null));
 	}
 
 	/**
@@ -172,8 +165,7 @@ class VigileDelFuocoDao_Test {
 	@Test
 	void testOttieniIntFail() {
 		int c = 9;
-		Collection<VigileDelFuocoBean> db = VigileDelFuocoDao.ottieni(c);
-		assertThrows(SQLException,()->VigileDelFuocoDao.ottieni(c));		
+		assertThrows(NullPointerException.class,()->VigileDelFuocoDao.ottieni(c));		
 	}
 	@Test
 	void testOttieniInt() {
@@ -208,9 +200,9 @@ class VigileDelFuocoDao_Test {
 	void testottieniInFerieFail() {
 		int i = 5;
 		Date data = null;
-		Collection<VigileDelFuocoBean> db = VigileDelFuocoDao.ottieniInFerie(i, data);
+		VigileDelFuocoDao.ottieniInFerie(i, data);
 		
-		assertThrows(SQLException,()->VigileDelFuocoDao.ottieniInFerie(i, data));		
+		assertThrows(NullPointerException.class,()->VigileDelFuocoDao.ottieniInFerie(i, data));		
 	}
 	
 	/**
@@ -237,9 +229,9 @@ class VigileDelFuocoDao_Test {
 	void testottieniInMalattiaFail() {
 		int i = 7;
 		Date data = null;	
-		Collection<VigileDelFuocoBean> db = VigileDelFuocoDao.ottieniInMalattia(i, data);
+		VigileDelFuocoDao.ottieniInMalattia(i, data);
 		
-		assertThrows(SQLException,()->VigileDelFuocoDao.ottieniInMalattia(i, data));
+		assertThrows(NullPointerException.class,()->VigileDelFuocoDao.ottieniInMalattia(i, data));
 	}
 
 	/**
@@ -320,8 +312,8 @@ class VigileDelFuocoDao_Test {
 	 */
 	@Test
 	void testSetAdoperabileFail() {
-		boolean set = VigileDelFuocoDao.setAdoperabile(null, true);
-		assertThrows(SQLException,()->VigileDelFuocoDao.setAdoperabile(null, true));
+		VigileDelFuocoDao.setAdoperabile(null, true);
+		assertThrows(NullPointerException.class,()->VigileDelFuocoDao.setAdoperabile(null, true));
 	}
 	@Test
 	void testSetAdoperabile() {
@@ -343,14 +335,7 @@ class VigileDelFuocoDao_Test {
 		boolean atteso=true;
 		boolean risultato= VigileDelFuocoDao.modifica(null,vf);
 		
-		assertThrows(SQLException,()->VigileDelFuocoDao.modifica(null,vf));
-	}
-	@Test
-	void testModificaFailVF() {
-		boolean atteso=true;
-		boolean risultato= VigileDelFuocoDao.modifica(email,null);
-		
-		assertThrows(SQLException,()->VigileDelFuocoDao.modifica(email,null));
+		assertThrows(NullPointerException.class,()->VigileDelFuocoDao.modifica(null,vf));
 	}
 	@Test
 	void testModifica() {
@@ -370,7 +355,7 @@ class VigileDelFuocoDao_Test {
 		
 		VigileDelFuocoDao.getDisponibili(null);
 		
-		assertThrows(SQLException,()->VigileDelFuocoDao.getDisponibili(null));
+		assertThrows(NullPointerException.class,()->VigileDelFuocoDao.getDisponibili(null));
 	}
 	@Test
 	void testGetDisponibili() {
