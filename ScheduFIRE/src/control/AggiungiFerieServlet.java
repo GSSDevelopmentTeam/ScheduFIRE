@@ -173,14 +173,11 @@ public class AggiungiFerieServlet extends HttpServlet {
 
 			if(componente) {
 				Notifiche.update(Notifiche.UPDATE_SQUADRE_PER_FERIE, dataInizio, dataFine, emailVF);
-				System.out.print(dateSostituzione.size());
-				System.out.println();
+			
 				for(int j=0; j< dateSostituzione.size(); j++) {
-					System.out.println("inizio ciclo... " + emailVF + " " + dateSostituzione.get(j));
 					Util.sostituisciVigile(dateSostituzione.get(j), emailVF);
 				}
 
-				System.out.println("Uscito");
 			}
 
 
@@ -313,7 +310,7 @@ public class AggiungiFerieServlet extends HttpServlet {
 				numeroGiorniFerie++;
 			inizio=inizio.plusDays(1);
 		}
-		System.out.println("giorni ferie :"+numeroGiorniFerie +" da "+inizio+" a "+fine);
+		
 		return numeroGiorniFerie;
 
 	}

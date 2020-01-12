@@ -126,14 +126,10 @@ public class AggiungiMalattiaServlet extends HttpServlet {
 				
 				if(componente) {
 					Notifiche.update(Notifiche.UPDATE_SQUADRE_PER_MALATTIA, dataInizio, dataFine, emailVF);
-					System.out.print(dateSostituzione.size());
-					System.out.println();
+				
 					for(int j=0; j< dateSostituzione.size(); j++) {
-						System.out.println("inizio ciclo... " + emailVF + " " + dateSostituzione.get(j));
 						Util.sostituisciVigile(dateSostituzione.get(j), emailVF);
 					}
-					
-					System.out.println("Uscito");
 				}
 				
 
