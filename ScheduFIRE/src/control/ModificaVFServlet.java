@@ -1,6 +1,8 @@
 package control;
 
 import java.io.IOException;
+import java.util.Date;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -9,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import model.bean.VigileDelFuocoBean;
+import model.dao.ComponenteDellaSquadraDao;
 import model.dao.VigileDelFuocoDao;
 import util.Util;
 import util.Validazione;
@@ -33,7 +36,7 @@ public class ModificaVFServlet extends HttpServlet {
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		//Controllo login
 		Util.isCapoTurno(request);
@@ -43,7 +46,7 @@ public class ModificaVFServlet extends HttpServlet {
 		
 		//Ottenimento parametro email dalla richiesta
 		String emailVecchia = request.getParameter("emailVecchia");
-
+		System.out.println("l'email è "+emailVecchia);
 		//Controllo email
 		if( ! Validazione.email(emailVecchia) )
 			throw new ParametroInvalidoException("Il parametro 'email' Ã¨ errato!");
@@ -65,6 +68,7 @@ public class ModificaVFServlet extends HttpServlet {
 		String giorniFerieAnnoCorrenteNuoviStringa = request.getParameter("giorniFerieAnnoCorrenteNuovi");;
 		String giorniFerieAnnoPrecedenteNuoviStringa = request.getParameter("giorniFerieAnnoPrecedenteNuovi");
 		String emailNuova = request.getParameter("emailNuova");
+		System.out.println("PARAMETRI PRESI:"+nomeNuovo+cognomeNuovo+mansioneNuova+gradoNuovo+giorniFerieAnnoCorrenteNuoviStringa+giorniFerieAnnoPrecedenteNuoviStringa);
 		
 		if(giorniFerieAnnoCorrenteNuoviStringa == null ||
 			"".equals(giorniFerieAnnoCorrenteNuoviStringa))
@@ -149,7 +153,7 @@ public class ModificaVFServlet extends HttpServlet {
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		doGet(request, response);
 	}

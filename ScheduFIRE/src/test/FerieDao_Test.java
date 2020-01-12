@@ -17,8 +17,6 @@ import model.dao.FerieDao;
 
 /**
  * Testing per le classi di FerieDao.
- * Raggiunto il 4,7% di coverage sull'intero progetto
- * Raggiunto il 93,3% di coverage sulla classe FerieDao.java
  * @author Francesca Pia Perillo
  *
  */
