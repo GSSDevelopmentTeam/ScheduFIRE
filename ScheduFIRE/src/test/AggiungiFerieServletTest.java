@@ -103,7 +103,7 @@ class AggiungiFerieServletTest extends TestCase{
 			ps3.setString(2, "Auto Botte");
 			ps3.setDate(3, data);
 			
-			ps1.executeUpdate();
+			ps1.executeUpdate(); 
 			ps2.executeUpdate();
 			ps3.executeUpdate();
 			con.commit();
@@ -122,13 +122,6 @@ class AggiungiFerieServletTest extends TestCase{
 		assertThrows(AutenticazioneException.class, ()->{servlet.doPost(request, response);});
 	}
 	
-
-	@Test
-	void test_autenticazioneFallita2() throws ServletException, IOException {
-		request.setSession(session);
-		request.getSession().setAttribute("email", "luca@vigilfuoco.it");
-		assertThrows(AutenticazioneException.class, ()->{servlet.doPost(request, response);});
-	}
 	
 	@Test
 	void test_inserimentoGiorniFerie()throws ServletException, IOException {
