@@ -324,6 +324,7 @@ class AggiungiVFServletTest {
 		request.addParameter("giorniFerieAnnoCorrente", "10");
 		request.addParameter("giorniFerieAnnoPrecedente", "5");
 		servlet.doPost(request, response);
+		assertEquals("./GestionePersonaleServlet",response.getRedirectedUrl());
 	}
 	
 	

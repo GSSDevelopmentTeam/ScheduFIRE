@@ -106,9 +106,9 @@ class VigileDelFuocoDao_Test {
 	 */
 	@Test
 	void testSalva() {		
-		assertThrows(SQLIntegrityConstraintViolationException.class, () -> {
-			VigileDelFuocoDao.salva(vf);
-		});				
+		boolean atteso=true;
+		boolean risultato = VigileDelFuocoDao.salva(vf);
+		assertEquals(atteso,risultato);
 	}
 	@Test
 	void testSalva2() {		
@@ -155,13 +155,13 @@ class VigileDelFuocoDao_Test {
 	 * se il parametro int per l'ordinamento non e' del formato giusto lancia un eccezione 
 	 * @param ordinamento e' un intero che determina il tipo di ordinamento della collezione
 	 * @return una collezione di VigileDelFuocoBean con campo 'adoperabile' settato a true
-	 * @throws ArrayIndexOutOfBoundsException
+	 * @throws NullPointerException
 	 * @precondition c>0 && c<7
 	 */
 	@Test
 	void testOttieniIntFail() throws ArrayIndexOutOfBoundsException {
 		int c = 9;
-		assertThrows(ArrayIndexOutOfBoundsException.class,()->VigileDelFuocoDao.ottieni(c));		
+		assertThrows(NullPointerException.class,()->VigileDelFuocoDao.ottieni(c));		
 	}
 	@Test
 	void testOttieniInt() {
