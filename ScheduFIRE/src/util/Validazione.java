@@ -97,7 +97,7 @@ public class Validazione {
 	 * @return @return true se il formato è rispettato, false altrimenti.
 	 */
 	public static boolean giorniFerieAnnoCorrente(int giorniFerieAnnoCorrente) {
-		return (giorniFerieAnnoCorrente >= 0);
+		return (giorniFerieAnnoCorrente >= 0 && giorniFerieAnnoCorrente <= 22);
 	}
 	
 	/**
@@ -107,7 +107,7 @@ public class Validazione {
 	 * @return @return true se il formato è rispettato, false altrimenti.
 	 */
 	public static boolean giorniFerieAnniPrecedenti(int giorniFerieAnniPrecedenti) {
-		return (giorniFerieAnniPrecedenti >= 0);
+		return (giorniFerieAnniPrecedenti >= 0 && giorniFerieAnniPrecedenti < 1000);
 	}
 	
 	

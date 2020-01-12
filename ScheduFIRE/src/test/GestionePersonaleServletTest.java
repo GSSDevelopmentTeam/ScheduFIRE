@@ -54,7 +54,8 @@ class GestionePersonaleServletTest {
 	}
 
 	/**
-	 * Questo metodo setta un parametro per "ordinamento", eseguendo i vari casi
+	 * Questo metodo setta un parametro per "ordinamento", 
+	 * il parametro ordinamento non viene passato correttamente
 	 * @throws IOException 
 	 * @throws ServletException 
 	 */
@@ -67,7 +68,14 @@ class GestionePersonaleServletTest {
 		request.getSession().setAttribute("email", "capoturno");
 		request.addParameter("ordinament","nome");
 		servlet.doPost(request, response);
+		assertEquals("/JSP/GestionePersonaleJSP.jsp",response.getForwardedUrl());
 	}
+	/**
+	 * Questo metodo setta un parametro per "ordinamento", 
+	 * il parametro ordinamento passato e' "nome"
+	 * @throws IOException 
+	 * @throws ServletException 
+	 */
 	@Test
 	void ordinamentotestnome() throws ServletException, IOException {
 		request.setSession(session);
@@ -77,7 +85,14 @@ class GestionePersonaleServletTest {
 		request.getSession().setAttribute("email", "capoturno");
 		request.addParameter("ordinamento","nome");
 		servlet.doPost(request, response);
+		assertEquals("/JSP/GestionePersonaleJSP.jsp",response.getForwardedUrl());
 	}
+	/**
+	 * Questo metodo setta un parametro per "ordinamento", 
+	 * il parametro ordinamento passato e' "cognome"
+	 * @throws IOException 
+	 * @throws ServletException 
+	 */
 	@Test
 	void ordinamentotestcognome() throws ServletException, IOException {
 		request.setSession(session);
@@ -87,7 +102,14 @@ class GestionePersonaleServletTest {
 		request.getSession().setAttribute("email", "capoturno");
 		request.addParameter("ordinamento","cognome");
 		servlet.doPost(request, response);
+		assertEquals("/JSP/GestionePersonaleJSP.jsp",response.getForwardedUrl());
 	}
+	/**
+	 * Questo metodo setta un parametro per "ordinamento", 
+	 * il parametro ordinamento passato e' "caricoLavoro"
+	 * @throws IOException 
+	 * @throws ServletException 
+	 */
 	@Test
 	void ordinamentotestcarcoLavoro() throws ServletException, IOException {
 		request.setSession(session);
@@ -97,7 +119,14 @@ class GestionePersonaleServletTest {
 		request.getSession().setAttribute("email", "capoturno");
 		request.setParameter("ordinamento","caricoLavoro");
 		servlet.doPost(request, response);
+		assertEquals("/JSP/GestionePersonaleJSP.jsp",response.getForwardedUrl());
 	}
+	/**
+	 * Questo metodo setta un parametro per "ordinamento", 
+	 * il parametro ordinamento passato e'"ferie"
+	 * @throws IOException 
+	 * @throws ServletException 
+	 */
 	@Test
 	void ordinamentotestferie() throws ServletException, IOException {
 		request.setSession(session);
@@ -107,5 +136,6 @@ class GestionePersonaleServletTest {
 		request.getSession().setAttribute("email", "capoturno");
 		request.getSession().setAttribute("ordinamento","ferie");
 		servlet.doPost(request, response);
+		assertEquals("/JSP/GestionePersonaleJSP.jsp",response.getForwardedUrl());
 	}
 }
