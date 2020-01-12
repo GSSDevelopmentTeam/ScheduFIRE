@@ -110,7 +110,11 @@ public class Validazione {
 		return (giorniFerieAnniPrecedenti >= 0 && giorniFerieAnniPrecedenti < 1000);
 	}
 	
-	
+	/**
+	 * Si occupa di controllare se il grado passato come parametro è corretto.
+	 * @param grado il grado da testare
+	 * @return TRUE se il grado è corretto, FALSE altrimenti
+	 */
 	public static boolean grado(String grado) {
 		
 		if(grado == null)
@@ -125,6 +129,11 @@ public class Validazione {
 		
 	}
 	
+	/**
+	 * Si occupa di controllare se il turno passato come parametro è corretto.
+	 * @param turno il turno da testare
+	 * @return TRUE se il turno è corretto, FALSE altrimenti
+	 */
 	public static boolean turno(String turno) {
 		
 		if(turno == null)

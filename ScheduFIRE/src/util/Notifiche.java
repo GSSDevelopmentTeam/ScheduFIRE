@@ -194,7 +194,10 @@ public class Notifiche {
 			listaNotifiche.add(new Notifica(3, notificaMalattia, "CalendarioServlet?giorno="+giornoString,generateId()));
 		}
 	
-	
+	/**
+	 * Rimuove la notifica passata come parametro dalla lista di notifiche
+	 * @param toRemove la notifica da rimuovere
+	 */
 	public void rimuovi(Notifica toRemove) {
 		listaNotifiche.remove(toRemove);
 	}
@@ -242,10 +245,18 @@ public class Notifiche {
 		else return true;
 	}
 	
+	/**
+	 * Restituisce la lista di notifiche
+	 * @return la lista di notifiche
+	 */
 	public List<Notifica> getListaNotifiche() {
 		return listaNotifiche;
 	}
 	
+	/**
+	 * Aggiunge una notifica nella lista di notifiche
+	 * @param notifica la notifica da aggiungere
+	 */
 	public void addNotifica(Notifica notifica) {
 		listaNotifiche.add(notifica);
 	}
