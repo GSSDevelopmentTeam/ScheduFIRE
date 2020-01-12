@@ -40,6 +40,8 @@ min-width: 265px;
 	<a href="#sali" class=" back-up"><img src="IMG/arrow/up-arrow-p.png" style="margin-left: 5px;"
 					onmouseover="this.src='IMG/arrow/up-arrow-d.png'"
 					onmouseout="this.src='IMG/arrow/up-arrow-p.png'" /></a>
+					
+					
 	<!-- Modal di aggiunta malattia-->
 	<div class="modal fade" id="aggiungiMalattia" tabindex="-1" role="dialog"
 		aria-labelledby="exampleModalCenterTitle" aria-hidden="true" style="display: none">
@@ -124,7 +126,7 @@ min-width: 265px;
 	</div>	
 
 
-		<!-- Modal di avviso aggiunta malattia-->
+		<!-- Modal di avviso malattia-->
  <div class="modal fade" id="modalAvviso" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
   <div class="modal-dialog modal-sm modal-dialog-centered" role="document">
     <div class="modal-content" style="border :3px solid #5be94b;">
@@ -145,7 +147,8 @@ min-width: 265px;
 	<!-- Barra Navigazione -->
 	<div id="sali"></div>
 	<jsp:include page="HeaderJSP.jsp" />
-	<h2 class="d-flex  justify-content-center" style="margin-top:3% ;color:#B60000!Important" ></h2>
+	<h2 class="d-flex justify-content-center" 
+			style="color: #B60000 !Important; margin-top: 3%; font-size:45px;" >Gestione Malattia</h2>
 
 	
 	<!-- form per l'ordinamento della lista dei VF-->
@@ -381,9 +384,7 @@ style="display: none;position:fixed;z-index: 99999; width:100%">
 
 		
 			<script>
-			$(document).ready(function(){
-				$("#TitleHead").text("Gestione Malattia");
-			});
+			
 		
 			
 			var picker = new Litepicker(
@@ -650,7 +651,7 @@ style="display: none;position:fixed;z-index: 99999; width:100%">
 			</script>
 			<script>
 			function ricaricaPagina(){
-				window.location.replace("PeriodiDiMalattiaServlet?coglione");
+				window.location.replace("PeriodiDiMalattiaServlet");
 			}
 			</script>
 			<script>

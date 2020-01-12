@@ -289,13 +289,14 @@ class UtilTest {
 				Date.valueOf("2020-03-20"), Date.valueOf("2020-03-22"));
 	}
 	
-	/*private void rimuoviSquadra() {
-		List<ComponenteDellaSquadraBean> lista1 = ComponenteDellaSquadraDao.getComponenti(Date.valueOf("2020-03-25"));
-		HashMap<VigileDelFuocoBean, String> squadra1 = Util.ottieniSquadra(Date.valueOf("2020-03-25"));
-		
-		ComponenteDellaSquadraDao.removeComponenti(lista1);
-		VigileDelFuocoDao.removeCaricoLavorativo(squadra1);
-	}*/
+//	private void rimuoviSquadra() {
+//		List<ComponenteDellaSquadraBean> lista1 = ComponenteDellaSquadraDao.getComponenti(Date.valueOf("2020-03-25"));
+//		HashMap<VigileDelFuocoBean, String> squadra1 = Util.ottieniSquadra(Date.valueOf("2020-03-25"));
+//		
+//		ComponenteDellaSquadraDao.removeComponenti(lista1);
+//		VigileDelFuocoDao.removeCaricoLavorativo(squadra1);
+//	}
+
 
 	private MockHttpServletRequest request;
 	private MockHttpSession sessione;
