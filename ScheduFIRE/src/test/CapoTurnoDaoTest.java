@@ -11,8 +11,6 @@ import model.dao.CapoTurnoDao;
 
 class CapoTurnoDaoTest {
 
-	private static final Class SQLException = null;
-
 	CapoTurnoBean ct = new CapoTurnoBean();
 	
 	@BeforeEach
@@ -38,7 +36,9 @@ class CapoTurnoDaoTest {
 	void testOttieniNull() {
 		
 		CapoTurnoBean ct = CapoTurnoDao.ottieni(null);
-		assertThrows(SQLException, () -> CapoTurnoDao.ottieni( this.ct.getEmail() ) );
+		assertThrows(NullPointerException.class, () -> {
+			CapoTurnoDao.ottieni(this.ct.getEmail());
+		} );
 		
 	}
 

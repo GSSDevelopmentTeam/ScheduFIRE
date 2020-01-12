@@ -100,8 +100,7 @@ public class VigileDelFuocoDao {
 		
 		//controlli
 		if(chiaveEmail == null)
-			//lancio eccezione
-			;
+			throw new NullPointerException();
 		
 		try(Connection con = ConnessioneDB.getConnection()) {
 			
@@ -215,8 +214,7 @@ public class VigileDelFuocoDao {
 	public static Collection<VigileDelFuocoBean> ottieni(int ordinamento) {
 		
 		if(ordinamento < 0 || ordinamento > 7)
-			//lancio eccezione
-			;
+			throw new NullPointerException();
 		
 		try(Connection con = ConnessioneDB.getConnection()) {
 			
@@ -349,8 +347,7 @@ public class VigileDelFuocoDao {
 	public static Collection<VigileDelFuocoBean> ottieniInMalattia(int ordinamento,Date data) {
 		
 		if(ordinamento < 0 || ordinamento > 7)
-			//lancio eccezione
-			;
+			throw new NullPointerException();
 		
 		try(Connection con = ConnessioneDB.getConnection()) {
 			
@@ -632,8 +629,7 @@ public class VigileDelFuocoDao {
 		
 		//controlli
 		if(chiaveEmail == null)
-			//lancio eccezione
-			;
+			throw new NullPointerException();
 		
 		try(Connection con = ConnessioneDB.getConnection()) {
 			
@@ -662,13 +658,8 @@ public class VigileDelFuocoDao {
 	public static boolean modifica(String chiaveEmail, VigileDelFuocoBean nuovoVF) {
 		
 		//controlli
-		if(chiaveEmail == null)
-			//lancio eccezione
-			;
-		
-		if(nuovoVF == null)
-			//lancio eccezione
-			;
+		if(chiaveEmail == null || nuovoVF == null)
+			throw new NullPointerException();
 		
 		try(Connection con = ConnessioneDB.getConnection()) {
 			
@@ -1161,6 +1152,16 @@ public class VigileDelFuocoDao {
 			}
 			
 			return true;
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+		}
+	}
+	
+	public static boolean removeVigileDelFuoco(String string) {
+		try (Connection con = ConnessioneDB.getConnection()){
+			PreparedStatement ps = con.prepareStatement("DELETE FROM vigile WHERE email = ?;");
+			ps.setString(1, string);
+			return (ps.executeUpdate() == 1);
 		} catch (SQLException e) {
 			throw new RuntimeException(e);
 		}

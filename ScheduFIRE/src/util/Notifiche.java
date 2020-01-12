@@ -245,6 +245,24 @@ public class Notifiche {
 	public List<Notifica> getListaNotifiche() {
 		return listaNotifiche;
 	}
+	
+	public void addNotifica(Notifica notifica) {
+		listaNotifiche.add(notifica);
+	}
+	
+	@Override
+	public boolean equals(Object obj) {
+		if(obj == null) {
+			return false;
+		}
+		if(getClass() != obj.getClass()) {
+			return false;
+		}
+		else {
+			Notifiche otherNotifiche = (Notifiche) obj;
+			return listaNotifiche.equals(otherNotifiche.getListaNotifiche());
+		}
+	}
 
 	/**
 	 * Utilizzare solo nella fase di avvio
