@@ -42,7 +42,6 @@ public class EliminaVFServlet extends HttpServlet {
 		
 		//Ottenimento parametro email dalla richiesta
 		String email = request.getParameter("email");
-		System.out.println("l'email passata è "+email);
 		//Controllo email
 		if( ! Validazione.email(email) )
 			throw new ParametroInvalidoException("Il parametro 'email' è errato!");
