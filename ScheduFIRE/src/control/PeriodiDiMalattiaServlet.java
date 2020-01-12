@@ -33,9 +33,10 @@ import model.dao.VigileDelFuocoDao;
 import util.GiornoLavorativo;
 import util.Util;
 
-/**
- * Servlet implementation class PeriodiDiMalattiaServlet
- */
+/*
+* Servlet implementation class PeriodiDiMalattiaServlet
+* @author Biagio Bruno
+*/
 @WebServlet("/PeriodiDiMalattiaServlet")
 public class PeriodiDiMalattiaServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
