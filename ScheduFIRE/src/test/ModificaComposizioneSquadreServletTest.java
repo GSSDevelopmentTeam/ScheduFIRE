@@ -149,6 +149,7 @@ class ModificaComposizioneSquadreServletTest {
 		request.setParameter("data", data.toString());
 		request.setParameter("email", "domenico.giordano@vigilfuoco.it");
 		session.setAttribute("squadra", squadra);
+		request.setParameter("VFNew", "domenico.giordano@vigilfuoco.it");
 		servlet.doPost(request, response);
 		assertEquals("JSP/SquadraJSP.jsp",response.getForwardedUrl());
 	}

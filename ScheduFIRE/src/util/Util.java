@@ -358,7 +358,7 @@ public class Util {
 
 		if(modifica==true) {
 			setFerie();
-			Date inizioAnnoNuovo=Date.valueOf(LocalDate.of(annoNuovo, 1, 1));
+			Date inizioAnnoNuovo=Date.valueOf(LocalDate.of(annoNuovo-1, 1, 1));
 			ComponenteDellaSquadraDao.rimuoviTutti(inizioAnnoNuovo);
 			SquadraDao.rimuoviTutti(inizioAnnoNuovo);
 			ListaSquadreDao.rimuoviTutte(inizioAnnoNuovo);
