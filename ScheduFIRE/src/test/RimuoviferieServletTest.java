@@ -29,6 +29,8 @@ import control.AutenticazioneException;
 import control.GeneraSquadreServlet;
 import control.RimuoviFerieServlet;
 
+import org.apache.tomcat.util.json.JSONParser;
+import org.json.JSONArray;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -69,37 +71,55 @@ class RimuoviferieServletTest{
 	
 	@Test
 	void test_autenticazioneFallita2() throws ServletException, IOException {
-		((MockHttpServletRequest) request).setSession(session);
+		request.setSession(session);
 		assertThrows(AutenticazioneException.class, ()->{servlet.doPost(request, response);});
 	}
 	
 	@Test
 	void test_autenticazioneFallita3() throws ServletException, IOException {
-		((MockHttpServletRequest) request).setSession(session);
+		request.setSession(session);
 		request.getSession().setAttribute("email", "luca@vigilfuoco.it");
 		assertThrows(AutenticazioneException.class, ()->{servlet.doPost(request, response);});
 	}
 	
 	@Test
-	void test_giorniGiaConcessi()throws ServletException, IOException {
-		String dataInizio = "02-03-2020";
-		String dataFine = "06-03-2020";
-		
+	void test_rimozioneGiorniDiFerie()throws ServletException, IOException {
 		request.setSession(session);
 		request.getSession().setAttribute("ruolo", "capoturno");
 		request.getSession().setAttribute("notifiche", "notifiche");
-		request.getSession().setAttribute("email", "luca.raimondi@vigilfuoco.it");
-		request.getSession().setAttribute("dataIniziale", "02-03-2020");
-		request.getSession().setAttribute("dataFinale", "06-03-2020");
+		request.setParameter("email", "luca.raimondi@vigilfuoco.it");
+		request.setParameter("dataIniziale", "02-03-2020");
+		request.setParameter("dataFinale", "06-03-2020");
+		servlet.doPost(request, response);
+		 assertEquals("application/json", response.getContentType());
+	}
+	
+	@Test
+	void test_rimozioneParteGiorniDiFerie()throws ServletException, IOException {
+		request.setSession(session);
+		request.getSession().setAttribute("ruolo", "capoturno");
+		request.getSession().setAttribute("notifiche", "notifiche");
+		request.setParameter("email", "luca.raimondi@vigilfuoco.it");
+		request.setParameter("dataIniziale", "03-03-2020");
+		request.setParameter("dataFinale", "05-03-2020");
 		servlet.doPost(request, response);
 		
-		
-		assertEquals("JSP/GestioneFerieJSP.jsp",response.getForwardedUrl());
+		 assertEquals("application/json", response.getContentType());
+	
 	}
-
+	@Test
+	void test_rimozioneGiorniNonPresenti()throws ServletException, IOException {
+		request.setSession(session);
+		request.getSession().setAttribute("ruolo", "capoturno");
+		request.getSession().setAttribute("notifiche", "notifiche");
+		request.setParameter("email", "luca.raimondi@vigilfuoco.it");
+		request.setParameter("dataIniziale", "10-03-2020");
+		request.setParameter("dataFinale", "15-03-2020");
+		servlet.doPost(request, response);
+		
+		 assertEquals("application/json", response.getContentType());
 	
-
-	
+	}
 	
 	@AfterEach
 	protected void tearDown() throws SQLException {
