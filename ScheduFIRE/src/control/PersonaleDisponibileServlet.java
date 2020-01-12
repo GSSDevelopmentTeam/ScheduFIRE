@@ -38,7 +38,7 @@ public class PersonaleDisponibileServlet extends HttpServlet{
 		doPost(request,response);
 	}
 
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		Util.isCapoTurno(request);
 		
 		Date giorno = null;
@@ -113,8 +113,6 @@ public class PersonaleDisponibileServlet extends HttpServlet{
 				giorno=GiornoLavorativo.nextLavorativo(giorno);
 
 			}
-			
-
 		}
 		
 
@@ -164,8 +162,7 @@ public class PersonaleDisponibileServlet extends HttpServlet{
 		ArrayList<VigileDelFuocoBean> vigiliMalattia=new ArrayList<VigileDelFuocoBean>
 				(VigileDelFuocoDao.ottieniInMalattia(ordinamento, giorno));
 		
-		
-		//Collections.sort(vigili, new VigileComparator());
+
 		Collections.sort(componenti, new ComponenteComparator());
 		String pattern = "dd-MM-yyyy";
 		SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
@@ -175,7 +172,6 @@ public class PersonaleDisponibileServlet extends HttpServlet{
 		String giornoLavoro=""+giorno.toLocalDate().getDayOfMonth()+" "+Mese(giorno.toLocalDate().getMonthValue())+" "+giorno.toLocalDate().getYear();
 		request.setAttribute("titolo", "Il personale del giorno "+giornoLavoro+" &egrave il seguente");
 
-		System.out.println("Ordinamento= "+ordinamentoStr);
 		request.setAttribute("ordinamento", ordinamentoStr);
 		request.setAttribute("vigiliCompleti", vigiliCompleti);
 		request.setAttribute("vigiliDisponibili", vigiliDisponibili);
@@ -208,27 +204,7 @@ public class PersonaleDisponibileServlet extends HttpServlet{
 		return meseString;
 	}
 
-
-
-
-	class VigileComparator implements Comparator<VigileDelFuocoBean> {
-
-		@Override
-		public int compare(VigileDelFuocoBean o1, VigileDelFuocoBean o2) {
-			String mansione1=o1.getMansione();
-			String mansione2=o2.getMansione();
-			if (mansione1.equals("Capo Squadra") && mansione2.equals("Capo Squadra"))
-				return o1.getCognome().compareTo(o2.getCognome());
-			if(mansione1.equals("Capo Squadra"))
-				return -1;
-			if(mansione2.equals("Capo Squadra"))
-				return 1;
-			return o1.getMansione().compareTo(o2.getMansione());
-		}
-	}
-
-
-
+	
 	class ComponenteComparator implements Comparator<ComponenteDellaSquadraBean> {
 
 		/*

@@ -30,12 +30,12 @@ import util.Util;
 public class AjaxCalendario extends HttpServlet{
 	private static final long serialVersionUID = 1L;
 	
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		doPost(request,response);
 	}
 	
 
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		Util.isAutenticato(request);
 		
 		
@@ -123,7 +123,7 @@ public class AjaxCalendario extends HttpServlet{
  
             //Se � ieri, quindi il giorno cliccato precede di 1 giorno oggi e sono meno delle 7 59, 
             // quindi ancora durante il turno notturno, posso modificarlo
-            if(giornoCliccatoLD.compareTo(ora.toLocalDate())==-1 && ora.getHour()<=7 && ora.getMinute()<=59) {
+            if(giornoCliccatoLD.compareTo(ora.toLocalDate().plusDays(-1))==0 && ora.getHour()<=7 && ora.getMinute()<=59) {
  
                 isModificabile=true;
             }

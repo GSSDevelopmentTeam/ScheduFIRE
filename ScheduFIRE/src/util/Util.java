@@ -31,30 +31,6 @@ import model.dao.*;
  */
 public class Util {
 
-	/**
-	 * Il metodo codifica la stringa passata come parametro in Base64.
-	 * @param pwd la stringa da codificare
-	 * @return la stringa codificata
-	 * @see Base64.Encoder
-	 */
-	public static String codificaPwd(String pwd){
-
-		String pwdCodificata = Base64.getEncoder().encodeToString(pwd.getBytes());
-		return pwdCodificata;
-	} 
-
-	/**
-	 * Il metodo decodifica una stringa codificata in Base64.
-	 * @param pwd_Cod la stringa da decodificare
-	 * @return la stringa decidificata
-	 * @see Base64.Decoder
-	 */
-	public static String decodificaPwd(String pwd_Cod){
-
-		byte[] ByteDecodificati = Base64.getDecoder().decode(pwd_Cod);
-		String pwdDecodificata = new String(ByteDecodificati);
-		return pwdDecodificata;
-	} 
 
 	public static List<ComponenteDellaSquadraBean> generaSquadra(Date data) throws NotEnoughMembersException {
 		//Prendiamo i vigili disponibili
@@ -65,7 +41,6 @@ public class Util {
 		List<VigileDelFuocoBean> vigile = new ArrayList<>();
 
 		for(VigileDelFuocoBean membro : disponibili) {
-			System.out.println("Mansione: "+membro.getMansione());
 			if(membro.getMansione().toLowerCase().equals("capo squadra")) {
 				caposquadra.add(membro);
 			}
@@ -76,8 +51,6 @@ public class Util {
 				vigile.add(membro);
 			}
 		}
-		System.out.println("Vigili disponibili: "+disponibili.size());
-		System.out.println("Capisquadra: "+caposquadra.size()+" ,autisti: "+ autista.size()+" ,vigili: "+ vigile.size());
 		//Controlliamo se abbiamo abbastanza personale per fare squadra, altrimenti lanciamo l'eccezione
 		if(abbastanzaPerTurno(caposquadra.size(), autista.size(), vigile.size())) {
 			//Ordiniamo in ordine ascendente
@@ -280,7 +253,6 @@ public class Util {
 		for(VigileDelFuocoBean sostituto : disponibili) {
 			if(sostituto.getMansione().equals(VigileDelFuocoDao.ottieni(mailVFDaSostituire).getMansione()) &&
 					!lista.contains(new ComponenteDellaSquadraBean(squadraVF, sostituto.getEmail(), data))) {
-				System.out.println("IL SOSTITUTO PIGLIATO NEL QUESTIONAMENTO E IL SIGNOR PASQUALINO DI NOME " + sostituto.getEmail());
 				lista.add(new ComponenteDellaSquadraBean(squadraVF, sostituto.getEmail(), data));
 
 				squadra.put(sostituto, squadraVF);
@@ -390,7 +362,6 @@ public class Util {
 			ComponenteDellaSquadraDao.rimuoviTutti(inizioAnnoNuovo);
 			SquadraDao.rimuoviTutti(inizioAnnoNuovo);
 			ListaSquadreDao.rimuoviTutte(inizioAnnoNuovo);
-			System.out.println("rimozione avvenuta con successo");
 		}
 
 	}

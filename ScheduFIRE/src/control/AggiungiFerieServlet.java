@@ -36,13 +36,13 @@ public class AggiungiFerieServlet extends HttpServlet {
 
 	public AggiungiFerieServlet() {
 		super();
-	}
+	} 
 
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		doPost(request, response);
-	}
+	} 
 
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		Util.isCapoTurno(request);
 		//Istanziazione ed inizializzazione variabili
 		Date dataInizio = null;
@@ -70,7 +70,7 @@ public class AggiungiFerieServlet extends HttpServlet {
 		int giornoIniziale = Integer.parseInt(dataIniziale.substring(0, 2));
 		int annoFinale = Integer.parseInt(dataFinale.substring(6, 10));
 		int meseFinale = Integer.parseInt(dataFinale.substring(3, 5));
-		int giornoFinale = Integer.parseInt(dataFinale.substring(0, 2));
+		int giornoFinale = Integer.parseInt(dataFinale.substring(0, 2)); 
 		inizio=LocalDate.of(annoIniziale, meseIniziale, giornoIniziale);
 		fine=LocalDate.of(annoFinale, meseFinale, giornoFinale);
 		dataInizio = Date.valueOf(inizio);
@@ -173,14 +173,11 @@ public class AggiungiFerieServlet extends HttpServlet {
 
 			if(componente) {
 				Notifiche.update(Notifiche.UPDATE_SQUADRE_PER_FERIE, dataInizio, dataFine, emailVF);
-				System.out.print(dateSostituzione.size());
-				System.out.println();
+			
 				for(int j=0; j< dateSostituzione.size(); j++) {
-					System.out.println("inizio ciclo... " + emailVF + " " + dateSostituzione.get(j));
 					Util.sostituisciVigile(dateSostituzione.get(j), emailVF);
 				}
 
-				System.out.println("Uscito");
 			}
 
 
@@ -313,7 +310,7 @@ public class AggiungiFerieServlet extends HttpServlet {
 				numeroGiorniFerie++;
 			inizio=inizio.plusDays(1);
 		}
-		System.out.println("giorni ferie :"+numeroGiorniFerie +" da "+inizio+" a "+fine);
+		
 		return numeroGiorniFerie;
 
 	}

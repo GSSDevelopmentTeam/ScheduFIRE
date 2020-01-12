@@ -43,20 +43,19 @@ public class PersonaleDisponibileAJAX extends HttpServlet {
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		doPost(request,response);
 	}
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		Util.isCapoTurno(request);
 		//Prendo l'email del VF da sostituire, il ruolo e il tipo di squadra
 		String email=request.getParameter("email");
 		String ruolo= request.getParameter("mansione");
 		String tipo = request.getParameter("tiposquadra");
-		System.out.println(email+ruolo+tipo);
 		int tp= Integer.parseInt(tipo);
 		
 		HttpSession session = request.getSession();
@@ -78,7 +77,6 @@ public class PersonaleDisponibileAJAX extends HttpServlet {
 			}
 		}
 		
-		System.out.println("Data "+data);
 		ArrayList<VigileDelFuocoBean> vigili=VigileDelFuocoDao.getDisponibili(data);
 
 		//Confronto se nell'ArrayList dei vigili ci sono quelli gi� inseriti nelle squadre 
@@ -92,7 +90,7 @@ public class PersonaleDisponibileAJAX extends HttpServlet {
 			//confronto il membro nella squadra con tutta la lista di vigili disponibili			
 				if(membro.getEmail().equalsIgnoreCase(vigili.get(i).getEmail())) {
 					trovato = true;
-					System.out.println(trovato);
+					
 				}	
 				if(trovato) break;
 			}
@@ -100,7 +98,6 @@ public class PersonaleDisponibileAJAX extends HttpServlet {
 			if(trovato==false) {
 				if(ruolo!=null) {
 					if(vigili.get(i).getMansione().equalsIgnoreCase(ruolo)) {
-						System.out.println();
 						nuovoelenco.add(vigili.get(i));
 					}
 				}

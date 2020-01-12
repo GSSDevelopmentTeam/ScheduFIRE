@@ -79,7 +79,7 @@ class ModificaVFServletTest {
 	
 	/**
 	 * in questo metodo settiamo il parametro dell'email del Vf da sostituire
-	 * genera errore perche' l'email e' già presente nel sistema
+	 * genera errore perche' l'email e' giï¿½ presente nel sistema
 	 * @throws IOException 
 	 * @throws ServletException 
 	 * @throws GestionePersonaleException
@@ -186,6 +186,7 @@ class ModificaVFServletTest {
 		request.addParameter("giorniFerieAnnoCorrenteNuovi", "10");
 		request.addParameter("giorniFerieAnnoPrecedenteNuovi", "");
 		assertThrows(GestionePersonaleException.class, ()->{servlet.doPost(request, response);});
+
 	}
 	/**
 	 * Inseriamo i nuovi dati al VF
@@ -281,7 +282,9 @@ class ModificaVFServletTest {
 		request.addParameter("gradoNuovo", "Qualificato");
 		request.addParameter("giorniFerieAnnoCorrenteNuovi", "10");
 		request.addParameter("giorniFerieAnnoPrecedenteNuovi", "5");
-		servlet.doPost(request, response);
+		assertThrows(GestionePersonaleException.class, () -> {
+			servlet.doGet(request, response);
+		});
 	}
 
 }

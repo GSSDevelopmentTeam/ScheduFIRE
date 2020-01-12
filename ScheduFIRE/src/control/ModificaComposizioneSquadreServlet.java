@@ -47,7 +47,7 @@ public class ModificaComposizioneSquadreServlet extends HttpServlet {
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		Util.isCapoTurno(request);
 		HttpSession sessione = request.getSession();
 
@@ -107,7 +107,7 @@ public class ModificaComposizioneSquadreServlet extends HttpServlet {
 			default:
 				throw new ScheduFIREException("C'e stato un errore. Riprova pi� tardi.");
 			}
-			System.out.println("squadra: "+squadra);
+			
 			Iterator i = squadra.entrySet().iterator();
 
 			while(i.hasNext()) {
@@ -144,23 +144,11 @@ public class ModificaComposizioneSquadreServlet extends HttpServlet {
 
 	}
 
-	private List<ComponenteDellaSquadraBean> vigileToComponente(HashMap<VigileDelFuocoBean, String> squadra, Date data) {
-		List<ComponenteDellaSquadraBean> toReturn = new ArrayList<>();
-		@SuppressWarnings("rawtypes")
-		Iterator i = squadra.entrySet().iterator();
-		while(i.hasNext()) {
-			@SuppressWarnings("unchecked")
-			Map.Entry<VigileDelFuocoBean, String> coppia = (Entry<VigileDelFuocoBean, String>) i.next();
-			toReturn.add(new ComponenteDellaSquadraBean(coppia.getValue(), coppia.getKey().getEmail(), data));
-		}
-		return toReturn;
-	}
-
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		doGet(request, response);
 	}
