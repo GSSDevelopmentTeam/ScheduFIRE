@@ -37,7 +37,7 @@ class CapoTurnoDaoTest {
 	@Test
 	void testOttieniNull() {
 		
-		CapoTurnoBean ct = CapoTurnoDao.ottieni(null);
+		CapoTurnoDao.ottieni(null);
 		assertThrows(SQLException, () -> CapoTurnoDao.ottieni( this.ct.getEmail() ) );
 		
 	}

@@ -46,7 +46,7 @@ public class ModificaVFServlet extends HttpServlet {
 		
 		//Ottenimento parametro email dalla richiesta
 		String emailVecchia = request.getParameter("emailVecchia");
-		System.out.println("l'email è "+emailVecchia);
+
 		//Controllo email
 		if( ! Validazione.email(emailVecchia) )
 			throw new ParametroInvalidoException("Il parametro 'email' Ã¨ errato!");
