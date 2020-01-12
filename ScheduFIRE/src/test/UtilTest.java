@@ -297,6 +297,7 @@ class UtilTest {
 //		VigileDelFuocoDao.removeCaricoLavorativo(squadra1);
 //	}
 
+
 	private MockHttpServletRequest request;
 	private MockHttpSession sessione;
 }

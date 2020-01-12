@@ -20,6 +20,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.mock.web.MockHttpSession;
+import org.springframework.test.context.jdbc.Sql;
 
 import com.mysql.cj.jdbc.exceptions.SQLExceptionsMapping;
 
@@ -50,7 +51,7 @@ class VigileDelFuocoDao_Test {
 						
 		vf.setNome("Fabrizio");
 		vf.setCognome("Romano");
-		vf.setEmail("fabrizio12.romano");
+		vf.setEmail("f.romano");
 		vf.setTurno("B");
 		vf.setMansione("Autista");
 		vf.setAdoperabile(true);
@@ -93,7 +94,7 @@ class VigileDelFuocoDao_Test {
 		Date data2= Date.valueOf("2020-02-14");
 		FerieDao.rimuoviPeriodoFerie("marzia.mancuso@vigilfuoco.it", data, data2);		
 		GiorniMalattiaDao.rimuoviPeriodoDiMalattia("rosario.marmo@vigilfuoco.it", data, data2);
-		
+		VigileDelFuocoDao.deleteVF(vf.getEmail());
 	}
 
 
@@ -105,9 +106,18 @@ class VigileDelFuocoDao_Test {
 	 */
 	@Test
 	void testSalva() {		
-		assertThrows(SQLIntegrityConstraintViolationException.class, () -> {
-			VigileDelFuocoDao.salva(vf);
-		});				
+		boolean atteso=true;
+		boolean risultato = VigileDelFuocoDao.salva(vf);
+		assertEquals(atteso,risultato);
+	}
+	@Test
+	void testSalva2() {		
+		boolean atteso = true;
+		vf.setEmail("email");
+		boolean risultato = VigileDelFuocoDao.salva(vf);
+		vf.setEmail(email);
+		assertEquals(atteso,risultato);
+				
 	}
 
 	/**
@@ -117,17 +127,10 @@ class VigileDelFuocoDao_Test {
 	 */ 
 	@Test
 	void testOttieniString() {
-		
+		vf.setCaricoLavoro(23);
 		VigileDelFuocoBean nuovo = VigileDelFuocoDao.ottieni(email);
 		assertNotNull(nuovo);
 	}
-	@Test
-	void testOttieniStringNull() {
-		assertThrows(NullPointerException.class, () -> {
-			VigileDelFuocoDao.ottieni(null);
-		});
-	}
-
 	/**
 	 * Si occupa dell'ottenimento di una collezione di VigileDelFuocoBean dal database
 	 * con campo 'adoperabile' settato a true.
@@ -139,18 +142,9 @@ class VigileDelFuocoDao_Test {
 		vigiliDB = (ArrayList<VigileDelFuocoBean>) VigileDelFuocoDao.ottieni();
 		
 		boolean atteso = true;
-		boolean risultato = true; 
+		boolean risultato = false; 
 		int l = vigiliDB.size();
-		if(l != controllo.size()) {
-			atteso= false;
-		}else {
-			for(int i=0; i<l; i++) {
-				if(!controllo.get(i).getEmail().equals(vigiliDB.get(i).getEmail())) {
-					atteso = false;
-					break;
-				}
-			}
-		}
+		if(controllo.equals(vigiliDB)) risultato=true;
 		
 		assertEquals(risultato, atteso);		
 	}
@@ -158,12 +152,14 @@ class VigileDelFuocoDao_Test {
 	/**
 	 * Si occupa dell'ottenimento di una collezione di VigileDelFuocoBean dal database
 	 * con campo 'adoperabile' settato a true.
+	 * se il parametro int per l'ordinamento non e' del formato giusto lancia un eccezione 
 	 * @param ordinamento e' un intero che determina il tipo di ordinamento della collezione
-	 * @return una collezione di VigileDelFuocoBean con campo 'adoperabile' settato a true 
+	 * @return una collezione di VigileDelFuocoBean con campo 'adoperabile' settato a true
+	 * @throws NullPointerException
 	 * @precondition c>0 && c<7
 	 */
 	@Test
-	void testOttieniIntFail() {
+	void testOttieniIntFail() throws ArrayIndexOutOfBoundsException {
 		int c = 9;
 		assertThrows(NullPointerException.class,()->VigileDelFuocoDao.ottieni(c));		
 	}
@@ -196,14 +192,6 @@ class VigileDelFuocoDao_Test {
 		
 		assertEquals(atteso, risultato);	
 	}
-	@Test
-	void testottieniInFerieFail() {
-		int i = 5;
-		Date data = null;
-		VigileDelFuocoDao.ottieniInFerie(i, data);
-		
-		assertThrows(NullPointerException.class,()->VigileDelFuocoDao.ottieniInFerie(i, data));		
-	}
 	
 	/**
 	 * Si occupa dell'ottenimento di una collezione di VigileDelFuocoBean dal database
@@ -225,15 +213,7 @@ class VigileDelFuocoDao_Test {
 		assertEquals(atteso,risultato);
 		
 	}
-	@Test
-	void testottieniInMalattiaFail() {
-		int i = 7;
-		Date data = null;	
-		VigileDelFuocoDao.ottieniInMalattia(i, data);
-		
-		assertThrows(NullPointerException.class,()->VigileDelFuocoDao.ottieniInMalattia(i, data));
-	}
-
+	
 	/**
 	 * Si occupa dell'ottenimento di una collezione di VigileDelFuocoBean dal database
 	 * con mansione 'Capo Squadra' con campo 'adoperabile' settato a true.
@@ -311,12 +291,6 @@ class VigileDelFuocoDao_Test {
 	 * @return true se l'operazione va a buon fine, false altrimenti
 	 */
 	@Test
-	void testSetAdoperabileFail() {
-		assertThrows(NullPointerException.class, ()-> {
-		VigileDelFuocoDao.setAdoperabile(null, true);
-		});
-	}
-	@Test
 	void testSetAdoperabile() {
 		boolean atteso=true;
 		boolean risultato = VigileDelFuocoDao.setAdoperabile("michele73.sica@vigilfuoco.it", false);
@@ -332,10 +306,6 @@ class VigileDelFuocoDao_Test {
 	 * @return true se l'operazione va a buon fine, false altrimenti
 	 */
 	@Test
-	void testModificaFailEmail() {
-		assertThrows(NullPointerException.class,()->VigileDelFuocoDao.modifica(null,vf));
-	}
-	@Test
 	void testModifica() {
 		boolean atteso=true;
 		boolean risultato= VigileDelFuocoDao.modifica(email,vf);
@@ -348,11 +318,7 @@ class VigileDelFuocoDao_Test {
 	 * @return una lista di VigileDelFuocoBean che hanno attributo adoperabile=true 
 	 * 			e non sono in ferie o malattia nella data passata come parametro
 	 */
-	@Test
-	void testGetDisponibiliFail() {
-		assertThrows(NullPointerException.class,()->VigileDelFuocoDao.getDisponibili(null));
-	}
-	@Test
+  @Test
 	void testGetDisponibili() {
 		Date data= Date.valueOf("2020-02-14");
 		ArrayList<VigileDelFuocoBean> db = VigileDelFuocoDao.getDisponibili(data);
@@ -441,7 +407,7 @@ class VigileDelFuocoDao_Test {
 	 */
 	@Test
 	void testAggiornaFeriePrecedenti() {
-		int ferie= 5;
+		int ferie= 0;
 		VigileDelFuocoDao.aggiornaFeriePrecedenti(email, ferie);
 		int risultato = VigileDelFuocoDao.ottieniNumeroFeriePrecedenti(email);
 		
@@ -455,7 +421,7 @@ class VigileDelFuocoDao_Test {
 	 */
 	@Test
 	void testAggiornaFerieCorrenti() {
-		int ferie= 15;
+		int ferie= 0;
 		VigileDelFuocoDao.aggiornaFerieCorrenti(email, ferie);
 		int risultato = VigileDelFuocoDao.ottieniNumeroFerieCorrenti(email);
 		
@@ -470,7 +436,7 @@ class VigileDelFuocoDao_Test {
 	 */
 	@Test
 	void testCaricoLavorativo() {
-		int atteso = vf.getCaricoLavoro()+3;
+		int atteso = vf.getCaricoLavoro();
 		VigileDelFuocoDao.caricoLavorativo(squadra);
 	
 		int risultato = vf.getCaricoLavoro();
@@ -492,6 +458,18 @@ class VigileDelFuocoDao_Test {
 		
 		assertEquals(atteso, risultato);
 		
+	}
+	/**
+	 * Si occupa della rimozione di un Vigile del Fuoco dal database data la sua chiave.
+	 * @param chiaveEmail una stringa contenente la mail del Vigile
+	 * @return true se la cancellazione e' andata a buon fine 
+	 */
+	@Test
+	void testdeleteVF() {
+		boolean atteso=true;
+		boolean risultato = VigileDelFuocoDao.deleteVF("email");
+		
+		assertEquals(atteso, risultato);
 	}
 
 	

@@ -36,7 +36,7 @@ import model.dao.VigileDelFuocoDao;
 class GeneraSquadreServletTest {
 	
 	 
-	static MockHttpServletRequest request;
+	static MockHttpServletRequest request; 
 	static MockHttpServletResponse response;
 	static MockHttpSession session;
 	static GeneraSquadreServlet servlet;
