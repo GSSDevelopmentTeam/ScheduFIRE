@@ -94,7 +94,7 @@ class UtilTest {
 	void ottieniSquadraTest() throws NotEnoughMembersException {
 		int sizeAttesa = 12;
 		
-		HashMap<VigileDelFuocoBean, String> squadra = Util.ottieniSquadra(Date.valueOf("2020-01-02"));
+		HashMap<VigileDelFuocoBean, String> squadra = Util.ottieniSquadra(Date.valueOf("2020-01-05"));
 		
 		assertEquals(squadra.size(), sizeAttesa);
 	}
@@ -102,7 +102,7 @@ class UtilTest {
 	@Test
 	void OrdinaComponentiTest() {
 		boolean ordinata = true;
-		ArrayList<ComponenteDellaSquadraBean> lista = ComponenteDellaSquadraDao.getComponenti(Date.valueOf("2020-01-02"));
+		ArrayList<ComponenteDellaSquadraBean> lista = ComponenteDellaSquadraDao.getComponenti(Date.valueOf("2020-01-05"));
 		ArrayList<ComponenteDellaSquadraBean> listaOrdinata = Util.ordinaComponenti(lista);
 		
 		for(int i=0; i<3; i++) {
