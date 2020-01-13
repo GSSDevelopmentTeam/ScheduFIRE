@@ -59,7 +59,7 @@ class AggiungiVFServletTest {
 		request.getSession().setAttribute("capoturno", ct);
 		request.getSession().setAttribute("notifiche", "notifiche");
 		request.getSession().setAttribute("email", "capoturno");
-		assertThrows(ScheduFIREException.class, ()->{servlet.doPost(request, response);});
+		assertThrows(ParametroInvalidoException.class, ()->{servlet.doPost(request, response);});
 	}
 	
 	/**
