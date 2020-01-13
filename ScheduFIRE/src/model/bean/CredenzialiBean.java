@@ -40,39 +40,17 @@ public class CredenzialiBean {
 		this.ruolo = ruolo;
 	}
 
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((password == null) ? 0 : password.hashCode());
-		result = prime * result + ((ruolo == null) ? 0 : ruolo.hashCode());
-		result = prime * result + ((username == null) ? 0 : username.hashCode());
-		return result;
-	}
-
 	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
+		if(obj == null) {
 			return false;
-		if (getClass() != obj.getClass())
+		}
+		else if(this.getClass() != obj.getClass()) {
 			return false;
+		}
 		CredenzialiBean other = (CredenzialiBean) obj;
-		if (password == null) {
-			if (other.password != null)
-				return false;
-		} else if (!password.equals(other.password))
-			return false;
-		if (ruolo == null) {
-			if (other.ruolo != null)
-				return false;
-		} else if (!ruolo.equals(other.ruolo))
-			return false;
-		if (username == null) {
-			if (other.username != null)
-				return false;
-		} else if (!username.equals(other.username))
-			return false;
-		return true;
+		return this.getPassword().equals(other.getPassword()) &&
+				this.getRuolo().equals(other.getRuolo()) &&
+				this.getUsername().equals(other.getUsername());
 	}
 
 	public String toString() {
