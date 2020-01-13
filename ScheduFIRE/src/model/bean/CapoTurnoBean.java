@@ -58,9 +58,20 @@ public class CapoTurnoBean {
 		public void setUsername(String username) {
 			this.username = username;
 		}
-		
-		
-		
 
-
+		public boolean equals(Object obj) {
+			if(obj == null) {
+				return false;
+			}
+			else if(this.getClass() != obj.getClass()) {
+				return false;
+			}
+			CapoTurnoBean other = (CapoTurnoBean) obj;
+			return this.getCognome().equals(other.getCognome()) &&
+					this.getEmail().equals(other.getEmail()) &&
+					this.getNome().equals(other.getNome()) &&
+					this.getTurno().equals(other.getTurno()) &&
+					this.getUsername().equals(other.getUsername());
+		}
+	
 }

@@ -39,7 +39,22 @@ public class CredenzialiBean {
 	public void setRuolo(String ruolo) {
 		this.ruolo = ruolo;
 	}
-	
-	
+
+	public boolean equals(Object obj) {
+		if(obj == null) {
+			return false;
+		}
+		else if(this.getClass() != obj.getClass()) {
+			return false;
+		}
+		CredenzialiBean other = (CredenzialiBean) obj;
+		return this.getPassword().equals(other.getPassword()) &&
+				this.getRuolo().equals(other.getRuolo()) &&
+				this.getUsername().equals(other.getUsername());
+	}
+
+	public String toString() {
+		return "CredenzialiBean [username=" + username + ", password=" + password + ", ruolo=" + ruolo + "]";
+	}
 
 }

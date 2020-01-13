@@ -47,12 +47,13 @@ public class ModificaComposizioneSquadreServlet extends HttpServlet {
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		Util.isCapoTurno(request);
 		HttpSession sessione = request.getSession();
 
 
 		try {
-			Map<VigileDelFuocoBean, String> squadra = new HashMap<>();
+			HashMap<VigileDelFuocoBean, String> squadra = new HashMap<>();
 			Date data = Date.valueOf(request.getParameter("data"));
 			if(request.getParameter("email")!= null) {
 				squadra = (HashMap<VigileDelFuocoBean, String>) sessione.getAttribute("squadra");
@@ -85,21 +86,28 @@ public class ModificaComposizioneSquadreServlet extends HttpServlet {
 			String oldVF =request.getParameter("email");
 			String newVF =request.getParameter("VFNew");
 			int tipo = Integer.parseInt(request.getParameter("tiposquadra"));
-			Map<VigileDelFuocoBean, String> squadra = new HashMap<>();
+			Date data = null;
+			Date other = null;
+			HashMap<VigileDelFuocoBean, String> squadra = new HashMap<>();
 			switch(tipo) {
 			case 1: 
 				squadra = (HashMap<VigileDelFuocoBean, String>) sessione.getAttribute("squadraDiurno");
+				data =  Date.valueOf(request.getParameter("dataModifica"));
+				other =  Date.valueOf(request.getParameter("altroturno"));
 				break;
 			case 2:
 				squadra = (HashMap<VigileDelFuocoBean, String>) sessione.getAttribute("squadraNotturno");
+				data =  Date.valueOf(request.getParameter("dataModifica"));
+				other =  Date.valueOf(request.getParameter("altroturno"));
 				break;
 			case 3:
 				squadra = (HashMap<VigileDelFuocoBean, String>) sessione.getAttribute("squadra");
+				data =  Date.valueOf(request.getParameter("dataModifica"));
 				break;
 			default:
 				throw new ScheduFIREException("C'e stato un errore. Riprova pi� tardi.");
 			}
-			System.out.println("squadra: "+squadra);
+			
 			Iterator i = squadra.entrySet().iterator();
 
 			while(i.hasNext()) {
@@ -113,10 +121,20 @@ public class ModificaComposizioneSquadreServlet extends HttpServlet {
 				}
 			}
 			switch(tipo) {
-			case 1: case 2:
+			case 1: 
+				sessione.setAttribute("squadraDiurno", squadra);
+				request.setAttribute("dataDiurno", data);
+				request.setAttribute("dataNotturno", other);
+				request.getRequestDispatcher("JSP/GestioneSquadreJSP.jsp").forward(request, response);
+				break;			
+			case 2:
+				sessione.setAttribute("squadraNotturno", squadra);
+				request.setAttribute("dataNotturno", data);
+				request.setAttribute("data", other);
 				request.getRequestDispatcher("JSP/GestioneSquadreJSP.jsp").forward(request, response);
 				break;
 			case 3:
+				sessione.setAttribute("squadra", squadra);
 				request.setAttribute("data", Date.valueOf(request.getParameter("data")));
 				request.getRequestDispatcher("JSP/SquadraJSP.jsp").forward(request, response);
 				break;
@@ -126,23 +144,11 @@ public class ModificaComposizioneSquadreServlet extends HttpServlet {
 
 	}
 
-	private List<ComponenteDellaSquadraBean> vigileToComponente(HashMap<VigileDelFuocoBean, String> squadra, Date data) {
-		List<ComponenteDellaSquadraBean> toReturn = new ArrayList<>();
-		@SuppressWarnings("rawtypes")
-		Iterator i = squadra.entrySet().iterator();
-		while(i.hasNext()) {
-			@SuppressWarnings("unchecked")
-			Map.Entry<VigileDelFuocoBean, String> coppia = (Entry<VigileDelFuocoBean, String>) i.next();
-			toReturn.add(new ComponenteDellaSquadraBean(coppia.getValue(), coppia.getKey().getEmail(), data));
-		}
-		return toReturn;
-	}
-
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		doGet(request, response);
 	}

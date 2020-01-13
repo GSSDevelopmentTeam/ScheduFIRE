@@ -32,7 +32,7 @@ public class EliminaVFServlet extends HttpServlet {
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		//Controllo login
 		Util.isCapoTurno(request);
@@ -40,12 +40,8 @@ public class EliminaVFServlet extends HttpServlet {
 		//Ottenimento oggetto sessione dalla richiesta
 		HttpSession session = request.getSession();
 		
-		//Rimozione flag per l'esito dell'operazione
-		session.removeAttribute("risultato");
-		
 		//Ottenimento parametro email dalla richiesta
 		String email = request.getParameter("email");
-		
 		//Controllo email
 		if( ! Validazione.email(email) )
 			throw new ParametroInvalidoException("Il parametro 'email' è errato!");
@@ -63,7 +59,7 @@ public class EliminaVFServlet extends HttpServlet {
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		doGet(request, response);
 	}

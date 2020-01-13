@@ -17,10 +17,11 @@ import model.bean.VigileDelFuocoBean;
 import model.dao.ComponenteDellaSquadraDao;
 import model.dao.VigileDelFuocoDao;
 import util.GiornoLavorativo;
+import util.Util;
 
 /**
  * Servlet implementation class CalendarioServlet
- * @autor Francesca Pia Perillo
+ * @author Francesca Pia Perillo
  */
 @WebServlet("/CalendarioServlet")
 public class CalendarioServlet extends HttpServlet {
@@ -31,8 +32,10 @@ public class CalendarioServlet extends HttpServlet {
 		super();
 	}
 
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
+	public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		Util.isAutenticato(request);
+		if(request.getSession().getAttribute("ruolo").equals("capoturno"))
+				Util.isCapoTurno(request);
 		Date date = new Date(System.currentTimeMillis());
 		String dataCorrente = date.toString();
 		
@@ -104,7 +107,7 @@ public class CalendarioServlet extends HttpServlet {
 	}
 
 
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		doGet(request, response);
 	}
 

@@ -21,6 +21,7 @@ import model.bean.VigileDelFuocoBean;
 import model.dao.FerieDao;
 import model.dao.GiorniMalattiaDao;
 import model.dao.VigileDelFuocoDao;
+import util.GiornoLavorativo;
 import util.Util;
 
 /**
@@ -44,28 +45,46 @@ public class GestioneFerieServlet extends HttpServlet {
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		doPost(request, response);
 	}
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
+	public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		Util.isCapoTurno(request);
 		//nel caso di chiamata AJAX che gestisce il datepicker per aggiungere ferie ad un vigile
 		if(request.getParameter("JSON")!=null && request.getParameter("aggiunta")!=null ) {
 			String email=request.getParameter("email");
 			
-			//giorni di malattia già concesse
+			//giorni di malattia giï¿½ concesse
 			List<GiorniMalattiaBean> giorniMalattia = GiorniMalattiaDao.ottieniMalattie(email);
-			//giorni di ferie già concesse
+			//giorni di ferie giï¿½ concesse
 			List<FerieBean> ferie=FerieDao.ottieniFerieConcesse(email);
 			
 			
 			JSONArray array = new JSONArray();
+
 			
-			//inserisco nell'array i giorni di ferie già concesse 
+			LocalDate dataOra=LocalDate.now();
+			//array che contiene le date da rimuovere
+			int annoInizio=dataOra.getYear();
+			int annoFine=dataOra.getYear()+10;
+			while(annoInizio<annoFine ) {
+				Date data=Date.valueOf(dataOra);
+				if(!GiornoLavorativo.isLavorativo(data)) {
+					array.put(data);
+				}
+				dataOra=dataOra.plusDays(1);
+				annoInizio=dataOra.getYear();
+				
+			}
+			
+			
+			
+			
+			//inserisco nell'array i giorni di ferie giï¿½ concesse 
 			for(FerieBean ferieBean:ferie) {
 
 				JSONArray arrayrange = new JSONArray();
@@ -73,7 +92,7 @@ public class GestioneFerieServlet extends HttpServlet {
 				arrayrange.put(ferieBean.getDataFine().toLocalDate().plusDays(1));
 				array.put(arrayrange);
 			}
-			//inserisco nell'array i giorni di malattia già concesse 
+			//inserisco nell'array i giorni di malattia giï¿½ concesse 
 			for(GiorniMalattiaBean giorniMalattiaBean:giorniMalattia) {
 		
 				JSONArray arrayrange = new JSONArray();
@@ -149,11 +168,8 @@ public class GestioneFerieServlet extends HttpServlet {
 			
 			List<VigileDelFuocoBean> listaVigili = new ArrayList<VigileDelFuocoBean>(vigili);
 			
-			listaVigili = Util.compareVigile(listaVigili);
-			
 			//Passasggio del tipo di ordinamento ottenuto
 			request.setAttribute("ordinamento", ordinamento);
-			
 			request.setAttribute("listaVigili", listaVigili);
 			request.getRequestDispatcher("JSP/GestioneFerieJSP.jsp").forward(request, response);
 		}

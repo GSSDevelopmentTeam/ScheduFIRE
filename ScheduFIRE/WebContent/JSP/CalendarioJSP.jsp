@@ -44,11 +44,11 @@
 <body>
 	<!-- Barra Navigazione -->
 	<jsp:include page="HeaderJSP.jsp" />
-	
-<a href="#inizio"><button class=" back-up"><img src="IMG/arrow/up-arrow-p.png" 
-					onmouseover="this.src='IMG/arrow/up-arrow-d.png'"
-					onmouseout="this.src='IMG/arrow/up-arrow-p.png'" /></button></a>
-					
+
+	<h2 class="modal-title" style="color: #B60000 !Important; font-size:45px;"id="titolo">
+	Calendario</h2>
+	<br><br><br>
+  
 	<!-- START: Container per calendario e schedulazione -->
 	<div class="containerAll" id="inizio">
 
@@ -168,7 +168,7 @@
 		<div class="container-schedul" id="visilibity">
 			<a class="info" id="informazione"></a>
 
-			<div >
+			<div>
 
 
 				<form action="GeneraSquadreServlet" method="POST">
@@ -179,8 +179,7 @@
 
 				<form id="modData" action="" method="POST">
 					<button type="submit" id="bottoneModificaSquadra" class="edit">
-						Modifica Squadre
-					</button>
+						Modifica Squadre</button>
 				</form>
 
 			</div>
@@ -237,15 +236,22 @@
 
 	<!-- START: script per la funzione dayClicked() -->
 	<script>
-	<%if (GiornoLavorativo.isLavorativo(data)) {%>
+	<%if (request.getParameter("giorno")!=null){
+	%>
+	$( document ).ready(function() {
+	    dayClicked(<%=request.getParameter("giorno")%>);
+	    imgMoonSun();
+	});
+		
+	<%
+	}else if (GiornoLavorativo.isLavorativo(data)) {%>
 		$( document ).ready(function() {
 		    dayClicked(<%=giorno%>);
 		    imgMoonSun();
 		});
 	<%}%>
 	
-		
-		
+
 		function dayClicked(input) {
 			
 		var v = document.getElementById('visilibity');

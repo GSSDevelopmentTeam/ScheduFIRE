@@ -52,7 +52,7 @@ public class VigileDelFuocoDao {
 	/**
 	 * Si occupa del salvataggio dei dati di un Vigile del Fuoco nel database.
 	 * @param vf Il vigile da memorizzare del database
-	 * @return true se l'operazione va a buon fine, false altrimenti
+	 * @return TRUE se l'operazione va a buon fine, FALSE altrimenti
 	 */
 	public static boolean salva(VigileDelFuocoBean vf) {
 		
@@ -94,14 +94,13 @@ public class VigileDelFuocoDao {
 	/**
 	 * Si occupa dell'ottenimento di un Vigile del Fuoco dal database data la sua chiave.
 	 * @param chiaveEmail una stringa contenente la mail del Vigile
-	 * @return il Vigile identificato da chiaveEmail (pu� essere null)
+	 * @return il Vigile identificato da chiaveEmail (puï¿½ essere null)
 	 */
 	public static VigileDelFuocoBean ottieni(String chiaveEmail) {
 		
 		//controlli
 		if(chiaveEmail == null)
-			//lancio eccezione
-			;
+			throw new NullPointerException();
 		
 		try(Connection con = ConnessioneDB.getConnection()) {
 			
@@ -204,19 +203,18 @@ public class VigileDelFuocoDao {
 			throw new RuntimeException(e);
 		}
 	
-	}
+	} 
 	
 	/**
 	 * Si occupa dell'ottenimento di una collezione di VigileDelFuocoBean dal database
 	 * con campo 'adoperabile' settato a true.
-	 * @param ordinamento � un intero che determina il tipo di ordinamento della collezione
+	 * @param ordinamento e' un intero che determina il tipo di ordinamento della collezione
 	 * @return una collezione di VigileDelFuocoBean con campo 'adoperabile' settato a true 
 	 */
 	public static Collection<VigileDelFuocoBean> ottieni(int ordinamento) {
 		
 		if(ordinamento < 0 || ordinamento > 7)
-			//lancio eccezione
-			;
+			throw new NullPointerException();
 		
 		try(Connection con = ConnessioneDB.getConnection()) {
 			
@@ -269,10 +267,144 @@ public class VigileDelFuocoDao {
 	
 	}
 	
+	
+	
+	/**
+	 * Si occupa dell'ottenimento di una collezione di VigileDelFuocoBean dal database
+	 * con campo 'adoperabile' settato a true e che risultano in malattia alla data passata per parametro.
+	 * @param ordinamento e' un intero che determina il tipo di ordinamento della collezione
+	 * @param data e' il giorno per cui viene effettuato il controllo
+	 * @return una collezione di VigileDelFuocoBean con campo 'adoperabile' settato a TRUE 
+	 */
+	public static Collection<VigileDelFuocoBean> ottieniInFerie(int ordinamento,Date data) {
+		
+		if(ordinamento < 0 || ordinamento > 7)
+			//lancio eccezione
+			;
+		
+		try(Connection con = ConnessioneDB.getConnection()) {
+			
+			// Esecuzione query
+			PreparedStatement ps = con.prepareStatement("select *, (giorniferieannocorrente + giorniferieannoprecedente) as ferie FROM Vigile v JOIN  Ferie f on v.email=f.emailvf where adoperabile = true And ? BETWEEN DataInizio And DataFine " + 
+					" " +
+														ORDINAMENTI[ordinamento] + ";");
+			ps.setDate(1, data);
+			ResultSet rs = ps.executeQuery();
+			
+			//Instanziazione del set dei Vigili del Fuoco
+			ArrayList<VigileDelFuocoBean> vigili = new ArrayList<VigileDelFuocoBean>();
+			
+			//Iterazione sui risultati
+			while(rs.next()) {
+				
+				// Ottenimento dati dall'interrogazione
+				String nome = rs.getString("nome");
+				String cognome = rs.getString("cognome");
+				String email = rs.getString("email");
+				String turno = rs.getString("turno");
+				String username = rs.getString("username");
+				String mansione = rs.getString("mansione");
+				int giorniFerieAnnoCorrente = rs.getInt("giorniferieannocorrente");
+				int giorniFerieAnnoPrecedente = rs.getInt("giorniferieannoprecedente");
+				int caricoLavoro = rs.getInt("caricolavoro");
+				boolean adoperabile = rs.getBoolean("adoperabile");
+				String grado = rs.getString("grado");
+				
+				VigileDelFuocoBean vf = new VigileDelFuocoBean();
+				vf.setNome(nome);
+				vf.setCognome(cognome);
+				vf.setEmail(email);
+				vf.setTurno(turno);
+				vf.setUsername(username);
+				vf.setMansione(mansione);
+				vf.setGiorniFerieAnnoCorrente(giorniFerieAnnoCorrente);
+				vf.setGiorniFerieAnnoPrecedente(giorniFerieAnnoPrecedente);
+				vf.setCaricoLavoro(caricoLavoro);
+				vf.setAdoperabile(adoperabile);
+				vf.setGrado(grado);
+				
+				vigili.add(vf);
+				
+			}
+			
+			return vigili;
+			
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+		}
+	
+	}
+	
+	
+	
+	/**
+	 * Si occupa dell'ottenimento di una collezione di VigileDelFuocoBean dal database
+	 * con campo 'adoperabile' settato a true e che risultano in malattia alla data passata per parametro.
+	 * @param ordinamento e' un intero che determina il tipo di ordinamento della collezione
+	 * @param data Ã¨ il giorno per cui viene effettuato il controllo
+	 * @return una collezione di VigileDelFuocoBean con campo 'adoperabile' settato a true 
+	 */
+	public static Collection<VigileDelFuocoBean> ottieniInMalattia(int ordinamento,Date data) {
+		
+		if(ordinamento < 0 || ordinamento > 7)
+			throw new NullPointerException();
+		
+		try(Connection con = ConnessioneDB.getConnection()) {
+			
+			// Esecuzione query
+			PreparedStatement ps = con.prepareStatement("select *, (giorniferieannocorrente + giorniferieannoprecedente) as ferie FROM Vigile v JOIN  Malattia m on v.email=m.emailvf where adoperabile = true And ? BETWEEN DataInizio And DataFine " + 
+					ORDINAMENTI[ordinamento] + ";");
+			ps.setDate(1, data);
+			ResultSet rs = ps.executeQuery();
+			
+			//Instanziazione del set dei Vigili del Fuoco
+			ArrayList<VigileDelFuocoBean> vigili = new ArrayList<VigileDelFuocoBean>();
+			
+			//Iterazione sui risultati
+			while(rs.next()) {
+				
+				// Ottenimento dati dall'interrogazione
+				String nome = rs.getString("nome");
+				String cognome = rs.getString("cognome");
+				String email = rs.getString("email");
+				String turno = rs.getString("turno");
+				String username = rs.getString("username");
+				String mansione = rs.getString("mansione");
+				int giorniFerieAnnoCorrente = rs.getInt("giorniferieannocorrente");
+				int giorniFerieAnnoPrecedente = rs.getInt("giorniferieannoprecedente");
+				int caricoLavoro = rs.getInt("caricolavoro");
+				boolean adoperabile = rs.getBoolean("adoperabile");
+				String grado = rs.getString("grado");
+				
+				VigileDelFuocoBean vf = new VigileDelFuocoBean();
+				vf.setNome(nome);
+				vf.setCognome(cognome);
+				vf.setEmail(email);
+				vf.setTurno(turno);
+				vf.setUsername(username);
+				vf.setMansione(mansione);
+				vf.setGiorniFerieAnnoCorrente(giorniFerieAnnoCorrente);
+				vf.setGiorniFerieAnnoPrecedente(giorniFerieAnnoPrecedente);
+				vf.setCaricoLavoro(caricoLavoro);
+				vf.setAdoperabile(adoperabile);
+				vf.setGrado(grado);
+				
+				vigili.add(vf);
+				
+			}
+			
+			return vigili;
+			
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+		}
+	
+	}
+	
 	/**
 	 * Si occupa dell'ottenimento di una collezione di VigileDelFuocoBean dal database
 	 * con mansione 'Capo Squadra' con campo 'adoperabile' settato a true.
-	 * @param ordinamento � un intero che determina il tipo di ordinamento della collezione
+	 * @param ordinamento e' un intero che determina il tipo di ordinamento della collezione
 	 * @return una collezione di VigileDelFuocoBean con campo 'adoperabile' settato a true 
 	 * e mansione 'Capo Squadra' 
 	 */
@@ -336,7 +468,7 @@ public class VigileDelFuocoDao {
 	/**
 	 * Si occupa dell'ottenimento di una collezione di VigileDelFuocoBean dal database
 	 * con mansione 'Autista' con campo 'adoperabile' settato a true.
-	 * @param ordinamento � un intero che determina il tipo di ordinamento della collezione
+	 * @param ordinamento e' un intero che determina il tipo di ordinamento della collezione
 	 * @return una collezione di VigileDelFuocoBean con campo 'adoperabile' settato a true 
 	 * e mansione 'Autista' 
 	 */
@@ -400,7 +532,7 @@ public class VigileDelFuocoDao {
 	/**
 	 * Si occupa dell'ottenimento di una collezione di VigileDelFuocoBean dal database
 	 * con mansione 'Vigile' con campo 'adoperabile' settato a true.
-	 * @param ordinamento � un intero che determina il tipo di ordinamento della collezione
+	 * @param ordinamento e' un intero che determina il tipo di ordinamento della collezione
 	 * @return una collezione di VigileDelFuocoBean con campo 'adoperabile' settato a true 
 	 * e mansione 'Vigile' 
 	 */
@@ -489,16 +621,15 @@ public class VigileDelFuocoDao {
 	/**
 	 * Si occupa del settaggio del campo 'adoperabile' di un Vigile del Fuoco
 	 * nel database, identificato dalla sua chiave.
-	 * @param chiaveEmail � una stringa che identifica un VigileDelFuocoBean nel database
-	 * @param adoperabile � un booleano che indica l'adoperabilit� di un VigileDelFuocoBean
+	 * @param chiaveEmail e' una stringa che identifica un VigileDelFuocoBean nel database
+	 * @param adoperabile e' un booleano che indica l'adoperabilitï¿½ di un VigileDelFuocoBean
 	 * @return true se l'operazione va a buon fine, false altrimenti
 	 */
 	public static boolean setAdoperabile(String chiaveEmail, boolean adoperabile) {
 		
 		//controlli
 		if(chiaveEmail == null)
-			//lancio eccezione
-			;
+			throw new NullPointerException();
 		
 		try(Connection con = ConnessioneDB.getConnection()) {
 			
@@ -520,20 +651,15 @@ public class VigileDelFuocoDao {
 	
 	/**
 	 * Si occupa della modifica dei dati di un Vigile del Fuoco nel database.
-	 * @param chiaveEmail � una stringa che identifica un VigileDelFuocoBean nel database
-	 * @param nuovoVF ,  � un oggetto di tipo VigileDelFuocoBean
-	 * @return true se l'operazione va a buon fine, false altrimenti
+	 * @param chiaveEmail e' una stringa che identifica un VigileDelFuocoBean nel database
+	 * @param nuovoVF un oggetto di tipo VigileDelFuocoBean
+	 * @return TRUE se l'operazione va a buon fine, FALSE altrimenti
 	 */
 	public static boolean modifica(String chiaveEmail, VigileDelFuocoBean nuovoVF) {
 		
 		//controlli
-		if(chiaveEmail == null)
-			//lancio eccezione
-			;
-		
-		if(nuovoVF == null)
-			//lancio eccezione
-			;
+		if(chiaveEmail == null || nuovoVF == null)
+			throw new NullPointerException();
 		
 		try(Connection con = ConnessioneDB.getConnection()) {
 			
@@ -568,7 +694,7 @@ public class VigileDelFuocoDao {
 	
 	
 	/**
-	 * @param data , la data del giorno di cui si vuole avere la lista dei vigili disponibili
+	 * @param data la data del giorno di cui si vuole avere la lista dei vigili disponibili
 	 * @return una lista di VigileDelFuocoBean che hanno attributo adoperabile=true 
 	 * 			e non sono in ferie o malattia nella data passata come parametro
 	 */
@@ -632,10 +758,79 @@ public class VigileDelFuocoDao {
 	}
 	
 	
+	
 	/**
+	 * Restituisce una lista di vigili disponibili nella data richiesta
+	 * @param ordinamento come si vuole avere ordinata la lista
 	 * @param data , la data del giorno di cui si vuole avere la lista dei vigili disponibili
 	 * @return una lista di VigileDelFuocoBean che hanno attributo adoperabile=true 
-	 * 			e non sono in ferie o malattia nella data passata come parametro
+	 * e non sono in ferie o malattia nella data passata come parametro
+	 */
+	public static ArrayList<VigileDelFuocoBean> getDisponibili(Date data,int ordinamento){
+		try(Connection con = ConnessioneDB.getConnection()) {
+
+			// Query di ricerca
+			PreparedStatement ps = con.prepareStatement("(SELECT v.email, v.nome, v.cognome, v.turno, v.mansione, "
+					+ "v.giorniferieannocorrente, v.giorniferieannoprecedente, v.caricolavoro, v.adoperabile, v.grado, v.username " + 
+					" FROM Vigile v " + 
+					" WHERE v.adoperabile=true AND NOT EXISTS " + 
+					" (SELECT *" + 
+					" FROM Malattia m " + 
+					" WHERE m.emailVF= v.email AND ? BETWEEN m.dataInizio AND m.dataFine)" + 
+					" AND NOT EXISTS" + 
+					" (SELECT *" + 
+					" FROM Ferie f " + 
+					" WHERE f.emailVF= v.email AND ? BETWEEN f.dataInizio AND f.dataFine))"
+					+ ORDINAMENTI[ordinamento]+";");
+			ps.setDate(1, data);
+			ps.setDate(2, data);
+			ResultSet rs = ps.executeQuery();
+			ArrayList<VigileDelFuocoBean> vigili=new ArrayList<>();
+
+			//Iterazione dei risultati
+			while(rs.next()) {
+
+				String nome = rs.getString("nome");
+				String cognome = rs.getString("cognome");
+				String email = rs.getString("email");
+				String turno = rs.getString("turno");
+				String username = rs.getString("username");
+				String mansione = rs.getString("mansione");
+				int giorniFerieAnnoCorrente = rs.getInt("giorniferieannocorrente");
+				int giorniFerieAnnoPrecedente = rs.getInt("giorniferieannoprecedente");
+				int caricoLavoro = rs.getInt("caricolavoro");
+				boolean adoperabile = rs.getBoolean("adoperabile");
+				String grado = rs.getString("grado");
+				VigileDelFuocoBean vf = new VigileDelFuocoBean();
+				vf.setNome(nome);
+				vf.setCognome(cognome);
+				vf.setEmail(email);
+				vf.setTurno(turno);
+				vf.setUsername(username);
+				vf.setMansione(mansione);
+				vf.setGiorniFerieAnnoCorrente(giorniFerieAnnoCorrente);
+				vf.setGiorniFerieAnnoPrecedente(giorniFerieAnnoPrecedente);
+				vf.setCaricoLavoro(caricoLavoro);
+				vf.setAdoperabile(adoperabile);
+				vf.setGrado(grado);
+
+				vigili.add(vf);
+
+			}
+			
+			return vigili;
+			
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+		}
+	}
+	
+	
+	/**
+	 * Metodo per sapere se un vigile è disponibile
+	 * @param email la mail del Vigile del quale si vuole conoscere la disponibilità
+	 * @param data la data del giorno di cui si vuole conoscere la disponibilità
+	 * @return true se il vigile è disponibile, false altrimenti-
 	 */
 	public static boolean isDisponibile(String email, Date data){
 		try(Connection con = ConnessioneDB.getConnection()) {
@@ -674,12 +869,12 @@ public class VigileDelFuocoDao {
 	
 	/**
 	 * Questo metodo si occupa di prelevare la lista completa dei VF presenti nel dataBase. 
-	 * @return una lista di VigileDelFuocoBean ordinata in base alla mansione più importante.
+	 * @return una lista di VigileDelFuocoBean ordinata in base alla mansione piÃ¹ importante.
 	 */
 	public static ArrayList<VigileDelFuocoBean> ottieniListaVF() {
 		
 		//Instanziazione variabili utili;
-		String nome, cognome, email, mansione;
+		String nome, cognome, email, mansione, grado, turno, username;
 		int ferieAnnoCorrente, ferieAnnoPrecedente;
 		PreparedStatement ps;
 		ResultSet rs;
@@ -711,6 +906,10 @@ public class VigileDelFuocoDao {
 				mansione = rs.getString("mansione");
 				ferieAnnoCorrente = rs.getInt("giorniferieannocorrente");
 				ferieAnnoPrecedente = rs.getInt("giorniferieannoprecedente");
+				grado = rs.getString("grado");
+				turno = rs.getString("turno");
+				username = rs.getString("username");
+				
 				
 				//Aggiunta dati del VF
 				vigile.setNome(nome);
@@ -719,6 +918,9 @@ public class VigileDelFuocoDao {
 				vigile.setMansione(mansione);
 				vigile.setGiorniFerieAnnoCorrente(ferieAnnoCorrente);
 				vigile.setGiorniFerieAnnoPrecedente(ferieAnnoPrecedente);
+				vigile.setGrado(grado);
+				vigile.setTurno(turno);
+				vigile.setUsername(username);
 				
 				//Aggiunta del VF in lista di ritorno
 				listaVigili.add(vigile);
@@ -736,6 +938,9 @@ public class VigileDelFuocoDao {
 				mansione = rs.getString("mansione");
 				ferieAnnoCorrente = rs.getInt("giorniferieannocorrente");
 				ferieAnnoPrecedente = rs.getInt("giorniferieannoprecedente");
+				grado = rs.getString("grado");
+				turno = rs.getString("turno");
+				username = rs.getString("username");
 				
 				vigile.setNome(nome);
 				vigile.setCognome(cognome);
@@ -743,6 +948,9 @@ public class VigileDelFuocoDao {
 				vigile.setMansione(mansione);
 				vigile.setGiorniFerieAnnoCorrente(ferieAnnoCorrente);
 				vigile.setGiorniFerieAnnoPrecedente(ferieAnnoPrecedente);
+				vigile.setGrado(grado);
+				vigile.setTurno(turno);
+				vigile.setUsername(username);
 				
 				listaVigili.add(vigile);
 			}
@@ -759,6 +967,9 @@ public class VigileDelFuocoDao {
 				mansione = rs.getString("mansione");
 				ferieAnnoCorrente = rs.getInt("giorniferieannocorrente");
 				ferieAnnoPrecedente = rs.getInt("giorniferieannoprecedente");
+				grado = rs.getString("grado");
+				turno = rs.getString("turno");
+				username = rs.getString("username");
 				
 				vigile.setNome(nome);
 				vigile.setCognome(cognome);
@@ -766,6 +977,9 @@ public class VigileDelFuocoDao {
 				vigile.setMansione(mansione);
 				vigile.setGiorniFerieAnnoCorrente(ferieAnnoCorrente);
 				vigile.setGiorniFerieAnnoPrecedente(ferieAnnoPrecedente);
+				vigile.setGrado(grado);
+				vigile.setTurno(turno);
+				vigile.setUsername(username);
 				
 				listaVigili.add(vigile);
 			}
@@ -779,8 +993,8 @@ public class VigileDelFuocoDao {
 
 	/**
 	 * Si occupa del prelevamento del numero di ferie accumulate negli anni precedenti dal VF, dal dataBase.
-	 * @param emailVF (String): L'email del VF del quale si ha bisogno del numero di ferie degli anni precedenti
-	 * @return feriePrecedenti (int): numero di ferie a disposizione degli anni precedenti
+	 * @param emailVF l'email del VF del quale si ha bisogno del numero di ferie degli anni precedenti
+	 * @return numero di ferie a disposizione degli anni precedenti
 	 */
 	public static int ottieniNumeroFeriePrecedenti(String emailVF) {
 		PreparedStatement ps;
@@ -812,8 +1026,8 @@ public class VigileDelFuocoDao {
 
 	/**
 	 * Si occupa del prelevamento del numero di ferie dell'anno corrente a disposizione del VF, dal dataBase.
-	 * @param emailVF (String): L'email del VF del quale si ha bisogno del numero di ferie degli anni precedenti
-	 * @return ferieCorrenti (int): numero di ferie a disposizione relative all'anno corrente
+	 * @param emailVF l'email del VF del quale si ha bisogno del numero di ferie degli anni precedenti
+	 * @return numero di ferie a disposizione relative all'anno corrente
 	 */
 	public static int ottieniNumeroFerieCorrenti(String emailVF) {
 		PreparedStatement ps;
@@ -845,8 +1059,8 @@ public class VigileDelFuocoDao {
 	
 	/**
 	 * Si occupa dell'aggiornamento nel dataBase, del numero di ferie accumulate negli anni precedenti dal VF
-	 * @param emailVF (String): L'email del VF per il quale bisogna aggiornare il numero di ferie degli anni precedenti
-	 * @param numeroFerie (int): Il nuovo numero di ferie relative all'anno precedente, da inserire nel dataBase
+	 * @param emailVFl'email del VF per il quale bisogna aggiornare il numero di ferie degli anni precedenti
+	 * @param il nuovo numero di ferie relative all'anno precedente, da inserire nel dataBase
 	 */
 	public static void aggiornaFeriePrecedenti(String emailVF, int numeroFerie) {
 		PreparedStatement ps;
@@ -874,8 +1088,8 @@ public class VigileDelFuocoDao {
 
 	/**
 	 * Si occupa dell'aggiornamento nel dataBase, del numero di ferie relativo all'anno corrente, a disposizione del VF
-	 * @param emailVF (String): L'email del VF per il quale bisogna aggiornare il numero di ferie relativo all'anno corrente
-	 * @param numeroFerie (int): Il nuovo numero di ferie relativo all'anno corrente, da inserire nel dataBase
+	 * @param emailVF l'email del VF per il quale bisogna aggiornare il numero di ferie relativo all'anno corrente
+	 * @param numeroFerie il nuovo numero di ferie relativo all'anno corrente, da inserire nel dataBase
 	 */
 	public static void aggiornaFerieCorrenti(String emailVF, int numeroFerie) {
 		PreparedStatement ps;
@@ -905,7 +1119,7 @@ public class VigileDelFuocoDao {
 	 * Il metodo incrementa per ogni vigile del fuoco (nella mappa 'Key') il suo carico lavorativo
 	 * a seconda della squadra assegnata (nella mappa 'Value'). 
 	 * @param squadra Una mappa di Vigili del Fuoco e delle relative squadre 
-	 * @return true se l'operazione va a buon fine, false altrimenti.
+	 * @return TRUE se l'operazione va a buon fine, FALSE altrimenti.
 	 */
 	public static boolean caricoLavorativo(HashMap<VigileDelFuocoBean, String> squadra) {
 		try (Connection con = ConnessioneDB.getConnection()) {
@@ -916,10 +1130,11 @@ public class VigileDelFuocoDao {
 			Iterator i = squadra.entrySet().iterator();
 			while (i.hasNext()) {
 				Map.Entry<VigileDelFuocoBean, String> pair = (Map.Entry<VigileDelFuocoBean, String>) i.next();
+
 				int toAdd = (	pair.getValue().equals("Prima Partenza") || 
 								pair.getValue().equals("Sala Operativa")) ? 3 :
 								(pair.getValue().equals("Auto Scala")) ? 2 : 1;
-				System.out.println("toAdd vale: "+toAdd+" per il vigile "+pair.getKey().getEmail());
+
 				ps = con.prepareStatement(incrementaCaricoLavorativo);
 				VigileDelFuocoBean vigile=VigileDelFuocoDao.ottieni(pair.getKey().getEmail());
 				ps.setInt(1, vigile.getCaricoLavoro() + toAdd);
@@ -927,7 +1142,6 @@ public class VigileDelFuocoDao {
 				count += ps.executeUpdate();
 				con.commit();
 			}
-			System.out.println("conto carico lavorativo "+count);
 			return (count == squadra.size());
 		} catch (SQLException e) {
 			throw new RuntimeException(e);
@@ -939,7 +1153,7 @@ public class VigileDelFuocoDao {
 	 * Il metodo decrementa per ogni vigile del fuoco (nella mappa 'Key') il suo carico lavorativo
 	 * a seconda della squadra assegnata (nella mappa 'Value'). 
 	 * @param squadra Una mappa di Vigili del Fuoco e delle relative squadre 
-	 * @return true se l'operazione va a buon fine, false altrimenti.
+	 * @return TRUE se l'operazione va a buon fine, FALSE altrimenti.
 	 */
 	public static boolean removeCaricoLavorativo(HashMap<VigileDelFuocoBean, String> squadra) {
 		try (Connection con = ConnessioneDB.getConnection()) {
@@ -957,7 +1171,7 @@ public class VigileDelFuocoDao {
 				ps.setString(2, pair.getKey().getEmail());
 				ps.executeUpdate();
 				con.commit();
-				i.remove();
+//				i.remove();
 			}
 			
 			return true;
@@ -965,5 +1179,46 @@ public class VigileDelFuocoDao {
 			throw new RuntimeException(e);
 		}
 	}
+	
+	public static boolean removeVigileDelFuoco(String string) {
+		try (Connection con = ConnessioneDB.getConnection()){
+			PreparedStatement ps = con.prepareStatement("DELETE FROM vigile WHERE email = ?;");
+			ps.setString(1, string);
+			return (ps.executeUpdate() == 1);
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+		}
+	}
 
+
+
+/**
+ * Si occupa della rimozione di un Vigile del Fuoco dal database data la sua chiave.
+ * @param chiaveEmail una stringa contenente la mail del Vigile
+ * @return TRUE se la cancellazione e' andata a buon fine 
+ */
+public static boolean deleteVF(String chiaveEmail) {
+	
+		
+	try(Connection con = ConnessioneDB.getConnection()) {
+		//Eseguo la rimozione del VF
+		PreparedStatement p = con.prepareStatement("Delete from Vigile where email = ?;");
+		p.setString(1, chiaveEmail);
+		p.execute();
+		con.commit();
+		
+		// Esecuzione query per controllare che l'eliminazione sia andata a buon fine
+		PreparedStatement ps = con.prepareStatement("select * from Vigile where email = ?;");
+		ps.setString(1, chiaveEmail);
+		ResultSet rs = ps.executeQuery();
+		
+
+		if(rs.next()) return false;
+		else return true;
+			
+	} catch (SQLException e) {
+		throw new RuntimeException(e);
+	}
+	
+}
 }

@@ -195,7 +195,6 @@ public class FerieDao {
 		}catch(SQLException e) {
 			e.printStackTrace();
 		}
-		System.out.println("Verifica: "+verifica);
 		return verifica;
 	}
 	

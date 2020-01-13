@@ -2,7 +2,10 @@ package control;
 
 import java.io.IOException;
 import java.sql.Date;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -11,6 +14,10 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 import model.bean.ComponenteDellaSquadraBean;
 import model.bean.VigileDelFuocoBean;
 import model.dao.ComponenteDellaSquadraDao;
@@ -26,93 +33,158 @@ import util.Util;
 @WebServlet("/PersonaleDisponibile")
 public class PersonaleDisponibileServlet extends HttpServlet{
 	private static final long serialVersionUID = 1L;
-	
+
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		doPost(request,response);
 	}
-	
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-				
-		LocalDateTime ora=LocalDateTime.now();
-		LocalDateTime inizioDiurno=LocalDateTime.of(ora.getYear(), ora.getMonth(), ora.getDayOfMonth(), 8, 00);
-		LocalDateTime fineDiurno=inizioDiurno.plusHours(12);
-		LocalDateTime inizioNotturno=fineDiurno;
-		LocalDateTime fineNotturno=inizioNotturno.plusHours(12);
 
-		Date giorno=Date.valueOf(ora.toLocalDate());
+	public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		Util.isCapoTurno(request);
+		
+		Date giorno = null;
 		
 		
-		
-		
-		/*
-		 * Per ricavare se nel momento in cui viene chiamata la servlet si è nel turno lavorativo o meno, prendo in considerazione
-		 * 3 possibilità: 
-		 * 1) il giorno considerato è lavorativo ed è il giorno con turno diurno;
-		 * 2) il giorno considerato è lavorativo ed è il giorno con turno notturno;
-		 * 3) non è un giorno lavorativo.
-		 * Delle prime due ho poi valutato se nell'istante in cui si chiama la servlet il turno:
-		 * 1)deve ancora iniziare
-		 * 2)è in corso
-		 * 3)è terminato
-		 * 
-		 */
-		
-		
-		//giorno lavorativo e turno diurno
-		String giornoLavoro=""+giorno.toLocalDate().getDayOfMonth()+" "+Mese(giorno.toLocalDate().getMonthValue())+" "+giorno.toLocalDate().getYear();
-		if(GiornoLavorativo.isLavorativo(giorno) && GiornoLavorativo.isDiurno(giorno)) {
-			if(ora.isBefore(inizioDiurno)) {
-				request.setAttribute("titolo", "Il turno lavorativo diurno del giorno "+giornoLavoro+" inizierà tra poco, il personale disponibile sarà il seguente");
+		//JSON per rendere non selezionabili sul calendario i giorni non lavorativi
+		if(request.getParameter("JSON")!=null) {
+			int mese=Integer.parseInt(request.getParameter("mese"));
+			int anno=Integer.parseInt(request.getParameter("anno"));
+			LocalDate dataInizio=LocalDate.of(anno, mese, 1);
+			//array che contiene le date da rimuovere
+			JSONArray array = new JSONArray();
+			boolean cambioMese=false;
+			while(!cambioMese ) {
+				Date data=Date.valueOf(dataInizio);
+				if(!GiornoLavorativo.isLavorativo(data)) {
+					array.put(data);
+				}
+				cambioMese=dataInizio.getMonthValue()!=dataInizio.plusDays(1).getMonthValue();
+				dataInizio=dataInizio.plusDays(1);
 			}
-			else if(ora.isAfter(inizioDiurno) && ora.isBefore(fineDiurno)) {
-				request.setAttribute("titolo", "Il personale disponibile oggi "+giornoLavoro+" è il seguente");
-			}
-			else {
-				giorno=GiornoLavorativo.nextLavorativo(giorno);
-				giornoLavoro=""+giorno.toLocalDate().getDayOfMonth()+" "+Mese(giorno.toLocalDate().getMonthValue())+" "+giorno.toLocalDate().getYear();
-				request.setAttribute("titolo", "Il personale disponibile per domani "+giornoLavoro+" sarà il seguente");
-
-			}
-		}
-		//giorno lavorativo e turno notturno
-		else if(GiornoLavorativo.isLavorativo(giorno) && !GiornoLavorativo.isDiurno(giorno)) {
-			if(ora.isBefore(inizioNotturno)) {
-				request.setAttribute("titolo", "Il turno lavorativo notturno del giorno "+giornoLavoro+" inizierà tra poco, il personale disponibile sarà il seguente");
-			}
-			else if(ora.isAfter(inizioNotturno) && ora.isBefore(fineNotturno)) {
-				request.setAttribute("titolo", "Il personale disponibile oggi "+giornoLavoro+" è il seguente");
-			}
-			else {
-				giorno=GiornoLavorativo.nextLavorativo(giorno);
-				giornoLavoro=""+giorno.toLocalDate().getDayOfMonth()+" "+Mese(giorno.toLocalDate().getMonthValue())+" "+giorno.toLocalDate().getYear();
-				request.setAttribute("titolo", "Il personale disponibile per il giorno "+ giornoLavoro +" sarà il seguente");
-			}
-
-		}
-		//giorno non lavorativo
-		else {
-			giorno=GiornoLavorativo.nextLavorativo(giorno);
-			giornoLavoro=""+giorno.toLocalDate().getDayOfMonth()+" "+Mese(giorno.toLocalDate().getMonthValue())+" "+giorno.toLocalDate().getYear();
-			request.setAttribute("titolo", "Il personale disponibile per il giorno "+ giornoLavoro +" sarà il seguente");
+			
+			response.setContentType("application/json");
+			response.getWriter().append(array.toString());
+			return;
 			
 		}
 		
+		
+		if(request.getParameter("data")==null) {
 
+			LocalDateTime ora=LocalDateTime.now();
+			LocalDateTime inizioDiurno=LocalDateTime.of(ora.getYear(), ora.getMonth(), ora.getDayOfMonth(), 8, 00);
+			LocalDateTime fineDiurno=inizioDiurno.plusHours(12);
+			LocalDateTime inizioNotturno=fineDiurno;
+			LocalDateTime fineNotturno=inizioNotturno.plusHours(12);
+
+			giorno=Date.valueOf(ora.toLocalDate());
+
+
+
+
+			/*
+			 * Per ricavare se nel momento in cui viene chiamata la servlet si ï¿½ nel turno lavorativo o meno, prendo in considerazione
+			 * 3 possibilitï¿½: 
+			 * 1) il giorno considerato ï¿½ lavorativo ed ï¿½ il giorno con turno diurno;
+			 * 2) il giorno considerato ï¿½ lavorativo ed ï¿½ il giorno con turno notturno;
+			 * 3) non ï¿½ un giorno lavorativo.
+			 * Delle prime due ho poi valutato se nell'istante in cui si chiama la servlet il turno:
+			 * 1)deve ancora iniziare
+			 * 2)ï¿½ in corso
+			 * 3)ï¿½ terminato
+			 * 
+			 */
+
+			LocalDate giornoLavorativo=null;
+			//giorno lavorativo e turno diurno, turno finito
+			String giornoLavoro=""+giorno.toLocalDate().getDayOfMonth()+" "+Mese(giorno.toLocalDate().getMonthValue())+" "+giorno.toLocalDate().getYear();
+			if(GiornoLavorativo.isLavorativo(giorno) && GiornoLavorativo.isDiurno(giorno) && ora.isAfter(fineDiurno)) {
+	
+					giorno=GiornoLavorativo.nextLavorativo(giorno);
+
+			}
+			//giorno lavorativo e turno notturno, turno finito
+			else if(GiornoLavorativo.isLavorativo(giorno) && !GiornoLavorativo.isDiurno(giorno) && ora.isAfter(fineNotturno)) {
+
+					giorno=GiornoLavorativo.nextLavorativo(giorno);
+
+			}
+			//giorno non lavorativo
+			else {
+				giorno=GiornoLavorativo.nextLavorativo(giorno);
+
+			}
+		}
+		
+
+		
+		else {
+			String datastr = request.getParameter("data");
+
+			int anno = Integer.parseInt(datastr.substring(6, 10));
+			int mese = Integer.parseInt(datastr.substring(3, 5));
+			int giorn = Integer.parseInt(datastr.substring(0, 2));
+			giorno=Date.valueOf(LocalDate.of(anno, mese, giorn));
+
+		}
+
+		//Ottenimento parametro
+		String ordinamentoStr = request.getParameter("ordinamento");
+		int ordinamento=-1;
+		//Se il parametro non ï¿½ settato, l'ordinamento sarÃ  quello di default
+		if(ordinamentoStr == null)
+			ordinamentoStr = "";
+		switch(ordinamentoStr) {
+		case "nome": 
+			ordinamento=(VigileDelFuocoDao.ORDINA_PER_NOME);
+			break;
+		case "cognome": 
+			ordinamento=(VigileDelFuocoDao.ORDINA_PER_COGNOME);
+			break;
+		case "grado": 
+			ordinamento=(VigileDelFuocoDao.ORDINA_PER_GRADO);
+			break;
+		case "disponibilita": 
+			ordinamento=(VigileDelFuocoDao.ORDINA_PER_MANSIONE);
+			break;
+		default:
+			ordinamento=(VigileDelFuocoDao.ORDINA_PER_MANSIONE);
+			ordinamentoStr = "disponibilita";
+		}
+		
+		
+		
 		//prendo i vigili del fuoco disponibili alla data odierna
-		ArrayList<VigileDelFuocoBean> vigili=VigileDelFuocoDao.getDisponibili(giorno);
+		ArrayList<VigileDelFuocoBean> vigiliCompleti=new ArrayList(VigileDelFuocoDao.ottieni(ordinamento));
+		ArrayList<VigileDelFuocoBean> vigiliDisponibili=VigileDelFuocoDao.getDisponibili(giorno,ordinamento);
 		ArrayList<ComponenteDellaSquadraBean> componenti=ComponenteDellaSquadraDao.getComponenti(giorno);
-		//Collections.sort(vigili, new VigileComparator());
-		Collections.sort(componenti, new ComponenteComparator());
+		ArrayList<VigileDelFuocoBean> vigiliFerie=new ArrayList<VigileDelFuocoBean>
+				(VigileDelFuocoDao.ottieniInFerie(ordinamento, giorno));
+		ArrayList<VigileDelFuocoBean> vigiliMalattia=new ArrayList<VigileDelFuocoBean>
+				(VigileDelFuocoDao.ottieniInMalattia(ordinamento, giorno));
+		
 
-		request.setAttribute("vigili", vigili);
+		Collections.sort(componenti, new ComponenteComparator());
+		String pattern = "dd-MM-yyyy";
+		SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
+		String dataparse = simpleDateFormat.format(giorno);
+		request.setAttribute("data", dataparse);
+		
+		String giornoLavoro=""+giorno.toLocalDate().getDayOfMonth()+" "+Mese(giorno.toLocalDate().getMonthValue())+" "+giorno.toLocalDate().getYear();
+		request.setAttribute("titolo", "Il personale del giorno "+giornoLavoro+" &egrave il seguente");
+
+		request.setAttribute("ordinamento", ordinamentoStr);
+		request.setAttribute("vigiliCompleti", vigiliCompleti);
+		request.setAttribute("vigiliDisponibili", vigiliDisponibili);
+		request.setAttribute("vigiliFerie", vigiliFerie);
+		request.setAttribute("vigiliMalattia", vigiliMalattia);
 		request.setAttribute("componenti", componenti);
 		request.getRequestDispatcher("JSP/PersonaleDisponibileJSP.jsp").forward(request, response);
-		
+
 	}
-	
-	
-	
-	
+
+
+
+
 	private String Mese (int mese) {
 		String meseString="";
 		switch (mese) {
@@ -131,33 +203,13 @@ public class PersonaleDisponibileServlet extends HttpServlet{
 		}
 		return meseString;
 	}
-	
-	
-	
-	
-	class VigileComparator implements Comparator<VigileDelFuocoBean> {
 
-		@Override
-		public int compare(VigileDelFuocoBean o1, VigileDelFuocoBean o2) {
-			String mansione1=o1.getMansione();
-			String mansione2=o2.getMansione();
-			if (mansione1.equals("Capo Squadra") && mansione2.equals("Capo Squadra"))
-				return o1.getCognome().compareTo(o2.getCognome());
-			if(mansione1.equals("Capo Squadra"))
-				return -1;
-			if(mansione2.equals("Capo Squadra"))
-				return 1;
-			return o1.getMansione().compareTo(o2.getMansione());
-		}
-	}
-	
-	
 	
 	class ComponenteComparator implements Comparator<ComponenteDellaSquadraBean> {
 
 		/*
 		 * Per ordinare l'array di componenti della squadra in base alla tipologia della squadra di appartenenza
-		 * con priorità a sala operativa, poi prima partenza, poi auto scala e infine auto botte.
+		 * con prioritï¿½ a sala operativa, poi prima partenza, poi auto scala e infine auto botte.
 		 * In caso di tipologia uguale, ordina in base al cognome che ricava dalla mail
 		 * essendo la mail composta sempre da nome<numero>.cognome
 		 * 
@@ -176,5 +228,5 @@ public class PersonaleDisponibileServlet extends HttpServlet{
 			return -comparazione;
 		}
 	}
-	
+
 }

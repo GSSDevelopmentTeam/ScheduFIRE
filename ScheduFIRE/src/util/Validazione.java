@@ -10,8 +10,11 @@ import java.util.regex.Pattern;
 public class Validazione {
 	
 	//Costanti
+	private static final Pattern USERNAME=Pattern.compile("^[A-Za-z0-9]{3,20}+$");
 	
-	private static final Pattern PATTERN_NOME_COGNOME = Pattern.compile("^[A-Z]{1}[a-z]{0,19}+$");
+	private static final Pattern PASSWORD=Pattern.compile("^[A-Za-z0-9]{6,16}+$");
+	
+	private static final Pattern PATTERN_NOME_COGNOME = Pattern.compile("^[A-Z]{1}[A-Z a-z]{0,19}+$");
 	
 	private static final Pattern PATTERN_EMAIL = Pattern.compile("[A-Za-z]+([1-9][0-9]*)?\\.[A-Za-z]+"); 
 	
@@ -20,6 +23,24 @@ public class Validazione {
 	private static final String[] GRADI = {"Qualificato", "Esperto", "Coordinatore", "Semplice"};
 	
 	private static final String[] TURNI = {"B"};
+	
+	/**
+	 * Si occupa di controllare se il formato del parametro passato è corretto.
+	 * @param username E' una stringa che indica l username.
+	 * @return true se il formato e' rispettato, false altrimenti.
+	 */
+	public static boolean username(String username) {
+		return (username != null) && (USERNAME.matcher(username).matches());
+	}
+	
+	/**
+	 * Si occupa di controllare se il formato del parametro passato è corretto.
+	 * @param password E' una stringa che indica la password.
+	 * @return true se il formato e' rispettato, false altrimenti.
+	 */
+	public static boolean password(String password) {
+		return (password != null) && (PASSWORD.matcher(password).matches());
+	}
 	
 	/**
 	 * Si occupa di controllare se il formato del parametro passato è corretto.
@@ -71,25 +92,29 @@ public class Validazione {
 	
 	/**
 	 * Si occupa di controllare se il formato del parametro passato è corretto.
-	 * @param ferieAnnoCorrente è un intero che rappresenta il numero 
+	 * @param giorniFerieAnnoCorrente e' un intero che rappresenta il numero 
 	 * di ferie relative all'anno corrente.
-	 * @return @return true se il formato è rispettato, false altrimenti.
+	 * @return true se il formato e' rispettato, false altrimenti.
 	 */
 	public static boolean giorniFerieAnnoCorrente(int giorniFerieAnnoCorrente) {
-		return (giorniFerieAnnoCorrente >= 0);
+		return (giorniFerieAnnoCorrente >= 0 && giorniFerieAnnoCorrente <= 22);
 	}
 	
 	/**
 	 * Si occupa di controllare se il formato del parametro passato è corretto.
-	 * @param ferieAnniPrecedenti è un intero che rappresenta il numero 
+	 * @param giorniFerieAnniPrecedenti E' un intero che rappresenta il numero 
 	 * di ferie relative agli anni precedenti.
-	 * @return @return true se il formato è rispettato, false altrimenti.
+	 * @return true se il formato e' rispettato, false altrimenti.
 	 */
 	public static boolean giorniFerieAnniPrecedenti(int giorniFerieAnniPrecedenti) {
-		return (giorniFerieAnniPrecedenti >= 0);
+		return (giorniFerieAnniPrecedenti >= 0 && giorniFerieAnniPrecedenti < 1000);
 	}
 	
-	
+	/**
+	 * Si occupa di controllare se il grado passato come parametro è corretto.
+	 * @param grado il grado da testare
+	 * @return TRUE se il grado è corretto, FALSE altrimenti
+	 */
 	public static boolean grado(String grado) {
 		
 		if(grado == null)
@@ -104,6 +129,11 @@ public class Validazione {
 		
 	}
 	
+	/**
+	 * Si occupa di controllare se il turno passato come parametro è corretto.
+	 * @param turno il turno da testare
+	 * @return TRUE se il turno è corretto, FALSE altrimenti
+	 */
 	public static boolean turno(String turno) {
 		
 		if(turno == null)

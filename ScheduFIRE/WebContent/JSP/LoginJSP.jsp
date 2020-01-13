@@ -9,19 +9,27 @@
 	<!-- Barra Navigazione -->
 	<jsp:include page="HeaderJSP.jsp" />
 
-<!--------- Alert NON Ok ----------------->
+	<!--------- Alert NON Ok ----------------->
 
-<div class="alert alert-danger flex alert-dismissible fade in text-center fixed-top" id="erroreLogin" style="display: none;position:fixed;z-index: 99999; width:100%">
-  <strong>Errore!</strong> <span>Errore..</span>
-</div>
+	<div
+		class="alert alert-danger flex alert-dismissible fade in text-center fixed-top"
+		id="erroreLogin"
+		style="display: none; position: fixed; z-index: 99999; width: 100%">
+		<strong>Errore!</strong> <span>Errore..</span>
+	</div>
 
-<!-- ----------------------- -->
+	<!-- ----------------------- -->
 	<!-- Page content -->
-	<br><br><div class="w3-content w3-padding center" style="max-width: 1564px; text-align: center">
+	<br>
+	<br>
+	<div class="w3-content w3-padding center"
+		style="max-width: 1564px; text-align: center">
 
 
 		<!--  Tabella Accesso -->
-		<br><br><div
+		<br>
+		<br>
+		<div
 			class="tb th  w3-auto w3-display-middle w3-center w3-margin-bottom  w3-hide-small">
 
 			<form action="Login" method="POST">
@@ -30,22 +38,23 @@
 
 				<p style="font-size: 23px">Effettua l'accesso con le tue
 					credenziali</p>
-				
-				<div class="d-flex justify-content-center" >
+
+				<div class="d-flex justify-content-center">
 					<div class="input-container">
 						<i class="fa fa-user icon"></i> <input class="input-field"
-							type="text" id="user1" placeholder="Username" name="Username">
-				</div>
+							type="text" id="user1" placeholder="Username" name="Username"
+							required>
+					</div>
 				</div>
 				<br>
-				<div class="d-flex justify-content-center" >
+				<div class="d-flex justify-content-center">
 					<div class="input-container">
 						<i class="fa fa-key icon"></i> <input class="input-field"
 							type="password" placeholder="Password" name="Password"
-							id="myInput">
+							id="myInput" required>
+					</div>
 				</div>
-				</div>
-				 <input type="checkbox" onclick="show()" class="center">Mostra
+				<input type="checkbox" onclick="show()" class="center">Mostra
 				Password<br>
 
 				<script>
@@ -58,8 +67,8 @@
 						}
 					}
 				</script>
-				<br>  <input type="submit" class="btn btn-outline-secondary btn-lg"
-					value="Accedi">
+				<br> <input type="submit"
+					class="btn btn-outline-secondary btn-lg" value="Accedi">
 			</form>
 			<br>
 			<!--  <button
@@ -79,21 +88,23 @@
 		<!-- <form class="modal-content" action="/..." method="post"> -->
 
 
-			<div class="tbPss w3-display-middle"
-				style="border-radius: 10px; margin-left: 50px;">
-				<div class="d-flex justify-content-center" >
+		<div class="tbPss w3-display-middle"
+			style="border-radius: 10px; margin-left: 50px;">
+			<div class="d-flex justify-content-center">
 				<div class="input-container">
 					<i class="fa fa-envelope icon"></i> <input class="input-field"
 						type="text" placeholder="E-Mail" name="Email">
 				</div>
-				</div><br>
-				<button type="submit" class="btn btn-outline-secondary">Recupera Password</button><br>
-				<span style="margin-left: 5px;">
-					<br><button type="button"
-						onclick="document.getElementById('id01').style.display='none'"
-						class="btn btn-outline-danger">Annulla</button>
-				</span>
 			</div>
+			<br>
+			<button type="submit" class="btn btn-outline-secondary">Recupera
+				Password</button>
+			<br> <span style="margin-left: 5px;"> <br>
+			<button type="button"
+					onclick="document.getElementById('id01').style.display='none'"
+					class="btn btn-outline-danger">Annulla</button>
+			</span>
+		</div>
 		<!-- </form> -->
 	</div>
 

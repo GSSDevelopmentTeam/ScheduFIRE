@@ -14,6 +14,7 @@ import model.bean.FerieBean;
 import model.dao.FerieDao;
 import model.dao.VigileDelFuocoDao;
 import util.GiornoLavorativo;
+import util.Util;
 
 /**
  * Servlet per la rimozione di periodi o giorni di ferie di un Vigile del Fuoco
@@ -30,12 +31,12 @@ public class RimuoviFerieServlet extends HttpServlet {
         super();
     }
 
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		doPost(request, response);
 	}
 
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
+	public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		Util.isCapoTurno(request);
 		//Istanziazione ed inizializzazione variabili
 		Date dataInizio = null;
 		Date dataFine = null;
@@ -45,7 +46,7 @@ public class RimuoviFerieServlet extends HttpServlet {
 		//Ottenimento parametri
 		emailVF = request.getParameter("email");
 		String dataIniz = request.getParameter("dataIniziale");
-		String dataFin = request.getParameter("dataFinale");
+		String dataFin = request.getParameter("dataFinale"); 
 		
 		int annoIniz = Integer.parseInt(dataIniz.substring(6, 10));
 		int meseIniz = Integer.parseInt(dataIniz.substring(3, 5));
@@ -58,22 +59,17 @@ public class RimuoviFerieServlet extends HttpServlet {
 		dataInizio = Date.valueOf(inizio);
 		dataFine = Date.valueOf(fine);
 		
-		System.out.println("dataInizio "+dataInizio+" datafine "+dataFine);
 		
 		int numeroGiorniFerie = 0;
 		
 		FerieBean iniziale = null;
 		FerieBean finale = null;
-		
+		 
 		//Controllo del periodo di Ferie mediante metodo della classe FerieDao
 		List<FerieBean> ferie = FerieDao.ferieInRange(dataInizio, dataFine, emailVF);
 		
-		System.out.println("ferie");
 		
-		for(FerieBean f : ferie) {
-			System.out.println(f.getDataInizio() + " " + f.getDataFine());
-		}
-		
+	
 		//Istanziazione FerieBean iniziale
 		if(ferie.size() > 0 && !ferie.get(0).getDataInizio().toLocalDate().equals(dataInizio.toLocalDate())) {
 			FerieBean f = ferie.get(0);
@@ -83,7 +79,6 @@ public class RimuoviFerieServlet extends HttpServlet {
 			iniziale.setEmailCT(f.getEmailCT());
 			iniziale.setDataInizio(f.getDataInizio());
 			iniziale.setDataFine(dataInizio);
-			System.out.println("ferie iniziale: "+iniziale.getDataInizio()+" "+iniziale.getDataFine());
 
 		}
 		
@@ -96,7 +91,6 @@ public class RimuoviFerieServlet extends HttpServlet {
 			finale.setEmailCT(f.getEmailCT());
 			finale.setDataInizio(dataFine);
 			finale.setDataFine(f.getDataFine());
-			System.out.println("ferie finale: "+finale.getDataInizio()+" "+finale.getDataFine());
 
 		}
 		
@@ -144,7 +138,6 @@ public class RimuoviFerieServlet extends HttpServlet {
 				numeroGiorniFerie++;
 			inizio=inizio.plusDays(1);
 		}
-		System.out.println("giorni ferie :"+numeroGiorniFerie +" da "+inizio+" a "+fine);
 		return numeroGiorniFerie;
 		
 	}

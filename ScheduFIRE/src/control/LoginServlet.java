@@ -3,9 +3,7 @@ package control;
 
 import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
-import java.util.Base64;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -16,31 +14,33 @@ import javax.servlet.http.HttpSession;
 import model.bean.CapoTurnoBean;
 import model.bean.CredenzialiBean;
 import model.dao.CapoTurnoDao;
-import model.dao.UserDao;
+import model.dao.CredenzialiDao;
 import util.Notifiche;
 import util.PasswordSha256;
+import util.Validazione;
 
 /**
- * Servlet implementation class LoginServlet
+ * Classe che si occupa dell'accesso dell'utente 
+ * @author Ciro Cipolletta
  */
 @WebServlet("/Login")
 public class LoginServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	public LoginServlet() {
-		super();
+		super(); 
 	}
 
-	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+	public void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		doPost(request, response);
 	}
 
-	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+	public void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		HttpSession session = request.getSession();
 
-		//Controllo se l utente è già loggato e lo rimando alla pagina corretta
+		//Controllo se l utente ï¿½ giï¿½ loggato e lo rimando alla pagina corretta
 		if(session.getAttribute("ruolo")!=null) {
 			String ruolo=(String)session.getAttribute("ruolo");
 			if (ruolo.equalsIgnoreCase("capoturno")) {
@@ -58,6 +58,25 @@ public class LoginServlet extends HttpServlet {
 
 			String username = request.getParameter("Username");
 			String password = request.getParameter("Password");
+			
+			if(username!=null) {
+				if(username.length()<3)
+					throw new ScheduFIREException("Il campo \"Username\" deve essere formato da almeno 3 caratteri");
+				else if(username.length()>20)
+					throw new ScheduFIREException("Il campo \"Username\" deve essere formato da massimo 20 caratteri");
+				else if(!Validazione.username(username))
+					throw new ScheduFIREException("Il campo \"Username\" accetta solo caratteri alfanumerici");
+			}
+			if(password!=null) {
+				if(password.length()<6)
+					throw new ScheduFIREException("Il campo \"Password\" deve essere formato da almeno 6 caratteri");
+				else if(password.length()>16)
+					throw new ScheduFIREException("Il campo \"Password\" deve essere formato da massimo 16 caratteri");
+				else if(!Validazione.password(password))
+					throw new ScheduFIREException("Il campo \"Password\" accetta solo caratteri alfanumerici");
+			}
+			
+			
 			if (username == null || username.equals(""))
 				request.getRequestDispatcher("/JSP/LoginJSP.jsp").forward(request, response);
 			else {
@@ -67,7 +86,7 @@ public class LoginServlet extends HttpServlet {
 					passwordBase256format = PasswordSha256.getEncodedpassword(password);
 				
 				
-				UserDao credenziali = new UserDao();
+				CredenzialiDao credenziali = new CredenzialiDao();
 				CredenzialiBean utente = credenziali.login(username);
 
 				if (utente == null) {
@@ -97,7 +116,6 @@ public class LoginServlet extends HttpServlet {
 					else {
 						request.setAttribute("passwordErrata", true);
 						request.getRequestDispatcher("/JSP/LoginJSP.jsp").forward(request, response);
-
 					}
 
 				}

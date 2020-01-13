@@ -12,6 +12,7 @@ import javax.servlet.http.HttpSession;
 
 import util.Notifica;
 import util.Notifiche;
+import util.Util;
 
 /**
  * Servlet implementation class RimuoviNotificheServlet
@@ -31,13 +32,13 @@ public class RimuoviNotificheServlet extends HttpServlet {
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		Util.isCapoTurno(request);
 		HttpSession sessione = request.getSession();
 		Notifiche notifiche = (Notifiche) sessione.getAttribute("notifiche");
 		ArrayList<Notifica> nn = (ArrayList<Notifica>) notifiche.getListaNotifiche();
 		String indice = (String) request.getParameter("indice");
 		int id = Integer.parseInt(indice);
-		if(indice == null)System.out.println("NON HAI PASSATO UN CAZZO");
 		for (Notifica notifica:nn) {
 			if(notifica.getId() == id) {
 				notifiche.rimuovi(notifica);

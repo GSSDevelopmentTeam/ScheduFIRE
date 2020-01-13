@@ -2,25 +2,19 @@ package control;
 
 import java.io.IOException;
 import java.sql.Date;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
-
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-
-import org.json.JSONObject;
-
 import com.sendmail.SendMail;
-
 import model.bean.CapoTurnoBean;
 import model.bean.ComponenteDellaSquadraBean;
 import model.bean.VigileDelFuocoBean;
@@ -38,7 +32,8 @@ import util.Util;
 @WebServlet(description = "Servlet per la generazione delle squadre", urlPatterns = { "/GeneraSquadreServlet" })
 public class GeneraSquadreServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-
+	private Date data;
+	private String testing;
 	/**
 	 * @see HttpServlet#HttpServlet()
 	 */
@@ -50,20 +45,26 @@ public class GeneraSquadreServlet extends HttpServlet {
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException,NotEnoughMembersException {
+	public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException,NotEnoughMembersException {
 		Util.isCapoTurno(request);
 		HttpSession sessione = request.getSession();
-		Date data=new Date(System.currentTimeMillis());
+
+		if(testing==null)
+			data=new Date(System.currentTimeMillis());
 
 		//Se è diurno, nextLavorativo restiuisce il giorno successivo, non il turno successivo
 		if(GiornoLavorativo.isDiurno(data)) {
-			data=Date.valueOf(LocalDate.now().plusDays(1));
+			data=Date.valueOf(data.toLocalDate().plusDays(1));
 		}
 
 		data = GiornoLavorativo.nextLavorativo(data);
 		Date giornoSuccessivo=Date.valueOf(data.toLocalDate().plusDays(1));
+		request.setAttribute("dataDiurno", data);
+		request.setAttribute("dataNotturno", giornoSuccessivo);
+		
+		Util.aggiornaDB(data, giornoSuccessivo);
 
-
+		
 		//Se si vuole salvare la squadra sul db
 		if(request.getParameter("salva")!= null) {
 			//Se si vuole salvare da Calendario
@@ -77,6 +78,7 @@ public class GeneraSquadreServlet extends HttpServlet {
 				List<ComponenteDellaSquadraBean> componentiDaRimuovere = ComponenteDellaSquadraDao.getComponenti(dataMod);
 				HashMap<VigileDelFuocoBean, String> squadraDaRimuovere = Util.ottieniSquadra(dataMod);
 
+				
 				if(!ComponenteDellaSquadraDao.removeComponenti(componentiDaRimuovere) ||
 						!VigileDelFuocoDao.removeCaricoLavorativo(squadraDaRimuovere)) {
 					throw new ScheduFIREException("errore nelle query");
@@ -86,7 +88,12 @@ public class GeneraSquadreServlet extends HttpServlet {
 					throw new ScheduFIREException("errore nelle query");
 				}
 
-				response.sendRedirect("HomeCTServlet");
+				sessione.removeAttribute("squadraDiurno");
+				sessione.removeAttribute("squadraNotturno");
+				String path=request.getHeader("referer");
+				if(!path.contains("squadraSalvata")) 
+					path+="&squadraSalvata";
+				response.sendRedirect(path);
 				return;
 			}
 			else {
@@ -94,12 +101,10 @@ public class GeneraSquadreServlet extends HttpServlet {
 				HashMap<VigileDelFuocoBean, String> squadraDiurno=(HashMap<VigileDelFuocoBean, String>)sessione.getAttribute("squadraDiurno");
 				@SuppressWarnings("unchecked")
 				HashMap<VigileDelFuocoBean, String> squadraNotturno=(HashMap<VigileDelFuocoBean, String>)sessione.getAttribute("squadraNotturno");
-				System.out.println("squadra diurno "+squadraDiurno);
-				System.out.println("squadra notturno "+squadraNotturno);
+
 				List<ComponenteDellaSquadraBean> listaDiurno = vigileToComponente(squadraDiurno, data);	
 				List<ComponenteDellaSquadraBean> listaNotturno = vigileToComponente(squadraNotturno, giornoSuccessivo);			
 				CapoTurnoBean capoturno=(CapoTurnoBean)sessione.getAttribute("capoturno");
-
 
 				//Se le squadre da salvare sono sul db, le rimuovo dal db restituendo i carichi di lavoro
 				if(ListaSquadreDao.isEsistente(data)) {
@@ -107,29 +112,18 @@ public class GeneraSquadreServlet extends HttpServlet {
 					ArrayList<ComponenteDellaSquadraBean> componentiNotturnoDaRimuovere=ComponenteDellaSquadraDao.getComponenti(giornoSuccessivo);
 					HashMap<VigileDelFuocoBean, String> squadraDaRimuovereDiurno=Util.ottieniSquadra(data);
 					HashMap<VigileDelFuocoBean, String> squadraDaRimuovereNotturno=Util.ottieniSquadra(giornoSuccessivo);
-					if(	!ComponenteDellaSquadraDao.removeComponenti(componentiDiurnoDaRimuovere))
-					{
-						throw new ScheduFIREException("Errore nelle Query SQL");
-					}	
-					if(	!ComponenteDellaSquadraDao.removeComponenti(componentiNotturnoDaRimuovere))
-					{
-						throw new ScheduFIREException("Errore nelle Query SQL");
-					}	
-					if( !VigileDelFuocoDao.removeCaricoLavorativo(squadraDaRimuovereDiurno)) 
-					{
-						throw new ScheduFIREException("Errore nelle Query SQL");
-					}	
-					if(	!VigileDelFuocoDao.removeCaricoLavorativo(squadraDaRimuovereNotturno))
+					if(		!ComponenteDellaSquadraDao.removeComponenti(componentiDiurnoDaRimuovere)
+							||!ComponenteDellaSquadraDao.removeComponenti(componentiNotturnoDaRimuovere)
+							||!VigileDelFuocoDao.removeCaricoLavorativo(squadraDaRimuovereDiurno) 
+							||!VigileDelFuocoDao.removeCaricoLavorativo(squadraDaRimuovereNotturno))
 					{
 						throw new ScheduFIREException("Errore nelle Query SQL");
 					}	
 
 					//
 					if(		(!ComponenteDellaSquadraDao.setComponenti(listaDiurno)) ||
-							(!VigileDelFuocoDao.caricoLavorativo(squadraDiurno))){
-						throw new ScheduFIREException("Errore nelle Query SQL");
-					}	
-					if(		(!ComponenteDellaSquadraDao.setComponenti(listaNotturno)) ||
+							(!VigileDelFuocoDao.caricoLavorativo(squadraDiurno))||
+							(!ComponenteDellaSquadraDao.setComponenti(listaNotturno)) ||
 							(!VigileDelFuocoDao.caricoLavorativo(squadraNotturno))){
 						throw new ScheduFIREException("Errore nelle Query SQL");
 					}
@@ -154,12 +148,20 @@ public class GeneraSquadreServlet extends HttpServlet {
 						throw new ScheduFIREException("Errore nelle Query SQL");
 					}
 					VigileDelFuocoDao.caricoLavorativo(squadraNotturno);
+					
+					//Mettere qui sendMail
+					SendMail.sendMail(data, squadraDiurno, squadraNotturno);
+
 				}
 
 
-				//SendMail.sendMail(data);
+				//SendMail.sendMail(data, squadraDiurno, squadraNotturno);
 
-				response.sendRedirect("HomeCTServlet");
+				//sessione.removeAttribute("squadraDiurno");
+				//sessione.removeAttribute("squadraNotturno");
+
+				
+				response.sendRedirect("GeneraSquadreServlet?squadraSalvata");
 				return;
 
 
@@ -168,14 +170,8 @@ public class GeneraSquadreServlet extends HttpServlet {
 		}
 
 
-
-
-
-		System.out.println("Sto tentando di generare le squadre per il giorno "+data);
-
 		//Se le squadre sono già state generate e sono in sessione
 		if(sessione.getAttribute("squadraDiurno") != null) {
-			System.out.println("Attributo squadra in sessione non nullo");
 			HashMap<VigileDelFuocoBean, String> squadraDiurno=(HashMap<VigileDelFuocoBean, String>)sessione.getAttribute("squadraDiurno");
 			HashMap<VigileDelFuocoBean, String> squadraNotturno=(HashMap<VigileDelFuocoBean, String>)sessione.getAttribute("squadraNotturno");
 			Iterator it = squadraDiurno.entrySet().iterator();
@@ -183,27 +179,23 @@ public class GeneraSquadreServlet extends HttpServlet {
 			//Controllo se sono ancora tutti disponibili o a qualcuno è stata assegnata ferie o malattia
 			//Se assegnata, cancello le squadre dalla sessione e faccio dispatch a se stessa, in modo che le rigenera
 			boolean nonDisponibile=false;
-			System.out.println("\n\n Squadra diurna");
 			while (it.hasNext()) {
 				Map.Entry coppia = (Map.Entry) it.next();
 				VigileDelFuocoBean membro = (VigileDelFuocoBean) coppia.getKey();
-				System.out.println("vigile "+membro.getEmail()+" squadra"+(String)coppia.getValue());
 				if(!VigileDelFuocoDao.isDisponibile(membro.getEmail(), data))
 					nonDisponibile=true;
 			}
 			it = squadraNotturno.entrySet().iterator();
-			System.out.println("\n\n Squadra notturna");
 			while (it.hasNext()) {
 				Map.Entry coppia = (Map.Entry) it.next();
 				VigileDelFuocoBean membro = (VigileDelFuocoBean) coppia.getKey();
-				System.out.println("vigile "+membro.getEmail()+" squadra"+(String)coppia.getValue());
 
 				if(!VigileDelFuocoDao.isDisponibile(membro.getEmail(), giornoSuccessivo))
 					nonDisponibile=true;
 			}
 			if(nonDisponibile) {
-				sessione.removeAttribute("squadraDiurno");
-				sessione.removeAttribute("squadraNotturno");
+				request.getSession().removeAttribute("squadraDiurno");
+				request.getSession().removeAttribute("squadraNotturno");
 				request.getRequestDispatcher("GeneraSquadreServlet").forward(request, response);
 				return;
 			}
@@ -213,10 +205,8 @@ public class GeneraSquadreServlet extends HttpServlet {
 			return;
 		}
 
-
 		//Se le squadre sono già nel database, non deve generare nuove squadre
 		if(ListaSquadreDao.isEsistente(data)) {
-			System.out.println("Squadra già esistente");
 			HashMap<VigileDelFuocoBean, String> squadraDiurno=Util.ottieniSquadra(data);
 			HashMap<VigileDelFuocoBean, String> squadraNotturno=Util.ottieniSquadra(giornoSuccessivo);
 			sessione.setAttribute("squadraDiurno", squadraDiurno);
@@ -271,16 +261,6 @@ public class GeneraSquadreServlet extends HttpServlet {
 			}
 		}
 
-		System.out.println("Squadre generate!!!\n\n");
-		System.out.println("Squadra diurna");
-		for(ComponenteDellaSquadraBean comp :listaDiurno) {
-			System.out.println("Squadra: "+comp.getTipologiaSquadra()+ " ,email: "+comp.getEmailVF());
-		}
-		System.out.println("\n\nSquadra notturna");
-		for(ComponenteDellaSquadraBean comp :listaNotturno) {
-			System.out.println("Squadra: "+comp.getTipologiaSquadra()+ " ,email: "+comp.getEmailVF());
-		}
-
 
 		HashMap<VigileDelFuocoBean, String> squadraDiurno=new HashMap<>();
 		for(ComponenteDellaSquadraBean componente:listaDiurno) {
@@ -290,51 +270,15 @@ public class GeneraSquadreServlet extends HttpServlet {
 		for(ComponenteDellaSquadraBean componente:listaNotturno) {
 			squadraNotturno.put(VigileDelFuocoDao.ottieni(componente.getEmailVF()), componente.getTipologiaSquadra());
 		}
+		
+		
 		sessione.setAttribute("squadraDiurno", squadraDiurno);
 		sessione.setAttribute("squadraNotturno", squadraNotturno);
 		request.setAttribute("nonSalvata",true);
-		request.setAttribute("dataDiurno", data);
-		request.setAttribute("dataNotturno", giornoSuccessivo);
 		request.getRequestDispatcher("JSP/GestioneSquadreJSP.jsp").forward(request, response);
 
-
-
-
-
-
-
-
-
-
-
-
-
-		/*
-		if(sessione.getAttribute("squadra") != null) {
-			@SuppressWarnings("unchecked")
-			HashMap<VigileDelFuocoBean, String> squadra = (HashMap<VigileDelFuocoBean, String>) 
-			sessione.getAttribute("squadra");
-			List<ComponenteDellaSquadraBean> lista = vigileToComponente(squadra, data);				
-
-			if((!ListaSquadreDao.aggiungiSquadre(data, (String) sessione.getAttribute("email"))) ||
-					(!SquadraDao.aggiungiSquadra(data)) ||
-					(!ComponenteDellaSquadraDao.setComponenti(lista)) ||
-					(!VigileDelFuocoDao.caricoLavorativo(squadra))){
-				throw new ScheduFIREException("Errore nelle Query SQL");
-			}	
-			SendMail.sendMail(data);
-		}
-		else {
-			try {
-				List<ComponenteDellaSquadraBean> lista = Util.generaSquadra(data);
-				request.setAttribute("squadra", lista);
-				request.getRequestDispatcher("/VisualizzaComposizioneSquadreServlet").forward(request, response);				
-			} catch (NotEnoughMembersException e) {
-				//
-			} 
-		}
-		 */
 	}
+	
 
 
 	//Trasforma l hashmap nei componenti della squadra
@@ -353,7 +297,7 @@ public class GeneraSquadreServlet extends HttpServlet {
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		doGet(request, response);
 	}

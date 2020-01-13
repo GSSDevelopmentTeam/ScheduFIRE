@@ -6,6 +6,8 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import util.Util;
 /*
  * Servlet implementation class HomeCTServlet
  */
@@ -24,21 +26,18 @@ public class HomeCTServlet extends HttpServlet {
 	/*
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		doPost(request, response);
 	}
 
 	/*
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		if(!request.getSession().getAttribute("ruolo").equals("capoturno")) {
-			response.sendRedirect("Login");
-		}
-		else {
-			response.setContentType("text/html");
-			request.getRequestDispatcher("JSP/HomeCT_JSP.jsp").forward(request, response);
-		}
+	public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		Util.isCapoTurno(request);
+
+		response.setContentType("text/html");
+		request.getRequestDispatcher("JSP/HomeCT_JSP.jsp").forward(request, response);
 	}
 
 }

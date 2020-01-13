@@ -8,6 +8,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import model.bean.VigileDelFuocoBean;
 
@@ -34,15 +35,21 @@ public class GestionePersonaleServlet extends HttpServlet {
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		//Controllo login
 		Util.isCapoTurno(request);
+		
+		//Ottenimento oggetto sessione dalla richiesta
+		HttpSession session = request.getSession();
 		
 		//Ottenimento parametri
 		String ordinamento = request.getParameter("ordinamento");
 		
 		//Se il parametro non è settato, l'ordinamento sarà quello di default
+		if(ordinamento == null)
+			ordinamento = (String) session.getAttribute("ordinamento");
+		
 		if(ordinamento == null)
 			ordinamento = "";
 	
@@ -91,7 +98,7 @@ public class GestionePersonaleServlet extends HttpServlet {
 		request.setAttribute("vigili", vigili);
 		
 		//Passasggio dei tipi di ordinamento ottenuti
-		request.setAttribute("ordinamento", ordinamento);
+		session.setAttribute("ordinamento", ordinamento);
 		
 		// Reindirizzamento alla jsp
 		request.getRequestDispatcher("/JSP/GestionePersonaleJSP.jsp").forward(request, response);
@@ -101,7 +108,7 @@ public class GestionePersonaleServlet extends HttpServlet {
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		doGet(request, response);
 	}

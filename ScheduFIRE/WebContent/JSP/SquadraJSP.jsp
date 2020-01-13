@@ -1,3 +1,4 @@
+<%@page import="java.time.format.DateTimeFormatter"%>
 <%@page import="java.util.HashMap"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
@@ -20,19 +21,18 @@ h2 {
 }
 
 .table td, .table th {
-    padding: 1.5px!important;
-    vertical-align: top;
-    border-top: 1px solid #dee2e6;
+	padding: 1.5px !important;
+	vertical-align: top;
+	border-top: 1px solid #dee2e6;
 }
 
-.back-up{
-	border:none;
-	background:none;	
-    position: fixed;
-    bottom: 5%;
-    right: 5%;
+.back-up {
+	border: none;
+	background: none;
+	position: fixed;
+	bottom: 5%;
+	right: 5%;
 }
-
 </style>
 </head>
 
@@ -40,9 +40,38 @@ h2 {
 	<%
 		Date data = (Date) request.getAttribute("data");
 	%>
-
+	<div id="sali"></div>
 	<!-- Barra Navigazione -->
 	<jsp:include page="HeaderJSP.jsp" />
+
+	<!-- Modal di avviso operazione effettuata correttamente-->
+
+	<button type="button" data-toggle="modal" id="buttonModalAvviso"
+		data-target="#modalAvviso" style="display: none">Bottone
+		per modal di Avviso riuscita operazione</button>
+
+	<div class="modal fade" id="modalAvviso" tabindex="-1" role="dialog"
+		aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+		<div class="modal-dialog modal-sm modal-dialog-centered"
+			role="document">
+			<div class="modal-content" style="border: 3px solid #5be94b;">
+				<p hidden="hidden" name="ricarica" id="ifRicarica"></p>
+				<div class="modal-body" style="align: center;">
+					<img src="IMG/fire.png" class="rounded mx-auto d-block">
+					<h4 class="modal-title text-center" id="titoloModalAvviso">Operazione
+						effettuata con successo</h4>
+				</div>
+				<div class="modal-footer">
+
+					<button type="button" class="btn btn-outline-success"
+						data-dismiss="modal">OK</button>
+
+				</div>
+			</div>
+		</div>
+	</div>
+
+
 
 	<!-- MODAL MODIFICA VF -->
 	<div class="modal fade" id="aggiungiVF" tabindex="-1" role="dialog"
@@ -63,10 +92,9 @@ h2 {
 					</div>
 
 					<div class="modal-footer">
+						<button class="btn btn-outline-success" id="agg" disabled>Aggiungi</button>
 						<button type="button" class="btn btn-outline-danger"
-							
-						data-dismiss="modal">Annulla</button>
-						<button class="btn btn-outline-secondary" id="agg" disabled="true">Aggiungi</button>
+							data-dismiss="modal">Annulla</button>
 
 					</div>
 				</form>
@@ -75,24 +103,31 @@ h2 {
 	</div>
 
 	<!-- ELENCO SQUADRE  -->
-<%
+	<%
 	HashMap<VigileDelFuocoBean, String> squadra = (HashMap<VigileDelFuocoBean, String>) session.getAttribute("squadra"); %>
-     
-     <a href="#inizio" class=" back-up"><img src="IMG/arrow/up-arrow-p.png" style="margin-left: 5px;"
-					onmouseover="this.src='IMG/arrow/up-arrow-d.png'"
-					onmouseout="this.src='IMG/arrow/up-arrow-p.png'" /></a>
-     
 
 
+	<a href="#sali" class=" back-up"><img
+		src="IMG/arrow/up-arrow-p.png" style="margin-left: 5px;"
+		onmouseover="this.src='IMG/arrow/up-arrow-d.png'"
+		onmouseout="this.src='IMG/arrow/up-arrow-p.png'" /></a>
+
+	<h2 class="d-flex justify-content-center"
+		style="color: #B60000 !Important; margin-top: 3%; font-size: 45px;">Modifica
+		Squadra</h2>
 	<!-- SQUADRA DIURNA -->
-	<div class="d-flex justify-content-center">
-		<h2 style="font-weight: bold; font-size: 36px;">
-			Squadra del
-			<%=data%></h2>
+	<h4 class="d-flex justify-content-center"
+		style="color: #B60000 !Important; margin-top: 3%; font-weight: bold; font-size: 36px;">
+		Squadra del
+		<%=data.toLocalDate().format(DateTimeFormatter.ofPattern("dd MMMM YYYY", new Locale("it", "IT")))%></h4>
+
 	</div>
 
-	<div class="d-flex justify-content-center" id="inizio">
-		<form action="GeneraSquadreServlet?salva=true&calendario=true&data=<%=data.toString()%>" method=post>
+
+	<div class="d-flex justify-content-center">
+		<form
+			action="GeneraSquadreServlet?salva=true&calendario=true&data=<%=data.toString()%>"
+			method=post>
 			<button type="submit" class="btn btn-outline-success btn-lg"
 				value="salva" name="salva" style="margin: 3px;">Conferma
 				Modifiche</button>
@@ -128,10 +163,11 @@ h2 {
 
 				<tr>
 					<td class="text-center"><img
-						src="Grado/<%=membro.getGrado()%>.png" style="height: 25%"
+						src="Grado/<%=membro.getMansione().equals("Capo Squadra") && membro.getGrado().equals("Esperto")?"EspertoCapoSquadra":membro.getGrado() %>.png"
+						title="<%=membro.getGrado() %>"
 						onerror="this.parentElement.innerHTML='Non disponibile';"></td>
-					<td class="text-center"><%=membro.getNome()%></td>
-					<td class="text-center"><%=membro.getCognome()%></td>
+					<td class="text-center"><strong><%=membro.getNome()%></strong></td>
+					<td class="text-center"><strong><%=membro.getCognome()%></strong></td>
 					<td class="text-center"><%=membro.getMansione()%></td>
 					<td class="text-center"><button type="button"
 							class="btn btn-outline-secondary" data-toggle="modal"
@@ -176,10 +212,11 @@ h2 {
 
 				<tr>
 					<td class="text-center"><img
-						src="Grado/<%=membro.getGrado()%>.png" style="height: 25%"
+						src="Grado/<%=membro.getMansione().equals("Capo Squadra") && membro.getGrado().equals("Esperto")?"EspertoCapoSquadra":membro.getGrado() %>.png"
+						title="<%=membro.getGrado() %>"
 						onerror="this.parentElement.innerHTML='Non disponibile';"></td>
-					<td class="text-center"><%=membro.getNome()%></td>
-					<td class="text-center"><%=membro.getCognome()%></td>
+					<td class="text-center"><strong><%=membro.getNome()%></strong></td>
+					<td class="text-center"><strong><%=membro.getCognome()%></strong></td>
 					<td class="text-center"><%=membro.getMansione()%></td>
 					<td class="text-center"><button type="button"
 							class="btn btn-outline-secondary" data-toggle="modal"
@@ -224,10 +261,11 @@ h2 {
 
 				<tr>
 					<td class="text-center"><img
-						src="Grado/<%=membro.getGrado()%>.png" style="height: 25%"
+						src="Grado/<%=membro.getMansione().equals("Capo Squadra") && membro.getGrado().equals("Esperto")?"EspertoCapoSquadra":membro.getGrado() %>.png"
+						title="<%=membro.getGrado() %>"
 						onerror="this.parentElement.innerHTML='Non disponibile';"></td>
-					<td class="text-center"><%=membro.getNome()%></td>
-					<td class="text-center"><%=membro.getCognome()%></td>
+					<td class="text-center"><strong><%=membro.getNome()%></strong></td>
+					<td class="text-center"><strong><%=membro.getCognome()%></strong></td>
 					<td class="text-center"><%=membro.getMansione()%></td>
 					<td class="text-center"><button type="button"
 							class="btn btn-outline-secondary" data-toggle="modal"
@@ -272,10 +310,11 @@ h2 {
 
 				<tr>
 					<td class="text-center"><img
-						src="Grado/<%=membro.getGrado()%>.png" style="height: 25%"
+						src="Grado/<%=membro.getMansione().equals("Capo Squadra") && membro.getGrado().equals("Esperto")?"EspertoCapoSquadra":membro.getGrado() %>.png"
+						title="<%=membro.getGrado() %>"
 						onerror="this.parentElement.innerHTML='Non disponibile';"></td>
-					<td class="text-center"><%=membro.getNome()%></td>
-					<td class="text-center"><%=membro.getCognome()%></td>
+					<td class="text-center"><strong><%=membro.getNome()%></strong></td>
+					<td class="text-center"><strong><%=membro.getCognome()%></strong></td>
 					<td class="text-center"><%=membro.getMansione()%></td>
 					<td class="text-center"><button type="button"
 							class="btn btn-outline-secondary" data-toggle="modal"
@@ -317,6 +356,7 @@ h2 {
 				"dataModifica" : dt
 			},			
 			success : function(response) {//Operazione da eseguire una volta terminata la chiamata alla servlet.
+				$("#agg").prop("disabled",true);
 				$("#appendElenco").remove();
 				$("<div id='appendElenco'></div>").appendTo("#elenco");
 				$(response).appendTo("#appendElenco");					
@@ -326,9 +366,15 @@ h2 {
 	}
 
 	function attivapulsante(){
-		$("#agg").Button.disabled=false
+		$("#agg").prop("disabled",false);
 	}
-
+	
+	$(document).ready(function(){
+		<% if (request.getParameter("squadraSalvata")!=null){%>
+		$('#buttonModalAvviso').trigger('click');
+		$("#titoloModalAvviso").text("Squadra salvata con successo");
+		<%}%>
+	});
 	</script>
 
 

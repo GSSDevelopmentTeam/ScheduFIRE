@@ -14,13 +14,28 @@ import model.bean.ComponenteDellaSquadraBean;
 import model.bean.VigileDelFuocoBean;
 
 /**
- * 
  * @author Alfredo Giuliano
- *
  */
 public class ComponenteDellaSquadraDao {
+	
+	public static String getSquadra(String mailVF, Date data) {
+		try(Connection con = ConnessioneDB.getConnection()) {
+			PreparedStatement ps = con.prepareStatement("SELECT tipologia FROM componentedellasquadra"
+					+ " WHERE emailVF = ? AND giornoLavorativo = ?;");
+			ps.setString(1, mailVF);
+			ps.setDate(2, data);
+			ResultSet rs = ps.executeQuery();
+			
+			rs.next();
+			return rs.getString("tipologia");
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+		}
+	}
+	
 	/**
-	 * @param data , la data del giorno di cui si vuole avere la lista dei vigili presenti nelle varie squadre
+	 * Utilizzato per ottenere componeti dalle varie squadre
+	 * @param data giorno di cui si vuole avere la lista dei vigili presenti nelle varie squadre
 	 * @return una lista di ComponenteDellaSquadraBean presenti nelle varie squadre al giorno passato come parametro, 
 	 * 			ordinati in base alla squadra assegnata e al cognome del vigile
 	 */
@@ -56,6 +71,11 @@ public class ComponenteDellaSquadraDao {
 		}
 	}
 
+	/**
+	 * Per la rimozione dei componenti delle varie squadre
+	 * @param componenti componenti da rimuovere 
+	 * @return true se i componenti sono stati eliminati, false altrimenti
+	 */
 	public static boolean removeComponenti(List<ComponenteDellaSquadraBean> componenti) {
 		try(Connection con = ConnessioneDB.getConnection()) {
 			for(ComponenteDellaSquadraBean comp : componenti) {
@@ -68,19 +88,21 @@ public class ComponenteDellaSquadraDao {
 		}
 	}
 
-
 	private static int rimuoviDalDb(ComponenteDellaSquadraBean comp, Connection con) throws SQLException {
-		System.out.println("Componente della squadra: "+comp.getEmailVF()+" , "+comp.getTipologiaSquadra()+" , "+comp.getGiornoLavorativo());
 		PreparedStatement ps = con.prepareStatement("DELETE FROM ComponenteDellaSquadra WHERE emailVF = ? AND tipologia = ? AND giornoLavorativo = ? ;");
 		ps.setString(1, comp.getEmailVF());
 		ps.setString(2, comp.getTipologiaSquadra());
 		ps.setDate(3, comp.getGiornoLavorativo());
 		int righe=ps.executeUpdate();
-		System.out.println("righe modificate: "+righe);
 		return righe;
 
 	}
 
+	/**
+	 * Aggiunge componenti alla squadra
+	 * @param componenti componenti da aggiungere ad database
+	 * @return true se i componenti sono stati aggiunti, false altrimenti
+	 */
 	public static boolean setComponenti(List<ComponenteDellaSquadraBean> componenti) {
 		try(Connection con = ConnessioneDB.getConnection()) {
 			int count = 0;
@@ -88,7 +110,6 @@ public class ComponenteDellaSquadraDao {
 				count += aggiungiAlDb(comp, con);
 				con.commit();
 			}
-			System.out.println("Conto set componente "+count);
 			return (count == componenti.size());
 		} catch (SQLException e) {
 			throw new RuntimeException(e);
@@ -97,8 +118,9 @@ public class ComponenteDellaSquadraDao {
 
 
 
+
 	private static int aggiungiAlDb(ComponenteDellaSquadraBean comp, Connection con) throws SQLException {
-		System.out.println("Componente della squadra: "+comp.getEmailVF()+" , "+comp.getTipologiaSquadra()+" , "+comp.getGiornoLavorativo());
+
 		PreparedStatement ps = con.prepareStatement("insert into ComponenteDellaSquadra(emailVF, tipologia, giornoLavorativo) "
 				+ "values (?, ?, ?);");
 		ps.setString(1, comp.getEmailVF());
@@ -109,6 +131,12 @@ public class ComponenteDellaSquadraDao {
 
 	}
 
+	/**
+	 * Controlla se un vigile del fuoco lavora in un dato giorno lavorativo
+	 * @param emailVF email del vigile del fuoco 
+	 * @param giornoLavorativo giorno da testare
+	 * @return true se � vero, false alrimenti
+	 */
 	public static boolean isComponente(String emailVF, Date giornoLavorativo) {
 
 		PreparedStatement ps;
@@ -133,6 +161,14 @@ public class ComponenteDellaSquadraDao {
 		return schedulato;
 	}
 
+	
+	/**
+	 * Restituisce le square delle quali fa parte un determinato vigile del fuoco 
+	 * @param from data inziale
+	 * @param to data finale
+	 * @param vigile vigile del fuoco del quale si vogliono sapere le squadre relative
+	 * @return La lista delle squadre relative al Vigile passato come parametro
+	 */
 	public static List<ComponenteDellaSquadraBean> getSquadreRelative(Date from, Date to, VigileDelFuocoBean vigile) {
 		String mailVF = vigile.getEmail();
 		String sql = "SELECT * "
@@ -163,8 +199,8 @@ public class ComponenteDellaSquadraDao {
 	
 	
 	/**
-	 * Serve a cancellare tutti i componentiDellaSquadra precedenti a questa data
-	 * @param data la data di partenza
+	 * Cancella tutti i componentiDellaSquadra precedenti a questa data
+	 * @param data  data iniziale
 	 */
 	public static void rimuoviTutti(Date data) {
 		String sql = "DELETE FROM ComponenteDellaSquadra WHERE giornoLavorativo < ? ;";
@@ -181,20 +217,12 @@ public class ComponenteDellaSquadraDao {
 		}
 	}
 
-
-
-
-
-
-
-
-
-
-	/*
+	/**
 	 * Per ordinare l'array di componenti della squadra in base alla tipologia della squadra di appartenenza
-	 * con priorit� a sala operativa, poi prima partenza, poi auto scala e infine auto botte.
+	 * con priorieta' a sala operativa, poi prima partenza, poi auto scala e infine auto botte.
 	 * In caso di tipologia uguale, ordina in base al cognome che ricava dalla mail
 	 * essendo la mail composta sempre da nome<numero>.cognome
+	 * @see Comparator 
 	 * 
 	 */
 	static class ComponenteComparator implements Comparator<ComponenteDellaSquadraBean> {

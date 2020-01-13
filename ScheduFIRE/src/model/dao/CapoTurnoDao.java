@@ -16,17 +16,12 @@ import model.bean.CapoTurnoBean;
 public class CapoTurnoDao {
 	
 	/**
-	 * Si occupa dell'ottenimento di un CapoTurnoBean dal database, dato il suo username.
-	 * @param chiaveUsername è una stringa che identifica un CapoTurnoBean tramite l'username
-	 * @return Un tipo CapoTurnoBean identificato da chiaveUsername, null altrimenti
+	 * Ottiene un capoturno dalla base di dati
+	 * @param chiaveUsername stringa che identifica un CapoTurnoBean tramite l'username
+	 * @return un tipo CapoTurnoBean identificato da chiaveUsername, null altrimenti
 	 */
 	public static CapoTurnoBean ottieni(String chiaveUsername) {
-		
-		//controlli
-		if(chiaveUsername == null)
-			//lancio eccezione
-			;
-	
+
 		try(Connection con = ConnessioneDB.getConnection()) {
 				
 			// Esecuzione query
