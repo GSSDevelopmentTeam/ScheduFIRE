@@ -118,7 +118,7 @@ class AggiungiFerieServletTest extends TestCase{
 		request.setParameter("dataFinale", "20-03-2020");
 		session.setAttribute("capoturno", capoturno);
 
-		servlet.doPost(request, response);
+		servlet.doGet(request, response);
 		assertEquals("application/json", response.getContentType());
 	}
 
