@@ -65,8 +65,8 @@
 						data desiderata.</p>
 					<p hidden="hidden" name="email" id="emailAggiuntaMalattia"></p>
 					<div class=" row justify-content-center">
-						<input id="dataInizio" placeholder="Giorno iniziale" size="34" />
-						<input id="dataFine" placeholder="Giorno finale" size="34" />
+						<input id="dataInizio" placeholder="Giorno iniziale" size="34" style="margin-bottom:1%;" />
+						<input id="dataFine" placeholder="Giorno finale" size="34" style="margin-bottom: 2%;"/>
 					</div>
 					<div class="text-center" id="messaggioTurno"></div>
 
@@ -110,8 +110,8 @@
 					<p hidden="hidden" name="email" id="emailRimozioneMalattia"></p>
 					<div class=" row justify-content-center">
 						<input id="rimozioneDataIniziale" placeholder="Giorno iniziale"
-							readonly size="34" /> <input id="rimozioneDataFinale"
-							placeholder="Giorno finale" readonly size="34" />
+							readonly size="34" style="margin-bottom:1%;"/> <input id="rimozioneDataFinale"
+							placeholder="Giorno finale" readonly size="34" style="margin-bottom:2%;"/>
 					</div>
 					<div class="text-center" id="messaggioTurno"></div>
 
