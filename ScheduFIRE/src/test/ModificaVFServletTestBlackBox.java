@@ -163,7 +163,7 @@ class ModificaVFServletTestBlackBox {
 	
 		request.addParameter("nomeNuovo", "Domenico");
 		request.addParameter("cognomeNuovo", "Giordano");
-		request.addParameter("emailNuova", "domenico.giordano");
+		request.addParameter("emailNuova", "Nicola.labanca");
 		request.addParameter("mansioneNuova", "");
 		request.addParameter("gradoNuovo", "Esperto");
 		request.addParameter("giorniFerieAnnoCorrenteNuovi", "22");
