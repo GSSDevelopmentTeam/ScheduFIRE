@@ -187,7 +187,7 @@ class GestioneFerieServletTest {
 		
 		servlet.doGet(request, response);
 		
-		assertEquals("JSP/GestioneFerieJSP.jsp", response.getForwardedUrl());
+		assertEquals("application/json", response.getContentType());
 	}
 	
 	@Test
