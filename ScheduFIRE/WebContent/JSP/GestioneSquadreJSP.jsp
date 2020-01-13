@@ -137,7 +137,7 @@ h2 {
 		</form>
 
 		 <a href="#Notte" class="btn btn-outline-secondary btn-lg" style="margin: 3px;">Squadra Notturna</a>
-		<a href="#Disp"	class="btn btn-outline-secondary btn-lg" style="margin: 3px;">Personale Disponibiles</a>
+		<a href="#Disp"	class="btn btn-outline-secondary btn-lg" style="margin: 3px;">Personale Disponibile</a>
 
 	</div>
 	<br>

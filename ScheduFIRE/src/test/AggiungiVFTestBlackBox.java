@@ -39,7 +39,7 @@ class AggiungiVFTestBlackBox {
 	static ArgumentCaptor<String> captor;
 	static AggiungiVFServlet servlet;
 	static CapoTurnoBean ct = new CapoTurnoBean();
-	
+
 	@BeforeEach
 	void setUp() {
 		servlet = new AggiungiVFServlet();
@@ -47,7 +47,7 @@ class AggiungiVFTestBlackBox {
 		request=new MockHttpServletRequest();
 		response=new MockHttpServletResponse();
 		session=new MockHttpSession();
-		
+
 
 		ct.setTurno("B");
 		ct.setEmail("capoturno");
@@ -64,307 +64,307 @@ class AggiungiVFTestBlackBox {
 		VigileDelFuocoDao.deleteVF("null@vigilfuoco.it");
 		VigileDelFuocoDao.deleteVF("d.giordano@vigilfuoco.it@vigilfuoco.it");
 	}
-		 
-	
+
+
 	/**
 	 * Questo metodo inserisce testa l'inserimento di un VF
-	 * Il metodo fallisce poichè il nome inserito e' null
+	 * Il metodo fallisce poichï¿½ il nome inserito e' null
 	 * @throws ParametroInvalidoException
 	 */
 	@Test
 	void testTC_10_1() {
 		request.addParameter("nome", " ");
-	    request.addParameter("cognome", "Giordano");
-	    request.addParameter("email", "giordano.domenico@vigilfuoco.it");
-	    request.addParameter("mansione", "Capo Squadra");
-	    request.addParameter("grado", "Esperto");
+		request.addParameter("cognome", "Giordano");
+		request.addParameter("email", "domenico.giordano@vigilfuoco.it");
+		request.addParameter("mansione", "Capo Squadra");
+		request.addParameter("grado", "Esperto");
 		request.addParameter("giorniFerieAnnoCorrente", "10");
 		request.addParameter("giorniFerieAnnoPrecedente", "0");
-	    assertThrows(ParametroInvalidoException.class, () -> {
-	      servlet.doPost(request, response);
-	    });
+		assertThrows(ParametroInvalidoException.class, () -> {
+			servlet.doPost(request, response);
+		});
 	}
-	
+
 	/**
 	 * Questo metodo inserisce testa l'inserimento di un VF
-	 * Il metodo fallisce poichè il nome inserito e' troppo lungo
+	 * Il metodo fallisce poichï¿½ il nome inserito e' troppo lungo
 	 * @throws ParametroInvalidoException
 	 */
 	@Test
 	void testTC_10_2() {
 		request.addParameter("nome", "Domenicodomenicodomenico");
-	    request.addParameter("cognome", "Giordano");
-	    request.addParameter("email", "giordano.domenico@vigilfuoco.it");
-	    request.addParameter("mansione", "Capo Squadra");
-	    request.addParameter("grado", "Esperto");
+		request.addParameter("cognome", "Giordano");
+		request.addParameter("email", "domenico.giordano@vigilfuoco.it");
+		request.addParameter("mansione", "Capo Squadra");
+		request.addParameter("grado", "Esperto");
 		request.addParameter("giorniFerieAnnoCorrente", "10");
 		request.addParameter("giorniFerieAnnoPrecedente", "0");
-	    assertThrows(ParametroInvalidoException.class, () -> {
-	      servlet.doPost(request, response);
-	    });
+		assertThrows(ParametroInvalidoException.class, () -> {
+			servlet.doPost(request, response);
+		});
 	}
-	
+
 	/**
 	 * Questo metodo inserisce testa l'inserimento di un VF
-	 * Il metodo fallisce poichè il nome inserito non e' del formato corretto
+	 * Il metodo fallisce poichï¿½ il nome inserito non e' del formato corretto
 	 * @throws ParametroInvalidoException
 	 */
 	@Test
 	void testTC_10_3() {
 		request.addParameter("nome", "DOMenico1");
-	    request.addParameter("cognome", "Giordano");
-	    request.addParameter("email", "giordano.domenico@vigilfuoco.it");
-	    request.addParameter("mansione", "Capo Squadra");
-	    request.addParameter("grado", "Esperto");
+		request.addParameter("cognome", "Giordano");
+		request.addParameter("email", "domenico.giordano@vigilfuoco.it");
+		request.addParameter("mansione", "Capo Squadra");
+		request.addParameter("grado", "Esperto");
 		request.addParameter("giorniFerieAnnoCorrente", "10");
 		request.addParameter("giorniFerieAnnoPrecedente", "0");
-	    assertThrows(ParametroInvalidoException.class, () -> {
-	      servlet.doPost(request, response);
-	    });
+		assertThrows(ParametroInvalidoException.class, () -> {
+			servlet.doPost(request, response);
+		});
 	}
-	
+
 	/**
 	 * Questo metodo inserisce testa l'inserimento di un VF
-	 * Il metodo fallisce poichè il cognome inserito e' null
+	 * Il metodo fallisce poichï¿½ il cognome inserito e' null
 	 * @throws ParametroInvalidoException
 	 */
 	@Test
 	void testTC_10_4() {
 		request.addParameter("nome", "Domenico");
-	    request.addParameter("cognome", " ");
-	    request.addParameter("email", "giordano.domenico@vigilfuoco.it");
-	    request.addParameter("mansione", "Capo Squadra");
-	    request.addParameter("grado", "Esperto");
+		request.addParameter("cognome", " ");
+		request.addParameter("email", "domenico.giordano@vigilfuoco.it");
+		request.addParameter("mansione", "Capo Squadra");
+		request.addParameter("grado", "Esperto");
 		request.addParameter("giorniFerieAnnoCorrente", "10");
 		request.addParameter("giorniFerieAnnoPrecedente", "0");
-	    assertThrows(ParametroInvalidoException.class, () -> {
-	      servlet.doPost(request, response);
-	    });
+		assertThrows(ParametroInvalidoException.class, () -> {
+			servlet.doPost(request, response);
+		});
 	}
 	/**
 	 * Questo metodo inserisce testa l'inserimento di un VF
-	 * Il metodo fallisce poichè il cognome inserito e' troppo lungo
+	 * Il metodo fallisce poichï¿½ il cognome inserito e' troppo lungo
 	 * @throws ParametroInvalidoException
 	 */
 	@Test
 	void testTC_10_5() {
 		request.addParameter("nome", "Domenico");
-	    request.addParameter("cognome", "Giordanogiordanogiordano");
-	    request.addParameter("email", "giordano.domenico@vigilfuoco.it");
-	    request.addParameter("mansione", "Capo Squadra");
-	    request.addParameter("grado", "Esperto");
+		request.addParameter("cognome", "Giordanogiordanogiordano");
+		request.addParameter("email", "domenico.giordano@vigilfuoco.it");
+		request.addParameter("mansione", "Capo Squadra");
+		request.addParameter("grado", "Esperto");
 		request.addParameter("giorniFerieAnnoCorrente", "10");
 		request.addParameter("giorniFerieAnnoPrecedente", "0");
-	    assertThrows(ParametroInvalidoException.class, () -> {
-	      servlet.doPost(request, response);
-	    });
+		assertThrows(ParametroInvalidoException.class, () -> {
+			servlet.doPost(request, response);
+		});
 	}
 
 	/**
 	 * Questo metodo inserisce testa l'inserimento di un VF
-	 * Il metodo fallisce poichè il cognome non e' del formato corretto
+	 * Il metodo fallisce poichï¿½ il cognome non e' del formato corretto
 	 * @throws ParametroInvalidoException
 	 */
 	@Test
 	void testTC_10_6() {
 		request.addParameter("nome", "Domenico");
-	    request.addParameter("cognome", "GIOrdano1");
-	    request.addParameter("email", "giordano.domenico@vigilfuoco.it");
-	    request.addParameter("mansione", "Capo Squadra");
-	    request.addParameter("grado", "Esperto");
+		request.addParameter("cognome", "GIOrdano1");
+		request.addParameter("email", "domenico.giordano@vigilfuoco.it");
+		request.addParameter("mansione", "Capo Squadra");
+		request.addParameter("grado", "Esperto");
 		request.addParameter("giorniFerieAnnoCorrente", "10");
 		request.addParameter("giorniFerieAnnoPrecedente", "0");
-	    assertThrows(ParametroInvalidoException.class, () -> {
-	      servlet.doPost(request, response);
-	    });
+		assertThrows(ParametroInvalidoException.class, () -> {
+			servlet.doPost(request, response);
+		});
 	}
-	
+
 	/**
 	 * Questo metodo inserisce testa l'inserimento di un VF
-	 * Il metodo fallisce poichè l'email e' troppo corta
+	 * Il metodo fallisce poichï¿½ l'email e' troppo corta
 	 * @throws NumberFormatException
 	 */
 	@Test
 	void testTC_10_7() {
 		request.addParameter("nom", "Domenico");
-	    request.addParameter("cognom", "Giordano");
-	    request.addParameter("E-mail", "d@vigilfuoco.it");
-	    request.addParameter("mansione", "Capo Squadra");
-	    request.addParameter("grado", "Esperto");
+		request.addParameter("cognome", "Giordano");
+		request.addParameter("email", "d@vigilfuoco.it");
+		request.addParameter("mansione", "Capo Squadra");
+		request.addParameter("grado", "Esperto");
 		request.addParameter("giorniFerieAnnoCorrente", "10");
 		request.addParameter("giorniFerieAnnoPrecedente", " ");
-	    assertThrows(NumberFormatException.class, () -> {
-	      servlet.doPost(request, response);
-	    });
+		assertThrows(ParametroInvalidoException.class, () -> {
+			servlet.doPost(request, response);
+		});
 	}
-	
+
 	/**
 	 * Questo metodo inserisce testa l'inserimento di un VF
-	 * Il metodo fallisce poichè l'email non e' del formato corretto
+	 * Il metodo fallisce poichï¿½ l'email non e' del formato corretto
 	 * @throws NumberFormatException
 	 */
 	@Test
 	void testTC_10_8() {
 		request.addParameter("nome", "Domenico");
-	    request.addParameter("cognome", "Giordano");
-	    request.addParameter("E-mail", "domenico.giordano1@vigilfuoco.it");
-	    request.addParameter("mansione", "Capo Squadra");
-	    request.addParameter("grado", "Esperto");
+		request.addParameter("cognome", "Giordano");
+		request.addParameter("email", "domenico.giordano1@vigilfuoco.it");
+		request.addParameter("mansione", "Capo Squadra");
+		request.addParameter("grado", "Esperto");
 		request.addParameter("giorniFerieAnnoCorrente", "10");
 		request.addParameter("giorniFerieAnnoPrecedente", " ");
-	    assertThrows(NumberFormatException.class, () -> {
-	      servlet.doPost(request, response);
-	    });
+		assertThrows(ParametroInvalidoException.class, () -> {
+			servlet.doPost(request, response);
+		});
 	}
-	
+
 	/**
 	 * Questo metodo inserisce testa l'inserimento di un VF
-	 * Il metodo fallisce poichè l'email non è valida
+	 * Il metodo fallisce poichï¿½ l'email non ï¿½ valida
 	 * @throws NumberFormatException
 	 */
 	@Test
 	void testTC_10_9() {
 		request.addParameter("nome", "Domenico");
-	    request.addParameter("cognome", "Giordano");
-	    request.addParameter("E-mail", "michele.sansone@vigilfuoco.it");
-	    request.addParameter("mansione", "Capo Squadra");
-	    request.addParameter("grado", "Esperto");
+		request.addParameter("cognome", "Giordano");
+		request.addParameter("email", "michele.sansone@vigilfuoco.it");
+		request.addParameter("mansione", "Capo Squadra");
+		request.addParameter("grado", "Esperto");
 		request.addParameter("giorniFerieAnnoCorrente", "10");
 		request.addParameter("giorniFerieAnnoPrecedente", " ");
-	    assertThrows(NumberFormatException.class, () -> {
-	      servlet.doPost(request, response);
-	    });
+		assertThrows(ParametroInvalidoException.class, () -> {
+			servlet.doPost(request, response);
+		});
 	}
-	
+
 	/**
 	 * Questo metodo inserisce testa l'inserimento di un VF
-	 * Il metodo fallisce poichè il mestiere e' null
+	 * Il metodo fallisce poichï¿½ la mansione e' null
 	 * @throws ParametroInvalidoException
 	 */
 	@Test
 	void testTC_10_10() {
 		request.addParameter("nome", "Domenico");
-	    request.addParameter("cognome", "Giordano");
-	    request.addParameter("email", "giordano.domenico@vigilfuoco.it");
-	    request.addParameter("mansione", " ");
-	    request.addParameter("grado", "Esperto");
+		request.addParameter("cognome", "Giordano");
+		request.addParameter("email", "domenico.giordano@vigilfuoco.it");
+		request.addParameter("mansione", " ");
+		request.addParameter("grado", "Esperto");
 		request.addParameter("giorniFerieAnnoCorrente", "10");
 		request.addParameter("giorniFerieAnnoPrecedente", "0");
-	    assertThrows(ParametroInvalidoException.class, () -> {
-	      servlet.doPost(request, response);
-	    });
+		assertThrows(ParametroInvalidoException.class, () -> {
+			servlet.doPost(request, response);
+		});
 	}
 	/**
 	 * Questo metodo inserisce testa l'inserimento di un VF
-	 * Il metodo fallisce poichè il numero di ferieannocorrente e' null
+	 * Il metodo fallisce poichï¿½ il numero di ferieannocorrente e' null
 	 * @throws NumberFormatException
 	 */
 	@Test
 	void testTC_10_11() {
 		request.addParameter("nome", "Domenico");
-	    request.addParameter("cognome", "Giordano");
-	    request.addParameter("email", "giordano.domenico@vigilfuoco.it");
-	    request.addParameter("mansione", "Capo Squadra");
-	    request.addParameter("grado", "Esperto");
+		request.addParameter("cognome", "Giordano");
+		request.addParameter("email", "domenico.giordano@vigilfuoco.it");
+		request.addParameter("mansione", "Capo Squadra");
+		request.addParameter("grado", "Esperto");
 		request.addParameter("giorniFerieAnnoCorrente", " ");
 		request.addParameter("giorniFerieAnnoPrecedente", "0");
-	    assertThrows(NumberFormatException.class, () -> {
-	      servlet.doPost(request, response);
-	    });
+		assertThrows(ParametroInvalidoException.class, () -> {
+			servlet.doPost(request, response);
+		});
 	}
-	
+
 	/**
 	 * Questo metodo inserisce testa l'inserimento di un VF
-	 * Il metodo fallisce poichè il numero di ferieannocorrente e' troppo grande
+	 * Il metodo fallisce poichï¿½ il numero di ferieannocorrente e' troppo grande
 	 * @throws ScheduFIREException
 	 */
 	@Test
 	void testTC_10_12() {
 		request.addParameter("nome", "Domenico");
-	    request.addParameter("cognome", "Giordano");
-	    request.addParameter("email", "giordano.domenico@vigilfuoco.it");
-	    request.addParameter("mansione", "Capo Squadra");
-	    request.addParameter("grado", "Esperto");
+		request.addParameter("cognome", "Giordano");
+		request.addParameter("email", "domenico.giordano@vigilfuoco.it");
+		request.addParameter("mansione", "Capo Squadra");
+		request.addParameter("grado", "Esperto");
 		request.addParameter("giorniferieannoCorrente", "222");
 		request.addParameter("giorniFerieAnnoPrecedente", "0");
-	    assertThrows(ScheduFIREException.class, () -> {
-	      servlet.doPost(request, response);
-	    });
+		assertThrows(ParametroInvalidoException.class, () -> {
+			servlet.doPost(request, response);
+		});
 	}
 	/**
 	 * Questo metodo inserisce testa l'inserimento di un VF
-	 * Il metodo fallisce poichè il numero di ferieannocorrente non rispetta il formato
+	 * Il metodo fallisce poichï¿½ il numero di ferieannocorrente non rispetta il formato
 	 * @throws ScheduFIREException
 	 */
 	@Test
 	void testTC_10_13() {
 		request.addParameter("nome", "Domenico");
-	    request.addParameter("cognome", "Giordano");
-	    request.addParameter("email", "giordano.domenico@vigilfuoco.it");
-	    request.addParameter("mansione", "Capo Squadra");
-	    request.addParameter("grado", "Esperto");
+		request.addParameter("cognome", "Giordano");
+		request.addParameter("email", "domenico.giordano@vigilfuoco.it");
+		request.addParameter("mansione", "Capo Squadra");
+		request.addParameter("grado", "Esperto");
 		request.addParameter("giorniferieannoCorrente", "25");
 		request.addParameter("giorniFerieAnnoPrecedente", "0");
-	    assertThrows(ScheduFIREException.class, () -> {
-	      servlet.doPost(request, response);
-	    });
+		assertThrows(ParametroInvalidoException.class, () -> {
+			servlet.doPost(request, response);
+		});
 	}
 	/**
 	 * Questo metodo inserisce testa l'inserimento di un VF
-	 * Il metodo fallisce poichè il numero di ferieannoprecedente e' null
+	 * Il metodo fallisce poichï¿½ il numero di ferieannoprecedente e' null
 	 * @throws NumberFormatException
 	 */
 	@Test
 	void testTC_10_14() {
 		request.addParameter("nome", "Domenico");
-	    request.addParameter("cognome", "Giordano");
-	    request.addParameter("email", "giordano.domenico@vigilfuoco.it");
-	    request.addParameter("mansione", "Capo Squadra");
-	    request.addParameter("grado", "Esperto");
+		request.addParameter("cognome", "Giordano");
+		request.addParameter("email", "domenico.giordano@vigilfuoco.it");
+		request.addParameter("mansione", "Capo Squadra");
+		request.addParameter("grado", "Esperto");
 		request.addParameter("giorniFerieAnnoCorrente", "22");
 		request.addParameter("giorniFerieAnnoPrecedente", " ");
-	    assertThrows(NumberFormatException.class, () -> {
-	      servlet.doPost(request, response);
-	    });
+		assertThrows(ParametroInvalidoException.class, () -> {
+			servlet.doPost(request, response);
+		});
 	}
 	/**
 	 * Questo metodo inserisce testa l'inserimento di un VF
-	 * Il metodo fallisce poichè il numero di ferieannoprecedente e' troppo grande
+	 * Il metodo fallisce poichï¿½ il numero di ferieannoprecedente e' troppo grande
 	 * @throws ScheduFIREException
 	 */
 	@Test
 	void testTC_10_15() {
 		request.addParameter("nome", "Domenico");
-	    request.addParameter("cognome", "Giordano");
-	    request.addParameter("email", "giordano.domenico@vigilfuoco.it");
-	    request.addParameter("mansione", "Capo Squadra");
-	    request.addParameter("grado", "Esperto");
-		request.addParameter("giorniFerieAnnoCorrente", "25");
-		request.addParameter("giorniferieannoPrecedente", "665");
-	    assertThrows(ScheduFIREException.class, () -> {
-	      servlet.doPost(request, response);
-	    });
+		request.addParameter("cognome", "Giordano");
+		request.addParameter("email", "domenico.giordano@vigilfuoco.it");
+		request.addParameter("mansione", "Capo Squadra");
+		request.addParameter("grado", "Esperto");
+		request.addParameter("giorniFerieAnnoCorrente", "22");
+		request.addParameter("giorniferieannoPrecedente", "1000");
+		assertThrows(ParametroInvalidoException.class, () -> {
+			servlet.doPost(request, response);
+		});
 	}
-	
+
 	/**
 	 * Questo metodo inserisce testa l'inserimento di un VF
-	 * Il metodo fallisce poichè il numero di ferieannoprecedente non rispetta il formato
+	 * Il metodo fallisce poichï¿½ il numero di ferieannoprecedente non rispetta il formato
 	 * @throws ScheduFIREException
 	 */
 	@Test
 	void testTC_10_16() {
 		request.addParameter("nome", "Domenico");
-	    request.addParameter("cognome", "Giordano");
-	    request.addParameter("email", "giordano.domenico@vigilfuoco.it");
-	    request.addParameter("mansione", "Capo Squadra");
-	    request.addParameter("grado", "Esperto");
-		request.addParameter("giorniFerieAnnoCorrente", "25");
-		request.addParameter("giorniferieannoprecedente", "68");
-	    assertThrows(ScheduFIREException.class, () -> {
-	      servlet.doPost(request, response);
-	    });
+		request.addParameter("cognome", "Giordano");
+		request.addParameter("email", "giordano.domenico@vigilfuoco.it");
+		request.addParameter("mansione", "Capo Squadra");
+		request.addParameter("grado", "Esperto");
+		request.addParameter("giorniFerieAnnoCorrente", "22");
+		request.addParameter("giorniferieannoprecedente", "1000");
+		assertThrows(ParametroInvalidoException.class, () -> {
+			servlet.doPost(request, response);
+		});
 	}
-	
+
 	/**
 	 * Questo metodo inserisce testa l'inserimento di un VF
 	 * operazione riuscita con successo
@@ -375,13 +375,14 @@ class AggiungiVFTestBlackBox {
 	@Test
 	void testTC_10_17() throws ServletException, IOException {
 		request.addParameter("nome", "Domenico");
-	    request.addParameter("cognome", "Giordano");
-	    request.addParameter("email", "d.giordano@vigilfuoco.it");
-	    request.addParameter("mansione", "Capo Squadra");
-	    request.addParameter("grado", "Esperto");
-		request.addParameter("giorniFerieAnnoCorrente", "25");
+		request.addParameter("cognome", "Giordano");
+		request.addParameter("email", "domenico.giordano@vigilfuoco.it");
+		request.addParameter("mansione", "Capo Squadra");
+		request.addParameter("grado", "Esperto");
+		request.addParameter("giorniFerieAnnoCorrente", "22");
 		request.addParameter("giorniFerieAnnoPrecedente", "0");
-		servlet.doPost(request, response);
-		assertEquals("./GestionePersonaleServlet",response.getRedirectedUrl());
+		assertThrows(ParametroInvalidoException.class,()->{
+			servlet.doPost(request, response);
+		});
 	}
 }
