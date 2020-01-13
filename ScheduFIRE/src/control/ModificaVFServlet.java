@@ -142,7 +142,7 @@ public class ModificaVFServlet extends HttpServlet {
 		
 		}
 		
-		session.setAttribute("risultato", "La modifica del Vigile del Fuoco è avvenuto con successo!");
+		session.setAttribute("risultato", "Modifica del Vigile del Fuoco avvenuta con successo!");
 		
 		// Reindirizzamento alla jsp
 		response.sendRedirect("./GestionePersonaleServlet");

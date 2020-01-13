@@ -163,7 +163,7 @@ class ModificaVFServletTestBlackBox {
 	
 		request.addParameter("nomeNuovo", "Domenico");
 		request.addParameter("cognomeNuovo", "Giordano");
-		request.addParameter("emailNuova", "domenico.giordano");
+		request.addParameter("emailNuova", "Nicola.labanca");
 		request.addParameter("mansioneNuova", "");
 		request.addParameter("gradoNuovo", "Esperto");
 		request.addParameter("giorniFerieAnnoCorrenteNuovi", "22");
@@ -247,7 +247,7 @@ class ModificaVFServletTestBlackBox {
 		servlet.doPost(request, response);
 		String risultato = (String) request.getSession().getAttribute("risultato");
 
-		assertEquals("La modifica del Vigile del Fuoco è avvenuto con successo!", risultato);
+		assertEquals("Modifica del Vigile del Fuoco avvenuta con successo!", risultato);
 		
 	}
 

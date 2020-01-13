@@ -51,9 +51,9 @@ class GiorniMalattiaDaoTest {
 		
 		GiorniMalattiaBean malattia = new GiorniMalattiaBean();
 		
-		boolean risultato = GiorniMalattiaDao.addMalattia(malattia);
-		
-		assertEquals(risultato, risultatoAtteso);
+		assertThrows(RuntimeException.class, () -> {
+			GiorniMalattiaDao.addMalattia(malattia);
+		});
 	}
 
 	@Test

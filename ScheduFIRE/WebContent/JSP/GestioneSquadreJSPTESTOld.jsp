@@ -37,15 +37,14 @@ h2 {
 						Disponibile</h5>
 				</div>
 				<form action="ModificaComposizioneSquadreServlet" method="POST">
-<!-- Nel form verranno passate l'email del VF da sostituire con nome "email" e quella del VF da inserire con nome "VFNew" -->
+					<!-- Nel form verranno passate l'email del VF da sostituire con nome "email" e quella del VF da inserire con nome "VFNew" -->
 					<div class="modal-body" id="elenco">
 						<div id="appendiElenco"></div>
 					</div>
 
 					<div class="modal-footer">
 						<button type="button" class="btn btn-outline-danger"
-							
-						data-dismiss="modal">Annulla</button>
+							data-dismiss="modal">Annulla</button>
 						<button class="btn btn-outline-secondary">Aggiungi</button>
 					</div>
 				</form>
@@ -55,19 +54,23 @@ h2 {
 
 	<!-- ELENCO SQUADRE  -->
 
-<%
+	<%
 
 	HashMap<VigileDelFuocoBean, String> squadra = (HashMap<VigileDelFuocoBean, String>) session.getAttribute("squadra");
         if ((boolean) request.getAttribute("nonSalvata")) {
             request.setAttribute("squadra", squadra);
             request.setAttribute("data", (Date) request.getAttribute("data"));
-    %> 
-    <form action="GeneraSquadreServlet" method=post>
-        <input type="Submit"  class="btn btn-success btn-lg" value="Conferma" name="Conferma">
-    </form> <br>
-    <%
+    %>
+	<form action="GeneraSquadreServlet" method=post>
+		<input type="Submit" class="btn btn-success btn-lg" value="Conferma"
+			name="Conferma">
+	</form>
+	<br>
+	<%
         }
-    %> <br><br>
+    %>
+	<br>
+	<br>
 	<div class="d-flex justify-content-center">
 		<img src="../Icon/caserma.png" class="fr">
 		<h2>Sala Operativa</h2>
@@ -96,7 +99,9 @@ h2 {
 				%>
 
 				<tr>
-					<td class="text-center"><img src="Grado/<%=membro.getGrado() %>.png" style="height:25%" onerror="this.parentElement.innerHTML='Non disponibile';"></td>
+					<td class="text-center"><img
+						src="Grado/<%=membro.getGrado() %>.png" style="height: 25%"
+						onerror="this.parentElement.innerHTML='Non disponibile';"></td>
 					<td class="text-center"><%=membro.getNome()%></td>
 					<td class="text-center"><%=membro.getCognome()%></td>
 					<td class="text-center"><%=membro.getMansione()%></td>
@@ -143,7 +148,9 @@ h2 {
 				%>
 
 				<tr>
-					<td class="text-center"><img src="Grado/<%=membro.getGrado() %>.png" style="height:25%" onerror="this.parentElement.innerHTML='Non disponibile';"></td>
+					<td class="text-center"><img
+						src="Grado/<%=membro.getGrado() %>.png" style="height: 25%"
+						onerror="this.parentElement.innerHTML='Non disponibile';"></td>
 					<td class="text-center"><%=membro.getNome()%></td>
 					<td class="text-center"><%=membro.getCognome()%></td>
 					<td class="text-center"><%=membro.getMansione()%></td>
@@ -189,7 +196,9 @@ h2 {
 				%>
 
 				<tr>
-					<td class="text-center"><img src="Grado/<%=membro.getGrado() %>.png" style="height:25%" onerror="this.parentElement.innerHTML='Non disponibile';"></td>
+					<td class="text-center"><img
+						src="Grado/<%=membro.getGrado() %>.png" style="height: 25%"
+						onerror="this.parentElement.innerHTML='Non disponibile';"></td>
 					<td class="text-center"><%=membro.getNome()%></td>
 					<td class="text-center"><%=membro.getCognome()%></td>
 					<td class="text-center"><%=membro.getMansione()%></td>
@@ -235,7 +244,9 @@ h2 {
 				%>
 
 				<tr>
-					<td class="text-center"><img src="Grado/<%=membro.getGrado() %>.png" style="height:25%" onerror="this.parentElement.innerHTML='Non disponibile';"></td>
+					<td class="text-center"><img
+						src="Grado/<%=membro.getGrado() %>.png" style="height: 25%"
+						onerror="this.parentElement.innerHTML='Non disponibile';"></td>
 					<td class="text-center"><%=membro.getNome()%></td>
 					<td class="text-center"><%=membro.getCognome()%></td>
 					<td class="text-center"><%=membro.getMansione()%></td>
@@ -256,11 +267,14 @@ h2 {
 	</div>
 
 
-	<script	src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+	<script
+		src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 	<script src="JS/datePicker.js"></script>
-	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.min.js"></script>
+	<script type="text/javascript"
+		src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.min.js"></script>
 	<script src="https://buttons.github.io/buttons.js"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.js"></script>
+	<script
+		src="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.js"></script>
 
 	<script>
 

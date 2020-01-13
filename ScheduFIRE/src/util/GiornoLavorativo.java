@@ -13,9 +13,9 @@ import java.time.ZoneId;
 public class GiornoLavorativo {
 	
 	/**
-	 * 
-	 * @param data data in cui si vuole sapere il turno
-	 * @return turno
+	 * Serve a capire quale è il turno alla data passata come parametro
+	 * @param data la data in cui si vuole sapere il turno
+	 * @return il nome del turno della data
 	 */
 	 public static String nomeTurnoB(Date data) {
 	        String turno="";

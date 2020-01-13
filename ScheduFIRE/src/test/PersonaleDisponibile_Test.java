@@ -35,7 +35,19 @@ class PersonaleDisponibile_Test {
 	static PersonaleDisponibileServlet servlet;
 	
 	static CapoTurnoBean ct = new CapoTurnoBean();
-	String data = "05-01-2020";
+	String data1 = "05-01-2020";
+	String data2 = "05-02-2020";
+	String data3 = "05-03-2020";
+	String data4 = "05-04-2020";
+	String data5 = "05-05-2020";
+	String data6 = "05-06-2020";
+	String data7 = "05-07-2020";
+	String data8 = "05-08-2020";
+	String data9 = "05-09-2020";
+	String data10 = "05-10-2020";
+	String data11 = "05-11-2020";
+	String data12 = "05-12-2020";
+	
 	
 	@BeforeEach
 	void setUp() throws ServletException, IOException {
@@ -84,7 +96,7 @@ class PersonaleDisponibile_Test {
 		request.getSession().setAttribute("JSON", 1);
 		request.getSession().setAttribute("mese", 1);
 		request.getSession().setAttribute("anno", 2020);
-		request.setParameter("data", data);
+		request.setParameter("data", data1);
 		servlet.doPost(request, response);
 		assertEquals("JSP/PersonaleDisponibileJSP.jsp",
 				response.getForwardedUrl());
@@ -97,7 +109,7 @@ class PersonaleDisponibile_Test {
 		request.getSession().setAttribute("JSON", 1);
 		request.getSession().setAttribute("mese", 1);
 		request.getSession().setAttribute("anno", 2020);
-		request.setParameter("data", data);
+		request.setParameter("data", data2);
 		request.setParameter("ordinamento","nome");
 		servlet.doPost(request, response);
 		assertEquals("JSP/PersonaleDisponibileJSP.jsp",
@@ -111,7 +123,7 @@ class PersonaleDisponibile_Test {
 		request.getSession().setAttribute("JSON", 1);
 		request.getSession().setAttribute("mese", 1);
 		request.getSession().setAttribute("anno", 2020);
-		request.setParameter("data", data);
+		request.setParameter("data", data3);
 		request.setParameter("ordinamento","cognome");
 		servlet.doPost(request, response);
 		assertEquals("JSP/PersonaleDisponibileJSP.jsp",
@@ -125,7 +137,7 @@ class PersonaleDisponibile_Test {
 		request.getSession().setAttribute("JSON", 1);
 		request.getSession().setAttribute("mese", 1);
 		request.getSession().setAttribute("anno", 2020);
-		request.setParameter("data", data);
+		request.setParameter("data", data4);
 		request.setParameter("ordinamento","grado");
 		servlet.doPost(request, response);
 		assertEquals("JSP/PersonaleDisponibileJSP.jsp",
@@ -139,17 +151,106 @@ class PersonaleDisponibile_Test {
 		request.getSession().setAttribute("JSON", 1);
 		request.getSession().setAttribute("mese", 1);
 		request.getSession().setAttribute("anno", 2020);
-		request.setParameter("data", data);
+		request.setParameter("data", data5);
 		request.setParameter("ordinamento","disponibilita");
 		servlet.doPost(request, response);
 		assertEquals("JSP/PersonaleDisponibileJSP.jsp",
 				response.getForwardedUrl());
 	}
 	
-
-	
 	@Test
 	void test0_7() throws ServletException, IOException {
+		request.setSession(session);
+		request.getSession().setAttribute("ruolo", "capoturno");
+		request.getSession().setAttribute("JSON", 1);
+		request.getSession().setAttribute("mese", 1);
+		request.getSession().setAttribute("anno", 2020);
+		request.setParameter("data", data6);
+		servlet.doPost(request, response);
+		assertEquals("JSP/PersonaleDisponibileJSP.jsp",
+				response.getForwardedUrl());
+	}
+	
+	@Test
+	void test0_8() throws ServletException, IOException {
+		request.setSession(session);
+		request.getSession().setAttribute("ruolo", "capoturno");
+		request.getSession().setAttribute("JSON", 1);
+		request.getSession().setAttribute("mese", 1);
+		request.getSession().setAttribute("anno", 2020);
+		request.setParameter("data", data7);
+		servlet.doPost(request, response);
+		assertEquals("JSP/PersonaleDisponibileJSP.jsp",
+				response.getForwardedUrl());
+	}
+	
+	@Test
+	void test0_9() throws ServletException, IOException {
+		request.setSession(session);
+		request.getSession().setAttribute("ruolo", "capoturno");
+		request.getSession().setAttribute("JSON", 1);
+		request.getSession().setAttribute("mese", 1);
+		request.getSession().setAttribute("anno", 2020);
+		request.setParameter("data", data8);
+		servlet.doPost(request, response);
+		assertEquals("JSP/PersonaleDisponibileJSP.jsp",
+				response.getForwardedUrl());
+	}
+	
+	@Test
+	void test1_0() throws ServletException, IOException {
+		request.setSession(session);
+		request.getSession().setAttribute("ruolo", "capoturno");
+		request.getSession().setAttribute("JSON", 1);
+		request.getSession().setAttribute("mese", 1);
+		request.getSession().setAttribute("anno", 2020);
+		request.setParameter("data", data9);
+		servlet.doPost(request, response);
+		assertEquals("JSP/PersonaleDisponibileJSP.jsp",
+				response.getForwardedUrl());
+	}
+	
+	@Test
+	void test1_1() throws ServletException, IOException {
+		request.setSession(session);
+		request.getSession().setAttribute("ruolo", "capoturno");
+		request.getSession().setAttribute("JSON", 1);
+		request.getSession().setAttribute("mese", 1);
+		request.getSession().setAttribute("anno", 2020);
+		request.setParameter("data", data10);
+		servlet.doPost(request, response);
+		assertEquals("JSP/PersonaleDisponibileJSP.jsp",
+				response.getForwardedUrl());
+	}
+	@Test
+	void test1_2() throws ServletException, IOException {
+		request.setSession(session);
+		request.getSession().setAttribute("ruolo", "capoturno");
+		request.getSession().setAttribute("JSON", 1);
+		request.getSession().setAttribute("mese", 1);
+		request.getSession().setAttribute("anno", 2020);
+		request.setParameter("data", data11);
+		servlet.doPost(request, response);
+		assertEquals("JSP/PersonaleDisponibileJSP.jsp",
+				response.getForwardedUrl());
+	}
+	
+	@Test
+	void test1_3() throws ServletException, IOException {
+		request.setSession(session);
+		request.getSession().setAttribute("ruolo", "capoturno");
+		request.getSession().setAttribute("JSON", 1);
+		request.getSession().setAttribute("mese", 1);
+		request.getSession().setAttribute("anno", 2020);
+		request.setParameter("data", data12);
+		servlet.doPost(request, response);
+		assertEquals("JSP/PersonaleDisponibileJSP.jsp",
+				response.getForwardedUrl());
+	}
+	
+
+	@Test
+	void test1_5() throws ServletException, IOException {
 		request.setSession(session);
 		request.setParameter("JSON", "json");
 		request.setParameter("mese","1");
