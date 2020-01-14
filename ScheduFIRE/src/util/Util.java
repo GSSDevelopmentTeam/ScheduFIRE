@@ -158,7 +158,6 @@ public class Util {
 		List<VigileDelFuocoBean> disponibili = VigileDelFuocoDao.getDisponibili(data);
 
 		if(!ComponenteDellaSquadraDao.removeComponenti(lista) || 
-
 				!VigileDelFuocoDao.removeCaricoLavorativo(squadra)) {
 			throw new ScheduFIREException("Errore nelle query di sostituzione ferie");
 		}
@@ -175,6 +174,16 @@ public class Util {
 			if(rimuovere.getEmail().equals(mailVFDaSostituire)) {
 				disponibili.remove(rimuovere);
 				break;
+			}
+		}
+		
+		Iterator iter = disponibili.iterator();
+		while(iter.hasNext()) {
+			VigileDelFuocoBean vigile = (VigileDelFuocoBean) iter.next();
+			for(ComponenteDellaSquadraBean componente : lista) {
+				if(vigile.getEmail().equals(componente.getEmailVF())) {
+					iter.remove();
+				}
 			}
 		}
 
@@ -196,7 +205,6 @@ public class Util {
 			if(sostituto.getMansione().equals(VigileDelFuocoDao.ottieni(mailVFDaSostituire).getMansione()) &&
 					!lista.contains(new ComponenteDellaSquadraBean(squadraVF, sostituto.getEmail(), data))) {
 				lista.add(new ComponenteDellaSquadraBean(squadraVF, sostituto.getEmail(), data));
-
 				squadra.put(sostituto, squadraVF);
 				break;
 			}
