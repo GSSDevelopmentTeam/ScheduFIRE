@@ -77,6 +77,8 @@ public class ModificaComposizioneSquadreServlet extends HttpServlet {
 			}
 			sessione.setAttribute("squadra", squadra);
 			request.setAttribute("data", data);
+			ArrayList<VigileDelFuocoBean> vigiliDisponibili=VigileDelFuocoDao.getDisponibili(Date.valueOf(request.getParameter("data")));
+			request.setAttribute("vigiliDisponibili", vigiliDisponibili);
 			request.getRequestDispatcher("JSP/SquadraJSP.jsp").forward(request, response);
 			return;
 
@@ -107,7 +109,7 @@ public class ModificaComposizioneSquadreServlet extends HttpServlet {
 			default:
 				throw new ScheduFIREException("C'e stato un errore. Riprova pi� tardi.");
 			}
-			
+
 			Iterator i = squadra.entrySet().iterator();
 
 			while(i.hasNext()) {
@@ -136,6 +138,8 @@ public class ModificaComposizioneSquadreServlet extends HttpServlet {
 			case 3:
 				sessione.setAttribute("squadra", squadra);
 				request.setAttribute("data", Date.valueOf(request.getParameter("data")));
+				ArrayList<VigileDelFuocoBean> vigiliDisponibili=VigileDelFuocoDao.getDisponibili(Date.valueOf(request.getParameter("data")));
+				request.setAttribute("vigiliDisponibili", vigiliDisponibili);
 				request.getRequestDispatcher("JSP/SquadraJSP.jsp").forward(request, response);
 				break;
 			}
