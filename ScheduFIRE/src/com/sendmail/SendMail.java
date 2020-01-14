@@ -95,11 +95,11 @@ public class SendMail {
 	}
 
 	private static String tr_pari(String nome,String cognome,String squadra) {
-		return "<tr>"+td_pari(nome)+td_pari(cognome)+td_pari(squadra)+"</tr>";
+		return "<tr>"+td_pari(cognome)+td_pari(nome)+td_pari(squadra)+"</tr>";
 	}
 
 	private static String tr_dispari(String nome,String cognome,String squadra) {
-		return "<tr>"+td_dispari(nome)+td_dispari(cognome)+td_dispari(squadra)+"</tr>";
+		return "<tr>"+td_dispari(cognome)+td_dispari(nome)+td_dispari(squadra)+"</tr>";
 	}
 	private static String tabella(ArrayList<String> tdList) {
 		String tabella="<table "+CSS_table+">" + 
