@@ -1,10 +1,8 @@
 package util;
 
-import java.awt.event.ComponentEvent;
 import java.sql.Date;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Base64;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
@@ -27,11 +25,17 @@ import model.dao.*;
  * La classe Util contiene diversi metodi statici utili per essere chiamati
  * da diverse classi del sistema. 
  * @author Emanuele Bombardelli
+ * @author Alfredo Giuliano
  *
  */
 public class Util {
 
-
+	/**
+	 * Il metodo genera le squadre alla data passata come parametro
+	 * @param data la data in cui generare le squadre
+	 * @return la lista di ComponenteDellaSquadraBean che formano le squadre
+	 * @throws NotEnoughMembersException se il personale è insufficiente
+	 */
 	public static List<ComponenteDellaSquadraBean> generaSquadra(Date data) throws NotEnoughMembersException {
 		//Prendiamo i vigili disponibili
 		List<VigileDelFuocoBean> disponibili = VigileDelFuocoDao.getDisponibili(data);
@@ -135,7 +139,14 @@ public class Util {
 
 		return toReturn;
 	}
-
+	
+	
+	/**
+	 * Il metodo sostituisce il vigile che si trova in una squadra alla data passata come parametro
+	 * @param data la data in cui sostituire il vigile
+	 * @param mailVFDaSostituire la mail del vigile da sostituire
+	 * @throws ScheduFIREException in caso ci siano problemi a rimuovere il vigile viene tirata un eccezione
+	 */
 	public static void sostituisciVigile(Date data, String mailVFDaSostituire) throws ScheduFIREException {
 		//Prendo componenti e mappa delle squadre per la data in questione e li rimuovo 
 		//dal DB prima di modificarli
@@ -200,7 +211,11 @@ public class Util {
 
 	}
 
-
+	/**
+	 * Il metodo restituisce la squadra alla data passata come parametro
+	 * @param data la data di cui si vuole ottenere le squadre
+	 * @return un HashMap di squadre 
+	 */
 	public static HashMap<VigileDelFuocoBean, String> ottieniSquadra(Date data) {
 		List<ComponenteDellaSquadraBean> lista = ComponenteDellaSquadraDao.getComponenti(data);
 		HashMap<VigileDelFuocoBean, String>  squadra = new HashMap<>();
@@ -220,7 +235,11 @@ public class Util {
 		return componenti;
 	}
 
-
+	/**
+	 * Il metodo controlla se l utente in sessione è loggato
+	 * @param request la richiesta passata dalla servlet
+	 * @throws AutenticazioneException se l utente non è autenticato 
+	 */
 	public static void isAutenticato(HttpServletRequest request) throws AutenticazioneException {
 		if(request.getSession(false)==null) {
 			request.getSession().invalidate();
@@ -232,6 +251,11 @@ public class Util {
 		
 	}
 
+	/**
+	 * Il metodo controlla se l utente in sessione è loggato ed è capoturno
+	 * @param request la richiesta passata dalla servlet
+	 * @throws AutenticazioneException se l utente non è capoturno 
+	 */
 	public static void isCapoTurno(HttpServletRequest request) throws AutenticazioneException {
 		if(request.getSession(false)==null) {
 			request.getSession().invalidate();
@@ -295,6 +319,11 @@ public class Util {
 
 	}
 
+	/**
+	 * Prende una lista di vigili e la riordina per mansione
+	 * @param lista	la lista di vigili da riordinare
+	 * @return la lista di vigili ordinata per mansione
+	 */
 	public static List<VigileDelFuocoBean> compareVigile(List<VigileDelFuocoBean> lista) {
 
 		List<VigileDelFuocoBean> listaC = new ArrayList<VigileDelFuocoBean>(lista);

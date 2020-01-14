@@ -1,13 +1,14 @@
 @charset "ISO-8859-1";
+
 * {
-  box-sizing: border-box;
+	box-sizing: border-box;
 }
 
 body {
 	background-image: url("../IMG/DSC_0066.png");
-	background-size:cover;
-	background-repeat:no-repeat;
-} 
+	background-size: cover;
+	background-repeat: no-repeat;
+}
 
 /*'FontAwesome'!important*/
 b {
@@ -24,7 +25,7 @@ b {
 	text-align: center;
 	display: inline-block;
 	font-size: 16px;
-	font-weight:bold;
+	font-weight: bold;
 	border-radius: 7px;
 	box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0
 		rgba(0, 0, 0, 0.19);
@@ -37,7 +38,7 @@ b {
 	font-weight: bold;
 }
 
-.inversesubmit{
+.inversesubmit {
 	background-color: white;
 	color: #b60000;
 	font-weight: bold;
@@ -55,6 +56,7 @@ b {
 	background-color: #b60000;
 	color: white;
 }
+
 .tb {
 	margin-top: 35px !important;
 	display: table;
@@ -62,8 +64,8 @@ b {
 	padding-left: 5%;
 	padding-right: 5%;
 	background-color: #FFFFFF;
-	border:inset;
-	border-color:#575757;
+	border: inset;
+	border-color: #575757;
 	border-width: 0.5px;
 	border-radius: 5%;
 	float: left;
@@ -82,7 +84,7 @@ b {
 	display: table-cell;
 	vertical-align: center;
 	padding: 3px;
-	text-size:13px;
+	text-size: 13px;
 }
 
 .center {
@@ -106,7 +108,7 @@ b {
 .icon {
 	padding: 10px;
 	background: #b60000;
-	color:#FFFFFF;
+	color: #FFFFFF;
 	min-width: 50px;
 	text-align: center;
 	box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0
@@ -128,18 +130,21 @@ b {
 }
 
 /*posizione tabella*/
- .w3-content, .w3-auto {
+.w3-content, .w3-auto {
 	margin-left: auto;
 	margin-right: auto;
 	max-width: 1140px
 }
+
 @media ( max-width :1205px) {
-	body{ 
+	body {
+		
 	}
 	.w3-auto {
 		max-width: 95%
 	}
 }
+
 @media ( max-width :992px) {
 	.w3-sidebar.w3-collapse {
 		display: none
@@ -161,63 +166,61 @@ b {
 	-ms-transform: translate(-50%, -50%)
 }
 
-.pass{
-	background-color:#FFFFFF;
-	color:#b60000; 
+.pass {
+	background-color: #FFFFFF;
+	color: #b60000;
 	font-weight: bold;
-	border:none;
+	border: none;
 	text-decoration: underline;
-	font-size:17px;
-	cursor:pointer;
+	font-size: 17px;
+	cursor: pointer;
 }
 
 /*Recupera Password*/
-
 .container {
-  padding: 16px;
+	padding: 16px;
 }
-
 
 /* The Modal (background) */
 .modal {
-  display: none; /* Hidden by default */
-  position: fixed; /* Stay in place */
-  z-index: 1; /* Sit on top */
-  left: 0;
-  top: 0;
-  width: 100%; /* Full width */
-  height: 100%; /* Full height */
-  overflow: auto; /* Enable scroll if needed */
-  background-color: rgb(0,0,0); /* Fallback color */
-  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
-  padding-top: 60px;
+	display: none; /* Hidden by default */
+	position: fixed; /* Stay in place */
+	z-index: 1; /* Sit on top */
+	left: 0;
+	top: 0;
+	width: 100%; /* Full width */
+	height: 100%; /* Full height */
+	overflow: auto; /* Enable scroll if needed */
+	background-color: rgb(0, 0, 0); /* Fallback color */
+	background-color: rgba(0, 0, 0, 0.4); /* Black w/ opacity */
+	padding-top: 60px;
 }
 
 /* Modal Content/Box */
 .modal-content {
-  background-color: #fefefe;
-  margin: 5% auto 15% auto; /* 5% from the top, 15% from the bottom and centered */
-  width: 80%; /* Could be more or less, depending on screen size */
+	background-color: #fefefe;
+	margin: 5% auto 15% auto;
+	/* 5% from the top, 15% from the bottom and centered */
+	width: 80%; /* Could be more or less, depending on screen size */
 }
-
 
 /* Change styles for span and cancel button on extra small screens */
 @media screen and (max-width: 300px) {
-  span.psw {
-     display: block;
-     float: none;
-  }
-  .cancelbtn {
-     width: 100%;
-  }
+	span.psw {
+		display: block;
+		float: none;
+	}
+	.cancelbtn {
+		width: 100%;
+	}
 }
 
 .tbPss {
-	padding:25px;
+	padding: 25px;
 	display: table;
 	background-color: #FFFFFF;
-	border:inset;
-	border-color:#575757;
+	border: inset;
+	border-color: #575757;
 	border-width: 0.5px;
 	border-radius: 15%;
 	float: left;

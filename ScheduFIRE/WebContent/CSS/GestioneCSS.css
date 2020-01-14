@@ -1,11 +1,9 @@
 @charset "ISO-8859-1";
+
 div.month-item-weekdays-row {
-	  min-width: 280px !important
-	
-	}
-	
-	
-	div.container__days {
-	  min-width: 270px !important
-	
-	}
+	min-width: 280px !important
+}
+
+div.container__days {
+	min-width: 270px !important
+}

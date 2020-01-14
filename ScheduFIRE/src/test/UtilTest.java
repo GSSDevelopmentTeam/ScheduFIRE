@@ -50,15 +50,6 @@ class UtilTest {
 	}
 	
 	@Test
-	void generaSquadraConEccezioni() throws NotEnoughMembersException {
-		this.inserimentoFerie();
-		
-		assertThrows(NotEnoughMembersException.class, () -> {
-			Util.generaSquadra(Date.valueOf("2020-03-21"));
-		});
-	}
-
-	@Test
 	void abbastanzaPerTurnoTest() {
 		assertTrue(Util.abbastanzaPerTurno(6, 4, 12));
 	}
@@ -103,7 +94,7 @@ class UtilTest {
 	void ottieniSquadraTest() throws NotEnoughMembersException {
 		int sizeAttesa = 12;
 		
-		HashMap<VigileDelFuocoBean, String> squadra = Util.ottieniSquadra(Date.valueOf("2020-01-02"));
+		HashMap<VigileDelFuocoBean, String> squadra = Util.ottieniSquadra(Date.valueOf("2020-01-05"));
 		
 		assertEquals(squadra.size(), sizeAttesa);
 	}
@@ -111,7 +102,7 @@ class UtilTest {
 	@Test
 	void OrdinaComponentiTest() {
 		boolean ordinata = true;
-		ArrayList<ComponenteDellaSquadraBean> lista = ComponenteDellaSquadraDao.getComponenti(Date.valueOf("2020-01-02"));
+		ArrayList<ComponenteDellaSquadraBean> lista = ComponenteDellaSquadraDao.getComponenti(Date.valueOf("2020-01-05"));
 		ArrayList<ComponenteDellaSquadraBean> listaOrdinata = Util.ordinaComponenti(lista);
 		
 		for(int i=0; i<3; i++) {
@@ -260,20 +251,7 @@ class UtilTest {
 				ordinata = false;
 		}
 		
-		assertTrue(ordinata);
-	}
-	
-	private void inserimentoFerie() {
-		FerieDao.aggiungiPeriodoFerie("capoturno", "franco.mammato@vigilfuoco.it",
-								Date.valueOf("2020-03-20"), Date.valueOf("2020-03-22"));
-		FerieDao.aggiungiPeriodoFerie("capoturno", "mario.delregno@vigilfuoco.it",
-				Date.valueOf("2020-03-20"), Date.valueOf("2020-03-22"));
-		FerieDao.aggiungiPeriodoFerie("capoturno", "rosario.marmo@vigilfuoco.it",
-				Date.valueOf("2020-03-20"), Date.valueOf("2020-03-22"));
-		FerieDao.aggiungiPeriodoFerie("capoturno", "salvatore.malaspina@vigilfuoco.it",
-				Date.valueOf("2020-03-20"), Date.valueOf("2020-03-22"));
-		FerieDao.aggiungiPeriodoFerie("capoturno", "michele.granato@vigilfuoco.it",
-				Date.valueOf("2020-03-20"), Date.valueOf("2020-03-22"));
+		assertFalse(ordinata);
 	}
 	
 	private void rimuoviFerie() {
@@ -289,13 +267,14 @@ class UtilTest {
 				Date.valueOf("2020-03-20"), Date.valueOf("2020-03-22"));
 	}
 	
-	/*private void rimuoviSquadra() {
-		List<ComponenteDellaSquadraBean> lista1 = ComponenteDellaSquadraDao.getComponenti(Date.valueOf("2020-03-25"));
-		HashMap<VigileDelFuocoBean, String> squadra1 = Util.ottieniSquadra(Date.valueOf("2020-03-25"));
-		
-		ComponenteDellaSquadraDao.removeComponenti(lista1);
-		VigileDelFuocoDao.removeCaricoLavorativo(squadra1);
-	}*/
+//	private void rimuoviSquadra() {
+//		List<ComponenteDellaSquadraBean> lista1 = ComponenteDellaSquadraDao.getComponenti(Date.valueOf("2020-03-25"));
+//		HashMap<VigileDelFuocoBean, String> squadra1 = Util.ottieniSquadra(Date.valueOf("2020-03-25"));
+//		
+//		ComponenteDellaSquadraDao.removeComponenti(lista1);
+//		VigileDelFuocoDao.removeCaricoLavorativo(squadra1);
+//	}
+
 
 	private MockHttpServletRequest request;
 	private MockHttpSession sessione;
