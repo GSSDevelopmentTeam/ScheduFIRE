@@ -113,7 +113,7 @@ class VigileDelFuocoDao_Test {
 	@Test
 	void testSalva2() {		
 		boolean atteso = true;
-		vf.setEmail("email");
+		vf.setEmail("fabrizio.romano@vigilfuoco.it");
 		boolean risultato = VigileDelFuocoDao.salva(vf);
 		vf.setEmail(email);
 		assertEquals(atteso,risultato);
