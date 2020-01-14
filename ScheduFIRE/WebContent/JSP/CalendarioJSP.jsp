@@ -239,7 +239,7 @@
 	<%if (request.getParameter("giorno")!=null){
 	%>
 	$( document ).ready(function() {
-	    dayClicked(<%=request.getParameter("giorno")%>);
+	    dayClicked("<%=request.getParameter("giorno")%>");
 	    imgMoonSun();
 	});
 		
