@@ -71,6 +71,10 @@ class AggiungiMalattiaServletTest {
 	
 	@Test
 	void aggiuntaMalattia() throws ServletException, IOException {
+		request.setSession(session);
+		request.getSession().setAttribute("ruolo", "capoturno");
+		request.getSession().setAttribute("notifiche", "notifiche");
+		request.getSession().setAttribute("notifiche", "notifiche");
 		request.setParameter("JSON", "aaa");
 		request.setParameter("inserisci", "true");
 		request.setParameter("emailVF", "mario.buonomo@vigilfuoco.it");
@@ -79,6 +83,54 @@ class AggiungiMalattiaServletTest {
 		
 		servlet.doGet(request, response);
 		assertEquals("application/json", response.getContentType());
+	}
+	
+	@Test
+	void aggiuntaMalattiaJSONtrueInserisciNull() throws ServletException, IOException {
+		request.setSession(session);
+		request.getSession().setAttribute("ruolo", "capoturno");
+		request.getSession().setAttribute("notifiche", "notifiche");
+		request.getSession().setAttribute("notifiche", "notifiche");
+		request.setParameter("JSON", "true");
+		request.getSession().setAttribute("inserisci", null);
+		request.setParameter("emailVF", "mario.buonomo@vigilfuoco.it");
+		request.setParameter("dataInizio", "15-05-2020");
+		request.setParameter("dataFine", "30-05-2020");
+		
+		servlet.doGet(request, response);
+		assertEquals(null, response.getContentType());
+	}
+	
+	@Test
+	void aggiuntaMalattiaJSONnullInseriscitrue() throws ServletException, IOException {
+		request.setSession(session);
+		request.getSession().setAttribute("ruolo", "capoturno");
+		request.getSession().setAttribute("notifiche", "notifiche");
+		request.getSession().setAttribute("notifiche", "notifiche");
+		request.getSession().setAttribute("JSON", null);
+		request.getSession().setAttribute("inserisci", "true");
+		request.setParameter("emailVF", "mario.buonomo@vigilfuoco.it");
+		request.setParameter("dataInizio", "15-05-2020");
+		request.setParameter("dataFine", "30-05-2020");
+		
+		servlet.doGet(request, response);
+		assertEquals(null, response.getContentType());
+	}
+	
+	@Test
+	void aggiuntaMalattiaJSONtrueInseriscitrue() throws ServletException, IOException {
+		request.setSession(session);
+		request.getSession().setAttribute("ruolo", "capoturno");
+		request.getSession().setAttribute("notifiche", "notifiche");
+		request.getSession().setAttribute("notifiche", "notifiche");
+		request.setParameter("inserisci", "true");
+		request.setParameter("inserisci", "true");
+		request.setParameter("emailVF", "mario.buonomo@vigilfuoco.it");
+		request.setParameter("dataInizio", "15-05-2020");
+		request.setParameter("dataFine", "30-05-2020");
+		
+		servlet.doGet(request, response);
+		assertEquals(null, response.getContentType());
 	}
 	
 	@Test 

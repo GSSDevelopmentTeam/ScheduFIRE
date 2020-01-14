@@ -343,9 +343,14 @@ class GestioneFerieServletTest {
 	void tearDown() throws Exception {
 		FerieDao.rimuoviPeriodoFerie("luca.raimondi@vigilfuoco.it", 
 				Date.valueOf("2020-03-23"), Date.valueOf("2020-03-25"));
-		
+		FerieDao.rimuoviPeriodoFerie("luca.raimondi@vigilfuoco.it", 
+				Date.valueOf("2020-03-02"), Date.valueOf("2020-03-02"));
+		FerieDao.rimuoviPeriodoFerie("luca.raimondi@vigilfuoco.it", 
+				Date.valueOf("2020-03-06"), Date.valueOf("2020-03-20"));
 		GiorniMalattiaDao.rimuoviPeriodoDiMalattia("luca.raimondi@vigilfuoco.it", 
 									malattia.getDataInizio(), malattia.getDataFine());
+		GiorniMalattiaDao.rimuoviPeriodoDiMalattia("luca.raimondi@vigilfuoco.it", 
+				malattia2.getDataInizio(), malattia2.getDataFine());
 	}
 	
 	private void inserimentoMalattie(GiorniMalattiaBean giorniMalattia) {

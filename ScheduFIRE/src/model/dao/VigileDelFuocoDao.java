@@ -874,7 +874,7 @@ public class VigileDelFuocoDao {
 	public static ArrayList<VigileDelFuocoBean> ottieniListaVF() {
 		
 		//Instanziazione variabili utili;
-		String nome, cognome, email, mansione;
+		String nome, cognome, email, mansione, grado, turno, username;
 		int ferieAnnoCorrente, ferieAnnoPrecedente;
 		PreparedStatement ps;
 		ResultSet rs;
@@ -906,6 +906,10 @@ public class VigileDelFuocoDao {
 				mansione = rs.getString("mansione");
 				ferieAnnoCorrente = rs.getInt("giorniferieannocorrente");
 				ferieAnnoPrecedente = rs.getInt("giorniferieannoprecedente");
+				grado = rs.getString("grado");
+				turno = rs.getString("turno");
+				username = rs.getString("username");
+				
 				
 				//Aggiunta dati del VF
 				vigile.setNome(nome);
@@ -914,6 +918,9 @@ public class VigileDelFuocoDao {
 				vigile.setMansione(mansione);
 				vigile.setGiorniFerieAnnoCorrente(ferieAnnoCorrente);
 				vigile.setGiorniFerieAnnoPrecedente(ferieAnnoPrecedente);
+				vigile.setGrado(grado);
+				vigile.setTurno(turno);
+				vigile.setUsername(username);
 				
 				//Aggiunta del VF in lista di ritorno
 				listaVigili.add(vigile);
@@ -931,6 +938,9 @@ public class VigileDelFuocoDao {
 				mansione = rs.getString("mansione");
 				ferieAnnoCorrente = rs.getInt("giorniferieannocorrente");
 				ferieAnnoPrecedente = rs.getInt("giorniferieannoprecedente");
+				grado = rs.getString("grado");
+				turno = rs.getString("turno");
+				username = rs.getString("username");
 				
 				vigile.setNome(nome);
 				vigile.setCognome(cognome);
@@ -938,6 +948,9 @@ public class VigileDelFuocoDao {
 				vigile.setMansione(mansione);
 				vigile.setGiorniFerieAnnoCorrente(ferieAnnoCorrente);
 				vigile.setGiorniFerieAnnoPrecedente(ferieAnnoPrecedente);
+				vigile.setGrado(grado);
+				vigile.setTurno(turno);
+				vigile.setUsername(username);
 				
 				listaVigili.add(vigile);
 			}
@@ -954,6 +967,9 @@ public class VigileDelFuocoDao {
 				mansione = rs.getString("mansione");
 				ferieAnnoCorrente = rs.getInt("giorniferieannocorrente");
 				ferieAnnoPrecedente = rs.getInt("giorniferieannoprecedente");
+				grado = rs.getString("grado");
+				turno = rs.getString("turno");
+				username = rs.getString("username");
 				
 				vigile.setNome(nome);
 				vigile.setCognome(cognome);
@@ -961,6 +977,9 @@ public class VigileDelFuocoDao {
 				vigile.setMansione(mansione);
 				vigile.setGiorniFerieAnnoCorrente(ferieAnnoCorrente);
 				vigile.setGiorniFerieAnnoPrecedente(ferieAnnoPrecedente);
+				vigile.setGrado(grado);
+				vigile.setTurno(turno);
+				vigile.setUsername(username);
 				
 				listaVigili.add(vigile);
 			}

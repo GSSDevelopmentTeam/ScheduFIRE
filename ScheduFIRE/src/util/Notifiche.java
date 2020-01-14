@@ -212,7 +212,7 @@ public class Notifiche {
 		if(!conta(disponibili)) {
 			Date data = new Date(System.currentTimeMillis());
 			listaNotifiche.add(new Notifica(3, "Il personale disponibile il " + 
-					data.toString() + " non ï¿½ sufficiente per creare il turno.", "/GestionePersonaleServlet",generateId()));
+					data.toString() + " non e' sufficiente per creare il turno.", "/GestionePersonaleServlet",generateId()));
 		}
 	}
 

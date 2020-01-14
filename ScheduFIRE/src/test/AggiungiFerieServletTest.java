@@ -21,6 +21,7 @@ import control.AutenticazioneException;
 import control.ScheduFIREException;
 
 import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 
 
@@ -28,7 +29,9 @@ import junit.framework.TestCase;
 import model.ConnessioneDB;
 import model.bean.CapoTurnoBean;
 import model.bean.ComponenteDellaSquadraBean;
+import model.bean.GiorniMalattiaBean;
 import model.dao.FerieDao;
+import model.dao.GiorniMalattiaDao;
 import model.dao.VigileDelFuocoDao;
 import util.Notifiche;
 
@@ -90,6 +93,57 @@ class AggiungiFerieServletTest extends TestCase{
 		VigileDelFuocoDao.aggiornaFeriePrecedenti("michele.granato@vigilfuoco.it", 0);
 		VigileDelFuocoDao.aggiornaFerieCorrenti("michele.granato@vigilfuoco.it", 0);
 	}
+	
+	@BeforeAll
+	static void setUpBean() throws Exception {
+		malattia = new GiorniMalattiaBean();
+		malattia.setDataInizio(Date.valueOf("2020-03-15"));
+		malattia.setDataFine(Date.valueOf("2020-03-20"));
+		malattia.setEmailCT("capoturno");
+		malattia.setEmailVF("rosario.marmo@vigilfuoco.it");
+		
+		malattia2 = new GiorniMalattiaBean();
+		malattia2.setDataInizio(Date.valueOf("2020-03-15"));
+		malattia2.setDataFine(Date.valueOf("2020-03-20"));
+		malattia2.setEmailCT("capoturno");
+		malattia2.setEmailVF("salvatore.malaspina@vigilfuoco.it");
+		
+		malattia3 = new GiorniMalattiaBean();
+		malattia3.setDataInizio(Date.valueOf("2020-03-15"));
+		malattia3.setDataFine(Date.valueOf("2020-03-20"));
+		malattia3.setEmailCT("capoturno");
+		malattia3.setEmailVF("michele73.sica@vigilfuoco.it");
+		
+		malattia4 = new GiorniMalattiaBean();
+		malattia4.setDataInizio(Date.valueOf("2020-03-15"));
+		malattia4.setDataFine(Date.valueOf("2020-03-20"));
+		malattia4.setEmailCT("capoturno");
+		malattia4.setEmailVF("michele.granato@vigilfuoco.it");
+		
+		malattia5 = new GiorniMalattiaBean();
+		malattia5.setDataInizio(Date.valueOf("2020-03-15"));
+		malattia5.setDataFine(Date.valueOf("2020-03-20"));
+		malattia5.setEmailCT("capoturno");
+		malattia5.setEmailVF("mario.delregno@vigilfuoco.it");
+		
+		malattia6 = new GiorniMalattiaBean();
+		malattia6.setDataInizio(Date.valueOf("2020-03-15"));
+		malattia6.setDataFine(Date.valueOf("2020-03-20"));
+		malattia6.setEmailCT("capoturno");
+		malattia6.setEmailVF("alberto.frosinone@vigilfuoco.it");
+		
+		malattia7 = new GiorniMalattiaBean();
+		malattia7.setDataInizio(Date.valueOf("2020-03-15"));
+		malattia7.setDataFine(Date.valueOf("2020-03-20"));
+		malattia7.setEmailCT("capoturno");
+		malattia7.setEmailVF("franco.mammato@vigilfuoco.it");
+		
+		malattia8 = new GiorniMalattiaBean();
+		malattia8.setDataInizio(Date.valueOf("2020-03-15"));
+		malattia8.setDataFine(Date.valueOf("2020-03-20"));
+		malattia8.setEmailCT("capoturno");
+		malattia8.setEmailVF("domenico.giordano@vigilfuoco.it");
+	}
 
 
 	@Test
@@ -118,7 +172,7 @@ class AggiungiFerieServletTest extends TestCase{
 		request.setParameter("dataFinale", "20-03-2020");
 		session.setAttribute("capoturno", capoturno);
 
-		servlet.doPost(request, response);
+		servlet.doGet(request, response);
 		assertEquals("application/json", response.getContentType());
 	}
 
@@ -165,6 +219,28 @@ class AggiungiFerieServletTest extends TestCase{
 		Date dataFine = Date.valueOf("2020-03-08");
 		FerieDao.rimuoviPeriodoFerie("alberto.barbarulo@vigilfuoco.it", dataInizio, dataFine);
 		FerieDao.rimuoviPeriodoFerie("carmine.sarraino@vigilfuoco.it", dataInizio, dataFine);
+
+	}
+	
+	@Test
+	void test_personaleInsufficienteTrue()throws ServletException, IOException {
+		this.inserimentoMalattie(malattia);
+		this.inserimentoMalattie(malattia2);
+		this.inserimentoMalattie(malattia3);
+		this.inserimentoMalattie(malattia4);
+		this.inserimentoMalattie(malattia5);
+
+		
+		request.setSession(session);
+		request.getSession().setAttribute("ruolo", "capoturno");
+		session.setAttribute("notifiche", new Notifiche());
+		request.setParameter("email", "alberto.barbarulo@vigilfuoco.it");
+		request.setParameter("dataIniziale", "15-03-2020");
+		request.setParameter("dataFinale", "20-03-2020");
+		session.setAttribute("capoturno", capoturno);
+		servlet.doPost(request, response);
+
+		assertDoesNotThrow(() -> {servlet.doPost(request, response);});
 
 	}
 
@@ -228,8 +304,37 @@ class AggiungiFerieServletTest extends TestCase{
 
 		VigileDelFuocoDao.aggiornaFeriePrecedenti("michele.granato@vigilfuoco.it", 5);
 		VigileDelFuocoDao.aggiornaFerieCorrenti("michele.granato@vigilfuoco.it", 20);
+		
+		GiorniMalattiaDao.rimuoviPeriodoDiMalattia("rosario.marmo@vigilfuoco.it", 
+				malattia2.getDataInizio(), malattia2.getDataFine());
+		GiorniMalattiaDao.rimuoviPeriodoDiMalattia("salvatore.malaspina@vigilfuoco.it", 
+				malattia2.getDataInizio(), malattia2.getDataFine());
+		GiorniMalattiaDao.rimuoviPeriodoDiMalattia("michele73.sica@vigilfuoco.it", 
+				malattia2.getDataInizio(), malattia2.getDataFine());
+		GiorniMalattiaDao.rimuoviPeriodoDiMalattia("michele.granato@vigilfuoco.it", 
+				malattia2.getDataInizio(), malattia2.getDataFine());
+		GiorniMalattiaDao.rimuoviPeriodoDiMalattia("mario.delregno@vigilfuoco.it", 
+				malattia2.getDataInizio(), malattia2.getDataFine());
+		GiorniMalattiaDao.rimuoviPeriodoDiMalattia("alberto.frosinone@vigilfuoco.it", 
+				malattia2.getDataInizio(), malattia2.getDataFine());
+		GiorniMalattiaDao.rimuoviPeriodoDiMalattia("franco.mammato@vigilfuoco.it", 
+				malattia2.getDataInizio(), malattia2.getDataFine());
+		GiorniMalattiaDao.rimuoviPeriodoDiMalattia("domenico.giordano@vigilfuoco.it", 
+				malattia2.getDataInizio(), malattia2.getDataFine());
+	}
+	
+	private void inserimentoMalattie(GiorniMalattiaBean giorniMalattia) {
+		GiorniMalattiaDao.addMalattia(giorniMalattia);
 	}
 
+	private static GiorniMalattiaBean malattia;
+	private static GiorniMalattiaBean malattia2;
+	private static GiorniMalattiaBean malattia3;
+	private static GiorniMalattiaBean malattia4;
+	private static GiorniMalattiaBean malattia5;
+	private static GiorniMalattiaBean malattia6;
+	private static GiorniMalattiaBean malattia7;
+	private static GiorniMalattiaBean malattia8;
 }
 
 

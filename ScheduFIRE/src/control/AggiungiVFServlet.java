@@ -56,8 +56,8 @@ public class AggiungiVFServlet extends HttpServlet {
 
 		
 		//Controllo email
-		/*if( ! Validazione.email(email) )
-			throw new ParametroInvalidoException("Il parametro 'email' è errato!");*/
+		if( ! Validazione.email(email) )
+			throw new ParametroInvalidoException("Il parametro 'email' è errato!");
 
 		// Ottenimento parametri del VF dalla richiesta
 		String nome = request.getParameter("nome");
