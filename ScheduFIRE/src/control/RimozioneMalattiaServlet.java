@@ -26,6 +26,7 @@ import util.Util;
 
 /**
  * Servlet implementation class RimozioneMalattiaServlet
+ * @author Biagio Bruno
  */
 @WebServlet("/RimozioneMalattiaServlet")
 public class RimozioneMalattiaServlet extends HttpServlet {

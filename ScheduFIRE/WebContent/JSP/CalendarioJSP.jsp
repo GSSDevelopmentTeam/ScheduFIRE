@@ -44,10 +44,11 @@
 <body>
 	<!-- Barra Navigazione -->
 	<jsp:include page="HeaderJSP.jsp" />
+
 	<h2 class="modal-title" style="color: #B60000 !Important; font-size:45px;"id="titolo">
 	Calendario</h2>
 	<br><br><br>
-					
+  
 	<!-- START: Container per calendario e schedulazione -->
 	<div class="containerAll" id="inizio">
 
@@ -167,7 +168,7 @@
 		<div class="container-schedul" id="visilibity">
 			<a class="info" id="informazione"></a>
 
-			<div >
+			<div>
 
 
 				<form action="GeneraSquadreServlet" method="POST">
@@ -178,8 +179,7 @@
 
 				<form id="modData" action="" method="POST">
 					<button type="submit" id="bottoneModificaSquadra" class="edit">
-						Modifica Squadre
-					</button>
+						Modifica Squadre</button>
 				</form>
 
 			</div>
@@ -246,7 +246,7 @@
 	<%
 	}else if (GiornoLavorativo.isLavorativo(data)) {%>
 		$( document ).ready(function() {
-		    dayClicked(<%=giorno%>);
+		    dayClicked("<%=giorno%>");
 		    imgMoonSun();
 		});
 	<%}%>

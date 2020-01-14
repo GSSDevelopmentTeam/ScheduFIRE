@@ -21,7 +21,7 @@ import util.Util;
 
 /**
  * Servlet implementation class CalendarioServlet
- * @autor Francesca Pia Perillo
+ * @author Francesca Pia Perillo
  */
 @WebServlet("/CalendarioServlet")
 public class CalendarioServlet extends HttpServlet {

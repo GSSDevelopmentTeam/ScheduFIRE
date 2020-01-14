@@ -1,22 +1,26 @@
 @charset "ISO-8859-1";
-body{
-	background-color:#F2F2F2;	
+
+body {
+	background-color: #F2F2F2;
 	text-align: center;
 }
+
 * {
-  box-sizing: border-box;
+	box-sizing: border-box;
 }
 
-h1{
-	color:#B60000;
+h1 {
+	color: #B60000;
 	font-size: 55px;
 }
-.fr{height:60px; 
-width:60px;
+
+.fr {
+	height: 60px;
+	width: 60px;
 }
 
-.cnt{
-	width:200px;
-    height: 200px;
-    margin: 0 auto;
+.cnt {
+	width: 200px;
+	height: 200px;
+	margin: 0 auto;
 }

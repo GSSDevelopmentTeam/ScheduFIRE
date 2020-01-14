@@ -2,11 +2,13 @@ package com.sendmail;
 
 import java.sql.Date;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
 import java.util.Iterator;
+import java.util.Locale;
 
 import javax.mail.Message;
 import javax.mail.MessagingException;
@@ -93,11 +95,11 @@ public class SendMail {
 	}
 
 	private static String tr_pari(String nome,String cognome,String squadra) {
-		return "<tr>"+td_pari(nome)+td_pari(cognome)+td_pari(squadra)+"</tr>";
+		return "<tr>"+td_pari(cognome)+td_pari(nome)+td_pari(squadra)+"</tr>";
 	}
 
 	private static String tr_dispari(String nome,String cognome,String squadra) {
-		return "<tr>"+td_dispari(nome)+td_dispari(cognome)+td_dispari(squadra)+"</tr>";
+		return "<tr>"+td_dispari(cognome)+td_dispari(nome)+td_dispari(squadra)+"</tr>";
 	}
 	private static String tabella(ArrayList<String> tdList) {
 		String tabella="<table "+CSS_table+">" + 
@@ -137,7 +139,7 @@ public class SendMail {
 		 * email=allEmail.getEmail();*/
 
 
-		/*
+		
 		email.add("c.cipolletta2@studenti.unisa.it");
 		email.add("f.perillo11@studenti.unisa.it");
 		email.add("e.sottile@studenti.unisa.it");
@@ -146,7 +148,7 @@ public class SendMail {
 		email.add("a.giuliano21@studenti.unisa.it");
 		email.add("n.labanca3@studenti.unisa.it");
 		email.add("b.bruno4@studenti.unisa.it");
-		 */
+		 
 
 		//L'id del mittente
 		String from = "schedufire@gmail.com";
@@ -228,35 +230,23 @@ public class SendMail {
 
 			int count; 
 
-			for(count=1;count<cognomiDiurno.size();count++) {
-				if(count%2==0)
-					diurnoLista.add(tr_pari(cognomiDiurno.get(count%3),nomiDiurno.get(count%3),squadreDiurno.get(count%4)));
+			for(count=0;count<cognomiDiurno.size();count++) {
+				if(count%2!=0)
+					diurnoLista.add(tr_pari(cognomiDiurno.get(count),nomiDiurno.get(count),squadreDiurno.get(count)));
 				else
-					diurnoLista.add(tr_dispari(cognomiDiurno.get(count%3),nomiDiurno.get(count%3),squadreDiurno.get(count%4)));
+					diurnoLista.add(tr_dispari(cognomiDiurno.get(count),nomiDiurno.get(count),squadreDiurno.get(count)));
 			}
 
-			for(count=1;count<cognomiNotturno.size();count++) {
-				if(count%2==0)
-					notturnoLista.add(tr_pari(cognomiNotturno.get(count%3),nomiNotturno.get(count%3),squadreNotturno.get(count%4)));
+			for(count=0;count<cognomiNotturno.size();count++) {
+				if(count%2!=0)
+					notturnoLista.add(tr_pari(cognomiNotturno.get(count),nomiNotturno.get(count),squadreNotturno.get(count)));
 				else
-					notturnoLista.add(tr_dispari(cognomiNotturno.get(count%3),nomiNotturno.get(count%3),squadreNotturno.get(count%4)));
+					notturnoLista.add(tr_dispari(cognomiNotturno.get(count),nomiNotturno.get(count),squadreNotturno.get(count)));
 			}
-
-			//giorno di oggi
-			String dataStringa = data.toString();
-			String anno = dataStringa.substring(0,4);
-			String mese = dataStringa.substring(5,7);
-			String giorno = dataStringa.substring(8);
-			//giorno successivo 
-			Date dataSucc = Date.valueOf(data.toLocalDate().plusDays(1));
-			String dataStringa2 = dataSucc.toString();
-			String anno2 = dataStringa2.substring(0,4);
-			String mese2 = dataStringa2.substring(5,7);
-			String giorno2 = dataStringa2.substring(8);
-
 
 			String titolo = titolo("Generazione della squadra per il turno del");
-			titolo+=titolo(giorno+"/"+mese+"/"+anno+"-"+giorno2+"/"+mese2+"/"+anno2);
+			titolo+=titolo(data.toLocalDate().format(DateTimeFormatter.ofPattern("dd MMMM YYYY", new Locale("it", "IT"))) 
+					+ " - " + data.toLocalDate().plusDays(1).format(DateTimeFormatter.ofPattern("dd MMMM YYYY", new Locale("it", "IT"))));
 			String tabellaDiurno= sottotitolo("Squadra diurna:");
 			tabellaDiurno+=tabella(diurnoLista);
 

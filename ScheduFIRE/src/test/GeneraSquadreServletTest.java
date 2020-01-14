@@ -90,6 +90,7 @@ class GeneraSquadreServletTest {
 	}
 	@BeforeEach
 	void setUp() {
+		ReflectionTestUtils.setField(servlet, "testing", "testing");
 		request=new MockHttpServletRequest();
 		response=new MockHttpServletResponse();
 		session=new MockHttpSession();
@@ -136,6 +137,18 @@ class GeneraSquadreServletTest {
 		request.setSession(session);
 		request.getSession().setAttribute("ruolo", "capoturno");
 		assertThrows(AutenticazioneException.class, ()->{servlet.doPost(request, response);});
+	}
+	
+	@Test
+	void squadreGiaInSessioneNoTesting() throws ServletException, IOException {
+		ReflectionTestUtils.setField(servlet, "testing", null);
+		request.setSession(session);
+		request.getSession().setAttribute("ruolo", "capoturno");
+		request.getSession().setAttribute("notifiche", "notifiche");
+		session.setAttribute("squadraDiurno", squadra);
+		session.setAttribute("squadraNotturno", squadra);
+		servlet.doPost(request, response);
+		assertEquals("JSP/GestioneSquadreJSP.jsp",response.getForwardedUrl());
 	}
 	
 	@Test
