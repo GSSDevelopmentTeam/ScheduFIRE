@@ -7,6 +7,8 @@ Nella cartella /Documentazione si trovano i seguenti documenti:
 * **TP** _(Test Plan)_: Pianificazione delle varie fasi del Testing;
 * **TCS** _(Test Case Specification)_: Specificazione dei casi di test Black Box.  
 * **ODD** _(Object Design Documentation)_: Documentazione relativa all'individuazione degli oggetti del sistema.
+* **MI** _(Manuale di Installazione)_: Istruzioni relative al come installare e far partire il sistema.
+* **MU** _(Manuale Utente)_: Istruzioni relative al come utilizzare il sistema correttamente.
 
 
 ## ScheduFIRE
