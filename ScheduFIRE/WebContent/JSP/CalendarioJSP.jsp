@@ -246,7 +246,7 @@
 	<%
 	}else if (GiornoLavorativo.isLavorativo(data)) {%>
 		$( document ).ready(function() {
-		    dayClicked(<%=giorno%>);
+		    dayClicked("<%=giorno%>");
 		    imgMoonSun();
 		});
 	<%}%>
