@@ -44,30 +44,38 @@
 
 <a><div class="dd">
   <button type="button" class="db" >
-    <img src="IMG/men.png" style="height:50px; width:50px " onmouseover="this.src='Icon/menuAperto.png'"
-					onmouseout="this.src='IMG/men.png'">
+    <img src="IMG/men.png" style="height:50px; width:50px "
+    	onmouseover="this.src='Icon/menuAperto.png'"
+		onmouseout="this.src='IMG/men.png'">
   </button>
   <div class="ddc" id="tabledown" style="margin-top: 1%;">
    <form action="HomeCTServlet" method="POST">
-    <button class="cmd" id="tornahome"><img src="IMG/logoSF.png" class="btl"><span class="rtlg">Home</span> </button>
+    <button class="cmd" id="tornahome"><img src="IMG/logoSF.png" class="btl">
+    <span class="rtlg">Home</span> </button>
   </form>
    <form action="GeneraSquadreServlet" method="POST">
-    <button class="cmd"><img src="Icon/CavallettoColorato.png" class="btl"><span class="rtlg">Gestione Squadra</span> </button>
+    <button class="cmd"><img src="Icon/CavallettoColorato.png" class="btl">
+    <span class="rtlg">Gestione Squadre</span> </button>
   </form>
   <form action="CalendarioServlet" method="POST">
-	<button class="cmd"><img src="Icon/calendarioColori.png" class="btl"><span class="rtlg">Visualizza Calendario</span></button>
+	<button class="cmd"><img src="Icon/calendarioColori.png" class="btl">
+	<span class="rtlg">Visualizza Calendario</span></button>
   </form>
   <form action="GestionePersonaleServlet" method="POST">
-	<button class="cmd"><img src="Icon/ominoVF.png"	class="btl"><span class="rtlg">Gestione Personale</span></button>
+	<button class="cmd"><img src="Icon/ominoVF.png"	class="btl">
+	<span class="rtlg">Gestione Personale</span></button>
   </form>
   <form action="GestioneFerieServlet" method="POST">
-   	<button class="cmd"><img src="Icon/solecolore.png" class="btl"><span class="rtlg">Gestione Ferie</span></button>
+   	<button class="cmd"><img src="Icon/solecolore.png" class="btl">
+   	<span class="rtlg">Gestione Ferie</span></button>
   </form>
   <form action="PeriodiDiMalattiaServlet" method="POST">
-	<button class="cmd"><img src="Icon/MalattieColore.png" class="btl" ><span class="rtlg">Gestione Malattia</span></button>
+	<button class="cmd"><img src="Icon/MalattieColore.png" class="btl" >
+	<span class="rtlg">Gestione Malattia</span></button>
   </form>
   <form action="PersonaleDisponibile" method="POST">
-	<button class="cmd" id="dispo"><img src="Icon/ominiVF.png" class="btl"	><span class="rtlg">Personale Disponibile</button>
+	<button class="cmd" id="dispo"><img src="Icon/ominiVF.png" class="btl">
+	<span class="rtlg">Personale Disponibile</button>
   </form>
   </div>
  
