@@ -12,6 +12,7 @@
 		<welcome-file>default.htm</welcome-file>
 		<welcome-file>default.jsp</welcome-file>
 	</welcome-file-list>
+	 
 	<error-page>
 		<location>/JSP/ErrorJSP.jsp</location>
 	</error-page>
@@ -31,4 +32,5 @@
 		<exception-type>control.AutenticazioneException</exception-type>
 		<location>/JSP/AutenticazioneErrorJSP.jsp</location>
 	</error-page>
+	
 </web-app>
