@@ -5,9 +5,11 @@ import java.io.IOException;
 import java.sql.Date;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Locale;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -43,19 +45,21 @@ public class AjaxCalendario extends HttpServlet{
 		String giornostr = request.getParameter("giorno").trim();
 		String mesestr = request.getParameter("mese").trim();
 		String annostr = request.getParameter("anno").trim();
-		int giorno;
-		int mese;
-		int anno;
-
-		try {
-			giorno=Integer.parseInt(giornostr);
-			mese=Integer.parseInt(mesestr);
-			anno=Integer.parseInt(annostr);
-		}
-		catch (NumberFormatException e) {
-			return;
-		}
-		Date data=Date.valueOf(LocalDate.of(anno, mese, giorno));
+		Date data = Date.valueOf(annostr + "-" + mesestr + "-" + giornostr);
+		String datastr = data.toLocalDate().format(DateTimeFormatter.ofPattern("dd MMMM yyyy", new Locale("it", "IT")));
+//		int giorno;
+//		int mese;
+//		int anno;
+//
+//		try {
+//			giorno=Integer.parseInt(giornostr);
+//			mese=Integer.parseInt(mesestr);
+//			anno=Integer.parseInt(annostr);
+//		}
+//		catch (NumberFormatException e) {
+//			return;
+//		}
+//		Date data=Date.valueOf(LocalDate.of(anno, mese, giorno));
 
 
 
@@ -70,6 +74,7 @@ public class AjaxCalendario extends HttpServlet{
 		JSONArray array = new JSONArray();
 		array.put(isModificabile(data));
 		array.put(isGenerabile(data));
+		array.put(datastr);
 
 		for(VigileDelFuocoBean vigile : vigili) {
 			for (ComponenteDellaSquadraBean componente:componenti){
@@ -84,6 +89,7 @@ public class AjaxCalendario extends HttpServlet{
 				}
 			}
 		}
+		
 		response.setContentType("application/json");
 		response.getWriter().append(array.toString());
 

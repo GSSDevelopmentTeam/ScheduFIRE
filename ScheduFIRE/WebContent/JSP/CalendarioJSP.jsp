@@ -250,7 +250,7 @@
 		    imgMoonSun();
 		});
 	<%} else if (!GiornoLavorativo.isLavorativo(data)){%>
-		$("#informazione").text("Oggi non è un giorno lavorativo. Premere su un giorno lavorativo per visualizzare la composizione delle squadre.");
+		$("#informazione").html("Oggi non è un giorno lavorativo.<br>Premere su un giorno lavorativo per visualizzare la composizione delle squadre.");
 	<%}%>
 	
 	
@@ -303,10 +303,12 @@
 				var len = response.length;
 				var isModificabile = response[0];
 				var isGenerabile = response[1];	
-				$("#informazione").text("Squadre relative al giorno "+giorno+"/ "+mese+" /"+anno);
-	
-				if(len<=2){
-					$("#informazione").text("Non sono ancora state generate squadre per il  giorno "+giorno+"/ "+mese+" /"+anno);
+				$("#informazione").text("Squadre relative al giorno " + response[2]);
+				
+
+				
+				if(len<=3){
+					$("#informazione").html("Non sono ancora state generate squadre<br>per il  giorno <strong>"+ response[2] +"</strong>");
 					schedulazione.style.display ='none';
 				}else{
 					schedulazione.style.display ='block';
@@ -322,7 +324,7 @@
 				}
 				<%}%>
 				
-				for (var i = 2; i < len; i++) {
+				for (var i = 3; i < len; i++) {
 				vigile=response[i];
 					
 						var rigaTabella = document.createElement("TR");

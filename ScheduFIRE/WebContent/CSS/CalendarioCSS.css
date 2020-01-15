@@ -173,22 +173,18 @@ flex:1 -> prende il resto del container*/
 
 #giornoLavorativoDiurno:hover {
 	color: white;
-	font-style: italic;
 }
 
 #giornoLavorativoNotturno:hover {
 	color: white;
-	font-style: italic;
 }
 
 #giornoCorrenteLavorativoDiurno:hover {
 	color: white;
-	font-style: italic;
 }
 
 #giornoCorrenteLavorativoNotturno:hover {
 	color: white;
-	font-style: italic;
 }
 
 .grid-days {
