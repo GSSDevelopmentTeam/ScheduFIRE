@@ -49,7 +49,13 @@ public class EliminaVFServlet extends HttpServlet {
 		
 		//Controllo email
 		if( ! Validazione.email(email) )
-			throw new ParametroInvalidoException("Il parametro 'email' è errato!");
+			throw new ParametroInvalidoException("Il parametro 'email' del vigile del Fuoco"
+					+ " che vuoi modificare &egrave; errato! <br>"
+					+ "L'email deve essere del formato: <br>"
+					+ "nome.cognome@vigilfuoco.it <br>"
+					+ "o eventualmente con un numero: <br>"
+					+ "nome1.cognome@vigilfuoco.it <br>"
+					+ "Verrai reindirizzato alla pagina di Gestione Personale...");
 		
 		email += "@vigilfuoco.it";
 		
@@ -67,10 +73,12 @@ public class EliminaVFServlet extends HttpServlet {
 				
 		if( ! eliminabile )
 			throw new GestionePersonaleException("Non puoi modificare un Vigile del Fuoco scelto per le squadre"
-					+ " dei prossimi giorni lavorativi! Sostiuiscilo prima.");
+					+ " dei prossimi giorni lavorativi! Sostiuiscilo prima. <br>"
+					+ "Verrai reindirizzato alla pagina di Gestione Personale...");
 		
 		if( ! VigileDelFuocoDao.setAdoperabile(email, false))
-			throw new GestionePersonaleException("La cancellazione del vigile del fuoco non è andata a buon fine!");
+			throw new GestionePersonaleException("La cancellazione del vigile del fuoco non è andata a buon fine! <br>"
+					+ "Verrai reindirizzato alla pagina di Gestione Personale...");
 		
 		session.setAttribute("risultato", "La cancellazione del Vigile del Fuoco è avvenuto con successo!");
 		
