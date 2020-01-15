@@ -21,7 +21,7 @@
 	<script>
 		
 			$(document).ready(function() {
-				setTimeout(function(){ window.location.replace("GestionePersonaleServlet"); }, 5000);
+				setTimeout(function(){ window.location.replace("GestionePersonaleServlet"); }, 7000);
 			});
 	
 		</script>
