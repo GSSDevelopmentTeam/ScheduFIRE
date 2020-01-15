@@ -104,8 +104,8 @@ public class SendMail {
 	private static String tabella(ArrayList<String> tdList) {
 		String tabella="<table "+CSS_table+">" + 
 				"    <tr>" + 
-				"      <th "+CSS_th+">Cognome</th>" + 
 				"      <th "+CSS_th+">Nome</th>" + 
+				"      <th "+CSS_th+">Cognome</th>" + 
 				"      <th "+CSS_th+">Squadra</th>" + 
 				"    </tr>";
 
@@ -214,8 +214,8 @@ public class SendMail {
 			Iterator i = squadraDiurno.entrySet().iterator();
 			while(i.hasNext()) {
 				Map.Entry<VigileDelFuocoBean, String> coppia = (Map.Entry<VigileDelFuocoBean, String>) i.next();
-				nomiDiurno.add(coppia.getKey().getCognome());
-				cognomiDiurno.add(coppia.getKey().getNome());
+				nomiDiurno.add(coppia.getKey().getNome());
+				cognomiDiurno.add(coppia.getKey().getCognome());
 				squadreDiurno.add(coppia.getValue());
 			}
 
@@ -223,8 +223,8 @@ public class SendMail {
 			i = squadraNotturno.entrySet().iterator();
 			while(i.hasNext()) {
 				Map.Entry<VigileDelFuocoBean, String> coppia = (Map.Entry<VigileDelFuocoBean, String>) i.next();
-				nomiNotturno.add(coppia.getKey().getCognome());
-				cognomiNotturno.add(coppia.getKey().getNome());
+				nomiNotturno.add(coppia.getKey().getNome());
+				cognomiNotturno.add(coppia.getKey().getCognome());
 				squadreNotturno.add(coppia.getValue());
 			}
 

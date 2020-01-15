@@ -249,7 +249,10 @@
 		    dayClicked("<%=giorno%>");
 		    imgMoonSun();
 		});
+	<%} else if (!GiornoLavorativo.isLavorativo(data)){%>
+		$("#informazione").text("Oggi non è un giorno lavorativo. Premere su un giorno lavorativo per visualizzare la composizione delle squadre.");
 	<%}%>
+	
 	
 
 		function dayClicked(input) {
@@ -344,10 +347,16 @@
 						  var cognome=document.createTextNode(vigile.cognome);
 						   colonnaCognome.appendChild(cognome);
 						  rigaTabella.appendChild(colonnaCognome);
+						  
+						  var colonnaMansione = document.createElement("TD");
+						  var mansione=document.createTextNode(vigile.mansione);
+						   colonnaMansione.appendChild(mansione);
+						  rigaTabella.appendChild(colonnaMansione);
 					
 				}
 				var red = 'ModificaComposizioneSquadreServlet?tiposquadra=3&data=' + anno.trim() + '-' + mese.trim() + '-' + giorno.trim();
 				$("#modData").attr("action", red);
+				
 
 			} 
 		});
