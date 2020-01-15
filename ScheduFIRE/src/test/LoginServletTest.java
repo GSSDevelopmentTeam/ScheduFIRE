@@ -1,5 +1,7 @@
 package test;
 
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.io.IOException;
@@ -14,6 +16,7 @@ import org.springframework.mock.web.MockHttpSession;
 
 import control.LoginServlet;
 import control.ScheduFIREException;
+import model.dao.CredenzialiDao;
 
 class LoginServletTest {
 
@@ -166,6 +169,48 @@ class LoginServletTest {
 			servlet.doGet(request, response);
 			});
 		
+	}
+	
+	@Test
+	void test11() throws ServletException, IOException {
+		
+		request.setSession(session);
+		request.getSession().setAttribute("ruolo", null);
+		
+		request.getSession().setAttribute("Username", null);
+		request.getSession().setAttribute("Password", null);
+	
+		assertDoesNotThrow(()->{
+			servlet.doPost(request, response);
+		});
+	}
+	
+	@Test
+	void test12() throws ServletException, IOException {
+		
+		request.setSession(session);
+		request.getSession().setAttribute("ruolo", null);
+		
+		request.getSession().setAttribute("Username", "");
+		request.getSession().setAttribute("Password", null);
+	
+		assertDoesNotThrow(()->{
+			servlet.doPost(request, response);
+		});
+	}
+	
+	@Test
+	void test13() throws ServletException, IOException {
+		
+		request.setSession(session);
+		request.getSession().setAttribute("ruolo", null);
+		
+		request.getSession().setAttribute("Username", "ct");
+		request.getSession().setAttribute("Password", null);
+	
+		assertDoesNotThrow(()->{
+			servlet.doPost(request, response);
+		});
 	}
 
 }

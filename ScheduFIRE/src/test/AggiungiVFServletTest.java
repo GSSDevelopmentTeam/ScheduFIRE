@@ -46,6 +46,7 @@ class AggiungiVFServletTest {
 	@AfterAll
 	static void tearDown(){
 		VigileDelFuocoDao.deleteVF("v.acanfora@vigilfuoco.it");
+		VigileDelFuocoDao.deleteVF("frosinone.alberto@vigilfuoco.it");
 	}
 	/**
 	 * Questo metodo serve per verificare se nella servlet viene eseguita l'autenticazione 
@@ -242,7 +243,7 @@ class AggiungiVFServletTest {
 	/**
 	 * Questo metodo testa il passaggio dei parametri alla Servlet
 	 * e i vari casi di aggiunta VF
-	 * il passaggio di parametri va a buon fine, ma rientra nel caso in cui il VF e' già registrato
+	 * il passaggio di parametri va a buon fine, ma rientra nel caso in cui il VF e' giï¿½ registrato
 	 * @throws ServletException
 	 * @throws OException
 	 * @throws ParametroInvalidoException
@@ -267,7 +268,7 @@ class AggiungiVFServletTest {
 	/**
 	 * Questo metodo testa il passaggio dei parametri alla Servlet
 	 * e i vari casi di aggiunta VF
-	 * il passaggio di parametri va a buon fine, ma rientra nel caso in cui il VF e' già registrato ed non è adoperabile
+	 * il passaggio di parametri va a buon fine, ma rientra nel caso in cui il VF e' giï¿½ registrato ed non ï¿½ adoperabile
 	 * @throws ServletException
 	 * @throws OException
 	 * @throws GestionePersonaleException
