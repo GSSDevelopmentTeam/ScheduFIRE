@@ -117,7 +117,7 @@ public class AggiungiVFServlet extends HttpServlet {
 					+ "Vigile. <br>"
 					+ "Verrai reindirizzato alla pagina di Gestione Personale...");
 		
-		//Se il grado non è settato e la mansione è Capo Squadra, il grado sarà 'Semplice'
+		//Se il grado non Ã¨ settato e la mansione Ã¨ Capo Squadra, il grado sarÃ  'Semplice'
 		if( mansione.equals("Capo Squadra") && (grado == null || grado.equals(" ")) )
 			grado = "Semplice";
 		
@@ -150,13 +150,13 @@ public class AggiungiVFServlet extends HttpServlet {
 		int caricoLavoro = VigileDelFuocoDao.getCaricoLavoroMinimo();
 		vf.setCaricoLavoro(caricoLavoro);
 		
-		//Controllo se il Vigile del Fuoco è già presente nel database
+		//Controllo se il Vigile del Fuoco Ã¨ giÃ  presente nel database
 		VigileDelFuocoBean vigileDb = null;
 		if((vigileDb = VigileDelFuocoDao.ottieni(email)) != null) {
 			
-			//Se il Vigile del Fuoco è già presente nel database ed è adoperabile si lancia l'eccezione
+			//Se il Vigile del Fuoco Ã¨ giÃ  presente nel database ed Ã¨ adoperabile si lancia l'eccezione
 			if(vigileDb.isAdoperabile()) {
-				throw new GestionePersonaleException("Il vigile del fuoco &egrave; gi&agrave;�presente nel sistema! <br>"
+				throw new GestionePersonaleException("Il vigile del fuoco &egrave; gi&agrave; presente nel sistema! <br>"
 						+ "Verrai reindirizzato alla pagina di Gestione Personale...");
 				
 			} else {

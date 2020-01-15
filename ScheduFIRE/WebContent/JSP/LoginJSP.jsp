@@ -41,7 +41,7 @@
 
 				<div class="d-flex justify-content-center">
 					<div class="input-container">
-						<i class="fa fa-user icon"></i> <input class="input-field"
+						<i class="fa fa-user icon" style="display:block;"></i> <input class="input-field"
 							type="text" id="user1" placeholder="Username" name="Username"
 							required>
 					</div>
@@ -49,7 +49,7 @@
 				<br>
 				<div class="d-flex justify-content-center">
 					<div class="input-container">
-						<i class="fa fa-key icon"></i> <input class="input-field"
+						<i class="fa fa-key icon" style="display:block;"></i> <input class="input-field"
 							type="password" placeholder="Password" name="Password"
 							id="myInput" required>
 					</div>
@@ -92,7 +92,7 @@
 			style="border-radius: 10px; margin-left: 50px;">
 			<div class="d-flex justify-content-center">
 				<div class="input-container">
-					<i class="fa fa-envelope icon"></i> <input class="input-field"
+					<i class="fa fa-envelope icon" style="display:block;"></i> <input class="input-field"
 						type="text" placeholder="E-Mail" name="Email">
 				</div>
 			</div>

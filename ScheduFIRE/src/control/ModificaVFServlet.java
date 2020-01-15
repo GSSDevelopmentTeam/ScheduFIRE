@@ -60,7 +60,7 @@ public class ModificaVFServlet extends HttpServlet {
 		
 		emailVecchia += "@vigilfuoco.it";
 		
-		//Controllo se il vf scelto � gia schedulato in delle squadre
+		//Controllo se il vf scelto è gia schedulato in delle squadre
 		LocalDate inizio = LocalDate.now();
 		LocalDate fine = inizio.plusDays(7);
 		boolean eliminabile = false;
@@ -81,7 +81,7 @@ public class ModificaVFServlet extends HttpServlet {
 		//Ottenimento Vigile del Fuoco dal database
 		VigileDelFuocoBean vf = VigileDelFuocoDao.ottieni(emailVecchia);
 		
-		//Controllo se Ã¨ nullo
+		//Controllo se ÃƒÂ¨ nullo
 		if( vf == null ) 
 			throw new GestionePersonaleException("Il vigile del Fuoco che vuoi modificare non &egrave; presente nel sistema. <br>"
 					+ "Verrai reindirizzato alla pagina di Gestione Personale...");
@@ -147,7 +147,7 @@ public class ModificaVFServlet extends HttpServlet {
 					+ "Il parametro deve essere compreso tra 0 e 999. <br>"
 					+ "Verrai reindirizzato alla pagina di Gestione Personale...");
 		
-		//Se il grado non è settato e la mansione è Capo Squadra, il grado sarà 'Semplice'
+		//Se il grado non Ã¨ settato e la mansione Ã¨ Capo Squadra, il grado sarÃ  'Semplice'
 		if( mansioneNuova.equals("Capo Squadra") && gradoNuovo == null )
 			gradoNuovo = "Semplice";
 		
@@ -191,9 +191,9 @@ public class ModificaVFServlet extends HttpServlet {
 		VigileDelFuocoBean vfDb =  VigileDelFuocoDao.ottieni(emailNuova);
 		if( ! vf.equals(vfDb) ) {
 		
-			//Controllo email giÃ  in uso
+			//Controllo email giÃƒÂ  in uso
 			if( (vfDb != null) && ( ! emailVecchia.equals(emailNuova) ) )
-				throw new GestionePersonaleException("L'email inserita &egrave; gi&agrave;� in uso! <br>"
+				throw new GestionePersonaleException("L'email inserita &egrave; gi&agrave;  in uso! <br>"
 						+ "Verrai reindirizzato alla pagina di Gestione Personale...");
 			
 			vf.setEmail(emailNuova);

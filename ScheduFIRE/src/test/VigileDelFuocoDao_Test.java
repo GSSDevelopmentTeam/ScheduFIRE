@@ -95,6 +95,7 @@ class VigileDelFuocoDao_Test {
 		FerieDao.rimuoviPeriodoFerie("marzia.mancuso@vigilfuoco.it", data, data2);		
 		GiorniMalattiaDao.rimuoviPeriodoDiMalattia("rosario.marmo@vigilfuoco.it", data, data2);
 		VigileDelFuocoDao.deleteVF(vf.getEmail());
+		VigileDelFuocoDao.deleteVF("fabrizio.romano@vigilfuoco.it");
 	}
 
 
