@@ -13,9 +13,7 @@
 		<div class="clm">
 			<form action="GeneraSquadreServlet" method="POST">
 				<button class="btop">
-					<img src="Icon/CavallettoColorato.png"><span class="rht">Gestione
-						<br> Squadra
-					</span>
+					<img src="Icon/CavallettoColorato.png"><span class="rht">Gestione Squadra</span>
 				</button>
 			</form>
 		</div>
@@ -23,7 +21,7 @@
 			<form action="CalendarioServlet" method="POST">
 				<button class="btop">
 					<img src="Icon/calendarioColori.png"> <span class="rht">
-						Visualizza <br> Calendario
+						Visualizza Calendario
 					</span>
 				</button>
 			</form>
@@ -31,7 +29,7 @@
 		<div class="clm">
 			<form action="PeriodiDiMalattiaServlet" method="POST">
 				<button class="btop">
-					<img src="Icon/MalattieColore.png"> <span class="rht">Gestione<br>
+					<img src="Icon/MalattieColore.png"> <span class="rht">Gestione
 						Malattia
 					</span>
 				</button>
@@ -41,7 +39,7 @@
 		<div class="clm">
 			<form action="GestioneFerieServlet" method="POST">
 				<button class="btop">
-					<img src="Icon/solecolore.png"> <span class="rht">Gestione<br>
+					<img src="Icon/solecolore.png"> <span class="rht">Gestione
 						Ferie
 					</span>
 				</button>
@@ -50,7 +48,7 @@
 		<div class="clm">
 			<form action="GestionePersonaleServlet" method="POST">
 				<button class="btop">
-					<img src="Icon/ominoVF.png"> <span class="rht">Gestione<br>
+					<img src="Icon/ominoVF.png"> <span class="rht">Gestione
 						Personale
 					</span>
 				</button>
@@ -60,7 +58,7 @@
 			<form action="PersonaleDisponibile" method="POST">
 				<button class="btop">
 					<img src="Icon/ominiVF.png"> <span class="rht">
-						Personale<br> Disponibile
+						Personale Disponibile
 				</button>
 			</form>
 		</div>
