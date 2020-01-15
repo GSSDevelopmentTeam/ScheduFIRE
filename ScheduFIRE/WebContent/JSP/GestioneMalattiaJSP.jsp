@@ -51,7 +51,7 @@
 		role="dialog" aria-labelledby="exampleModalCenterTitle"
 		aria-hidden="true" style="display: none">
 		<div class="modal-dialog modal-dialog-centered" role="document">
-			<div class="modal-content contenutiModal" style="min-height: 700px;">
+			<div class="modal-content contenutiModal" style="min-height: 710px;">
 				<div class="modal-header">
 					<h5 class="modal-title" id="titoloAggiuntaMalattia">Aggiunta
 						malattia</h5>
@@ -95,7 +95,7 @@
 		role="dialog" aria-labelledby="exampleModalCenterTitle"
 		aria-hidden="true" style="display: none">
 		<div class="modal-dialog modal-dialog-centered" role="document">
-			<div class="modal-content contenutiModal">
+			<div class="modal-content contenutiModal" style="min-height: 700px;">
 				<div class="modal-header">
 					<h5 class="modal-title" id="titoloRimozioneMalattia">Rimuovi
 						Malattia</h5>
@@ -137,19 +137,24 @@
 	</div>
 
 
-	<!-- Modal di avviso aggiunta malattia-->
+	<!-- Modal di avviso operazione effettuata correttamente-->
+
+	<button type="button" data-toggle="modal" id="buttonModalAvviso"
+		data-target="#modalAvviso" style="display: none">Bottone
+		per modal di Avviso riuscita operazione</button>
+
 	<div class="modal fade" id="modalAvviso" tabindex="-1" role="dialog"
 		aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
 		<div class="modal-dialog modal-sm modal-dialog-centered"
 			role="document">
 			<div class="modal-content" style="border: 3px solid #5be94b;">
+				<p hidden="hidden" name="ricarica" id="ifRicarica"></p>
 				<div class="modal-body" style="align: center;">
 					<img src="IMG/fire.png" class="rounded mx-auto d-block">
-					<h4 class="modal-title text-center">Operazione effettuata con
-						successo</h4>
+					<h4 class="modal-title text-center" id="titoloModalAvviso">Operazione
+						effettuata con successo</h4>
 				</div>
 				<div class="modal-footer">
-
 
 					<button type="button" class="btn btn-outline-success"
 						data-dismiss="modal" onClick="ricaricaPagina()">OK</button>
@@ -635,6 +640,8 @@
 				 success : function(response) {
 					 var Risposta=response[0];
 					 if(Risposta){
+						 $('#buttonModalAvviso').trigger('click');
+				    	 $("#titoloModalAvviso").text("Operazione effettuata con successo");
 					 }
 					 else{
 						 apriFormAggiunta();
@@ -666,7 +673,8 @@
 					success : function(response) {
 						var booleanRisposta = response[0];
 						if (booleanRisposta == 'true') {
-		
+							$('#buttonModalAvviso').trigger('click');
+				    		$("#titoloModalAvviso").text("Operazione effettuata con successo");
 						} else {
 							
 							console.log("problema rimozione ferie "

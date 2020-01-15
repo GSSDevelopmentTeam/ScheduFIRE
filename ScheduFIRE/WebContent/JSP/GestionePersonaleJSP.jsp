@@ -53,7 +53,7 @@ session.removeAttribute("risultato");
 }
 
 h4 {
-	color: #B60000;
+	color: black;
 }
 </style>
 

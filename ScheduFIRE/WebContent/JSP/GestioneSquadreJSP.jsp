@@ -137,7 +137,7 @@ h2 {
 		</form>
 
 		 <a href="#Notte" class="btn btn-outline-secondary btn-lg" style="margin: 3px;">Squadra Notturna</a>
-		<a href="#Disp"	class="btn btn-outline-secondary btn-lg" style="margin: 3px;">Personale Disponibiles</a>
+		<a href="#Disp"	class="btn btn-outline-secondary btn-lg" style="margin: 3px;">Personale Disponibile</a>
 
 	</div>
 	<br>
@@ -595,7 +595,7 @@ h2 {
 		//Chiamata ajax alla servlet PersonaleDisponibileAJAX
 		$.ajax({
 			type : "POST",//Chiamata POST
-			url : "/ScheduFIRE/PersonaleServlet",//url della servlet che devo chiamare
+			url : "PersonaleServlet",//url della servlet che devo chiamare
 			data : {
 				"JSON" : true,
 				"aggiunta" : true,
@@ -612,7 +612,7 @@ h2 {
 			//Chiamata ajax alla servlet PersonaleDisponibileAJAX
 			$.ajax({
 				type : "POST",//Chiamata POST
-				url : "/ScheduFIRE/PersonaleDisponibileAJAX",//url della servlet che devo chiamare
+				url : "PersonaleDisponibileAJAX",//url della servlet che devo chiamare
 				data : {
 					"JSON" : true,
 					"aggiunta" : true,
