@@ -45,21 +45,21 @@ public class AjaxCalendario extends HttpServlet{
 		String giornostr = request.getParameter("giorno").trim();
 		String mesestr = request.getParameter("mese").trim();
 		String annostr = request.getParameter("anno").trim();
-		Date data = Date.valueOf(annostr + "-" + mesestr + "-" + giornostr);
-		String datastr = data.toLocalDate().format(DateTimeFormatter.ofPattern("dd MMMM yyyy", new Locale("it", "IT")));
-//		int giorno;
-//		int mese;
-//		int anno;
-//
-//		try {
-//			giorno=Integer.parseInt(giornostr);
-//			mese=Integer.parseInt(mesestr);
-//			anno=Integer.parseInt(annostr);
-//		}
-//		catch (NumberFormatException e) {
-//			return;
-//		}
-//		Date data=Date.valueOf(LocalDate.of(anno, mese, giorno));
+		Date dataMeseJSP = Date.valueOf(annostr + "-" + mesestr + "-" + giornostr);
+		String datastr = dataMeseJSP.toLocalDate().format(DateTimeFormatter.ofPattern("dd MMMM yyyy", new Locale("it", "IT")));
+		int giorno;
+		int mese;
+		int anno;
+
+		try {
+			giorno=Integer.parseInt(giornostr);
+			mese=Integer.parseInt(mesestr);
+			anno=Integer.parseInt(annostr);
+		}
+		catch (NumberFormatException e) {
+			return;
+		}
+		Date data=Date.valueOf(LocalDate.of(anno, mese, giorno));
 
 
 
