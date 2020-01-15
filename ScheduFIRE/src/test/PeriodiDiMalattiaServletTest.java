@@ -231,6 +231,7 @@ class PeriodiDiMalattiaServletTest {
 									malattia.getDataInizio(), malattia.getDataFine());
 		GiorniMalattiaDao.rimuoviPeriodoDiMalattia("alberto.barbarulo@vigilfuoco.it", 
 				malattia2.getDataInizio(), malattia2.getDataFine());
+		
 	}
 	
 	private void inserimentoMalattie(GiorniMalattiaBean giorniMalattia) {
