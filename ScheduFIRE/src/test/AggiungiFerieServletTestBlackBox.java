@@ -84,6 +84,7 @@ class AggiungiFerieServletTestBlackBox {
 	@AfterEach
 	void tearDown() throws Exception {
 		FerieDao.rimuoviPeriodoFerie("alberto.barbarulo@vigilfuoco.it", Date.valueOf("2020-03-06"), Date.valueOf("2020-03-20"));
+		FerieDao.rimuoviPeriodoFerie("luca.raimondi@vigilfuoco.it", Date.valueOf("2020-03-06"), Date.valueOf("2020-03-20"));
 	}
 
 }
