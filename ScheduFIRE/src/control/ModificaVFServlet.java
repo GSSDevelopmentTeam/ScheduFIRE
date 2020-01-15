@@ -1,7 +1,8 @@
 package control;
 
 import java.io.IOException;
-import java.util.Date;
+import java.sql.Date;
+import java.time.LocalDate;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -52,6 +53,23 @@ public class ModificaVFServlet extends HttpServlet {
 			throw new ParametroInvalidoException("Il parametro 'email' Ã¨ errato!");
 		
 		emailVecchia += "@vigilfuoco.it";
+		
+		//Controllo se il vf scelto � gia schedulato in delle squadre
+		LocalDate inizio = LocalDate.now();
+		LocalDate fine = inizio.plusDays(7);
+		boolean eliminabile = false;
+		while( inizio.compareTo(fine) != 0 ) {
+			
+			eliminabile = eliminabile || ComponenteDellaSquadraDao.isComponente(emailVecchia, Date.valueOf(inizio) );
+			
+			inizio = inizio.plusDays(1);
+
+			
+		}
+
+		if( eliminabile )
+			throw new GestionePersonaleException("Non puoi modificare un Vigile del Fuoco scelto per le squadre"
+					+ " dei prossimi giorni lavorativi! Sostiuiscilo prima.");
 		
 		//Ottenimento Vigile del Fuoco dal database
 		VigileDelFuocoBean vf = VigileDelFuocoDao.ottieni(emailVecchia);
