@@ -514,7 +514,10 @@
 				differenza = dataok2-dataok1;    
 				giorni_differenza = new String(1+differenza/86400000);
 				
-				return giorni_differenza;}
+				var giorniApprossimati = Math.ceil(giorni_differenza);
+				
+				return giorniApprossimati;
+				}
 			}
 			
 			
