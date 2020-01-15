@@ -87,7 +87,7 @@ function rimuoviNotifica(input) {
 	//Chiamata ajax alla servlet PersonaleDisponibileAJAX
 	$.ajax({
 		type : "POST",//Chiamata POST
-		url : "/ScheduFIRE/RimuoviNotificheServlet",//url della servlet che devo chiamare
+		url : "RimuoviNotificheServlet",//url della servlet che devo chiamare
 		data : {
 			"indice" : input
 		},
