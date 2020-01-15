@@ -85,7 +85,7 @@ public class Notifiche {
 		for(List<VigileDelFuocoBean> disponibiliAlGiorno : disponibili) {
 			if(!conta(disponibiliAlGiorno)) {
 				listaNotifiche.add(new Notifica(2, "La malattia concesse a " + vigile.getCognome() + " " +
-						vigile.getNome() + " non rendono possibile la creazione di un turno", "/PeriodiDiMalattiaServlet",generateId()));
+						vigile.getNome() + " non rendono possibile la creazione di un turno", "PeriodiDiMalattiaServlet",generateId()));
 				break;
 			}
 		}
@@ -109,7 +109,7 @@ public class Notifiche {
 		for(List<VigileDelFuocoBean> disponibiliAlGiorno : disponibili) {
 			if(!conta(disponibiliAlGiorno)) {
 				listaNotifiche.add(new Notifica(2, "Le ferie concesse a " + vigile.getCognome() + " " +
-						vigile.getNome() + " non rendono possibile la creazione di un turno", "/GestioneFerieServlet",generateId()));
+						vigile.getNome() + " non rendono possibile la creazione di un turno", "GestioneFerieServlet",generateId()));
 				break;
 			}
 		}
@@ -212,7 +212,7 @@ public class Notifiche {
 		if(!conta(disponibili)) {
 			Date data = new Date(System.currentTimeMillis());
 			listaNotifiche.add(new Notifica(3, "Il personale disponibile il " + 
-					data.toString() + " non e' sufficiente per creare il turno.", "/GestionePersonaleServlet",generateId()));
+					data.toString() + " non e' sufficiente per creare il turno.", "GestionePersonaleServlet",generateId()));
 		}
 	}
 

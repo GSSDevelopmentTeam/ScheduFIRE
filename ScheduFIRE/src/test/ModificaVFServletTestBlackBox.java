@@ -184,7 +184,7 @@ class ModificaVFServletTestBlackBox {
 		request.addParameter("giorniFerieAnnoCorrenteNuovi", "");
 		request.addParameter("giorniFerieAnnoPrecedenteNuovi", "0");
 		
-		assertThrows(ScheduFIREException.class, () -> {servlet.doPost(request, response);} );
+		assertThrows(ParametroInvalidoException.class, () -> {servlet.doPost(request, response);} );
 		
 	}
 	
@@ -214,7 +214,7 @@ class ModificaVFServletTestBlackBox {
 		request.addParameter("giorniFerieAnnoCorrenteNuovi", "22");
 		request.addParameter("giorniFerieAnnoPrecedenteNuovi", "");
 		
-		assertThrows(ScheduFIREException.class, () -> {servlet.doPost(request, response);} );
+		assertThrows(ParametroInvalidoException.class, () -> {servlet.doPost(request, response);} );
 		
 	}
 	
