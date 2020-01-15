@@ -57,7 +57,12 @@ public class AggiungiVFServlet extends HttpServlet {
 		
 		//Controllo email
 		if( ! Validazione.email(email) )
-			throw new ParametroInvalidoException("Il parametro 'email' è errato!");
+			throw new ParametroInvalidoException("Il parametro 'email' &egrave; errato! <br>"
+					+ "L'email deve essere del formato: <br>"
+					+ "nome.cognome@vigilfuoco.it <br>"
+					+ "o eventualmente con un numero: <br>"
+					+ "nome1.cognome@vigilfuoco.it <br>"
+					+ "Verrai reindirizzato alla pagina di Gestione Personale...");
 
 		// Ottenimento parametri del VF dalla richiesta
 		String nome = request.getParameter("nome");
@@ -70,10 +75,12 @@ public class AggiungiVFServlet extends HttpServlet {
 		String giorniFerieAnnoPrecedenteStringa = request.getParameter("giorniFerieAnnoPrecedente");
 		
 		if(giorniFerieAnnoCorrenteStringa == null || "".equals(giorniFerieAnnoCorrenteStringa))
-			throw new ScheduFIREException("Il parametro 'Giorni Ferie Anno Corrente' è nullo!");
+			throw new ParametroInvalidoException("Il parametro 'Giorni Ferie Anno Corrente' &egrave; nullo! <br>"
+					+ "Verrai reindirizzato alla pagina di Gestione Personale.");
 		
 		if(giorniFerieAnnoPrecedenteStringa == null || "".equals(giorniFerieAnnoPrecedenteStringa))
-			throw new ScheduFIREException("Il parametro 'Giorni Ferie Anno Precedente' è nullo!");
+			throw new ParametroInvalidoException("Il parametro 'Giorni Ferie Anno Precedente' &egrave; nullo! <br>"
+					+ "Verrai reindirizzato alla pagina di Gestione Personale.");
 		
 		//Conversione parametri da Stringa ad interi
 		Integer giorniFerieAnnoCorrente = Integer.parseInt(giorniFerieAnnoCorrenteStringa); 
@@ -81,32 +88,57 @@ public class AggiungiVFServlet extends HttpServlet {
 	
 		//Controlli
 		if( ! Validazione.nome(nome) )
-			throw new ParametroInvalidoException("Il parametro 'nome' è errato!");
+			throw new ParametroInvalidoException("Il parametro 'nome' &egrave; errato! <br>"
+					+ "Verifica che il nome: <br>"
+					+ "sia formato da sole lettere; <br>"
+					+ "non contenga numeri o caratteri speciali; <br>"
+					+ "abbia l'iniziale maiuscola; <br>"
+					+ "non superi i 20 caratteri. <br>"
+					+ "Verrai reindirizzato alla pagina di Gestione Personale...");
 		
 		if( ! Validazione.cognome(cognome) )
-			throw new ParametroInvalidoException("Il parametro 'cognome' è errato!");
+			throw new ParametroInvalidoException("Il parametro 'cognome' &egrave; errato! <br>"
+					+ "Verifica che il cognome: <br>"
+					+ "sia formato da sole lettere; <br>"
+					+ "non contenga numeri o caratteri speciali; <br>"
+					+ "abbia l'iniziale maiuscola; <br>"
+					+ "non superi i 20 caratteri. <br>"
+					+ "Verrai reindirizzato alla pagina di Gestione Personale...");
 		
 		if( ! Validazione.turno(turno) )
-			throw new ParametroInvalidoException("Il parametro 'turno' è errato!");
+			throw new ParametroInvalidoException("Il parametro 'turno' &egrave; errato! <br>"
+					+ "Verrai reindirizzato alla pagina di Gestione Personale...");
 		
 		if( ! Validazione.mansione(mansione) )
-			throw new ParametroInvalidoException("Il parametro 'mansione' è errato!");
+			throw new ParametroInvalidoException("Il parametro 'mansione' &egrave; errato! <br>"
+					+ "Le mansioni che puoi inserire sono: <br>"
+					+ "Capo Squadra; <br>"
+					+ "Autista; <br>"
+					+ "Vigile. <br>"
+					+ "Verrai reindirizzato alla pagina di Gestione Personale...");
 		
-		//Se il grado non è settato e la mansione è Capo Squadra, il grado sarà 'Semplice'
+		//Se il grado non Ã¨ settato e la mansione Ã¨ Capo Squadra, il grado sarÃ  'Semplice'
 		if( mansione.equals("Capo Squadra") && (grado == null || grado.equals(" ")) )
 			grado = "Semplice";
 		
 		if( ! Validazione.grado(grado) )
-			throw new ParametroInvalidoException("Il parametro 'grado' è errato!");
+			throw new ParametroInvalidoException("Il parametro 'grado' &egrave; errato! <br>"
+					+ "I gradi che puoi inserire sono: <br>"
+					+ "Esperto; <br>"
+					+ "Qualificato; <br>"
+					+ "Coordinatore. <br>"
+					+ "Verrai reindirizzato alla pagina di Gestione Personale...");
 		
 		//Controllo mansione
 		if( mansione.equals("Capo Squadra") && ( grado.equals("Qualificato") 
 				|| grado.equals("Coordinatore") ) ) 
-			throw new ParametroInvalidoException("Un Capo Squadra può essere solamente Esperto o Semplice!");
+			throw new ParametroInvalidoException("Un Capo Squadra pu&ograve; essere solamente di grado Esperto o Semplice! <br>"
+					+ "Verrai reindirizzato alla pagina di Gestione Personale...");
 		
 		if( (mansione.equals("Autista") || mansione.equals("Vigile") )  
 				&&  grado.equals("Semplice") ) 
-			throw new ParametroInvalidoException("Il parametro 'grado' è errato!");
+			throw new ParametroInvalidoException("Un Vigile o un Autista non pu&ograve; essere di grado Semplice! <br>"
+					+ "Verrai reindirizzato alla pagina di Gestione Personale...");
 		
 		email += "@vigilfuoco.it";
 			
@@ -118,22 +150,25 @@ public class AggiungiVFServlet extends HttpServlet {
 		int caricoLavoro = VigileDelFuocoDao.getCaricoLavoroMinimo();
 		vf.setCaricoLavoro(caricoLavoro);
 		
-		//Controllo se il Vigile del Fuoco è già presente nel database
+		//Controllo se il Vigile del Fuoco Ã¨ giÃ  presente nel database
 		VigileDelFuocoBean vigileDb = null;
 		if((vigileDb = VigileDelFuocoDao.ottieni(email)) != null) {
 			
-			//Se il Vigile del Fuoco è già presente nel database ed è adoperabile si lancia l'eccezione
+			//Se il Vigile del Fuoco Ã¨ giÃ  presente nel database ed Ã¨ adoperabile si lancia l'eccezione
 			if(vigileDb.isAdoperabile()) {
-				throw new GestionePersonaleException("Il vigile del fuoco è già presente nel sistema!");
+				throw new GestionePersonaleException("Il vigile del fuoco &egrave; gi&agrave; presente nel sistema! <br>"
+						+ "Verrai reindirizzato alla pagina di Gestione Personale...");
 				
 			} else {
 				
 				//Si effettua l'aggiornamento dei dati nel database
 				if( ! VigileDelFuocoDao.modifica(email, vf)) 
-					throw new GestionePersonaleException("L'inserimento del vigile del fuoco non è andato a buon fine!");
+					throw new GestionePersonaleException("L'inserimento del vigile del fuoco non &egrave; andato a buon fine! <br>"
+							+ "Verrai reindirizzato alla pagina di Gestione Personale...");
 				
 				if( ! VigileDelFuocoDao.setAdoperabile(email, true)) 
-					throw new GestionePersonaleException("L'inserimento del vigile del fuoco non è andato a buon fine!");
+					throw new GestionePersonaleException("L'inserimento del vigile del fuoco non &egrave; andato a buon fine! <br>"
+							+ "Verrai reindirizzato alla pagina di Gestione Personale...");
 				
 			}
 			
@@ -141,11 +176,12 @@ public class AggiungiVFServlet extends HttpServlet {
 			
 			// Controllo salvataggio Vigile del Fuoco nel database
 			if(! VigileDelFuocoDao.salva(vf))
-				throw new GestionePersonaleException("L'inserimento del vigile del fuoco non è andato a buon fine!");
+				throw new GestionePersonaleException("L'inserimento del vigile del fuoco non &egrave; andato a buon fine! <br>"
+						+ "Verrai reindirizzato alla pagina di Gestione Personale...");
 
 		}
 		
-		session.setAttribute("risultato", "L'inserimento del Vigile del Fuoco è avvenuto con successo!");
+		session.setAttribute("risultato", "L'inserimento del Vigile del Fuoco &egrave; avvenuto con successo!");
 
 		// Reindirizzamento alla jsp
 		response.sendRedirect("./GestionePersonaleServlet");

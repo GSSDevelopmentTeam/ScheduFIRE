@@ -48,7 +48,7 @@
     	onmouseover="this.src='Icon/menuAperto.png'"
 		onmouseout="this.src='IMG/men.png'">
   </button>
-  <div class="ddc" id="tabledown">
+  <div class="ddc" id="tabledown" style="margin-top: 1%;">
    <form action="HomeCTServlet" method="POST">
     <button class="cmd" id="tornahome"><img src="IMG/logoSF.png" class="btl">
     <span class="rtlg">Home</span> </button>

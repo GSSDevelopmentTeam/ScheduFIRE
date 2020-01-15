@@ -188,20 +188,20 @@
 					%>
 				<option value="nome" selected>Nome</option>
 				<option value="cognome">Cognome</option>
-				<option value="grado">grado</option>
+				<option value="grado">Grado</option>
 
 				<%
 						} else if( ordinamento.equals("cognome") ) {		
 						%>
 				<option value="nome">Nome</option>
 				<option value="cognome" selected>Cognome</option>
-				<option value="grado">grado</option>
+				<option value="grado">Grado</option>
 				<%
 						}  else if( ordinamento.equals("grado") ) {		
 						%>
 				<option value="nome">Nome</option>
 				<option value="cognome">Cognome</option>
-				<option value="grado" selected>grado</option>
+				<option value="grado" selected>Grado</option>
 				<%}
 					}%>
 
@@ -514,7 +514,10 @@
 				differenza = dataok2-dataok1;    
 				giorni_differenza = new String(1+differenza/86400000);
 				
-				return giorni_differenza;}
+				var giorniApprossimati = Math.ceil(giorni_differenza);
+				
+				return giorniApprossimati;
+				}
 			}
 			
 			

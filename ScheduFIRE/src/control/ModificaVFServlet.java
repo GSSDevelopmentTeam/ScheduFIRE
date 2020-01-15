@@ -50,11 +50,17 @@ public class ModificaVFServlet extends HttpServlet {
 
 		//Controllo email
 		if( ! Validazione.email(emailVecchia) )
-			throw new ParametroInvalidoException("Il parametro 'email' Ã¨ errato!");
+			throw new ParametroInvalidoException("Il parametro 'email' del vigile del Fuoco"
+					+ " che vuoi modificare &egrave; errato! <br>"
+					+ "L'email deve essere del formato: <br>"
+					+ "nome.cognome@vigilfuoco.it <br>"
+					+ "o eventualmente con un numero: <br>"
+					+ "nome1.cognome@vigilfuoco.it <br>"
+					+ "Verrai reindirizzato alla pagina di Gestione Personale...");
 		
 		emailVecchia += "@vigilfuoco.it";
 		
-		//Controllo se il vf scelto � gia schedulato in delle squadre
+		//Controllo se il vf scelto è gia schedulato in delle squadre
 		LocalDate inizio = LocalDate.now();
 		LocalDate fine = inizio.plusDays(7);
 		boolean eliminabile = false;
@@ -69,14 +75,16 @@ public class ModificaVFServlet extends HttpServlet {
 
 		if( eliminabile )
 			throw new GestionePersonaleException("Non puoi modificare un Vigile del Fuoco scelto per le squadre"
-					+ " dei prossimi giorni lavorativi! Sostiuiscilo prima.");
+					+ " dei prossimi giorni lavorativi! Sostiuiscilo prima. <br>"
+					+ "Verrai reindirizzato alla pagina di Gestione Personale...");
 		
 		//Ottenimento Vigile del Fuoco dal database
 		VigileDelFuocoBean vf = VigileDelFuocoDao.ottieni(emailVecchia);
 		
-		//Controllo se Ã¨ nullo
+		//Controllo se ÃƒÂ¨ nullo
 		if( vf == null ) 
-			throw new GestionePersonaleException("Il vigile del fuoco non Ã¨ presente nel sistema!");
+			throw new GestionePersonaleException("Il vigile del Fuoco che vuoi modificare non &egrave; presente nel sistema. <br>"
+					+ "Verrai reindirizzato alla pagina di Gestione Personale...");
 		
 		// Ottenimento parametri del VF dalla richiesta
 		String nomeNuovo = request.getParameter("nomeNuovo");;
@@ -89,11 +97,13 @@ public class ModificaVFServlet extends HttpServlet {
 		
 		if(giorniFerieAnnoCorrenteNuoviStringa == null ||
 			"".equals(giorniFerieAnnoCorrenteNuoviStringa))
-			throw new ScheduFIREException("Il parametro 'Giorni Ferie Anno Corrente' Ã¨ nullo!");
+			throw new ParametroInvalidoException("Il parametro 'Giorni Ferie Anno Corrente' &egrave; nullo! <br>"
+					+ "Verrai reindirizzato alla pagina di Gestione Personale.");
 		
 		if(giorniFerieAnnoPrecedenteNuoviStringa == null ||
 			"".equals(giorniFerieAnnoPrecedenteNuoviStringa))
-			throw new ScheduFIREException("Il parametro 'Giorni Ferie Anno Precedente' Ã¨ nullo!");
+			throw new ParametroInvalidoException("Il parametro 'Giorni Ferie Anno Precedente' &egrave; nullo! <br>"
+					+ "Verrai reindirizzato alla pagina di Gestione Personale.");
 		
 		//Conversione parametri da Stringa ad interi
 		Integer giorniFerieAnnoCorrenteNuovi = Integer.parseInt(giorniFerieAnnoCorrenteNuoviStringa);
@@ -102,38 +112,71 @@ public class ModificaVFServlet extends HttpServlet {
 		//Controlli
 
 		if( ! Validazione.nome(nomeNuovo) )
-			throw new ParametroInvalidoException("Il parametro 'nome' Ã¨ errato!");
+			throw new ParametroInvalidoException("Il parametro 'nome' &egrave; errato! <br>"
+					+ "Verifica che il nome: <br>"
+					+ "sia formato da sole lettere;\n"
+					+ "non contenga numeri o caratteri speciali; <br>"
+					+ "abbia l'iniziale maiuscola; <br>"
+					+ "non superi i 20 caratteri. <br>"
+					+ "Verrai reindirizzato alla pagina di Gestione Personale...");
 		
 		if( ! Validazione.cognome(cognomeNuovo) )
-			throw new ParametroInvalidoException("Il parametro 'cognome' Ã¨ errato!");
+			throw new ParametroInvalidoException("Il parametro 'cognome' &egrave; errato! <br>"
+					+ "Verifica che il cognome: <br>"
+					+ "sia formato da sole lettere; <br>"
+					+ "non contenga numeri o caratteri speciali; <br>"
+					+ "abbia l'iniziale maiuscola; <br>"
+					+ "non superi i 20 caratteri. <br>"
+					+ "Verrai reindirizzato alla pagina di Gestione Personale...");
 		
 		if( ! Validazione.mansione(mansioneNuova) )
-			throw new ParametroInvalidoException("Il parametro 'mansione' Ã¨ errato!");
+			throw new ParametroInvalidoException("Il parametro 'mansione' &egrave; errato! <br>"
+					+ "Le mansioni che puoi inserire sono: <br>"
+					+ "Capo Squadra; <br>"
+					+ "Autista; <br>"
+					+ "Vigile. <br>"
+					+ "Verrai reindirizzato alla pagina di Gestione Personale...");
 		
 		if( ! Validazione.giorniFerieAnnoCorrente(giorniFerieAnnoCorrenteNuovi) )
-			throw new ParametroInvalidoException("Il parametro 'Giorni Ferie Anno Corrente' Ã¨ errato!");
+			throw new ParametroInvalidoException("Il parametro 'Giorni Ferie Anno Corrente' &egrave; errato! <br>"
+					+ "Il parametro deve essere compreso tra 0 e 22. <br>"
+					+ "Verrai reindirizzato alla pagina di Gestione Personale...");
 	
 		if( ! Validazione.giorniFerieAnniPrecedenti(giorniFerieAnnoPrecedenteNuovi) )
-			throw new ParametroInvalidoException("Il parametro 'Giorni Ferie Anno Precedente' Ã¨ errato!");
+			throw new ParametroInvalidoException("Il parametro 'Giorni Ferie Anno Precedente' &egrave; errato! <br>"
+					+ "Il parametro deve essere compreso tra 0 e 999. <br>"
+					+ "Verrai reindirizzato alla pagina di Gestione Personale...");
 		
-		//Se il grado non è settato e la mansione è Capo Squadra, il grado sarà 'Semplice'
+		//Se il grado non Ã¨ settato e la mansione Ã¨ Capo Squadra, il grado sarÃ  'Semplice'
 		if( mansioneNuova.equals("Capo Squadra") && gradoNuovo == null )
 			gradoNuovo = "Semplice";
 		
 		if( ! Validazione.grado(gradoNuovo) )
-			throw new ParametroInvalidoException("Il parametro 'grado' Ã¨ errato!");
+			throw new ParametroInvalidoException("Il parametro 'grado' &egrave; errato! <br>"
+					+ "I gradi che puoi inserire sono: <br>"
+					+ "Esperto; <br>"
+					+ "Qualificato; <br>"
+					+ "Coordinatore. <br>"
+					+ "Verrai reindirizzato alla pagina di Gestione Personale...");
 		
 		if( ! Validazione.email(emailNuova) )
-			throw new ParametroInvalidoException("Il parametro 'email' Ã¨ errato!");
+			throw new ParametroInvalidoException("Il parametro 'email' &egrave; errato! <br>"
+					+ "L'email deve essere del formato: <br>"
+					+ "nome.cognome@vigilfuoco.it <br>"
+					+ "o eventualmente con un numero: <br>"
+					+ "nome1.cognome@vigilfuoco.it <br>"
+					+ "Verrai reindirizzato alla pagina di Gestione Personale...");
 		
 		//Controllo mansione
 		if( mansioneNuova.equals("Capo Squadra") && ( gradoNuovo.equals("Qualificato") 
 				|| gradoNuovo.equals("Coordinatore") ) ) 
-			throw new ParametroInvalidoException("Un Capo Squadra può essere solamente Esperto o Semplice!");
+			throw new ParametroInvalidoException("Un Capo Squadra pu&ograve; essere solamente di grado Esperto o Semplice! <br>"
+					+ "Verrai reindirizzato alla pagina di Gestione Personale...");
 		
 		if( (mansioneNuova.equals("Autista") || mansioneNuova.equals("Vigile") )  
 				&&  gradoNuovo.equals("Semplice") ) 
-			throw new ParametroInvalidoException("Il parametro 'grado' è errato!");
+			throw new ParametroInvalidoException("Un Vigile o un Autista non pu&ograve; essere di grado Semplice! <br>"
+					+ "Verrai reindirizzato alla pagina di Gestione Personale...");
 		
 		emailNuova += "@vigilfuoco.it";
 	
@@ -148,15 +191,17 @@ public class ModificaVFServlet extends HttpServlet {
 		VigileDelFuocoBean vfDb =  VigileDelFuocoDao.ottieni(emailNuova);
 		if( ! vf.equals(vfDb) ) {
 		
-			//Controllo email giÃ  in uso
+			//Controllo email giÃƒÂ  in uso
 			if( (vfDb != null) && ( ! emailVecchia.equals(emailNuova) ) )
-				throw new GestionePersonaleException("L'email inserita Ã¨ giÃ  in uso!");
+				throw new GestionePersonaleException("L'email inserita &egrave; gi&agrave;  in uso! <br>"
+						+ "Verrai reindirizzato alla pagina di Gestione Personale...");
 			
 			vf.setEmail(emailNuova);
 			
 			// Controllo modifica Vigile del Fuoco nel database
 			if( ! VigileDelFuocoDao.modifica(emailVecchia, vf)) 
-				throw new GestionePersonaleException("La modifica del vigile del fuoco non Ã¨ andata a buon fine!");
+				throw new GestionePersonaleException("La modifica del vigile del fuoco non &egrave; andata a buon fine! <br>"
+						+ "Verrai reindirizzato alla pagina di Gestione Personale...");
 		
 		}
 		
