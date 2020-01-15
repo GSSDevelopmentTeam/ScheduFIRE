@@ -72,17 +72,12 @@ p#turno {
 
 /*contenitore per il calendario*/
 .container-calendar {
-	width: 70%;
+	width: 60%;
 	background-color: transparent;
 	font-family: Verdana;
 	border-right: 2px dotted black;
 }
 
-.container-calendar h1 h2 h3 {
-	color: white;
-	text-align: center;
-	font-family: Verdana;
-}
 
 .altroAnno {
 	background-color: transparent;
@@ -296,3 +291,4 @@ non ha la proprietà :hover*/
 	text-decoration: none;
 	color: black;
 }
+
