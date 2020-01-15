@@ -15,7 +15,7 @@ public class CredenzialiDao {
  public CredenzialiDao() {}
 
 
- public CredenzialiBean login(String username) {
+ public static CredenzialiBean login(String username) {
   CredenzialiBean credenziali = null;
   try {
    
