@@ -1,6 +1,9 @@
 /*contenitore per l'intero calendario*/
 body {
 	background-color: #f2f2f2;
+	min-width:753px;        /* Suppose you want minimum width of 1000px */
+	width: auto !important;  /* Firefox will set width as auto */
+	width:753px;            /* As IE6 ignores !important it will set width as 1000px; */
 }
 
 * {
@@ -14,6 +17,10 @@ h2 {
 #titolo {
 	position: absolute;
 	margin-left: 40%;
+}
+
+#informazione{
+	font-size: 125%;
 }
 
 .back-up {
@@ -31,7 +38,6 @@ p#turno {
 
 .containerAll {
 	position: relative;
-	margin-top: 3px;
 	margin-right: 10px;
 	display: flex;
 	width: 100%;
@@ -75,7 +81,6 @@ p#turno {
 	width: 60%;
 	background-color: transparent;
 	font-family: Verdana;
-	border-right: 2px dotted black;
 }
 
 
@@ -191,7 +196,7 @@ flex:1 -> prende il resto del container*/
 	grid-template-columns: auto auto auto auto auto auto auto;
 	color: white;
 	border-bottom: 3px solid #454d55;
-	padding: 2%;
+	padding: 1%;
 	background-color: #343a40;
 	justify-content: center;
 	font-family: Verdana;
@@ -202,7 +207,7 @@ flex:1 -> prende il resto del container*/
 	display: grid;
 	grid-template-columns: auto auto auto auto auto auto auto;
 	background-color: transparent;
-	margin: 2%;
+	margin: 1%;
 	font-family: Verdana;
 	border: 2px solid black;
 }
@@ -214,8 +219,8 @@ non ha la proprietà :hover*/
 	color: #434a52;
 	background-color: transparent;
 	border-bottom: 0.1px solid #343a40;
-	border-top: 0.1 px solid #343a40;
-	padding: 2%;
+	padding: 0;
+	padding-left: 2% !important;
 	font-size: 200%;
 	text-align: center;
 	font-family: Verdana;

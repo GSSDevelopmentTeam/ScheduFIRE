@@ -249,7 +249,10 @@
 		    dayClicked("<%=giorno%>");
 		    imgMoonSun();
 		});
+	<%} else if (!GiornoLavorativo.isLavorativo(data)){%>
+		$("#informazione").text("Oggi non è un giorno lavorativo. Premere su un giorno lavorativo per visualizzare la composizione delle squadre.");
 	<%}%>
+	
 	
 
 		function dayClicked(input) {
@@ -353,6 +356,7 @@
 				}
 				var red = 'ModificaComposizioneSquadreServlet?tiposquadra=3&data=' + anno.trim() + '-' + mese.trim() + '-' + giorno.trim();
 				$("#modData").attr("action", red);
+				
 
 			} 
 		});
