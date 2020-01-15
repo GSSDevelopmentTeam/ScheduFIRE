@@ -303,7 +303,7 @@
 				var len = response.length;
 				var isModificabile = response[0];
 				var isGenerabile = response[1];	
-				$("#informazione").text("Squadre relative al giorno " + response[2]);
+				$("#informazione").text("Squadre relative al giorno <strong>" + response[2] + "</strong>");
 				
 
 				
