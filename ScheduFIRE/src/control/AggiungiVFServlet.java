@@ -57,7 +57,7 @@ public class AggiungiVFServlet extends HttpServlet {
 		
 		//Controllo email
 		if( ! Validazione.email(email) )
-			throw new ParametroInvalidoException("Il parametro 'email' è errato!");
+			throw new ParametroInvalidoException("Il parametro 'email' &egrave errato!");
 
 		// Ottenimento parametri del VF dalla richiesta
 		String nome = request.getParameter("nome");
@@ -70,10 +70,10 @@ public class AggiungiVFServlet extends HttpServlet {
 		String giorniFerieAnnoPrecedenteStringa = request.getParameter("giorniFerieAnnoPrecedente");
 		
 		if(giorniFerieAnnoCorrenteStringa == null || "".equals(giorniFerieAnnoCorrenteStringa))
-			throw new ScheduFIREException("Il parametro 'Giorni Ferie Anno Corrente' è nullo!");
+			throw new ScheduFIREException("Il parametro 'Giorni Ferie Anno Corrente' &egrave nullo!");
 		
 		if(giorniFerieAnnoPrecedenteStringa == null || "".equals(giorniFerieAnnoPrecedenteStringa))
-			throw new ScheduFIREException("Il parametro 'Giorni Ferie Anno Precedente' è nullo!");
+			throw new ScheduFIREException("Il parametro 'Giorni Ferie Anno Precedente' &egrave nullo!");
 		
 		//Conversione parametri da Stringa ad interi
 		Integer giorniFerieAnnoCorrente = Integer.parseInt(giorniFerieAnnoCorrenteStringa); 
@@ -81,23 +81,23 @@ public class AggiungiVFServlet extends HttpServlet {
 	
 		//Controlli
 		if( ! Validazione.nome(nome) )
-			throw new ParametroInvalidoException("Il parametro 'nome' è errato!");
+			throw new ParametroInvalidoException("Il parametro 'nome' &egrave errato!");
 		
 		if( ! Validazione.cognome(cognome) )
-			throw new ParametroInvalidoException("Il parametro 'cognome' è errato!");
+			throw new ParametroInvalidoException("Il parametro 'cognome' &egrave errato!");
 		
 		if( ! Validazione.turno(turno) )
-			throw new ParametroInvalidoException("Il parametro 'turno' è errato!");
+			throw new ParametroInvalidoException("Il parametro 'turno' &egrave errato!");
 		
 		if( ! Validazione.mansione(mansione) )
-			throw new ParametroInvalidoException("Il parametro 'mansione' è errato!");
+			throw new ParametroInvalidoException("Il parametro 'mansione' &egrave errato!");
 		
 		//Se il grado non è settato e la mansione è Capo Squadra, il grado sarà 'Semplice'
 		if( mansione.equals("Capo Squadra") && (grado == null || grado.equals(" ")) )
 			grado = "Semplice";
 		
 		if( ! Validazione.grado(grado) )
-			throw new ParametroInvalidoException("Il parametro 'grado' è errato!");
+			throw new ParametroInvalidoException("Il parametro 'grado' &egrave errato!");
 		
 		//Controllo mansione
 		if( mansione.equals("Capo Squadra") && ( grado.equals("Qualificato") 
@@ -106,7 +106,7 @@ public class AggiungiVFServlet extends HttpServlet {
 		
 		if( (mansione.equals("Autista") || mansione.equals("Vigile") )  
 				&&  grado.equals("Semplice") ) 
-			throw new ParametroInvalidoException("Il parametro 'grado' è errato!");
+			throw new ParametroInvalidoException("Il parametro 'grado' &egrave errato!");
 		
 		email += "@vigilfuoco.it";
 			
@@ -124,16 +124,16 @@ public class AggiungiVFServlet extends HttpServlet {
 			
 			//Se il Vigile del Fuoco è già presente nel database ed è adoperabile si lancia l'eccezione
 			if(vigileDb.isAdoperabile()) {
-				throw new GestionePersonaleException("Il vigile del fuoco è già presente nel sistema!");
+				throw new GestionePersonaleException("Il vigile del fuoco &egrave gi&agrave� presente nel sistema!");
 				
 			} else {
 				
 				//Si effettua l'aggiornamento dei dati nel database
 				if( ! VigileDelFuocoDao.modifica(email, vf)) 
-					throw new GestionePersonaleException("L'inserimento del vigile del fuoco non è andato a buon fine!");
+					throw new GestionePersonaleException("L'inserimento del vigile del fuoco non &egrave andato a buon fine!");
 				
 				if( ! VigileDelFuocoDao.setAdoperabile(email, true)) 
-					throw new GestionePersonaleException("L'inserimento del vigile del fuoco non è andato a buon fine!");
+					throw new GestionePersonaleException("L'inserimento del vigile del fuoco non &egrave andato a buon fine!");
 				
 			}
 			
@@ -141,11 +141,11 @@ public class AggiungiVFServlet extends HttpServlet {
 			
 			// Controllo salvataggio Vigile del Fuoco nel database
 			if(! VigileDelFuocoDao.salva(vf))
-				throw new GestionePersonaleException("L'inserimento del vigile del fuoco non è andato a buon fine!");
+				throw new GestionePersonaleException("L'inserimento del vigile del fuoco non &egrave andato a buon fine!");
 
 		}
 		
-		session.setAttribute("risultato", "L'inserimento del Vigile del Fuoco è avvenuto con successo!");
+		session.setAttribute("risultato", "L'inserimento del Vigile del Fuoco &egrave avvenuto con successo!");
 
 		// Reindirizzamento alla jsp
 		response.sendRedirect("./GestionePersonaleServlet");

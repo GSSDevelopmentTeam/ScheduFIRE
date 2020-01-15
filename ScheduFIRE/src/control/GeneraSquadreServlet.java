@@ -149,8 +149,12 @@ public class GeneraSquadreServlet extends HttpServlet {
 					}
 					VigileDelFuocoDao.caricoLavorativo(squadraNotturno);
 					
-					//Mettere qui sendMail
-					SendMail.sendMail(data, squadraDiurno, squadraNotturno);
+					
+					new Thread(() -> {
+						//Mettere qui sendMail
+					    SendMail.sendMail(data, squadraDiurno, squadraNotturno);
+					}).start();
+
 
 				}
 
