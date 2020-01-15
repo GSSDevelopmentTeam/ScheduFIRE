@@ -330,6 +330,173 @@ h2 {
 			</tbody>
 		</table>
 	</div>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<% ArrayList<VigileDelFuocoBean> vigiliDisponibili = (ArrayList<VigileDelFuocoBean>) request.getAttribute("vigiliDisponibili");
+ArrayList<VigileDelFuocoBean> vigili = new ArrayList<VigileDelFuocoBean>();
+ 
+for(int i=0; i<vigiliDisponibili.size();i++) {
+        boolean trovato= false;
+        it = squadra.entrySet().iterator();
+        while (it.hasNext()) {
+            Map.Entry coppia = (Map.Entry) it.next();
+            VigileDelFuocoBean membro = (VigileDelFuocoBean) coppia.getKey();          
+            //confronto il membro nella squadra con tutta la lista di vigili disponibili           
+                if(membro.getEmail().equalsIgnoreCase(vigiliDisponibili.get(i).getEmail())) {
+                    trovato = true;
+                }  
+                if(trovato) break;
+            }
+            if(trovato==false) {
+                vigili.add(vigiliDisponibili.get(i));              
+            }
+           
+        }
+for(VigileDelFuocoBean vigile:vigili){
+	System.out.println("vigile "+vigile);
+}
+ %>
+ 
+<div class="d-flex justify-content-center">
+    <h2>Personale disponibile</h2>
+</div>
+ 
+<h4 class="d-flex justify-content-center" style="color: #B60000;">Capi
+    Squadra</h4>
+<div class="table-responsive">
+    <table class="table  table-hover" id="listaVigili">
+        <thead class="thead-dark">
+            <tr>
+                <th class="text-center">Grado</th>
+                <th class="text-center">Mansione</th>
+                <th class="text-center">Nome</th>
+                <th class="text-center">Cognome</th>
+            </tr>
+        </thead>
+ 
+        <tbody>
+            <%
+                    for (VigileDelFuocoBean vigile : vigili) {
+                        if (vigile.getMansione().equals("Capo Squadra")) {
+            %>
+ 
+            <tr>
+                <td class="text-center"><img
+                    src="Grado/<%=vigile.getMansione().equals("Capo Squadra") && vigile.getGrado().equals("Esperto")
+                                ? "EspertoCapoSquadra"
+                                : vigile.getGrado()%>.png"
+                    title="<%=vigile.getGrado()%>"
+                    onerror="this.parentElement.innerHTML='Non disponibile';"></td>
+                <td class="text-center"><%=vigile.getMansione()%></td>
+                <td class="text-center"><strong><%=vigile.getNome()%></strong></td>
+                <td class="text-center"><strong><%=vigile.getCognome()%></strong></td>
+            </tr>
+            <%
+                }
+                    }
+                
+            %>
+        </tbody>
+    </table>
+</div>
+<div class="d-flex justify-content-center">
+    <h2></h2>
+</div>
+ 
+<h4 class="d-flex justify-content-center" style="color: #B60000;">Autisti</h4>
+<div class="table-responsive">
+    <table class="table  table-hover" id="listaVigili">
+        <thead class="thead-dark">
+            <tr>
+                <th class="text-center">Grado</th>
+                <th class="text-center">Mansione</th>
+                <th class="text-center">Nome</th>
+                <th class="text-center">Cognome</th>
+            </tr>
+        </thead>
+ 
+        <tbody>
+            <%
+                        for (VigileDelFuocoBean vigile : vigili) {
+                            if (vigile.getMansione().equals("Autista")) {
+                %>
+ 
+            <tr>
+                <td class="text-center"><img
+                    src="Grado/<%=vigile.getMansione().equals("Capo Squadra") && vigile.getGrado().equals("Esperto")
+                                ? "EspertoCapoSquadra"
+                                : vigile.getGrado()%>.png"
+                    title="<%=vigile.getGrado()%>"
+                    onerror="this.parentElement.innerHTML='Non disponibile';"></td>
+                <td class="text-center"><%=vigile.getMansione()%></td>
+                <td class="text-center"><strong><%=vigile.getNome()%></strong></td>
+                <td class="text-center"><strong><%=vigile.getCognome()%></strong></td>
+            </tr>
+            <%
+                    }
+                        }
+                    
+                %>
+        </tbody>
+    </table>
+</div>
+<div class="d-flex justify-content-center">
+    <h2></h2>
+</div>
+ 
+<h4 class="d-flex justify-content-center" style="color: #B60000;">Vigili</h4>
+<div class="table-responsive">
+    <table class="table  table-hover" id="listaVigili">
+        <thead class="thead-dark">
+            <tr>
+                <th class="text-center">Grado</th>
+                <th class="text-center">Mansione</th>
+                <th class="text-center">Nome</th>
+                <th class="text-center">Cognome</th>
+            </tr>
+        </thead>
+ 
+        <tbody>
+            <% 
+                        for (VigileDelFuocoBean vigile : vigili) {
+                            if (vigile.getMansione().equals("Vigile")) {
+                %>
+ 
+            <tr>
+                <td class="text-center"><img
+                    src="Grado/<%=vigile.getMansione().equals("Capo Squadra") && vigile.getGrado().equals("Esperto")
+                                ? "EspertoCapoSquadra"
+                                : vigile.getGrado()%>.png"
+                    title="<%=vigile.getGrado()%>"
+                    onerror="this.parentElement.innerHTML='Non disponibile';"></td>
+                <td class="text-center"><%=vigile.getMansione()%></td>
+                <td class="text-center"><strong><%=vigile.getNome()%></strong></td>
+                <td class="text-center"><strong><%=vigile.getCognome()%></strong></td>
+            </tr>
+            <%
+                    }
+                        }
+                    
+                %>
+        </tbody>
+    </table>
+</div>
+	
+	
+	
+	
+	
+	
 
 	<script
 		src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>

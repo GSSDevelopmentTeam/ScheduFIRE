@@ -125,7 +125,7 @@ public class SendMail {
 	}
 
 	/**
-	 * Il metodo si occupa del mandare le mail ai vigili del fuoco. La mail è formattata in HTML.
+	 * Il metodo si occupa del mandare le mail ai vigili del fuoco. La mail ï¿½ formattata in HTML.
 	 * @param data La data del turno mattutino. 
 	 * @param squadraDiurno La mappa dei vigili del fuoco e delle relative squadre associate mattutina.
 	 * @param squadraNotturno La mappa dei vigili del fuoco e delle relative squadre associate notturna.
@@ -246,7 +246,7 @@ public class SendMail {
 
 			String titolo = titolo("Generazione della squadra per il turno del");
 			titolo+=titolo(data.toLocalDate().format(DateTimeFormatter.ofPattern("dd MMMM YYYY", new Locale("it", "IT"))) 
-					+ " - " + data.toLocalDate().plusDays(1).format(DateTimeFormatter.ofPattern("dd MMMM YYYY", new Locale("it", "IT"))));
+					+ " - <br> " + data.toLocalDate().plusDays(1).format(DateTimeFormatter.ofPattern("dd MMMM YYYY", new Locale("it", "IT"))));
 			String tabellaDiurno= sottotitolo("Squadra diurna:");
 			tabellaDiurno+=tabella(diurnoLista);
 
